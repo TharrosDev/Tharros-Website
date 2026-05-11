@@ -1,18 +1,7 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import Script from "next/script";
 import AnimatedSection from "./AnimatedSection";
 
 export default function ChatDemoSection() {
-  // State to store the iframe URL with a unique timestamp to prevent persistence on reload
-  const [iframeUrl, setIframeUrl] = useState("");
-
-  useEffect(() => {
-    const baseUrl = "https://app.relevanceai.com/agents/bcbe5a/53ba4219-0247-4c7e-a441-cd107d5783e0/f0398db0-96a2-4f11-8db8-b4c5b6fe769a/embed-chat?hide_tool_steps=false&hide_file_uploads=true&hide_conversation_list=true&bubble_style=agent&primary_color=%230f172a&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false";
-    // Append a unique session ID based on current time
-    setIframeUrl(`${baseUrl}&session_id=session_${Date.now()}`);
-  }, []);
-
   return (
     <section id="demo" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
       {/* Background soft gradients */}
@@ -33,50 +22,35 @@ export default function ChatDemoSection() {
           </p>
         </AnimatedSection>
 
-        {/* Wide "Comfortable" Chat UI */}
+        {/* Relevance AI Script-based Embed */}
         <AnimatedSection delay={0.2} variant="scale-in">
           <div className="max-w-5xl mx-auto relative">
-            {/* Desktop-style Window Container */}
-            <div className="clean-card overflow-hidden shadow-2xl border-border/40 bg-white min-h-[600px] md:min-h-[700px] flex flex-col">
-              
-              {/* Sleek Window Header */}
-              <div className="px-6 py-4 border-b border-border bg-slate-50/50 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-400/20 border border-red-400/40" />
-                    <div className="w-3 h-3 rounded-full bg-amber-400/20 border border-amber-400/40" />
-                    <div className="w-3 h-3 rounded-full bg-green-400/20 border border-green-400/40" />
-                  </div>
-                  <div className="h-4 w-[1px] bg-border mx-2" />
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                    <span className="text-sm font-semibold text-text">Tharros Agent Live</span>
-                  </div>
+            <div className="clean-card overflow-hidden shadow-2xl border-border/40 bg-white min-h-[400px] flex flex-col items-center justify-center p-12 text-center">
+              <div className="max-w-md">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-3xl">💬</span>
                 </div>
-                <div className="hidden md:flex items-center gap-6 text-xs font-medium text-subdued uppercase tracking-widest">
-                  <span>Lead Intelligence</span>
-                  <span>24/7 Support</span>
+                <h3 className="text-xl font-bold text-text mb-4">Click the bubble in the corner</h3>
+                <p className="text-subdued mb-8">
+                  We&apos;ve integrated our real-time agent into the site. Look for the chat icon in the bottom right corner of your screen to start a conversation.
+                </p>
+                <div className="inline-flex items-center gap-2 text-accent-3 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
+                  Agent is online and ready
                 </div>
-              </div>
-
-              {/* The Iframe (Taking the full width/height of the card) */}
-              <div className="flex-1 w-full bg-white relative">
-                {iframeUrl && (
-                  <iframe 
-                    src={iframeUrl} 
-                    width="100%" 
-                    height="100%" 
-                    frameBorder="0" 
-                    allow="microphone"
-                    title="Tharros AI Agent"
-                    className="absolute inset-0"
-                  />
-                )}
               </div>
             </div>
 
+            {/* Script loading */}
+            <Script 
+              defer 
+              data-relevanceai-share-id="bcbe5a/53ba4219-0247-4c7e-a441-cd107d5783e0/f0398db0-96a2-4f11-8db8-b4c5b6fe769a" 
+              src="https://app.relevanceai.com/embed/chat-bubble.js" 
+              data-share-styles="hide_tool_steps=false&hide_file_uploads=true&hide_conversation_list=true&bubble_style=agent&primary_color=%23544bfb&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=true"
+            />
+
             {/* Subtle floating badge below */}
-            <div className="mt-8 flex flex-wrap justify-center gap-8 md:gap-16">
+            <div className="mt-12 flex flex-wrap justify-center gap-8 md:gap-16">
               <div className="flex items-center gap-3">
                 <span className="text-2xl opacity-80">🛡️</span>
                 <div>
