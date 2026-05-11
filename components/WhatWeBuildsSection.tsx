@@ -50,7 +50,9 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="solutions" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-white">
+      {/* Decorative Flow */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
       <div className="max-w-6xl mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-4 text-center">What we build</p>

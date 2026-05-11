@@ -39,7 +39,9 @@ const pricingFactors = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="pricing" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-white">
+      {/* Decorative Flow */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-accent-3/5 blur-[120px] rounded-full" />
