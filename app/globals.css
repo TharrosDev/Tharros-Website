@@ -52,18 +52,20 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
 }
 
 /* ── Custom Scrollbar ─────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
@@ -114,7 +116,17 @@ body {
 }
 
 .primary-button:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
+  background: var(--color-accent-3);
+}
+
+@media (max-width: 640px) {
+  .primary-button {
+    width: 100%;
+    text-align: center;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
 }
 
 /* ── Section Label ────────────────────────────────────── */

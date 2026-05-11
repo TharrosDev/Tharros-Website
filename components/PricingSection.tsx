@@ -79,7 +79,7 @@ export default function PricingSection() {
 
         <AnimatedSection delay={0.3}>
           <div className="max-w-4xl mx-auto">
-            <div className="bg-surface/40 backdrop-blur-sm border border-border/60 p-8 md:p-12 rounded-[2rem] text-center relative overflow-hidden group">
+            <div className="bg-surface/40 backdrop-blur-sm border border-border/60 p-6 md:p-12 rounded-[1.5rem] md:rounded-[2rem] text-center relative overflow-hidden group">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent-3/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               

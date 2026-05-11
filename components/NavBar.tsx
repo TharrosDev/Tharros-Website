@@ -17,7 +17,16 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
+    let ticking = false;
+    const handler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -89,21 +98,21 @@ export default function NavBar() {
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden relative z-[60] w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full hover:bg-surface transition-colors"
+          className="md:hidden relative z-[60] w-12 h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-white border border-slate-100 shadow-sm transition-all active:scale-90"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           <span
-            className={`block w-5 h-[2px] bg-accent rounded-full transition-all duration-300 origin-center ${
+            className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
               mobileOpen ? "rotate-45 translate-y-[5px]" : ""
             }`}
           />
           <span
-            className={`block w-5 h-[2px] bg-accent rounded-full transition-all duration-300 ${
+            className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 ${
               mobileOpen ? "opacity-0 scale-0" : ""
             }`}
           />
           <span
-            className={`block w-5 h-[2px] bg-accent rounded-full transition-all duration-300 origin-center ${
+            className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
               mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
             }`}
           />
@@ -113,35 +122,52 @@ export default function NavBar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[55] bg-white/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8"
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[55] bg-white/80 flex flex-col items-center justify-center"
           >
-            {navLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                initial={{ opacity: 0, y: 24 }}
+            <div className="flex flex-col items-center justify-center gap-10 w-full px-6">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                  transition={{ delay: i * 0.08, duration: 0.5, ease: "circOut" }}
+                  className="text-4xl font-bold tracking-tighter text-slate-900 hover:text-accent-3 transition-colors text-center w-full py-2"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07, duration: 0.4 }}
-                className="text-2xl font-semibold text-text hover:text-accent-3 transition-colors"
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: navLinks.length * 0.08, duration: 0.5 }}
+                className="w-full max-w-xs mt-4"
               >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.4 }}
-              onClick={() => setMobileOpen(false)}
-              className="mt-4 primary-button px-8 py-4 text-lg"
+                <a
+                  href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+                  onClick={() => setMobileOpen(false)}
+                  className="primary-button flex items-center justify-center px-8 py-5 text-lg shadow-2xl shadow-slate-900/10"
+                >
+                  Get in touch
+                </a>
+              </motion.div>
+            </div>
+            
+            {/* Industrial Accent Bottom */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              className="absolute bottom-12 text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400"
             >
-              Get in touch
-            </motion.a>
+              Unit_01 // Menu_System
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

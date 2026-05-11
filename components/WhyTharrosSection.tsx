@@ -49,7 +49,7 @@ export default function WhyTharrosSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-16 md:mb-24">
           {pillars.map((pillar, i) => (
             <AnimatedSection key={pillar.headline}>
-              <div className="clean-card p-10 md:p-12 h-full flex flex-col gap-6 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
+              <div className="clean-card p-8 md:p-12 h-full flex flex-col gap-6 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
                 <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
                   <span aria-hidden="true" className="scale-125">{pillar.icon}</span>
                 </div>
@@ -63,7 +63,7 @@ export default function WhyTharrosSection() {
         {/* Founder quote */}
         <AnimatedSection variant="scale-in">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-slate-900 rounded-[2.5rem] p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+            <div className="bg-slate-900 rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl">
               {/* Subtle background pattern */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
               

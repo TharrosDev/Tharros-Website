@@ -34,14 +34,14 @@ export default function HeroSection() {
             </span>
           </div>
 
-          <h1 className="text-[2.5rem] leading-[1.05] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-8">
+          <h1 className="text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-8">
             Your business doesn&apos;t need a <br />
             <span className="text-slate-400">corporate AI strategy.</span>
-            <br />
+            <br className="hidden sm:block" />
             It needs something that{" "}
             <span className="relative inline-block text-accent-3">
               works
-              <span className="absolute -bottom-2 left-0 right-0 h-[4px] bg-accent-3/20 rounded-full w-full" />
+              <span className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-[3px] sm:h-[4px] bg-accent-3/20 rounded-full w-full" />
             </span>
             .
           </h1>
@@ -62,9 +62,40 @@ export default function HeroSection() {
                 Set up a Consultation
               </a>
             </Magnetic>
-            <div className="flex flex-col">
+            <div className="flex flex-col sm:pl-2">
               <span className="text-sm font-bold text-text">Free initial Consultation.</span>
               <span className="text-xs text-subdued">No obligation. Ottawa-based.</span>
+            </div>
+          </div>
+
+          {/* Mobile-Only Technology Proof Visual */}
+          <div className="mt-16 lg:hidden w-full max-w-sm">
+            <div className="bg-slate-900 rounded-2xl p-1 border border-white/10 shadow-xl overflow-hidden opacity-90 scale-[0.95] origin-left">
+              <div className="bg-slate-800/50 p-3 border-b border-white/5 flex items-center justify-between">
+                <div className="flex gap-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400/30" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400/30" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400/30" />
+                </div>
+                <span className="text-[7px] font-mono text-white/30 tracking-[0.2em] uppercase">Mobile_Module_Live</span>
+              </div>
+              <div className="p-4 space-y-4">
+                <div className="space-y-2">
+                  {[60, 30, 80].map((w, i) => (
+                    <div key={i} className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${w}%` }}
+                        transition={{ delay: 0.2 + (i * 0.1), duration: 1 }}
+                        className="h-full bg-accent-3"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="font-mono text-[8px] text-white/20">
+                  <p>{`> DEPLOY_UNIT_01_SUCCESS`}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

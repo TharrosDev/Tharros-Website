@@ -123,14 +123,17 @@ export default function ChatDemoSection() {
     };
   }, [currentTask]);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior,
+      });
     }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    scrollToBottom(messages.length <= 1 ? "auto" : "smooth");
   }, [messages, isTyping]);
 
   const handleSend = async (text: string, e?: React.FormEvent) => {
@@ -187,7 +190,7 @@ export default function ChatDemoSection() {
               <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-xl md:text-2xl mb-16 leading-relaxed max-w-lg">
+            <p className="text-subdued text-lg md:text-2xl mb-12 md:mb-16 leading-relaxed max-w-lg">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
             
@@ -224,21 +227,21 @@ export default function ChatDemoSection() {
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[600px] w-full bg-white rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
+              <div className="relative flex flex-col h-[550px] md:h-[600px] w-full bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
                 
                 {/* Chat Header */}
-                <div className="px-8 py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-lg">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <div className="px-5 md:px-8 py-4 md:py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-lg">
+                      <svg width="16" height="16" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Support Agent</h3>
+                      <h3 className="text-text font-bold text-sm md:text-base tracking-tight">Tharros Support Agent</h3>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                        <p className="text-slate-400 text-xs font-medium">Active now</p>
+                        <p className="text-slate-400 text-[10px] md:text-xs font-medium">Active now</p>
                       </div>
                     </div>
                   </div>
@@ -251,7 +254,7 @@ export default function ChatDemoSection() {
                 {/* Messages Area */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-8 flex flex-col gap-6 bg-slate-50/30 scroll-smooth"
+                  className="flex-1 overflow-y-auto p-5 md:p-8 flex flex-col gap-5 md:gap-6 bg-slate-50/30 scroll-smooth"
                 >
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
@@ -268,7 +271,7 @@ export default function ChatDemoSection() {
                           <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
                         </div>
                         <div 
-                          className={`max-w-[85%] text-sm leading-relaxed p-4 rounded-2xl shadow-sm ${
+                          className={`max-w-[90%] md:max-w-[85%] text-[13px] md:text-sm leading-relaxed p-3.5 md:p-4 rounded-xl md:rounded-2xl shadow-sm ${
                             msg.sender === "user" 
                             ? "bg-slate-900 text-white rounded-tr-none" 
                             : "bg-white text-text border border-slate-100 rounded-tl-none"
@@ -299,7 +302,7 @@ export default function ChatDemoSection() {
                 </div>
 
                 {/* Footer / Input Area */}
-                <div className="p-6 bg-white border-t border-slate-100">
+                <div className="p-4 md:p-6 bg-white border-t border-slate-100">
                   
                   {/* Suggestions */}
                   <AnimatePresence>
@@ -333,15 +336,15 @@ export default function ChatDemoSection() {
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Type your message..."
                         disabled={!agentInstance || isTyping}
-                        className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm text-text placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/5 focus:border-slate-300 transition-all disabled:opacity-50"
+                        className="w-full bg-slate-50 border border-slate-200 px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[13px] md:text-sm text-text placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/5 focus:border-slate-300 transition-all disabled:opacity-50"
                       />
                     </div>
                     <button 
                       type="submit"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-[52px] w-[52px] flex items-center justify-center rounded-2xl bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-20 active:scale-95"
+                      className="h-[44px] w-[44px] md:h-[52px] md:w-[52px] flex items-center justify-center rounded-xl md:rounded-2xl bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-20 active:scale-95 shrink-0"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                       </svg>

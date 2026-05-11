@@ -71,7 +71,7 @@ export default function WhatWeBuildsSection() {
             <AnimatedSection key={agent.name}>
               <motion.div 
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="clean-card p-10 md:p-12 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
+                className="clean-card p-8 md:p-12 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
                   {agent.icon}
