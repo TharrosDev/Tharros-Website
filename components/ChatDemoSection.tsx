@@ -154,7 +154,7 @@ export default function ChatDemoSection() {
             Built for <span className="accent-text">Performance</span>
           </h2>
           <p className="text-subdued text-base md:text-lg mb-10 leading-relaxed max-w-xl">
-            Experience the precision of our custom-built AI. It understands context, handles objections, and schedules calls—all within your brand&apos;s voice.
+            Experience the precision of our custom-built AI. It understands context, handles objections, and schedules calls, all within your brand&apos;s voice.
           </p>
           
           <div className="space-y-4">

@@ -6,12 +6,12 @@ const steps = [
   {
     number: "01",
     headline: "Consult",
-    body: "We spend 30 minutes understanding your business, your biggest time drains, and which repetitive conversations are costing you the most. No sales pitch — just listening.",
+    body: "We spend time understanding your business, your biggest time drains, and which repetitive conversations are costing you the most. No sales pitch, just listening.",
   },
   {
     number: "02",
     headline: "Build",
-    body: "We build and configure your agent in 1–2 weeks. You review it, request changes, and we refine until it sounds exactly like your business. No code on your end.",
+    body: "We build and configure your agent in 1-2 weeks. You review it, request changes, and we refine until it sounds exactly like your business. No code on your end.",
   },
   {
     number: "03",
@@ -28,19 +28,19 @@ export default function HowItWorksSection() {
           <p className="section-label mb-4 text-center">How it works</p>
           <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
             From conversation to{" "}
-            <span className="accent-text">live in under a week</span>
+            <span className="accent-text">live in under 2 weeks</span>
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-16 md:mb-20 text-base md:text-lg leading-relaxed">
-            Three steps. No jargon. No six-week enterprise rollout.
+            Three steps. No jargon. No complex enterprise rollout.
           </p>
         </AnimatedSection>
 
         <div className="relative">
-          {/* Connecting line — desktop horizontal */}
+          {/* Connecting line - desktop horizontal */}
           <div className="hidden md:block absolute top-[44px] left-[16.67%] right-[16.67%] h-[2px]">
             <div className="w-full h-full bg-border rounded-full" />
           </div>
-          {/* Connecting line — mobile vertical */}
+          {/* Connecting line - mobile vertical */}
           <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-[88px] bottom-[88px] w-[2px]">
             <div className="w-full h-full bg-border rounded-full" />
           </div>

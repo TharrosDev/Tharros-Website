@@ -71,7 +71,7 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="text-base sm:text-lg md:text-xl text-subdued max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Tharros builds lightweight AI agents for Ottawa small businesses —
+          Tharros builds lightweight AI agents for Ottawa small businesses,
           handling customer questions, capturing leads, and keeping the phone
           from running your day. No code required.
         </motion.p>
@@ -89,7 +89,7 @@ export default function HeroSection() {
             Talk to us about your business
           </a>
           <p className="mt-5 text-subdued text-sm">
-            Free 30-minute consult. No obligation.
+            Free initial Consultation. No obligation.
           </p>
         </motion.div>
       </motion.div>

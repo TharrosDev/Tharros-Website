@@ -9,7 +9,7 @@ const pillars = [
   {
     icon: "⚡",
     headline: "Fast turnaround",
-    body: "Most agencies quote 6–8 weeks. We ship in 1–2 weeks. Because a small business owner waiting two months for an AI chat widget is a small business owner bleeding leads.",
+    body: "Most agencies quote 6-8 weeks. We ship in 1-2 weeks. Because a small business owner waiting two months for an AI chat widget is a small business owner bleeding leads.",
   },
   {
     icon: "🔧",
@@ -25,12 +25,11 @@ export default function WhyTharrosSection() {
         <AnimatedSection>
           <p className="section-label mb-4 text-center">Why Tharros</p>
           <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
-            Built for small businesses,{" "}
-            <span className="accent-text">not enterprise teams</span>
+            Built for <span className="accent-text">small businesses</span>
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
-            Corporate AI vendors want to sell you a platform. We want to solve
-            one specific problem for your business, affordably, within the week.
+            We want to solve specific problems for your business, affordably, and
+            efficently.
           </p>
         </AnimatedSection>
 

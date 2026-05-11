@@ -17,7 +17,7 @@ const pains = [
     icon: "📋",
     stat: "Hours per week",
     headline: "Admin that never ends",
-    body: "Booking confirmations, intake forms, follow-up emails — the paperwork that comes with running a small business quietly eats your week.",
+    body: "Booking confirmations, intake forms, follow-up emails, the paperwork that comes with running a small business quietly eats your week.",
   },
 ];
 
@@ -28,12 +28,13 @@ export default function ProblemSection() {
         <AnimatedSection>
           <p className="section-label mb-4 text-center">The problem</p>
           <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
-            Ottawa small businesses are drowning in{" "}
-            <span className="accent-text">things that shouldn&apos;t need them</span>
+            Ottawa businesses should focus on{" "}
+            <span className="accent-text">growth, not manual busywork</span>
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
-            You started your business to do the work you&apos;re good at — not to
-            manage an inbox, a phone, and a booking calendar at 10pm.
+            You&apos;re an expert at what you do. You shouldn&apos;t have to
+            spend your nights managing an inbox, a phone, and a booking
+            calendar.
           </p>
         </AnimatedSection>
 
