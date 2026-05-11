@@ -37,30 +37,10 @@ interface AnimatedSectionProps {
 export default function AnimatedSection({
   children,
   className = "",
-  delay = 0,
-  variant = "fade-up",
 }: AnimatedSectionProps) {
-  const reduced = useReducedMotion();
-
-  if (reduced) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const v = variants[variant];
-
   return (
-    <motion.div
-      className={className}
-      initial={v.hidden}
-      whileInView={v.visible}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.45,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay,
-      }}
-    >
+    <div className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
