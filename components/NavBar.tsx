@@ -7,13 +7,9 @@ import { motion, AnimatePresence } from "motion/react";
 import Magnetic from "./Magnetic";
 
 const navLinks = [
-  { label: "Problem", href: "#problem" },
   { label: "Solutions", href: "#solutions" },
-  { label: "Process", href: "#process" },
-  { label: "Why Us", href: "#why" },
   { label: "Try Agent", href: "#demo" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export default function NavBar() {
@@ -48,7 +44,7 @@ export default function NavBar() {
         style={{ width: "min(92vw, 1100px)" }}
       >
         <Magnetic strength={0.15}>
-          <Link href="/" aria-label="Tharros home" className="shrink-0 block">
+          <Link href="#hero" aria-label="Tharros home" className="shrink-0 block">
             <Image
               src="/tharros-logo.svg"
               alt="Tharros"
