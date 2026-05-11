@@ -159,8 +159,8 @@ export default function ChatDemoSection() {
           
           <div className="space-y-4">
             <div className="flex items-center gap-3 p-4 rounded-xl bg-white border border-border shadow-sm">
-              <span className="text-xl">⚡</span>
-              <p className="text-sm font-medium text-text">Sub-second response times</p>
+              <span className="text-xl">🧠</span>
+              <p className="text-sm font-medium text-text">Context-aware reasoning & logic</p>
             </div>
             <div className="flex items-center gap-3 p-4 rounded-xl bg-white border border-border shadow-sm">
               <span className="text-xl">🌐</span>
