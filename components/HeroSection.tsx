@@ -84,7 +84,7 @@ export default function HeroSection() {
                 href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
                 className="primary-button px-10 py-5 text-lg shadow-xl shadow-accent-3/10 hover:shadow-accent-3/20 transition-all"
               >
-                Book a consultation
+                Set up a Consultation
               </a>
             </Magnetic>
             <div className="flex flex-col">

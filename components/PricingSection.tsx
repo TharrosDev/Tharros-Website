@@ -11,7 +11,7 @@ const pricingFactors = [
       </svg>
     ),
     title: "Solution Complexity",
-    description: "From simple website concierges to deep integrations with CRMs and booking software."
+    description: "From simple website concierges to deep integrations with CRMs and business workflows."
   },
   {
     icon: (

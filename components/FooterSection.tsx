@@ -16,7 +16,7 @@ export default function FooterSection() {
             <span className="accent-text">that works for you</span>
           </h2>
           <p className="text-subdued text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-            Book a free initial consultation. We&apos;ll listen to your business,
+            Set up a free initial consultation. We&apos;ll listen to your business,
             identify the best use case, and give you a clear sense of what&apos;s
             possible, no obligation.
           </p>
@@ -25,7 +25,7 @@ export default function FooterSection() {
               href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
               className="primary-button px-8 md:px-10 py-4 md:py-5 text-base md:text-lg mb-5"
             >
-              Book a free consult
+              Set up a free consult
             </a>
           </Magnetic>
           <p className="text-subdued text-sm mb-16 md:mb-20">

@@ -28,9 +28,9 @@ const agents = [
       </svg>
     ),
     name: "Lead Capture Agent",
-    tagline: "Turn website visitors into booked consultations",
+    tagline: "Turn website visitors into qualified leads",
     description:
-      "Greets visitors, asks a few smart qualifying questions, and books a call or collects contact info automatically, while you're on the job or asleep.",
+      "Greets visitors, asks a few smart qualifying questions, and coordinates a follow-up via email or collects contact info automatically, while you're on the job or asleep.",
     examples: ["Lawyers", "Accountants", "Consultants", "Contractors"],
   },
   {

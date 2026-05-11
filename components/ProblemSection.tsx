@@ -36,7 +36,7 @@ const pains = [
     ),
     stat: "Hours per week",
     headline: "Admin that never ends",
-    body: "Booking confirmations, intake forms, follow-up emails, the paperwork that comes with running a small business quietly eats your week.",
+    body: "Inquiry management, intake forms, follow-up emails, the paperwork that comes with running a small business quietly eats your week.",
   },
 ];
 
@@ -52,8 +52,8 @@ export default function ProblemSection() {
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             You&apos;re an expert at what you do. You shouldn&apos;t have to
-            spend your nights managing an inbox, a phone, and a booking
-            calendar.
+            spend your nights managing an inbox, a phone, and a busy
+            schedule.
           </p>
         </AnimatedSection>
 
