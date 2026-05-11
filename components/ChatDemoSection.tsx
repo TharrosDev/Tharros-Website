@@ -15,7 +15,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: "1",
     sender: "agent",
-    text: "Hi! I'm your Tharros-powered AI agent. How can I help your business today?",
+    text: "Hi! I'm your Tharros-powered AI agent. Ask me anything, and I'll get back to you as soon as possible.",
     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   },
 ];
@@ -112,26 +112,24 @@ export default function ChatDemoSection() {
             Ask a question on the right to see how seamlessly it handles interaction.
           </p>
           
-          <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 text-sm text-text font-medium">
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Fully custom logic integration
+              Consistent inquiry handling
             </div>
             <div className="flex items-center gap-3 text-sm text-text font-medium">
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Real-time response streaming
+              Responses within the week
             </div>
             <div className="flex items-center gap-3 text-sm text-text font-medium">
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Responsive across all devices
+              Automated follow-up logic
             </div>
-          </div>
         </AnimatedSection>
 
         {/* Right: Chat UI */}

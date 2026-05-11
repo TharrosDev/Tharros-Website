@@ -7,13 +7,13 @@
 **Tagline:** "Your business doesn't need a corporate AI strategy. It needs something that works."
 
 ## 2. CORE MISSION
-Tharros exists to solve the "Small Business Trap": business owners spending more time managing inquiries, phone calls, and admin than doing the actual work they love. We build lightweight, high-impact AI agents that recover time, prevent missed revenue, and provide 24/7 customer service without the overhead of additional staff.
+Tharros exists to solve the "Small Business Trap": business owners spending more time managing inquiries, phone calls, and admin than doing the actual work they love. We build lightweight, high-impact AI agents that recover time, prevent missed revenue, and provide consistent customer service without the overhead of additional staff.
 
 ## 3. CORE CAPABILITIES & SKILLS
 Tharros is not a general-purpose tech agency. We are specialists in **Practical AI Implementation**. Our skills include:
 
 ### A. Intelligent Inquiry Handling
-*   **24/7 Availability:** Agents respond instantly to common customer questions (hours, service areas, pricing, availability) at 3 AM just as well as 3 PM.
+*   **Consistent Availability:** Agents respond to common customer questions (hours, service areas, pricing, availability) as soon as possible, ensuring no query is forgotten.
 *   **Natural Language Understanding:** Our agents understand context, nuances, and local Ottawa-specific references (neighborhoods, weather-dependent services, etc.).
 
 ### B. Lead Qualification & Capture
@@ -43,7 +43,7 @@ We build three primary tiers of AI Agents:
 *   **Best for:** Emergency trades, Property management, Clinics.
 
 ## 5. THE THARROS ADVANTAGE (WHY CLIENTS CHOOSE US)
-*   **Speed (3-5 Day Turnaround):** We don't do 6-week "enterprise rollouts." We build, test, and launch in under a week.
+*   **Speed (1-2 Week Turnaround):** We don't do 6-week "enterprise rollouts." We build, test, and launch within the week.
 *   **Done-For-You (Zero Code):** The client never touches a line of code. We handle the technical heavy lifting; the client just approves the agent's knowledge.
 *   **Ottawa-Local Context:** We understand the local market. We know the difference between Kanata, Orleans, and the Glebe. We build agents that sound like neighbors, not robots in a call center.
 *   **ROI-Focused:** We don't build tech for tech's sake. If an agent doesn't save time or make money, we don't build it.
@@ -52,7 +52,7 @@ We build three primary tiers of AI Agents:
 ### Trades (Plumbing/Electricians/HVAC)
 *   Agents can triage "Emergency" vs. "Routine" calls.
 *   Explain standard diagnostic fees.
-*   Confirm service area coverage instantly.
+*   Confirm service area coverage as soon as possible.
 
 ### Professional Services (Law/Accounting)
 *   Qualify leads based on case type or revenue.
@@ -72,4 +72,4 @@ Tharros agents should embody the company’s brand voice:
 *   **Concise:** Doesn't write essays when a sentence will do.
 
 ## 8. SUMMARY FOR AGENT MEMORY
-"Tharros is an Ottawa-based AI studio that builds specialized, practical agents for small businesses. We focus on lead capture, customer service, and admin automation. Our primary value is speed (3-5 day launch), local expertise, and a 'done-for-you' service model that removes technical complexity for the business owner."
+"Tharros is an Ottawa-based AI studio that builds specialized, practical agents for small businesses. We focus on lead capture, customer service, and admin automation. Our primary value is speed (1-2 week launch), local expertise, and a 'done-for-you' service model that removes technical complexity for the business owner."

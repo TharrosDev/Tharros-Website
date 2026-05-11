@@ -11,7 +11,7 @@ const steps = [
   {
     number: "02",
     headline: "Build",
-    body: "We build and configure your agent in 3–5 days. You review it, request changes, and we refine until it sounds exactly like your business. No code on your end.",
+    body: "We build and configure your agent in 1–2 weeks. You review it, request changes, and we refine until it sounds exactly like your business. No code on your end.",
   },
   {
     number: "03",

@@ -13,7 +13,7 @@ const agents = [
     name: "Customer Inquiry Agent",
     tagline: "Never let a question go unanswered",
     description:
-      "Answers your most common questions instantly — services, pricing, availability, location — 24/7 via your website chat or a messaging channel. Escalates to you when it needs to.",
+      "Answers your most common questions as soon as possible — services, pricing, availability, location — via your website chat or a messaging channel. Escalates to you when it needs to.",
     examples: ["Plumbers", "HVAC", "Cleaning services", "Landscapers"],
   },
   {
