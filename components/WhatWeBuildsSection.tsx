@@ -56,7 +56,7 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="py-28 px-6 md:px-12 relative">
+    <section id="solutions" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
       {/* Subtle ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -74,20 +74,20 @@ export default function WhatWeBuildsSection() {
             Practical agents. Real outcomes.{" "}
             <span className="gradient-text">No corporate fluff.</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-16 text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             Every agent we build is designed around one thing: the specific
             problem your business needs solved.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {agents.map((agent, i) => (
-            <AnimatedSection key={agent.name} delay={i * 0.12}>
-              <div className="glass-card p-8 h-full flex flex-col gap-5 group">
+            <AnimatedSection key={agent.name} delay={i * 0.1}>
+              <div className="glass-card p-7 md:p-8 h-full flex flex-col gap-5 group">
                 <div className="icon-container">{agent.icon}</div>
                 <div>
                   <p className="section-label text-xs mb-2">{agent.tagline}</p>
-                  <h3 className="text-xl font-bold text-text mb-3">
+                  <h3 className="text-lg md:text-xl font-bold text-text mb-3">
                     {agent.name}
                   </h3>
                   <p className="text-subdued text-sm leading-relaxed">
@@ -96,7 +96,7 @@ export default function WhatWeBuildsSection() {
                 </div>
                 <div className="mt-auto pt-5">
                   <div className="gradient-divider mb-4" />
-                  <p className="text-subdued text-xs font-medium mb-3">
+                  <p className="text-muted text-xs font-medium mb-3">
                     Great for:
                   </p>
                   <div className="flex flex-wrap gap-2">

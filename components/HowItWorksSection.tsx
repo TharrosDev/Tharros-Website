@@ -22,7 +22,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="py-28 px-6 md:px-12 relative overflow-hidden">
+    <section id="process" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -40,42 +40,43 @@ export default function HowItWorksSection() {
             From conversation to{" "}
             <span className="gradient-text">live in under a week</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-20 text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-xl mx-auto mb-16 md:mb-20 text-base md:text-lg leading-relaxed">
             Three steps. No jargon. No six-week enterprise rollout.
           </p>
         </AnimatedSection>
 
         {/* Timeline */}
         <div className="relative">
-          {/* Connecting line — desktop horizontal, mobile vertical */}
-          <div className="hidden md:block absolute top-[52px] left-[16.67%] right-[16.67%] h-[2px]">
-            <div className="w-full h-full bg-gradient-to-r from-accent via-accent-2 to-accent-3 rounded-full opacity-30" />
+          {/* Connecting line — desktop horizontal */}
+          <div className="hidden md:block absolute top-[48px] left-[16.67%] right-[16.67%] h-[2px]">
+            <div className="w-full h-full bg-gradient-to-r from-accent via-accent-2 to-accent-3 rounded-full opacity-25" />
           </div>
-          <div className="md:hidden absolute left-[28px] top-[60px] bottom-[60px] w-[2px]">
-            <div className="w-full h-full bg-gradient-to-b from-accent via-accent-2 to-accent-3 rounded-full opacity-30" />
+          {/* Connecting line — mobile vertical, centered */}
+          <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-[96px] bottom-[96px] w-[2px]">
+            <div className="w-full h-full bg-gradient-to-b from-accent via-accent-2 to-accent-3 rounded-full opacity-20" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
             {steps.map((step, i) => (
-              <AnimatedSection key={step.number} delay={i * 0.15} variant="scale-in">
+              <AnimatedSection key={step.number} delay={i * 0.12} variant="scale-in">
                 <div className="flex flex-col items-center text-center relative">
                   {/* Step circle */}
-                  <div className="relative mb-8">
-                    <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center relative z-10">
+                  <div className="relative mb-6 md:mb-8">
+                    <div className="w-[96px] h-[96px] rounded-full flex items-center justify-center relative z-10">
                       {/* Outer glow ring */}
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent via-accent-2 to-accent-3 opacity-20" />
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent via-accent-2 to-accent-3 opacity-15" />
                       {/* Inner circle */}
-                      <div className="w-[96px] h-[96px] rounded-full bg-bg border-2 border-accent/30 flex items-center justify-center relative z-10">
-                        <span className="gradient-text font-bold text-3xl">
+                      <div className="w-[88px] h-[88px] rounded-full bg-bg border-2 border-accent/25 flex items-center justify-center relative z-10">
+                        <span className="gradient-text font-bold text-2xl md:text-3xl">
                           {step.number}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="glass-card p-6 w-full hover:translate-y-0">
-                    <h3 className="text-2xl font-bold text-text mb-3">
+                  {/* Content card */}
+                  <div className="glass-card p-6 w-full" style={{ transform: 'none' }}>
+                    <h3 className="text-xl md:text-2xl font-bold text-text mb-3">
                       {step.headline}
                     </h3>
                     <p className="text-subdued text-sm leading-relaxed">{step.body}</p>

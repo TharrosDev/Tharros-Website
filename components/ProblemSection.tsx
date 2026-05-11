@@ -23,7 +23,7 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-28 px-6 md:px-12 relative">
+    <section id="problem" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
       {/* Subtle gradient background */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -41,25 +41,25 @@ export default function ProblemSection() {
             Ottawa small businesses are drowning in{" "}
             <span className="gradient-text">things that shouldn&apos;t need them</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-16 text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             You started your business to do the work you&apos;re good at — not to
             manage an inbox, a phone, and a booking calendar at 10pm.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {pains.map((pain, i) => (
-            <AnimatedSection key={pain.headline} delay={i * 0.12}>
-              <div className="glass-card p-8 h-full flex flex-col gap-4 group relative overflow-hidden">
+            <AnimatedSection key={pain.headline} delay={i * 0.1}>
+              <div className="glass-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden">
                 {/* Accent left stripe */}
-                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-gradient-to-b from-accent via-accent-2 to-transparent opacity-40 group-hover:opacity-80 transition-opacity" />
+                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-gradient-to-b from-accent via-accent-2 to-transparent opacity-30 group-hover:opacity-70 transition-opacity duration-400" />
 
-                <div className="pl-3">
+                <div className="pl-4">
                   <div className="icon-container mb-4">
-                    <span className="text-2xl">{pain.icon}</span>
+                    <span aria-hidden="true">{pain.icon}</span>
                   </div>
                   <span className="section-label text-xs">{pain.stat}</span>
-                  <h3 className="text-xl font-bold text-text mt-2 mb-3">{pain.headline}</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-text mt-2 mb-2">{pain.headline}</h3>
                   <p className="text-subdued leading-relaxed text-sm">{pain.body}</p>
                 </div>
               </div>

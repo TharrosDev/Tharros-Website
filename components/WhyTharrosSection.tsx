@@ -20,7 +20,7 @@ const pillars = [
 
 export default function WhyTharrosSection() {
   return (
-    <section id="why" className="py-28 px-6 md:px-12 relative">
+    <section id="why" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -38,20 +38,20 @@ export default function WhyTharrosSection() {
             Built for small businesses,{" "}
             <span className="gradient-text">not enterprise teams</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-16 text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             Corporate AI vendors want to sell you a platform. We want to solve
             one specific problem for your business, affordably, this week.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-14 md:mb-16">
           {pillars.map((pillar, i) => (
-            <AnimatedSection key={pillar.headline} delay={i * 0.12}>
-              <div className="glass-card p-8 h-full flex flex-col gap-4 group">
+            <AnimatedSection key={pillar.headline} delay={i * 0.1}>
+              <div className="glass-card p-7 md:p-8 h-full flex flex-col gap-4 group">
                 <div className="icon-container">
-                  <span className="text-2xl">{pillar.icon}</span>
+                  <span aria-hidden="true">{pillar.icon}</span>
                 </div>
-                <h3 className="text-xl font-bold text-text">{pillar.headline}</h3>
+                <h3 className="text-lg md:text-xl font-bold text-text">{pillar.headline}</h3>
                 <p className="text-subdued text-sm leading-relaxed">{pillar.body}</p>
               </div>
             </AnimatedSection>
@@ -59,31 +59,29 @@ export default function WhyTharrosSection() {
         </div>
 
         {/* Founder quote */}
-        <AnimatedSection delay={0.2} variant="scale-in">
-          <div className="relative max-w-3xl mx-auto rounded-2xl overflow-hidden">
-            {/* Gradient border effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/20 via-accent-2/10 to-accent-3/20 p-[1px]">
-              <div className="w-full h-full rounded-2xl bg-bg" />
-            </div>
-
-            <div className="relative p-10 text-center">
-              <p className="gradient-text text-4xl mb-5 font-serif" aria-hidden="true">
-                &ldquo;
-              </p>
-              <p className="text-text text-lg md:text-xl leading-relaxed mb-8 font-medium">
-                Ottawa small businesses don&apos;t need a corporate AI strategy. They
-                need something that works on Tuesday morning when the phone
-                won&apos;t stop ringing.
-              </p>
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center text-white font-bold text-sm">
-                  T
-                </div>
-                <div className="text-left">
-                  <p className="text-text text-sm font-semibold">
-                    Magnus Abdelnour
-                  </p>
-                  <p className="text-subdued text-xs">Founder, Tharros</p>
+        <AnimatedSection delay={0.15} variant="scale-in">
+          <div className="relative max-w-3xl mx-auto">
+            {/* Gradient border container */}
+            <div className="rounded-2xl p-[1px] bg-gradient-to-br from-accent/25 via-accent-2/15 to-accent-3/25">
+              <div className="rounded-2xl bg-bg p-8 md:p-10 text-center">
+                <p className="gradient-text text-4xl mb-4 leading-none" aria-hidden="true">
+                  &ldquo;
+                </p>
+                <p className="text-text text-base md:text-xl leading-relaxed mb-8 font-medium max-w-2xl mx-auto">
+                  Ottawa small businesses don&apos;t need a corporate AI strategy. They
+                  need something that works on Tuesday morning when the phone
+                  won&apos;t stop ringing.
+                </p>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center text-white font-bold text-sm">
+                    M
+                  </div>
+                  <div className="text-left">
+                    <p className="text-text text-sm font-semibold">
+                      Magnus Abdelnour
+                    </p>
+                    <p className="text-subdued text-xs">Founder, Tharros</p>
+                  </div>
                 </div>
               </div>
             </div>
