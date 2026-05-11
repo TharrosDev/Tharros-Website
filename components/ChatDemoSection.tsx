@@ -35,50 +35,57 @@ export default function ChatDemoSection() {
         const stored = JSON.parse(localStorage.getItem(storageKey) ?? "null");
         
         let keyInstance;
-        if (stored?.embedKey && stored?.conversationPrefix) {
-          keyInstance = new Key({
-            key: stored.embedKey,
-            region: REGION as any,
-            project: PROJECT,
-            agentId: AGENT_ID,
-            taskPrefix: stored.conversationPrefix,
-          });
-        } else {
-          keyInstance = await Key.generateEmbedKey({
-            region: REGION as any,
-            project: PROJECT,
-            agentId: AGENT_ID,
-          });
-          const { key: embedKey, taskPrefix } = keyInstance.toJSON();
-          localStorage.setItem(storageKey, JSON.stringify({ embedKey, conversationPrefix: taskPrefix }));
-        }
-
-        const client = new Client(keyInstance);
-        const agent = await Agent.get(AGENT_ID, client);
-        setAgentInstance(agent);
-
-        // Fetch initial recommended questions from agent config
-        const config = (agent as any).config || {};
-        const metadata = (agent as any).metadata || {};
-        const initialQuestions = 
-          config.recommended_questions || 
-          metadata.recommended_questions || 
-          config.suggested_queries || 
-          [];
-        
-        if (initialQuestions.length > 0) {
-          setRecommendedQuestions(initialQuestions);
-        }
-
-        // Initial greeting
-        setMessages([
-          {
-            id: "1",
-            sender: "agent",
-            text: "Hi! I'm your Tharros-powered AI agent. Ask me anything about our services.",
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        try {
+          if (typeof window !== "undefined" && stored?.embedKey && stored?.conversationPrefix) {
+            keyInstance = new Key({
+              key: stored.embedKey,
+              region: REGION as any,
+              project: PROJECT,
+              agentId: AGENT_ID,
+              taskPrefix: stored.conversationPrefix,
+            });
+          } else {
+            keyInstance = await Key.generateEmbedKey({
+              region: REGION as any,
+              project: PROJECT,
+              agentId: AGENT_ID,
+            });
+            const { key: embedKey, taskPrefix } = keyInstance.toJSON();
+            if (typeof window !== "undefined") {
+              localStorage.setItem(storageKey, JSON.stringify({ embedKey, conversationPrefix: taskPrefix }));
+            }
           }
-        ]);
+
+          const client = new Client(keyInstance);
+          const agent = await Agent.get(AGENT_ID, client);
+          setAgentInstance(agent);
+
+          // Fetch initial recommended questions from agent config
+          const config = (agent as any).config || {};
+          const metadata = (agent as any).metadata || {};
+          const initialQuestions = 
+            config.recommended_questions || 
+            metadata.recommended_questions || 
+            config.suggested_queries || 
+            [];
+          
+          if (initialQuestions.length > 0) {
+            setRecommendedQuestions(initialQuestions);
+          }
+
+          // Initial greeting
+          setMessages([
+            {
+              id: "1",
+              sender: "agent",
+              text: "Hi! I'm your Tharros-powered AI agent. Ask me anything about our services.",
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            }
+          ]);
+        } catch (innerErr) {
+          console.error("Inner Relevance init error:", innerErr);
+          // Fallback or retry logic could go here
+        }
       } catch (err) {
         console.error("Failed to initialize Relevance AI:", err);
       }
@@ -227,7 +234,7 @@ export default function ChatDemoSection() {
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[550px] md:h-[600px] w-full bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
+              <div className="relative flex flex-col h-[550px] md:h-[600px] w-full bg-white rounded-xl md:rounded-2xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
                 
                 {/* Chat Header */}
                 <div className="px-5 md:px-8 py-4 md:py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
@@ -271,7 +278,7 @@ export default function ChatDemoSection() {
                           <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
                         </div>
                         <div 
-                          className={`max-w-[90%] md:max-w-[85%] text-[13px] md:text-sm leading-relaxed p-3.5 md:p-4 rounded-xl md:rounded-2xl shadow-sm ${
+                          className={`max-w-[90%] md:max-w-[85%] text-[13px] md:text-sm leading-relaxed p-3.5 md:p-4 rounded-lg md:rounded-xl shadow-sm ${
                             msg.sender === "user" 
                             ? "bg-slate-900 text-white rounded-tr-none" 
                             : "bg-white text-text border border-slate-100 rounded-tl-none"
@@ -291,10 +298,34 @@ export default function ChatDemoSection() {
                         <div className="flex items-center gap-2 mb-1 px-1">
                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tharros Assistant</span>
                         </div>
-                        <div className="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1.5">
-                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                        <div className="bg-white border border-slate-100 p-4 rounded-lg rounded-tl-none shadow-sm flex items-center gap-2">
+                          <div className="flex gap-1">
+                            <motion.div 
+                              animate={{ 
+                                opacity: [0.3, 1, 0.3],
+                                scaleY: [1, 1.5, 1] 
+                              }} 
+                              transition={{ repeat: Infinity, duration: 0.8 }} 
+                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
+                            />
+                            <motion.div 
+                              animate={{ 
+                                opacity: [0.3, 1, 0.3],
+                                scaleY: [1, 1.5, 1] 
+                              }} 
+                              transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }} 
+                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
+                            />
+                            <motion.div 
+                              animate={{ 
+                                opacity: [0.3, 1, 0.3],
+                                scaleY: [1, 1.5, 1] 
+                              }} 
+                              transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }} 
+                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
+                            />
+                          </div>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">Processing</span>
                         </div>
                       </motion.div>
                     )}
