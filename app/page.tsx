@@ -15,8 +15,8 @@ export default function Home() {
       <main>
         <HeroSection />
         <ProblemSection />
-        <WhatWeBuildsSection />
         <ChatDemoSection />
+        <WhatWeBuildsSection />
         <HowItWorksSection />
         <WhyTharrosSection />
         <PricingSection />
