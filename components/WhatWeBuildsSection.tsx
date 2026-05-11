@@ -3,12 +3,14 @@ import AnimatedSection from "./AnimatedSection";
 const agents = [
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden={true}>
-        <rect width="32" height="32" rx="8" fill="rgba(0,194,255,0.1)" />
-        <path d="M8 20 Q16 10 24 20" stroke="#00c2ff" strokeWidth="2" fill="none" strokeLinecap="round" />
-        <circle cx="16" cy="20" r="2" fill="#00c2ff" />
-        <circle cx="8" cy="20" r="2" fill="#00c2ff" />
-        <circle cx="24" cy="20" r="2" fill="#00c2ff" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M4 18 Q14 6 24 18" stroke="url(#ic1)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <circle cx="14" cy="18" r="2.5" fill="#818cf8" />
+        <circle cx="4" cy="18" r="2" fill="#06b6d4" />
+        <circle cx="24" cy="18" r="2" fill="#a78bfa" />
+        <defs>
+          <linearGradient id="ic1" x1="4" y1="18" x2="24" y2="18"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
+        </defs>
       </svg>
     ),
     name: "Customer Inquiry Agent",
@@ -19,11 +21,13 @@ const agents = [
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden={true}>
-        <rect width="32" height="32" rx="8" fill="rgba(0,194,255,0.1)" />
-        <rect x="8" y="10" width="16" height="12" rx="2" stroke="#00c2ff" strokeWidth="2" />
-        <path d="M12 16h8M12 20h5" stroke="#00c2ff" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="24" cy="10" r="3" fill="#00c2ff" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="4" y="6" width="20" height="16" rx="3" stroke="url(#ic2)" strokeWidth="2" />
+        <path d="M9 13h10M9 17h6" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="22" cy="6" r="3.5" fill="#a78bfa" />
+        <defs>
+          <linearGradient id="ic2" x1="4" y1="6" x2="24" y2="22"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
+        </defs>
       </svg>
     ),
     name: "Lead Capture Agent",
@@ -34,10 +38,12 @@ const agents = [
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden={true}>
-        <rect width="32" height="32" rx="8" fill="rgba(0,194,255,0.1)" />
-        <circle cx="16" cy="14" r="5" stroke="#00c2ff" strokeWidth="2" />
-        <path d="M8 26c0-4.418 3.582-7 8-7s8 2.582 8 7" stroke="#00c2ff" strokeWidth="2" strokeLinecap="round" />
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="11" r="5" stroke="url(#ic3)" strokeWidth="2" />
+        <path d="M5 25c0-5 4-8 9-8s9 3 9 8" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" />
+        <defs>
+          <linearGradient id="ic3" x1="9" y1="6" x2="19" y2="16"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
+        </defs>
       </svg>
     ),
     name: "After-Hours Intake Agent",
@@ -50,17 +56,25 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="py-24 px-6 md:px-12 bg-surface">
-      <div className="max-w-6xl mx-auto">
+    <section id="solutions" className="py-28 px-6 md:px-12 relative">
+      {/* Subtle ambient glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 60% at 70% 40%, rgba(139,92,246,0.04) 0%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="max-w-6xl mx-auto relative">
         <AnimatedSection>
-          <p className="text-accent text-sm font-semibold tracking-widest uppercase mb-4 text-center">
-            What we build
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-4 max-w-3xl mx-auto leading-tight">
+          <p className="section-label mb-4 text-center">What we build</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
             Practical agents. Real outcomes.{" "}
-            <span className="text-accent">No corporate fluff.</span>
+            <span className="gradient-text">No corporate fluff.</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-16 text-lg">
+          <p className="text-subdued text-center max-w-xl mx-auto mb-16 text-lg leading-relaxed">
             Every agent we build is designed around one thing: the specific
             problem your business needs solved.
           </p>
@@ -69,12 +83,10 @@ export default function WhatWeBuildsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.12}>
-              <div className="rounded-2xl border border-border bg-bg p-8 h-full flex flex-col gap-5">
-                <div>{agent.icon}</div>
+              <div className="glass-card p-8 h-full flex flex-col gap-5 group">
+                <div className="icon-container">{agent.icon}</div>
                 <div>
-                  <p className="text-accent text-xs font-semibold tracking-widest uppercase mb-2">
-                    {agent.tagline}
-                  </p>
+                  <p className="section-label text-xs mb-2">{agent.tagline}</p>
                   <h3 className="text-xl font-bold text-text mb-3">
                     {agent.name}
                   </h3>
@@ -82,16 +94,14 @@ export default function WhatWeBuildsSection() {
                     {agent.description}
                   </p>
                 </div>
-                <div className="mt-auto pt-4 border-t border-border">
-                  <p className="text-subdued text-xs font-medium mb-2">
+                <div className="mt-auto pt-5">
+                  <div className="gradient-divider mb-4" />
+                  <p className="text-subdued text-xs font-medium mb-3">
                     Great for:
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {agent.examples.map((ex) => (
-                      <span
-                        key={ex}
-                        className="text-xs px-3 py-1 rounded-full bg-surface border border-border text-subdued"
-                      >
+                      <span key={ex} className="tag-pill">
                         {ex}
                       </span>
                     ))}

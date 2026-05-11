@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="130" height="32" viewBox="0 0 130 32">
-  <text x="0" y="24" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#f0f0f0" letter-spacing="-0.5">Tharros</text>
-  <circle cx="7" cy="30" r="2.5" fill="#00c2ff"/>
+  <text x="0" y="24" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Tharros</text>
+  <circle cx="7" cy="30" r="2.5" fill="#818cf8"/>
 </svg>
