@@ -50,58 +50,54 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="solutions" className="py-24 md:py-48 px-6 md:px-12 relative overflow-hidden bg-white">
       {/* Decorative Flow */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
-          <p className="section-label mb-4 text-center">What we build</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
+          <p className="section-label mb-6 text-center">What we build</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
             Practical agents. Real outcomes.{" "}
             <span className="accent-text">No corporate fluff.</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
             Every agent we build is designed around one thing: the specific
             problem your business needs solved.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {agents.map((agent, i) => (
-            <AnimatedSection key={agent.name} delay={i * 0.1}>
+            <AnimatedSection key={agent.name}>
               <motion.div 
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="clean-card p-7 md:p-8 h-full flex flex-col gap-5 group cursor-default"
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="clean-card p-10 md:p-12 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
-                <motion.div 
-                  whileHover={{ rotate: 10, scale: 1.1 }}
-                  className="icon-container"
-                >
+                <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
                   {agent.icon}
-                </motion.div>
-                <div>
-                  <p className="section-label text-xs mb-2">{agent.tagline}</p>
-                  <h3 className="text-lg md:text-xl font-bold text-text mb-3">
+                </div>
+                <div className="space-y-4">
+                  <p className="section-label text-xs font-bold tracking-[0.2em]">{agent.tagline}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-text leading-tight">
                     {agent.name}
                   </h3>
-                  <p className="text-subdued text-sm leading-relaxed">
+                  <p className="text-subdued text-base md:text-lg leading-relaxed">
                     {agent.description}
                   </p>
                 </div>
-                <div className="mt-auto pt-5">
-                  <div className="subtle-divider mb-4" />
-                  <p className="text-muted text-xs font-medium mb-3">
+                <div className="mt-auto pt-8">
+                  <div className="h-px bg-slate-100 w-full mb-6" />
+                  <p className="text-muted text-xs font-bold uppercase tracking-widest mb-4">
                     Great for:
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {agent.examples.map((ex) => (
-                      <motion.span 
+                      <span 
                         key={ex} 
-                        whileHover={{ scale: 1.05, backgroundColor: "var(--color-surface-2)" }}
-                        className="tag-pill"
+                        className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-xs font-semibold text-slate-600"
                       >
                         {ex}
-                      </motion.span>
+                      </span>
                     ))}
                   </div>
                 </div>

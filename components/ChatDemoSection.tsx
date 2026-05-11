@@ -177,21 +177,21 @@ export default function ChatDemoSection() {
         {/* Left: Authoritative Capabilities */}
         <div className="lg:col-span-5">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-text animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text">Live Deployment</span>
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-bold text-text mb-8 leading-[1.1] tracking-tight">
+            <h2 className="text-5xl md:text-7xl font-bold text-text mb-10 leading-[1] tracking-tighter">
               An agent that <br />
               <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-lg md:text-xl mb-12 leading-relaxed max-w-md">
+            <p className="text-subdued text-xl md:text-2xl mb-16 leading-relaxed max-w-lg">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
             
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-10">
               {[
                 { title: "Neural Logic", desc: "Handles complex multi-step reasoning without failure." },
                 { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone and values." },
@@ -202,10 +202,10 @@ export default function ChatDemoSection() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex flex-col gap-1 border-l-2 border-slate-100 pl-6 hover:border-text transition-colors duration-500 cursor-default group"
+                  className="flex flex-col gap-2 border-l-2 border-slate-100 pl-8 hover:border-text transition-colors duration-500 cursor-default group"
                 >
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
-                  <p className="text-sm text-subdued">{item.desc}</p>
+                  <h4 className="text-base font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
+                  <p className="text-base text-subdued leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>

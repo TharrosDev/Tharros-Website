@@ -42,41 +42,38 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-24 md:py-40 px-6 md:px-12 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
-      <div className="max-w-6xl mx-auto relative">
+    <section id="problem" className="py-24 md:py-48 px-6 md:px-12 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
+      <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
-          <p className="section-label mb-4 text-center">The problem</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
+          <p className="section-label mb-6 text-center">The problem</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
             Ottawa businesses should focus on{" "}
             <span className="accent-text">growth, not manual busywork</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
             You&apos;re an expert at what you do. You shouldn&apos;t have to
             spend your nights managing an inbox, a phone, and a busy
             schedule.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {pains.map((pain, i) => (
-            <AnimatedSection key={pain.headline} delay={i * 0.1}>
+            <AnimatedSection key={pain.headline}>
               <motion.div 
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className="clean-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden cursor-default"
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="clean-card p-10 md:p-12 h-full flex flex-col gap-6 group relative overflow-hidden cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
                 {/* Accent left stripe */}
-                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute left-0 top-10 bottom-10 w-[4px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 <div className="pl-2 group-hover:pl-4 transition-all duration-300">
-                  <motion.div 
-                    whileHover={{ rotate: -5, scale: 1.1 }}
-                    className="icon-container mb-4"
-                  >
-                    <span aria-hidden="true">{pain.icon}</span>
-                  </motion.div>
-                  <span className="section-label text-xs">{pain.stat}</span>
-                  <h3 className="text-lg md:text-xl font-bold text-text mt-2 mb-2">{pain.headline}</h3>
-                  <p className="text-subdued leading-relaxed text-sm">{pain.body}</p>
+                  <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
+                    <span aria-hidden="true" className="scale-125">{pain.icon}</span>
+                  </div>
+                  <span className="section-label text-xs font-bold tracking-[0.2em]">{pain.stat}</span>
+                  <h3 className="text-xl md:text-2xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>
+                  <p className="text-subdued leading-relaxed text-base">{pain.body}</p>
                 </div>
               </motion.div>
             </AnimatedSection>
