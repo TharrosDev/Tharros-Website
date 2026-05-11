@@ -33,54 +33,57 @@ const pillars = [
 
 export default function WhyTharrosSection() {
   return (
-    <section id="why" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
-      <div className="max-w-6xl mx-auto relative">
+    <section id="why" className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden bg-white">
+      <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
-          <p className="section-label mb-4 text-center">Why Tharros</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
+          <p className="section-label mb-6 text-center">Why Tharros</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
             Built for <span className="accent-text">small businesses</span>
           </h2>
-          <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
-            We want to solve specific problems for your business, affordably, and
-            efficently.
+          <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
+            We solve specific problems for your business, affordably, and
+            efficiently.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-14 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-16 md:mb-24">
           {pillars.map((pillar, i) => (
-            <AnimatedSection key={pillar.headline} delay={i * 0.1}>
-              <div className="clean-card p-7 md:p-8 h-full flex flex-col gap-4 group">
-                <div className="icon-container">
-                  <span aria-hidden="true">{pillar.icon}</span>
+            <AnimatedSection key={pillar.headline}>
+              <div className="clean-card p-10 md:p-12 h-full flex flex-col gap-6 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
+                <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
+                  <span aria-hidden="true" className="scale-125">{pillar.icon}</span>
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-text">{pillar.headline}</h3>
-                <p className="text-subdued text-sm leading-relaxed">{pillar.body}</p>
+                <h3 className="text-xl md:text-2xl font-bold text-text leading-tight">{pillar.headline}</h3>
+                <p className="text-subdued text-base leading-relaxed">{pillar.body}</p>
               </div>
             </AnimatedSection>
           ))}
         </div>
 
         {/* Founder quote */}
-        <AnimatedSection delay={0.15} variant="scale-in">
-          <div className="max-w-3xl mx-auto">
-            <div className="clean-card p-8 md:p-10 text-center border-accent-3/20">
-              <p className="text-accent-3 text-4xl mb-4 leading-none" aria-hidden="true">
+        <AnimatedSection variant="scale-in">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-slate-900 rounded-[2.5rem] p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+              {/* Subtle background pattern */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
+              
+              <p className="text-accent-3 text-6xl mb-6 leading-none select-none opacity-50" aria-hidden="true">
                 &ldquo;
               </p>
-              <p className="text-text text-base md:text-xl leading-relaxed mb-8 font-medium max-w-2xl mx-auto">
+              <p className="text-white text-xl md:text-3xl leading-[1.4] mb-12 font-medium max-w-3xl mx-auto relative z-10 tracking-tight">
                 Ottawa small businesses don&apos;t need a corporate AI strategy. They
                 need something that works on Tuesday morning when the phone
                 won&apos;t stop ringing.
               </p>
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm">
+              <div className="flex flex-col items-center justify-center gap-4 relative z-10">
+                <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-slate-900 font-bold text-lg shadow-lg">
                   M
                 </div>
-                <div className="text-left">
-                  <p className="text-text text-sm font-semibold">
+                <div>
+                  <p className="text-white text-base font-bold tracking-tight">
                     Magnus Abdelnour
                   </p>
-                  <p className="text-subdued text-xs">Founder, Tharros</p>
+                  <p className="text-white/40 text-xs font-bold uppercase tracking-widest mt-1">Founder, Tharros</p>
                 </div>
               </div>
             </div>
