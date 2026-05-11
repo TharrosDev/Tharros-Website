@@ -4,74 +4,106 @@ import AnimatedSection from "./AnimatedSection";
 
 const pricingFactors = [
   {
-    icon: "🧩",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+    ),
     title: "Solution Complexity",
-    description: "Whether you need a simple website concierge or a deep integration that talks to your CRM and booking software."
+    description: "From simple website concierges to deep integrations with CRMs and booking software."
   },
   {
-    icon: "📚",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </svg>
+    ),
     title: "Knowledge Depth",
-    description: "The volume of training data required—from a single service list to an entire library of technical manuals."
+    description: "The volume of training data—from basic FAQs to complex technical manuals."
   },
   {
-    icon: "🔄",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8Z" />
+        <path d="M10 12h.01" />
+        <path d="M14 12h.01" />
+        <path d="M6 12h.01" />
+      </svg>
+    ),
     title: "Channel Support",
-    description: "Deploying to your website, SMS, WhatsApp, or all of them at once with unified intelligence."
+    description: "Deploying to Web, SMS, WhatsApp, or all at once with unified intelligence."
   }
 ];
 
 export default function PricingSection() {
   return (
     <section id="pricing" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
+      {/* Background decoration */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-accent-3/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[30%] h-[30%] bg-accent-3/5 blur-[100px] rounded-full" />
+      </div>
+
       <div className="max-w-6xl mx-auto relative">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <AnimatedSection>
             <p className="section-label mb-4">Investment</p>
-            <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight">
-              Bespoke Pricing for <span className="accent-text">Bespoke Results</span>
+            <h2 className="text-3xl md:text-6xl font-bold text-text mb-6 leading-tight">
+              Tailored Pricing for <span className="accent-text">Tailored Results</span>
             </h2>
-            <p className="text-subdued text-base md:text-lg mb-8 leading-relaxed">
-              We don&apos;t believe in generic monthly subscriptions that charge you for features you never use. 
-              Our pricing is as custom as the agents we build—tailored strictly to the value they provide your business.
+            <p className="text-subdued text-base md:text-xl leading-relaxed">
+              We don&apos;t believe in generic subscriptions. 
+              Our pricing is as custom as the agents we build—mapped strictly to the value they create for your business.
             </p>
-            
-            <div className="bg-surface/50 border border-border p-6 rounded-2xl mb-8">
-              <p className="text-text font-semibold mb-2 flex items-center gap-2">
-                <span className="text-accent-3">●</span> Why no fixed price?
-              </p>
-              <p className="text-subdued text-sm leading-relaxed">
-                Because an AI agent for a boutique law firm is fundamentally different from one for a high-volume plumbing contractor. 
-                We provide a firm, no-obligation quote immediately following our initial consultation.
-              </p>
-            </div>
-
-            <a
-              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20request%20a%20quote"
-              className="primary-button px-8 py-4 text-base"
-            >
-              Request your custom quote
-            </a>
           </AnimatedSection>
-
-          <div className="space-y-4">
-            {pricingFactors.map((factor, i) => (
-              <AnimatedSection key={factor.title} delay={i * 0.1} variant="scale-in">
-                <div className="clean-card p-6 flex gap-5 group">
-                  <div className="w-12 h-12 shrink-0 rounded-xl bg-surface border border-border flex items-center justify-center text-xl group-hover:bg-accent-3/5 group-hover:border-accent-3/20 transition-colors">
-                    {factor.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-text mb-1">{factor.title}</h3>
-                    <p className="text-subdued text-sm leading-relaxed">{factor.description}</p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
+          {pricingFactors.map((factor, i) => (
+            <AnimatedSection key={factor.title} delay={i * 0.1} variant="scale-in">
+              <div className="clean-card p-8 flex flex-col h-full group hover:border-accent-3/30 transition-all duration-500">
+                <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-all duration-500">
+                  {factor.icon}
+                </div>
+                <h3 className="text-xl font-bold text-text mb-3">{factor.title}</h3>
+                <p className="text-subdued text-sm leading-relaxed">{factor.description}</p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        <AnimatedSection delay={0.3}>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-surface/40 backdrop-blur-sm border border-border/60 p-8 md:p-12 rounded-[2rem] text-center relative overflow-hidden group">
+              {/* Subtle inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-3/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="relative z-10">
+                <h3 className="text-xl md:text-2xl font-bold text-text mb-4">
+                  Why no fixed price list?
+                </h3>
+                <p className="text-subdued text-base md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                  Because an AI agent for a boutique law firm has different requirements than one for a high-volume plumbing contractor. 
+                  We provide a firm, no-obligation quote immediately following our initial consultation.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <a
+                    href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20request%20a%20quote"
+                    className="primary-button px-10 py-5 text-lg w-full sm:w-auto"
+                  >
+                    Get your custom quote
+                  </a>
+                </div>
+                <p className="mt-6 text-muted text-sm font-medium">
+                  Free consultation • No obligation • Ottawa-based
+                </p>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
 
       </div>
     </section>
