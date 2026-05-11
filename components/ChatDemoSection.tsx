@@ -212,62 +212,66 @@ export default function ChatDemoSection() {
           </AnimatedSection>
         </div>
 
-        {/* Right: The Executive Console */}
+        {/* Right: The Friendly Agent Interface */}
         <div className="lg:col-span-7">
           <AnimatedSection delay={0.2} variant="scale-in">
             <div className="relative w-full max-w-[600px] mx-auto lg:ml-auto">
-              {/* Premium Shadow & Depth */}
-              <div className="absolute -inset-4 bg-slate-900/5 rounded-[2rem] blur-2xl" />
               
-              <div className="relative flex flex-col h-[600px] w-full bg-slate-900 rounded-[1.5rem] shadow-2xl overflow-hidden border border-white/10">
+              {/* Try it Header */}
+              <div className="text-center mb-8">
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Interactive Demo</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-text">Try out Our Tharros Support Agent for yourself</h3>
+              </div>
+
+              {/* Chat Container */}
+              <div className="relative flex flex-col h-[600px] w-full bg-white rounded-[2rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
                 
-                {/* Console Header */}
-                <div className="px-8 py-6 flex items-center justify-between border-b border-white/5 bg-white/[0.02] backdrop-blur-md">
+                {/* Chat Header */}
+                <div className="px-8 py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-slate-900">
+                    <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-lg">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-white font-bold text-sm tracking-tight">THARROS_COMMAND_v4</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-bright animate-pulse" />
-                        <p className="text-white/40 text-[10px] font-mono uppercase">Secure Link Established</p>
+                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Support Agent</h3>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <p className="text-slate-400 text-xs font-medium">Active now</p>
                       </div>
                     </div>
                   </div>
                   <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                    <div className="w-2 h-2 rounded-full bg-slate-200" />
+                    <div className="w-2 h-2 rounded-full bg-slate-200" />
                   </div>
                 </div>
 
-                {/* Console Messages Area */}
+                {/* Messages Area */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-8 flex flex-col gap-10 bg-slate-900/50 scroll-smooth"
+                  className="flex-1 overflow-y-auto p-8 flex flex-col gap-6 bg-slate-50/30 scroll-smooth"
                 >
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                       <motion.div
                         key={msg.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-col gap-3"
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                       >
-                        <div className="flex items-center justify-between">
-                          <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${msg.sender === "user" ? "text-accent-bright" : "text-white/40"}`}>
-                            {msg.sender === "user" ? "Authorized_Client" : "Agent_Core"}
+                        <div className="flex items-center gap-2 mb-1 px-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            {msg.sender === "user" ? "You" : "Tharros Assistant"}
                           </span>
-                          <span className="text-[10px] text-white/20 font-mono">{msg.time}</span>
+                          <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
                         </div>
                         <div 
-                          className={`text-base leading-relaxed font-medium ${
+                          className={`max-w-[85%] text-sm leading-relaxed p-4 rounded-2xl shadow-sm ${
                             msg.sender === "user" 
-                            ? "text-white bg-white/5 p-5 rounded-xl rounded-tr-none border border-white/10" 
-                            : "text-white/80 pl-6 border-l border-white/20"
+                            ? "bg-slate-900 text-white rounded-tr-none" 
+                            : "bg-white text-text border border-slate-100 rounded-tl-none"
                           }`}
                         >
                           {msg.text}
@@ -279,35 +283,37 @@ export default function ChatDemoSection() {
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="flex items-center gap-4 pl-6"
+                        className="flex flex-col items-start"
                       >
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">Analyzing</span>
-                        <div className="flex gap-1">
-                          <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.2 }} className="w-1 h-1 bg-accent-bright" />
-                          <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.2 }} className="w-1 h-1 bg-accent-bright" />
-                          <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.4 }} className="w-1 h-1 bg-accent-bright" />
+                        <div className="flex items-center gap-2 mb-1 px-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tharros Assistant</span>
+                        </div>
+                        <div className="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1.5">
+                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                          <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-slate-300" />
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                {/* Console Footer */}
-                <div className="p-8 pt-4 bg-slate-900 border-t border-white/5">
+                {/* Footer / Input Area */}
+                <div className="p-6 bg-white border-t border-slate-100">
                   
-                  {/* Quick Command Suggestions */}
+                  {/* Suggestions */}
                   <AnimatePresence>
                     {recommendedQuestions.length > 0 && !isTyping && (
                       <motion.div 
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex flex-wrap gap-2 mb-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex flex-wrap gap-2 mb-4"
                       >
                         {recommendedQuestions.map((q) => (
                           <button
                             key={q}
                             onClick={() => handleSend(q)}
-                            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-[11px] font-bold text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all text-left"
+                            className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:border-slate-300 transition-all text-left whitespace-nowrap"
                           >
                             {q}
                           </button>
@@ -318,22 +324,27 @@ export default function ChatDemoSection() {
 
                   <form 
                     onSubmit={(e) => handleSend(inputValue, e)}
-                    className="flex items-center gap-4 bg-white/5 border border-white/10 p-2 rounded-xl focus-within:border-white/20 transition-all"
+                    className="flex items-center gap-3"
                   >
-                    <input
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Enter command..."
-                      disabled={!agentInstance || isTyping}
-                      className="flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none disabled:opacity-50"
-                    />
+                    <div className="flex-1 relative">
+                      <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Type your message..."
+                        disabled={!agentInstance || isTyping}
+                        className="w-full bg-slate-50 border border-slate-200 px-5 py-3.5 rounded-2xl text-sm text-text placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/5 focus:border-slate-300 transition-all disabled:opacity-50"
+                      />
+                    </div>
                     <button 
                       type="submit"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-12 px-6 rounded-lg bg-white text-slate-900 font-bold text-xs uppercase tracking-widest hover:bg-accent-bright hover:text-white transition-all disabled:opacity-20"
+                      className="h-[52px] w-[52px] flex items-center justify-center rounded-2xl bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-20 active:scale-95"
                     >
-                      Send
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                      </svg>
                     </button>
                   </form>
                 </div>
