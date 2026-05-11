@@ -21,11 +21,7 @@ export default function ChatDemoSection() {
   const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([
-    "How much does it cost?",
-    "How fast can you build an agent?",
-    "Do you handle lead capture?"
-  ]);
+  const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([]);
   const [agentInstance, setAgentInstance] = useState<Agent | null>(null);
   const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -60,6 +56,19 @@ export default function ChatDemoSection() {
         const client = new Client(keyInstance);
         const agent = await Agent.get(AGENT_ID, client);
         setAgentInstance(agent);
+
+        // Fetch initial recommended questions from agent config
+        const config = (agent as any).config || {};
+        const metadata = (agent as any).metadata || {};
+        const initialQuestions = 
+          config.recommended_questions || 
+          metadata.recommended_questions || 
+          config.suggested_queries || 
+          [];
+        
+        if (initialQuestions.length > 0) {
+          setRecommendedQuestions(initialQuestions);
+        }
 
         // Initial greeting
         setMessages([
