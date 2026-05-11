@@ -186,91 +186,109 @@ export default function ChatDemoSection() {
 
         {/* Right: Compact Chat UI */}
         <AnimatedSection delay={0.2} variant="scale-in">
-          <div className="clean-card overflow-hidden shadow-xl border-border/50 bg-white flex flex-col h-[500px] sm:h-[550px] w-full max-w-[440px] mx-auto lg:ml-auto">
-            {/* Header */}
-            <div className="bg-white border-b border-border p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm">
-                    T
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full" />
-                </div>
-                <div>
-                  <p className="text-text font-bold text-sm leading-none mb-1">Tharros Assistant</p>
-                  <p className="text-muted text-[10px] uppercase tracking-wider font-semibold">Online now</p>
-                </div>
-              </div>
-              <div className="flex gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-border" />
-                <div className="w-1.5 h-1.5 rounded-full bg-border" />
-              </div>
-            </div>
-
-            {/* Messages Area */}
-            <div 
-              ref={scrollRef}
-              className="flex-1 overflow-y-auto p-4 sm:p-5 flex flex-col gap-4 bg-slate-50/50"
-            >
-              <AnimatePresence initial={false}>
-                {messages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-                  >
-                    <div 
-                      className={`max-w-[88%] p-3.5 rounded-2xl text-sm leading-relaxed ${
-                        msg.sender === "user" 
-                        ? "bg-accent text-white rounded-tr-none shadow-sm" 
-                        : "bg-white text-text border border-border shadow-sm rounded-tl-none"
-                      }`}
-                    >
-                      {msg.text}
+          <div className="relative group w-full max-w-[440px] mx-auto lg:ml-auto">
+            {/* Background Glow */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent-3/20 to-accent-bright/20 rounded-[2.5rem] blur-2xl opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
+            
+            <div className="relative flex flex-col h-[500px] sm:h-[550px] w-full bg-white/80 backdrop-blur-2xl rounded-[2rem] border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
+              
+              {/* Header */}
+              <div className="bg-accent/5 backdrop-blur-md border-b border-white/40 p-5 flex items-center justify-between">
+                <div className="flex items-center gap-3.5">
+                  <div className="relative">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center text-white shadow-lg">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                        <path d="M12 12L2.1 12" />
+                        <path d="M12 12l9.9 0" />
+                        <path d="M12 2a10 10 0 0 1 10 10" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
                     </div>
-                    <span className="text-[9px] text-muted mt-1 px-1">{msg.time}</span>
-                  </motion.div>
-                ))}
-                
-                {isTyping && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex gap-1 p-3 bg-white border border-border rounded-xl rounded-tl-none w-12"
-                  >
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1 h-1 rounded-full bg-accent" />
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1 h-1 rounded-full bg-accent" />
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1 h-1 rounded-full bg-accent" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full shadow-sm" />
+                  </div>
+                  <div>
+                    <p className="text-text font-bold text-sm leading-none mb-1.5">Tharros Assistant</p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      <p className="text-accent-3 text-[10px] uppercase tracking-wider font-bold">Active Intelligence</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="w-2 h-2 rounded-full bg-border/60" />
+                  <div className="w-2 h-2 rounded-full bg-border/60" />
+                </div>
+              </div>
 
-            {/* Input Area */}
-            <div className="p-4 bg-white border-t border-border">
-              <form 
-                onSubmit={handleSend}
-                className="flex gap-2"
+              {/* Messages Area */}
+              <div 
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col gap-6 bg-gradient-to-b from-transparent to-white/30"
               >
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask a question..."
-                  disabled={!agentInstance || isTyping}
-                  className="flex-1 bg-surface border border-border rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-accent-3 transition-colors text-text disabled:opacity-50"
-                />
-                <button 
-                  type="submit"
-                  disabled={!inputValue.trim() || !agentInstance || isTyping}
-                  className="w-11 h-11 rounded-xl bg-accent text-white flex items-center justify-center hover:bg-accent-2 transition-colors disabled:opacity-30"
+                <AnimatePresence initial={false}>
+                  {messages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                    >
+                      <div 
+                        className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm transition-all duration-300 ${
+                          msg.sender === "user" 
+                          ? "bg-gradient-to-br from-accent to-accent-2 text-white rounded-tr-none hover:shadow-md" 
+                          : "bg-white/90 backdrop-blur-sm text-text border border-white/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] rounded-tl-none hover:bg-white"
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                      <span className="text-[10px] text-muted/80 mt-1.5 px-1 font-medium">{msg.time}</span>
+                    </motion.div>
+                  ))}
+                  
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="flex gap-1.5 p-4 bg-white/60 backdrop-blur-sm border border-white/60 rounded-2xl rounded-tl-none w-14 shadow-sm"
+                    >
+                      <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-accent-3" />
+                      <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-accent-3" />
+                      <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-accent-3" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Input Area */}
+              <div className="p-5 bg-white/40 backdrop-blur-md border-t border-white/60">
+                <form 
+                  onSubmit={handleSend}
+                  className="flex gap-3 bg-white/80 p-1.5 rounded-2xl border border-white shadow-inner"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                  </svg>
-                </button>
-              </form>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Ask about our AI solutions..."
+                    disabled={!agentInstance || isTyping}
+                    className="flex-1 bg-transparent px-4 py-2 text-sm focus:outline-none text-text disabled:opacity-50 placeholder:text-muted/60"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={!inputValue.trim() || !agentInstance || isTyping}
+                    className="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center hover:bg-accent-2 transition-all duration-300 disabled:opacity-30 shadow-md active:scale-95 group"
+                  >
+                    <svg 
+                      width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                      className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    >
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </AnimatedSection>
