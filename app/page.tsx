@@ -5,6 +5,7 @@ import WhatWeBuildsSection from "@/components/WhatWeBuildsSection";
 import ChatDemoSection from "@/components/ChatDemoSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import WhyTharrosSection from "@/components/WhyTharrosSection";
+import PricingSection from "@/components/PricingSection";
 import FooterSection from "@/components/FooterSection";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <ChatDemoSection />
         <HowItWorksSection />
         <WhyTharrosSection />
+        <PricingSection />
         <FooterSection />
       </main>
     </>
