@@ -68,7 +68,7 @@ export default function NavBar() {
         </nav>
 
         <a
-          href="mailto:magnus.abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+          href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
           className="hidden md:inline-block primary-button px-5 py-2.5 text-sm"
         >
           Get in touch
@@ -120,7 +120,7 @@ export default function NavBar() {
               </motion.a>
             ))}
             <motion.a
-              href="mailto:magnus.abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.4 }}

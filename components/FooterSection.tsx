@@ -20,7 +20,7 @@ export default function FooterSection() {
             no obligation.
           </p>
           <a
-            href="mailto:magnus.abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+            href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
             className="primary-button px-8 md:px-10 py-4 md:py-5 text-base md:text-lg mb-5"
           >
             Book a free consult
@@ -28,10 +28,10 @@ export default function FooterSection() {
           <p className="text-subdued text-sm mb-16 md:mb-20">
             Or email directly:{" "}
             <a
-              href="mailto:magnus.abdelnour@gmail.com"
+              href="mailto:Magnus.Abdelnour@gmail.com"
               className="text-accent-3 hover:underline transition-colors"
             >
-              magnus.abdelnour@gmail.com
+              Magnus.Abdelnour@gmail.com
             </a>
           </p>
 
