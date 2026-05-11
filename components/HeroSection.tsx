@@ -72,8 +72,9 @@ export default function HeroSection() {
           className="text-base sm:text-lg md:text-xl text-subdued max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           Tharros builds lightweight AI agents for Ottawa small businesses,
-          handling customer questions, capturing leads, and keeping the phone
-          from running your day. No code required.
+          automating customer inquiries, office admin, and repetitive
+          back-office tasks. We handle the busywork so you can focus on the job.
+          No code required.
         </motion.p>
 
         {/* CTA */}
