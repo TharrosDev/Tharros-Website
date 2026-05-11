@@ -1,8 +1,18 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import AnimatedSection from "./AnimatedSection";
 
 export default function ChatDemoSection() {
+  // State to store the iframe URL with a unique timestamp to prevent persistence on reload
+  const [iframeUrl, setIframeUrl] = useState("");
+
+  useEffect(() => {
+    const baseUrl = "https://app.relevanceai.com/agents/bcbe5a/53ba4219-0247-4c7e-a441-cd107d5783e0/f0398db0-96a2-4f11-8db8-b4c5b6fe769a/embed-chat?hide_tool_steps=false&hide_file_uploads=true&hide_conversation_list=true&bubble_style=agent&primary_color=%230f172a&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false";
+    // Append a unique session ID based on current time
+    setIframeUrl(`${baseUrl}&session_id=session_${Date.now()}`);
+  }, []);
+
   return (
     <section id="demo" className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
       {/* Background soft gradients */}
@@ -51,15 +61,17 @@ export default function ChatDemoSection() {
 
               {/* The Iframe (Taking the full width/height of the card) */}
               <div className="flex-1 w-full bg-white relative">
-                <iframe 
-                  src="https://app.relevanceai.com/agents/bcbe5a/53ba4219-0247-4c7e-a441-cd107d5783e0/f0398db0-96a2-4f11-8db8-b4c5b6fe769a/embed-chat?hide_tool_steps=false&hide_file_uploads=true&hide_conversation_list=true&bubble_style=agent&primary_color=%230f172a&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false" 
-                  width="100%" 
-                  height="100%" 
-                  frameBorder="0" 
-                  allow="microphone"
-                  title="Tharros AI Agent"
-                  className="absolute inset-0"
-                />
+                {iframeUrl && (
+                  <iframe 
+                    src={iframeUrl} 
+                    width="100%" 
+                    height="100%" 
+                    frameBorder="0" 
+                    allow="microphone"
+                    title="Tharros AI Agent"
+                    className="absolute inset-0"
+                  />
+                )}
               </div>
             </div>
 
