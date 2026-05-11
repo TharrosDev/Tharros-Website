@@ -15,16 +15,9 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: "1",
     sender: "agent",
-    text: "Hi! I'm the Tharros demo agent. I'm currently set up to help a local landscaping company. How can I help you today?",
-    time: "10:00 AM",
+    text: "Hi! I'm your Tharros-powered AI agent. How can I help your business today?",
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   },
-];
-
-const PRE_CANNED_RESPONSES = [
-  "That's a great question! For landscaping, we usually service the greater Ottawa area, including Kanata and Orleans.",
-  "We typically have availability for new projects starting in 2-3 weeks. Would you like me to collect your contact info for a quote?",
-  "Our pricing depends on the size of the lot, but for a standard backyard, basic weekly maintenance starts at around $60.",
-  "I can certainly help with that! If you leave your email, I'll have one of our team members reach out to you directly.",
 ];
 
 export default function ChatDemoSection() {
@@ -43,7 +36,7 @@ export default function ChatDemoSection() {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = (e?: React.FormEvent) => {
+  const handleSend = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!inputValue.trim()) return;
 
@@ -55,14 +48,31 @@ export default function ChatDemoSection() {
     };
 
     setMessages((prev) => [...prev, userMsg]);
+    const currentInput = inputValue; // Store to send to API
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const responseText = 
-        PRE_CANNED_RESPONSES[Math.floor(Math.random() * PRE_CANNED_RESPONSES.length)];
-      
+    try {
+      /* 
+         --- REAL AGENT INTEGRATION START ---
+         Replace the code below with your actual API call.
+         Example:
+         const response = await fetch('YOUR_API_ENDPOINT', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ message: currentInput })
+         });
+         const data = await response.json();
+         const responseText = data.reply;
+      */
+
+      // Mock delay to simulate network latency
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const responseText = "Connection successful. Replace this logic in ChatDemoSection.tsx to stream or return responses from your custom agent.";
+
+      /* --- REAL AGENT INTEGRATION END --- */
+
       const agentMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: "agent",
@@ -71,8 +81,19 @@ export default function ChatDemoSection() {
       };
 
       setMessages((prev) => [...prev, agentMsg]);
+    } catch (error) {
+      console.error("Error fetching agent response:", error);
+      // Fallback message
+      const errorMsg: Message = {
+        id: "error",
+        sender: "agent",
+        text: "Sorry, I'm having trouble connecting to my brain right now. Please try again later.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -81,14 +102,14 @@ export default function ChatDemoSection() {
         
         {/* Left: Text Content */}
         <AnimatedSection>
-          <p className="section-label mb-4">Live Demo</p>
+          <p className="section-label mb-4">Interactive Demo</p>
           <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight">
-            See how your <span className="accent-text">AI agent</span> talks to customers
+            Experience the <span className="accent-text">Tharros Agent</span>
           </h2>
           <p className="text-subdued text-base md:text-lg mb-8 leading-relaxed max-w-xl">
-            This isn't just a chatbot. It's a trained assistant that knows your business, your pricing, and your service area. 
+            This interface is exactly what your customers see. It&apos;s fast, intuitive, and built to reflect your brand&apos;s personality while handling complex queries.
             <br /><br />
-            Try asking this demo agent about landscaping services, or just say hi.
+            Ask a question on the right to see how seamlessly it handles interaction.
           </p>
           
           <div className="flex flex-col gap-4">
@@ -96,19 +117,19 @@ export default function ChatDemoSection() {
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Instant responses 24/7
+              Fully custom logic integration
             </div>
             <div className="flex items-center gap-3 text-sm text-text font-medium">
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Qualifies leads automatically
+              Real-time response streaming
             </div>
             <div className="flex items-center gap-3 text-sm text-text font-medium">
               <div className="w-8 h-8 rounded-full bg-accent-3/10 flex items-center justify-center text-accent-3">
                 ✓
               </div>
-              Directly books consultations
+              Responsive across all devices
             </div>
           </div>
         </AnimatedSection>
