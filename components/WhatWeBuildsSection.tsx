@@ -4,13 +4,10 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path d="M4 18 Q14 6 24 18" stroke="url(#ic1)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="2.5" fill="#818cf8" />
-        <circle cx="4" cy="18" r="2" fill="#06b6d4" />
-        <circle cx="24" cy="18" r="2" fill="#a78bfa" />
-        <defs>
-          <linearGradient id="ic1" x1="4" y1="18" x2="24" y2="18"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
-        </defs>
+        <path d="M4 18 Q14 6 24 18" stroke="#3b82f6" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <circle cx="14" cy="18" r="2.5" fill="#1e293b" />
+        <circle cx="4" cy="18" r="2" fill="#3b82f6" />
+        <circle cx="24" cy="18" r="2" fill="#3b82f6" />
       </svg>
     ),
     name: "Customer Inquiry Agent",
@@ -22,12 +19,9 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect x="4" y="6" width="20" height="16" rx="3" stroke="url(#ic2)" strokeWidth="2" />
-        <path d="M9 13h10M9 17h6" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="22" cy="6" r="3.5" fill="#a78bfa" />
-        <defs>
-          <linearGradient id="ic2" x1="4" y1="6" x2="24" y2="22"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
-        </defs>
+        <rect x="4" y="6" width="20" height="16" rx="3" stroke="#3b82f6" strokeWidth="2" />
+        <path d="M9 13h10M9 17h6" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="22" cy="6" r="3.5" fill="#3b82f6" />
       </svg>
     ),
     name: "Lead Capture Agent",
@@ -39,11 +33,8 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="11" r="5" stroke="url(#ic3)" strokeWidth="2" />
-        <path d="M5 25c0-5 4-8 9-8s9 3 9 8" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" />
-        <defs>
-          <linearGradient id="ic3" x1="9" y1="6" x2="19" y2="16"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#06b6d4"/></linearGradient>
-        </defs>
+        <circle cx="14" cy="11" r="5" stroke="#3b82f6" strokeWidth="2" />
+        <path d="M5 25c0-5 4-8 9-8s9 3 9 8" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
     name: "After-Hours Intake Agent",
@@ -56,23 +47,13 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
-      {/* Subtle ambient glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 60% at 70% 40%, rgba(139,92,246,0.04) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
-
+    <section id="solutions" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden bg-white">
       <div className="max-w-6xl mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-4 text-center">What we build</p>
           <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
             Practical agents. Real outcomes.{" "}
-            <span className="gradient-text">No corporate fluff.</span>
+            <span className="accent-text">No corporate fluff.</span>
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             Every agent we build is designed around one thing: the specific
@@ -83,7 +64,7 @@ export default function WhatWeBuildsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1}>
-              <div className="glass-card p-7 md:p-8 h-full flex flex-col gap-5 group">
+              <div className="clean-card p-7 md:p-8 h-full flex flex-col gap-5 group">
                 <div className="icon-container">{agent.icon}</div>
                 <div>
                   <p className="section-label text-xs mb-2">{agent.tagline}</p>
@@ -95,7 +76,7 @@ export default function WhatWeBuildsSection() {
                   </p>
                 </div>
                 <div className="mt-auto pt-5">
-                  <div className="gradient-divider mb-4" />
+                  <div className="subtle-divider mb-4" />
                   <p className="text-muted text-xs font-medium mb-3">
                     Great for:
                   </p>

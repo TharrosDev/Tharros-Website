@@ -23,23 +23,13 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden">
-      {/* Subtle gradient background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 50% at 30% 50%, rgba(99,102,241,0.03) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
-
+    <section id="problem" className="py-24 md:py-28 px-6 md:px-12 relative overflow-hidden bg-bg">
       <div className="max-w-6xl mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-4 text-center">The problem</p>
           <h2 className="text-3xl md:text-5xl font-bold text-center text-text mb-5 max-w-3xl mx-auto leading-tight">
             Ottawa small businesses are drowning in{" "}
-            <span className="gradient-text">things that shouldn&apos;t need them</span>
+            <span className="accent-text">things that shouldn&apos;t need them</span>
           </h2>
           <p className="text-subdued text-center max-w-xl mx-auto mb-14 md:mb-16 text-base md:text-lg leading-relaxed">
             You started your business to do the work you&apos;re good at — not to
@@ -50,11 +40,11 @@ export default function ProblemSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1}>
-              <div className="glass-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden">
+              <div className="clean-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden">
                 {/* Accent left stripe */}
-                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-gradient-to-b from-accent via-accent-2 to-transparent opacity-30 group-hover:opacity-70 transition-opacity duration-400" />
+                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="pl-4">
+                <div className="pl-2 group-hover:pl-4 transition-all duration-300">
                   <div className="icon-container mb-4">
                     <span aria-hidden="true">{pain.icon}</span>
                   </div>

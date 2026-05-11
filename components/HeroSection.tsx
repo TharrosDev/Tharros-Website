@@ -4,31 +4,28 @@ import { motion } from "motion/react";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 pt-24 pb-20 overflow-hidden">
-      {/* Ambient grid background */}
-      <div className="absolute inset-0 ambient-grid opacity-50" aria-hidden="true" />
-
-      {/* Gradient orb top-center */}
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center text-center px-6 pt-24 pb-20 overflow-hidden bg-white">
+      {/* Subtle background pattern */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-[0.4]"
         style={{
-          background:
-            "radial-gradient(ellipse 50% 50% at 50% 20%, rgba(99,102,241,0.10) 0%, rgba(139,92,246,0.05) 40%, transparent 70%)",
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0)",
+          backgroundSize: "32px 32px",
         }}
         aria-hidden="true"
       />
 
-      {/* Secondary orb */}
+      {/* Soft blue glow */}
       <div
-        className="absolute top-1/3 right-0 w-[350px] h-[350px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(6,182,212,0.05) 0%, transparent 70%)",
+            "radial-gradient(ellipse 50% 50% at 50% 30%, rgba(59,130,246,0.06) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -40,10 +37,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/20 bg-accent/[0.06] mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-white mb-8 shadow-sm"
         >
-          <span className="w-2 h-2 rounded-full bg-accent-bright animate-pulse" />
-          <span className="text-sm font-medium text-accent-bright tracking-wide">
+          <span className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
+          <span className="text-sm font-medium text-accent-3 tracking-wide">
             Ottawa&apos;s AI agent studio
           </span>
         </motion.div>
@@ -56,13 +53,13 @@ export default function HeroSection() {
           className="text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl font-bold md:leading-[1.08] tracking-tight text-text mb-7"
         >
           Your business doesn&apos;t need a{" "}
-          <span className="gradient-text">corporate AI strategy.</span>
+          <span className="accent-text">corporate AI strategy.</span>
           <br className="hidden sm:block" />
           <span className="sm:hidden"> </span>
           It needs something that{" "}
           <span className="relative inline-block">
             works
-            <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-gradient-to-r from-accent via-accent-2 to-accent-3 rounded-full" />
+            <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-accent-3 rounded-full" />
           </span>
           .
         </motion.h1>
@@ -87,7 +84,7 @@ export default function HeroSection() {
         >
           <a
             href="mailto:magnus.abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-            className="glow-button px-8 sm:px-9 py-4 text-base md:text-lg"
+            className="primary-button px-8 sm:px-9 py-4 text-base md:text-lg"
           >
             Talk to us about your business
           </a>
@@ -97,7 +94,7 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator — hidden on very small screens */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
