@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import Magnetic from "./Magnetic";
 
 const pricingFactors = [
   {
@@ -90,12 +91,14 @@ export default function PricingSection() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <a
-                    href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20request%20a%20quote"
-                    className="primary-button px-10 py-5 text-lg w-full sm:w-auto"
-                  >
-                    Get your custom quote
-                  </a>
+                  <Magnetic strength={0.2}>
+                    <a
+                      href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20request%20a%20quote"
+                      className="primary-button px-10 py-5 text-lg w-full sm:w-auto"
+                    >
+                      Get your custom quote
+                    </a>
+                  </Magnetic>
                 </div>
                 <p className="mt-6 text-muted text-sm font-medium">
                   Free consultation • No obligation • Ottawa-based

@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const agents = [
@@ -64,8 +65,16 @@ export default function WhatWeBuildsSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1}>
-              <div className="clean-card p-7 md:p-8 h-full flex flex-col gap-5 group">
-                <div className="icon-container">{agent.icon}</div>
+              <motion.div 
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="clean-card p-7 md:p-8 h-full flex flex-col gap-5 group cursor-default"
+              >
+                <motion.div 
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                  className="icon-container"
+                >
+                  {agent.icon}
+                </motion.div>
                 <div>
                   <p className="section-label text-xs mb-2">{agent.tagline}</p>
                   <h3 className="text-lg md:text-xl font-bold text-text mb-3">
@@ -82,13 +91,17 @@ export default function WhatWeBuildsSection() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {agent.examples.map((ex) => (
-                      <span key={ex} className="tag-pill">
+                      <motion.span 
+                        key={ex} 
+                        whileHover={{ scale: 1.05, backgroundColor: "var(--color-surface-2)" }}
+                        className="tag-pill"
+                      >
                         {ex}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </AnimatedSection>
           ))}
         </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import Magnetic from "./Magnetic";
 
 const navLinks = [
   { label: "Problem", href: "#problem" },
@@ -46,35 +47,41 @@ export default function NavBar() {
         }`}
         style={{ width: "min(92vw, 1100px)" }}
       >
-        <Link href="/" aria-label="Tharros home" className="shrink-0">
-          <Image
-            src="/tharros-logo.svg"
-            alt="Tharros"
-            width={110}
-            height={28}
-            priority
-            style={{ width: "auto", height: "auto" }}
-          />
-        </Link>
+        <Magnetic strength={0.15}>
+          <Link href="/" aria-label="Tharros home" className="shrink-0 block">
+            <Image
+              src="/tharros-logo.svg"
+              alt="Tharros"
+              width={110}
+              height={28}
+              priority
+              style={{ width: "auto", height: "auto" }}
+            />
+          </Link>
+        </Magnetic>
 
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
-            <a
+            <motion.a
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-sm text-subdued hover:text-text rounded-full hover:bg-surface transition-all duration-200"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 text-sm text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
             >
               {link.label}
-            </a>
+            </motion.a>
           ))}
         </nav>
 
-        <a
-          href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-          className="hidden md:inline-block primary-button px-5 py-2.5 text-sm"
-        >
-          Get in touch
-        </a>
+        <Magnetic strength={0.2}>
+          <a
+            href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+            className="hidden md:inline-block primary-button px-5 py-2.5 text-sm"
+          >
+            Get in touch
+          </a>
+        </Magnetic>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}

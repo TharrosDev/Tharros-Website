@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
@@ -36,8 +37,9 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-white mb-8 shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-white mb-8 shadow-sm cursor-default"
         >
           <span className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
           <span className="text-sm font-medium text-accent-3 tracking-wide">
@@ -47,9 +49,9 @@ export default function HeroSection() {
 
         {/* Headline */}
         <motion.h1
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.25 }}
+          transition={{ duration: 0.8, delay: 0.25, type: "spring", stiffness: 100 }}
           className="text-[2rem] leading-[1.1] sm:text-4xl md:text-6xl lg:text-7xl font-bold md:leading-[1.08] tracking-tight text-text mb-7"
         >
           Your business doesn&apos;t need a{" "}
@@ -59,7 +61,12 @@ export default function HeroSection() {
           It needs something that{" "}
           <span className="relative inline-block">
             works
-            <span className="absolute -bottom-1 left-0 right-0 h-[3px] bg-accent-3 rounded-full" />
+            <motion.span 
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 1.2, duration: 0.8, ease: "circOut" }}
+              className="absolute -bottom-1 left-0 right-0 h-[3px] bg-accent-3 rounded-full" 
+            />
           </span>
           .
         </motion.h1>
@@ -83,12 +90,14 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
         >
-          <a
-            href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-            className="primary-button px-8 sm:px-9 py-4 text-base md:text-lg"
-          >
-            Talk to us about your business
-          </a>
+          <Magnetic strength={0.2}>
+            <a
+              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+              className="primary-button px-8 sm:px-9 py-4 text-base md:text-lg"
+            >
+              Talk to us about your business
+            </a>
+          </Magnetic>
           <p className="mt-5 text-subdued text-sm">
             Free initial Consultation. No obligation.
           </p>

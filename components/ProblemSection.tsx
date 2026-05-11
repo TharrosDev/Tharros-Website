@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const pains = [
@@ -57,19 +58,25 @@ export default function ProblemSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1}>
-              <div className="clean-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden">
+              <motion.div 
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="clean-card p-7 md:p-8 h-full flex flex-col gap-4 group relative overflow-hidden cursor-default"
+              >
                 {/* Accent left stripe */}
                 <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 <div className="pl-2 group-hover:pl-4 transition-all duration-300">
-                  <div className="icon-container mb-4">
+                  <motion.div 
+                    whileHover={{ rotate: -5, scale: 1.1 }}
+                    className="icon-container mb-4"
+                  >
                     <span aria-hidden="true">{pain.icon}</span>
-                  </div>
+                  </motion.div>
                   <span className="section-label text-xs">{pain.stat}</span>
                   <h3 className="text-lg md:text-xl font-bold text-text mt-2 mb-2">{pain.headline}</h3>
                   <p className="text-subdued leading-relaxed text-sm">{pain.body}</p>
                 </div>
-              </div>
+              </motion.div>
             </AnimatedSection>
           ))}
         </div>

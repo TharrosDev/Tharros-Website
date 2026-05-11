@@ -1,4 +1,5 @@
 import AnimatedSection from "./AnimatedSection";
+import Magnetic from "./Magnetic";
 
 export default function FooterSection() {
   const year = new Date().getFullYear();
@@ -19,12 +20,14 @@ export default function FooterSection() {
             identify the best use case, and give you a clear sense of what&apos;s
             possible, no obligation.
           </p>
-          <a
-            href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-            className="primary-button px-8 md:px-10 py-4 md:py-5 text-base md:text-lg mb-5"
-          >
-            Book a free consult
-          </a>
+          <Magnetic strength={0.2}>
+            <a
+              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+              className="primary-button px-8 md:px-10 py-4 md:py-5 text-base md:text-lg mb-5"
+            >
+              Book a free consult
+            </a>
+          </Magnetic>
           <p className="text-subdued text-sm mb-16 md:mb-20">
             Or email directly:{" "}
             <a
