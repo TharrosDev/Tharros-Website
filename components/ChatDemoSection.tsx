@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Client, Key, Agent, type Task } from "@relevanceai/sdk";
 import AnimatedSection from "./AnimatedSection";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import MobileChatConsole from "./MobileChatConsole";
 
 // Relevance AI Configuration (using environment variables)
 const REGION = process.env.NEXT_PUBLIC_RELEVANCE_REGION || "";
@@ -31,6 +33,7 @@ export default function ChatDemoSection() {
   const [agentInstance, setAgentInstance] = useState<AgentResource | null>(null);
   const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   // Initialize Relevance AI Client and Agent
   useEffect(() => {
@@ -245,157 +248,171 @@ export default function ChatDemoSection() {
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[600px] md:h-[650px] xl:h-[780px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
-                
-                {/* Chat Header - Glassmorphism Bento Style */}
-                <div className="px-5 md:px-10 py-4 md:py-5 border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 md:gap-4">
-                      <div className="relative">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-200/50">
-                          <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                          </svg>
-                        </div>
-                        <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-white flex items-center justify-center border-2 border-white">
-                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        </div>
-                      </div>
-                      <div className="flex flex-col">
-                        <h3 className="text-text font-bold text-[13px] md:text-base tracking-tight leading-none mb-1">Tharros Agent &mdash; Light Model</h3>
-                        <div className="flex items-center gap-2">
-                          <span className="text-green-600 text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
-                            <span className="w-1 h-1 rounded-full bg-green-600 animate-ping" />
-                            Operational
-                          </span>
-                          <span className="w-px h-2.5 bg-slate-200 hidden md:block" />
-                          <span className="text-slate-400 text-[8px] md:text-[10px] font-bold uppercase tracking-widest hidden md:block">Latency: 24ms</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <div className="hidden sm:flex flex-col items-end px-3 py-1 bg-slate-50 rounded-lg border border-slate-100">
-                        <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest">Model_V</span>
-                        <span className="text-[9px] font-bold text-text uppercase">1.2.4b</span>
-                      </div>
-                      <button className="w-9 h-9 md:w-10 md:h-10 rounded-full hover:bg-slate-50 flex items-center justify-center text-slate-300 transition-colors active:scale-90">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Messages Area */}
-                <div 
-                  ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-5 md:p-10 flex flex-col gap-5 md:gap-6 bg-slate-50/10 scroll-smooth relative"
-                >
-                  {/* Subtle Grainy Overlay */}
-                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
-                  <AnimatePresence initial={false}>
-                    {messages.map((msg) => (
-                      <motion.div
-                        key={msg.id}
-                        initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-                      >
-                        <div 
-                          className={`max-w-[90%] md:max-w-[75%] text-[13px] md:text-base leading-relaxed px-5 py-3.5 md:px-6 md:py-4 rounded-[1.2rem] md:rounded-[2rem] shadow-sm border ${
-                            msg.sender === "user" 
-                            ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-200/5" 
-                            : "bg-white text-text border-slate-100/80 rounded-tl-none shadow-slate-100/50"
-                          }`}
-                        >
-                          {msg.text}
-                        </div>
-                        <span className="text-[9px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
-                      </motion.div>
-                    ))}
-                    
-                    {isTyping && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="flex flex-col items-start"
-                      >
-                        <div className="bg-white border border-slate-100/80 px-5 py-3.5 rounded-[1.2rem] rounded-tl-none shadow-sm flex items-center gap-3">
-                          <div className="flex gap-1.5">
-                            {[0, 1, 2].map((i) => (
-                              <motion.div 
-                                key={i}
-                                animate={{ 
-                                  y: [0, -6, 0],
-                                  opacity: [0.4, 1, 0.4]
-                                }} 
-                                transition={{ 
-                                  repeat: Infinity, 
-                                  duration: 0.8, 
-                                  delay: i * 0.15 
-                                }} 
-                                className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
-                              />
-                            ))}
+              {isMobile ? (
+                <MobileChatConsole
+                  messages={messages}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  handleSend={handleSend}
+                  isTyping={isTyping}
+                  recommendedQuestions={recommendedQuestions}
+                  title="Tharros Agent"
+                  subtitle="Light Model Operational"
+                  modelType="Industrial Logic Demo"
+                />
+              ) : (
+                <div className="relative flex flex-col h-[600px] md:h-[650px] xl:h-[780px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
+                  
+                  {/* Chat Header - Glassmorphism Bento Style */}
+                  <div className="px-5 md:px-10 py-4 md:py-5 border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <div className="relative">
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-200/50">
+                            <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                          </div>
+                          <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-white flex items-center justify-center border-2 border-white">
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                           </div>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                        <div className="flex flex-col">
+                          <h3 className="text-text font-bold text-[13px] md:text-base tracking-tight leading-none mb-1">Tharros Agent &mdash; Light Model</h3>
+                          <div className="flex items-center gap-2">
+                            <span className="text-green-600 text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
+                              <span className="w-1 h-1 rounded-full bg-green-600 animate-ping" />
+                              Operational
+                            </span>
+                            <span className="w-px h-2.5 bg-slate-200 hidden md:block" />
+                            <span className="text-slate-400 text-[8px] md:text-[10px] font-bold uppercase tracking-widest hidden md:block">Latency: 24ms</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <div className="hidden sm:flex flex-col items-end px-3 py-1 bg-slate-50 rounded-lg border border-slate-100">
+                          <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest">Model_V</span>
+                          <span className="text-[9px] font-bold text-text uppercase">1.2.4b</span>
+                        </div>
+                        <button className="w-9 h-9 md:w-10 md:h-10 rounded-full hover:bg-slate-50 flex items-center justify-center text-slate-300 transition-colors active:scale-90">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
-                {/* Footer / Input Area */}
-                <div className="p-4 md:p-8 bg-white border-t border-slate-100/50">
-                  
-                  {/* Suggestions - Swipeable on mobile */}
-                  <AnimatePresence>
-                    {recommendedQuestions.length > 0 && !isTyping && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex overflow-x-auto no-scrollbar gap-2 mb-4 md:mb-6 -mx-1 px-1 pb-1"
-                      >
-                        {recommendedQuestions.map((q) => (
-                          <button
-                            key={q}
-                            onClick={() => handleSend(q)}
-                            className="px-4 py-2 bg-slate-50 border border-slate-200/60 rounded-full text-[10px] md:text-[11px] font-bold text-slate-500 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap active:scale-95"
-                          >
-                            {q}
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <form 
-                    onSubmit={(e) => handleSend(inputValue, e)}
-                    className="flex items-center gap-2 md:gap-4 bg-slate-50 p-1.5 rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 focus-within:border-accent-3/30 transition-all"
+                  {/* Messages Area */}
+                  <div 
+                    ref={scrollRef}
+                    className="flex-1 overflow-y-auto p-5 md:p-10 flex flex-col gap-5 md:gap-6 bg-slate-50/10 scroll-smooth relative"
                   >
-                    <input
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Message..."
-                      disabled={!agentInstance || isTyping}
-                      className="flex-1 bg-transparent px-4 py-2.5 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
-                    />
-                    <button 
-                      type="submit"
-                      aria-label="Send message"
-                      disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-[1rem] md:rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-90 shrink-0"
+                    {/* Subtle Grainy Overlay */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
+                    <AnimatePresence initial={false}>
+                      {messages.map((msg) => (
+                        <motion.div
+                          key={msg.id}
+                          initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                        >
+                          <div 
+                            className={`max-w-[90%] md:max-w-[75%] text-[13px] md:text-base leading-relaxed px-5 py-3.5 md:px-6 md:py-4 rounded-[1.2rem] md:rounded-[2rem] shadow-sm border ${
+                              msg.sender === "user" 
+                              ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-200/5" 
+                              : "bg-white text-text border-slate-100/80 rounded-tl-none shadow-slate-100/50"
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                          <span className="text-[9px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
+                        </motion.div>
+                      ))}
+                      
+                      {isTyping && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="flex flex-col items-start"
+                        >
+                          <div className="bg-white border border-slate-100/80 px-5 py-3.5 rounded-[1.2rem] rounded-tl-none shadow-sm flex items-center gap-3">
+                            <div className="flex gap-1.5">
+                              {[0, 1, 2].map((_, index) => (
+                                <motion.div 
+                                  key={index}
+                                  animate={{ 
+                                    y: [0, -6, 0],
+                                    opacity: [0.4, 1, 0.4]
+                                  }} 
+                                  transition={{ 
+                                    repeat: Infinity, 
+                                    duration: 0.8, 
+                                    delay: index * 0.15 
+                                  }} 
+                                  className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Footer / Input Area */}
+                  <div className="p-4 md:p-8 bg-white border-t border-slate-100/50">
+                    
+                    {/* Suggestions - Swipeable on mobile */}
+                    <AnimatePresence>
+                      {recommendedQuestions.length > 0 && !isTyping && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="flex overflow-x-auto no-scrollbar gap-2 mb-4 md:mb-6 -mx-1 px-1 pb-1"
+                        >
+                          {recommendedQuestions.map((q) => (
+                            <button
+                              key={q}
+                              onClick={() => handleSend(q)}
+                              className="px-4 py-2 bg-slate-50 border border-slate-200/60 rounded-full text-[10px] md:text-[11px] font-bold text-slate-500 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap active:scale-95"
+                            >
+                              {q}
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <form 
+                      onSubmit={(e) => handleSend(inputValue, e)}
+                      className="flex items-center gap-2 md:gap-4 bg-slate-50 p-1.5 rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 focus-within:border-accent-3/30 transition-all"
                     >
-                      <svg width="18" height="18" className="md:w-5 md:h-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
-                      </svg>
-                    </button>
-                  </form>
+                      <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        placeholder="Message..."
+                        disabled={!agentInstance || isTyping}
+                        className="flex-1 bg-transparent px-4 py-2.5 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
+                      />
+                      <button 
+                        type="submit"
+                        aria-label="Send message"
+                        disabled={!inputValue.trim() || !agentInstance || isTyping}
+                        className="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-[1rem] md:rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-90 shrink-0"
+                      >
+                        <svg width="18" height="18" className="md:w-5 md:h-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
           </AnimatedSection>
