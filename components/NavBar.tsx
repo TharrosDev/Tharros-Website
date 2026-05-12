@@ -45,12 +45,12 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`fixed top-3 md:top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-5 md:px-10 py-3 md:py-5 rounded-full transition-all duration-500 ${
+        className={`fixed top-3 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-5 md:px-7 py-2.5 md:py-3 rounded-full transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-xl border border-border shadow-[0_4px_24px_rgba(0,0,0,0.08)]"
+            ? "bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
             : "bg-white/60 backdrop-blur-md border border-transparent"
         }`}
-        style={{ width: "min(92vw, 1200px)" }}
+        style={{ width: "min(92vw, 1000px)" }}
       >
         <Magnetic strength={0.15}>
           <a 
@@ -65,11 +65,11 @@ export default function NavBar() {
             <Image
               src="/tharros-logo.svg"
               alt="Tharros"
-              width={140}
-              height={36}
+              width={110}
+              height={28}
               priority
               style={{ width: "auto", height: "auto" }}
-              className="scale-110 md:scale-125"
+              className="scale-100 md:scale-110"
             />
           </a>
         </Magnetic>
@@ -81,7 +81,7 @@ export default function NavBar() {
               href={link.href}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 text-base font-medium text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
+              className="px-4 py-2 text-sm font-medium text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
             >
               {link.label}
             </motion.a>
@@ -91,7 +91,7 @@ export default function NavBar() {
         <Magnetic strength={0.2}>
           <a
             href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-            className="hidden md:inline-block primary-button px-7 py-3.5 text-base"
+            className="hidden md:inline-block primary-button px-5 py-2 text-sm"
           >
             Get in touch
           </a>
