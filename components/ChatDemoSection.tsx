@@ -200,12 +200,12 @@ export default function ChatDemoSection() {
       <div className="scanline" />
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
-      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 xl:gap-24 items-center">
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative flex flex-col items-center">
         
-        {/* Left: Authoritative Capabilities & Intro */}
-        <div className="lg:col-span-5 flex flex-col justify-center">
+        {/* Section Header */}
+        <div className="text-center mb-16 md:mb-24">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-8 mx-auto">
               <span className="w-1.5 h-1.5 rounded-full bg-text animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text">Live Deployment</span>
             </div>
@@ -215,43 +215,42 @@ export default function ChatDemoSection() {
               <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-lg md:text-xl xl:text-2xl mb-10 leading-relaxed max-w-lg">
+            <p className="text-subdued text-lg md:text-xl xl:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
 
-            {/* Reorganized: Demo Header now on the left */}
-            <div className="mb-12 pt-8 border-t border-slate-100">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-text tracking-tight mb-4">Interact with our <span className="text-accent-3">Light Model</span></h3>
-              <p className="text-sm text-subdued max-w-md">Experience the responsiveness and brand alignment of a Tharros-engineered conversational interface.</p>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-8">
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
               {[
-                { title: "Neural Logic", desc: "Handles complex multi-step reasoning without failure." },
-                { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone and values." },
-                { title: "Deep Integration", desc: "Syncs directly with your existing CRM and calendar." }
+                { title: "Neural Logic", desc: "Handles complex multi-step reasoning." },
+                { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone." },
+                { title: "Deep Integration", desc: "Syncs directly with your existing CRM." }
               ].map((item, i) => (
                 <motion.div 
                   key={item.title}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex flex-col gap-1 border-l-2 border-slate-100 pl-6 hover:border-text transition-colors duration-500 cursor-default group"
+                  className="flex flex-col gap-1 text-center group cursor-default"
                 >
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
-                  <p className="text-sm text-subdued leading-relaxed">{item.desc}</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-accent-3 transition-colors">{item.title}</h4>
+                  <p className="text-xs text-subdued leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
           </AnimatedSection>
         </div>
 
-        {/* Right: The Focused Agent Console */}
-        <div className="lg:col-span-7">
+        {/* The Focused Agent Console & Demo Header */}
+        <div className="w-full max-w-4xl xl:max-w-5xl mx-auto">
           <AnimatedSection delay={0.2} variant="scale-in">
-            <div className="relative w-full max-w-[600px] xl:max-w-[760px] mx-auto lg:ml-auto">
-              
+            {/* Demo Header back above the chat box */}
+            <div className="text-center mb-10">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
+              <h3 className="text-3xl md:text-5xl font-bold text-text tracking-tight mb-4">Interact with our <span className="text-accent-3">Light Model</span></h3>
+              <p className="text-sm text-subdued max-w-md mx-auto">Experience the responsiveness and brand alignment of a Tharros-engineered conversational interface.</p>
+            </div>
+
+            <div className="relative w-full">
               {/* Chat Container */}
               {isMobile ? (
                 <MobileChatConsole
@@ -418,11 +417,9 @@ export default function ChatDemoSection() {
                   </div>
                 </div>
               )}
-
             </div>
           </AnimatedSection>
         </div>
-
       </div>
     </section>
   );
