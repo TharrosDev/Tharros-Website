@@ -21,13 +21,16 @@ export default function NavBar() {
     const handler = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 50);
+          const isScrolled = window.scrollY > 20;
+          setScrolled(isScrolled);
           ticking = false;
         });
         ticking = true;
       }
     };
     window.addEventListener("scroll", handler, { passive: true });
+    // Initial check
+    handler();
     return () => window.removeEventListener("scroll", handler);
   }, []);
 

@@ -89,6 +89,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Tharros AI",
+  },
   manifest: "/manifest.json",
 };
 

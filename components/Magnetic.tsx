@@ -23,7 +23,8 @@ export default function Magnetic({ children, strength = 0.5 }: MagneticProps) {
   const moveY = useTransform(springY, (val) => val * strength);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
+    // Disable on touch devices or small screens to save performance
+    if (!ref.current || window.matchMedia("(pointer: coarse)").matches) return;
     const { clientX, clientY } = e;
     const { width, height, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);

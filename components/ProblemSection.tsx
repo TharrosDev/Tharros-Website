@@ -87,8 +87,11 @@ export default function ProblemSection() {
                     <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
                   </div>
 
-                  <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
-                    <span aria-hidden="true" className="scale-125">{pain.icon}</span>
+                  <div 
+                    aria-hidden="true"
+                    className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500"
+                  >
+                    <span className="scale-125">{pain.icon}</span>
                   </div>
                   
                   <h3 className="text-xl md:text-2xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>

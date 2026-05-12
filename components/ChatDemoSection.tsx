@@ -261,11 +261,13 @@ export default function ChatDemoSection() {
                   </button>
                 </div>
 
-                {/* Messages Area - Subtle Pattern */}
+                {/* Messages Area - CSS Mesh Gradient instead of external image */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed bg-slate-50/20 scroll-smooth"
+                  className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-slate-50/10 scroll-smooth relative"
                 >
+                  {/* Subtle Grainy Overlay (CSS only) */}
+                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                       <motion.div
@@ -356,10 +358,11 @@ export default function ChatDemoSection() {
                     />
                     <button 
                       type="submit"
+                      aria-label="Send message"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
                       className="h-12 w-12 flex items-center justify-center rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-95 shrink-0"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
                       </svg>
                     </button>
