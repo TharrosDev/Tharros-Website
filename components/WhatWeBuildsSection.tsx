@@ -56,45 +56,48 @@ export default function WhatWeBuildsSection() {
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
-          <p className="section-label mb-6 text-center">What we build</p>
-          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
-            Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}
-            <span className="accent-text">No corporate fluff.</span>
-          </h2>
-          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-16 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
-            Every AI Agent we deploy is custom-engineered to solve the high-impact operational gaps in your Ottawa business.
-          </p>
+          <div className="text-center mb-10 md:mb-16">
+            <p className="section-label mb-4">What we build</p>
+            <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-text mb-6 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
+              Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}
+              <span className="accent-text">No corporate fluff.</span>
+            </h2>
+            <p className="text-subdued max-w-2xl xl:max-w-3xl mx-auto text-base md:text-lg xl:text-xl leading-relaxed">
+              Every AI Agent is custom-engineered to solve the high-impact operational gaps in your Ottawa business.
+            </p>
+          </div>
         </AnimatedSection>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-14">
+ 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 xl:gap-10">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name}>
               <motion.div 
-                whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="clean-card p-8 md:p-12 xl:p-16 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="clean-card p-6 md:p-8 xl:p-10 h-full flex flex-col group cursor-default shadow-sm hover:shadow-lg hover:border-accent-3/20 transition-all duration-500"
               >
-                <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
-                  {agent.icon}
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 shrink-0">
+                    <span className="scale-90">{agent.icon}</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className="section-label text-[10px] font-bold tracking-[0.1em]">{agent.tagline}</p>
+                    <h3 className="text-lg md:text-xl font-bold text-text leading-tight">
+                      {agent.name}
+                    </h3>
+                  </div>
                 </div>
-                <div className="space-y-4">
-                  <p className="section-label text-xs font-bold tracking-[0.2em]">{agent.tagline}</p>
-                  <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-text leading-tight">
-                    {agent.name}
-                  </h3>
-                  <p className="text-subdued text-base md:text-lg xl:text-xl leading-relaxed">
-                    {agent.description}
-                  </p>
-                </div>
-                <div className="mt-auto pt-8">
-                  <div className="h-px bg-slate-100 w-full mb-6" />
-                  <p className="text-muted text-xs font-bold uppercase tracking-widest mb-4">
-                    Great for:
-                  </p>
-                  <div className="flex flex-wrap gap-2">
+                
+                <p className="text-subdued text-sm md:text-base leading-relaxed mb-6">
+                  {agent.description}
+                </p>
+ 
+                <div className="mt-auto">
+                  <div className="h-px bg-slate-100 w-full mb-4" />
+                  <div className="flex flex-wrap gap-1.5">
                     {agent.examples.map((ex) => (
                       <span 
                         key={ex} 
-                        className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-xs font-semibold text-slate-600"
+                        className="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wider"
                       >
                         {ex}
                       </span>

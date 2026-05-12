@@ -56,45 +56,48 @@ export default function ProblemSection() {
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-16 md:mb-24">
-            <span className="section-label mb-6">Process Inefficiencies</span>
-            <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl leading-[1.1] tracking-tight">
+          <div className="flex flex-col items-center mb-10 md:mb-16">
+            <span className="section-label mb-4">Process Inefficiencies</span>
+            <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-center text-text mb-6 max-w-4xl xl:max-w-5xl leading-[1.1] tracking-tight">
               Ottawa businesses need <br className="hidden md:block" />
               <span className="text-accent-3">Autonomous AI Agents,</span> not more wasted time.
             </h2>
-            <p className="text-subdued text-center max-w-2xl xl:max-w-3xl text-lg md:text-xl xl:text-2xl leading-relaxed">
-              Don&apos;t just add software. Deploy a workforce of specialized AI Agents to manage your inbox, your leads, and your schedule 24/7.
+            <p className="text-subdued text-center max-w-2xl xl:max-w-3xl text-base md:text-lg xl:text-xl leading-relaxed">
+              Don&apos;t just add software. Deploy specialized AI Agents to manage your inbox, leads, and schedule 24/7.
             </p>
           </div>
         </AnimatedSection>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-14">
+ 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 xl:gap-10">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline}>
               <motion.div 
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="clean-card p-10 md:p-12 xl:p-16 h-full flex flex-col gap-6 group relative overflow-hidden cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="clean-card p-6 md:p-8 xl:p-10 h-full flex flex-col group relative overflow-hidden cursor-default shadow-sm hover:shadow-lg hover:border-accent-3/20 transition-all duration-500"
               >
                 {/* Accent left stripe */}
-                <div className="absolute left-0 top-10 bottom-10 w-[4px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="pl-2 group-hover:pl-4 transition-all duration-300">
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className={`text-[9px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${pain.color}`}>
-                      {pain.status}
+                <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+ 
+                <div className="group-hover:pl-2 transition-all duration-300">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div 
+                      aria-hidden="true"
+                      className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 shrink-0"
+                    >
+                      <span className="scale-100">{pain.icon}</span>
                     </div>
-                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
-                  </div>
-
-                  <div 
-                    aria-hidden="true"
-                    className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500"
-                  >
-                    <span className="scale-125">{pain.icon}</span>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className={`text-[8px] font-bold px-1.5 py-0.5 rounded border uppercase tracking-wider ${pain.color}`}>
+                          {pain.status}
+                        </div>
+                        <span className="text-[8px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-bold text-text leading-tight">{pain.headline}</h3>
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl xl:text-3xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>
-                  <p className="text-subdued leading-relaxed text-base xl:text-lg">{pain.body}</p>
+                  <p className="text-subdued leading-relaxed text-sm md:text-base">{pain.body}</p>
                 </div>
               </motion.div>
             </AnimatedSection>
