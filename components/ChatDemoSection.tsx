@@ -234,14 +234,14 @@ export default function ChatDemoSection() {
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[550px] md:h-[600px] w-full bg-white rounded-xl md:rounded-2xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100">
+              <div className="relative flex flex-col h-[550px] md:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_48px_96px_-24px_rgba(0,0,0,0.12)] overflow-hidden border border-slate-100">
                 
                 {/* Chat Header */}
                 <div className="px-5 md:px-8 py-4 md:py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
                   <div className="flex items-center gap-3 md:gap-4">
-                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-lg">
-                      <svg width="16" height="16" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                      <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                       </svg>
                     </div>
                     <div>
@@ -278,9 +278,9 @@ export default function ChatDemoSection() {
                           <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
                         </div>
                         <div 
-                          className={`max-w-[90%] md:max-w-[85%] text-[13px] md:text-sm leading-relaxed p-3.5 md:p-4 rounded-lg md:rounded-xl shadow-sm ${
+                          className={`max-w-[85%] md:max-w-[80%] text-[14px] md:text-base leading-relaxed p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-sm ${
                             msg.sender === "user" 
-                            ? "bg-slate-900 text-white rounded-tr-none" 
+                            ? "bg-gradient-to-br from-slate-800 to-slate-900 text-white rounded-tr-none" 
                             : "bg-white text-text border border-slate-100 rounded-tl-none"
                           }`}
                         >
@@ -298,34 +298,25 @@ export default function ChatDemoSection() {
                         <div className="flex items-center gap-2 mb-1 px-1">
                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tharros Assistant</span>
                         </div>
-                        <div className="bg-white border border-slate-100 p-4 rounded-lg rounded-tl-none shadow-sm flex items-center gap-2">
-                          <div className="flex gap-1">
-                            <motion.div 
-                              animate={{ 
-                                opacity: [0.3, 1, 0.3],
-                                scaleY: [1, 1.5, 1] 
-                              }} 
-                              transition={{ repeat: Infinity, duration: 0.8 }} 
-                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
-                            />
-                            <motion.div 
-                              animate={{ 
-                                opacity: [0.3, 1, 0.3],
-                                scaleY: [1, 1.5, 1] 
-                              }} 
-                              transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }} 
-                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
-                            />
-                            <motion.div 
-                              animate={{ 
-                                opacity: [0.3, 1, 0.3],
-                                scaleY: [1, 1.5, 1] 
-                              }} 
-                              transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }} 
-                              className="w-1 h-3 bg-accent-3/40 rounded-full" 
-                            />
+                        <div className="bg-white border border-slate-100 p-4 md:p-5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-3">
+                          <div className="flex gap-1.5">
+                            {[0, 1, 2].map((i) => (
+                              <motion.div 
+                                key={i}
+                                animate={{ 
+                                  y: [0, -6, 0],
+                                  opacity: [0.4, 1, 0.4]
+                                }} 
+                                transition={{ 
+                                  repeat: Infinity, 
+                                  duration: 0.8, 
+                                  delay: i * 0.15 
+                                }} 
+                                className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
+                              />
+                            ))}
                           </div>
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">Processing</span>
+                          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Thinking...</span>
                         </div>
                       </motion.div>
                     )}
