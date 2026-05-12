@@ -78,8 +78,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      </div>
-
       {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3">
         <span className="text-[10px] font-bold text-muted tracking-[0.3em] uppercase">Scroll_Down</span>
