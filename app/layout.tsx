@@ -1,12 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0f172a",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tharros.ca"),
@@ -15,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Tharros",
   },
   description:
-    "Tharros builds lightweight AI agents that handle customer inquiries, capture leads, and answer questions automatically. Ottawa-based studio for practical AI solutions.",
+    "Tharros builds tailored AI agents that handle customer inquiries, capture leads, and automate office admin. Ottawa-based studio for practical, high-performance AI solutions.",
   keywords: [
     "AI Agents Ottawa",
     "Small Business Automation",
@@ -24,10 +32,26 @@ export const metadata: Metadata = {
     "Ottawa Tech Studio",
     "Practical AI Solutions",
     "Automated Customer Service",
+    "HVAC AI Agent",
+    "Lawyer Lead Automation",
+    "Contractor AI Chat",
+    "Dental Clinic AI",
+    "Property Management Automation",
+    "After-hours lead capture",
   ],
   authors: [{ name: "Magnus Abdelnour" }],
   creator: "Tharros",
   publisher: "Tharros",
+  category: "technology",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   robots: {
     index: true,
     follow: true,
@@ -65,6 +89,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -72,9 +97,39 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Tharros",
+    "image": "https://tharros.ca/og-image.jpg",
+    "@id": "https://tharros.ca",
+    "url": "https://tharros.ca",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ottawa",
+      "addressRegion": "ON",
+      "addressCountry": "CA"
+    },
+    "description": "Tailored AI agents for Ottawa small businesses. We automate lead capture, customer service, and admin tasks.",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "17:00"
+    }
+  };
+
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
+      <head>
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
 }
+
