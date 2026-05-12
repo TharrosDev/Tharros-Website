@@ -40,7 +40,7 @@ export default function FooterSection() {
 
           <div className="subtle-divider mb-6" />
           <div className="text-subdued text-sm flex flex-col md:flex-row items-center justify-between gap-3">
-            <span>&copy; {year} Tharros. Ottawa, Ontario. 🇨🇦 Keep it Canadian.</span>
+            <span className="inline-flex items-center gap-2">&copy; {year} Tharros. Ottawa, Ontario. <img src="/canada-flag.svg" alt="" className="w-4 h-2.5 rounded-[1px]" /> Keep it Canadian.</span>
             <span className="text-muted text-xs">AI agents for small businesses that need to move fast.</span>
           </div>
         </AnimatedSection>
