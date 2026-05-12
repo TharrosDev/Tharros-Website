@@ -46,10 +46,9 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-6 md:mb-8 leading-relaxed font-medium">
-            Tharros builds <span className="text-text">Autonomous AI Agents</span> for Ottawa small businesses,
-            automating customer inquiries, office admin, and repetitive
-            back-office tasks. No code required.
+          <p className="text-sm md:text-lg xl:text-xl text-subdued max-w-xl xl:max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed font-medium">
+            Autonomous AI Agents for Ottawa businesses. We automate inquiries, 
+            admin, and back-office tasks with zero code required.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
