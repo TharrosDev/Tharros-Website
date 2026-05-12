@@ -34,7 +34,7 @@ export default function HeroSection() {
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-8">
+          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-6">
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
@@ -46,30 +46,30 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-14 leading-relaxed font-medium">
+          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-medium">
             Tharros builds <span className="text-text">Autonomous AI Agents</span> for Ottawa small businesses,
             automating customer inquiries, office admin, and repetitive
             back-office tasks. No code required.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
             <a
               href="/intake"
               aria-label="Start your AI intake journey"
-              className="primary-button px-10 py-5 md:px-12 md:py-6 xl:px-16 xl:py-7 text-base md:text-xl xl:text-2xl w-full sm:w-auto"
+              className="primary-button px-8 py-4 md:px-10 md:py-5 xl:px-12 xl:py-6 text-sm md:text-lg xl:text-xl w-full sm:w-auto"
             >
               Start your journey
             </a>
             <a
               href="#demo"
               aria-label="View our live AI agent demo"
-              className="text-text font-bold text-sm md:text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-3"
+              className="text-text font-bold text-xs md:text-sm uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
             >
               Live Demo
             </a>
           </div>
 
-          <div className="mt-12 flex items-center justify-center gap-3">
+          <div className="mt-10 flex items-center justify-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Intake Agent Online &mdash; <a href="mailto:Magnus.Abdelnour@gmail.com" className="text-accent-3 hover:underline">Or Email Directly</a>
@@ -79,9 +79,9 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2">
         <span className="text-[10px] font-bold text-muted tracking-[0.3em] uppercase">Scroll_Down</span>
-        <div className="w-px h-12 bg-gradient-to-b from-slate-200 to-transparent" />
+        <div className="w-px h-8 bg-gradient-to-b from-slate-200 to-transparent" />
       </div>
     </section>
   );
