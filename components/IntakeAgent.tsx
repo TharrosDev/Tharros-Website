@@ -32,7 +32,7 @@ export default function IntakeAgent() {
 
   useEffect(() => {
     async function initRelevance() {
-      if (!REGION || !PROJECT || !AGENT_ID) return;
+      console.log("Initializing Relevance Intake:", { REGION, PROJECT, AGENT_ID });
       try {
         const storageKey = `r-intake-${AGENT_ID}`;
         const stored = JSON.parse(localStorage.getItem(storageKey) ?? "null");
