@@ -7,10 +7,10 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path d="M4 18 Q14 6 24 18" stroke="#3b82f6" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <path d="M4 18 Q14 6 24 18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" />
         <circle cx="14" cy="18" r="2.5" fill="#1e293b" />
-        <circle cx="4" cy="18" r="2" fill="#3b82f6" />
-        <circle cx="24" cy="18" r="2" fill="#3b82f6" />
+        <circle cx="4" cy="18" r="2" fill="currentColor" />
+        <circle cx="24" cy="18" r="2" fill="currentColor" />
       </svg>
     ),
     name: "Customer Inquiry Agent",
@@ -22,9 +22,9 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect x="4" y="6" width="20" height="16" rx="3" stroke="#3b82f6" strokeWidth="2" />
+        <rect x="4" y="6" width="20" height="16" rx="3" stroke="currentColor" strokeWidth="2" />
         <path d="M9 13h10M9 17h6" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="22" cy="6" r="3.5" fill="#3b82f6" />
+        <circle cx="22" cy="6" r="3.5" fill="currentColor" />
       </svg>
     ),
     name: "Lead Capture Agent",
@@ -36,7 +36,7 @@ const agents = [
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="11" r="5" stroke="#3b82f6" strokeWidth="2" />
+        <circle cx="14" cy="11" r="5" stroke="currentColor" strokeWidth="2" />
         <path d="M5 25c0-5 4-8 9-8s9 3 9 8" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
@@ -73,7 +73,7 @@ export default function WhatWeBuildsSection() {
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
                 className="clean-card p-8 md:p-12 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
-                <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
+                <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
                   {agent.icon}
                 </div>
                 <div className="space-y-4">

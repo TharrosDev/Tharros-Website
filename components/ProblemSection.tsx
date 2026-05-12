@@ -6,7 +6,7 @@ import AnimatedSection from "./AnimatedSection";
 const pains = [
   {
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
       </svg>
     ),
@@ -18,7 +18,7 @@ const pains = [
   },
   {
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 2l4 4-4 4" />
         <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
         <path d="M7 22l-4-4 4-4" />
@@ -33,7 +33,7 @@ const pains = [
   },
   {
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
         <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
       </svg>
@@ -90,7 +90,7 @@ export default function ProblemSection() {
                     <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">{pains[0].stat}</span>
                   </div>
 
-                  <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-accent-3 group-hover:text-white transition-all duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 text-accent-3 group-hover:bg-accent-3 group-hover:text-white transition-all duration-500">
                     <span className="scale-150">{pains[0].icon}</span>
                   </div>
                   
@@ -122,7 +122,7 @@ export default function ProblemSection() {
                       <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
                     </div>
 
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center mb-6 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
                       <span>{pain.icon}</span>
                     </div>
 
