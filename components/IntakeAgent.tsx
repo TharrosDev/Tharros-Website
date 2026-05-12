@@ -173,7 +173,7 @@ export default function IntakeAgent() {
           <div className="absolute bottom-0 left-0 w-1/2 h-full bg-slate-50 skew-x-12 -translate-x-1/4 opacity-50" />
         </div>
 
-        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[80vh] md:h-[85vh]">
+        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[85vh] md:h-[90vh]">
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div 
