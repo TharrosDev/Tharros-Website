@@ -250,7 +250,7 @@ export default function ChatDemoSection() {
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Agent</h3>
+                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Agent &mdash; Light Model</h3>
                       <p className="text-slate-400 text-xs font-medium">Ready to assist</p>
                     </div>
                   </div>
