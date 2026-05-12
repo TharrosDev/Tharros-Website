@@ -178,103 +178,110 @@ export default function ChatDemoSection() {
   };
 
   return (
-    <section id="demo" className="py-16 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="demo" className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden bg-white">
       {/* Background Sophistication */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      <div className="max-w-7xl mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
         
         {/* Left: Authoritative Capabilities */}
-        <div className="lg:col-span-5 pt-8">
+        <div className="lg:col-span-5">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-100 border border-slate-200 mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-3 animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600">Console_Link: Active</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-text animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text">Live Deployment</span>
             </div>
             
-            <h2 className="text-5xl md:text-7xl font-bold text-text mb-10 leading-[0.9] tracking-tighter">
-              Automate <br />
-              <span className="text-accent-3">the Intake.</span>
+            <h2 className="text-5xl md:text-7xl font-bold text-text mb-10 leading-[1] tracking-tighter">
+              An agent that <br />
+              <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-lg md:text-xl mb-12 md:mb-16 leading-relaxed max-w-lg">
-              Our agents are engineered for high-stakes business environments where precision is the only metric that matters. No corporate fluff. Just results.
+            <p className="text-subdued text-lg md:text-2xl mb-12 md:mb-16 leading-relaxed max-w-lg">
+              Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
             
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 gap-10">
               {[
-                { id: "01", title: "Neural Logic", desc: "Handles complex multi-step reasoning without failure." },
-                { id: "02", title: "Local Context", desc: "Native understanding of Ottawa neighborhoods and services." },
-                { id: "03", title: "Deep Integration", desc: "Syncs directly with your existing CRM and schedule." }
+                { title: "Neural Logic", desc: "Handles complex multi-step reasoning without failure." },
+                { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone and values." },
+                { title: "Deep Integration", desc: "Syncs directly with your existing CRM and calendar." }
               ].map((item, i) => (
                 <motion.div 
                   key={item.title}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex gap-6 group cursor-default"
+                  className="flex flex-col gap-2 border-l-2 border-slate-100 pl-8 hover:border-text transition-colors duration-500 cursor-default group"
                 >
-                  <span className="text-xs font-mono text-accent-3 pt-1">{item.id}</span>
-                  <div className="flex flex-col gap-1 border-l border-slate-100 pl-6 group-hover:border-accent-3 transition-colors duration-500">
-                    <h4 className="text-sm font-bold uppercase tracking-widest text-text">{item.title}</h4>
-                    <p className="text-sm text-subdued leading-relaxed">{item.desc}</p>
-                  </div>
+                  <h4 className="text-base font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
+                  <p className="text-base text-subdued leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
           </AnimatedSection>
         </div>
 
-        {/* Right: The Executive Console */}
+        {/* Right: The Friendly Agent Interface */}
         <div className="lg:col-span-7">
-          <AnimatedSection delay={0.2}>
-            <div className="relative w-full max-w-[650px] mx-auto lg:ml-auto">
+          <AnimatedSection delay={0.2} variant="scale-in">
+            <div className="relative w-full max-w-[600px] mx-auto lg:ml-auto">
               
-              {/* Console Frame */}
-              <div className="relative flex flex-col h-[600px] md:h-[700px] w-full bg-slate-950 rounded-xl shadow-[0_64px_128px_-32px_rgba(15,23,42,0.3)] overflow-hidden border border-slate-800">
+              {/* Try it Header */}
+              <div className="text-center mb-8">
+                <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Interactive Demo</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-text">Try out our Tharros Support Agent for yourself</h3>
+              </div>
+
+              {/* Chat Container */}
+              <div className="relative flex flex-col h-[550px] md:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_48px_96px_-24px_rgba(0,0,0,0.12)] overflow-hidden border border-slate-100">
                 
-                {/* Console Header */}
-                <div className="px-6 py-4 flex items-center justify-between border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
-                  <div className="flex items-center gap-4">
-                    <div className="w-2 h-2 rounded-full bg-accent-3 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                    <div className="flex flex-col">
-                      <h3 className="text-white font-bold text-xs uppercase tracking-[0.2em]">Tharros_Executive_Console</h3>
-                      <span className="text-[9px] font-mono text-slate-500 uppercase">Status: Operating_In_Parameters</span>
+                {/* Chat Header */}
+                <div className="px-5 md:px-8 py-4 md:py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                      <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-text font-bold text-sm md:text-base tracking-tight">Tharros Support Agent</h3>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <p className="text-slate-400 text-[10px] md:text-xs font-medium">Active now</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="hidden md:flex gap-1">
-                      {[0, 1, 2].map(i => <div key={i} className="w-3 h-1 bg-slate-800" />)}
-                    </div>
-                    <span className="text-[10px] font-mono text-accent-3">V.1.04</span>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-slate-200" />
+                    <div className="w-2 h-2 rounded-full bg-slate-200" />
                   </div>
                 </div>
 
-                {/* Messages Feed */}
+                {/* Messages Area */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] bg-fixed"
+                  className="flex-1 overflow-y-auto p-5 md:p-8 flex flex-col gap-5 md:gap-6 bg-slate-50/30 scroll-smooth"
                 >
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                       <motion.div
                         key={msg.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, ease: "circOut" }}
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
                         className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                       >
-                        <div className="flex items-center gap-3 mb-2 px-1">
-                          <span className={`text-[9px] font-mono uppercase tracking-widest ${msg.sender === "user" ? "text-accent-3" : "text-slate-500"}`}>
-                            {msg.sender === "user" ? "[USER_INPUT]" : "[AGENT_RESPONSE]"}
+                        <div className="flex items-center gap-2 mb-1 px-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            {msg.sender === "user" ? "You" : "Tharros Assistant"}
                           </span>
-                          <span className="text-[9px] font-mono text-slate-700">{msg.time}</span>
+                          <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
                         </div>
                         <div 
-                          className={`max-w-[90%] text-sm leading-relaxed p-4 md:p-5 border ${
+                          className={`max-w-[85%] md:max-w-[80%] text-[14px] md:text-base leading-relaxed p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-sm ${
                             msg.sender === "user" 
-                            ? "bg-slate-900/80 text-white border-accent-3/30 rounded-l-lg rounded-tr-sm" 
-                            : "bg-slate-900/40 text-slate-300 border-slate-800 rounded-r-lg rounded-tl-sm"
+                            ? "bg-gradient-to-br from-slate-800 to-slate-900 text-white rounded-tr-none" 
+                            : "bg-white text-text border border-slate-100 rounded-tl-none"
                           }`}
                         >
                           {msg.text}
@@ -288,52 +295,52 @@ export default function ChatDemoSection() {
                         animate={{ opacity: 1 }}
                         className="flex flex-col items-start"
                       >
-                        <div className="flex items-center gap-3 mb-2 px-1">
-                          <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">[AGENT_THINKING]</span>
+                        <div className="flex items-center gap-2 mb-1 px-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tharros Assistant</span>
                         </div>
-                        <div className="bg-slate-900/40 border border-slate-800 p-4 rounded-r-lg rounded-tl-sm flex items-center gap-4">
-                          <div className="flex gap-1">
+                        <div className="bg-white border border-slate-100 p-4 md:p-5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-3">
+                          <div className="flex gap-1.5">
                             {[0, 1, 2].map((i) => (
                               <motion.div 
                                 key={i}
                                 animate={{ 
-                                  opacity: [0.3, 1, 0.3],
-                                  scale: [1, 1.2, 1]
+                                  y: [0, -6, 0],
+                                  opacity: [0.4, 1, 0.4]
                                 }} 
                                 transition={{ 
                                   repeat: Infinity, 
-                                  duration: 1, 
-                                  delay: i * 0.2 
+                                  duration: 0.8, 
+                                  delay: i * 0.15 
                                 }} 
-                                className="w-1 h-1 bg-accent-3" 
+                                className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
                               />
                             ))}
                           </div>
-                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">Processing...</span>
+                          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Thinking...</span>
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                {/* Command Input Area */}
-                <div className="p-6 bg-slate-900/80 border-t border-slate-800 backdrop-blur-xl">
+                {/* Footer / Input Area */}
+                <div className="p-4 md:p-6 bg-white border-t border-slate-100">
                   
-                  {/* Quick Commands */}
+                  {/* Suggestions */}
                   <AnimatePresence>
                     {recommendedQuestions.length > 0 && !isTyping && (
                       <motion.div 
-                        initial={{ opacity: 0, y: 5 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-wrap gap-2 mb-6"
+                        className="flex flex-wrap gap-2 mb-4"
                       >
                         {recommendedQuestions.map((q) => (
                           <button
                             key={q}
                             onClick={() => handleSend(q)}
-                            className="px-3 py-1.5 bg-slate-800/50 border border-slate-700 rounded-sm text-[10px] font-mono text-slate-400 hover:text-white hover:border-accent-3 hover:bg-accent-3/10 transition-all text-left uppercase tracking-tighter"
+                            className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:border-slate-300 transition-all text-left whitespace-nowrap"
                           >
-                            &gt; {q}
+                            {q}
                           </button>
                         ))}
                       </motion.div>
@@ -342,41 +349,31 @@ export default function ChatDemoSection() {
 
                   <form 
                     onSubmit={(e) => handleSend(inputValue, e)}
-                    className="flex items-center gap-4"
+                    className="flex items-center gap-3"
                   >
                     <div className="flex-1 relative">
                       <input
                         type="text"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="ENTER_COMMAND_HERE..."
+                        placeholder="Type your message..."
                         disabled={!agentInstance || isTyping}
-                        className="w-full bg-slate-950 border border-slate-800 px-5 py-4 rounded-lg text-sm font-mono text-white placeholder:text-slate-700 focus:outline-none focus:border-accent-3/50 transition-all disabled:opacity-50"
+                        className="w-full bg-slate-50 border border-slate-200 px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[13px] md:text-sm text-text placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/5 focus:border-slate-300 transition-all disabled:opacity-50"
                       />
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1 pointer-events-none opacity-20">
-                        <div className="w-1 h-1 rounded-full bg-white" />
-                        <div className="w-1 h-1 rounded-full bg-white" />
-                      </div>
                     </div>
                     <button 
                       type="submit"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-[52px] w-[52px] flex items-center justify-center rounded-lg bg-accent-3 text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:bg-blue-500 transition-all disabled:opacity-10 active:scale-95 shrink-0"
+                      className="h-[44px] w-[44px] md:h-[52px] md:w-[52px] flex items-center justify-center rounded-xl md:rounded-2xl bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-20 active:scale-95 shrink-0"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
+                      <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                       </svg>
                     </button>
                   </form>
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-[8px] font-mono text-slate-600 uppercase tracking-widest">Encrypted_Channel: Secured</span>
-                    <span className="text-[8px] font-mono text-slate-600 uppercase tracking-widest">Powered_by: Tharros_Neural_Engine</span>
-                  </div>
                 </div>
               </div>
-
-              {/* Console Shadow/Reflection */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-4/5 h-8 bg-slate-900/10 blur-2xl rounded-full -z-10" />
             </div>
           </AnimatedSection>
         </div>
@@ -385,3 +382,4 @@ export default function ChatDemoSection() {
     </section>
   );
 }
+
