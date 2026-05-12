@@ -58,13 +58,11 @@ export default function ProblemSection() {
           <div className="flex flex-col items-center mb-16 md:mb-24">
             <span className="section-label mb-6">Process Inefficiencies</span>
             <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl leading-[1.1] tracking-tight">
-              Ottawa businesses should focus on{" "}
-              <span className="text-accent-3">growth, not manual busywork</span>
+              Ottawa businesses need <br className="hidden md:block" />
+              <span className="text-accent-3">Autonomous AI Agents,</span> not more tools.
             </h2>
             <p className="text-subdued text-center max-w-2xl text-lg md:text-xl leading-relaxed">
-              You&apos;re an expert at what you do. You shouldn&apos;t have to
-              spend your nights managing an inbox, a phone, and a busy
-              schedule.
+              Don&apos;t just add software. Deploy a workforce of specialized AI Agents to manage your inbox, your leads, and your schedule 24/7.
             </p>
           </div>
         </AnimatedSection>

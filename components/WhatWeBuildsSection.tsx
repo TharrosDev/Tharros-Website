@@ -57,12 +57,11 @@ export default function WhatWeBuildsSection() {
         <AnimatedSection>
           <p className="section-label mb-6 text-center">What we build</p>
           <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
-            Practical agents. Real outcomes.{" "}
+            Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}
             <span className="accent-text">No corporate fluff.</span>
           </h2>
           <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
-            Every agent we build is designed around one thing: the specific
-            problem your business needs solved.
+            Every AI Agent we deploy is custom-engineered to solve the high-impact operational gaps in your Ottawa business.
           </p>
         </AnimatedSection>
 

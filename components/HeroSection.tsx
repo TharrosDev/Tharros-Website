@@ -37,12 +37,12 @@ export default function HeroSection() {
           </motion.div>
 
           <h1 className="text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-6 md:mb-8">
-            Your business doesn&apos;t need a <br className="hidden md:block" />
-            <span className="text-slate-400">corporate AI strategy.</span>
+            Your business doesn&apos;t need <br className="hidden md:block" />
+            <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
-            It needs something that{" "}
+            It needs <span className="text-accent-3">AI Agents</span> that{" "}
             <span className="relative inline-block text-accent-3">
-              works
+              work
               <span className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-[3px] sm:h-[4px] bg-accent-3/20 rounded-full w-full" />
             </span>
             .
