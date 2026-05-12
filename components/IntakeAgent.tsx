@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import FooterSection from "./FooterSection";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import MobileChatConsole from "./MobileChatConsole";
+import AnimatedSection from "./AnimatedSection";
 
 // Relevance AI Configuration
 const REGION = process.env.NEXT_PUBLIC_RELEVANCE_REGION || "";
