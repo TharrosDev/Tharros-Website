@@ -265,7 +265,7 @@ export default function ChatDemoSection() {
                   modelType="Industrial Logic Demo"
                 />
               ) : (
-                <div className="relative flex flex-col h-[600px] md:h-[650px] xl:h-[780px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
+                <div className="relative flex flex-col h-[500px] md:h-[550px] xl:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
                   
                   {/* Chat Header - Glassmorphism Bento Style */}
                   <div className="px-5 md:px-10 py-4 md:py-5 border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
