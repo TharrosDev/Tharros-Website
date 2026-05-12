@@ -23,8 +23,9 @@ export const metadata: Metadata = {
     template: "%s | Tharros",
   },
   description:
-    "Tharros builds tailored AI agents that handle customer inquiries, capture leads, and automate office admin. Ottawa-based studio for practical, high-performance AI solutions.",
+    "Tharros builds tailored AI agents that handle customer inquiries, capture leads, and automate office admin. Keep it Canadian with our Ottawa-based studio for practical, high-performance AI solutions.",
   keywords: [
+    "Keep it Canadian",
     "AI Agents Ottawa",
     "Small Business Automation",
     "Lead Capture AI",

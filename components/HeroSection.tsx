@@ -25,6 +25,16 @@ export default function HeroSection() {
         <div className="lg:col-span-7 relative z-10 text-left">
 
 
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-6"
+          >
+            <span className="text-base leading-none">🇨🇦</span>
+            Keep it Canadian
+          </motion.div>
+
           <h1 className="text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-8">
             Your business doesn&apos;t need a <br />
             <span className="text-slate-400">corporate AI strategy.</span>
