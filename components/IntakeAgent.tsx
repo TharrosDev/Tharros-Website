@@ -18,12 +18,26 @@ type LocalMessage = {
   time: string;
 };
 
+interface AgentConfig {
+  recommended_questions?: string[];
+}
+
+interface AgentMetadata {
+  recommended_questions?: string[];
+}
+
+interface AgentResource {
+  config?: AgentConfig;
+  metadata?: AgentMetadata;
+  sendMessage: (text: string, task: Task<any, any> | null) => Promise<Task<any, any>>;
+}
+
 export default function IntakeAgent() {
   const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([]);
-  const [agentInstance, setAgentInstance] = useState<any>(null);
+  const [agentInstance, setAgentInstance] = useState<AgentResource | null>(null);
   const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
   const [initError, setInitError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,12 +45,17 @@ export default function IntakeAgent() {
 
   useEffect(() => {
     async function initRelevance() {
-      if (!REGION || !PROJECT || !AGENT_ID) return;
+      if (!REGION || !PROJECT || !AGENT_ID) {
+        setInitError("Environment configuration missing.");
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const storageKey = `r-intake-${AGENT_ID}`;
         const stored = JSON.parse(localStorage.getItem(storageKey) ?? "null");
         
-        let keyInstance;
+        let keyInstance: Key;
         if (typeof window !== "undefined" && stored?.embedKey && stored?.conversationPrefix) {
           keyInstance = new Key({
             key: stored.embedKey,
@@ -73,16 +92,16 @@ export default function IntakeAgent() {
         }
 
         const client = new Client(keyInstance);
-        let resource;
+        let resource: any;
         if ((keyInstance as any)._isWorkforce || stored?.isWorkforce) {
           resource = await Workforce.get(AGENT_ID, client);
         } else {
           resource = await Agent.get(AGENT_ID, client);
         }
-        setAgentInstance(resource);
+        setAgentInstance(resource as AgentResource);
 
-        const config = (resource as any).config || {};
-        const metadata = (resource as any).metadata || {};
+        const config = resource.config || {};
+        const metadata = resource.metadata || {};
         const initialQuestions = config.recommended_questions || metadata.recommended_questions || [];
         
         if (initialQuestions.length > 0) {
