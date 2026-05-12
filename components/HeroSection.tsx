@@ -5,7 +5,7 @@ import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[100svh] flex items-center justify-center px-6 pt-32 pb-24 overflow-hidden bg-white">
+    <section id="hero" className="relative min-h-[100svh] flex items-center justify-center px-6 pt-40 pb-24 overflow-hidden bg-white">
       {/* Background: Industrial Geometric Depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4 opacity-70" />
@@ -23,16 +23,7 @@ export default function HeroSection() {
         
         {/* Left: Authoritative Content */}
         <div className="lg:col-span-7 relative z-10 text-left">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg border border-slate-200 bg-white mb-10 shadow-sm cursor-default">
-            <div className="flex gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-3 animate-pulse" />
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-              System_Active // Ottawa_Unit_01
-            </span>
-          </div>
+
 
           <h1 className="text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-8">
             Your business doesn&apos;t need a <br />

@@ -24,42 +24,44 @@ Tharros is not a general-purpose tech agency. We are specialists in **Practical 
 *   **Workflow Integration:** Directly scheduling calls or visits via existing calendar tools.
 *   **Handoffs:** Knowing exactly when to escalate a complex conversation to the business owner.
 
-## 4. THE THARROS CONSOLE (USER EXPERIENCE)
+## 4. THE EXECUTIVE CONSOLE (USER EXPERIENCE)
 We deploy agents through a **"Confident Executive Console"** interface:
-*   **High-Contrast Authority:** A sleek, dark-mode command interface that mirrors professional high-stakes environments.
-*   **Linear Precision:** No "bubbly" or social-style chat elements. We use structured, geometric layouts that prioritize information density and clarity.
-*   **Micro-Interactions:** Premium "weighted" animations and magnetic interactions that make the AI feel substantial and reliable.
+*   **Industrial Aesthetics:** A sleek, dark-mode command interface that mirrors professional high-stakes environments. No "bubbly" or social-style chat elements.
+*   **Bento Grid Architecture:** Structured, geometric layouts that prioritize information density and clarity.
+*   **Weighted Micro-Interactions:** Premium magnetic interactions and staggered reveals that make the AI feel substantial, reliable, and "built-to-order."
 
 ## 5. WHAT WE MAKE (PRODUCT LINEUP)
-We build three primary tiers of **Tailored** AI Agents:
+We build three primary types of **Tailored** AI Agents:
 
-### Tier 1: The Customer Service Agent
-*   **Focus:** Answering FAQs and providing info.
-*   **Value:** Reduces phone/email volume by up to 70%.
-*   **Best for:** HVAC, Plumbers, Retail, Local Services.
+### Type 1: The Customer Inquiry Agent
+*   **Tagline:** "Never let a question go unanswered."
+*   **Focus:** Answering FAQs regarding services, pricing, availability, and location via website chat or messaging channels.
+*   **Value:** Reduces phone/email volume by answering routine questions instantly.
+*   **Best for:** Plumbers, HVAC, Cleaning services, Landscapers.
 
-### Tier 2: The Lead Capture & Qualifier
-*   **Focus:** Turning visitors into booked consultations.
-*   **Value:** Prevents "Lead Leak" (customers calling a competitor because they didn't get an immediate answer).
-*   **Best for:** Lawyers, Accountants, Consultants, Real Estate.
+### Type 2: The Lead Capture Agent
+*   **Tagline:** "Turn website visitors into qualified leads."
+*   **Focus:** Greeting visitors, asking smart qualifying questions, and coordinating follow-ups or collecting contact info automatically.
+*   **Value:** Prevents "Lead Leak" by engaging customers while the owner is on the job or asleep.
+*   **Best for:** Lawyers, Accountants, Consultants, Contractors.
 
-### Tier 3: The After-Hours Intake Specialist
-*   **Focus:** Managing the "Off-Clock" business.
-*   **Value:** Summarizes overnight leads for a "Zero Inbox" start to the workday.
-*   **Best for:** Emergency trades, Property management, Clinics.
+### Type 3: The After-Hours Intake Agent
+*   **Tagline:** "Capture every lead, even when you're off the clock."
+*   **Focus:** Managing inbound messages after business hours, collecting job details/urgency, and providing a clean summary for the morning.
+*   **Value:** Ensures a "Zero Inbox" start to the workday by managing the "Off-Clock" business.
+*   **Best for:** Emergency trades, Property managers, Auto repair, Clinics.
 
 ## 6. THE THARROS ADVANTAGE (WHY CLIENTS CHOOSE US)
-*   **Speed (1-2 Week Turnaround):** We don't do 6-week "enterprise rollouts." We build, test, and launch within the week.
-*   **Done-For-You (Zero Code):** The client never touches a line of code. We handle the technical heavy lifting; the client just approves the agent's knowledge.
-*   **Ottawa-Local Context:** We understand the local market. We know the difference between Kanata, Orleans, and the Glebe. We build agents that sound like neighbors, not robots in a call center.
-*   **ROI-Focused:** We don't build tech for tech's sake. If an agent doesn't save time or make money, we don't build it.
+*   **Fast Turnaround (1-2 Weeks):** We ship while others are still quoting. Small businesses cannot afford to wait months for automation.
+*   **No Code Required (Done-For-You):** The client never touches a line of code or a dashboard. We handle the technical heavy lifting; the client just approves the agent's knowledge in plain English.
+*   **Ottawa-Local Context:** We know the difference between Kanata trades, Centretown law offices, and the Glebe. We build agents that sound like neighbors, not robots in a call center.
+*   **ROI-Focused:** We don't build tech for tech's sake. If an agent doesn't save time or recover revenue, we don't build it.
 
 ## 7. VOICE & PERSONALITY GUIDELINES
 Tharros agents embody a **Confident Executive** brand voice:
 *   **Authoritative & Decisive:** No corporate jargon or "AI-filler." The agent speaks with the confidence of an expert.
-*   **Professional but Accessible:** Clear, direct language focused on solving problems.
-*   **High-Stakes Precision:** Every word matters. The agent is concise and avoids unnecessary fluff.
+*   **Industrial Precision:** Every word matters. The agent is concise and avoids unnecessary fluff.
 *   **Mission-Oriented:** Focused exclusively on the business objective (booking the call, answering the query, qualifying the lead).
 
 ## 8. SUMMARY FOR AGENT MEMORY
-"Tharros is an Ottawa-based AI studio that builds specialized, practical, and **Tailored** agents for small businesses. We deploy high-performance 'Executive Consoles' that focus on lead capture, customer service, and admin automation. Our value lies in speed (1-2 week launch), local expertise, and a premium 'done-for-you' service model that removes technical complexity while maintaining absolute brand authority."
+"Tharros is an Ottawa-based AI studio building specialized, practical, and **Tailored** agents for small businesses. We deploy high-performance 'Executive Consoles' that focus on lead capture, customer service, and admin automation. Our value lies in speed (1-2 week launch), local expertise (Kanata to the Glebe), and a premium 'done-for-you' service model that removes technical complexity while maintaining absolute brand authority."
