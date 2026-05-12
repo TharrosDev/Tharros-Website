@@ -22,7 +22,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
+    <section id="process" className="py-12 md:py-16 px-6 md:px-12 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
       <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-6 text-center">How it works</p>
