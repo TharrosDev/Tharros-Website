@@ -202,24 +202,31 @@ export default function ChatDemoSection() {
       
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 xl:gap-24 items-center">
         
-        {/* Left: Authoritative Capabilities */}
-        <div className="lg:col-span-5">
+        {/* Left: Authoritative Capabilities & Intro */}
+        <div className="lg:col-span-5 flex flex-col justify-center">
           <AnimatedSection>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-text animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text">Live Deployment</span>
             </div>
             
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-text mb-10 leading-[1] tracking-tighter">
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-text mb-8 leading-[1] tracking-tighter">
               An agent that <br />
               <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-lg md:text-2xl xl:text-3xl mb-12 md:mb-16 leading-relaxed max-w-lg xl:max-w-xl">
+            <p className="text-subdued text-lg md:text-xl xl:text-2xl mb-10 leading-relaxed max-w-lg">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
+
+            {/* Reorganized: Demo Header now on the left */}
+            <div className="mb-12 pt-8 border-t border-slate-100">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-text tracking-tight mb-4">Interact with our <span className="text-accent-3">Light Model</span></h3>
+              <p className="text-sm text-subdued max-w-md">Experience the responsiveness and brand alignment of a Tharros-engineered conversational interface.</p>
+            </div>
             
-            <div className="grid grid-cols-1 gap-10">
+            <div className="grid grid-cols-1 gap-8">
               {[
                 { title: "Neural Logic", desc: "Handles complex multi-step reasoning without failure." },
                 { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone and values." },
@@ -230,27 +237,21 @@ export default function ChatDemoSection() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex flex-col gap-2 border-l-2 border-slate-100 pl-8 hover:border-text transition-colors duration-500 cursor-default group"
+                  className="flex flex-col gap-1 border-l-2 border-slate-100 pl-6 hover:border-text transition-colors duration-500 cursor-default group"
                 >
-                  <h4 className="text-base font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
-                  <p className="text-base text-subdued leading-relaxed">{item.desc}</p>
+                  <h4 className="text-sm font-bold uppercase tracking-widest text-text group-hover:text-accent-3 transition-colors">{item.title}</h4>
+                  <p className="text-sm text-subdued leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
           </AnimatedSection>
         </div>
 
-        {/* Right: The Friendly Agent Interface */}
+        {/* Right: The Focused Agent Console */}
         <div className="lg:col-span-7">
           <AnimatedSection delay={0.2} variant="scale-in">
             <div className="relative w-full max-w-[600px] xl:max-w-[760px] mx-auto lg:ml-auto">
               
-              {/* Try it Header */}
-              <div className="text-center mb-6 md:mb-10 px-2">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
-                <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-text tracking-tight">Interact with our <span className="text-accent-3">Light Model</span></h3>
-              </div>
-
               {/* Chat Container */}
               {isMobile ? (
                 <MobileChatConsole

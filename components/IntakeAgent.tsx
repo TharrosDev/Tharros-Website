@@ -230,14 +230,15 @@ export default function IntakeAgent() {
           />
         </div>
 
-        <div className="w-full max-w-7xl relative z-10 flex flex-col h-auto md:h-[95vh] overflow-hidden max-w-full">
-          {/* Premium Header - Hidden on Mobile if Console takes over */}
-          {!isMobile && (
-            <div className="text-center mb-8 md:mb-10">
+        <div className="w-full max-w-7xl relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 xl:gap-20 items-center">
+          
+          {/* Left: Briefing & Strategy Header */}
+          <div className="lg:col-span-5">
+            <AnimatedSection>
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white border border-slate-200/60 shadow-sm backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-6"
+                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white border border-slate-200/60 shadow-sm backdrop-blur-md text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-8"
               >
                 <span className="flex gap-1">
                   <span className="w-1 h-1 rounded-full bg-accent-3 animate-pulse" />
@@ -245,200 +246,222 @@ export default function IntakeAgent() {
                 </span>
                 Secure_Intake // System_Active
               </motion.div>
-              <h1 className="text-4xl md:text-6xl font-bold text-text tracking-tighter mb-4 leading-[1.1]">
-                Brief our <span className="text-accent-3 relative inline-block">
+
+              <h1 className="text-5xl md:text-7xl font-bold text-text tracking-tighter mb-8 leading-[1.1]">
+                Brief our <br />
+                <span className="text-accent-3 relative inline-block">
                   specialist
                   <svg className="absolute -bottom-2 left-0 w-full h-2 text-accent-3/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                     <path d="M0 5 Q 50 0 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
                   </svg>
                 </span>
               </h1>
-              <p className="text-subdued text-sm md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
-                Brief our specialist on your business objectives. Your briefing will be securely analyzed and forwarded to our executive team for immediate review and outreach.
-              </p>
-            </div>
-          )}
-          
-          {isMobile ? (
-            <div className="flex-1 flex flex-col pt-4">
-              <MobileChatConsole
-                messages={messages}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                handleSend={handleSend}
-                isTyping={isTyping}
-                recommendedQuestions={recommendedQuestions}
-                title="Intake Specialist"
-                subtitle="Active System"
-                modelType="CRM Intake Agent Model"
-                isLoading={isLoading}
-                height="h-[75dvh]"
-              />
-              {initError && (
-                <div className="mt-4 p-4 bg-white rounded-2xl border border-red-100 text-center">
-                   <p className="text-red-500 text-xs font-bold">{initError}</p>
-                   <button onClick={() => window.location.reload()} className="mt-2 text-[10px] uppercase tracking-widest font-bold text-slate-400">Retry</button>
-                </div>
-              )}
-            </div>
-          ) : (
-            /* Chat Container: High-End Industrial Console */
-            <div className="flex-1 flex flex-col bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] overflow-hidden relative">
-              
-              {/* Console Glass Header */}
-              <div className="px-6 md:px-10 py-4 md:py-4 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between z-20">
-                <div className="flex items-center gap-4">
-                  <div className="relative">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                      </svg>
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-text leading-none mb-1">Tharros Intake Specialist</h3>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Active System</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="hidden sm:flex flex-col items-end px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
-                    <span className="text-[10px] font-bold text-text uppercase">CRM Intake Agent Model</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Cinematic Messages Area */}
-              <div 
-                ref={scrollRef}
-                className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-[#fdfdfd] relative"
-              >
-                {/* Subtle Texture Overlay */}
-                <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+              <p className="text-subdued text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-lg">
+                Brief our specialist on your business objectives. Your briefing will be securely analyzed and forwarded to our executive team for immediate review.
+              </p>
+
+              <div className="grid grid-cols-1 gap-8">
+                {[
+                  { label: "01", title: "Objective Definition", desc: "Outline your primary lead capture and automation goals." },
+                  { label: "02", title: "Brand Alignment", desc: "Define the tone and professional guardrails for your agent." },
+                  { label: "03", title: "Deployment Specs", desc: "Identify the high-traffic areas for your agent's operation." }
+                ].map((item, i) => (
+                  <div key={item.title} className="flex gap-6 group">
+                    <span className="text-[10px] font-black text-slate-200 group-hover:text-accent-3 transition-colors pt-1.5">{item.label}</span>
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-xs font-bold uppercase tracking-widest text-text">{item.title}</h4>
+                      <p className="text-sm text-subdued leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+          
+          {/* Right: The Intake Console */}
+          <div className="lg:col-span-7 w-full h-full min-h-[600px] md:min-h-[750px] flex flex-col">
+            {isMobile ? (
+              <div className="flex-1 flex flex-col pt-4">
+                <MobileChatConsole
+                  messages={messages}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  handleSend={handleSend}
+                  isTyping={isTyping}
+                  recommendedQuestions={recommendedQuestions}
+                  title="Intake Specialist"
+                  subtitle="Active System"
+                  modelType="CRM Intake Agent Model"
+                  isLoading={isLoading}
+                  height="h-[75dvh]"
+                />
+                {initError && (
+                  <div className="mt-4 p-4 bg-white rounded-2xl border border-red-100 text-center">
+                    <p className="text-red-500 text-xs font-bold">{initError}</p>
+                    <button onClick={() => window.location.reload()} className="mt-2 text-[10px] uppercase tracking-widest font-bold text-slate-400">Retry</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* Chat Container: High-End Industrial Console */
+              <div className="flex-1 flex flex-col bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] overflow-hidden relative min-h-[650px] xl:min-h-[780px]">
                 
-                {isLoading ? (
-                  <div className="flex-1 flex flex-col items-center justify-center gap-6">
-                    <div className="relative w-16 h-16">
-                      <div className="absolute inset-0 rounded-full border-2 border-slate-100" />
-                      <motion.div 
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-3" 
-                      />
+                {/* Console Glass Header */}
+                <div className="px-6 md:px-10 py-4 md:py-4 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between z-20">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                      </div>
                     </div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em] animate-pulse">Syncing_Neural_Parameters...</p>
-                  </div>
-                ) : initError ? (
-                  <div className="flex-1 flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl border border-slate-100 m-4 shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center mb-6">
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                      </svg>
+                    <div>
+                      <h3 className="text-base font-bold text-text leading-none mb-1">Tharros Intake Specialist</h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Active System</span>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold text-text mb-2 tracking-tight">Initialization Halted</h3>
-                    <p className="text-subdued text-sm max-w-sm mb-8 leading-relaxed">{initError}</p>
-                    <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-slate-800 transition-colors">
-                      Reset Protocol
-                    </button>
                   </div>
-                ) : (
-                  <AnimatePresence initial={false}>
-                    {messages.map((msg, i) => (
-                      <motion.div
-                        key={msg.id}
-                        initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                        className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-                      >
-                        <div className={`max-w-[90%] md:max-w-[80%] text-[15px] md:text-[17px] leading-relaxed px-6 py-4 md:px-8 md:py-5 rounded-[1.8rem] border shadow-sm ${
-                          msg.sender === "user" 
-                          ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-900/10" 
-                          : "bg-white text-text border-slate-100 rounded-tl-none shadow-slate-100/50"
-                        }`}>
-                          {msg.text}
-                        </div>
-                        <span className="text-[10px] text-slate-300 font-bold mt-2.5 px-2 uppercase tracking-widest">{msg.time}</span>
-                      </motion.div>
-                    ))}
-                    {isTyping && (
+                  <div className="flex items-center gap-3">
+                    <div className="hidden sm:flex flex-col items-end px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl">
+                      <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
+                      <span className="text-[10px] font-bold text-text uppercase">CRM Intake Agent Model</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cinematic Messages Area */}
+                <div 
+                  ref={scrollRef}
+                  className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-[#fdfdfd] relative"
+                >
+                  {/* Subtle Texture Overlay */}
+                  <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+                  
+                  {isLoading ? (
+                    <div className="flex-1 flex flex-col items-center justify-center gap-6">
+                      <div className="relative w-16 h-16">
+                        <div className="absolute inset-0 rounded-full border-2 border-slate-100" />
+                        <motion.div 
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent-3" 
+                        />
+                      </div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em] animate-pulse">Syncing_Neural_Parameters...</p>
+                    </div>
+                  ) : initError ? (
+                    <div className="flex-1 flex flex-col items-center justify-center p-12 text-center bg-white rounded-3xl border border-slate-100 m-4 shadow-sm">
+                      <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-500 flex items-center justify-center mb-6">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold text-text mb-2 tracking-tight">Initialization Halted</h3>
+                      <p className="text-subdued text-sm max-w-sm mb-8 leading-relaxed">{initError}</p>
+                      <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-slate-800 transition-colors">
+                        Reset Protocol
+                      </button>
+                    </div>
+                  ) : (
+                    <AnimatePresence initial={false}>
+                      {messages.map((msg, i) => (
+                        <motion.div
+                          key={msg.id}
+                          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                          className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                        >
+                          <div className={`max-w-[90%] md:max-w-[80%] text-[15px] md:text-[17px] leading-relaxed px-6 py-4 md:px-8 md:py-5 rounded-[1.8rem] border shadow-sm ${
+                            msg.sender === "user" 
+                            ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-900/10" 
+                            : "bg-white text-text border-slate-100 rounded-tl-none shadow-slate-100/50"
+                          }`}>
+                            {msg.text}
+                          </div>
+                          <span className="text-[10px] text-slate-300 font-bold mt-2.5 px-2 uppercase tracking-widest">{msg.time}</span>
+                        </motion.div>
+                      ))}
+                      {isTyping && (
+                        <motion.div 
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className="flex gap-2 p-4 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm"
+                        >
+                          {[0, 1, 2].map((_, index) => (
+                            <motion.div 
+                              key={index} 
+                              animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }} 
+                              transition={{ repeat: Infinity, duration: 1, delay: index * 0.15 }} 
+                              className="w-2 h-2 bg-accent-3 rounded-full" 
+                            />
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  )}
+                </div>
+
+                {/* Premium Input Dashboard */}
+                <div className="p-6 md:p-8 border-t border-slate-100 bg-white relative z-20">
+                  {/* Quick Commands (Recommended Questions) */}
+                  <AnimatePresence>
+                    {recommendedQuestions.length > 0 && !isTyping && (
                       <motion.div 
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex gap-2 p-4 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex overflow-x-auto no-scrollbar gap-3 mb-8 pb-1"
                       >
-                        {[0, 1, 2].map((_, index) => (
-                          <motion.div 
-                            key={index} 
-                            animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }} 
-                            transition={{ repeat: Infinity, duration: 1, delay: index * 0.15 }} 
-                            className="w-2 h-2 bg-accent-3 rounded-full" 
-                          />
+                        {recommendedQuestions.map((q) => (
+                          <button 
+                            key={q} 
+                            onClick={() => handleSend(q)} 
+                            className="px-5 py-2.5 bg-white border border-slate-200 rounded-full text-[11px] font-bold text-slate-500 hover:border-accent-3 hover:text-accent-3 hover:shadow-lg hover:shadow-accent-3/5 transition-all whitespace-nowrap active:scale-95"
+                          >
+                            {q}
+                          </button>
                         ))}
                       </motion.div>
                     )}
                   </AnimatePresence>
-                )}
-              </div>
 
-              {/* Premium Input Dashboard */}
-              <div className="p-6 md:p-8 border-t border-slate-100 bg-white relative z-20">
-                {/* Quick Commands (Recommended Questions) */}
-                <AnimatePresence>
-                  {recommendedQuestions.length > 0 && !isTyping && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="flex overflow-x-auto no-scrollbar gap-3 mb-8 pb-1"
-                    >
-                      {recommendedQuestions.map((q) => (
-                        <button 
-                          key={q} 
-                          onClick={() => handleSend(q)} 
-                          className="px-5 py-2.5 bg-white border border-slate-200 rounded-full text-[11px] font-bold text-slate-500 hover:border-accent-3 hover:text-accent-3 hover:shadow-lg hover:shadow-accent-3/5 transition-all whitespace-nowrap active:scale-95"
-                        >
-                          {q}
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <form 
-                  onSubmit={(e) => handleSend(inputValue, e)} 
-                  className="flex items-center gap-4 bg-slate-50 p-2 md:p-2.5 rounded-[2rem] border border-slate-100 focus-within:border-accent-3/30 focus-within:bg-white focus-within:shadow-2xl focus-within:shadow-slate-200/50 transition-all duration-500"
-                >
-                  <div className="pl-4 text-slate-300">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Describe your project goals or ask about specific features..."
-                    className="flex-1 bg-transparent px-2 py-3 text-[15px] md:text-base text-text placeholder:text-slate-400 focus:outline-none"
-                  />
-                  <button 
-                    type="submit" 
-                    disabled={!inputValue.trim() || isTyping || !agentInstance} 
-                    className="h-12 w-12 md:h-14 md:w-14 flex items-center justify-center rounded-[1.4rem] bg-slate-900 text-white shadow-xl hover:bg-slate-800 disabled:opacity-20 transition-all active:scale-95 group"
+                  <form 
+                    onSubmit={(e) => handleSend(inputValue, e)} 
+                    className="flex items-center gap-4 bg-slate-50 p-2 md:p-2.5 rounded-[2rem] border border-slate-100 focus-within:border-accent-3/30 focus-within:bg-white focus-within:shadow-2xl focus-within:shadow-slate-200/50 transition-all duration-500"
                   >
-                    <svg width="22" height="22" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <path d="m22 2-7 20-4-9-9-4Z" />
-                      <path d="M22 2 11 13" />
-                    </svg>
-                  </button>
-                </form>
+                    <div className="pl-4 text-slate-300">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Describe your project goals or ask about specific features..."
+                      className="flex-1 bg-transparent px-2 py-3 text-[15px] md:text-base text-text placeholder:text-slate-400 focus:outline-none"
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={!inputValue.trim() || isTyping || !agentInstance} 
+                      className="h-12 w-12 md:h-14 md:w-14 flex items-center justify-center rounded-[1.4rem] bg-slate-900 text-white shadow-xl hover:bg-slate-800 disabled:opacity-20 transition-all active:scale-95 group"
+                    >
+                      <svg width="22" height="22" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <path d="m22 2-7 20-4-9-9-4Z" />
+                        <path d="M22 2 11 13" />
+                      </svg>
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
 
