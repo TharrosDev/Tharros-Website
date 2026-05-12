@@ -44,7 +44,7 @@ export default function MobileChatConsole({
   }, [messages, isTyping]);
 
   return (
-    <div className="flex flex-col fixed bottom-0 left-0 right-0 h-[45dvh] md:h-[65dvh] w-full max-w-full bg-white rounded-t-[1.5rem] md:rounded-[1.5rem] border-t md:border border-slate-100 shadow-2xl overflow-hidden z-[100] mx-auto pb-safe">
+    <div className="flex flex-col h-[45dvh] md:h-[65dvh] w-full max-w-full bg-white rounded-[1.5rem] border border-slate-100 shadow-2xl overflow-hidden relative mx-auto">
       {/* Header */}
       <div className="px-4 py-3 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">

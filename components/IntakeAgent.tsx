@@ -226,7 +226,7 @@ export default function IntakeAgent() {
           />
         </div>
 
-        <div className="w-full max-w-7xl relative z-10 flex flex-col h-[88dvh] md:h-[98vh] overflow-hidden max-w-full">
+        <div className="w-full max-w-7xl relative z-10 flex flex-col h-auto md:h-[98vh] overflow-x-hidden max-w-full">
           {/* Premium Header - Hidden on Mobile if Console takes over */}
           {!isMobile && (
             <div className="text-center mb-8 md:mb-10">
