@@ -9,18 +9,20 @@
 
 ## 🎨 Design System & Code Style
 
-- **Philosophy**: "Confident Executive" — Minimalist, sharp, high-contrast, and industrial. 
-- **Aesthetics**: Avoid "bubbly" or "soft" UI. Use sharp corners (`rounded-xl` or smaller), clean borders, and high-quality glassmorphism.
+- ** Philosophy**: "Industrial Executive" — High-stakes precision, minimalist, and command-oriented.
+- **Aesthetics**: Avoid "soft" UI. Use sharp corners, industrial motifs (**Scanlines**, **Geometric Grid Overlays**), and high-contrast glassmorphism.
 - **Layout Architecture**: 
   - Prefer **Bento Grid** layouts for info-dense sections.
-  - Use asymmetric spans (e.g., `md:col-span-8` vs `md:col-span-4`) to create visual hierarchy.
+  - Implement **Progressive Hydration** using `components/wrappers` for heavy AI logic.
 - **Components**: 
-  - Use `motion/react` for purposeful, weighted animations (prefer `ease: "circOut"` or `ease: "easeInOut"`).
-  - All interactive components (Buttons, Logos) should use the `Magnetic` wrapper for premium feel.
-  - Always mark components using Framer Motion with `"use client";`.
-- **Formatting**: Standard TypeScript/React patterns. Use Tailwind for all styling.
-- **Terminology**: Always use **"Tailored"** instead of "Bespoke".
-- **SEO**: All pages must maintain metadata, sitemap, and robots configurations pointing to `tharros.ca`.
+  - Use `motion/react` for weighted animations with `will-change: transform` for GPU acceleration.
+  - All heavy interactive engines (Chat, Intake) must use **Dynamic Imports** with `ssr: false`.
+  - Use **Tailwind CSS 4.0** utility patterns.
+- **Performance**: 
+  - Enforce `content-visibility: auto` on non-hero landing sections to optimize mobile TTI.
+  - All background animations must be hardware-accelerated.
+- **Terminology**: Always use **"Tailored"** or **"Autonomous"**.
+- **SEO**: Use the multi-layered JSON-LD suite (LocalBusiness, Organization, Service) for local search dominance.
 
 ## 🤖 Agent Logic
 
