@@ -133,6 +133,7 @@ export default function NavBar() {
             animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => setMobileOpen(false)}
             className="fixed inset-0 z-[55] bg-white/80 flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center justify-center gap-10 w-full px-6">
