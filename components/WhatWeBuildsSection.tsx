@@ -50,37 +50,37 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="section-padding px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="solutions" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
       {/* Decorative Flow */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
-      <div className="max-w-7xl mx-auto relative">
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-6 text-center">What we build</p>
-          <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
+          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
             Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}
             <span className="accent-text">No corporate fluff.</span>
           </h2>
-          <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-16 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
             Every AI Agent we deploy is custom-engineered to solve the high-impact operational gaps in your Ottawa business.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-14">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name}>
               <motion.div 
                 whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="clean-card p-8 md:p-12 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
+                className="clean-card p-8 md:p-12 xl:p-16 h-full flex flex-col gap-8 group cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
                 <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 scale-110">
                   {agent.icon}
                 </div>
                 <div className="space-y-4">
                   <p className="section-label text-xs font-bold tracking-[0.2em]">{agent.tagline}</p>
-                  <h3 className="text-2xl md:text-3xl font-bold text-text leading-tight">
+                  <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-text leading-tight">
                     {agent.name}
                   </h3>
-                  <p className="text-subdued text-base md:text-lg leading-relaxed">
+                  <p className="text-subdued text-base md:text-lg xl:text-xl leading-relaxed">
                     {agent.description}
                   </p>
                 </div>

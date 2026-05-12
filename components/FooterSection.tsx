@@ -18,16 +18,16 @@ export default function FooterSection() {
 
   return (
     <footer id="contact" className="section-padding px-6 md:px-12 relative overflow-hidden bg-bg">
-      <div className="max-w-4xl mx-auto text-center relative">
+      <div className="max-w-4xl xl:max-w-5xl mx-auto text-center relative">
         <AnimatedSection variant="scale-in">
           <p className="section-label mb-6">
             Ready to stop missing leads?
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 leading-tight">
+          <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-text mb-6 leading-tight">
             Let&apos;s build something{" "}
             <span className="accent-text">that works for you</span>
           </h2>
-          <p className="text-subdued text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+          <p className="text-subdued text-base md:text-lg xl:text-xl mb-10 max-w-xl xl:max-w-2xl mx-auto leading-relaxed">
             Set up a free initial consultation. We&apos;ll listen to your business,
             identify the best use case, and give you a clear sense of what&apos;s
             possible, no obligation.

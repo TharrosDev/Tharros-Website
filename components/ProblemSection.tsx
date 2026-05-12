@@ -48,31 +48,31 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="section-padding px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="problem" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
       {/* Subtle Background Accents */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
           <div className="flex flex-col items-center mb-16 md:mb-24">
             <span className="section-label mb-6">Process Inefficiencies</span>
-            <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl leading-[1.1] tracking-tight">
+            <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl leading-[1.1] tracking-tight">
               Ottawa businesses need <br className="hidden md:block" />
               <span className="text-accent-3">Autonomous AI Agents,</span> not more wasted time.
             </h2>
-            <p className="text-subdued text-center max-w-2xl text-lg md:text-xl leading-relaxed">
+            <p className="text-subdued text-center max-w-2xl xl:max-w-3xl text-lg md:text-xl xl:text-2xl leading-relaxed">
               Don&apos;t just add software. Deploy a workforce of specialized AI Agents to manage your inbox, your leads, and your schedule 24/7.
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-14">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline}>
               <motion.div 
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="clean-card p-10 md:p-12 h-full flex flex-col gap-6 group relative overflow-hidden cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
+                className="clean-card p-10 md:p-12 xl:p-16 h-full flex flex-col gap-6 group relative overflow-hidden cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
                 {/* Accent left stripe */}
                 <div className="absolute left-0 top-10 bottom-10 w-[4px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -92,8 +92,8 @@ export default function ProblemSection() {
                     <span className="scale-125">{pain.icon}</span>
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>
-                  <p className="text-subdued leading-relaxed text-base">{pain.body}</p>
+                  <h3 className="text-xl md:text-2xl xl:text-3xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>
+                  <p className="text-subdued leading-relaxed text-base xl:text-lg">{pain.body}</p>
                 </div>
               </motion.div>
             </AnimatedSection>

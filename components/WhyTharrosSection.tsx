@@ -33,28 +33,28 @@ const pillars = [
 
 export default function WhyTharrosSection() {
   return (
-    <section id="why" className="section-padding px-6 md:px-12 relative overflow-hidden bg-white">
-      <div className="max-w-7xl mx-auto relative">
+    <section id="why" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-6 text-center">Why Tharros</p>
-          <h2 className="text-4xl md:text-6xl font-bold text-center text-text mb-8 max-w-4xl mx-auto leading-[1.1] tracking-tight">
+          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
             Built for <span className="accent-text">small businesses</span>
           </h2>
-          <p className="text-subdued text-center max-w-2xl mx-auto mb-16 md:mb-24 text-lg md:text-xl leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-16 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
             We solve specific problems for your business, affordably, and
             efficiently.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-16 md:mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-14 mb-16 md:mb-24 xl:mb-32">
           {pillars.map((pillar, i) => (
             <AnimatedSection key={pillar.headline}>
-              <div className="clean-card p-8 md:p-12 h-full flex flex-col gap-6 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
+              <div className="clean-card p-8 md:p-12 xl:p-16 h-full flex flex-col gap-6 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
                 <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
                   <span aria-hidden="true" className="scale-125">{pillar.icon}</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold text-text leading-tight">{pillar.headline}</h3>
-                <p className="text-subdued text-base leading-relaxed">{pillar.body}</p>
+                <h3 className="text-xl md:text-2xl xl:text-3xl font-bold text-text leading-tight">{pillar.headline}</h3>
+                <p className="text-subdued text-base xl:text-lg leading-relaxed">{pillar.body}</p>
               </div>
             </AnimatedSection>
           ))}
@@ -62,15 +62,15 @@ export default function WhyTharrosSection() {
 
         {/* Founder quote */}
         <AnimatedSection variant="scale-in">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-slate-900 rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl">
+          <div className="max-w-4xl xl:max-w-5xl mx-auto">
+            <div className="bg-slate-900 rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-16 xl:p-24 text-center relative overflow-hidden shadow-2xl">
               {/* Subtle background pattern */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "32px 32px" }} />
               
               <p className="text-accent-3 text-6xl mb-6 leading-none select-none opacity-50" aria-hidden="true">
                 &ldquo;
               </p>
-              <p className="text-white text-xl md:text-3xl leading-[1.4] mb-12 font-medium max-w-3xl mx-auto relative z-10 tracking-tight">
+              <p className="text-white text-xl md:text-3xl xl:text-4xl leading-[1.4] mb-12 font-medium max-w-3xl xl:max-w-4xl mx-auto relative z-10 tracking-tight">
                 Ottawa small businesses don&apos;t need a corporate AI strategy. They
                 need something that works on Tuesday morning when the phone
                 won&apos;t stop ringing.

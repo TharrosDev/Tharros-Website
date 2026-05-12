@@ -20,10 +20,10 @@ export default function HeroSection() {
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-accent-3/5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
-        
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10 flex flex-col items-center text-center">
+
         {/* Authoritative Content */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl xl:max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ export default function HeroSection() {
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl md:text-8xl font-bold tracking-tight text-text mb-8">
+          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tight text-text mb-8">
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
@@ -46,7 +46,7 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-base md:text-2xl text-subdued max-w-2xl mx-auto mb-10 md:mb-14 leading-relaxed font-medium">
+          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-14 leading-relaxed font-medium">
             Tharros builds <span className="text-text">Autonomous AI Agents</span> for Ottawa small businesses,
             automating customer inquiries, office admin, and repetitive
             back-office tasks. No code required.
@@ -56,7 +56,7 @@ export default function HeroSection() {
             <a
               href="/intake"
               aria-label="Start your AI intake journey"
-              className="primary-button px-10 py-5 md:px-12 md:py-6 text-base md:text-xl w-full sm:w-auto"
+              className="primary-button px-10 py-5 md:px-12 md:py-6 xl:px-16 xl:py-7 text-base md:text-xl xl:text-2xl w-full sm:w-auto"
             >
               Start your journey
             </a>

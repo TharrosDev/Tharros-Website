@@ -241,6 +241,13 @@ body {
     }
   }
 
+  @media (min-width: 1280px) {
+    .section-padding {
+      padding-top: 11rem;
+      padding-bottom: 11rem;
+    }
+  }
+
   .gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;

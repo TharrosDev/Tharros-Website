@@ -185,12 +185,12 @@ export default function ChatDemoSection() {
   };
 
   return (
-    <section id="demo" className="section-padding px-4 md:px-12 relative overflow-hidden bg-white industrial-grid">
+    <section id="demo" className="section-padding px-4 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       {/* Background Sophistication */}
       <div className="scanline" />
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center">
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 xl:gap-24 items-center">
         
         {/* Left: Authoritative Capabilities */}
         <div className="lg:col-span-5">
@@ -200,12 +200,12 @@ export default function ChatDemoSection() {
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text">Live Deployment</span>
             </div>
             
-            <h2 className="text-5xl md:text-7xl font-bold text-text mb-10 leading-[1] tracking-tighter">
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-text mb-10 leading-[1] tracking-tighter">
               An agent that <br />
               <span className="text-slate-400">commands results.</span>
             </h2>
             
-            <p className="text-subdued text-lg md:text-2xl mb-12 md:mb-16 leading-relaxed max-w-lg">
+            <p className="text-subdued text-lg md:text-2xl xl:text-3xl mb-12 md:mb-16 leading-relaxed max-w-lg xl:max-w-xl">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
             
@@ -233,16 +233,16 @@ export default function ChatDemoSection() {
         {/* Right: The Friendly Agent Interface */}
         <div className="lg:col-span-7">
           <AnimatedSection delay={0.2} variant="scale-in">
-            <div className="relative w-full max-w-[600px] mx-auto lg:ml-auto">
+            <div className="relative w-full max-w-[600px] xl:max-w-[760px] mx-auto lg:ml-auto">
               
               {/* Try it Header */}
               <div className="text-center mb-6 md:mb-10 px-2">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
-                <h3 className="text-2xl md:text-3xl font-bold text-text tracking-tight">Interact with our <span className="text-accent-3">Light Model</span></h3>
+                <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-text tracking-tight">Interact with our <span className="text-accent-3">Light Model</span></h3>
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[600px] md:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
+              <div className="relative flex flex-col h-[600px] md:h-[650px] xl:h-[780px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50" style={{ willChange: "transform" }}>
                 
                 {/* Chat Header - Glassmorphism Bento Style */}
                 <div className="px-5 md:px-10 py-4 md:py-5 border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">

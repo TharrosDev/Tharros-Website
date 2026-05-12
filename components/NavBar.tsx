@@ -77,7 +77,7 @@ export default function NavBar() {
             ? "bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
             : "bg-white/60 backdrop-blur-md border border-transparent"
         }`}
-        style={{ width: "min(94vw, 1000px)" }}
+        style={{ width: "min(94vw, 1300px)" }}
       >
         <Magnetic strength={0.15}>
           <a
