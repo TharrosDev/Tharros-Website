@@ -26,6 +26,8 @@ export default function IntakeAgent() {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([]);
   const [agentInstance, setAgentInstance] = useState<Agent | null>(null);
   const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
+  const [initError, setInitError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -76,8 +78,11 @@ export default function IntakeAgent() {
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           }
         ]);
-      } catch (err) {
+        setIsLoading(false);
+      } catch (err: any) {
         console.error("Failed to initialize Intake Agent:", err);
+        setInitError(err.message || "Failed to initialize agent portal. Please verify your Agent ID and configuration.");
+        setIsLoading(false);
       }
     }
     initRelevance();
@@ -195,39 +200,63 @@ export default function IntakeAgent() {
               className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-slate-50/5 relative"
             >
               <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
-              <AnimatePresence initial={false}>
-                {messages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-                  >
-                    <div 
-                      className={`max-w-[90%] md:max-w-[85%] text-sm md:text-base leading-relaxed px-5 py-3 rounded-[1.5rem] border ${
-                        msg.sender === "user" 
-                        ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-sm" 
-                        : "bg-white text-text border-slate-100 rounded-tl-none shadow-sm"
-                      }`}
-                    >
-                      {msg.text}
-                    </div>
-                    <span className="text-[9px] text-slate-300 font-bold mt-2 uppercase tracking-widest px-1">{msg.time}</span>
-                  </motion.div>
-                ))}
-                {isTyping && (
-                  <div className="flex gap-1.5 p-3 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm">
-                    {[0, 1, 2].map((i) => (
-                      <motion.div 
-                        key={i}
-                        animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }} 
-                        transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.15 }} 
-                        className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
-                      />
-                    ))}
+              
+              {isLoading ? (
+                <div className="flex-1 flex flex-col items-center justify-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-slate-100 border-t-accent-3 animate-spin mb-4" />
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Initializing System...</p>
+                </div>
+              ) : initError ? (
+                <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center text-red-500 mb-6">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
                   </div>
-                )}
-              </AnimatePresence>
+                  <h3 className="text-xl font-bold text-text mb-2">Configuration Error</h3>
+                  <p className="text-subdued text-sm max-w-sm mb-6">{initError}</p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="px-6 py-2 bg-slate-900 text-white rounded-full text-xs font-bold uppercase tracking-widest"
+                  >
+                    Retry Initialization
+                  </button>
+                </div>
+              ) : (
+                <AnimatePresence initial={false}>
+                  {messages.map((msg) => (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                    >
+                      <div 
+                        className={`max-w-[90%] md:max-w-[85%] text-sm md:text-base leading-relaxed px-5 py-3 rounded-[1.5rem] border ${
+                          msg.sender === "user" 
+                          ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-sm" 
+                          : "bg-white text-text border-slate-100 rounded-tl-none shadow-sm"
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                      <span className="text-[9px] text-slate-300 font-bold mt-2 uppercase tracking-widest px-1">{msg.time}</span>
+                    </motion.div>
+                  ))}
+                  {isTyping && (
+                    <div className="flex gap-1.5 p-3 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm">
+                      {[0, 1, 2].map((i) => (
+                        <motion.div 
+                          key={i}
+                          animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }} 
+                          transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.15 }} 
+                          className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
+                        />
+                      ))}
+                    </div>
+                  )}
+                </AnimatePresence>
+              )}
             </div>
 
             {/* Input Area */}
