@@ -96,14 +96,14 @@ export default function NavBar() {
           </a>
         </Magnetic>
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-4">
           {navLinks.map((link) => (
             <motion.a
               key={link.href}
               href={link.href}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 text-sm font-medium text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
+              className="px-6 py-2.5 text-base font-semibold text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
             >
               {link.label}
             </motion.a>
