@@ -48,12 +48,12 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`fixed top-3 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-5 md:px-7 py-2.5 md:py-3 rounded-full transition-all duration-500 ${
+        className={`fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-4 md:px-7 py-2 md:py-3 rounded-full transition-all duration-500 ${
           scrolled
             ? "bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
             : "bg-white/60 backdrop-blur-md border border-transparent"
         }`}
-        style={{ width: "min(92vw, 1000px)" }}
+        style={{ width: "min(94vw, 1000px)" }}
       >
         <Magnetic strength={0.15}>
           <a 
@@ -68,11 +68,11 @@ export default function NavBar() {
             <Image
               src="/tharros-logo.svg"
               alt="Tharros"
-              width={160}
-              height={40}
+              width={140}
+              height={36}
               priority
               style={{ width: "auto", height: "auto" }}
-              className="scale-100 md:scale-110"
+              className="scale-[0.8] origin-left md:scale-110"
             />
           </a>
         </Magnetic>
@@ -102,7 +102,7 @@ export default function NavBar() {
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden relative z-[60] w-12 h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-white border border-slate-100 shadow-sm transition-all active:scale-90"
+          className="md:hidden relative z-[60] w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-full bg-white border border-slate-100 shadow-sm transition-all active:scale-90"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-menu"
