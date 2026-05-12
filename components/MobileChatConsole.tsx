@@ -44,7 +44,7 @@ export default function MobileChatConsole({
   }, [messages, isTyping]);
 
   return (
-    <div className="flex flex-col h-[45dvh] md:h-[65dvh] w-full bg-white rounded-[1.5rem] border border-slate-100 shadow-2xl overflow-hidden relative">
+    <div className="flex flex-col h-[45dvh] md:h-[65dvh] w-full max-w-full bg-white rounded-[1.5rem] border border-slate-100 shadow-2xl overflow-hidden relative mx-auto">
       {/* Header */}
       <div className="px-4 py-3 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
@@ -157,7 +157,7 @@ export default function MobileChatConsole({
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type message..."
             disabled={isLoading || isTyping}
-            className="flex-1 bg-transparent px-3 py-2 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
+            className="flex-1 bg-transparent px-3 py-2 text-[16px] text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
           />
           <button 
             type="submit"
