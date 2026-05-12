@@ -150,7 +150,7 @@ export default function IntakeAgent() {
           <div className="absolute bottom-0 left-0 w-1/2 h-full bg-slate-50 skew-x-12 -translate-x-1/4 opacity-50" />
         </div>
 
-        <div className="w-full max-w-4xl relative z-10 flex flex-col h-[75vh] md:h-[80vh]">
+        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[80vh] md:h-[85vh]">
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div 
@@ -204,7 +204,7 @@ export default function IntakeAgent() {
                     className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                   >
                     <div 
-                      className={`max-w-[85%] md:max-w-[75%] text-sm md:text-base leading-relaxed px-5 py-3 rounded-[1.5rem] border ${
+                      className={`max-w-[90%] md:max-w-[85%] text-sm md:text-base leading-relaxed px-5 py-3 rounded-[1.5rem] border ${
                         msg.sender === "user" 
                         ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-sm" 
                         : "bg-white text-text border-slate-100 rounded-tl-none shadow-sm"
