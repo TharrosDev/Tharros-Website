@@ -34,7 +34,7 @@ export default function HeroSection() {
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tight text-text mb-8">
+          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-8">
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
