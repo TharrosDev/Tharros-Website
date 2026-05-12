@@ -234,58 +234,57 @@ export default function ChatDemoSection() {
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[550px] md:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_48px_96px_-24px_rgba(0,0,0,0.12)] overflow-hidden border border-slate-100">
+              <div className="relative flex flex-col h-[550px] md:h-[650px] w-full bg-white rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100/50">
                 
-                {/* Chat Header */}
-                <div className="px-5 md:px-8 py-4 md:py-5 flex items-center justify-between border-b border-slate-50 bg-white/80 backdrop-blur-md sticky top-0 z-10">
-                  <div className="flex items-center gap-3 md:gap-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                      <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-text font-bold text-sm md:text-base tracking-tight">Tharros Support Agent</h3>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                        <p className="text-slate-400 text-[10px] md:text-xs font-medium">Active now</p>
+                {/* Chat Header - Glassmorphism */}
+                <div className="px-6 md:px-10 py-5 flex items-center justify-between border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-200">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white flex items-center justify-center border-2 border-white">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                       </div>
                     </div>
+                    <div>
+                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Agent</h3>
+                      <p className="text-slate-400 text-xs font-medium">Ready to assist</p>
+                    </div>
                   </div>
-                  <div className="flex gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-slate-200" />
-                    <div className="w-2 h-2 rounded-full bg-slate-200" />
-                  </div>
+                  <button className="w-8 h-8 rounded-full hover:bg-slate-50 flex items-center justify-center text-slate-300 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
+                    </svg>
+                  </button>
                 </div>
 
-                {/* Messages Area */}
+                {/* Messages Area - Subtle Pattern */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-5 md:p-8 flex flex-col gap-5 md:gap-6 bg-slate-50/30 scroll-smooth"
+                  className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed bg-slate-50/20 scroll-smooth"
                 >
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                       <motion.div
                         key={msg.id}
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        initial={{ opacity: 0, y: 15, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
                         className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                       >
-                        <div className="flex items-center gap-2 mb-1 px-1">
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                            {msg.sender === "user" ? "You" : "Tharros Assistant"}
-                          </span>
-                          <span className="text-[10px] text-slate-300 font-medium">{msg.time}</span>
-                        </div>
                         <div 
-                          className={`max-w-[85%] md:max-w-[80%] text-[14px] md:text-base leading-relaxed p-4 md:p-5 rounded-2xl md:rounded-3xl shadow-sm ${
+                          className={`max-w-[85%] md:max-w-[75%] text-sm md:text-base leading-relaxed px-6 py-4 rounded-[1.5rem] md:rounded-[2rem] shadow-sm border ${
                             msg.sender === "user" 
-                            ? "bg-gradient-to-br from-slate-800 to-slate-900 text-white rounded-tr-none" 
-                            : "bg-white text-text border border-slate-100 rounded-tl-none"
+                            ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-200" 
+                            : "bg-white text-text border-slate-100/80 rounded-tl-none shadow-slate-100"
                           }`}
                         >
                           {msg.text}
                         </div>
+                        <span className="text-[10px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
                       </motion.div>
                     ))}
                     
@@ -295,10 +294,7 @@ export default function ChatDemoSection() {
                         animate={{ opacity: 1 }}
                         className="flex flex-col items-start"
                       >
-                        <div className="flex items-center gap-2 mb-1 px-1">
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tharros Assistant</span>
-                        </div>
-                        <div className="bg-white border border-slate-100 p-4 md:p-5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-3">
+                        <div className="bg-white border border-slate-100/80 px-6 py-4 rounded-[1.5rem] rounded-tl-none shadow-sm flex items-center gap-3">
                           <div className="flex gap-1.5">
                             {[0, 1, 2].map((i) => (
                               <motion.div 
@@ -316,29 +312,28 @@ export default function ChatDemoSection() {
                               />
                             ))}
                           </div>
-                          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Thinking...</span>
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                {/* Footer / Input Area */}
-                <div className="p-4 md:p-6 bg-white border-t border-slate-100">
+                {/* Footer / Input Area - Integrated */}
+                <div className="p-6 md:p-8 bg-white border-t border-slate-100/50">
                   
-                  {/* Suggestions */}
+                  {/* Suggestions - Pill Style */}
                   <AnimatePresence>
                     {recommendedQuestions.length > 0 && !isTyping && (
                       <motion.div 
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-wrap gap-2 mb-4"
+                        className="flex flex-wrap gap-2 mb-6"
                       >
                         {recommendedQuestions.map((q) => (
                           <button
                             key={q}
                             onClick={() => handleSend(q)}
-                            className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:border-slate-300 transition-all text-left whitespace-nowrap"
+                            className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-full text-[11px] font-bold text-slate-500 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap"
                           >
                             {q}
                           </button>
@@ -349,31 +344,29 @@ export default function ChatDemoSection() {
 
                   <form 
                     onSubmit={(e) => handleSend(inputValue, e)}
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-4 bg-slate-50/50 p-2 rounded-[1.5rem] border border-slate-100"
                   >
-                    <div className="flex-1 relative">
-                      <input
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Type your message..."
-                        disabled={!agentInstance || isTyping}
-                        className="w-full bg-slate-50 border border-slate-200 px-4 md:px-5 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-[13px] md:text-sm text-text placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/5 focus:border-slate-300 transition-all disabled:opacity-50"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Message your agent..."
+                      disabled={!agentInstance || isTyping}
+                      className="flex-1 bg-transparent px-5 py-2 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
+                    />
                     <button 
                       type="submit"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-[44px] w-[44px] md:h-[52px] md:w-[52px] flex items-center justify-center rounded-xl md:rounded-2xl bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-20 active:scale-95 shrink-0"
+                      className="h-12 w-12 flex items-center justify-center rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-95 shrink-0"
                     >
-                      <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
                       </svg>
                     </button>
                   </form>
                 </div>
               </div>
+
             </div>
           </AnimatedSection>
         </div>
