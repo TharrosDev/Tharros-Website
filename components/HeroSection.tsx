@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import Magnetic from "./Magnetic";
 
@@ -55,12 +56,12 @@ export default function HeroSection() {
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-6">
             <Magnetic strength={0.2}>
-              <a
-                href="#pricing"
+              <Link
+                href="/intake"
                 className="primary-button px-8 py-4 md:px-10 md:py-5 text-base md:text-lg w-full sm:w-auto"
               >
-                View our solutions
-              </a>
+                Start your journey
+              </Link>
             </Magnetic>
             <a
               href="#demo"
@@ -68,6 +69,13 @@ export default function HeroSection() {
             >
               Live Demo
             </a>
+          </div>
+
+          <div className="mt-8 flex items-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              Intake Agent Online &mdash; <a href="mailto:Magnus.Abdelnour@gmail.com" className="text-accent-3 hover:underline">Or Email Directly</a>
+            </p>
           </div>
 
           {/* Mobile-Only Technology Proof Visual */}

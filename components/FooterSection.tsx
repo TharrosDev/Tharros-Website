@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 import Magnetic from "./Magnetic";
 
@@ -20,23 +21,23 @@ export default function FooterSection() {
             identify the best use case, and give you a clear sense of what&apos;s
             possible, no obligation.
           </p>
-          <Magnetic strength={0.2}>
-            <a
-              href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-              className="primary-button px-8 md:px-10 py-4 md:py-5 text-base md:text-lg mb-5"
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-20">
+            <Magnetic strength={0.2}>
+              <Link
+                href="/intake"
+                className="primary-button px-10 py-5 text-xl"
+              >
+                Start your journey
+              </Link>
+            </Magnetic>
+            <a 
+              href="mailto:Magnus.Abdelnour@gmail.com" 
+              className="text-text font-bold text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
             >
-              Set up a free consult
+              Email Us
             </a>
-          </Magnetic>
-          <p className="text-subdued text-sm mb-16 md:mb-20">
-            Or email directly:{" "}
-            <a
-              href="mailto:Magnus.Abdelnour@gmail.com"
-              className="text-accent-3 hover:underline transition-colors"
-            >
-              Magnus.Abdelnour@gmail.com
-            </a>
-          </p>
+          </div>
 
           <div className="subtle-divider mb-6" />
           <div className="text-subdued text-sm flex flex-col md:flex-row items-center justify-between gap-3">

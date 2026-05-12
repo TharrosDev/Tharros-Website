@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 import Magnetic from "./Magnetic";
 
@@ -94,16 +95,16 @@ export default function PricingSection() {
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Magnetic strength={0.2}>
-                    <a
-                      href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20request%20a%20quote"
+                    <Link
+                      href="/intake"
                       className="primary-button px-10 py-5 text-lg w-full sm:w-auto"
                     >
                       Get your custom quote
-                    </a>
+                    </Link>
                   </Magnetic>
                 </div>
                 <p className="mt-6 text-muted text-sm font-medium">
-                  Free consultation • No obligation • Ottawa-based
+                  Free consultation &bull; <a href="mailto:Magnus.Abdelnour@gmail.com" className="hover:text-accent-3 underline">Email us directly</a> &bull; Ottawa-based
                 </p>
               </div>
             </div>

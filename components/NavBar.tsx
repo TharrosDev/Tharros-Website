@@ -92,12 +92,12 @@ export default function NavBar() {
         </nav>
 
         <Magnetic strength={0.2}>
-          <a
-            href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+          <Link
+            href="/intake"
             className="hidden md:inline-block primary-button px-5 py-2 text-sm"
           >
             Get in touch
-          </a>
+          </Link>
         </Magnetic>
 
         <button
@@ -158,13 +158,21 @@ export default function NavBar() {
                 transition={{ delay: navLinks.length * 0.08, duration: 0.5 }}
                 className="w-full max-w-xs mt-4"
               >
-                <a
-                  href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
+                <Link
+                  href="/intake"
                   onClick={() => setMobileOpen(false)}
-                  className="primary-button flex items-center justify-center px-8 py-5 text-lg shadow-2xl shadow-slate-900/10"
+                  className="primary-button flex items-center justify-center px-8 py-4 text-lg shadow-2xl shadow-slate-900/10"
                 >
                   Get in touch
-                </a>
+                </Link>
+                <div className="mt-6 text-center">
+                  <a 
+                    href="mailto:Magnus.Abdelnour@gmail.com?subject=Inquiry" 
+                    className="text-slate-400 text-sm font-bold uppercase tracking-widest hover:text-text transition-colors"
+                  >
+                    Or Email Us
+                  </a>
+                </div>
               </motion.div>
             </div>
             
