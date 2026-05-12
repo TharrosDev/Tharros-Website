@@ -191,7 +191,8 @@ export default function IntakeAgent() {
       
       <main className="flex-1 pt-24 pb-12 px-4 md:px-8 flex flex-col items-center justify-center relative overflow-hidden">
         {/* Background Sophistication: Industrial Geometric Depth */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden industrial-grid">
+          <div className="scanline" />
           <div className="absolute top-0 right-0 w-[60%] h-full bg-slate-900/[0.015] -skew-x-12 translate-x-1/4" />
           <div className="absolute bottom-0 left-0 w-[60%] h-full bg-slate-900/[0.015] skew-x-12 -translate-x-1/4" />
           <div 

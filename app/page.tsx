@@ -14,12 +14,12 @@ export default function Home() {
       <NavBar />
       <main>
         <HeroSection />
-        <ProblemSection />
-        <ChatDemoSection />
-        <WhatWeBuildsSection />
-        <HowItWorksSection />
-        <WhyTharrosSection />
-        <PricingSection />
+        <div className="content-visibility-auto"><ProblemSection /></div>
+        <div className="content-visibility-auto"><ChatDemoSection /></div>
+        <div className="content-visibility-auto"><WhatWeBuildsSection /></div>
+        <div className="content-visibility-auto"><HowItWorksSection /></div>
+        <div className="content-visibility-auto"><WhyTharrosSection /></div>
+        <div className="content-visibility-auto"><PricingSection /></div>
         <FooterSection />
       </main>
     </>
