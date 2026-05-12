@@ -10,11 +10,12 @@ We believe small businesses don't need "corporate AI strategies"—they need lig
 
 - **Tailored, Not Generic**: Every agent is custom-trained on specific business knowledge.
 - **Executive Console**: Minimalist, industrial-grade interfaces that prioritize precision over "bubbly" social aesthetics.
-- **Local Expertise**: Built in Ottawa, for Ottawa. We understand the local market context.
+- **Bento Grid Architecture**: We use asymmetric, high-density layouts to display complex information with clarity and authority.
+- **Local Expertise**: Built in Ottawa, for Ottawa. We understand the context of Kanata trades, Centretown law, and Glebe services.
 
 ## 🛠 Tech Stack
 
-- **Core**: Next.js 16 (App Router), React 19, TypeScript
+- **Core**: Next.js (App Router), React 19, TypeScript
 - **Logic**: Relevance AI SDK
 - **Styling**: Tailwind CSS
 - **Animations**: motion/react (Framer Motion)
@@ -23,9 +24,11 @@ We believe small businesses don't need "corporate AI strategies"—they need lig
 ## 📁 Project Structure
 
 - `/app`: Next.js App Router pages and global configurations.
-- `/components`: Modular UI components (Hero, ChatDemo, Pricing, etc.).
-- `/public`: Static assets (Logos, OG images, icons).
-- `THARROS_KNOWLEDGE_BASE.md`: The core mission, capabilities, and personality guidelines for the Tharros brand.
+- `/components`: Modular UI components (Hero, ChatDemo, ProblemSection, etc.).
+- `/public`: Static assets (Logos, OG images, favicon, icons).
+- `THARROS_KNOWLEDGE_BASE.md`: The definitive source of truth for the Tharros brand mission, capabilities, and personality.
+- `AGENTS.md`: Internal guidelines for AI agent behavior and interface standards.
+- `CLAUDE.md`: Developer-facing guidelines for design systems and code style.
 
 ## ⚡ Development
 
@@ -43,3 +46,4 @@ npm run build
 ## 📄 License
 
 Private. All rights reserved by Tharros.
+
