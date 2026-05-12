@@ -203,7 +203,7 @@ export default function IntakeAgent() {
           />
         </div>
 
-        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[90vh] md:h-[94vh]">
+        <div className="w-full max-w-7xl relative z-10 flex flex-col h-[94vh] md:h-[98vh]">
           {/* Premium Header */}
           <div className="text-center mb-8 md:mb-10">
             <motion.div 
