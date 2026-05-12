@@ -29,10 +29,6 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
           },
-          {
-            key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.relevanceai.com https://*.relevance.ai; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.relevanceai.com https://*.relevance.ai wss://*.relevanceai.com wss://*.relevance.ai; frame-src 'self' https://*.relevanceai.com https://*.relevance.ai; upgrade-insecure-requests;",
-          },
         ],
       },
     ];
