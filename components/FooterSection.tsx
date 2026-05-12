@@ -1,9 +1,20 @@
-import Link from "next/link";
+"use client";
+
+import { usePathname } from "next/navigation";
 import AnimatedSection from "./AnimatedSection";
 import Magnetic from "./Magnetic";
 
 export default function FooterSection() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+  const isIntakePage = pathname === "/intake";
+
+  const handleScrollToTop = (e: React.MouseEvent) => {
+    if (isIntakePage) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <footer id="contact" className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden bg-bg">
@@ -25,6 +36,7 @@ export default function FooterSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-20">
             <a
               href="/intake"
+              onClick={handleScrollToTop}
               aria-label="Start your AI intake journey and consultation"
               className="primary-button px-10 py-5 text-xl"
             >

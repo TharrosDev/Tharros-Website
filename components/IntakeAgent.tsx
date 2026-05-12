@@ -126,7 +126,10 @@ export default function IntakeAgent() {
       }
     };
     currentTask.addEventListener("message", handleMessage);
-    return () => currentTask.unsubscribe();
+    return () => {
+      currentTask.removeEventListener("message", handleMessage);
+      currentTask.unsubscribe();
+    };
   }, [currentTask]);
 
   const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {

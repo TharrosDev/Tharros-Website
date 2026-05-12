@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import Magnetic from "./Magnetic";
 
@@ -15,6 +16,15 @@ const navLinks = [
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isIntakePage = pathname === "/intake";
+
+  const handleScrollToTop = (e: React.MouseEvent) => {
+    if (isIntakePage) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -92,6 +102,7 @@ export default function NavBar() {
         <Magnetic strength={0.2}>
           <a
             href="/intake"
+            onClick={handleScrollToTop}
             aria-label="Start your AI consultation"
             className="hidden md:inline-block primary-button px-5 py-2 text-sm"
           >
@@ -160,7 +171,10 @@ export default function NavBar() {
                 <a
                   href="/intake"
                   aria-label="Start your AI intake journey"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    handleScrollToTop(e);
+                    setMobileOpen(false);
+                  }}
                   className="primary-button flex items-center justify-center px-8 py-4 text-lg shadow-2xl shadow-slate-900/10"
                 >
                   Get in touch
