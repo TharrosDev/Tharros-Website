@@ -6,7 +6,7 @@ import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[100svh] flex items-center justify-center px-6 pt-32 pb-12 md:pb-16 overflow-hidden bg-white">
+    <section id="hero" className="relative min-h-[100svh] flex items-center justify-center px-6 pt-20 md:pt-28 pb-12 md:pb-16 overflow-hidden bg-white">
       {/* Background: Industrial Geometric Depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4 opacity-70" />
@@ -34,7 +34,7 @@ export default function HeroSection() {
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-6">
+          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-4">
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
@@ -46,7 +46,7 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-medium">
+          <p className="text-base md:text-2xl xl:text-3xl text-subdued max-w-2xl xl:max-w-3xl mx-auto mb-6 md:mb-8 leading-relaxed font-medium">
             Tharros builds <span className="text-text">Autonomous AI Agents</span> for Ottawa small businesses,
             automating customer inquiries, office admin, and repetitive
             back-office tasks. No code required.
@@ -56,7 +56,7 @@ export default function HeroSection() {
             <a
               href="/intake"
               aria-label="Start your AI intake journey"
-              className="primary-button px-8 py-4 md:px-10 md:py-5 xl:px-12 xl:py-6 text-sm md:text-lg xl:text-xl w-full sm:w-auto"
+              className="primary-button px-8 py-4 md:px-10 md:py-5 xl:px-12 xl:py-6 text-sm md:text-base xl:text-lg w-full sm:w-auto"
             >
               Initiate a consultation
             </a>
@@ -69,7 +69,7 @@ export default function HeroSection() {
             </a>
           </div>
 
-          <div className="mt-10 flex items-center justify-center gap-3">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Intake Agent Online &mdash; <a href="mailto:Magnus.Abdelnour@gmail.com" className="text-accent-3 hover:underline">Or Email Directly</a>
@@ -79,9 +79,9 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2">
         <span className="text-[10px] font-bold text-muted tracking-[0.3em] uppercase">Scroll_Down</span>
-        <div className="w-px h-8 bg-gradient-to-b from-slate-200 to-transparent" />
+        <div className="w-px h-4 bg-gradient-to-b from-slate-200 to-transparent" />
       </div>
     </section>
   );
