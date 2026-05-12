@@ -196,7 +196,7 @@ export default function IntakeAgent() {
     <div className="min-h-screen bg-[#fafafa] flex flex-col font-sans selection:bg-accent-3/10 selection:text-accent-3">
       <NavBar />
       
-      <main className="flex-1 pt-32 pb-24 px-4 md:px-8 flex flex-col items-center justify-center relative overflow-hidden">
+      <main className="flex-1 pt-20 md:pt-24 pb-8 md:pb-12 px-4 md:px-8 flex flex-col items-center justify-center relative overflow-hidden">
         {/* Background Sophistication: Industrial Geometric Depth */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden industrial-grid">
           <div className="scanline" />
@@ -230,7 +230,7 @@ export default function IntakeAgent() {
           />
         </div>
 
-        <div className="w-full max-w-7xl relative z-10 flex flex-col h-auto md:h-[98vh] overflow-x-hidden max-w-full">
+        <div className="w-full max-w-7xl relative z-10 flex flex-col h-auto md:h-[95vh] overflow-hidden max-w-full">
           {/* Premium Header - Hidden on Mobile if Console takes over */}
           {!isMobile && (
             <div className="text-center mb-8 md:mb-10">
@@ -286,7 +286,7 @@ export default function IntakeAgent() {
             <div className="flex-1 flex flex-col bg-white rounded-[2.5rem] border border-slate-100 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] overflow-hidden relative">
               
               {/* Console Glass Header */}
-              <div className="px-6 md:px-10 py-5 md:py-6 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between z-20">
+              <div className="px-6 md:px-10 py-4 md:py-4 border-b border-slate-100 bg-white/80 backdrop-blur-xl flex items-center justify-between z-20">
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200">
@@ -316,7 +316,7 @@ export default function IntakeAgent() {
               {/* Cinematic Messages Area */}
               <div 
                 ref={scrollRef}
-                className="flex-1 overflow-y-auto p-6 md:p-12 flex flex-col gap-8 bg-[#fdfdfd] relative"
+                className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-[#fdfdfd] relative"
               >
                 {/* Subtle Texture Overlay */}
                 <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
@@ -387,7 +387,7 @@ export default function IntakeAgent() {
               </div>
 
               {/* Premium Input Dashboard */}
-              <div className="p-6 md:p-10 border-t border-slate-100 bg-white relative z-20">
+              <div className="p-6 md:p-8 border-t border-slate-100 bg-white relative z-20">
                 {/* Quick Commands (Recommended Questions) */}
                 <AnimatePresence>
                   {recommendedQuestions.length > 0 && !isTyping && (
