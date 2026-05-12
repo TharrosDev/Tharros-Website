@@ -173,35 +173,37 @@ export default function IntakeAgent() {
       <main className="flex-1 pt-24 pb-12 px-4 md:px-8 flex flex-col items-center justify-center relative overflow-hidden">
         {/* Background Sophistication: Industrial Geometric Depth */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-[60%] h-full bg-slate-900/[0.02] -skew-x-12 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-[60%] h-full bg-slate-900/[0.02] skew-x-12 -translate-x-1/4" />
+          <div className="absolute top-0 right-0 w-[60%] h-full bg-slate-900/[0.015] -skew-x-12 translate-x-1/4" />
+          <div className="absolute bottom-0 left-0 w-[60%] h-full bg-slate-900/[0.015] skew-x-12 -translate-x-1/4" />
           <div 
-            className="absolute inset-0 opacity-[0.4]"
+            className="absolute inset-0 opacity-[0.2]"
             style={{
-              backgroundImage: "radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0)",
-              backgroundSize: "48px 48px",
+              backgroundImage: "radial-gradient(circle at 1px 1px, #cbd5e1 1px, transparent 0)",
+              backgroundSize: "64px 64px",
             }}
           />
-          {/* Animated Glows */}
+          {/* Animated Glows with hardware acceleration */}
           <motion.div 
             animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1]
+              scale: [1, 1.1, 1],
+              opacity: [0.05, 0.1, 0.05]
             }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-accent-3/10 blur-[120px] rounded-full" 
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform, opacity" }}
+            className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-accent-3/10 blur-[100px] rounded-full" 
           />
           <motion.div 
             animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.1, 0.15, 0.1]
+              scale: [1.1, 1, 1.1],
+              opacity: [0.05, 0.08, 0.05]
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-1/4 left-0 w-[600px] h-[600px] bg-blue-400/5 blur-[140px] rounded-full" 
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            style={{ willChange: "transform, opacity" }}
+            className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-blue-400/5 blur-[120px] rounded-full" 
           />
         </div>
 
-        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[85vh] md:h-[90vh]">
+        <div className="w-full max-w-6xl relative z-10 flex flex-col h-[90vh] md:h-[94vh]">
           {/* Premium Header */}
           <div className="text-center mb-8 md:mb-10">
             <motion.div 
