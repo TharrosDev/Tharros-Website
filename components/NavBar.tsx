@@ -18,8 +18,22 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const isIntakePage = pathname === "/intake";
+  const isHomePage = pathname === "/";
 
   const handleScrollToTop = (e: React.MouseEvent) => {
+    if (isHomePage || isIntakePage) {
+      // If we are on home or intake, we just want to scroll to top if the link is meant for that
+      // But for the logo, it always goes to /, so if we are on /, just scroll.
+      // If we are on /intake and click logo, it should actually go to / (default behavior).
+      // If we are on / and click logo, scroll to top.
+      if (isHomePage) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
+
+  const handleIntakeScroll = (e: React.MouseEvent) => {
     if (isIntakePage) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -66,14 +80,11 @@ export default function NavBar() {
         style={{ width: "min(94vw, 1000px)" }}
       >
         <Magnetic strength={0.15}>
-          <a 
-            href="#hero" 
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            aria-label="Tharros home" 
-            className="shrink-0 block"
+          <a
+            href="/"
+            onClick={handleScrollToTop}
+            className="relative z-10 block"
+            aria-label="Tharros Home"
           >
             <Image
               src="/tharros-logo.svg"
@@ -102,7 +113,7 @@ export default function NavBar() {
         <Magnetic strength={0.2}>
           <a
             href="/intake"
-            onClick={handleScrollToTop}
+            onClick={handleIntakeScroll}
             aria-label="Start your AI consultation"
             className="hidden md:inline-block primary-button px-5 py-2 text-sm"
           >
@@ -172,7 +183,7 @@ export default function NavBar() {
                   href="/intake"
                   aria-label="Start your AI intake journey"
                   onClick={(e) => {
-                    handleScrollToTop(e);
+                    handleIntakeScroll(e);
                     setMobileOpen(false);
                   }}
                   className="primary-button flex items-center justify-center px-8 py-4 text-lg shadow-2xl shadow-slate-900/10"
