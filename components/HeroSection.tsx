@@ -29,14 +29,14 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/[0.03] border border-slate-900/5 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-900/60 mb-8 hover:bg-slate-900/[0.05] transition-colors cursor-default"
+            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/[0.03] border border-slate-900/5 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-900/60 mb-6 md:mb-8 hover:bg-slate-900/[0.05] transition-colors cursor-default"
           >
             <img src="/canada-flag.svg" alt="Canada" className="w-5 h-3 rounded-[2px] shadow-sm" />
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-8">
-            Your business doesn&apos;t need a <br />
+          <h1 className="text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl font-bold tracking-tight text-text mb-6 md:mb-8">
+            Your business doesn&apos;t need a <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI strategy.</span>
             <br className="hidden sm:block" />
             It needs something that{" "}
@@ -47,54 +47,68 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-lg md:text-xl text-subdued max-w-xl mb-12 leading-relaxed">
+          <p className="text-base md:text-xl text-subdued max-w-xl mb-10 md:mb-12 leading-relaxed">
             Tharros builds lightweight AI agents for Ottawa small businesses,
             automating customer inquiries, office admin, and repetitive
-            back-office tasks. We handle the busywork so you can focus on the job.
-            No code required.
+            back-office tasks. No code required.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-6">
             <Magnetic strength={0.2}>
               <a
-                href="mailto:Magnus.Abdelnour@gmail.com?subject=I%27d%20like%20to%20talk%20about%20an%20AI%20agent"
-                className="primary-button px-10 py-5 text-lg shadow-xl shadow-accent-3/10 hover:shadow-accent-3/20 transition-all"
+                href="#pricing"
+                className="primary-button px-8 py-4 md:px-10 md:py-5 text-base md:text-lg w-full sm:w-auto"
               >
-                Set up a Consultation
+                View our solutions
               </a>
             </Magnetic>
-            <div className="flex flex-col sm:pl-2">
-              <span className="text-sm font-bold text-text">Free initial Consultation.</span>
-              <span className="text-xs text-subdued">No obligation. Ottawa-based.</span>
-            </div>
+            <a
+              href="#demo"
+              className="text-text font-bold text-sm md:text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-3 text-center"
+            >
+              Live Demo
+            </a>
           </div>
 
           {/* Mobile-Only Technology Proof Visual */}
-          <div className="mt-16 lg:hidden w-full max-w-sm">
-            <div className="bg-slate-900 rounded-2xl p-1 border border-white/10 shadow-xl overflow-hidden opacity-90 scale-[0.95] origin-left">
+          <div className="mt-12 lg:hidden w-full max-w-sm">
+            <div className="bg-slate-900 rounded-2xl p-1 border border-white/10 shadow-2xl overflow-hidden opacity-95">
               <div className="bg-slate-800/50 p-3 border-b border-white/5 flex items-center justify-between">
-                <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-400/30" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400/30" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400/30" />
+                <div className="flex gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400/40" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400/40" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400/40" />
                 </div>
-                <span className="text-[7px] font-mono text-white/30 tracking-[0.2em] uppercase">Mobile_Module_Live</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-1 h-1 rounded-full bg-accent-3 animate-pulse" />
+                  <span className="text-[7px] font-mono text-white/40 tracking-[0.2em] uppercase">System_Active</span>
+                </div>
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-5 space-y-5">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/5 rounded-lg p-2 border border-white/5">
+                    <span className="block text-[6px] text-white/30 uppercase tracking-widest mb-1">Inference</span>
+                    <span className="text-[10px] font-mono text-accent-3">ACTIVE</span>
+                  </div>
+                  <div className="bg-white/5 rounded-lg p-2 border border-white/5">
+                    <span className="block text-[6px] text-white/30 uppercase tracking-widest mb-1">Latency</span>
+                    <span className="text-[10px] font-mono text-white/60">0.4s</span>
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  {[60, 30, 80].map((w, i) => (
+                  {[70, 45, 85].map((w, i) => (
                     <div key={i} className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
                         whileInView={{ width: `${w}%` }}
-                        transition={{ delay: 0.2 + (i * 0.1), duration: 1 }}
+                        transition={{ delay: 0.2 + (i * 0.1), duration: 1.2, ease: "circOut" }}
                         className="h-full bg-accent-3"
                       />
                     </div>
                   ))}
                 </div>
-                <div className="font-mono text-[8px] text-white/20">
-                  <p>{`> DEPLOY_UNIT_01_SUCCESS`}</p>
+                <div className="font-mono text-[7px] text-white/20 pt-2 border-t border-white/5">
+                  <p className="animate-pulse">{`> SYNCING_LOCAL_CONTEXT...`}</p>
                 </div>
               </div>
             </div>

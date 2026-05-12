@@ -178,11 +178,11 @@ export default function ChatDemoSection() {
   };
 
   return (
-    <section id="demo" className="py-12 md:py-16 px-6 md:px-12 relative overflow-hidden bg-white">
+    <section id="demo" className="py-12 md:py-16 px-4 md:px-12 relative overflow-hidden bg-white">
       {/* Background Sophistication */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div className="max-w-7xl mx-auto relative grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center">
         
         {/* Left: Authoritative Capabilities */}
         <div className="lg:col-span-5">
@@ -228,45 +228,61 @@ export default function ChatDemoSection() {
             <div className="relative w-full max-w-[600px] mx-auto lg:ml-auto">
               
               {/* Try it Header */}
-              <div className="text-center mb-8">
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Interactive Demo</p>
-                <h3 className="text-2xl md:text-3xl font-bold text-text">Try out our Tharros Support Agent for yourself</h3>
+              <div className="text-center mb-6 md:mb-10 px-2">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">Industrial Logic Demo</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-text tracking-tight">Interact with our <span className="text-accent-3">Light Model</span></h3>
               </div>
 
               {/* Chat Container */}
-              <div className="relative flex flex-col h-[550px] md:h-[650px] w-full bg-white rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] overflow-hidden border border-slate-100/50">
+              <div className="relative flex flex-col h-[600px] md:h-[650px] w-full bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden border border-slate-100/50">
                 
-                {/* Chat Header - Glassmorphism */}
-                <div className="px-6 md:px-10 py-5 flex items-center justify-between border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-200">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                        </svg>
+                {/* Chat Header - Glassmorphism Bento Style */}
+                <div className="px-5 md:px-10 py-4 md:py-5 border-b border-slate-100/50 bg-white/70 backdrop-blur-xl sticky top-0 z-10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="relative">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-lg shadow-slate-200/50">
+                          <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                          </svg>
+                        </div>
+                        <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-white flex items-center justify-center border-2 border-white">
+                          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                        </div>
                       </div>
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-white flex items-center justify-center border-2 border-white">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                      <div className="flex flex-col">
+                        <h3 className="text-text font-bold text-[13px] md:text-base tracking-tight leading-none mb-1">Tharros Agent &mdash; Light Model</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-600 text-[8px] md:text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-green-600 animate-ping" />
+                            Operational
+                          </span>
+                          <span className="w-px h-2.5 bg-slate-200 hidden md:block" />
+                          <span className="text-slate-400 text-[8px] md:text-[10px] font-bold uppercase tracking-widest hidden md:block">Latency: 24ms</span>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <h3 className="text-text font-bold text-base tracking-tight">Tharros Agent &mdash; Light Model</h3>
-                      <p className="text-slate-400 text-xs font-medium">Ready to assist</p>
+                    
+                    <div className="flex items-center gap-2">
+                      <div className="hidden sm:flex flex-col items-end px-3 py-1 bg-slate-50 rounded-lg border border-slate-100">
+                        <span className="text-[7px] font-bold text-slate-400 uppercase tracking-widest">Model_V</span>
+                        <span className="text-[9px] font-bold text-text uppercase">1.2.4b</span>
+                      </div>
+                      <button className="w-9 h-9 md:w-10 md:h-10 rounded-full hover:bg-slate-50 flex items-center justify-center text-slate-300 transition-colors active:scale-90">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
-                  <button className="w-8 h-8 rounded-full hover:bg-slate-50 flex items-center justify-center text-slate-300 transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
-                    </svg>
-                  </button>
                 </div>
 
-                {/* Messages Area - CSS Mesh Gradient instead of external image */}
+                {/* Messages Area */}
                 <div 
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-slate-50/10 scroll-smooth relative"
+                  className="flex-1 overflow-y-auto p-5 md:p-10 flex flex-col gap-5 md:gap-6 bg-slate-50/10 scroll-smooth relative"
                 >
-                  {/* Subtle Grainy Overlay (CSS only) */}
+                  {/* Subtle Grainy Overlay */}
                   <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
                   <AnimatePresence initial={false}>
                     {messages.map((msg) => (
@@ -278,15 +294,15 @@ export default function ChatDemoSection() {
                         className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                       >
                         <div 
-                          className={`max-w-[85%] md:max-w-[75%] text-sm md:text-base leading-relaxed px-6 py-4 rounded-[1.5rem] md:rounded-[2rem] shadow-sm border ${
+                          className={`max-w-[90%] md:max-w-[75%] text-[13px] md:text-base leading-relaxed px-5 py-3.5 md:px-6 md:py-4 rounded-[1.2rem] md:rounded-[2rem] shadow-sm border ${
                             msg.sender === "user" 
-                            ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-200" 
-                            : "bg-white text-text border-slate-100/80 rounded-tl-none shadow-slate-100"
+                            ? "bg-slate-900 text-white border-slate-800 rounded-tr-none shadow-slate-200/5" 
+                            : "bg-white text-text border-slate-100/80 rounded-tl-none shadow-slate-100/50"
                           }`}
                         >
                           {msg.text}
                         </div>
-                        <span className="text-[10px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
+                        <span className="text-[9px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
                       </motion.div>
                     ))}
                     
@@ -296,7 +312,7 @@ export default function ChatDemoSection() {
                         animate={{ opacity: 1 }}
                         className="flex flex-col items-start"
                       >
-                        <div className="bg-white border border-slate-100/80 px-6 py-4 rounded-[1.5rem] rounded-tl-none shadow-sm flex items-center gap-3">
+                        <div className="bg-white border border-slate-100/80 px-5 py-3.5 rounded-[1.2rem] rounded-tl-none shadow-sm flex items-center gap-3">
                           <div className="flex gap-1.5">
                             {[0, 1, 2].map((i) => (
                               <motion.div 
@@ -320,22 +336,22 @@ export default function ChatDemoSection() {
                   </AnimatePresence>
                 </div>
 
-                {/* Footer / Input Area - Integrated */}
-                <div className="p-6 md:p-8 bg-white border-t border-slate-100/50">
+                {/* Footer / Input Area */}
+                <div className="p-4 md:p-8 bg-white border-t border-slate-100/50">
                   
-                  {/* Suggestions - Pill Style */}
+                  {/* Suggestions - Swipeable on mobile */}
                   <AnimatePresence>
                     {recommendedQuestions.length > 0 && !isTyping && (
                       <motion.div 
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="flex flex-wrap gap-2 mb-6"
+                        className="flex overflow-x-auto no-scrollbar gap-2 mb-4 md:mb-6 -mx-1 px-1 pb-1"
                       >
                         {recommendedQuestions.map((q) => (
                           <button
                             key={q}
                             onClick={() => handleSend(q)}
-                            className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-full text-[11px] font-bold text-slate-500 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap"
+                            className="px-4 py-2 bg-slate-50 border border-slate-200/60 rounded-full text-[10px] md:text-[11px] font-bold text-slate-500 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap active:scale-95"
                           >
                             {q}
                           </button>
@@ -346,23 +362,23 @@ export default function ChatDemoSection() {
 
                   <form 
                     onSubmit={(e) => handleSend(inputValue, e)}
-                    className="flex items-center gap-4 bg-slate-50/50 p-2 rounded-[1.5rem] border border-slate-100"
+                    className="flex items-center gap-2 md:gap-4 bg-slate-50 p-1.5 rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 focus-within:border-accent-3/30 transition-all"
                   >
                     <input
                       type="text"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Message your agent..."
+                      placeholder="Message..."
                       disabled={!agentInstance || isTyping}
-                      className="flex-1 bg-transparent px-5 py-2 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
+                      className="flex-1 bg-transparent px-4 py-2.5 text-sm text-text placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
                     />
                     <button 
                       type="submit"
                       aria-label="Send message"
                       disabled={!inputValue.trim() || !agentInstance || isTyping}
-                      className="h-12 w-12 flex items-center justify-center rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-95 shrink-0"
+                      className="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center rounded-[1rem] md:rounded-[1.2rem] bg-slate-900 text-white shadow-lg hover:bg-slate-800 transition-all disabled:opacity-10 active:scale-90 shrink-0"
                     >
-                      <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="18" height="18" className="md:w-5 md:h-5" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
                       </svg>
                     </button>
