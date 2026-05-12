@@ -23,14 +23,12 @@ export default function FooterSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-20">
-            <Magnetic strength={0.2}>
-              <Link
-                href="/intake"
-                className="primary-button px-10 py-5 text-xl"
-              >
-                Start your journey
-              </Link>
-            </Magnetic>
+            <Link
+              href="/intake"
+              className="primary-button px-10 py-5 text-xl"
+            >
+              Start your journey
+            </Link>
             <a 
               href="mailto:Magnus.Abdelnour@gmail.com" 
               className="text-text font-bold text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"

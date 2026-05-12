@@ -55,14 +55,12 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-6">
-            <Magnetic strength={0.2}>
-              <Link
-                href="/intake"
-                className="primary-button px-8 py-4 md:px-10 md:py-5 text-base md:text-lg w-full sm:w-auto"
-              >
-                Start your journey
-              </Link>
-            </Magnetic>
+            <Link
+              href="/intake"
+              className="primary-button px-8 py-4 md:px-10 md:py-5 text-base md:text-lg w-full sm:w-auto"
+            >
+              Start your journey
+            </Link>
             <a
               href="#demo"
               className="text-text font-bold text-sm md:text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-3 text-center"
