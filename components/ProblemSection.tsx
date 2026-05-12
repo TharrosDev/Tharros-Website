@@ -69,73 +69,38 @@ export default function ProblemSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 auto-rows-fr">
-          {/* Main Pain Point - Spans 7 columns */}
-          <div className="md:col-span-7 lg:col-span-8 flex">
-            <AnimatedSection className="w-full h-full flex">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          {pains.map((pain, i) => (
+            <AnimatedSection key={pain.headline}>
               <motion.div 
-                whileHover={{ y: -4 }}
-                className="clean-card p-8 md:p-12 w-full flex flex-col justify-between group relative overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border-slate-200/60"
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="clean-card p-10 md:p-12 h-full flex flex-col gap-6 group relative overflow-hidden cursor-default shadow-sm hover:shadow-xl hover:border-accent-3/20 transition-all duration-500"
               >
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <span className="scale-[4] block origin-top-right">{pains[0].icon}</span>
-                </div>
-                
-                <div>
-                  <div className="flex items-center gap-3 mb-10">
-                    <div className={`text-[10px] font-bold px-2 py-1 rounded border uppercase tracking-wider ${pains[0].color}`}>
-                      {pains[0].status}
+                {/* Accent left stripe */}
+                <div className="absolute left-0 top-10 bottom-10 w-[4px] rounded-full bg-accent-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="pl-2 group-hover:pl-4 transition-all duration-300">
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className={`text-[9px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${pain.color}`}>
+                      {pain.status}
                     </div>
-                    <div className="h-px w-8 bg-slate-200" />
-                    <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">{pains[0].stat}</span>
+                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
                   </div>
 
-                  <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 text-accent-3 group-hover:bg-accent-3 group-hover:text-white transition-all duration-500">
-                    <span className="scale-150">{pains[0].icon}</span>
+                  <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
+                    <span aria-hidden="true" className="scale-125">{pain.icon}</span>
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-bold text-text mb-6 leading-tight max-w-md">
-                    {pains[0].headline}
-                  </h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-text mt-4 mb-3 leading-tight">{pain.headline}</h3>
+                  <p className="text-subdued leading-relaxed text-base">{pain.body}</p>
                 </div>
-
-                <p className="text-subdued text-lg md:text-xl max-w-2xl leading-relaxed">
-                  {pains[0].body}
-                </p>
               </motion.div>
             </AnimatedSection>
-          </div>
-
-          {/* Side Pain Points - Stacked in 5 columns */}
-          <div className="md:col-span-5 lg:col-span-4 grid grid-cols-1 gap-6 h-full">
-            {pains.slice(1).map((pain) => (
-              <AnimatedSection key={pain.headline} className="h-full">
-                <motion.div 
-                  whileHover={{ y: -4 }}
-                  className="clean-card p-8 h-full flex flex-col justify-between group relative overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border-slate-200/60"
-                >
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className={`text-[9px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${pain.color}`}>
-                        {pain.status}
-                      </div>
-                      <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">{pain.stat}</span>
-                    </div>
-
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center mb-6 text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500">
-                      <span>{pain.icon}</span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-text mb-3 leading-tight">{pain.headline}</h3>
-                    <p className="text-subdued text-sm leading-relaxed">{pain.body}</p>
-                  </div>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
 
