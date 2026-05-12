@@ -249,16 +249,14 @@ export default function IntakeAgent() {
                 <div>
                   <h3 className="text-base font-bold text-text leading-none mb-1">Tharros Intake Specialist</h3>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-extrabold text-accent-3 uppercase tracking-widest">Protocol 02_Brief</span>
-                    <span className="w-1 h-1 rounded-full bg-slate-200" />
-                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Latency: 12ms</span>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Active System</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="hidden sm:flex flex-col items-end px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl">
-                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Model_V</span>
-                  <span className="text-[10px] font-bold text-text uppercase">Prime_A1</span>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
+                  <span className="text-[10px] font-bold text-text uppercase">CRM Intake Agent Model</span>
                 </div>
               </div>
             </div>
