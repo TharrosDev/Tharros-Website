@@ -58,7 +58,7 @@ export default function HeroSection() {
               aria-label="Start your AI intake journey"
               className="primary-button px-8 py-4 md:px-10 md:py-5 xl:px-12 xl:py-6 text-sm md:text-lg xl:text-xl w-full sm:w-auto"
             >
-              Start your journey
+              Initiate a consultation
             </a>
             <a
               href="#demo"

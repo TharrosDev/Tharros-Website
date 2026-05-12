@@ -40,7 +40,7 @@ export default function FooterSection() {
               aria-label="Start your AI intake journey and consultation"
               className="primary-button px-10 py-5 text-xl"
             >
-              Start your journey
+              Initiate a consultation
             </a>
             <a 
               href="mailto:Magnus.Abdelnour@gmail.com" 
