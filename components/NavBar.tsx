@@ -117,7 +117,7 @@ export default function NavBar() {
             aria-label="Start your AI consultation"
             className="hidden md:inline-block primary-button px-5 py-2 text-sm"
           >
-            Get in touch
+            Consultation
           </a>
         </Magnetic>
 
@@ -188,7 +188,7 @@ export default function NavBar() {
                   }}
                   className="primary-button flex items-center justify-center px-8 py-4 text-lg shadow-2xl shadow-slate-900/10"
                 >
-                  Get in touch
+                  Consultation
                 </a>
                 <div className="mt-6 text-center">
                   <a 
