@@ -67,7 +67,7 @@ export default function ClientsSection() {
                   rel="noopener noreferrer"
                   className="inline-block group/link"
                 >
-                  <h3 className="text-2xl md:text-4xl font-bold text-text mb-6 group-hover/link:text-accent-3 transition-colors duration-500 tracking-tight flex items-center gap-3">
+                  <h3 className="text-2xl md:text-4xl font-bold text-text mb-8 md:mb-6 group-hover/link:text-accent-3 transition-colors duration-500 tracking-tight flex items-center gap-3">
                     {clients[0].name}
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 group-hover/link:opacity-100 transition-all -translate-x-2 group-hover/link:translate-x-0 will-change-transform">
                       <path d="M7 17l10-10M7 7h10v10" />
@@ -77,7 +77,7 @@ export default function ClientsSection() {
                 {/* Mobile Expansion Toggle */}
                 <button 
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="md:hidden flex items-center gap-2 text-accent-3 font-bold text-[10px] uppercase tracking-[0.2em] mb-6 active:opacity-70 transition-opacity"
+                  className="md:hidden flex items-center gap-2 text-accent-3 font-bold text-[10px] uppercase tracking-[0.2em] mt-2 mb-6 active:opacity-70 transition-opacity"
                 >
                   {isExpanded ? "[ SHOW_LESS ]" : "[ LEARN_MORE ]"}
                   <motion.svg 
