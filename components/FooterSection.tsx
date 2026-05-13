@@ -67,7 +67,7 @@ export default function FooterSection() {
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center relative z-10">
           <div className="text-slate-400 text-[10px] font-black flex flex-col items-center justify-center gap-4 uppercase tracking-[0.3em]">
             <span className="inline-flex items-center gap-3">
-              &copy; {year} Tharros // Ottawa Node 
+              &copy; {year} Tharros | Ottawa Node 
               <img src="/canada-flag.svg" alt="Canadian Flag" className="w-5 h-3 rounded-[2px] grayscale opacity-40" />
             </span>
           </div>

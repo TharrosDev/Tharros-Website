@@ -277,7 +277,7 @@ export default function IntakeAgent() {
                   <span className="w-1 h-1 rounded-full bg-accent-3 animate-pulse" />
                   <span className="w-1 h-1 rounded-full bg-accent-3 animate-pulse delay-75" />
                 </span>
-                Secure_Intake // System_Active
+                Secure_Intake | System_Active
               </motion.div>
 
               <h1 className="text-5xl md:text-7xl font-bold text-text tracking-tighter mb-8 leading-[1.1]">

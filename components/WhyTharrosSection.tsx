@@ -92,7 +92,7 @@ export default function WhyTharrosSection() {
                     <p className="text-white text-sm font-bold tracking-tight">
                       Magnus Abdelnour
                     </p>
-                    <p className="text-accent-3 text-[8px] font-black uppercase tracking-[0.3em] mt-0.5">Founder // Tharros</p>
+                    <p className="text-accent-3 text-[8px] font-black uppercase tracking-[0.3em] mt-0.5">Founder | Tharros</p>
                   </div>
                 </div>
               </div>
