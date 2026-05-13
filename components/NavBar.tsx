@@ -8,9 +8,9 @@ import { motion, AnimatePresence } from "motion/react";
 import Magnetic from "./Magnetic";
 
 const navLinks = [
+  { label: "Demo", href: "/#demo" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Process", href: "/#process" },
-  { label: "Demo", href: "/#demo" },
   { label: "Why", href: "/#why" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Clients", href: "/clients" },
