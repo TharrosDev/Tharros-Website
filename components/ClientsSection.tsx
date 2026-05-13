@@ -79,7 +79,7 @@ export default function ClientsSection() {
                   onClick={() => setIsExpanded(!isExpanded)}
                   className="md:hidden flex items-center gap-2 text-accent-3 font-bold text-[10px] uppercase tracking-[0.2em] mb-6 active:opacity-70 transition-opacity"
                 >
-                  {isExpanded ? "[ CLOSE_CASE_STUDY ]" : "[ VIEW_CASE_STUDY ]"}
+                  {isExpanded ? "[ SHOW_LESS ]" : "[ LEARN_MORE ]"}
                   <motion.svg 
                     animate={{ rotate: isExpanded ? 180 : 0 }}
                     width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
