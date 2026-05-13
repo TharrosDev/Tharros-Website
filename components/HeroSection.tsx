@@ -7,17 +7,11 @@ import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[70svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-16 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-white">
-      {/* Background: Industrial Geometric Depth */}
+    <section id="hero" className="relative min-h-[70svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-16 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-slate-950 industrial-grid">
+      {/* Background Sophistication */}
+      <div className="scanline" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4 opacity-70" />
-        <div 
-          className="absolute inset-0 opacity-[0.2]"
-          style={{
-            backgroundImage: "radial-gradient(circle at 1px 1px, #cbd5e1 1px, transparent 0)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-accent-3/5 blur-[120px] rounded-full" />
       </div>
 
@@ -29,7 +23,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/[0.03] border border-slate-900/5 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-900/60 mb-4 md:mb-8 hover:bg-slate-900/[0.05] transition-colors cursor-default"
+            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-white/60 mb-4 md:mb-8 hover:bg-white/[0.05] transition-colors cursor-default"
           >
             <Image 
               src="/canada-flag.svg" 
@@ -41,7 +35,7 @@ export default function HeroSection() {
             Keep it Canadian
           </motion.div>
 
-          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-text mb-4">
+          <h1 className="text-[2rem] leading-[1.05] sm:text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4">
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-400">corporate AI theory.</span>
             <br className="hidden sm:block" />
@@ -53,7 +47,7 @@ export default function HeroSection() {
             .
           </h1>
 
-          <p className="text-sm md:text-lg xl:text-xl text-subdued max-w-xl xl:max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed font-medium">
+          <p className="text-sm md:text-lg xl:text-xl text-slate-100 max-w-xl xl:max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed font-medium">
             Autonomous AI Agents for Ottawa businesses. We automate inquiries, 
             admin, and back-office tasks with zero code required.
           </p>
@@ -69,7 +63,7 @@ export default function HeroSection() {
             <a
               href="#demo"
               aria-label="View our live AI agent demo"
-              className="text-text font-bold text-xs md:text-sm uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
+              className="text-white font-bold text-xs md:text-sm uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
             >
               Live Demo
             </a>
@@ -81,8 +75,8 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2">
-        <span className="text-[10px] font-bold text-muted tracking-[0.3em] uppercase">Scroll_Down</span>
-        <div className="w-px h-4 bg-gradient-to-b from-slate-200 to-transparent" />
+        <span className="text-[10px] font-bold text-slate-400 tracking-[0.3em] uppercase">Scroll_Down</span>
+        <div className="w-px h-4 bg-gradient-to-b from-white/20 to-transparent" />
       </div>
     </section>
   );
