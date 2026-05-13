@@ -54,9 +54,9 @@ const MobileChatConsole = memo(({
   }, [messages, isTyping]);
 
   return (
-    <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border border-slate-200 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
+    <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border-2 border-slate-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Header - Minimalist Light Mode */}
-      <div className="px-4 py-3 border-b border-slate-100 bg-white/95 backdrop-blur-2xl shrink-0">
+      <div className="px-4 py-3 border-b-2 border-slate-900 bg-white/95 backdrop-blur-2xl shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -76,7 +76,7 @@ const MobileChatConsole = memo(({
             </div>
             
             <div className="flex items-center gap-2">
-              <div className="px-2 py-1 bg-slate-50 rounded-lg border border-slate-100">
+              <div className="px-2 py-1 bg-slate-50 rounded-lg border-2 border-slate-900">
                 <span className={`text-[9px] font-black tabular-nums ${isLimitReached ? 'text-red-500' : 'text-slate-400'}`}>
                   {userMessageCount}/{maxPrompts}
                 </span>
@@ -109,7 +109,7 @@ const MobileChatConsole = memo(({
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-slate-100 shrink-0">
+      <div className="p-4 bg-white border-t-2 border-slate-900 shrink-0">
         <AnimatePresence>
           {recommendedQuestions.length > 0 && !isTyping && !isLimitReached && (
             <motion.div 
@@ -121,7 +121,7 @@ const MobileChatConsole = memo(({
                 <button
                   key={q}
                   onClick={() => handleSend(q)}
-                  className="px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl text-[10px] font-bold text-slate-500 whitespace-nowrap active:scale-95 active:bg-slate-950 active:text-white transition-all uppercase tracking-widest"
+                  className="px-4 py-2 bg-slate-50 border-2 border-slate-900 rounded-xl text-[10px] font-bold text-slate-500 whitespace-nowrap active:scale-95 active:bg-slate-950 active:text-white transition-all uppercase tracking-widest"
                 >
                   {q}
                 </button>
@@ -132,7 +132,7 @@ const MobileChatConsole = memo(({
 
         <form 
           onSubmit={(e) => handleSend(inputValue, e)}
-          className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border border-slate-100"
+          className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-2xl border-2 border-slate-900"
         >
           <input
             type="text"

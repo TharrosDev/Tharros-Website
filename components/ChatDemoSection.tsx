@@ -366,10 +366,10 @@ export default function ChatDemoSection() {
                       debugInfo={initError ? { error: initError } : null}
                     />
                   ) : (
-                    <div className="relative flex flex-col h-[500px] xl:h-[650px] w-full bg-white rounded-[3rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] overflow-hidden border border-slate-200 group/console" style={{ willChange: "transform" }}>
+                    <div className="relative flex flex-col h-[500px] xl:h-[650px] w-full bg-white rounded-[3rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] overflow-hidden border-2 border-slate-900 group/console" style={{ willChange: "transform" }}>
                       
                       {/* Chat Header - Minimalist Light Mode (Compacted) */}
-                      <div className="p-4 md:p-5 border-b border-slate-100 bg-white/80 backdrop-blur-2xl sticky top-0 z-10">
+                      <div className="p-4 md:p-5 border-b-2 border-slate-900 bg-white/80 backdrop-blur-2xl sticky top-0 z-10">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4">
                             <div className="relative group/icon">
@@ -391,7 +391,7 @@ export default function ChatDemoSection() {
                           </div>
                           
                           <div className="flex items-center gap-3">
-                            <div className="px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
+                            <div className="px-3 py-1.5 bg-slate-50 rounded-lg border-2 border-slate-900">
                               <span className={`text-[11px] font-black tabular-nums leading-none ${isLimitReached ? 'text-red-500' : 'text-slate-950'}`}>
                                 {userMessageCount}/{MAX_PROMPTS}
                               </span>
@@ -430,7 +430,7 @@ export default function ChatDemoSection() {
                       </div>
 
                       {/* Footer / Input Area */}
-                      <div className="p-6 md:p-7 bg-white border-t border-slate-100">
+                      <div className="p-6 md:p-7 bg-white border-t-2 border-slate-900">
                         
                         {/* Suggestions */}
                         <AnimatePresence>
@@ -444,7 +444,7 @@ export default function ChatDemoSection() {
                                 <button
                                   key={q}
                                   onClick={() => handleSend(q)}
-                                  className="px-5 py-2.5 bg-slate-50 border border-slate-100 rounded-xl text-[10px] font-bold text-slate-500 hover:bg-slate-950 hover:text-white transition-all whitespace-nowrap active:scale-95 uppercase tracking-widest"
+                                  className="px-5 py-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl text-[10px] font-bold text-slate-500 hover:bg-slate-950 hover:text-white transition-all whitespace-nowrap active:scale-95 uppercase tracking-widest"
                                 >
                                   {q}
                                 </button>
@@ -455,7 +455,7 @@ export default function ChatDemoSection() {
 
                         <form 
                           onSubmit={(e) => handleSend(inputValue, e)}
-                          className="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl border border-slate-100 focus-within:border-slate-300 focus-within:bg-white transition-all duration-300"
+                          className="flex items-center gap-4 bg-slate-50 p-2 rounded-2xl border-2 border-slate-900 focus-within:bg-white transition-all duration-300"
                         >
                           <div className="flex items-center gap-4 px-4 py-3 flex-1">
                             <input
