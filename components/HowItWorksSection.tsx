@@ -22,15 +22,21 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
+    <section id="process" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+      {/* Background Sophistication */}
+      <div className="scanline" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
+      </div>
+
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
           <p className="section-label mb-6 text-center">How it works</p>
-          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
+          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-white mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
             From conversation to{" "}
             <span className="accent-text">live in under 2 weeks</span>
           </h2>
-          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
+          <p className="text-slate-100 text-center max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
             Three steps. No jargon. No complex enterprise rollout.
           </p>
         </AnimatedSection>
@@ -38,7 +44,7 @@ export default function HowItWorksSection() {
         <div className="relative">
           {/* Connecting line - desktop horizontal */}
           <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-[2px]">
-            <div className="w-full h-full bg-slate-100 rounded-full" />
+            <div className="w-full h-full bg-white/10 rounded-full" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
@@ -47,7 +53,7 @@ export default function HowItWorksSection() {
                 <div className="flex flex-col items-center text-center relative group">
                   {/* Step circle */}
                   <div className="relative mb-6">
-                    <div className="w-[80px] h-[80px] xl:w-[100px] xl:h-[100px] rounded-full bg-white border border-slate-100 flex items-center justify-center relative z-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent-3 group-hover:shadow-xl group-hover:shadow-accent-3/5 transition-all duration-500">
+                    <div className="w-[80px] h-[80px] xl:w-[100px] xl:h-[100px] rounded-full bg-slate-900 border border-white/10 flex items-center justify-center relative z-10 shadow-2xl group-hover:border-accent-3 group-hover:shadow-accent-3/20 transition-all duration-500">
                       <span className="text-accent-3 font-bold text-2xl md:text-3xl xl:text-4xl">
                         {step.number}
                       </span>
@@ -55,11 +61,11 @@ export default function HowItWorksSection() {
                   </div>
 
                   {/* Content card */}
-                  <div className="clean-card p-6 md:p-8 xl:p-10 w-full flex-1 hover:shadow-xl transition-all duration-500">
-                    <h3 className="text-lg md:text-xl xl:text-2xl font-bold text-text mb-4 leading-tight">
+                  <div className="bg-slate-900/50 backdrop-blur-xl border border-white/10 p-6 md:p-8 xl:p-10 rounded-[2rem] w-full flex-1 hover:bg-slate-900/80 hover:border-accent-3/30 transition-all duration-500 shadow-xl">
+                    <h3 className="text-lg md:text-xl xl:text-2xl font-bold text-white mb-4 leading-tight">
                       {step.headline}
                     </h3>
-                    <p className="text-subdued text-sm md:text-base xl:text-lg leading-relaxed">{step.body}</p>
+                    <p className="text-slate-300 text-sm md:text-base xl:text-lg leading-relaxed">{step.body}</p>
                   </div>
                 </div>
               </AnimatedSection>
