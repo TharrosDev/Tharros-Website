@@ -86,12 +86,12 @@ export default function IntakeForm() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
                           <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Full Name</label>
-                          <input required name="name" type="text" placeholder="John Doe" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
+                          <input required name="name" type="text" placeholder="John Smith" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                           <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                         <div className="space-y-2">
                           <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Email</label>
-                          <input required name="email" type="email" placeholder="john@company.com" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
+                          <input required name="email" type="email" placeholder="John.smith@gmail.com" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                           <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                       </div>
