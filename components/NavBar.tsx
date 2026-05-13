@@ -228,9 +228,6 @@ export default function NavBar() {
                   transition={{ delay: i * 0.08 + 0.1, ease: [0.22, 1, 0.36, 1] as any }}
                   className="group flex flex-col items-center gap-1"
                 >
-                  <span className="text-[10px] font-black text-accent-3/40 uppercase tracking-[0.4em] mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Access_0{i + 1}
-                  </span>
                   <span className="text-4xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors">
                     {link.label}
                   </span>
@@ -256,24 +253,11 @@ export default function NavBar() {
                   href="mailto:tharrosdev@gmail.com" 
                   className="mt-8 text-white/40 text-[10px] font-black uppercase tracking-[0.4em] hover:text-accent-3 transition-colors flex items-center gap-3"
                 >
-                  <span className="w-8 h-px bg-white/10" />
-                  Direct_Inquiry
-                  <span className="w-8 h-px bg-white/10" />
+                  Contact our Team
                 </a>
               </motion.div>
             </div>
             
-            {/* System Status Footer */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="absolute bottom-8 left-0 w-full px-8 flex justify-between items-center text-[8px] font-black uppercase tracking-[0.4em] text-white/20"
-            >
-              <span>Tharros_V2.0</span>
-              <span>Node_Ottawa</span>
-              <span>Encrypted_Session</span>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

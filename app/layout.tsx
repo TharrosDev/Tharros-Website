@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://tharros.ca"),
   title: {
-    default: "Tharros — Custom AI Agents for Ottawa Small Businesses",
+    default: "Tharros - Custom AI Agents for Ottawa Small Businesses",
     template: "%s | Tharros AI Studio",
   },
   description:
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Tharros — Custom AI Agents for Ottawa Small Businesses",
+    title: "Tharros - Custom AI Agents for Ottawa Small Businesses",
     description:
       "Recover your time and capture every lead with practical AI agents built for local trades, professional services, and small businesses in Ottawa. No corporate fluff, just performance.",
     url: "https://tharros.ca",

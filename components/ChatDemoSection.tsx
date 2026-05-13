@@ -18,9 +18,9 @@ const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2
 const formatTime = () => TIME_FORMATTER.format(new Date());
 
 const NEURAL_LOGIC_FEATURES = [
-  { title: "Neural Logic", desc: "Handles complex multi-step reasoning." },
-  { title: "Brand Integrity", desc: "Perfectly mirrors your professional tone." },
-  { title: "Deep Integration", desc: "Syncs directly with your existing CRM." }
+  { title: "Core Reasoning", desc: "Handles complex multi-step tasks." },
+  { title: "Brand Identity", desc: "Perfectly mirrors your professional tone." },
+  { title: "System Integration", desc: "Syncs directly with your existing tools." }
 ] as const;
 
 const VERIFICATION_BLOCKS = [
@@ -279,7 +279,7 @@ export default function ChatDemoSection() {
             
             <p className="text-slate-200 text-lg md:text-2xl xl:text-3xl mb-16 leading-relaxed max-w-3xl mx-auto font-medium opacity-90">
               High-stakes automation for high-impact businesses. <br className="hidden md:block" />
-              Test our <span className="text-accent-3">Light Model</span> logic in real-time.
+              Test our <span className="text-accent-3">Commercial Model</span> in real-time.
             </p>
 
             <div className="flex flex-wrap justify-center gap-12 md:gap-20">
@@ -309,16 +309,13 @@ export default function ChatDemoSection() {
                 <div className="mb-12">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-8 h-px bg-accent-3" />
-                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
-                      Deployment_Briefing
-                    </p>
                   </div>
                   <h3 className="text-5xl md:text-6xl xl:text-7xl font-bold text-white tracking-tighter mb-10 leading-[1.1]">
                     Operational <br />
-                    <span className="text-accent-3">Intelligence.</span>
+                    <span className="text-accent-3">Excellence.</span>
                   </h3>
                   <p className="text-lg text-slate-300 leading-relaxed mb-12 max-w-sm">
-                    This instance demonstrates the core reasoning engine used in our custom service deployments.
+                    This instance demonstrates the core intelligence used in our custom service deployments.
                   </p>
                 </div>
 
@@ -344,9 +341,8 @@ export default function ChatDemoSection() {
                   <div className="mb-6 flex items-center justify-between px-4">
                     <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                      Baseline_Inference_Limit: {MAX_PROMPTS}
+                      SESSION CAPACITY: {MAX_PROMPTS} INQUIRIES
                     </p>
-                    <span className="text-[10px] font-black text-white/10 uppercase tracking-widest">ID: {AGENT_ID.slice(0, 8)}</span>
                   </div>
 
                   {isMobile ? (
@@ -357,9 +353,9 @@ export default function ChatDemoSection() {
                       handleSend={handleSend}
                       isTyping={isTyping}
                       recommendedQuestions={recommendedQuestions}
-                      title="Tharros Agent"
-                      subtitle="Light Model Operational"
-                      modelType="Industrial Logic Demo"
+                      title="Tharros AI Agent"
+                      subtitle="Live Operational"
+                      modelType="Commercial Demo"
                       userMessageCount={userMessageCount}
                       maxPrompts={MAX_PROMPTS}
                       isLoading={isLoading}
@@ -383,14 +379,14 @@ export default function ChatDemoSection() {
                               </div>
                             </div>
                             <div className="flex flex-col gap-1">
-                              <h3 className="text-white font-bold text-xl tracking-tighter leading-none">Tharros_Agent_v1.0</h3>
+                              <h3 className="text-white font-bold text-xl tracking-tighter leading-none">Tharros AI Agent</h3>
                               <div className="flex items-center gap-3">
                                 <span className="text-green-500 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-1.5">
                                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-                                  Live_Operational
+                                  Status: Ready
                                 </span>
                                 <span className="w-1 h-1 rounded-full bg-white/10" />
-                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Ottawa_Node</span>
+                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Ottawa, Canada</span>
                               </div>
                             </div>
                           </div>
@@ -401,7 +397,7 @@ export default function ChatDemoSection() {
                                 <span className={`text-[12px] font-black tabular-nums leading-none mb-0.5 ${isLimitReached ? 'text-red-400' : 'text-white'}`}>
                                   {userMessageCount}/{MAX_PROMPTS}
                                 </span>
-                                <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">Baseline_Calls</span>
+                                <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">INQUIRIES</span>
                               </div>
                               <div className="w-px h-6 bg-white/10" />
                               <div className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
@@ -432,7 +428,7 @@ export default function ChatDemoSection() {
                                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                               </svg>
                             </div>
-                            <p className="text-[11px] font-black text-red-400/70 uppercase tracking-[0.2em]">Agent_Offline</p>
+                            <p className="text-[11px] font-black text-red-400/70 uppercase tracking-[0.2em]">Agent Offline</p>
                             <p className="text-xs text-slate-500 text-center max-w-xs">{initError}</p>
                           </div>
                         )}
@@ -480,7 +476,7 @@ export default function ChatDemoSection() {
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            placeholder={isLoading ? "Initializing agent..." : isLimitReached ? "Deployment limit reached for this session." : "Type your inquiry..."}
+                            placeholder={isLoading ? "Starting agent..." : isLimitReached ? "Session limit reached for this session." : "Type your inquiry..."}
                             disabled={isLoading || isTyping || isLimitReached || !!initError}
                             className="flex-1 bg-transparent px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50 font-medium"
                           />

@@ -21,8 +21,7 @@ const pricingFactors = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
       </svg>
     ),
-    title: "Knowledge Depth",
-    description: "The volume of training data—from basic FAQs to complex technical manuals."
+    description: "The volume of training data: from basic FAQs to complex technical manuals."
   },
   {
     icon: (
@@ -57,8 +56,7 @@ export default function PricingSection() {
               <span className="text-accent-3">Tailored Results.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
-              We don&apos;t believe in generic subscriptions. 
-              Our pricing is as custom as the agents we build—mapped strictly to the value they create for your business.
+              Our pricing is as custom as the agents we build. Mapped strictly to the value they create for your business.
             </p>
           </AnimatedSection>
         </div>

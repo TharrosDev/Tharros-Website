@@ -74,7 +74,7 @@ export default function HeroSection() {
             className="text-base md:text-2xl xl:text-3xl text-slate-200 max-w-2xl xl:max-w-5xl mx-auto mb-8 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
             High-performance AI Agents for trades and professional services. <br className="hidden lg:block" />
-            We build the digital workforce that recovers your time — <span className="text-white font-black tracking-widest uppercase text-[10px] md:text-sm inline-block ml-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10">Keep it Canadian</span>
+            We build the digital workforce that recovers your time. <span className="text-white font-black tracking-widest uppercase text-[10px] md:text-sm inline-block ml-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10">Keep it Canadian</span>
           </motion.p>
 
           <motion.div 
@@ -104,16 +104,6 @@ export default function HeroSection() {
 
 
 
-      {/* Scroll indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4"
-      >
-        <span className="text-[10px] font-black text-slate-500 tracking-[0.5em] uppercase">Deployment_Log</span>
-        <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
-      </motion.div>
 
     </section>
   );

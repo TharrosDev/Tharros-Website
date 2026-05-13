@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { useRef, useEffect, memo, useState } from "react";
+import { useRef, useEffect, memo } from "react";
 
 type LocalMessage = {
   id: string;
@@ -35,16 +35,12 @@ const MobileChatConsole = memo(({
   isTyping,
   recommendedQuestions,
   title,
-  subtitle,
-  modelType,
   userMessageCount,
   maxPrompts,
   isLoading = false,
   height = "h-[65dvh]",
-  debugInfo
 }: MobileChatConsoleProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [logsOpen, setLogsOpen] = useState(false);
   const isLimitReached = userMessageCount >= maxPrompts;
 
   useEffect(() => {
@@ -61,10 +57,7 @@ const MobileChatConsole = memo(({
     <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-slate-900 border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Header - Industrial Control Pod */}
       <div className="px-5 py-4 border-b border-white/10 bg-slate-900/95 backdrop-blur-2xl flex items-center justify-between shrink-0">
-          <button 
-            onClick={() => setLogsOpen(!logsOpen)}
-            className="flex items-center gap-4 active:opacity-70 transition-opacity"
-          >
+          <div className="flex items-center gap-4">
             <div className="relative">
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-950 shadow-lg">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -78,12 +71,12 @@ const MobileChatConsole = memo(({
             <div className="text-left">
               <h3 className="text-sm font-black text-white tracking-tight leading-none mb-1.5 uppercase">{title}</h3>
               <div className="flex items-center gap-2">
-                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">{subtitle}</span>
+                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Status: Ready</span>
                 <span className="w-1 h-1 rounded-full bg-white/10" />
                 <span className="text-[8px] font-bold text-accent-3 uppercase tracking-widest">ACTIVE</span>
               </div>
             </div>
-          </button>
+          </div>
           
           <div className="flex items-center gap-3">
             <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10 flex items-center gap-2">
@@ -91,41 +84,10 @@ const MobileChatConsole = memo(({
                 {userMessageCount}/{maxPrompts}
               </span>
               <div className="w-1 h-1 rounded-full bg-white/20" />
-              <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">CALS</span>
+              <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">INQUIRIES</span>
             </div>
           </div>
         </div>
-
-      {/* Logs Overlay */}
-      <AnimatePresence>
-        {logsOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute inset-0 z-50 bg-slate-950 p-6 font-mono text-[10px] overflow-y-auto"
-          >
-            <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
-              <span className="text-accent-3 font-black uppercase tracking-[0.3em]">System_Logs_v1.0.4</span>
-              <button onClick={() => setLogsOpen(false)} className="text-white hover:text-accent-3 font-black uppercase tracking-widest">
-                [CLOSE]
-              </button>
-            </div>
-            <div className="space-y-4 text-slate-500">
-              <p><span className="text-green-500 font-bold">[INIT]</span> SDK_CORE_READY</p>
-              <p><span className="text-green-500 font-bold">[SYNC]</span> CONTEXT_INJECTED: {modelType}</p>
-              <p><span className="text-blue-500 font-bold">[STAT]</span> SESSION_PROMPTS: {userMessageCount}/{maxPrompts}</p>
-              <p><span className="text-blue-500 font-bold">[STAT]</span> BUFFER_LEN: {messages.length}</p>
-              <p><span className="text-amber-500 font-bold">[INFO]</span> REGION: {typeof window !== 'undefined' ? 'CA-OTTAWA-01' : 'N/A'}</p>
-              {debugInfo && (
-                <pre className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10 whitespace-pre-wrap break-all text-slate-400">
-                  {JSON.stringify(debugInfo, null, 2)}
-                </pre>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Messages */}
       <div 
@@ -140,7 +102,7 @@ const MobileChatConsole = memo(({
               <div className="w-12 h-12 rounded-2xl border-2 border-white/5 border-t-accent-3 animate-spin" />
               <div className="absolute inset-0 bg-accent-3/20 blur-xl rounded-full animate-pulse" />
             </div>
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] animate-pulse">Initializing_Model...</span>
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] animate-pulse">Starting Agent...</span>
           </div>
         ) : (
           <AnimatePresence initial={false}>
