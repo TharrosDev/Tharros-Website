@@ -22,7 +22,8 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+      <div id="process" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       {/* Background Sophistication */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />

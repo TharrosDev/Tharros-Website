@@ -33,7 +33,8 @@ const pillars = [
 
 export default function WhyTharrosSection() {
   return (
-    <section id="why" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+      <div id="why" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       {/* Background Sophistication */}
       <div className="scanline" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
