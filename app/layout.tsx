@@ -210,6 +210,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://api-bc654b.stack.relevance.ai" />
         <link rel="dns-prefetch" href="https://api-bc654b.stack.relevance.ai" />
         <link rel="preconnect" href="https://va.vercel-scripts.com" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <Script
           id="json-ld"
           type="application/ld+json"

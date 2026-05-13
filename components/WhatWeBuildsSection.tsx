@@ -50,60 +50,66 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
+    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-[#fafafa]">
       <div id="solutions" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      {/* Decorative Flow */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
-      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
+      
+      {/* Industrial Grid Accents */}
+      <div className="absolute inset-0 industrial-grid opacity-[0.2] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent opacity-100" />
+      
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-6 md:mb-16">
-            <p className="section-label mb-4">What we build</p>
-            <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-text mb-6 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
-              Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}
-              <span className="accent-text">No corporate fluff.</span>
+          <div className="text-center mb-16 md:mb-24">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/5 border border-slate-900/10 mb-6">
+              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">Service_Catalog_v1.0</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-slate-900 mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1] tracking-tighter">
+              Autonomous <span className="text-slate-400">AI Agents.</span> <br />
+              <span className="accent-text">Industrial performance.</span>
             </h2>
-            <p className="text-subdued max-w-2xl xl:max-w-3xl mx-auto text-base md:text-lg xl:text-xl leading-relaxed">
-              Every AI Agent is custom-engineered to solve the high-impact operational gaps in your Ottawa business.
+            <p className="text-slate-500 max-w-2xl xl:max-w-3xl mx-auto text-lg md:text-xl xl:text-2xl leading-relaxed font-medium">
+              We don&apos;t just build bots. We engineer digital workforce solutions tailored to the operational DNA of your business.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 xl:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
               <motion.div 
                 whileHover={{ 
-                  y: -5,
-                  scale: 1.01,
-                  borderColor: "rgba(59, 130, 246, 0.3)",
-                  boxShadow: "0 20px 40px -15px rgba(0,0,0,0.08)",
+                  y: -8,
+                  borderColor: "rgba(59, 130, 246, 0.2)",
+                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.06)",
                   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
                 }}
-                className="clean-card p-6 md:p-8 xl:p-10 h-full flex flex-col group cursor-default shadow-sm transition-all duration-500"
+                className="bg-white border border-slate-200 p-8 md:p-10 xl:p-12 h-full flex flex-col group cursor-default shadow-sm transition-all duration-500 rounded-[2.5rem] relative overflow-hidden"
               >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-accent-3 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-colors duration-500 shrink-0">
-                    <span className="scale-90">{agent.icon}</span>
+                {/* Visual Depth Accent */}
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="flex flex-col gap-6 mb-8 relative z-10">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 group-hover:bg-accent-3 group-hover:text-white group-hover:border-accent-3 transition-all duration-500 shrink-0 shadow-sm">
+                    <span className="scale-125">{agent.icon}</span>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="section-label text-[10px] font-bold tracking-[0.1em]">{agent.tagline}</p>
-                    <h3 className="text-lg md:text-xl font-bold text-text leading-tight">
+                  <div className="flex flex-col gap-2">
+                    <p className="text-[10px] font-black text-accent-3 uppercase tracking-[0.2em]">{agent.tagline}</p>
+                    <h3 className="text-2xl xl:text-3xl font-bold text-slate-900 tracking-tighter leading-none">
                       {agent.name}
                     </h3>
                   </div>
                 </div>
                 
-                <p className="text-subdued text-sm md:text-base leading-relaxed mb-6">
+                <p className="text-slate-500 text-base md:text-lg leading-relaxed mb-10 relative z-10">
                   {agent.description}
                 </p>
  
-                <div className="mt-auto">
-                  <div className="h-px bg-slate-100 w-full mb-4" />
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="mt-auto relative z-10">
+                  <div className="flex flex-wrap gap-2">
                     {agent.examples.map((ex) => (
                       <span 
                         key={ex} 
-                        className="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wider"
+                        className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-[9px] font-bold text-slate-400 uppercase tracking-widest group-hover:bg-white group-hover:border-slate-200 transition-colors"
                       >
                         {ex}
                       </span>

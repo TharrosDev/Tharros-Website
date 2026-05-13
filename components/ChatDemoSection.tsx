@@ -42,6 +42,7 @@ interface AgentResource {
 }
 
 export default function ChatDemoSection() {
+  const [mounted, setMounted] = useState(false);
   const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -67,6 +68,7 @@ export default function ChatDemoSection() {
 
   // Persistence: Load count on mount
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem(`pc-${AGENT_ID}`);
       if (stored) {
@@ -255,36 +257,44 @@ export default function ChatDemoSection() {
       <div className="scanline" />
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
-      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative flex flex-col items-center">
+      {/* Neural Glows */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" style={{ animationDelay: '1s' }} />
+
+      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative flex flex-col items-center z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-24">
+        <div className="text-center mb-16 md:mb-32">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 mx-auto">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-3 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-100">Live Deployment</span>
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-10 mx-auto group hover:bg-white/10 transition-all cursor-default">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-3 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-3"></span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-100">Live_Operational_Instance</span>
             </div>
             
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[1] tracking-tighter">
+            <h2 className="text-5xl md:text-8xl xl:text-9xl font-bold text-white mb-10 leading-[0.9] tracking-tighter">
               An agent that <br />
-              <span className="text-slate-100">commands results.</span>
+              <span className="text-slate-500">commands results.</span>
             </h2>
             
-            <p className="text-slate-100 text-lg md:text-xl xl:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
-              Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
+            <p className="text-slate-200 text-lg md:text-2xl xl:text-3xl mb-16 leading-relaxed max-w-3xl mx-auto font-medium opacity-90">
+              High-stakes automation for high-impact businesses. <br className="hidden md:block" />
+              Test our <span className="text-accent-3">Light Model</span> logic in real-time.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            <div className="flex flex-wrap justify-center gap-12 md:gap-20">
               {NEURAL_LOGIC_FEATURES.map((item, i) => (
                 <motion.div 
                   key={item.title}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex flex-col gap-1 text-center group cursor-default"
+                  className="flex flex-col gap-2 text-center group cursor-default"
                 >
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-accent-3 transition-colors">{item.title}</h4>
-                  <p className="text-xs text-slate-100 leading-relaxed">{item.desc}</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent-3 opacity-60 group-hover:opacity-100 transition-opacity">{item.title}</h4>
+                  <p className="text-xs text-slate-400 font-bold tracking-tight">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -294,44 +304,51 @@ export default function ChatDemoSection() {
         {/* Re-arranged Split Layout: Header & Console side-by-side */}
         <div className="w-full">
           <AnimatedSection delay={0.2} variant="scale-in">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24 items-start">
               
               {/* Left Column: Briefing & Strategy */}
               <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-32">
-                <div className="mb-8">
-                  <p className="text-[10px] font-bold text-white uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                    <span className="w-2 h-[1px] bg-slate-400" />
-                    Industrial Logic Demo
-                  </p>
-                  <h3 className="text-4xl md:text-5xl xl:text-6xl font-bold text-white tracking-tighter mb-6 leading-[1.1]">
-                    Interact with <br />
-                    our <span className="text-accent-3">Light Model.</span>
+                <div className="mb-12">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-px bg-accent-3" />
+                    <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
+                      Deployment_Briefing
+                    </p>
+                  </div>
+                  <h3 className="text-5xl md:text-6xl xl:text-7xl font-bold text-white tracking-tighter mb-8 leading-[1]">
+                    Operational <br />
+                    <span className="text-accent-3">Intelligence.</span>
                   </h3>
-                  <p className="text-base text-slate-100 leading-relaxed mb-10 max-w-sm">
-                    Experience the responsiveness and brand alignment of a Tharros-engineered Customer Q&A Agent.
+                  <p className="text-lg text-slate-300 leading-relaxed mb-12 max-w-sm">
+                    This instance demonstrates the core reasoning engine used in our custom service deployments.
                   </p>
                 </div>
 
-                <div className="space-y-8 hidden lg:block">
+                <div className="space-y-6 hidden lg:block">
                   {VERIFICATION_BLOCKS.map((item) => (
-                    <div key={item.title} className="flex flex-col gap-1.5 p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-900 transition-colors duration-300">
-                      <span className="text-[8px] font-black uppercase tracking-widest text-slate-200">{item.label}</span>
-                      <h4 className="text-xs font-bold text-white uppercase tracking-tight">{item.title}</h4>
-                      <p className="text-[11px] text-white leading-normal">{item.desc}</p>
+                    <div key={item.title} className="flex flex-col gap-2 p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 group">
+                      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-accent-3 opacity-50 group-hover:opacity-100 transition-opacity">{item.label}</span>
+                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">{item.title}</h4>
+                      <p className="text-xs text-slate-400 leading-relaxed font-medium">{item.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Right Column: Chat Console */}
-              <div className="lg:col-span-7 xl:col-span-8">
+              <div className="lg:col-span-7 xl:col-span-8 relative">
+                {/* Decorative Frame Elements */}
+                <div className="absolute -top-12 -right-12 w-48 h-48 border-t-2 border-r-2 border-white/5 rounded-tr-[4rem] pointer-events-none" />
+                <div className="absolute -bottom-12 -left-12 w-48 h-48 border-b-2 border-l-2 border-white/5 rounded-bl-[4rem] pointer-events-none" />
+
                 <div className="relative w-full">
                   {/* Industrial Disclaimer */}
-                  <div className="mb-4 px-6">
-                    <p className="text-[10px] font-bold text-white uppercase tracking-[0.15em] flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-white" />
-                      Sandbox instance restricted to {MAX_PROMPTS} baseline inferences.
+                  <div className="mb-6 flex items-center justify-between px-4">
+                    <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                      Baseline_Inference_Limit: {MAX_PROMPTS}
                     </p>
+                    <span className="text-[10px] font-black text-white/10 uppercase tracking-widest">ID: {AGENT_ID.slice(0, 8)}</span>
                   </div>
 
                   {isMobile ? (
@@ -351,39 +368,45 @@ export default function ChatDemoSection() {
                       debugInfo={initError ? { error: initError } : null}
                     />
                   ) : (
-                    <div className="relative flex flex-col h-[450px] xl:h-[550px] w-full bg-slate-900/40 rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5" style={{ willChange: "transform" }}>
+                    <div className="relative flex flex-col h-[500px] xl:h-[650px] w-full bg-slate-900/40 rounded-[3rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.7)] overflow-hidden border border-white/10 group/console" style={{ willChange: "transform" }}>
                       
                       {/* Chat Header - Glassmorphism Bento Style */}
-                      <div className="px-5 md:px-10 py-5 border-b border-white/5 bg-slate-900/80 backdrop-blur-xl sticky top-0 z-10">
+                      <div className="px-8 md:px-12 py-8 border-b border-white/5 bg-slate-900/90 backdrop-blur-2xl sticky top-0 z-10">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
-                            <div className="relative">
-                              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-slate-950 shadow-lg shadow-white/5">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <div className="flex items-center gap-6">
+                            <div className="relative group/icon">
+                              <div className="w-14 h-14 rounded-[1.25rem] bg-white flex items-center justify-center text-slate-950 shadow-2xl group-hover/icon:scale-110 transition-transform duration-500">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                 </svg>
                               </div>
-                              <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-slate-900 flex items-center justify-center border-2 border-slate-900">
+                              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-slate-900 flex items-center justify-center border-[3px] border-slate-900">
                                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                               </div>
                             </div>
-                            <div className="flex flex-col">
-                              <h3 className="text-white font-bold text-base tracking-tight leading-none mb-1.5">Tharros Agent &mdash; Light Model</h3>
-                              <div className="flex items-center gap-2">
-                                <span className="text-green-500 text-[10px] font-extrabold uppercase tracking-widest flex items-center gap-1">
-                                  <span className="w-1 h-1 rounded-full bg-green-500 animate-ping" />
-                                  Operational
+                            <div className="flex flex-col gap-1">
+                              <h3 className="text-white font-bold text-xl tracking-tighter leading-none">Tharros_Agent_v1.0</h3>
+                              <div className="flex items-center gap-3">
+                                <span className="text-green-500 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-1.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
+                                  Live_Operational
                                 </span>
+                                <span className="w-1 h-1 rounded-full bg-white/10" />
+                                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Ottawa_Node</span>
                               </div>
                             </div>
                           </div>
                           
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-lg border border-white/10">
-                              <span className={`text-[10px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
-                                {userMessageCount}/{MAX_PROMPTS}
-                              </span>
-                              <span className="text-[9px] font-bold text-slate-100 uppercase tracking-tight">Prompts</span>
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-xl border border-white/10 shadow-inner">
+                              <div className="flex flex-col items-end">
+                                <span className={`text-[12px] font-black tabular-nums leading-none mb-0.5 ${isLimitReached ? 'text-red-400' : 'text-white'}`}>
+                                  {userMessageCount}/{MAX_PROMPTS}
+                                </span>
+                                <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">Baseline_Calls</span>
+                              </div>
+                              <div className="w-px h-6 bg-white/10" />
+                              <div className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
                             </div>
                           </div>
                         </div>
@@ -392,10 +415,10 @@ export default function ChatDemoSection() {
                       {/* Messages Area */}
                       <div 
                         ref={scrollRef}
-                        className="flex-1 overflow-y-auto p-6 md:p-10 flex flex-col gap-6 bg-black/20 scroll-smooth relative"
+                        className="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col gap-8 bg-black/40 scroll-smooth relative"
                       >
                         {/* Subtle Grainy Overlay */}
-                        <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
+                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
                         <AnimatePresence initial={false}>
                           {messages.map((msg) => (
                             <MessageItem key={msg.id} msg={msg} />
@@ -408,7 +431,7 @@ export default function ChatDemoSection() {
                       </div>
 
                       {/* Footer / Input Area */}
-                      <div className="p-6 md:p-8 bg-slate-900/60 border-t border-white/5">
+                      <div className="p-8 md:p-10 bg-slate-900/80 border-t border-white/10 backdrop-blur-xl">
                         
                         {/* Suggestions */}
                         <AnimatePresence>
@@ -416,13 +439,13 @@ export default function ChatDemoSection() {
                             <motion.div 
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
-                              className="flex overflow-x-auto no-scrollbar gap-2 mb-6 -mx-1 px-1 pb-1"
+                              className="flex overflow-x-auto no-scrollbar gap-3 mb-8 -mx-1 px-1 pb-1"
                             >
                               {recommendedQuestions.map((q) => (
                                 <button
                                   key={q}
                                   onClick={() => handleSend(q)}
-                                  className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[11px] font-bold text-slate-300 hover:bg-accent-3 hover:text-white hover:border-accent-3 transition-all whitespace-nowrap active:scale-95"
+                                  className="px-6 py-3 bg-white/5 border border-white/10 rounded-2xl text-[11px] font-black text-slate-300 hover:bg-white hover:text-slate-950 hover:border-white transition-all whitespace-nowrap active:scale-95 shadow-lg uppercase tracking-widest"
                                 >
                                   {q}
                                 </button>
@@ -433,23 +456,23 @@ export default function ChatDemoSection() {
 
                         <form 
                           onSubmit={(e) => handleSend(inputValue, e)}
-                          className="flex items-center gap-4 bg-white/5 p-2 rounded-[2rem] border border-white/10 focus-within:border-accent-3/30 transition-all"
+                          className="flex items-center gap-4 bg-white/5 p-3 rounded-[2.5rem] border border-white/10 focus-within:border-accent-3/40 focus-within:bg-white/[0.08] transition-all duration-500 shadow-2xl"
                         >
                           <input
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            placeholder={isLimitReached ? "Demo limit reached." : "Message..."}
+                            placeholder={isLimitReached ? "Deployment limit reached for this session." : "Type your inquiry..."}
                             disabled={!agentInstance || isTyping || isLimitReached}
-                            className="flex-1 bg-transparent px-4 py-3 text-base text-white placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
+                            className="flex-1 bg-transparent px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50 font-medium"
                           />
                           <button 
                             type="submit"
                             aria-label="Send message"
                             disabled={!inputValue.trim() || !agentInstance || isTyping || isLimitReached}
-                            className="h-12 w-12 flex items-center justify-center rounded-[1.2rem] bg-white text-slate-950 shadow-lg hover:bg-slate-100 transition-all disabled:opacity-10 active:scale-90 shrink-0"
+                            className="h-14 w-14 flex items-center justify-center rounded-[1.75rem] bg-white text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-slate-100 hover:scale-105 transition-all disabled:opacity-5 disabled:grayscale active:scale-95 shrink-0"
                           >
-                            <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
                               <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
                             </svg>
                           </button>
@@ -464,6 +487,7 @@ export default function ChatDemoSection() {
         </div>
       </div>
     </section>
+
   );
 }
 

@@ -15,12 +15,28 @@ const navLinks = [
 ];
 
 export default function NavBar() {
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const pathname = usePathname();
   const isIntakePage = pathname === "/intake";
   const isHomePage = pathname === "/";
+
+  // Persistent Navigation Preference - Safe for Hydration
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem("tharros_nav_minimized");
+    if (saved !== null) {
+      setIsMinimized(saved === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("tharros_nav_minimized", String(isMinimized));
+    }
+  }, [isMinimized, mounted]);
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     // Handle logo/scroll to top
@@ -68,14 +84,14 @@ export default function NavBar() {
               behavior: "smooth"
             });
           }
-        }, 100);
+        }, 150); // Increased for safety
       }
     };
 
-    if (isHomePage) {
+    if (isHomePage && mounted) {
       handleHashScroll();
     }
-  }, [isHomePage, pathname]);
+  }, [isHomePage, pathname, mounted]);
 
   useEffect(() => {
     let ticking = false;
@@ -106,33 +122,26 @@ export default function NavBar() {
     };
   }, [mobileOpen]);
 
-  // Persistent Navigation Preference
-  useEffect(() => {
-    const saved = localStorage.getItem("tharros_nav_minimized");
-    if (saved !== null) {
-      setIsMinimized(saved === "true");
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("tharros_nav_minimized", String(isMinimized));
-  }, [isMinimized]);
-
+  // Prevent flicker by not rendering specific parts or using suppressHydrationWarning
   return (
     <>
       <header
-        className={`fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-border shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[0.22, 1, 0.36, 1] ${
-          isMinimized 
-            ? "right-[3%] md:right-[5%] left-auto translate-x-0" 
+        suppressHydrationWarning
+        className={`fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-700 ease-[0.22, 1, 0.36, 1] ${
+          mounted && isMinimized 
+            ? "right-4 md:right-8 left-auto translate-x-0 w-auto border-slate-900/10 bg-slate-950 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)]" 
             : "left-1/2 -translate-x-1/2 justify-between"
         }`}
-        style={{ width: isMinimized ? "auto" : "min(94%, 1300px)" }}
+        style={{ 
+          width: mounted && isMinimized ? "auto" : "min(94%, 1300px)",
+          opacity: mounted ? 1 : 0 // Fade in when ready
+        }}
       >
-        <Magnetic strength={0.15}>
+        <Magnetic strength={0.1}>
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className={`relative z-10 block transition-all duration-500 ${isMinimized ? "scale-[0.6] -mr-4 opacity-70 hover:opacity-100" : "scale-90 md:scale-100"}`}
+            className={`relative z-10 block transition-all duration-700 ${isMinimized ? "scale-50 -mr-6 opacity-40 grayscale hover:opacity-100 hover:grayscale-0" : "scale-90 md:scale-100"}`}
             aria-label="Tharros Home"
           >
             <Image
@@ -152,9 +161,9 @@ export default function NavBar() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleLinkClick(e, link.href)}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 text-sm font-semibold text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
+              className="px-5 py-2 text-sm font-bold text-subdued hover:text-text rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px]"
             >
               {link.label}
             </motion.a>
@@ -165,24 +174,28 @@ export default function NavBar() {
           {/* Industrial Minimize Toggle */}
           <button
             onClick={() => setIsMinimized(!isMinimized)}
-            className="hidden md:flex w-9 h-9 items-center justify-center rounded-xl bg-slate-950 text-slate-400 hover:text-white border border-white/10 transition-all active:scale-95 shadow-[0_4px_12px_rgba(0,0,0,0.1)] relative group"
+            className={`hidden md:flex w-9 h-9 items-center justify-center rounded-xl transition-all duration-500 active:scale-90 shadow-sm relative group overflow-hidden ${
+              isMinimized ? "bg-accent-3 text-white border-transparent" : "bg-slate-950 text-slate-400 hover:text-white border border-white/10"
+            }`}
             aria-label={isMinimized ? "Expand Console" : "Minimize Console"}
             title={isMinimized ? "Expand Console" : "Minimize Console"}
           >
+            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             {isMinimized ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
                 <rect x="3" y="3" width="18" height="18" rx="2" />
                 <path d="M15 3v18" />
                 <path d="M8 9l3 3-3 3" />
               </svg>
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
                 <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
               </svg>
             )}
-            {/* Tooltip-like Pulse */}
+            
+            {/* Control Pod Glow */}
             {isMinimized && (
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-accent-3 rounded-full animate-pulse shadow-[0_0_8px_rgba(14,165,233,0.8)]" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full animate-ping opacity-50" />
             )}
           </button>
 
