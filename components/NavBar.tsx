@@ -212,14 +212,15 @@ export default function NavBar() {
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-[55] bg-white/80 flex flex-col items-center justify-center"
+            initial={isMinimized ? { opacity: 0, y: 20, scale: 0.95 } : { opacity: 0 }}
+            animate={isMinimized ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, backdropFilter: "blur(40px)" }}
+            exit={isMinimized ? { opacity: 0, y: 10, scale: 0.95 } : { opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className={isMinimized 
+              ? "fixed top-20 right-[3%] md:right-[5%] z-[55] w-72 bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-[2rem] shadow-2xl p-8 overflow-hidden shadow-slate-900/10" 
+              : "fixed inset-0 z-[55] bg-white/80 backdrop-blur-3xl flex flex-col items-center justify-center"}
           >
-            <div className="flex flex-col items-center justify-center gap-10 w-full px-6">
+            <div className={isMinimized ? "flex flex-col gap-6" : "flex flex-col items-center justify-center gap-10 w-full px-6"}>
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -228,34 +229,37 @@ export default function NavBar() {
                     handleLinkClick(e, link.href);
                     setMobileOpen(false);
                   }}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                  transition={{ delay: i * 0.08, duration: 0.5, ease: "circOut" }}
-                  className="text-4xl font-bold tracking-tighter text-slate-900 hover:text-accent-3 transition-colors text-center w-full py-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className={isMinimized 
+                    ? "text-xl font-bold tracking-tight text-slate-900 hover:text-accent-3 transition-colors" 
+                    : "text-4xl font-bold tracking-tighter text-slate-900 hover:text-accent-3 transition-colors text-center w-full py-2"}
                 >
                   {link.label}
                 </motion.a>
               ))}
+              
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: navLinks.length * 0.08, duration: 0.5 }}
-                className="w-full max-w-xs mt-4"
+                transition={{ delay: navLinks.length * 0.05 }}
+                className={isMinimized ? "mt-2 pt-6 border-t border-slate-100" : "w-full max-w-xs mt-4"}
               >
                 <Link
                   href="/intake"
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
-                  className="primary-button flex items-center justify-center px-6 py-3 text-base shadow-2xl shadow-slate-900/10"
+                  className={isMinimized 
+                    ? "primary-button flex items-center justify-center px-6 py-3 text-sm" 
+                    : "primary-button flex items-center justify-center px-6 py-4 text-base shadow-2xl shadow-slate-900/10"}
                 >
                   Get Started
                 </Link>
-                <div className="mt-6 text-center">
+                <div className={isMinimized ? "mt-4 text-left" : "mt-6 text-center"}>
                   <a 
                     href="mailto:tharrosdev@gmail.com?subject=Inquiry" 
-                    className="text-slate-400 text-sm font-bold uppercase tracking-widest hover:text-text transition-colors"
+                    className="text-slate-400 text-[10px] font-bold uppercase tracking-widest hover:text-text transition-colors"
                   >
                     Or Email Us
                   </a>
@@ -263,14 +267,16 @@ export default function NavBar() {
               </motion.div>
             </div>
             
-            {/* Industrial Accent Bottom */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
-              className="absolute bottom-12 text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400"
-            >
-              Unit_01 // Menu_System
-            </motion.div>
+            {/* Industrial Accent - Only show on full screen or adjust for dropdown */}
+            {!isMinimized && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                className="absolute bottom-12 text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400"
+              >
+                Unit_01 // Menu_System
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
