@@ -48,7 +48,7 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
+    <section className="pt-8 md:pt-16 pb-12 md:pb-24 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
       <div id="problem" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       {/* Subtle Background Accents */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
