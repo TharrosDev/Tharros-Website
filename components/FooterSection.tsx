@@ -72,7 +72,7 @@ export default function FooterSection() {
             <span className="hidden md:block text-slate-600/30">|</span>
             <span className="flex items-center gap-2 text-slate-500">
               <span>Keep it Local, Keep it Canadian</span>
-              <span className="text-sm md:text-base">🇨🇦</span>
+              <img src="/canada-flag.svg" alt="Canada" className="w-4 h-auto rounded-[1px] opacity-80" />
             </span>
           </div>
         </div>
