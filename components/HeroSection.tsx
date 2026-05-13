@@ -102,7 +102,7 @@ export default function HeroSection() {
 
           <motion.div 
             variants={itemVariants}
-            className="mt-12 md:mt-16 flex items-center gap-3 text-white/40 font-bold uppercase tracking-[0.3em] text-[9px] md:text-[11px] select-none"
+            className="mt-12 md:mt-16 flex items-center justify-center gap-3 text-white/40 font-bold uppercase tracking-[0.3em] text-[9px] md:text-[11px] select-none"
           >
             <span>Keep it Local, Keep it Canadian</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-red-600">
