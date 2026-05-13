@@ -11,6 +11,7 @@ const clients = [
     type: "Knowledge Q&A Agent",
     description: "The Meridian Society connects Ottawa's top student talent with industry leaders and scholars. We deployed a custom Knowledge Q&A Agent to serve as an on-demand forum for inquiries and speaker insights, bridging the gap between academia and the professional world 24/7.",
     link: "https://meridiansociety.ca",
+    date: "May 12, 2026",
     metrics: { label: "Inquiry Accuracy", value: "98%", sub: "Verified Data" },
     impact: "Instant Member Response",
     image: "/meridian-logo.png"
@@ -47,11 +48,15 @@ export default function ClientsSection() {
               style={{ transform: 'translateZ(0)' }}
             >
               <div className="flex-1 p-8 md:p-12 lg:p-16 flex flex-col justify-center relative z-10">
-                <div className="flex items-center gap-3 mb-8">
+                <div className="flex items-center flex-wrap gap-x-6 gap-y-3 mb-8">
                   <span className="px-3 py-1 rounded-full bg-accent-3/10 text-accent-3 text-[10px] font-bold uppercase tracking-[0.2em]">
                     {clients[0].type}
                   </span>
-                  <span className="text-slate-300 text-xs font-bold uppercase tracking-widest">{clients[0].location}</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-slate-300 text-xs font-bold uppercase tracking-widest">{clients[0].location}</span>
+                    <span className="w-1 h-1 rounded-full bg-slate-200" />
+                    <span className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.15em]">Deployed {clients[0].date}</span>
+                  </div>
                 </div>
                 <a 
                   href={clients[0].link} 
