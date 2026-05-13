@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
+import { useState } from "react";
 import AnimatedSection from "./AnimatedSection";
 
 const clients = [
@@ -19,6 +20,8 @@ const clients = [
 ];
 
 export default function ClientsSection() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <section className="py-12 md:py-24 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
       <div className="industrial-grid absolute inset-0 opacity-[0.02] pointer-events-none" />
@@ -71,21 +74,47 @@ export default function ClientsSection() {
                     </svg>
                   </h3>
                 </a>
-                <p className="text-subdued text-base md:text-lg leading-relaxed mb-10 max-w-xl">
-                  {clients[0].description}
-                </p>
-                <div className="mt-auto grid grid-cols-2 gap-10 border-t border-slate-50 pt-8">
-                  <div className="flex flex-col">
-                    <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">{clients[0].metrics.label}</p>
-                    <p className="text-3xl font-bold text-text tracking-tighter">{clients[0].metrics.value}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-60">{clients[0].metrics.sub}</p>
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">Performance Impact</p>
-                    <p className="text-3xl font-bold text-accent-3 tracking-tighter">{clients[0].impact.split(' ')[0]}</p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-60">{clients[0].impact.split(' ').slice(1).join(' ')}</p>
-                  </div>
-                </div>
+                {/* Mobile Expansion Toggle */}
+                <button 
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="md:hidden flex items-center gap-2 text-accent-3 font-bold text-[10px] uppercase tracking-[0.2em] mb-6 active:opacity-70 transition-opacity"
+                >
+                  {isExpanded ? "[ CLOSE_CASE_STUDY ]" : "[ VIEW_CASE_STUDY ]"}
+                  <motion.svg 
+                    animate={{ rotate: isExpanded ? 180 : 0 }}
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </motion.svg>
+                </button>
+
+                <AnimatePresence>
+                  {(isExpanded || (typeof window !== 'undefined' && window.innerWidth >= 768)) && (
+                    <motion.div
+                      initial={typeof window !== 'undefined' && window.innerWidth < 768 ? { height: 0, opacity: 0 } : false}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden md:!h-auto md:!opacity-100"
+                    >
+                      <p className="text-subdued text-base md:text-lg leading-relaxed mb-10 max-w-xl">
+                        {clients[0].description}
+                      </p>
+                      <div className="mt-auto grid grid-cols-2 gap-10 border-t border-slate-50 pt-8 mb-8 md:mb-0">
+                        <div className="flex flex-col">
+                          <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">{clients[0].metrics.label}</p>
+                          <p className="text-3xl font-bold text-text tracking-tighter">{clients[0].metrics.value}</p>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-60">{clients[0].metrics.sub}</p>
+                        </div>
+                        <div className="flex flex-col">
+                          <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">Performance Impact</p>
+                          <p className="text-3xl font-bold text-accent-3 tracking-tighter">{clients[0].impact.split(' ')[0]}</p>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest opacity-60">{clients[0].impact.split(' ').slice(1).join(' ')}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
               <div className="w-full md:w-[45%] relative min-h-[280px] md:min-h-[400px] bg-black flex items-center justify-center overflow-hidden group/img">
                 <div className="absolute inset-0 scanline opacity-[0.05] pointer-events-none z-10" />
