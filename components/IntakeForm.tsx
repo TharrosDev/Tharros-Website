@@ -50,7 +50,7 @@ export default function IntakeForm() {
               >
                 {/* Left Side: Briefing Header */}
                 <div className="lg:col-span-5 pt-4">
-                  <p className="section-label mb-6 tracking-[0.3em] text-[10px] uppercase font-bold text-slate-400">Get Started</p>
+                  <p className="section-label mb-6 tracking-[0.3em] text-[10px] uppercase font-bold text-slate-300">Get Started</p>
                   <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-8 leading-[1.1]">
                     Project <br />
                     <span className="text-accent-3">Intake.</span>
@@ -68,7 +68,7 @@ export default function IntakeForm() {
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-3 mt-1.5 shrink-0" />
                         <div>
                           <h4 className="text-xs font-bold uppercase tracking-widest text-white mb-1">{item.title}</h4>
-                          <p className="text-sm text-slate-400">{item.desc}</p>
+                          <p className="text-sm text-slate-300">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -83,32 +83,32 @@ export default function IntakeForm() {
                     <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Full Name</label>
-                          <input required name="name" type="text" placeholder="John Smith" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 ml-1">Full Name</label>
+                          <input required name="name" type="text" placeholder="John Smith" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
                           <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Email</label>
-                          <input required name="email" type="email" placeholder="John.smith@gmail.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 ml-1">Email</label>
+                          <input required name="email" type="email" placeholder="John.smith@gmail.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
                           <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Business / Company</label>
-                        <input required name="company" type="text" placeholder="Organization Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 ml-1">Business / Company</label>
+                        <input required name="company" type="text" placeholder="Organization Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
                         <ValidationError prefix="Company" field="company" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Website <span className="text-slate-500 font-normal ml-1">(Optional)</span></label>
-                        <input name="website" type="url" placeholder="https://yourwebsite.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 ml-1">Website <span className="text-slate-400 font-normal ml-1">(Optional)</span></label>
+                        <input name="website" type="url" placeholder="https://yourwebsite.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm" />
                         <ValidationError prefix="Website" field="website" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Needs</label>
-                        <textarea required name="needs" rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm resize-none" />
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-300 ml-1">Needs</label>
+                        <textarea required name="needs" rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:border-accent-3/30 focus:bg-white/10 transition-all shadow-sm resize-none" />
                         <ValidationError prefix="Needs" field="needs" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
@@ -124,7 +124,7 @@ export default function IntakeForm() {
                         </button>
                       </div>
 
-                      <p className="text-center text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em]">
+                      <p className="text-center text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em]">
                         Secure submission
                       </p>
                     </form>
