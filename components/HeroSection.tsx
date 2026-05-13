@@ -53,7 +53,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.1] md:leading-[1]"
           >
-            Your business doesn&apos;t need <br className="hidden md:block" />
+            Your small business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-500">corporate AI theory.</span>
             <br className="hidden sm:block" />
             It needs <span className="text-accent-3">AI Agents</span> that{" "}
