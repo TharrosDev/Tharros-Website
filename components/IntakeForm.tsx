@@ -73,7 +73,7 @@ export default function IntakeForm() {
                   
                   <div className="space-y-6">
                     {[
-                      { title: "Quick Review", desc: "Our team reviews all submissions within 24 business hours." },
+                      { title: "Quick Review", desc: "Our team reviews all submissions within 1-3 business days." },
                       { title: "Custom Design", desc: "Every agent is built from scratch based on your specific needs." }
                     ].map((item) => (
                       <div key={item.title} className="flex gap-4 items-start">
