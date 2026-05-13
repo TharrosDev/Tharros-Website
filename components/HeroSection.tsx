@@ -48,24 +48,7 @@ export default function HeroSection() {
         className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10 flex flex-col items-center text-center"
       >
         {/* Authoritative Content */}
-        <div className="max-w-4xl xl:max-w-7xl mx-auto">
-          <motion.div 
-            variants={itemVariants}
-            className="inline-flex items-center gap-3 px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60 mb-8 md:mb-16 hover:bg-white/[0.06] hover:border-white/20 transition-all cursor-default group"
-          >
-            <div className="relative">
-              <Image 
-                src="/canada-flag.svg" 
-                alt="Canadian Flag" 
-                width={18} 
-                height={12} 
-                priority
-                className="rounded-[2px] grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 md:w-[22px] md:h-[14px]" 
-              />
-            </div>
-            <span>Keep it Canadian</span>
-          </motion.div>
-
+        <div className="max-w-4xl xl:max-w-7xl mx-auto pt-10 md:pt-0">
           <motion.h1 
             variants={itemVariants}
             className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.1] md:leading-[1]"
@@ -91,7 +74,7 @@ export default function HeroSection() {
             className="text-base md:text-2xl xl:text-3xl text-slate-200 max-w-2xl xl:max-w-5xl mx-auto mb-8 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
             High-performance AI Agents for trades and professional services. <br className="hidden lg:block" />
-            We build the digital workforce that recovers your time.
+            We build the digital workforce that recovers your time — <span className="text-white font-black tracking-widest uppercase text-[10px] md:text-sm inline-block ml-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10">Keep it Canadian</span>
           </motion.p>
 
           <motion.div 

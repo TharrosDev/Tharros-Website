@@ -117,9 +117,9 @@ export default function NavBar() {
     <>
       <header
         suppressHydrationWarning
-        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
+        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-4 md:px-5 py-1.5 md:py-2 rounded-2xl md:rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
         style={{ 
-          width: "min(94%, 1300px)",
+          width: "min(92%, 1300px)",
           opacity: mounted ? 1 : 0
         }}
       >
@@ -127,13 +127,13 @@ export default function NavBar() {
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className="relative z-10 block transition-all duration-700 scale-90 md:scale-100"
+            className="relative z-10 block transition-all duration-700 scale-[0.85] md:scale-100 origin-left"
             aria-label="Tharros Home"
           >
             <Image
               src="/tharros-logo.svg"
-              width={160}
-              height={40}
+              width={140}
+              height={35}
               priority
               style={{ width: "auto", height: "auto" }}
               alt="Tharros AI Automation Logo"
@@ -162,7 +162,7 @@ export default function NavBar() {
               href="/intake"
               prefetch={false}
               aria-label="Start your AI consultation"
-              className="inline-block px-2.5 py-1 md:px-5 md:py-2 primary-button text-[9px] md:text-sm transition-all duration-300"
+              className="inline-block px-2.5 py-1.5 md:px-5 md:py-2 primary-button text-[9px] md:text-sm transition-all duration-300"
             >
               Get Started
             </Link>
@@ -170,24 +170,24 @@ export default function NavBar() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex relative z-[60] w-10 h-10 flex-col items-center justify-center gap-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 shadow-sm transition-all duration-300 active:scale-90"
+            className="md:hidden flex relative z-[60] w-8 h-8 flex-col items-center justify-center gap-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all duration-300 active:scale-90"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
           >
             <span
-              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
-                mobileOpen ? "rotate-45 translate-y-[5px]" : ""
+              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 origin-center ${
+                mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
               }`}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 ${
+              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 ${
                 mobileOpen ? "opacity-0 scale-0" : ""
               }`}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
-                mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
+              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 origin-center ${
+                mobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
               }`}
             />
           </button>
