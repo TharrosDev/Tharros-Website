@@ -65,11 +65,12 @@ export default function FooterSection() {
       <section className="bg-white py-4 md:py-6 px-6 border-t border-slate-100 relative overflow-hidden industrial-grid">
         <div className="scanline opacity-[0.02]" />
         <div className="max-w-7xl mx-auto flex flex-col items-center justify-center relative z-10">
-          <div className="text-slate-400 text-[10px] font-black flex flex-col items-center justify-center gap-4 uppercase tracking-[0.3em]">
+          <div className="text-slate-400 text-[10px] font-black flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 uppercase tracking-[0.3em]">
             <span className="inline-flex items-center gap-3">
               &copy; {year} Tharros | Ottawa, Canada 
             </span>
-            <span className="flex items-center gap-2 text-slate-500 mt-2">
+            <span className="hidden md:block text-slate-600/30">|</span>
+            <span className="flex items-center gap-2 text-slate-500">
               <span>Keep it Local, Keep it Canadian</span>
               <span className="text-sm md:text-base">🇨🇦</span>
             </span>
