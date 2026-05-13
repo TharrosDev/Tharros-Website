@@ -34,7 +34,7 @@ export default function ClientsSection() {
               Operational <span className="text-slate-400">Proof.</span>
             </h2>
             <p className="text-subdued max-w-xl mx-auto text-base md:text-lg leading-relaxed">
-              Field-tested agents delivering measurable results for Ottawa's most forward-thinking institutions.
+              Field-tested agents delivering measurable results.
             </p>
           </div>
         </AnimatedSection>
