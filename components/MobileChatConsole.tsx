@@ -59,7 +59,7 @@ const MobileChatConsole = memo(({
   }, [messages, isTyping]);
 
   return (
-    <div className={`flex flex-col ${height} md:h-[65dvh] w-full max-w-full bg-slate-900 border border-white/10 shadow-2xl overflow-hidden relative mx-auto`}>
+    <div className={`flex flex-col ${height} md:h-[65dvh] w-[calc(100%-24px)] md:w-full max-w-full bg-slate-900 border border-white/10 shadow-2xl rounded-3xl overflow-hidden relative mx-auto mb-4`}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-white/10 bg-slate-900/90 backdrop-blur-xl flex items-center justify-between shrink-0">
           <button 
