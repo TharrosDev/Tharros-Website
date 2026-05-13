@@ -108,11 +108,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-4 md:px-7 py-2 md:py-3 rounded-full transition-all duration-500 ${
-          scrolled
-            ? "bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
-            : "bg-white/60 backdrop-blur-md border border-transparent"
-        }`}
+        className="fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-4 md:px-7 py-2 md:py-3 rounded-full bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
         style={{ width: "min(94%, 1300px)" }}
       >
         <Magnetic strength={0.15}>
@@ -225,7 +221,7 @@ export default function NavBar() {
                   href="/intake"
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
-                  className="primary-button flex items-center justify-center px-8 py-4 text-lg shadow-2xl shadow-slate-900/10"
+                  className="primary-button flex items-center justify-center px-6 py-3 text-base shadow-2xl shadow-slate-900/10"
                 >
                   Get Started
                 </Link>
