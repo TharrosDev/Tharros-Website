@@ -105,9 +105,7 @@ export default function HeroSection() {
             className="mt-16 md:mt-20 flex items-center justify-center gap-4 text-white/70 font-black uppercase tracking-[0.4em] text-[10px] md:text-sm select-none"
           >
             <span>Keep it Local, Keep it Canadian</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.4)]">
-              <path d="M12 21.5L13 16.5L18.5 18L17.5 12.5L22 12L17.5 11.5L18.5 6L13 7.5L12 2.5L11 7.5L5.5 6L6.5 11.5L2 12L6.5 12.5L5.5 18L11 16.5L12 21.5Z" fill="currentColor" stroke="currentColor" strokeWidth="0.5" strokeLinejoin="round"/>
-            </svg>
+            <span className="text-xl md:text-2xl drop-shadow-lg">🇨🇦</span>
           </motion.div>
         </div>
       </motion.div>
