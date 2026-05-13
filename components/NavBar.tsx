@@ -106,6 +106,18 @@ export default function NavBar() {
     };
   }, [mobileOpen]);
 
+  // Persistent Navigation Preference
+  useEffect(() => {
+    const saved = localStorage.getItem("tharros_nav_minimized");
+    if (saved !== null) {
+      setIsMinimized(saved === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tharros_nav_minimized", String(isMinimized));
+  }, [isMinimized]);
+
   return (
     <>
       <header
