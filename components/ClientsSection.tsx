@@ -34,7 +34,7 @@ export default function ClientsSection() {
 
 function ClientsHero() {
   return (
-    <section className="pt-24 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
+    <section className="pt-32 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
       {/* Subtle Background Grid */}
       <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
       
