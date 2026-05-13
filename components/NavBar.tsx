@@ -109,14 +109,18 @@ export default function NavBar() {
   return (
     <>
       <header
-        className="fixed top-2 md:top-4 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-4 md:px-7 py-2 md:py-3 rounded-full bg-white/90 backdrop-blur-xl border border-border shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
-        style={{ width: "min(94%, 1300px)" }}
+        className={`fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-border shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-500 ease-[0.22, 1, 0.36, 1] ${
+          isMinimized 
+            ? "right-[3%] md:right-[5%] left-auto translate-x-0" 
+            : "left-1/2 -translate-x-1/2 justify-between"
+        }`}
+        style={{ width: isMinimized ? "auto" : "min(94%, 1300px)" }}
       >
         <Magnetic strength={0.15}>
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className="relative z-10 block"
+            className={`relative z-10 block transition-all duration-500 ${isMinimized ? "scale-[0.6] -mr-4 opacity-70 hover:opacity-100" : "scale-90 md:scale-100"}`}
             aria-label="Tharros Home"
           >
             <Image
@@ -125,13 +129,12 @@ export default function NavBar() {
               height={40}
               priority
               style={{ width: "auto", height: "auto" }}
-              className="scale-90 md:scale-100"
               alt="Tharros AI Automation Logo"
             />
           </Link>
         </Magnetic>
 
-        <nav className={`${isMinimized ? 'hidden' : 'hidden md:flex'} items-center gap-2 lg:gap-4`}>
+        <nav className={`${isMinimized ? 'hidden' : 'hidden md:flex'} items-center gap-1 lg:gap-2`}>
           {navLinks.map((link) => (
             <motion.a
               key={link.href}
@@ -139,7 +142,7 @@ export default function NavBar() {
               onClick={(e) => handleLinkClick(e, link.href)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 text-base font-semibold text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
+              className="px-5 py-2 text-sm font-semibold text-subdued hover:text-text rounded-full hover:bg-surface transition-colors duration-200"
             >
               {link.label}
             </motion.a>
