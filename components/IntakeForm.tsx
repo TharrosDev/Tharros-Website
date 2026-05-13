@@ -68,7 +68,7 @@ export default function IntakeForm() {
                     <span className="text-accent-3">Intake.</span>
                   </h1>
                   <p className="text-subdued text-lg leading-relaxed mb-10">
-                    Tell us about your project. A Tharros representative will reach out to you shortly.
+                    Share your project goals and requirements. Once submitted, a Tharros representative will review your details and reach out to discuss the next steps.
                   </p>
                   
                   <div className="space-y-6">
