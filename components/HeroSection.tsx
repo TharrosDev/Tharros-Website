@@ -27,7 +27,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="hero" className="relative min-h-[90svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-28 md:pt-32 pb-16 md:pb-32 overflow-hidden bg-slate-950 industrial-grid">
+    <section id="hero" className="relative min-h-[90svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-28 md:pt-32 pb-10 md:pb-20 overflow-hidden bg-slate-950 industrial-grid">
       {/* Background Sophistication */}
       <div className="scanline" />
       <div className="absolute inset-0 pointer-events-none">
@@ -102,10 +102,10 @@ export default function HeroSection() {
 
           <motion.div 
             variants={itemVariants}
-            className="mt-12 md:mt-16 flex items-center justify-center gap-3 text-white/40 font-bold uppercase tracking-[0.3em] text-[9px] md:text-[11px] select-none"
+            className="mt-16 md:mt-20 flex items-center justify-center gap-4 text-white/70 font-black uppercase tracking-[0.4em] text-[10px] md:text-sm select-none"
           >
             <span>Keep it Local, Keep it Canadian</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-red-600">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
               <path d="M12 2L10.5 7.5L5 6L6.5 11.5L2 12L6.5 12.5L5 18L10.5 16.5L12 22L13.5 16.5L19 18L17.5 12.5L22 12L17.5 11.5L19 6L13.5 7.5L12 2Z" fill="currentColor"/>
             </svg>
           </motion.div>
