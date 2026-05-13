@@ -17,23 +17,29 @@ export default function FooterSection() {
   };
 
   return (
-    <footer id="contact" className="section-padding px-6 md:px-12 relative overflow-hidden bg-bg">
+    <footer id="contact" className="section-padding px-6 md:px-12 relative overflow-hidden bg-slate-950 industrial-grid">
+      {/* Background Sophistication */}
+      <div className="scanline" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
+      </div>
+
       <div className="max-w-4xl xl:max-w-5xl mx-auto text-center relative">
         <AnimatedSection variant="scale-in">
           <p className="section-label mb-6">
             Ready to stop missing leads?
           </p>
-          <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-text mb-6 leading-tight">
+          <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
             Let&apos;s build something{" "}
             <span className="accent-text">that works for you</span>
           </h2>
-          <p className="text-subdued text-base md:text-lg xl:text-xl mb-10 max-w-xl xl:max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-100 text-base md:text-lg xl:text-xl mb-10 max-w-xl xl:max-w-2xl mx-auto leading-relaxed">
             Set up a free initial consultation. We&apos;ll listen to your business,
             identify the best use case, and give you a clear sense of what&apos;s
             possible, no obligation.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-20">
             <a
               href="/intake"
               onClick={handleScrollToTop}
@@ -45,16 +51,16 @@ export default function FooterSection() {
             <a 
               href="mailto:tharrosdev@gmail.com" 
               aria-label="Email Magnus Abdelnour for business inquiries"
-              className="text-text font-bold text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
+              className="text-white font-bold text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
             >
               Email Us
             </a>
           </div>
 
-          <div className="subtle-divider mb-6" />
-          <div className="text-subdued text-sm flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="w-full h-px bg-white/10 mb-6" />
+          <div className="text-slate-400 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
             <span className="inline-flex items-center gap-2">&copy; {year} Tharros. Ottawa, Ontario. <img src="/canada-flag.svg" alt="Canadian Flag" className="w-4 h-2.5 rounded-[1px]" /> Keep it Canadian.</span>
-            <span className="text-muted text-xs">AI agents for small businesses that need to move fast.</span>
+            <span className="text-slate-500 text-xs">AI agents for small businesses that need to move fast.</span>
           </div>
         </AnimatedSection>
       </div>
