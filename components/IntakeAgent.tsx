@@ -14,9 +14,10 @@ const REGION = process.env.NEXT_PUBLIC_RELEVANCE_REGION || "";
 const PROJECT = process.env.NEXT_PUBLIC_RELEVANCE_PROJECT || "";
 const AGENT_ID = process.env.NEXT_PUBLIC_RELEVANCE_INTAKE_AGENT_ID || process.env.NEXT_PUBLIC_RELEVANCE_AGENT_ID || "";
 
-// Performance: Pre-calculate time formatter
-const timeFormatter = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2-digit' });
-const formatTime = () => timeFormatter.format(new Date());
+// Performance Constants & Static Data
+const MAX_PROMPTS = 5;
+const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2-digit' });
+const formatTime = () => TIME_FORMATTER.format(new Date());
 
 type LocalMessage = {
   id: string;
@@ -50,6 +51,34 @@ export default function IntakeAgent() {
   const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  
+  const [userMessageCount, setUserMessageCount] = useState(0);
+  const countRef = useRef(0);
+  const isLimitReached = userMessageCount >= MAX_PROMPTS;
+
+  // Sync ref with state
+  useEffect(() => {
+    countRef.current = userMessageCount;
+  }, [userMessageCount]);
+
+  // Persistence: Load count on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`pc-intake-${AGENT_ID}`);
+      if (stored) {
+        const count = parseInt(stored, 10);
+        setUserMessageCount(count);
+        countRef.current = count;
+      }
+    }
+  }, []);
+
+  // Persistence: Save count on change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(`pc-intake-${AGENT_ID}`, userMessageCount.toString());
+    }
+  }, [userMessageCount]);
 
   useEffect(() => {
     async function initRelevance() {
@@ -171,10 +200,11 @@ export default function IntakeAgent() {
 
   const handleSend = async (text: string, e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!text.trim() || !agentInstance || isTyping) return;
+    if (!text.trim() || !agentInstance || isTyping || isLimitReached) return;
 
     setInputValue("");
     setRecommendedQuestions([]);
+    setUserMessageCount(prev => prev + 1);
     
     setMessages((prev) => [...prev, {
       id: Date.now().toString(),
@@ -296,6 +326,8 @@ export default function IntakeAgent() {
                   modelType="CRM Intake Agent Model"
                   isLoading={isLoading}
                   height="h-[75dvh]"
+                  userMessageCount={userMessageCount}
+                  maxPrompts={MAX_PROMPTS}
                 />
                 {initError && (
                   <div className="mt-4 p-4 bg-white rounded-2xl border border-red-100 text-center">
@@ -329,6 +361,12 @@ export default function IntakeAgent() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl">
+                      <span className={`text-[9px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
+                        {userMessageCount}/{MAX_PROMPTS}
+                      </span>
+                      <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tight">Inferences</span>
+                    </div>
                     <div className="hidden sm:flex flex-col items-end px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-xl">
                       <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
                       <span className="text-[10px] font-bold text-text uppercase">CRM Intake Agent Model</span>
@@ -445,12 +483,13 @@ export default function IntakeAgent() {
                       type="text"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Describe your project goals or ask about specific features..."
+                      placeholder={isLimitReached ? "Demo limit reached." : "Describe your project goals or ask about specific features..."}
                       className="flex-1 bg-transparent px-2 py-3 text-[15px] md:text-base text-text placeholder:text-slate-400 focus:outline-none"
+                      disabled={isLimitReached || isTyping || !agentInstance}
                     />
                     <button 
                       type="submit" 
-                      disabled={!inputValue.trim() || isTyping || !agentInstance} 
+                      disabled={!inputValue.trim() || isTyping || !agentInstance || isLimitReached} 
                       className="h-12 w-12 md:h-14 md:w-14 flex items-center justify-center rounded-[1.4rem] bg-slate-900 text-white shadow-xl hover:bg-slate-800 disabled:opacity-20 transition-all active:scale-95 group"
                     >
                       <svg width="22" height="22" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
