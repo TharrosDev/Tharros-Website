@@ -15,7 +15,7 @@ const PROJECT = process.env.NEXT_PUBLIC_RELEVANCE_PROJECT || "";
 const AGENT_ID = process.env.NEXT_PUBLIC_RELEVANCE_INTAKE_AGENT_ID || process.env.NEXT_PUBLIC_RELEVANCE_AGENT_ID || "";
 
 // Performance Constants & Static Data
-const MAX_PROMPTS = 5;
+const MAX_PROMPTS = 3;
 const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2-digit' });
 const formatTime = () => TIME_FORMATTER.format(new Date());
 
@@ -311,9 +311,9 @@ export default function IntakeAgent() {
           </div>
           
           {/* Right: The Intake Console */}
-          <div className="lg:col-span-7 w-full h-full min-h-[600px] md:min-h-[750px] flex flex-col">
+          <div className="lg:col-span-7 w-full lg:h-full lg:min-h-[750px] flex flex-col">
             {isMobile ? (
-              <div className="flex-1 flex flex-col pt-4">
+              <div className="w-full flex flex-col pt-4">
                 <MobileChatConsole
                   messages={messages}
                   inputValue={inputValue}

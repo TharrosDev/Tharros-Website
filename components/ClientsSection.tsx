@@ -87,17 +87,19 @@ export default function ClientsSection() {
                   </div>
                 </div>
               </div>
-              <div className="md:w-[45%] relative min-h-[300px] bg-black flex items-center justify-center p-12 overflow-hidden">
-                <div className="absolute inset-0 scanline opacity-[0.05] pointer-events-none z-20" />
+              <div className="w-full md:w-[45%] relative min-h-[280px] md:min-h-[400px] bg-slate-950 flex items-center justify-center overflow-hidden group/img">
+                <div className="absolute inset-0 scanline opacity-[0.05] pointer-events-none z-10" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)]" />
+                
                 {clients[0].image && (
-                  <div className="relative w-full h-full z-10 will-change-transform">
+                  <div className="absolute inset-10 md:inset-16 z-0">
                     <Image 
                       src={clients[0].image} 
                       alt={clients[0].name}
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 45vw"
-                      className="object-contain transition-all duration-700 scale-100 group-hover:scale-105"
+                      className="object-contain transition-all duration-700 scale-100 group-hover:scale-110"
                     />
                   </div>
                 )}

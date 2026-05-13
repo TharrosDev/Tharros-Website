@@ -13,7 +13,7 @@ const PROJECT = process.env.NEXT_PUBLIC_RELEVANCE_PROJECT || "";
 const AGENT_ID = process.env.NEXT_PUBLIC_RELEVANCE_AGENT_ID || "";
 
 // Performance Constants & Static Data
-const MAX_PROMPTS = 5;
+const MAX_PROMPTS = 3;
 const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2-digit' });
 const formatTime = () => TIME_FORMATTER.format(new Date());
 
@@ -48,6 +48,8 @@ export default function ChatDemoSection() {
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([]);
   const [agentInstance, setAgentInstance] = useState<AgentResource | null>(null);
   const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [initError, setInitError] = useState<string | null>(null);
   
   const scrollRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
@@ -138,11 +140,16 @@ export default function ChatDemoSection() {
               time: formatTime(),
             }
           ]);
-        } catch (innerErr) {
+          setIsLoading(false);
+        } catch (innerErr: any) {
           console.error("Inner Relevance init error:", innerErr);
+          setInitError(innerErr.message || "Failed to initialize agent.");
+          setIsLoading(false);
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Failed to initialize Relevance AI:", err);
+        setInitError(err.message || "System error.");
+        setIsLoading(false);
       }
     }
 
@@ -338,6 +345,8 @@ export default function ChatDemoSection() {
                       modelType="Industrial Logic Demo"
                       userMessageCount={userMessageCount}
                       maxPrompts={MAX_PROMPTS}
+                      isLoading={isLoading}
+                      debugInfo={initError ? { error: initError } : null}
                     />
                   ) : (
                     <div className="relative flex flex-col h-[450px] xl:h-[550px] w-full bg-slate-900/40 rounded-[2.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5" style={{ willChange: "transform" }}>

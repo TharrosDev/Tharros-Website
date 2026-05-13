@@ -24,6 +24,7 @@ interface MobileChatConsoleProps {
   maxPrompts: number;
   isLoading?: boolean;
   height?: string;
+  debugInfo?: any;
 }
 
 const MobileChatConsole = memo(({
@@ -39,43 +40,88 @@ const MobileChatConsole = memo(({
   userMessageCount,
   maxPrompts,
   isLoading = false,
-  height = "h-[50dvh]"
+  height = "h-[60dvh]",
+  debugInfo
 }: MobileChatConsoleProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [logsOpen, setLogsOpen] = useState(false);
   const isLimitReached = userMessageCount >= maxPrompts;
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
+    const scroll = () => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    };
+    // Use rAF to ensure DOM is updated before scrolling
+    const rafId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(rafId);
   }, [messages, isTyping]);
 
   return (
     <div className={`flex flex-col ${height} md:h-[65dvh] w-full max-w-full bg-slate-900 border border-white/10 shadow-2xl overflow-hidden relative mx-auto`}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-white/10 bg-slate-900/90 backdrop-blur-xl flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-950 shadow-sm">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="text-xs font-bold text-white leading-none mb-1">{title}</h3>
-            <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[8px] font-bold text-slate-300 uppercase tracking-widest">{subtitle} // {modelType}</span>
+          <button 
+            onClick={() => setLogsOpen(!logsOpen)}
+            className="flex items-center gap-3 active:opacity-70 transition-opacity"
+          >
+            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-slate-950 shadow-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-xs font-bold text-white leading-none mb-1">{title}</h3>
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-[8px] font-bold text-slate-300 uppercase tracking-widest">{subtitle} // {modelType}</span>
+              </div>
+            </div>
+          </button>
+          <div className="flex items-center gap-2">
+            <div className="px-2 py-1 bg-white/5 rounded-md border border-white/10 flex items-center gap-1.5">
+              <span className={`text-[9px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
+                {userMessageCount}/{maxPrompts}
+              </span>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="px-2 py-1 bg-white/5 rounded-md border border-white/10 flex items-center gap-1.5">
-            <span className={`text-[9px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
-              {userMessageCount}/{maxPrompts}
-            </span>
-          </div>
-        </div>
       </div>
+
+      {/* Logs Overlay */}
+      <AnimatePresence>
+        {logsOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute inset-0 z-50 bg-slate-950 p-6 font-mono text-[10px] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+              <span className="text-accent-3 font-bold uppercase tracking-[0.2em]">System_Logs</span>
+              <button onClick={() => setLogsOpen(false)} className="text-white hover:text-accent-3">
+                [CLOSE]
+              </button>
+            </div>
+            <div className="space-y-3 text-slate-400">
+              <p><span className="text-green-500">[INIT]</span> SDK_CORE_READY</p>
+              <p><span className="text-green-500">[SYNC]</span> CONTEXT_INJECTED: {modelType}</p>
+              <p><span className="text-blue-500">[STAT]</span> PROMPTS: {userMessageCount}/{maxPrompts}</p>
+              <p><span className="text-blue-500">[STAT]</span> MSG_BUFFER: {messages.length}</p>
+              {debugInfo && (
+                <pre className="mt-4 p-3 bg-white/5 rounded border border-white/10 whitespace-pre-wrap break-all">
+                  {JSON.stringify(debugInfo, null, 2)}
+                </pre>
+              )}
+              <div className="mt-8 pt-8 border-t border-white/10 opacity-50">
+                <p>UA: {typeof window !== 'undefined' ? navigator.userAgent : 'N/A'}</p>
+                <p>TS: {new Date().toISOString()}</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Messages */}
       <div 
