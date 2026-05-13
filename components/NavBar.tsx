@@ -119,17 +119,19 @@ export default function NavBar() {
     <>
       <header
         suppressHydrationWarning
-        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-4 md:px-5 py-1.5 md:py-2 rounded-2xl md:rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
+        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-4 md:px-5 3xl:px-12 py-1.5 md:py-2 3xl:py-6 rounded-2xl md:rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
         style={{ 
-          width: "min(92%, 1300px)",
-          opacity: mounted ? 1 : 0
+          width: "min(92%, var(--nav-width, 1300px))",
+          opacity: mounted ? 1 : 0,
+          // Fluidly increase width for large monitors
+          ...({ "--nav-width": "clamp(1300px, 60vw, 2200px)" } as any)
         }}
       >
         <Magnetic strength={0.1}>
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className="relative z-10 block transition-all duration-700 scale-[0.85] md:scale-100 origin-left"
+            className="relative z-10 block transition-all duration-700 scale-[0.85] md:scale-100 3xl:scale-150 origin-left"
             aria-label="Tharros Home"
           >
             <Image
@@ -143,7 +145,7 @@ export default function NavBar() {
           </Link>
         </Magnetic>
 
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2 3xl:gap-8">
           {navLinks.map((link) => (
             <motion.a
               key={link.href}
@@ -151,20 +153,20 @@ export default function NavBar() {
               onClick={(e) => handleLinkClick(e, link.href)}
               whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px]"
+              className="px-5 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px] 3xl:text-lg"
             >
               {link.label}
             </motion.a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-1.5 md:gap-3 h-full">
+        <div className="flex items-center gap-1.5 md:gap-3 3xl:gap-8 h-full">
           <Magnetic strength={0.2}>
             <Link
               href="/intake"
               prefetch={false}
               aria-label="Start your AI consultation"
-              className="inline-block px-2.5 py-1.5 md:px-5 md:py-2 primary-button text-[9px] md:text-sm transition-all duration-300"
+              className="inline-block px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 primary-button text-[11px] md:text-sm 3xl:text-xl transition-all duration-300"
             >
               Get Started
             </Link>
@@ -230,7 +232,7 @@ export default function NavBar() {
                   transition={{ delay: i * 0.08 + 0.1, ease: [0.22, 1, 0.36, 1] as any }}
                   className="group flex flex-col items-center gap-1"
                 >
-                  <span className="text-4xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors">
+                  <span className="text-3xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors uppercase">
                     {link.label}
                   </span>
                 </motion.a>

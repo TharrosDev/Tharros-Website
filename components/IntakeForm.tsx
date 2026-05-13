@@ -51,7 +51,7 @@ export default function IntakeForm() {
                 {/* Left Side: Briefing Header */}
                 <div className="lg:col-span-5 pt-4">
                   <p className="section-label mb-6 tracking-[0.3em] text-[9px] md:text-[10px] uppercase font-bold text-slate-500">Get Started</p>
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-900 tracking-tighter mb-8 leading-[1.1]">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-900 tracking-tighter mb-8 leading-[1.2] sm:leading-[1.1]">
                     Project <br />
                     <span className="text-accent-3">Intake.</span>
                   </h1>
@@ -84,31 +84,31 @@ export default function IntakeForm() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                         <div className="space-y-2">
                           <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Full Name</label>
-                          <input required name="name" type="text" placeholder="John Smith" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
+                          <input required name="name" type="text" placeholder="John Smith" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
                           <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                         <div className="space-y-2">
                           <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Email</label>
-                          <input required name="email" type="email" placeholder="John.smith@gmail.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
+                          <input required name="email" type="email" placeholder="John.smith@gmail.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
                           <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                         </div>
                       </div>
 
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Business / Company</label>
-                        <input required name="company" type="text" placeholder="Organization Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
+                        <input required name="company" type="text" placeholder="Organization Name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
                         <ValidationError prefix="Company" field="company" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Website <span className="text-slate-400 font-normal ml-1">(Optional)</span></label>
-                        <input name="website" type="url" placeholder="https://yourwebsite.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
+                        <input name="website" type="url" placeholder="https://yourwebsite.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm" />
                         <ValidationError prefix="Website" field="website" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Needs</label>
-                        <textarea required name="needs" rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
+                        <textarea required name="needs" rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
                         <ValidationError prefix="Needs" field="needs" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 

@@ -81,8 +81,16 @@ body {
 .clean-card {
   background: var(--color-surface); /* solid slate-800 or slate-900 */
   border: 1px solid var(--color-border);
-  border-radius: 2rem;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
   transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  .clean-card {
+    border-radius: 2rem;
+    padding: 2.5rem;
+  }
 }
 
 .clean-card:hover {
@@ -110,12 +118,19 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.75rem;
-  padding: 1.25rem 2.5rem;
-  border-radius: 1.25rem;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .primary-button {
+    padding: 1.25rem 2.5rem;
+    border-radius: 1.25rem;
+  }
 }
 
 .primary-button:hover {
@@ -236,8 +251,8 @@ body {
   }
 
   .section-padding {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 
   @media (min-width: 768px) {
@@ -251,6 +266,47 @@ body {
     .section-padding {
       padding-top: 10rem;
       padding-bottom: 10rem;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .section-padding {
+      padding-top: 12rem;
+      padding-bottom: 12rem;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .section-padding {
+      padding-top: 16rem;
+      padding-bottom: 16rem;
+    }
+  }
+
+  .max-w-ultra {
+    max-width: 160rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ultra-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  @media (min-width: 1920px) {
+    .ultra-grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .ultra-grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .ultra-grid-cols-5 {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
 

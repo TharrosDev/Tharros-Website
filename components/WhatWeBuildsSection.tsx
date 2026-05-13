@@ -57,48 +57,48 @@ export default function WhatWeBuildsSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       
-      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
+      <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-12 md:mb-16 3xl:mb-32">
 
-            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 md:mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
+            <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
               Autonomous <span className="text-slate-500">AI Agents.</span> <br className="hidden sm:block" />
               <span className="text-accent-3">Industrial performance.</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl xl:max-w-4xl mx-auto text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
+            <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
               We engineer digital workforce solutions tailored to the operational DNA of your business.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 3xl:gap-20">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                className="clean-card p-7 md:p-10 xl:p-12 h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden"
+                className="clean-card h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden 3xl:p-16 4xl:p-20"
               >
-                <div className="flex flex-col gap-8 mb-10 relative z-10">
-                  <div className="w-16 h-16 rounded-[1.25rem] bg-white border border-white flex items-center justify-center text-slate-950 transition-all duration-500 shrink-0 shadow-2xl">
-                    <span className="scale-125">{agent.icon}</span>
+                <div className="flex flex-col gap-8 3xl:gap-16 mb-10 3xl:mb-20 relative z-10">
+                  <div className="w-16 h-16 3xl:w-32 3xl:h-32 rounded-[1.25rem] 3xl:rounded-[2.5rem] bg-white border border-white flex items-center justify-center text-slate-950 transition-all duration-500 shrink-0 shadow-2xl">
+                    <span className="scale-125 3xl:scale-[2.5]">{agent.icon}</span>
                   </div>
-                  <div className="flex flex-col gap-3">
-                    <p className="text-[11px] font-black text-accent-3 uppercase tracking-[0.3em]">{agent.tagline}</p>
-                    <h3 className="text-3xl xl:text-4xl font-bold text-white tracking-tighter leading-[1.1]">
+                  <div className="flex flex-col gap-3 3xl:gap-8">
+                    <p className="text-[11px] 3xl:text-xl font-black text-accent-3 uppercase tracking-[0.3em]">{agent.tagline}</p>
+                    <h3 className="text-2xl sm:text-3xl xl:text-4xl 3xl:text-6xl font-bold text-white tracking-tighter leading-[1.1]">
                       {agent.name}
                     </h3>
                   </div>
                 </div>
                 
-                <p className="text-slate-200 text-lg md:text-xl leading-relaxed mb-6 relative z-10 flex-1">
+                <p className="text-slate-200 text-lg md:text-xl 3xl:text-3xl leading-relaxed mb-6 3xl:mb-12 relative z-10 flex-1">
                   {agent.description}
                 </p>
  
-                <div className="relative z-10 pt-5 border-t border-white/[0.03]">
-                  <div className="flex flex-wrap gap-2.5">
+                <div className="relative z-10 pt-5 3xl:pt-10 border-t border-white/[0.03]">
+                  <div className="flex flex-wrap gap-2.5 3xl:gap-6">
                     {agent.examples.map((ex) => (
                       <span 
                         key={ex} 
-                        className="px-4 py-1.5 bg-white/[0.05] border border-white/20 rounded-xl text-[10px] font-black text-white/60 uppercase tracking-[0.2em]"
+                        className="px-4 py-1.5 3xl:px-8 3xl:py-3 bg-white/[0.05] border border-white/20 rounded-xl 3xl:rounded-3xl text-[10px] 3xl:text-base font-black text-white/60 uppercase tracking-[0.2em]"
                       >
                         {ex}
                       </span>

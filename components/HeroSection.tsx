@@ -45,13 +45,13 @@ export default function HeroSection() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10 flex flex-col items-center text-center"
+        className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative z-10 flex flex-col items-center text-center"
       >
         {/* Authoritative Content */}
-        <div className="max-w-4xl xl:max-w-7xl mx-auto pt-10 md:pt-0">
+        <div className="max-w-4xl xl:max-w-7xl 3xl:max-w-[100rem] mx-auto pt-10 md:pt-0">
           <motion.h1 
             variants={itemVariants}
-            className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.1] md:leading-[1]"
+            className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[14rem] font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.2] sm:leading-[1.1] md:leading-[1] 3xl:leading-[0.9]"
           >
             Your small business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-500">corporate AI theory.</span>
@@ -71,7 +71,7 @@ export default function HeroSection() {
 
           <motion.p 
             variants={itemVariants}
-            className="text-base md:text-2xl xl:text-3xl text-slate-200 max-w-2xl xl:max-w-5xl mx-auto mb-8 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
+            className="text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl text-slate-200 max-w-2xl xl:max-w-5xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
             High-performance AI Agents for trades and small businesses. <br className="hidden lg:block" />
             We build the digital workforce that recovers your time.
@@ -84,7 +84,7 @@ export default function HeroSection() {
             <Magnetic strength={0.1}>
               <a
                 href="/intake"
-                className="primary-button text-sm md:text-xl xl:text-2xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] py-4 md:py-6"
+                className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] py-4 md:py-6 3xl:py-8 3xl:px-12"
               >
                 <span className="relative z-10">Get Started</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
@@ -93,7 +93,7 @@ export default function HeroSection() {
             
             <a
               href="#demo"
-              className="group flex items-center justify-center gap-4 text-white font-black text-[10px] md:text-sm uppercase tracking-[0.4em] hover:text-accent-3 transition-all px-6 py-4 w-full sm:w-auto"
+              className="group flex items-center justify-center gap-4 text-white font-black text-[10px] md:text-sm 3xl:text-base uppercase tracking-[0.4em] hover:text-accent-3 transition-all px-6 py-4 w-full sm:w-auto"
             >
               <span className="hidden sm:block w-10 h-px bg-white/20 group-hover:w-16 group-hover:bg-accent-3 transition-all" />
               Live System Demo

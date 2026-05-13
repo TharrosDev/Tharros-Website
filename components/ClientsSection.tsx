@@ -51,7 +51,7 @@ function ClientsHero() {
                 <div className="h-px w-8 md:w-12 bg-white/10" />
                 <span className="text-[9px] md:text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
               </div>
-              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.85] md:leading-[0.8]">
+              <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.9] md:leading-[0.8]">
                 Real-World <br/>
                 <span className="text-slate-700/60">Impact.</span>
               </h1>
@@ -140,7 +140,7 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
     <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${client.gridPos} h-full`}>
       <motion.div 
         whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-bg border border-white/10 hover:border-accent-3/40 rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col shadow-2xl shadow-black/40 gpu-accelerated"
+        className="group relative h-full bg-bg border border-white/10 hover:border-accent-3/40 rounded-2xl sm:rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col shadow-2xl shadow-black/40 gpu-accelerated"
       >
         <div className="p-6 md:p-10 flex flex-col h-full relative z-10">
           {/* Header Bar */}
@@ -202,7 +202,7 @@ function PlaceholderCard({ index, gridPos }: { index: number, gridPos: string })
     <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${gridPos} h-full`}>
       <motion.div 
         whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-bg border border-white/5 border-dashed rounded-[2.5rem] overflow-hidden flex flex-col items-center justify-center p-6 md:p-10 text-center transition-all duration-500 gpu-accelerated shadow-2xl shadow-black/20"
+        className="group relative h-full bg-bg border border-white/5 border-dashed rounded-2xl sm:rounded-[2.5rem] overflow-hidden flex flex-col items-center justify-center p-6 md:p-10 text-center transition-all duration-500 gpu-accelerated shadow-2xl shadow-black/20"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.05)_0%,transparent_70%)]" />
         

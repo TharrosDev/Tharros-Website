@@ -54,7 +54,7 @@ const MobileChatConsole = memo(({
   }, [messages, isTyping]);
 
   return (
-    <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border-2 border-slate-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
+    <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border-2 border-slate-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Header - Minimalist Light Mode */}
       <div className="px-4 py-3 border-b-2 border-slate-900 bg-white/95 backdrop-blur-2xl shrink-0">
           <div className="flex items-center justify-between">
@@ -70,7 +70,7 @@ const MobileChatConsole = memo(({
                 </div>
               </div>
               <div className="text-left">
-                <h3 className="text-xs font-black text-slate-950 tracking-tight leading-none mb-1 uppercase">{title}</h3>
+                <h3 className="text-[10px] sm:text-xs font-black text-slate-950 tracking-tight leading-none mb-1 uppercase">{title}</h3>
                 <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.2em]">Operational</span>
               </div>
             </div>

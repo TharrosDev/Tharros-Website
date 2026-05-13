@@ -56,7 +56,7 @@ export default function ProblemSection() {
         <AnimatedSection>
           <div className="flex flex-col items-center mb-12 md:mb-16">
 
-            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-8 md:mb-10 max-w-4xl xl:max-w-6xl leading-[1.1] tracking-tighter">
+            <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-8 md:mb-10 max-w-4xl xl:max-w-6xl mx-auto leading-[1.2] tracking-tighter">
               Ottawa businesses are <br className="hidden md:block" />
               <span className="text-slate-400">bleeding time.</span>
             </h2>
@@ -70,7 +70,7 @@ export default function ProblemSection() {
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                className="bg-white border border-slate-200 p-7 md:p-10 xl:p-12 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
+                className="bg-white border border-slate-200 p-6 sm:p-8 md:p-10 xl:p-12 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-2xl sm:rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
               >
                 {/* Industrial Corner Accents */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
