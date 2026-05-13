@@ -29,12 +29,12 @@ export default function ClientsSection() {
       <div className="max-w-5xl mx-auto relative">
         <AnimatedSection>
           <div className="mb-16 md:mb-20 text-center">
-            <p className="section-label mb-4 tracking-[0.3em] text-[10px] justify-center">Current Deployment</p>
+            <p className="section-label mb-4 tracking-[0.3em] text-[10px] justify-center">Strategic Deployments</p>
             <h2 className="text-3xl md:text-5xl font-bold text-text mb-6 tracking-tight leading-[1.1]">
-              Ottawa's <span className="text-slate-400">Digital Workforce.</span>
+              Operational <span className="text-slate-400">Proof.</span>
             </h2>
             <p className="text-subdued max-w-xl mx-auto text-base md:text-lg leading-relaxed">
-              Real results for Ottawa businesses. We don't just deploy code; we deploy dedicated agents that understand the local market.
+              Field-tested agents delivering measurable results for Ottawa's most forward-thinking institutions.
             </p>
           </div>
         </AnimatedSection>
