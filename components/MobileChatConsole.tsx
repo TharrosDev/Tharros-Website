@@ -56,35 +56,54 @@ const MobileChatConsole = memo(({
   return (
     <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-slate-900 border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Header - Industrial Control Pod */}
-      <div className="px-5 py-4 border-b border-white/10 bg-slate-900/95 backdrop-blur-2xl flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-950 shadow-lg">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
+        <div className="px-5 py-4 border-b border-white/10 bg-slate-900/95 backdrop-blur-2xl shrink-0">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-950 shadow-lg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-slate-900 flex items-center justify-center border-2 border-slate-900">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                </div>
               </div>
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-slate-900 flex items-center justify-center border-2 border-slate-900">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              <div className="text-left">
+                <h3 className="text-sm font-black text-white tracking-tight leading-none mb-1.5 uppercase">{title}</h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Ready</span>
+                  <span className="w-1 h-1 rounded-full bg-white/10" />
+                  <span className="text-[8px] font-bold text-accent-3 uppercase tracking-widest">ACTIVE</span>
+                </div>
               </div>
             </div>
-            <div className="text-left">
-              <h3 className="text-sm font-black text-white tracking-tight leading-none mb-1.5 uppercase">{title}</h3>
-              <div className="flex items-center gap-2">
-                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Status: Ready</span>
-                <span className="w-1 h-1 rounded-full bg-white/10" />
-                <span className="text-[8px] font-bold text-accent-3 uppercase tracking-widest">ACTIVE</span>
+            
+            <div className="flex items-center gap-3">
+              <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10 flex items-center gap-2">
+                <span className={`text-[10px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
+                  {userMessageCount}/{maxPrompts}
+                </span>
+                <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">CAP</span>
               </div>
             </div>
           </div>
-          
-          <div className="flex items-center gap-3">
-            <div className="px-3 py-1.5 bg-white/5 rounded-lg border border-white/10 flex items-center gap-2">
-              <span className={`text-[10px] font-black tabular-nums ${isLimitReached ? 'text-red-400' : 'text-slate-400'}`}>
-                {userMessageCount}/{maxPrompts}
-              </span>
-              <div className="w-1 h-1 rounded-full bg-white/20" />
-              <span className="text-[8px] font-black text-white/30 uppercase tracking-widest">INQUIRIES</span>
+
+          {/* Mobile Telemetry */}
+          <div className="flex items-center gap-4 pt-3 border-t border-white/[0.03]">
+            <div className="flex items-center gap-2">
+              <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">NEURAL:</span>
+              <div className="w-12 h-1 bg-white/5 rounded-full overflow-hidden">
+                <motion.div 
+                  animate={{ width: ["20%", "60%", "40%"] }} 
+                  transition={{ repeat: Infinity, duration: 4 }}
+                  className="h-full bg-accent-3" 
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">LATENCY:</span>
+              <span className="text-[7px] font-black text-accent-3 tabular-nums">24ms</span>
             </div>
           </div>
         </div>
@@ -177,12 +196,20 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => (
     className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
   >
     <div 
-      className={`max-w-[90%] text-[15px] leading-relaxed px-5 py-4 rounded-[1.5rem] border font-medium ${
+      className={`relative max-w-[90%] text-[15px] leading-relaxed px-5 py-4 border transition-all duration-500 ${
         msg.sender === "user" 
-        ? "bg-white text-slate-950 border-white/10 rounded-tr-none shadow-xl" 
-        : "bg-slate-800 text-white border-white/5 rounded-tl-none shadow-2xl"
+        ? "bg-white text-slate-950 border-white/10 rounded-[1.5rem] rounded-tr-none shadow-xl font-semibold" 
+        : "bg-slate-800/80 text-white border-white/5 rounded-[1.5rem] rounded-tl-none shadow-2xl backdrop-blur-md"
       }`}
+      style={{
+        clipPath: msg.sender === "user"
+          ? "polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%)"
+          : "polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 85%)"
+      }}
     >
+      {msg.sender === "agent" && (
+        <div className="absolute top-0 left-0 w-1 h-full bg-accent-3/30" />
+      )}
       {msg.text}
     </div>
     <span className="text-[8px] text-slate-500 font-black mt-2 px-1 uppercase tracking-[0.2em] opacity-60">{msg.time}</span>
@@ -196,16 +223,27 @@ const MobileTypingIndicator = memo(() => (
     animate={{ opacity: 1 }}
     className="flex flex-col items-start"
   >
-    <div className="bg-slate-800 border border-white/5 px-5 py-3 rounded-[1.5rem] rounded-tl-none shadow-sm flex items-center gap-3">
-      <div className="flex gap-1.5">
-        {[0, 1, 2].map((_, index) => (
-          <motion.div 
-            key={index}
-            animate={{ y: [0, -5, 0], opacity: [0.4, 1, 0.4] }} 
-            transition={{ repeat: Infinity, duration: 0.8, delay: index * 0.15 }} 
-            className="w-1.5 h-1.5 bg-accent-3 rounded-full shadow-[0_0_8px_rgba(14,165,233,0.6)]" 
-          />
-        ))}
+    <div className="bg-slate-800/80 border border-white/10 px-5 py-3 rounded-2xl rounded-tl-none shadow-sm flex flex-col gap-2 min-w-[140px] backdrop-blur-md">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-black text-accent-3 uppercase tracking-[0.2em] animate-pulse">Processing</span>
+        <div className="flex gap-1">
+          {[0, 1, 2].map((_, index) => (
+            <motion.div 
+              key={index}
+              animate={{ opacity: [0.3, 1, 0.3] }} 
+              transition={{ repeat: Infinity, duration: 1, delay: index * 0.2 }} 
+              className="w-1 h-1 bg-accent-3 rounded-full" 
+            />
+          ))}
+        </div>
+      </div>
+      <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <motion.div 
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="h-full bg-accent-3/50" 
+        />
       </div>
     </div>
   </motion.div>

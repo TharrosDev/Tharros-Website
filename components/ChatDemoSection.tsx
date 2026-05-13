@@ -368,9 +368,9 @@ export default function ChatDemoSection() {
                   ) : (
                     <div className="relative flex flex-col h-[500px] xl:h-[650px] w-full bg-slate-900/40 rounded-[3rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.7)] overflow-hidden border border-white/10 group/console" style={{ willChange: "transform" }}>
                       
-                      {/* Chat Header - Glassmorphism Bento Style */}
+                      {/* Chat Header - Glassmorphism Bento Style with Telemetry */}
                       <div className="p-6 md:p-8 border-b border-white/5 bg-slate-900/90 backdrop-blur-2xl sticky top-0 z-10">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-6">
                             <div className="relative group/icon">
                               <div className="w-14 h-14 rounded-[1.25rem] bg-white flex items-center justify-center text-slate-950 shadow-2xl group-hover/icon:scale-110 transition-transform duration-500">
@@ -406,6 +406,28 @@ export default function ChatDemoSection() {
                               <div className="w-px h-6 bg-white/10" />
                               <div className="w-2 h-2 rounded-full bg-accent-3 animate-pulse" />
                             </div>
+                          </div>
+                        </div>
+
+                        {/* Live Telemetry Row */}
+                        <div className="flex items-center gap-6 pt-4 border-t border-white/[0.03]">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Neural_Load:</span>
+                            <div className="w-16 h-1 bg-white/5 rounded-full overflow-hidden">
+                              <motion.div 
+                                animate={{ width: ["15%", "45%", "30%"] }} 
+                                transition={{ repeat: Infinity, duration: 4 }}
+                                className="h-full bg-accent-3" 
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Latency:</span>
+                            <span className="text-[8px] font-black text-accent-3 tabular-nums">24ms</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">Uptime:</span>
+                            <span className="text-[8px] font-black text-white/40 tabular-nums">99.98%</span>
                           </div>
                         </div>
                       </div>
@@ -476,14 +498,17 @@ export default function ChatDemoSection() {
                           onSubmit={(e) => handleSend(inputValue, e)}
                           className="flex items-center gap-4 bg-white/5 p-3 rounded-[2.5rem] border border-white/10 focus-within:border-accent-3/40 focus-within:bg-white/[0.08] transition-all duration-500 shadow-2xl"
                         >
-                          <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            placeholder={isLoading ? "Starting agent..." : isLimitReached ? "Session limit reached for this session." : "Type your inquiry..."}
-                            disabled={isLoading || isTyping || isLimitReached || !!initError}
-                            className="flex-1 bg-transparent px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50 font-medium"
-                          />
+                          <div className="flex items-center gap-4 px-6 py-4 flex-1">
+                            <span className="text-accent-3 font-black text-lg select-none opacity-50 tracking-tighter font-mono">{">"}</span>
+                            <input
+                              type="text"
+                              value={inputValue}
+                              onChange={(e) => setInputValue(e.target.value)}
+                              placeholder={isLoading ? "BOOTING_SYSTEM..." : isLimitReached ? "CAPACITY_LIMIT_REACHED" : "INITIATE_INQUIRY..."}
+                              disabled={isLoading || isTyping || isLimitReached || !!initError}
+                              className="flex-1 bg-transparent text-lg text-white placeholder:text-slate-600 focus:outline-none disabled:opacity-50 font-medium tracking-tight"
+                            />
+                          </div>
                           <button
                             type="submit"
                             aria-label="Send message"
@@ -510,50 +535,75 @@ export default function ChatDemoSection() {
 }
 
 // Sub-components for better performance and readability
-const MessageItem = memo(({ msg }: { msg: LocalMessage }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 15, scale: 0.98 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ duration: 0.4, ease: "easeOut" }}
-    className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-  >
-    <div 
-      className={`max-w-[85%] md:max-w-[75%] text-base leading-relaxed px-6 py-4 rounded-[1.5rem] md:rounded-[2rem] shadow-sm border ${
-        msg.sender === "user" 
-        ? "bg-white text-slate-950 border-white/10 rounded-tr-none shadow-white/5" 
-        : "bg-slate-800 text-white border-white/5 rounded-tl-none shadow-black/50"
-      }`}
+const MessageItem = memo(({ msg }: { msg: LocalMessage }) => {
+  const isAgent = msg.sender === "agent";
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: isAgent ? -20 : 20, scale: 0.98 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
     >
-      {msg.text}
-    </div>
-    <span className="text-[9px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
-  </motion.div>
-));
+      <div 
+        className={`relative max-w-[85%] md:max-w-[75%] text-base leading-relaxed px-7 py-5 shadow-2xl border transition-all duration-500 ${
+          isAgent 
+          ? "bg-slate-900/60 text-white border-white/5 rounded-[2rem] rounded-tl-none backdrop-blur-md" 
+          : "bg-white text-slate-950 border-white/10 rounded-[2rem] rounded-tr-none font-semibold"
+        }`}
+        style={{
+          clipPath: isAgent 
+            ? "polygon(0 0, 100% 0, 100% 100%, 8% 100%, 0 85%)" 
+            : "polygon(0 0, 100% 0, 100% 85%, 92% 100%, 0 100%)"
+        }}
+      >
+        {isAgent && (
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-20">
+            <div className="absolute top-0 left-0 w-1 h-full bg-accent-3/40" />
+            <div className="absolute top-0 left-0 w-full h-px bg-white/10" />
+          </div>
+        )}
+        <p className={isAgent ? "font-medium" : ""}>
+          {msg.text}
+        </p>
+      </div>
+      <div className={`flex items-center gap-2 mt-3 px-2 ${isAgent ? "flex-row" : "flex-row-reverse"}`}>
+        <span className="text-[8px] font-black text-white/30 uppercase tracking-[0.2em]">{isAgent ? "MODEL_OUT" : "USER_IN"}</span>
+        <div className="w-1 h-1 rounded-full bg-white/10" />
+        <span className="text-[9px] text-slate-400 font-bold tabular-nums uppercase tracking-widest">{msg.time}</span>
+      </div>
+    </motion.div>
+  );
+});
 MessageItem.displayName = "MessageItem";
 
 const TypingIndicator = memo(() => (
   <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    className="flex flex-col items-start"
+    initial={{ opacity: 0, x: -10 }}
+    animate={{ opacity: 1, x: 0 }}
+    className="flex flex-col items-start gap-3"
   >
-    <div className="bg-slate-800 border border-white/5 px-6 py-4 rounded-[1.5rem] rounded-tl-none shadow-sm flex items-center gap-3">
-      <div className="flex gap-1.5">
-        {[0, 1, 2].map((_, index) => (
-          <motion.div 
-            key={index}
-            animate={{ 
-              y: [0, -6, 0],
-              opacity: [0.4, 1, 0.4]
-            }} 
-            transition={{ 
-              repeat: Infinity, 
-              duration: 0.8, 
-              delay: index * 0.15 
-            }} 
-            className="w-1.5 h-1.5 bg-accent-3 rounded-full" 
-          />
-        ))}
+    <div className="bg-slate-900/60 border border-white/10 px-6 py-4 rounded-2xl rounded-tl-none flex flex-col gap-3 min-w-[160px] backdrop-blur-md">
+      <div className="flex items-center justify-between gap-8">
+        <span className="text-[9px] font-black text-accent-3 uppercase tracking-[0.2em] animate-pulse">Neural_Processing</span>
+        <div className="flex gap-1">
+          {[0, 1, 2].map((_, index) => (
+            <motion.div 
+              key={index}
+              animate={{ opacity: [0.3, 1, 0.3] }} 
+              transition={{ repeat: Infinity, duration: 1, delay: index * 0.2 }} 
+              className="w-1 h-1 bg-accent-3 rounded-full" 
+            />
+          ))}
+        </div>
+      </div>
+      <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+        <motion.div 
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="h-full bg-accent-3/50" 
+        />
       </div>
     </div>
   </motion.div>
