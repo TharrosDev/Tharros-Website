@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
 import NavBar from "@/components/NavBar";
+import BackToTop from "@/components/BackToTop";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
@@ -218,6 +219,7 @@ export default function RootLayout({
       <body>
         <NavBar />
         <PageTransition>{children}</PageTransition>
+        <BackToTop />
         <Analytics />
       </body>
     </html>
