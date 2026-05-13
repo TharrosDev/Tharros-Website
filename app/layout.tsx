@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | Tharros AI Studio",
   },
   description:
-    "Keep it Local, Keep it Canadian. Tharros engineers high-performance AI agents for Ottawa trades and small businesses. Automate lead capture and admin with 24/7 autonomous intelligence.",
+    "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Tharros engineers high-performance AI agents for Ottawa trades and small businesses. Automate lead capture and admin with 24/7 autonomous intelligence.",
   keywords: [
     "AI Agents Ottawa",
     "Autonomous AI Agents",
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tharros | Keep it Local, Keep it Canadian | AI Agents for Ottawa",
     description:
-      "Keep it Local, Keep it Canadian. Recover your time and capture every lead with practical AI agents built for local trades and small businesses in Ottawa. No corporate fluff, just performance.",
+      "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Recover your time and capture every lead with practical AI agents built for local trades and small businesses in Ottawa. No corporate fluff, just performance.",
     url: "https://tharros.ca",
     siteName: "Tharros AI Studio",
     locale: "en_CA",
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Tharros | Keep it Local, Keep it Canadian",
-    description: "Keep it Local, Keep it Canadian. High-performance AI agents for your local business. 24/7 lead capture and admin automation with Ottawa-specific context.",
+    description: "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. High-performance AI agents for your local business. 24/7 lead capture and admin automation with Ottawa-specific context.",
     images: ["/og-image.jpg"],
     creator: "@TharrosAI",
   },
@@ -143,6 +143,7 @@ export default function RootLayout({
       "@type": "Organization",
       "name": "Tharros",
       "alternateName": "Tharros AI Studio",
+      "slogan": "Recovering time. Rescuing revenue.",
       "url": "https://tharros.ca",
       "logo": "https://tharros.ca/tharros-logo.svg",
       "sameAs": [
@@ -178,7 +179,7 @@ export default function RootLayout({
         "latitude": 45.3483,
         "longitude": -75.9103
       },
-      "description": "Keep it Local, Keep it Canadian. Custom AI agents for Ottawa trades and small businesses. Automating lead capture and office admin.",
+      "description": "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Custom AI agents for Ottawa trades and small businesses. Automating lead capture and office admin.",
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
