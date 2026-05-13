@@ -134,7 +134,7 @@ const MobileChatConsole = memo(({
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={isLimitReached ? "Limit reached." : "Type message..."}
             disabled={isLoading || isTyping || isLimitReached}
-            className="flex-1 bg-transparent px-3 py-2 text-[16px] text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50"
+            className="flex-1 bg-transparent px-3 py-2 text-[16px] text-white placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
           />
           <button 
             type="submit"
@@ -169,7 +169,7 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => (
     >
       {msg.text}
     </div>
-    <span className="text-[8px] text-slate-400 font-bold mt-1.5 px-1 uppercase tracking-widest">{msg.time}</span>
+    <span className="text-[8px] text-slate-300 font-bold mt-1.5 px-1 uppercase tracking-widest">{msg.time}</span>
   </motion.div>
 ));
 MobileMessageItem.displayName = "MobileMessageItem";

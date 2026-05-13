@@ -106,7 +106,7 @@ export default function PricingSection() {
                   </Magnetic>
                 </div>
                 <p className="mt-6 text-muted text-sm font-medium">
-                  Free consultation &bull; <a href="mailto:Magnus.Abdelnour@gmail.com" className="hover:text-accent-3 underline">Email us directly</a> &bull; Ottawa-based
+                  Free consultation &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline">Email us directly</a> &bull; Ottawa-based
                 </p>
               </div>
             </div>

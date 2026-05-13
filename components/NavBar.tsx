@@ -234,7 +234,7 @@ export default function NavBar() {
                 </a>
                 <div className="mt-6 text-center">
                   <a 
-                    href="mailto:Magnus.Abdelnour@gmail.com?subject=Inquiry" 
+                    href="mailto:tharrosdev@gmail.com?subject=Inquiry" 
                     className="text-slate-400 text-sm font-bold uppercase tracking-widest hover:text-text transition-colors"
                   >
                     Or Email Us

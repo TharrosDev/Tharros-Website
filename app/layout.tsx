@@ -133,7 +133,7 @@ export default function RootLayout({
         "@type": "ContactPoint",
         "telephone": "",
         "contactType": "customer service",
-        "email": "Magnus.Abdelnour@gmail.com",
+        "email": "tharrosdev@gmail.com",
         "areaServed": "CA",
         "availableLanguage": "en"
       }

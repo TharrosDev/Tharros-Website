@@ -253,15 +253,15 @@ export default function ChatDemoSection() {
           <AnimatedSection>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 mx-auto">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-3 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Live Deployment</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-100">Live Deployment</span>
             </div>
             
             <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[1] tracking-tighter">
               An agent that <br />
-              <span className="text-slate-400">commands results.</span>
+              <span className="text-slate-300">commands results.</span>
             </h2>
             
-            <p className="text-slate-400 text-lg md:text-xl xl:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-slate-200 text-lg md:text-xl xl:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
               Don&apos;t just chat. Automate. Our agents are engineered for high-stakes business environments where precision is the only metric that matters.
             </p>
 
@@ -274,8 +274,8 @@ export default function ChatDemoSection() {
                   transition={{ delay: i * 0.1 }}
                   className="flex flex-col gap-1 text-center group cursor-default"
                 >
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-accent-3 transition-colors">{item.title}</h4>
-                  <p className="text-xs text-subdued leading-relaxed">{item.desc}</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-300 group-hover:text-accent-3 transition-colors">{item.title}</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -290,15 +290,15 @@ export default function ChatDemoSection() {
               {/* Left Column: Briefing & Strategy */}
               <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-32">
                 <div className="mb-8">
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                    <span className="w-2 h-[1px] bg-slate-600" />
+                  <p className="text-[10px] font-bold text-slate-200 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                    <span className="w-2 h-[1px] bg-slate-400" />
                     Industrial Logic Demo
                   </p>
                   <h3 className="text-4xl md:text-5xl xl:text-6xl font-bold text-white tracking-tighter mb-6 leading-[1.1]">
                     Interact with <br />
                     our <span className="text-accent-3">Light Model.</span>
                   </h3>
-                  <p className="text-base text-slate-400 leading-relaxed mb-10 max-w-sm">
+                  <p className="text-base text-slate-200 leading-relaxed mb-10 max-w-sm">
                     Experience the responsiveness and brand alignment of a Tharros-engineered Customer Q&A Agent.
                   </p>
                 </div>
@@ -306,9 +306,9 @@ export default function ChatDemoSection() {
                 <div className="space-y-8 hidden lg:block">
                   {VERIFICATION_BLOCKS.map((item) => (
                     <div key={item.title} className="flex flex-col gap-1.5 p-4 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-900 transition-colors duration-300">
-                      <span className="text-[8px] font-black uppercase tracking-widest text-slate-400">{item.label}</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest text-slate-200">{item.label}</span>
                       <h4 className="text-xs font-bold text-white uppercase tracking-tight">{item.title}</h4>
-                      <p className="text-[11px] text-slate-300 leading-normal">{item.desc}</p>
+                      <p className="text-[11px] text-slate-100 leading-normal">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -319,8 +319,8 @@ export default function ChatDemoSection() {
                 <div className="relative w-full">
                   {/* Industrial Disclaimer */}
                   <div className="mb-4 px-6">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-slate-500" />
+                    <p className="text-[10px] font-bold text-slate-200 uppercase tracking-[0.15em] flex items-center gap-2">
+                      <span className="w-1 h-1 rounded-full bg-slate-200" />
                       Sandbox instance restricted to {MAX_PROMPTS} baseline inferences.
                     </p>
                   </div>
@@ -430,7 +430,7 @@ export default function ChatDemoSection() {
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder={isLimitReached ? "Demo limit reached." : "Message..."}
                             disabled={!agentInstance || isTyping || isLimitReached}
-                            className="flex-1 bg-transparent px-4 py-3 text-base text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50"
+                            className="flex-1 bg-transparent px-4 py-3 text-base text-white placeholder:text-slate-400 focus:outline-none disabled:opacity-50"
                           />
                           <button 
                             type="submit"
@@ -473,7 +473,7 @@ const MessageItem = memo(({ msg }: { msg: LocalMessage }) => (
     >
       {msg.text}
     </div>
-    <span className="text-[9px] text-slate-400 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
+    <span className="text-[9px] text-slate-300 font-bold mt-2 px-1 uppercase tracking-widest">{msg.time}</span>
   </motion.div>
 ));
 MessageItem.displayName = "MessageItem";

@@ -71,7 +71,7 @@ export default function HeroSection() {
           <div className="mt-6 flex items-center justify-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-              Intake Agent Online &mdash; <a href="mailto:Magnus.Abdelnour@gmail.com" className="text-accent-3 hover:underline">Or Email Directly</a>
+              Intake Agent Online &mdash; <a href="mailto:tharrosdev@gmail.com" className="text-accent-3 hover:underline">Or Email Directly</a>
             </p>
           </div>
         </div>

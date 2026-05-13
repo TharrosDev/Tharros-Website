@@ -12,7 +12,7 @@ COMPANY NAME: Tharros
 PARENT ORGANIZATION: Meridian Society
 LOCATION: Ottawa, Ontario, Canada
 WEBSITE: https://tharros.ca
-PRIMARY CONTACT EMAIL: Magnus.Abdelnour@gmail.com
+PRIMARY CONTACT EMAIL: tharrosdev@gmail.com
 FOUNDER: Magnus Abdelnour
 COUNTRY: Canada (proudly Canadian — "Keep it Canadian")
 
@@ -177,7 +177,7 @@ PRICING IS DETERMINED BY THREE FACTORS:
 
 HOW TO GET A QUOTE:
 - Book a free initial consultation via the intake agent at tharros.ca/intake
-- OR email directly: Magnus.Abdelnour@gmail.com
+- OR email directly: tharrosdev@gmail.com
 - A firm, no-obligation quote is provided immediately following the initial consult.
 
 CONSULTATION: Free, no obligation, no sales pressure.
@@ -333,7 +333,7 @@ Q: How much does it cost?
 A: Pricing is custom — based on the complexity of your solution, the depth of
    knowledge required, and how many channels you need covered. We provide a firm,
    no-obligation quote immediately after the free initial consultation. Email
-   Magnus.Abdelnour@gmail.com to get started.
+   tharrosdev@gmail.com to get started.
 
 Q: What does the consultation involve?
 A: It's a free conversation where we listen to your business — your biggest time
@@ -373,7 +373,7 @@ Q: How do I get started?
 A: Two options:
    1. Use the intake agent at tharros.ca/intake — our AI specialist will gather
       your business objectives and brief our team.
-   2. Email Magnus directly at Magnus.Abdelnour@gmail.com with your business name
+   2. Email Magnus directly at tharrosdev@gmail.com with your business name
       and a brief description of your challenge.
 
 Q: What makes Tharros different from other AI chatbot services?
@@ -395,7 +395,7 @@ A: Yes. In Step 02 (Build), you review the agent and request changes before any
 
 Q: Who is the founder?
 A: Magnus Abdelnour, founder of Tharros, based in Ottawa, Ontario. His direct
-   email is Magnus.Abdelnour@gmail.com.
+   email is tharrosdev@gmail.com.
 
 Q: What is Tharros's philosophy?
 A: "Ottawa small businesses don't need a corporate AI strategy. They need something
@@ -537,7 +537,7 @@ SECTION 14: CONTACT & ENGAGEMENT DETAILS
 ================================================================================
 
 FOUNDER & PRIMARY CONTACT: Magnus Abdelnour
-EMAIL: Magnus.Abdelnour@gmail.com
+EMAIL: tharrosdev@gmail.com
 INTAKE AGENT: https://tharros.ca/intake (available 24/7)
 LOCATION: Ottawa, Ontario, Canada
 
@@ -548,7 +548,7 @@ Option 1 (Recommended): Use the intake agent at tharros.ca/intake
   - Custom quote follows immediately after review
 
 Option 2: Email directly
-  - Magnus.Abdelnour@gmail.com
+  - tharrosdev@gmail.com
   - Include your business name and a brief description of your challenge
   - Response within one business day
 
@@ -633,7 +633,7 @@ high-performance 'Industrial Consoles' focused on lead capture, customer service
 and admin automation. Our value: speed (1–2 week launch), local expertise (Kanata
 to the Glebe), and a premium done-for-you service model that removes all technical
 complexity while maintaining absolute brand authority. We don't just build tech;
-we recover time. Contact: Magnus.Abdelnour@gmail.com | tharros.ca"
+we recover time. Contact: tharrosdev@gmail.com | tharros.ca"
 
 ================================================================================
 END OF KNOWLEDGE BASE

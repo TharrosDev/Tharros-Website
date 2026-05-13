@@ -43,7 +43,7 @@ export default function FooterSection() {
               Initiate a consultation
             </a>
             <a 
-              href="mailto:Magnus.Abdelnour@gmail.com" 
+              href="mailto:tharrosdev@gmail.com" 
               aria-label="Email Magnus Abdelnour for business inquiries"
               className="text-text font-bold text-base uppercase tracking-widest hover:text-accent-3 transition-colors px-4 py-2"
             >
