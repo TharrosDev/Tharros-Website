@@ -7,7 +7,7 @@ import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[100svh] flex items-center justify-center px-6 pt-14 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-white">
+    <section id="hero" className="relative min-h-[70svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-10 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-white">
       {/* Background: Industrial Geometric Depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4 opacity-70" />
@@ -29,7 +29,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/[0.03] border border-slate-900/5 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-900/60 mb-6 md:mb-8 hover:bg-slate-900/[0.05] transition-colors cursor-default"
+            className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/[0.03] border border-slate-900/5 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-[0.25em] text-slate-900/60 mb-4 md:mb-8 hover:bg-slate-900/[0.05] transition-colors cursor-default"
           >
             <Image 
               src="/canada-flag.svg" 
