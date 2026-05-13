@@ -53,6 +53,7 @@ export default function IntakeAgent() {
   const isMobile = useIsMobile();
   
   const [userMessageCount, setUserMessageCount] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(false);
   const countRef = useRef(0);
   const isLimitReached = userMessageCount >= MAX_PROMPTS;
 
@@ -70,15 +71,16 @@ export default function IntakeAgent() {
         setUserMessageCount(count);
         countRef.current = count;
       }
+      setIsInitialized(true);
     }
   }, []);
 
-  // Persistence: Save count on change
+  // Persistence: Save count on change (only after initialization)
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isInitialized && typeof window !== "undefined") {
       localStorage.setItem(`pc-intake-${AGENT_ID}`, userMessageCount.toString());
     }
-  }, [userMessageCount]);
+  }, [userMessageCount, isInitialized]);
 
   useEffect(() => {
     async function initRelevance() {

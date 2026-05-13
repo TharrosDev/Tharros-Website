@@ -55,8 +55,9 @@ export default function ChatDemoSection() {
   const isMobile = useIsMobile();
 
   const [userMessageCount, setUserMessageCount] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(false);
   const countRef = useRef(0); // For stable access in listeners
-  
+
   const isLimitReached = userMessageCount >= MAX_PROMPTS;
 
   // Sync ref with state
@@ -73,15 +74,16 @@ export default function ChatDemoSection() {
         setUserMessageCount(count);
         countRef.current = count;
       }
+      setIsInitialized(true);
     }
   }, []);
 
-  // Persistence: Save count on change
+  // Persistence: Save count on change (only after initialization)
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isInitialized && typeof window !== "undefined") {
       localStorage.setItem(`pc-${AGENT_ID}`, userMessageCount.toString());
     }
-  }, [userMessageCount]);
+  }, [userMessageCount, isInitialized]);
 
   // Initialize Relevance AI Client and Agent
   useEffect(() => {
