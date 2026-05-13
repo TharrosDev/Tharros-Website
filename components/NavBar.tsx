@@ -193,7 +193,8 @@ export default function NavBar() {
               mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
             }`}
           />
-        </button>
+          </button>
+        </div>
       </header>
 
       <AnimatePresence>
