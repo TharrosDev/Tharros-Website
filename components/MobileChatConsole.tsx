@@ -56,33 +56,30 @@ const MobileChatConsole = memo(({
   return (
     <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border border-slate-200 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Header - Minimalist Light Mode */}
-      <div className="px-5 py-4 border-b border-slate-100 bg-white/95 backdrop-blur-2xl shrink-0">
+      <div className="px-4 py-3 border-b border-slate-100 bg-white/95 backdrop-blur-2xl shrink-0">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-white shadow-lg">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <div className="w-8 h-8 rounded-lg bg-slate-950 flex items-center justify-center text-white shadow-lg">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-white flex items-center justify-center border-2 border-white">
+                <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-white flex items-center justify-center border-2 border-white">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
                 </div>
               </div>
               <div className="text-left">
-                <h3 className="text-sm font-black text-slate-950 tracking-tight leading-none mb-1.5 uppercase">{title}</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em]">Operational</span>
-                </div>
+                <h3 className="text-xs font-black text-slate-950 tracking-tight leading-none mb-1 uppercase">{title}</h3>
+                <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.2em]">Operational</span>
               </div>
             </div>
             
-            <div className="flex items-center gap-3">
-              <div className="px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2">
-                <span className={`text-[10px] font-black tabular-nums ${isLimitReached ? 'text-red-500' : 'text-slate-400'}`}>
+            <div className="flex items-center gap-2">
+              <div className="px-2 py-1 bg-slate-50 rounded-lg border border-slate-100">
+                <span className={`text-[9px] font-black tabular-nums ${isLimitReached ? 'text-red-500' : 'text-slate-400'}`}>
                   {userMessageCount}/{maxPrompts}
                 </span>
-                <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">CAP</span>
               </div>
             </div>
           </div>
