@@ -157,7 +157,7 @@ export default function IntakeForm() {
                   </button>
                 </div>
               </motion.div>
-            )}}
+            )}
           </AnimatePresence>
         </div>
       </main>
