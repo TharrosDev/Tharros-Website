@@ -90,7 +90,11 @@ export default function ChatDemoSection() {
   // Initialize Relevance AI Client and Agent
   useEffect(() => {
     async function initRelevance() {
-      if (!REGION || !PROJECT || !AGENT_ID) return;
+      if (!REGION || !PROJECT || !AGENT_ID) {
+        setInitError("Agent not configured. Please contact support.");
+        setIsLoading(false);
+        return;
+      }
       try {
         const storageKey = `r-${AGENT_ID}`;
         const storedJson = localStorage.getItem(storageKey);
@@ -407,17 +411,37 @@ export default function ChatDemoSection() {
                       </div>
 
                       {/* Messages Area */}
-                      <div 
+                      <div
                         ref={scrollRef}
                         className="flex-1 overflow-y-auto p-8 md:p-12 flex flex-col gap-8 bg-black/40 scroll-smooth relative"
                       >
                         {/* Subtle Grainy Overlay */}
                         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
+
+                        {isLoading && (
+                          <div className="flex-1 flex flex-col items-center justify-center gap-4 py-16">
+                            <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                            <p className="text-[11px] font-black text-white/30 uppercase tracking-[0.3em]">Initializing_Agent</p>
+                          </div>
+                        )}
+
+                        {!isLoading && initError && (
+                          <div className="flex-1 flex flex-col items-center justify-center gap-3 py-16">
+                            <div className="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-red-400">
+                                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                              </svg>
+                            </div>
+                            <p className="text-[11px] font-black text-red-400/70 uppercase tracking-[0.2em]">Agent_Offline</p>
+                            <p className="text-xs text-slate-500 text-center max-w-xs">{initError}</p>
+                          </div>
+                        )}
+
                         <AnimatePresence initial={false}>
                           {messages.map((msg) => (
                             <MessageItem key={msg.id} msg={msg} />
                           ))}
-                          
+
                           {isTyping && (
                             <TypingIndicator />
                           )}
@@ -456,14 +480,14 @@ export default function ChatDemoSection() {
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            placeholder={isLimitReached ? "Deployment limit reached for this session." : "Type your inquiry..."}
-                            disabled={!agentInstance || isTyping || isLimitReached}
+                            placeholder={isLoading ? "Initializing agent..." : isLimitReached ? "Deployment limit reached for this session." : "Type your inquiry..."}
+                            disabled={isLoading || isTyping || isLimitReached || !!initError}
                             className="flex-1 bg-transparent px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:outline-none disabled:opacity-50 font-medium"
                           />
-                          <button 
+                          <button
                             type="submit"
                             aria-label="Send message"
-                            disabled={!inputValue.trim() || !agentInstance || isTyping || isLimitReached}
+                            disabled={!inputValue.trim() || !agentInstance || isLoading || isTyping || isLimitReached}
                             className="h-14 w-14 flex items-center justify-center rounded-[1.75rem] bg-white text-slate-950 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-slate-100 hover:scale-105 transition-all disabled:opacity-5 disabled:grayscale active:scale-95 shrink-0"
                           >
                             <svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
