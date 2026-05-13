@@ -9,9 +9,9 @@ const clients = [
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
-    description: "The Meridian Society is a premium community hub for collaborative excellence. We deployed an advanced Knowledge Q&A Agent to automate institutional information access, member support, and course documentation 24/7.",
+    description: "The Meridian Society is an independent, student-led hub connecting Ottawa's top talent from Carleton, uOttawa, and Algonquin with industry leaders and scholars. We deployed a custom Knowledge Q&A Agent to serve as an on-demand forum for student inquiries, speaker insights, and membership information—bridging the gap between academic theory and professional reality 24/7.",
     link: "https://meridiansociety.ca",
-    metrics: { label: "Query Resolution", value: "92%", sub: "Automated" },
+    metrics: { label: "Member Engagement", value: "92%", sub: "Automated" },
     impact: "85% reduction in support load",
     image: "/meridian-logo.png"
   }
