@@ -105,12 +105,12 @@ export default function IntakeForm() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Business / Institution</label>
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Business / Company</label>
                         <input required type="text" placeholder="Organization Name" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">The Mission</label>
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Needs</label>
                         <textarea required rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm resize-none" />
                       </div>
 
