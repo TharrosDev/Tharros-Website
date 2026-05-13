@@ -95,23 +95,23 @@ export default function IntakeForm() {
                     <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Full Name</label>
-                          <input required type="text" placeholder="John Doe" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Your Name</label>
+                          <input required type="text" placeholder="Who are we speaking with?" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Work Email</label>
-                          <input required type="email" placeholder="john@company.com" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Professional Email</label>
+                          <input required type="email" placeholder="Where should we send your briefing?" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                         </div>
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Business / Institution</label>
-                        <input required type="text" placeholder="Organization Name" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Organization</label>
+                        <input required type="text" placeholder="What company or society are we building for?" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">Agent Objectives</label>
-                        <textarea required rows={4} placeholder="Describe your lead capture or automation goals..." className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm resize-none" />
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 ml-1">The Mission</label>
+                        <textarea required rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-accent-3/30 focus:bg-white transition-all shadow-sm resize-none" />
                       </div>
 
                       <div className="pt-4">
