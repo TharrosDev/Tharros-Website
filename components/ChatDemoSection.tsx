@@ -258,7 +258,7 @@ export default function ChatDemoSection() {
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative flex flex-col items-center">
         
         {/* Section Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-10 md:mb-24">
           <AnimatedSection>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8 mx-auto">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-3 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />

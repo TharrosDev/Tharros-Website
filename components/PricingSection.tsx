@@ -52,7 +52,7 @@ export default function PricingSection() {
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto relative">
         
-        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-16 md:mb-20 xl:mb-28">
+        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 md:mb-20 xl:mb-28">
           <AnimatedSection>
             <p className="section-label mb-4">Investment</p>
             <h2 className="text-3xl md:text-6xl xl:text-7xl font-bold text-text mb-6 leading-tight">

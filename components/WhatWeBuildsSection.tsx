@@ -56,7 +56,7 @@ export default function WhatWeBuildsSection() {
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
-          <div className="text-center mb-10 md:mb-16">
+          <div className="text-center mb-6 md:mb-16">
             <p className="section-label mb-4">What we build</p>
             <h2 className="text-3xl md:text-5xl xl:text-6xl font-bold text-text mb-6 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
               Autonomous <span className="text-slate-400">AI Agents.</span> Real outcomes.{" "}

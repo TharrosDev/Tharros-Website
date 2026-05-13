@@ -30,7 +30,7 @@ export default function ModelTiersSection() {
       <div className="absolute inset-0 industrial-grid opacity-[0.4] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 md:px-12 xl:px-20 relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 md:mb-20">
           <AnimatedSection>
             <p className="section-label mb-6">Strategic Scaling</p>
             <h2 className="text-4xl md:text-6xl font-bold text-text tracking-tighter mb-8 leading-[1.1]">

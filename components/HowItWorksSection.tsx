@@ -30,7 +30,7 @@ export default function HowItWorksSection() {
             From conversation to{" "}
             <span className="accent-text">live in under 2 weeks</span>
           </h2>
-          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-16 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
             Three steps. No jargon. No complex enterprise rollout.
           </p>
         </AnimatedSection>

@@ -33,7 +33,7 @@ export default function FooterSection() {
             possible, no obligation.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16 md:mb-20">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
             <a
               href="/intake"
               onClick={handleScrollToTop}

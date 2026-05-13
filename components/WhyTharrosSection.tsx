@@ -40,13 +40,13 @@ export default function WhyTharrosSection() {
           <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-text mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
             Built for <span className="accent-text">small businesses</span>
           </h2>
-          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-16 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
+          <p className="text-subdued text-center max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
             We solve specific problems for your business, affordably, and
             efficiently.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-16">
           {pillars.map((pillar, i) => (
             <AnimatedSection key={pillar.headline}>
               <div className="clean-card p-5 md:p-6 xl:p-8 h-full flex flex-col gap-5 group hover:shadow-xl hover:border-accent-3/20 transition-all duration-500">
