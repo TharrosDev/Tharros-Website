@@ -104,7 +104,7 @@ export default function HeroSection() {
                 href="/intake"
                 className="primary-button text-sm md:text-xl xl:text-2xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)]"
               >
-                <span className="relative z-10">Initiate Briefing</span>
+                <span className="relative z-10">Get Started</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               </a>
             </Magnetic>

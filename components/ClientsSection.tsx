@@ -6,112 +6,236 @@ import AnimatedSection from "./AnimatedSection";
 
 const clients = [
   {
+    id: "meridian",
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
-    description: "The Meridian Society connects Ottawa's top student talent with industry leaders and scholars. We deployed a custom Knowledge Q&A Agent to serve as an on-demand forum for inquiries and speaker insights, bridging the gap between academia and the professional world 24/7.",
+    description: "Deployed a custom Knowledge Q&A Agent for 24/7 member insights and forum automation. Bridging the gap between student talent and industry scholars via an on-demand intelligence layer.",
     link: "https://meridiansociety.ca",
-    date: "May 12, 2026",
-    metrics: { label: "Inquiry Accuracy", value: "98%", sub: "Verified Data" },
-    impact: "Instant Member Response",
-    image: "/meridian-logo.png"
+    date: "MAY 2026",
+    image: "/meridian-logo.png",
+    gridPos: "lg:col-span-2 lg:row-span-2"
+  },
+  {
+    id: "in-progress",
+    isPlaceholder: true,
+    gridPos: "lg:col-span-1 lg:row-span-2"
   }
 ];
 
 export default function ClientsSection() {
   return (
-    <section className="py-12 md:py-24 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
-      <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none" />
-      
-      {/* Background Depth Glows - Optimized with GPU layers */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent-3/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none will-change-transform" style={{ transform: 'translateZ(0)' }} />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-200/5 blur-[120px] rounded-full translate-y-1/3 -translate-x-1/4 pointer-events-none will-change-transform" style={{ transform: 'translateZ(0)' }} />
+    <>
+      <ClientsHero />
+      <ClientsGallery />
+    </>
+  );
+}
 
-      <div className="max-w-4xl mx-auto relative">
+function ClientsHero() {
+  return (
+    <section className="pt-8 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
+      {/* Subtle Background Grid */}
+      <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
+      
+      {/* Background Depth Glows */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-3/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none gpu-accelerated" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-900/30 blur-[150px] rounded-full translate-y-1/3 -translate-x-1/4 pointer-events-none gpu-accelerated" />
+
+      <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
-          <div className="mb-16 md:mb-20 text-center">
-            <p className="section-label mb-4 tracking-[0.3em] text-[10px] justify-center text-accent-3">Strategic Deployments</p>
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight leading-[1.1]">
-              Operational <span className="text-slate-500">Proof.</span>
-            </h2>
-            <p className="text-slate-600 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
-              Field-tested agents delivering measurable results.
-            </p>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 border-b border-white/5 pb-12">
+            <div className="flex-grow">
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-[10px] font-bold text-accent-3 tracking-[0.3em] uppercase">Trusted Partnerships</span>
+                <div className="h-px w-12 bg-white/10" />
+                <span className="text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
+              </div>
+              <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.8]">
+                Real-World <br/>
+                <span className="text-slate-700/60">Impact.</span>
+              </h1>
+            </div>
+            
+            <div className="max-w-xl lg:text-right lg:pb-4 flex flex-col lg:items-end gap-12">
+              {/* Abstract Visual Anchor: Operational Network */}
+              <div className="w-full h-48 relative mt-12 mb-4 opacity-70 group select-none pointer-events-none">
+                <svg width="100%" height="100%" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
+                  {/* Background Grid Points */}
+                  {[...Array(4)].map((_, i) => (
+                    <circle key={`p-${i}`} cx={350 - (i * 80)} cy={75 + (Math.sin(i) * 30)} r="1.5" fill="currentColor" className="text-white/30" />
+                  ))}
+                  
+                  {/* Connecting Lines */}
+                  <path d="M100 80 L180 50 L260 90 L340 60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-accent-3/50" />
+                  
+                  {/* Main Node Circles */}
+                  <circle cx="340" cy="60" r="40" stroke="currentColor" strokeWidth="1" className="text-accent-3/30" />
+                  <circle cx="340" cy="60" r="25" stroke="currentColor" strokeWidth="0.5" className="text-accent-3/20" />
+                  <motion.circle 
+                    cx="340" cy="60" r="4" 
+                    fill="currentColor" className="text-accent-3" 
+                    animate={{ r: [4, 6, 4], opacity: [1, 0.7, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  />
+                  
+                  {/* Secondary Nodes */}
+                  <circle cx="180" cy="50" r="15" stroke="currentColor" strokeWidth="1" className="text-white/20" />
+                  <circle cx="180" cy="50" r="2.5" fill="currentColor" className="text-white/60" />
+                  
+                  <circle cx="260" cy="90" r="12" stroke="currentColor" strokeWidth="1" className="text-white/20" />
+                  <circle cx="260" cy="90" r="2.5" fill="currentColor" className="text-white/60" />
+                  
+                  {/* Subtle 'Signal' waves */}
+                  <motion.circle 
+                    cx="340" cy="60" r="60" 
+                    stroke="currentColor" strokeWidth="1" 
+                    className="text-accent-3/10"
+                    animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
+                  />
+                </svg>
+              </div>
+
+              <div className="flex flex-col lg:items-end">
+                <span className="text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-6">Strategic Overview</span>
+                <p className="text-subdued text-xl md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
+                  Tharros agents deliver autonomous customer service and lead capture, ensuring local businesses remain responsive 24/7.
+                </p>
+              </div>
+            </div>
           </div>
         </AnimatedSection>
-
-        <div className="relative">
-          <AnimatedSection variant="scale-in">
-            <motion.div 
-              whileHover={{ y: -4 }}
-              className="bg-white overflow-hidden group relative border border-slate-200 shadow-xl rounded-[2rem] will-change-transform flex flex-col md:flex-row"
-              style={{ transform: 'translateZ(0)' }}
-            >
-              {/* Content Body */}
-              <div className="flex-1 p-8 md:p-10 lg:p-12 relative z-10 bg-white flex flex-col justify-between">
-                <div className="mb-10">
-                  <div className="flex items-center flex-wrap gap-x-4 gap-y-3 mb-6">
-                    <span className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-900 text-[9px] font-black uppercase tracking-[0.2em] border border-slate-200 shadow-sm">
-                      {clients[0].type}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-slate-500 text-xs font-bold uppercase tracking-widest">{clients[0].location}</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-300" />
-                      <span className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.15em] hidden sm:inline-block">Deployed {clients[0].date}</span>
-                    </div>
-                  </div>
-                  <a 
-                    href={clients[0].link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block group/link mb-5"
-                  >
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 group-hover/link:text-accent-3 transition-colors duration-500 tracking-tight flex items-center gap-3">
-                      {clients[0].name}
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 group-hover/link:opacity-100 transition-all -translate-x-3 group-hover/link:translate-x-0 will-change-transform">
-                        <path d="M7 17l10-10M7 7h10v10" />
-                      </svg>
-                    </h3>
-                  </a>
-                  <p className="text-slate-600 text-base leading-relaxed">
-                    {clients[0].description}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6 items-start pt-6 border-t border-slate-100 mt-auto">
-                  <div className="flex flex-col">
-                    <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">{clients[0].metrics.label}</p>
-                    <p className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tighter mb-1">{clients[0].metrics.value}</p>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{clients[0].metrics.sub}</p>
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.2em] mb-1">Performance Impact</p>
-                    <p className="text-2xl md:text-3xl font-bold text-accent-3 tracking-tighter mb-1">{clients[0].impact.split(' ')[0]}</p>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{clients[0].impact.split(' ').slice(1).join(' ')}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Image Banner */}
-              <div className="w-full md:w-[35%] lg:w-[40%] relative min-h-[250px] bg-slate-100 flex items-center justify-center overflow-hidden border-t md:border-t-0 md:border-l border-slate-200">
-                <div className="absolute inset-0 bg-slate-900/5 mix-blend-multiply z-10 pointer-events-none" />
-                {clients[0].image && (
-                  <Image 
-                    src={clients[0].image} 
-                    alt={clients[0].name}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-700 scale-100 group-hover:scale-105"
-                  />
-                )}
-              </div>
-            </motion.div>
-          </AnimatedSection>
-        </div>
-
-
       </div>
     </section>
   );
 }
+
+function ClientsGallery() {
+  return (
+    <section className="py-10 md:py-16 xl:py-20 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+      {/* Background decoration - Standard site-wide separators */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[minmax(280px,auto)]">
+          {clients.map((client, idx) => (
+            client.isPlaceholder ? (
+              <PlaceholderCard key={client.id} index={idx} gridPos={client.gridPos} />
+            ) : (
+              <ClientCard key={client.id} client={client} index={idx} isPriority={idx === 0} />
+            )
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ClientCard({ client, index, isPriority }: { client: any, index: number, isPriority?: boolean }) {
+  const isLarge = client.gridPos.includes("lg:col-span-2");
+  
+  return (
+    <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${client.gridPos} h-full`}>
+      <motion.div 
+        whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+        className="group relative h-full bg-bg border border-white/10 hover:border-accent-3/40 rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col shadow-2xl shadow-black/40 gpu-accelerated"
+      >
+        <div className="p-6 md:p-10 flex flex-col h-full relative z-10">
+          {/* Header Bar */}
+          <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+            <span className="text-[10px] font-bold text-accent-3 uppercase tracking-[0.2em]">{client.date}</span>
+            <span className="text-[10px] text-slate-300 font-bold tracking-tight uppercase">{client.location}</span>
+          </div>
+
+          {/* Core Content */}
+          <div className="flex-grow">
+            <div className={`flex ${isLarge ? 'flex-row items-center' : 'flex-col'} gap-6 mb-6`}>
+              {client.image && (
+                <div className="w-16 h-16 shrink-0 relative rounded-2xl overflow-hidden bg-bg border border-white/10 group-hover:border-accent-3/20 transition-colors">
+                  <Image 
+                    src={client.image} 
+                    alt={client.name}
+                    fill
+                    priority={isPriority}
+                    className="object-cover transition-all duration-700 group-hover:scale-110"
+                  />
+                </div>
+              )}
+              <div className="flex flex-col justify-center">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-1">
+                  {client.type}
+                </span>
+                <h3 className={`font-bold text-white tracking-tighter group-hover:text-accent-3 transition-colors duration-300 ${isLarge ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-3xl'}`}>
+                  {client.name}
+                </h3>
+              </div>
+            </div>
+            
+            <p className={`text-slate-200 leading-relaxed mb-6 ${isLarge ? 'text-xl md:text-2xl max-w-2xl font-light' : 'text-base line-clamp-4'}`}>
+              {client.description}
+            </p>
+          </div>
+
+          {/* Simplified Footer */}
+          <div className="pt-4 mt-auto relative flex items-center justify-between">
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Active Deployment</span>
+            
+            <a 
+              href={client.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-bg transition-all text-white"
+            >
+               View Project
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </AnimatedSection>
+  );
+}
+
+function PlaceholderCard({ index, gridPos }: { index: number, gridPos: string }) {
+  return (
+    <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${gridPos} h-full`}>
+      <motion.div 
+        whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+        className="group relative h-full bg-bg border border-white/5 border-dashed rounded-[2.5rem] overflow-hidden flex flex-col items-center justify-center p-6 md:p-10 text-center transition-all duration-500 gpu-accelerated shadow-2xl shadow-black/20"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.05)_0%,transparent_70%)]" />
+        
+        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center mb-6 relative">
+           <motion.div 
+             animate={{ scale: [1, 2.8], opacity: [0.3, 0] }}
+             transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
+             className="absolute inset-0 rounded-full border-2 border-accent-3/20" 
+           />
+           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/40 group-hover:text-accent-3 transition-colors relative z-10">
+             <path d="M12 5v14M5 12h14" />
+           </svg>
+        </div>
+        
+        <h3 className="text-xl font-bold text-white/80 mb-2 tracking-tight">New Client in Progress</h3>
+        <p className="text-slate-200 text-sm max-w-[220px] leading-relaxed">
+          We are currently preparing a new success story with an Ottawa commercial partner.
+        </p>
+
+        {/* Pulsing Dots */}
+        <div className="mt-6 flex gap-1.5 justify-center">
+           {[1,2,3].map(i => (
+             <motion.div 
+               key={i}
+               animate={{ opacity: [0.2, 1, 0.2] }}
+               transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+               className="w-1 h-1 rounded-full bg-accent-3/60"
+             />
+           ))}
+        </div>
+      </motion.div>
+    </AnimatedSection>
+  );
+}
+
+

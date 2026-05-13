@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ClientsPage() {
   return (
     <>
-      <main className="pt-24 md:pt-28">
+      <main>
         <ClientsSection />
         <FooterSection />
       </main>
