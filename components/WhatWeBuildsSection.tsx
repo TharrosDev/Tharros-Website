@@ -50,7 +50,7 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
       <div id="solutions" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       
       {/* Industrial Grid Accents */}
@@ -59,23 +59,23 @@ export default function WhatWeBuildsSection() {
       
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-24 md:mb-32">
+          <div className="text-center mb-16 md:mb-32">
 
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
-              Autonomous <span className="text-slate-500">AI Agents.</span> <br />
+            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 md:mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
+              Autonomous <span className="text-slate-500">AI Agents.</span> <br className="hidden sm:block" />
               <span className="text-accent-3">Industrial performance.</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl xl:max-w-4xl mx-auto text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+            <p className="text-slate-300 max-w-2xl xl:max-w-4xl mx-auto text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
               We engineer digital workforce solutions tailored to the operational DNA of your business.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 xl:gap-20">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                className="clean-card p-10 md:p-12 xl:p-14 h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden"
+                className="clean-card p-8 md:p-12 xl:p-14 h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden"
               >
                 {/* Visual Depth Accent */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.05] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />

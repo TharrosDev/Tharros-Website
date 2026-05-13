@@ -22,20 +22,20 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section id="process" className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       {/* Background Sophistication */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-24 md:mb-32">
+          <div className="flex flex-col items-center mb-16 md:mb-32">
 
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-8 md:mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
               From conversation to <br className="hidden md:block" />
               <span className="text-accent-3">live in under 2 weeks.</span>
             </h2>
-            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl mx-auto mb-10 md:mb-12 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl mx-auto mb-10 md:mb-12 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
               Three stages. Zero jargon. No complex enterprise rollout.
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function HowItWorksSection() {
                   </div>
 
                   {/* Content card */}
-                  <div className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 w-full flex-1 rounded-[3rem] shadow-xl transition-all duration-700 group-hover:border-accent-3/50">
+                  <div className="bg-white border border-slate-200 p-8 md:p-12 xl:p-14 w-full flex-1 rounded-3xl md:rounded-[3rem] shadow-xl transition-all duration-700 group-hover:border-accent-3/50">
                     <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-slate-900 mb-6 tracking-tighter leading-tight group-hover:text-accent-3 transition-colors">
                       {step.headline}
                     </h3>

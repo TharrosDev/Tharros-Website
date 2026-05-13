@@ -34,7 +34,7 @@ export default function ClientsSection() {
 
 function ClientsHero() {
   return (
-    <section className="pt-8 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
+    <section className="pt-24 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
       {/* Subtle Background Grid */}
       <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
       
@@ -44,22 +44,22 @@ function ClientsHero() {
 
       <div className="max-w-7xl mx-auto relative">
         <AnimatedSection>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 border-b border-white/5 pb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 lg:gap-12 border-b border-white/5 pb-8 md:pb-12">
             <div className="flex-grow">
-              <div className="flex items-center gap-4 mb-8">
-                <span className="text-[10px] font-bold text-accent-3 tracking-[0.3em] uppercase">Trusted Partnerships</span>
-                <div className="h-px w-12 bg-white/10" />
-                <span className="text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
+              <div className="flex items-center gap-4 mb-6 md:mb-8">
+                <span className="text-[9px] md:text-[10px] font-bold text-accent-3 tracking-[0.3em] uppercase">Trusted Partnerships</span>
+                <div className="h-px w-8 md:w-12 bg-white/10" />
+                <span className="text-[9px] md:text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
               </div>
-              <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.8]">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.85] md:leading-[0.8]">
                 Real-World <br/>
                 <span className="text-slate-700/60">Impact.</span>
               </h1>
             </div>
             
-            <div className="max-w-xl lg:text-right lg:pb-4 flex flex-col lg:items-end gap-12">
+            <div className="max-w-xl lg:text-right lg:pb-4 flex flex-col lg:items-end gap-10 lg:gap-12">
               {/* Abstract Visual Anchor: Operational Network */}
-              <div className="w-full h-48 relative mt-12 mb-4 opacity-70 group select-none pointer-events-none">
+              <div className="w-full h-32 md:h-48 relative mt-8 lg:mt-12 mb-2 lg:mb-4 opacity-70 group select-none pointer-events-none">
                 <svg width="100%" height="100%" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
                   {/* Background Grid Points */}
                   {[...Array(4)].map((_, i) => (
@@ -98,8 +98,8 @@ function ClientsHero() {
               </div>
 
               <div className="flex flex-col lg:items-end">
-                <span className="text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-6">Strategic Overview</span>
-                <p className="text-subdued text-xl md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
+                <span className="text-[9px] md:text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-4 md:mb-6">Strategic Overview</span>
+                <p className="text-subdued text-lg md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
                   Tharros agents deliver autonomous customer service and lead capture, ensuring local businesses remain responsive 24/7.
                 </p>
               </div>

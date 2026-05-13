@@ -199,12 +199,22 @@ export default function NavBar() {
           <motion.div
             id="mobile-menu"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as any }}
-            className="fixed inset-0 z-[55] bg-white/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as any }}
+            className="fixed inset-0 z-[55] bg-slate-950/98 flex flex-col items-center justify-center overflow-hidden"
           >
-            <div className="flex flex-col items-center justify-center gap-10 w-full px-6">
+            {/* Industrial Background Elements */}
+            <div className="scanline opacity-[0.15]" />
+            <div className="absolute inset-0 industrial-grid opacity-[0.05] pointer-events-none" />
+            
+            {/* Corner Markers */}
+            <div className="absolute top-24 left-8 w-4 h-4 border-t border-l border-white/20" />
+            <div className="absolute top-24 right-8 w-4 h-4 border-t border-r border-white/20" />
+            <div className="absolute bottom-12 left-8 w-4 h-4 border-b border-l border-white/20" />
+            <div className="absolute bottom-12 right-8 w-4 h-4 border-b border-r border-white/20" />
+
+            <div className="flex flex-col items-center justify-center gap-8 w-full px-8 relative z-10">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -213,54 +223,57 @@ export default function NavBar() {
                     handleLinkClick(e, link.href);
                     setMobileOpen(false);
                   }}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className={isMinimized 
-                    ? "text-xl font-bold tracking-tight text-slate-900 hover:text-accent-3 transition-colors" 
-                    : "text-4xl font-bold tracking-tighter text-slate-900 hover:text-accent-3 transition-colors text-center w-full py-2"}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.08 + 0.1, ease: [0.22, 1, 0.36, 1] as any }}
+                  className="group flex flex-col items-center gap-1"
                 >
-                  {link.label}
+                  <span className="text-[10px] font-black text-accent-3/40 uppercase tracking-[0.4em] mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Access_0{i + 1}
+                  </span>
+                  <span className="text-4xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors">
+                    {link.label}
+                  </span>
                 </motion.a>
               ))}
               
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.05 }}
-                className={isMinimized ? "mt-2 pt-6 border-t border-slate-100" : "w-full max-w-xs mt-4"}
+                transition={{ delay: 0.4 }}
+                className="w-full max-w-xs mt-8 pt-8 border-t border-white/5 flex flex-col items-center"
               >
                 <Link
                   href="/intake"
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
-                  className={isMinimized 
-                    ? "primary-button flex items-center justify-center px-6 py-3 text-sm" 
-                    : "primary-button flex items-center justify-center px-6 py-4 text-base shadow-2xl shadow-slate-900/10"}
+                  className="primary-button flex items-center justify-center px-10 py-5 text-base shadow-2xl shadow-accent-3/20 w-full"
                 >
                   Get Started
                 </Link>
-                <div className={isMinimized ? "mt-4 text-left" : "mt-6 text-center"}>
-                  <a 
-                    href="mailto:tharrosdev@gmail.com?subject=Inquiry" 
-                    className="text-slate-400 text-[10px] font-bold uppercase tracking-widest hover:text-text transition-colors"
-                  >
-                    Or Email Us
-                  </a>
-                </div>
+                
+                <a 
+                  href="mailto:tharrosdev@gmail.com" 
+                  className="mt-8 text-white/40 text-[10px] font-black uppercase tracking-[0.4em] hover:text-accent-3 transition-colors flex items-center gap-3"
+                >
+                  <span className="w-8 h-px bg-white/10" />
+                  Direct_Inquiry
+                  <span className="w-8 h-px bg-white/10" />
+                </a>
               </motion.div>
             </div>
             
-            {/* Industrial Accent - Only show on full screen or adjust for dropdown */}
-            {!isMinimized && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.4 }}
-                className="absolute bottom-12 text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400"
-              >
-                Unit_01 // Menu_System
-              </motion.div>
-            )}
+            {/* System Status Footer */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="absolute bottom-8 left-0 w-full px-8 flex justify-between items-center text-[8px] font-black uppercase tracking-[0.4em] text-white/20"
+            >
+              <span>Tharros_V2.0</span>
+              <span>Node_Ottawa</span>
+              <span>Encrypted_Session</span>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

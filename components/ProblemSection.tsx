@@ -48,7 +48,7 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div id="problem" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       
       {/* Industrial Sophistication */}
@@ -57,23 +57,23 @@ export default function ProblemSection() {
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-24 md:mb-32">
+          <div className="flex flex-col items-center mb-16 md:mb-24 lg:mb-32">
 
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-10 max-w-4xl xl:max-w-6xl leading-[1.1] tracking-tighter">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-8 md:mb-10 max-w-4xl xl:max-w-6xl leading-[1.1] tracking-tighter">
               Ottawa businesses are <br className="hidden md:block" />
               <span className="text-slate-400">bleeding time.</span>
             </h2>
-            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
               Software is just a tool. Our <span className="text-accent-3">Autonomous Agents</span> are a workforce that never sleeps and never misses a lead.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 xl:gap-20">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
+                className="bg-white border border-slate-200 p-8 md:p-12 xl:p-14 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
               >
                 {/* Industrial Corner Accents */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />

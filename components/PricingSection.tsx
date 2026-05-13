@@ -40,7 +40,7 @@ const pricingFactors = [
 
 export default function PricingSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div id="pricing" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       
       {/* Background decoration */}
@@ -49,24 +49,24 @@ export default function PricingSection() {
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto relative">
         
-        <div className="text-center max-w-3xl xl:max-w-5xl mx-auto mb-24 md:mb-32">
+        <div className="text-center max-w-3xl xl:max-w-5xl mx-auto mb-16 md:mb-32">
           <AnimatedSection>
 
-            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-slate-900 mb-12 leading-[1.1] tracking-tighter">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-bold text-slate-900 mb-8 md:mb-12 leading-[1.1] tracking-tighter">
               Tailored Pricing for <br className="hidden md:block" />
               <span className="text-accent-3">Tailored Results.</span>
             </h2>
-            <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+            <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
               We don&apos;t believe in generic subscriptions. 
               Our pricing is as custom as the agents we build—mapped strictly to the value they create for your business.
             </p>
           </AnimatedSection>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20 mb-24 md:mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 xl:gap-20 mb-16 md:mb-32">
           {pricingFactors.map((factor, i) => (
             <AnimatedSection key={factor.title} delay={i * 0.1} variant="scale-in">
-              <div className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 flex flex-col h-full group relative overflow-hidden shadow-xl rounded-[3rem] hover:border-accent-3/50 transition-all duration-500">
+              <div className="bg-white border border-slate-200 p-8 md:p-12 xl:p-14 flex flex-col h-full group relative overflow-hidden shadow-xl rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="w-16 h-16 rounded-[1.25rem] bg-slate-950 border border-slate-900/10 flex items-center justify-center mb-8 group-hover:bg-accent-3 group-hover:text-white group-hover:border-accent-3 transition-all duration-700 shadow-xl">
                   <span className="text-white group-hover:scale-110 transition-transform">{factor.icon}</span>
@@ -80,7 +80,7 @@ export default function PricingSection() {
 
         <AnimatedSection delay={0.3}>
           <div className="max-w-4xl xl:max-w-6xl mx-auto">
-            <div className="bg-white border border-slate-200 p-10 md:p-16 xl:p-24 rounded-[3rem] text-center relative overflow-hidden group shadow-2xl">
+            <div className="bg-white border border-slate-200 p-8 md:p-16 xl:p-24 rounded-3xl md:rounded-[3rem] text-center relative overflow-hidden group shadow-2xl">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:32px_32px]" />
               
