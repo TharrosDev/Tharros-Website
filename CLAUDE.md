@@ -1,4 +1,5 @@
 # AI Assistant Guidelines for Tharros-Website
+**"Keep it Local, Keep it Canadian" 🇨🇦**
 
 ## 🛠 Commands
 

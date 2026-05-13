@@ -1,13 +1,15 @@
 # THARROS KNOWLEDGE BASE: MISSION, CAPABILITIES, AND SOLUTIONS
+**"Keep it Local, Keep it Canadian" 🇨🇦**
 
 ## 1. COMPANY OVERVIEW
 **Company Name:** Tharros
 **Location:** Ottawa, Ontario, Canada
 **Identity:** A specialized AI agent studio dedicated to helping small businesses leverage the power of practical artificial intelligence through premium, high-performance interfaces.
-**Tagline:** "Your business doesn't need corporate AI theory. It needs AI Agents that work."
+**Primary Slogan:** "Recovering time. Rescuing revenue."
+**Core Tagline:** "Your business doesn't need corporate AI theory. It needs AI Agents that work."
 
 ## 2. CORE MISSION
-Tharros exists to solve the "Small Business Trap": business owners spending more time managing inquiries, phone calls, and admin than doing the actual work they love. We build **Autonomous AI Agents** that recover time, prevent missed revenue, and provide consistent customer service without the overhead of additional staff. We deliver "Industrial-Grade" automation for local experts.
+Tharros exists to eradicate the "Small Business Trap": the cycle where business owners spend more time managing administrative friction—inquiries, phone calls, and scheduling—than performing their craft. We build **Autonomous AI Agents** (Digital Workforce) that recover time, prevent revenue leakage, and provide 24/7 executive-level customer service without the overhead of additional headcount. We deliver "Industrial-Grade" automation for local experts who demand precision.
 
 ## 3. CORE CAPABILITIES & SKILLS
 Tharros is not a general-purpose tech agency. We are specialists in **Practical AI Implementation**. Our skills include:

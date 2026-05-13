@@ -1,6 +1,10 @@
 # Tharros — Premium AI Agent Studio
 
+**Recovering time. Rescuing revenue.**
+
 Tharros is an Ottawa-based specialized studio dedicated to building high-performance, practical AI agents for small businesses. We solve the "Small Business Trap" by automating lead capture, customer inquiry handling, and back-office admin.
+
+**Keep it Local, Keep it Canadian 🇨🇦**
 
 **Live Site:** [https://tharros.ca](https://tharros.ca)
 
@@ -8,12 +12,22 @@ Tharros is an Ottawa-based specialized studio dedicated to building high-perform
 
 We believe small businesses don't need "corporate AI strategies"—they need lightweight agents that work on Tuesday morning when the phone won't stop ringing.
 
-- **Tailored, Not Generic**: Every agent is custom-trained on specific business knowledge.
-- **Industrial Aesthetics**: Minimalist, high-performance interfaces featuring CRT scanlines, geometric grid overlays, and a "Command Console" persona.
-- **Cinematic Navigation**: Optimized `PageTransition` system providing seamless, 250ms motion-orchestrated route changes.
-- **Bento Grid Architecture**: Asymmetric, high-density layouts for clear information hierarchy.
-- **Performance Hardened**: Implemented `content-visibility: auto`, dynamic imports, and GPU acceleration for flawless mobile performance.
-- **Hyper-Local SEO**: Comprehensive JSON-LD suite (LocalBusiness, Organization, Service) tailored for the Ottawa-Kanata market.
+-   **Tailored, Not Generic**: Every agent is custom-trained on specific business knowledge, ensuring absolute brand integrity.
+-   **Industrial Executive Console**: We deploy agents through a sleek, high-contrast, dark-mode interface featuring CRT scanlines, geometric grid overlays, and a "Command Pod" persona. No "bubbly" consumer-grade UI.
+-   **Bento Grid Architecture**: High-density, asymmetric layouts that organize complex information hierarchies with industrial precision.
+-   **Cinematic Motion**: Optimized `PageTransition` system and GPU-accelerated micro-interactions providing a premium, "weighted" digital experience.
+-   **Hyper-Local Focus**: Deeply integrated Ottawa-local context (Kanata, Stittsville, Orleans, the Glebe) to build immediate trust with local clientele.
+-   **Performance Hardened**: Implemented `content-visibility: auto`, dynamic imports, and strict hydration patterns for flawless mobile performance.
+-   **Search Dominance**: Comprehensive JSON-LD suite (LocalBusiness, Organization, Service) tailored for the Ottawa market.
+
+## 💎 Core Value Proposition
+
+We don't just build chatbots; we deploy a **Digital Workforce**.
+
+1.  **Zero Lead Leakage**: Our agents engage 100% of website visitors instantly, qualifying leads while you sleep or work on-site.
+2.  **Administrative Freedom**: Automate routine FAQ and booking tasks, reclaiming up to 10+ hours per week for business owners.
+3.  **Industrial Reliability**: Built on the CRM Intake Agent Model, ensuring consistent, professional, and authoritative communication that matches your brand's integrity.
+4.  **Local Expertise**: Deeply familiar with the Ottawa-Gatineau landscape, from trade-specific terminology to neighborhood-level logistics.
 
 ## 🛠 Tech Stack
 
