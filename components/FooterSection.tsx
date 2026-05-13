@@ -52,7 +52,7 @@ export default function FooterSection() {
                   aria-label="Email Magnus Abdelnour for business inquiries"
                   className="group flex items-center gap-4 text-white font-black text-xs md:text-sm uppercase tracking-[0.4em] hover:text-accent-3 transition-all px-6 py-4"
                 >
-                  <span className="w-10 h-px bg-white/20 group-hover:w-16 group-hover:bg-accent-3 transition-all" />
+
                   Direct_Email
                 </a>
               </div>
