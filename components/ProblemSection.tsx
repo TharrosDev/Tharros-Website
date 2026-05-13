@@ -48,77 +48,70 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section className="pt-4 md:pt-16 pb-6 md:pb-24 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div id="problem" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       
       {/* Industrial Sophistication */}
-      <div className="scanline" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-16 md:mb-24">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
-              <span className="w-1 h-1 rounded-full bg-accent-3 animate-pulse" />
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Inefficiency_Audit</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-white mb-8 max-w-4xl xl:max-w-5xl leading-[1] tracking-tighter">
+          <div className="flex flex-col items-center mb-24 md:mb-32">
+
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-10 max-w-4xl xl:max-w-6xl leading-[1.1] tracking-tighter">
               Ottawa businesses are <br className="hidden md:block" />
-              <span className="text-slate-500">bleeding time.</span>
+              <span className="text-slate-400">bleeding time.</span>
             </h2>
-            <p className="text-slate-300 text-center max-w-2xl xl:max-w-3xl text-lg md:text-xl xl:text-2xl leading-relaxed font-medium">
-              Software is just a tool. Our <span className="text-accent-3">Autonomous Agents</span> are a workforce that never sleeps, never forgets, and never misses a lead.
+            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+              Software is just a tool. Our <span className="text-accent-3">Autonomous Agents</span> are a workforce that never sleeps and never misses a lead.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                whileHover={{ 
-                  y: -8,
-                  borderColor: "rgba(59, 130, 246, 0.4)",
-                  backgroundColor: "rgba(15, 23, 42, 0.6)",
-                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
-                }}
-                className="relative bg-slate-900/40 backdrop-blur-xl border border-white/5 p-8 md:p-10 xl:p-12 rounded-[2.5rem] h-full flex flex-col group overflow-hidden cursor-default transition-all duration-500 shadow-2xl"
+                className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
               >
                 {/* Industrial Corner Accents */}
-                <div className="absolute top-0 right-0 w-16 h-16 bg-accent-3/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute top-4 right-4 text-[8px] font-black text-white/10 group-hover:text-accent-3/40 transition-colors tracking-widest uppercase">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-6 right-6 text-[9px] font-black text-slate-900/10 group-hover:text-accent-3/40 transition-colors tracking-[0.3em] uppercase">
                   LOSS_ID: 0{i + 1}
                 </div>
 
-                <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-8">
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="flex items-center gap-6 mb-10">
                     <div 
                       aria-hidden="true"
-                      className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-accent-3 group-hover:text-white group-hover:border-accent-3 transition-all duration-500 shrink-0 shadow-lg"
+                      className="w-16 h-16 rounded-[1.25rem] bg-slate-950 text-white flex items-center justify-center group-hover:bg-accent-3 group-hover:shadow-2xl transition-all duration-500 shrink-0"
                     >
-                      <span className="scale-110">{pain.icon}</span>
+                      <span className="scale-125">{pain.icon}</span>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-black text-accent-3 uppercase tracking-widest">{pain.status}</span>
+                        <span className="text-[10px] font-black text-accent-3 uppercase tracking-[0.3em]">{pain.status}</span>
                       </div>
-                      <span className="text-[8px] font-bold text-slate-500 uppercase tracking-[0.2em]">{pain.stat}</span>
+                      <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">{pain.stat}</span>
                     </div>
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-tight tracking-tight mb-4 group-hover:text-accent-3 transition-colors">{pain.headline}</h3>
-                  <p className="text-slate-400 leading-relaxed text-base md:text-lg group-hover:text-slate-300 transition-colors">{pain.body}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight tracking-tighter mb-6 group-hover:text-accent-3 transition-colors">{pain.headline}</h3>
+                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl group-hover:text-slate-800 transition-colors mb-8 flex-1">{pain.body}</p>
+                  
+
                 </div>
                 
                 {/* Progress bar accent */}
-                <div className="absolute bottom-0 left-0 h-1 bg-accent-3 w-0 group-hover:w-full transition-all duration-700 ease-out" />
+                <div className="absolute bottom-0 left-0 h-1 bg-accent-3 w-0 group-hover:w-full transition-all duration-700 ease-out shadow-[0_0_15px_rgba(14,165,233,0.5)]" />
               </motion.div>
             </AnimatedSection>
           ))}
         </div>
       </div>
     </section>
+
   );
 }
 

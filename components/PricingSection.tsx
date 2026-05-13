@@ -40,73 +40,77 @@ const pricingFactors = [
 
 export default function PricingSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
+    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div id="pricing" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      {/* Decorative Flow */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-slate-50 to-transparent opacity-50" />
+      
       {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-[-10%] left-[10%] w-[40%] h-[40%] bg-accent-3/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[30%] h-[30%] bg-accent-3/5 blur-[100px] rounded-full" />
-      </div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
       <div className="max-w-6xl xl:max-w-7xl mx-auto relative">
         
-        <div className="text-center max-w-3xl xl:max-w-4xl mx-auto mb-10 md:mb-20 xl:mb-28">
+        <div className="text-center max-w-3xl xl:max-w-5xl mx-auto mb-24 md:mb-32">
           <AnimatedSection>
-            <p className="section-label mb-4">Investment</p>
-            <h2 className="text-3xl md:text-6xl xl:text-7xl font-bold text-text mb-6 leading-tight">
-              Tailored Pricing for <span className="accent-text">Tailored Results</span>
+
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-slate-900 mb-12 leading-[1.1] tracking-tighter">
+              Tailored Pricing for <br className="hidden md:block" />
+              <span className="text-accent-3">Tailored Results.</span>
             </h2>
-            <p className="text-subdued text-base md:text-xl xl:text-2xl leading-relaxed">
+            <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
               We don&apos;t believe in generic subscriptions. 
               Our pricing is as custom as the agents we build—mapped strictly to the value they create for your business.
             </p>
           </AnimatedSection>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 xl:gap-12 mb-16 xl:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20 mb-24 md:mb-32">
           {pricingFactors.map((factor, i) => (
             <AnimatedSection key={factor.title} delay={i * 0.1} variant="scale-in">
-              <div className="clean-card p-8 xl:p-12 flex flex-col h-full group hover:border-accent-3/30 transition-all duration-500">
-                <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-accent-3/10 group-hover:text-accent-3 transition-all duration-500">
-                  {factor.icon}
+              <div className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 flex flex-col h-full group relative overflow-hidden shadow-xl rounded-[3rem] hover:border-accent-3/50 transition-all duration-500">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="w-16 h-16 rounded-[1.25rem] bg-slate-950 border border-slate-900/10 flex items-center justify-center mb-8 group-hover:bg-accent-3 group-hover:text-white group-hover:border-accent-3 transition-all duration-700 shadow-xl">
+                  <span className="text-white group-hover:scale-110 transition-transform">{factor.icon}</span>
                 </div>
-                <h3 className="text-xl xl:text-2xl font-bold text-text mb-3">{factor.title}</h3>
-                <p className="text-subdued text-sm xl:text-base leading-relaxed">{factor.description}</p>
+                <h3 className="text-2xl xl:text-3xl font-bold text-slate-900 mb-6 tracking-tighter group-hover:text-accent-3 transition-colors">{factor.title}</h3>
+                <p className="text-slate-600 text-lg xl:text-xl leading-relaxed font-medium group-hover:text-slate-900 transition-colors">{factor.description}</p>
               </div>
             </AnimatedSection>
           ))}
         </div>
 
         <AnimatedSection delay={0.3}>
-          <div className="max-w-4xl xl:max-w-5xl mx-auto">
-            <div className="bg-surface/40 backdrop-blur-sm border border-border/60 p-6 md:p-12 xl:p-16 rounded-[1.5rem] md:rounded-[2rem] text-center relative overflow-hidden group">
+          <div className="max-w-4xl xl:max-w-6xl mx-auto">
+            <div className="bg-white border border-slate-200 p-10 md:p-16 xl:p-24 rounded-[3rem] text-center relative overflow-hidden group shadow-2xl">
               {/* Subtle inner glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-3/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:32px_32px]" />
               
               <div className="relative z-10">
-                <h3 className="text-xl md:text-2xl xl:text-3xl font-bold text-text mb-4">
+                <div className="inline-flex items-center gap-4 mb-10 px-6 py-2 rounded-full bg-slate-950/5 border border-slate-900/5">
+                  <span className="text-[10px] font-black text-slate-900/30 uppercase tracking-[0.5em]">Investment_Justification</span>
+                </div>
+                
+                <h3 className="text-3xl md:text-4xl xl:text-5xl font-bold text-slate-900 mb-8 tracking-tighter leading-tight">
                   Why no fixed price list?
                 </h3>
-                <p className="text-subdued text-base md:text-lg xl:text-xl leading-relaxed mb-10 max-w-2xl xl:max-w-3xl mx-auto">
+                <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl leading-relaxed mb-12 max-w-4xl mx-auto font-medium opacity-80">
                   Because an AI agent for a boutique law firm has different requirements than one for a high-volume plumbing contractor. 
-                  We provide a firm, no-obligation quote immediately following our initial consultation.
+                  We provide a firm, no-obligation quote following our initial briefing.
                 </p>
                 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
                   <Magnetic strength={0.2}>
                     <a
                       href="/intake"
                       aria-label="Request a custom AI automation quote"
-                      className="primary-button px-10 py-5 text-lg w-full sm:w-auto"
+                      className="primary-button px-12 py-6 md:px-16 md:py-8 xl:px-20 xl:py-10 text-sm md:text-xl xl:text-2xl w-full sm:w-auto relative overflow-hidden group shadow-2xl"
                     >
-                      Get your custom quote
+                      <span className="relative z-10">Request Briefing</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                     </a>
                   </Magnetic>
                 </div>
-                <p className="mt-6 text-muted text-sm font-medium">
-                  Free consultation &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline">Email us directly</a> &bull; Ottawa-based
+                <p className="mt-12 text-slate-400 text-sm font-bold uppercase tracking-[0.2em]">
+                  Free consultation &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline transition-colors">Direct Inquiry</a> &bull; Ottawa Node
                 </p>
               </div>
             </div>

@@ -258,7 +258,7 @@ export default function ChatDemoSection() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
       
       {/* Neural Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none animate-pulse" />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" style={{ animationDelay: '1s' }} />
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative flex flex-col items-center z-10">
@@ -266,15 +266,9 @@ export default function ChatDemoSection() {
         {/* Section Header */}
         <div className="text-center mb-16 md:mb-32">
           <AnimatedSection>
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-10 mx-auto group hover:bg-white/10 transition-all cursor-default">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-3 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-3"></span>
-              </span>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-100">Live_Operational_Instance</span>
-            </div>
+
             
-            <h2 className="text-5xl md:text-8xl xl:text-9xl font-bold text-white mb-10 leading-[0.9] tracking-tighter">
+            <h2 className="text-5xl md:text-8xl xl:text-9xl font-bold text-white mb-12 leading-[1.1] tracking-tighter">
               An agent that <br />
               <span className="text-slate-500">commands results.</span>
             </h2>
@@ -315,7 +309,7 @@ export default function ChatDemoSection() {
                       Deployment_Briefing
                     </p>
                   </div>
-                  <h3 className="text-5xl md:text-6xl xl:text-7xl font-bold text-white tracking-tighter mb-8 leading-[1]">
+                  <h3 className="text-5xl md:text-6xl xl:text-7xl font-bold text-white tracking-tighter mb-10 leading-[1.1]">
                     Operational <br />
                     <span className="text-accent-3">Intelligence.</span>
                   </h3>

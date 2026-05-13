@@ -22,12 +22,12 @@ export default function HeroSection() {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any }
     }
   };
 
   return (
-    <section id="hero" className="relative min-h-[85svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-16 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-slate-950 industrial-grid">
+    <section id="hero" className="relative min-h-[90svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-24 md:pt-32 pb-24 md:pb-32 overflow-hidden bg-slate-950 industrial-grid">
       {/* Background Sophistication */}
       <div className="scanline" />
       <div className="absolute inset-0 pointer-events-none">
@@ -35,10 +35,10 @@ export default function HeroSection() {
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-accent-3/5 blur-[120px] rounded-full" />
         
         {/* Industrial Markers */}
-        <div className="absolute top-10 left-10 w-4 h-4 border-t-2 border-l-2 border-white/10" />
-        <div className="absolute top-10 right-10 w-4 h-4 border-t-2 border-r-2 border-white/10" />
-        <div className="absolute bottom-10 left-10 w-4 h-4 border-b-2 border-l-2 border-white/10" />
-        <div className="absolute bottom-10 right-10 w-4 h-4 border-b-2 border-r-2 border-white/10" />
+        <div className="absolute top-12 left-12 w-6 h-6 border-t-2 border-l-2 border-white/10" />
+        <div className="absolute top-12 right-12 w-6 h-6 border-t-2 border-r-2 border-white/10" />
+        <div className="absolute bottom-12 left-12 w-6 h-6 border-b-2 border-l-2 border-white/10" />
+        <div className="absolute bottom-12 right-12 w-6 h-6 border-b-2 border-r-2 border-white/10" />
       </div>
 
       <motion.div 
@@ -48,28 +48,28 @@ export default function HeroSection() {
         className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10 flex flex-col items-center text-center"
       >
         {/* Authoritative Content */}
-        <div className="max-w-4xl xl:max-w-6xl mx-auto">
+        <div className="max-w-4xl xl:max-w-7xl mx-auto">
           <motion.div 
             variants={itemVariants}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-[0.3em] text-white/70 mb-6 md:mb-10 hover:bg-white/[0.06] hover:border-white/20 transition-all cursor-default group"
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.4em] text-white/60 mb-10 md:mb-16 hover:bg-white/[0.06] hover:border-white/20 transition-all cursor-default group"
           >
             <div className="relative">
               <Image 
                 src="/canada-flag.svg" 
                 alt="Canadian Flag" 
-                width={20} 
-                height={12} 
+                width={22} 
+                height={14} 
                 priority
-                className="rounded-[2px] shadow-sm grayscale group-hover:grayscale-0 transition-all duration-500" 
+                className="rounded-[2px] shadow-sm transition-all duration-700" 
               />
               <div className="absolute inset-0 bg-accent-3/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <span>Ottawa_System_Active // 2026</span>
+            <span>Keep it Canadian</span>
           </motion.div>
 
           <motion.h1 
             variants={itemVariants}
-            className="text-[2.5rem] leading-[0.95] sm:text-5xl md:text-7xl xl:text-8xl font-bold tracking-tighter text-white mb-6"
+            className="text-4xl leading-[1.1] sm:text-6xl md:text-8xl xl:text-9xl font-bold tracking-tighter text-white mb-8 md:mb-12"
           >
             Your business doesn&apos;t need <br className="hidden md:block" />
             <span className="text-slate-500">corporate AI theory.</span>
@@ -80,8 +80,8 @@ export default function HeroSection() {
               <motion.span 
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
-                transition={{ delay: 1.2, duration: 1, ease: "easeInOut" }}
-                className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-[4px] sm:h-[6px] bg-accent-3/30 rounded-full" 
+                transition={{ delay: 1.2, duration: 1, ease: [0.22, 1, 0.36, 1] as any }}
+                className="absolute -bottom-2 md:-bottom-4 left-0 right-0 h-[4px] md:h-[8px] bg-accent-3/20 rounded-full" 
               />
             </span>
             .
@@ -89,61 +89,50 @@ export default function HeroSection() {
 
           <motion.p 
             variants={itemVariants}
-            className="text-base md:text-xl xl:text-2xl text-slate-200 max-w-xl xl:max-w-3xl mx-auto mb-10 md:mb-12 leading-relaxed font-medium opacity-90"
+            className="text-base md:text-2xl xl:text-3xl text-slate-200 max-w-2xl xl:max-w-5xl mx-auto mb-10 md:mb-16 leading-relaxed font-medium opacity-80 px-4 sm:px-0"
           >
-            High-performance AI Agents for local trades and professional services. 
-            We automate your back-office so you can reclaim your time.
+            High-performance AI Agents for trades and professional services. <br className="hidden lg:block" />
+            We build the digital workforce that recovers your time.
           </motion.p>
 
           <motion.div 
             variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 w-full px-6 sm:px-0"
           >
             <Magnetic strength={0.1}>
               <a
                 href="/intake"
-                className="primary-button px-10 py-5 md:px-14 md:py-6 xl:px-16 xl:py-8 text-sm md:text-lg xl:text-xl w-full sm:w-auto relative overflow-hidden group shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:shadow-[0_0_60px_rgba(59,130,246,0.25)] transition-shadow"
+                className="primary-button text-sm md:text-xl xl:text-2xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)]"
               >
                 <span className="relative z-10">Initiate Briefing</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               </a>
             </Magnetic>
             
             <a
               href="#demo"
-              className="group flex items-center gap-3 text-white font-bold text-xs md:text-sm uppercase tracking-[0.3em] hover:text-accent-3 transition-colors px-4 py-2"
+              className="group flex items-center gap-4 text-white font-black text-xs md:text-sm uppercase tracking-[0.4em] hover:text-accent-3 transition-all px-6 py-4"
             >
-              <span className="w-8 h-px bg-white/20 group-hover:w-12 group-hover:bg-accent-3 transition-all" />
+              <span className="w-10 h-px bg-white/20 group-hover:w-16 group-hover:bg-accent-3 transition-all" />
               Live System Demo
             </a>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* System Status Indicators */}
-      <div className="absolute bottom-10 left-10 hidden xl:flex flex-col gap-1 pointer-events-none">
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[8px] font-black text-white/40 uppercase tracking-widest">Network_Stable</span>
-        </div>
-        <span className="text-[8px] font-black text-white/20 uppercase tracking-widest ml-3.5">LATENCY: 14ms</span>
-      </div>
 
-      <div className="absolute bottom-10 right-10 hidden xl:flex flex-col items-end gap-1 pointer-events-none">
-        <span className="text-[8px] font-black text-white/40 uppercase tracking-widest">Model_Type: CRM_INTAKE_V3</span>
-        <span className="text-[8px] font-black text-white/20 uppercase tracking-widest tracking-[0.5em]">THARROS_CAN_01</span>
-      </div>
 
       {/* Scroll indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-4"
       >
-        <span className="text-[9px] font-bold text-slate-500 tracking-[0.4em] uppercase">Deployment_Overview</span>
-        <div className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent" />
+        <span className="text-[10px] font-black text-slate-500 tracking-[0.5em] uppercase">Deployment_Log</span>
+        <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
       </motion.div>
+
     </section>
   );
 }

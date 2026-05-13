@@ -18,25 +18,13 @@ export default function NavBar() {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const pathname = usePathname();
   const isIntakePage = pathname === "/intake";
   const isHomePage = pathname === "/";
 
-  // Persistent Navigation Preference - Safe for Hydration
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("tharros_nav_minimized");
-    if (saved !== null) {
-      setIsMinimized(saved === "true");
-    }
   }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem("tharros_nav_minimized", String(isMinimized));
-    }
-  }, [isMinimized, mounted]);
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     // Handle logo/scroll to top
@@ -127,21 +115,17 @@ export default function NavBar() {
     <>
       <header
         suppressHydrationWarning
-        className={`fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-700 ease-[0.22, 1, 0.36, 1] ${
-          mounted && isMinimized 
-            ? "right-4 md:right-8 left-auto translate-x-0 w-auto border-slate-900/10 bg-slate-950 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)]" 
-            : "left-1/2 -translate-x-1/2 justify-between"
-        }`}
+        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-3 md:px-5 py-2 md:py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
         style={{ 
-          width: mounted && isMinimized ? "auto" : "min(94%, 1300px)",
-          opacity: mounted ? 1 : 0 // Fade in when ready
+          width: "min(94%, 1300px)",
+          opacity: mounted ? 1 : 0
         }}
       >
         <Magnetic strength={0.1}>
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className={`relative z-10 block transition-all duration-700 ${isMinimized ? "scale-50 -mr-6 opacity-40 grayscale hover:opacity-100 hover:grayscale-0" : "scale-90 md:scale-100"}`}
+            className="relative z-10 block transition-all duration-700 scale-90 md:scale-100"
             aria-label="Tharros Home"
           >
             <Image
@@ -155,7 +139,7 @@ export default function NavBar() {
           </Link>
         </Magnetic>
 
-        <nav className={`${isMinimized ? 'hidden' : 'hidden md:flex'} items-center gap-1 lg:gap-2`}>
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           {navLinks.map((link) => (
             <motion.a
               key={link.href}
@@ -163,7 +147,7 @@ export default function NavBar() {
               onClick={(e) => handleLinkClick(e, link.href)}
               whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 text-sm font-bold text-subdued hover:text-text rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px]"
+              className="px-5 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px]"
             >
               {link.label}
             </motion.a>
@@ -171,40 +155,12 @@ export default function NavBar() {
         </nav>
 
         <div className="flex items-center gap-3 h-full">
-          {/* Industrial Minimize Toggle */}
-          <button
-            onClick={() => setIsMinimized(!isMinimized)}
-            className={`hidden md:flex w-9 h-9 items-center justify-center rounded-xl transition-all duration-500 active:scale-90 shadow-sm relative group overflow-hidden ${
-              isMinimized ? "bg-accent-3 text-white border-transparent" : "bg-slate-950 text-slate-400 hover:text-white border border-white/10"
-            }`}
-            aria-label={isMinimized ? "Expand Console" : "Minimize Console"}
-            title={isMinimized ? "Expand Console" : "Minimize Console"}
-          >
-            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            {isMinimized ? (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M15 3v18" />
-                <path d="M8 9l3 3-3 3" />
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="relative z-10">
-                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-              </svg>
-            )}
-            
-            {/* Control Pod Glow */}
-            {isMinimized && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-white rounded-full animate-ping opacity-50" />
-            )}
-          </button>
-
           <Magnetic strength={0.2}>
             <Link
               href="/intake"
               prefetch={false}
               aria-label="Start your AI consultation"
-              className={`${isMinimized ? 'w-0 opacity-0 overflow-hidden px-0 pointer-events-none' : 'hidden md:inline-block px-5 py-2'} primary-button text-sm transition-all duration-300`}
+              className="hidden md:inline-block px-5 py-2 primary-button text-sm transition-all duration-300"
             >
               Get Started
             </Link>
@@ -212,23 +168,23 @@ export default function NavBar() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`${isMinimized ? 'flex scale-110' : 'md:hidden flex'} relative z-[60] w-10 h-10 flex-col items-center justify-center gap-1.5 rounded-full bg-slate-950 border border-white/10 shadow-lg transition-all duration-300 active:scale-90`}
+            className="md:hidden flex relative z-[60] w-10 h-10 flex-col items-center justify-center gap-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 shadow-sm transition-all duration-300 active:scale-90"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
           >
             <span
-              className={`block w-5 h-[1.5px] bg-white rounded-full transition-all duration-300 origin-center ${
+              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
                 mobileOpen ? "rotate-45 translate-y-[5px]" : ""
               }`}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-white rounded-full transition-all duration-300 ${
+              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 ${
                 mobileOpen ? "opacity-0 scale-0" : ""
               }`}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-white rounded-full transition-all duration-300 origin-center ${
+              className={`block w-5 h-[1.5px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
                 mobileOpen ? "-rotate-45 -translate-y-[5px]" : ""
               }`}
             />
@@ -240,15 +196,13 @@ export default function NavBar() {
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={isMinimized ? { opacity: 0, y: 20, scale: 0.95 } : { opacity: 0 }}
-            animate={isMinimized ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, backdropFilter: "blur(40px)" }}
-            exit={isMinimized ? { opacity: 0, y: 10, scale: 0.95 } : { opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className={isMinimized 
-              ? "fixed top-20 right-[3%] md:right-[5%] z-[55] w-72 bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-[2rem] shadow-2xl p-8 overflow-hidden shadow-slate-900/10" 
-              : "fixed inset-0 z-[55] bg-white/80 backdrop-blur-3xl flex flex-col items-center justify-center"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as any }}
+            className="fixed inset-0 z-[55] bg-white/95 backdrop-blur-3xl flex flex-col items-center justify-center"
           >
-            <div className={isMinimized ? "flex flex-col gap-6" : "flex flex-col items-center justify-center gap-10 w-full px-6"}>
+            <div className="flex flex-col items-center justify-center gap-10 w-full px-6">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}

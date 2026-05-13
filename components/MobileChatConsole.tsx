@@ -211,7 +211,7 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => (
   <motion.div
     initial={{ opacity: 0, y: 15, scale: 0.98 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as any }}
     className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
   >
     <div 

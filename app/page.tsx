@@ -14,38 +14,17 @@ const ModelTiersSection = dynamic(() => import("@/components/ModelTiersSection")
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="bg-slate-950">
       <HeroSection />
       
-      <div className="gpu-accelerated">
-        <section className="content-visibility-auto">
-          <ProblemSection />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <ChatDemoSectionWrapper />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <ModelTiersSection />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <WhatWeBuildsSection />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <HowItWorksSection />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <WhyTharrosSection />
-        </section>
-        
-        <section className="content-visibility-auto">
-          <PricingSection />
-        </section>
-        
+      <div className="flex flex-col">
+        <ProblemSection />
+        <ChatDemoSectionWrapper />
+        <ModelTiersSection />
+        <WhatWeBuildsSection />
+        <HowItWorksSection />
+        <WhyTharrosSection />
+        <PricingSection />
         <FooterSection />
       </div>
     </main>

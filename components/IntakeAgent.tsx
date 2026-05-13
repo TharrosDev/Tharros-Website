@@ -416,7 +416,7 @@ export default function IntakeAgent() {
                           key={msg.id}
                           initial={{ opacity: 0, y: 20, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as any }}
                           className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                         >
                           <div className={`max-w-[90%] md:max-w-[80%] text-[15px] md:text-[17px] leading-relaxed px-6 py-4 md:px-8 md:py-5 rounded-[1.8rem] border shadow-sm ${

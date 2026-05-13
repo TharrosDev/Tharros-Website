@@ -22,50 +22,60 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section id="process" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section id="process" className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       {/* Background Sophistication */}
-      <div className="scanline" />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
-      </div>
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative">
         <AnimatedSection>
-          <p className="section-label mb-6 text-center">How it works</p>
-          <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-center text-white mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1.1] tracking-tight">
-            From conversation to{" "}
-            <span className="accent-text">live in under 2 weeks</span>
-          </h2>
-          <p className="text-slate-100 text-center max-w-2xl xl:max-w-3xl mx-auto mb-10 md:mb-24 text-lg md:text-xl xl:text-2xl leading-relaxed">
-            Three steps. No jargon. No complex enterprise rollout.
-          </p>
+          <div className="flex flex-col items-center mb-24 md:mb-32">
+
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
+              From conversation to <br className="hidden md:block" />
+              <span className="text-accent-3">live in under 2 weeks.</span>
+            </h2>
+            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl mx-auto mb-10 md:mb-12 text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+              Three stages. Zero jargon. No complex enterprise rollout.
+            </p>
+          </div>
         </AnimatedSection>
 
         <div className="relative">
           {/* Connecting line - desktop horizontal */}
-          <div className="hidden md:block absolute top-[40px] left-[15%] right-[15%] h-[2px]">
-            <div className="w-full h-full bg-white/10 rounded-full" />
+          <div className="hidden md:block absolute top-[50px] left-[15%] right-[15%] h-[1px]">
+            <div className="w-full h-full bg-gradient-to-r from-transparent via-slate-200 to-transparent rounded-full" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20">
             {steps.map((step, i) => (
-              <AnimatedSection key={step.number}>
+              <AnimatedSection key={step.number} delay={i * 0.1}>
                 <div className="flex flex-col items-center text-center relative group">
                   {/* Step circle */}
-                  <div className="relative mb-6">
-                    <div className="w-[80px] h-[80px] xl:w-[100px] xl:h-[100px] rounded-full bg-slate-900 border border-white/10 flex items-center justify-center relative z-10 shadow-2xl group-hover:border-accent-3 group-hover:shadow-accent-3/20 transition-all duration-500">
-                      <span className="text-accent-3 font-bold text-2xl md:text-3xl xl:text-4xl">
+                  <div className="relative mb-10">
+                    <div className="w-[100px] h-[100px] xl:w-[120px] xl:h-[120px] rounded-full bg-white border border-slate-200 flex items-center justify-center relative z-10 shadow-xl group-hover:border-accent-3 group-hover:shadow-[0_0_30px_rgba(14,165,233,0.2)] transition-all duration-700">
+                      <span className="text-slate-900 font-black text-3xl md:text-4xl xl:text-5xl tracking-tighter">
                         {step.number}
                       </span>
                     </div>
+                    {/* Pulsing ring */}
+                    <div className="absolute inset-0 rounded-full bg-accent-3/5 animate-ping group-hover:bg-accent-3/10 transition-colors" />
                   </div>
 
                   {/* Content card */}
-                  <div className="bg-slate-900/50 backdrop-blur-xl border border-white/10 p-6 md:p-8 xl:p-10 rounded-[2rem] w-full flex-1 hover:bg-slate-900/80 hover:border-accent-3/30 transition-all duration-500 shadow-xl">
-                    <h3 className="text-lg md:text-xl xl:text-2xl font-bold text-white mb-4 leading-tight">
+                  <div className="bg-white border border-slate-200 p-10 md:p-12 xl:p-14 w-full flex-1 rounded-[3rem] shadow-xl transition-all duration-700 group-hover:border-accent-3/50">
+                    <h3 className="text-2xl md:text-3xl xl:text-4xl font-bold text-slate-900 mb-6 tracking-tighter leading-tight group-hover:text-accent-3 transition-colors">
                       {step.headline}
                     </h3>
-                    <p className="text-slate-300 text-sm md:text-base xl:text-lg leading-relaxed">{step.body}</p>
+                    <p className="text-slate-600 text-lg md:text-xl xl:text-2xl leading-relaxed font-medium group-hover:text-slate-900 transition-colors">{step.body}</p>
+                    
+                    <div className="mt-8 pt-8 border-t border-slate-200 flex justify-center">
+                      <div className="flex gap-1.5">
+                        {[0, 1, 2].map((dot) => (
+                          <div key={dot} className={`w-1 h-1 rounded-full ${dot === i ? 'bg-accent-3' : 'bg-slate-300'}`} />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </AnimatedSection>
@@ -74,5 +84,6 @@ export default function HowItWorksSection() {
         </div>
       </div>
     </section>
+
   );
 }

@@ -50,66 +50,58 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-[#fafafa]">
+    <section className="section-padding px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
       <div id="solutions" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
       
       {/* Industrial Grid Accents */}
-      <div className="absolute inset-0 industrial-grid opacity-[0.2] pointer-events-none" />
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent opacity-100" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-16 md:mb-24">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/5 border border-slate-900/10 mb-6">
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">Service_Catalog_v1.0</span>
-            </div>
-            <h2 className="text-4xl md:text-6xl xl:text-7xl font-bold text-slate-900 mb-8 max-w-4xl xl:max-w-5xl mx-auto leading-[1] tracking-tighter">
-              Autonomous <span className="text-slate-400">AI Agents.</span> <br />
-              <span className="accent-text">Industrial performance.</span>
+          <div className="text-center mb-24 md:mb-32">
+
+            <h2 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-12 max-w-4xl xl:max-w-6xl mx-auto leading-[1.1] tracking-tighter">
+              Autonomous <span className="text-slate-500">AI Agents.</span> <br />
+              <span className="text-accent-3">Industrial performance.</span>
             </h2>
-            <p className="text-slate-500 max-w-2xl xl:max-w-3xl mx-auto text-lg md:text-xl xl:text-2xl leading-relaxed font-medium">
-              We don&apos;t just build bots. We engineer digital workforce solutions tailored to the operational DNA of your business.
+            <p className="text-slate-300 max-w-2xl xl:max-w-4xl mx-auto text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80">
+              We engineer digital workforce solutions tailored to the operational DNA of your business.
             </p>
           </div>
         </AnimatedSection>
  
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:gap-20">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
               <motion.div 
-                whileHover={{ 
-                  y: -8,
-                  borderColor: "rgba(59, 130, 246, 0.2)",
-                  boxShadow: "0 40px 80px -20px rgba(0,0,0,0.06)",
-                  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
-                }}
-                className="bg-white border border-slate-200 p-8 md:p-10 xl:p-12 h-full flex flex-col group cursor-default shadow-sm transition-all duration-500 rounded-[2.5rem] relative overflow-hidden"
+                className="clean-card p-10 md:p-12 xl:p-14 h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden"
               >
                 {/* Visual Depth Accent */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.05] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 
-                <div className="flex flex-col gap-6 mb-8 relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 group-hover:bg-accent-3 group-hover:text-white group-hover:border-accent-3 transition-all duration-500 shrink-0 shadow-sm">
+                <div className="flex flex-col gap-8 mb-10 relative z-10">
+                  <div className="w-16 h-16 rounded-[1.25rem] bg-white/[0.03] border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-slate-950 group-hover:border-white transition-all duration-500 shrink-0 shadow-2xl">
                     <span className="scale-125">{agent.icon}</span>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="text-[10px] font-black text-accent-3 uppercase tracking-[0.2em]">{agent.tagline}</p>
-                    <h3 className="text-2xl xl:text-3xl font-bold text-slate-900 tracking-tighter leading-none">
+                  <div className="flex flex-col gap-3">
+                    <p className="text-[11px] font-black text-accent-3 uppercase tracking-[0.3em]">{agent.tagline}</p>
+                    <h3 className="text-3xl xl:text-4xl font-bold text-white tracking-tighter leading-[1.1]">
                       {agent.name}
                     </h3>
                   </div>
                 </div>
                 
-                <p className="text-slate-500 text-base md:text-lg leading-relaxed mb-10 relative z-10">
+                <p className="text-slate-400 text-lg md:text-xl leading-relaxed mb-12 relative z-10 flex-1 group-hover:text-slate-200 transition-colors">
                   {agent.description}
                 </p>
  
-                <div className="mt-auto relative z-10">
-                  <div className="flex flex-wrap gap-2">
+                <div className="mt-auto relative z-10 pt-8 border-t border-white/[0.03]">
+                  <div className="flex flex-wrap gap-2.5">
                     {agent.examples.map((ex) => (
                       <span 
                         key={ex} 
-                        className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-[9px] font-bold text-slate-400 uppercase tracking-widest group-hover:bg-white group-hover:border-slate-200 transition-colors"
+                        className="px-4 py-1.5 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] font-black text-white/30 uppercase tracking-[0.2em] group-hover:border-white/20 group-hover:text-white/60 transition-all"
                       >
                         {ex}
                       </span>
@@ -122,5 +114,6 @@ export default function WhatWeBuildsSection() {
         </div>
       </div>
     </section>
+
   );
 }
