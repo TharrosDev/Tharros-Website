@@ -110,6 +110,8 @@ export default function NavBar() {
     };
   }, [mobileOpen]);
 
+  const isMinimized = false;
+
   // Prevent flicker by not rendering specific parts or using suppressHydrationWarning
   return (
     <>
