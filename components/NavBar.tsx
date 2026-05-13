@@ -156,13 +156,13 @@ export default function NavBar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-3 h-full">
+        <div className="flex items-center gap-1.5 md:gap-3 h-full">
           <Magnetic strength={0.2}>
             <Link
               href="/intake"
               prefetch={false}
               aria-label="Start your AI consultation"
-              className="inline-block px-3 py-1.5 md:px-5 md:py-2 primary-button text-[10px] md:text-sm transition-all duration-300"
+              className="inline-block px-2.5 py-1 md:px-5 md:py-2 primary-button text-[9px] md:text-sm transition-all duration-300"
             >
               Get Started
             </Link>
