@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://tharros.ca"),
   title: {
-    default: "Tharros - Custom AI Agents for Ottawa Small Businesses",
+    default: "Tharros | Custom AI Agents for Ottawa Small Businesses",
     template: "%s | Tharros AI Studio",
   },
   description:
-    "Tharros builds high-performance AI agents tailored for Ottawa small businesses. We automate lead capture, customer service, and admin tasks so you can focus on growth. Local expertise, industrial-grade results.",
+    "Tharros engineers high-performance AI agents for Ottawa trades and professional services. Automate lead capture, customer support, and administrative intake with 24/7 autonomous intelligence. Built for plumbers, lawyers, contractors, and local enterprises.",
   keywords: [
     "AI Agents Ottawa",
     "Autonomous AI Agents",
@@ -56,6 +56,20 @@ export const metadata: Metadata = {
     "Real Estate AI Agents",
     "AI SDR for Small Business",
     "Autonomous Office Admin AI",
+    "Kanata AI Solutions",
+    "Nepean Business Automation",
+    "Stittsville AI Consulting",
+    "Orleans Lead Capture",
+    "Barrhaven AI Agents",
+    "Ottawa Tech Automation",
+    "HVAC AI Intake",
+    "Plumbing AI Customer Service",
+    "Roofing Lead Generation AI",
+    "Dental Office AI Assistant",
+    "Veterinary AI Intake",
+    "Auto Repair AI Agent",
+    "Knowledge Management AI",
+    "Digital Workforce Ottawa",
   ],
   authors: [{ name: "Magnus Abdelnour" }],
   creator: "Tharros",
@@ -81,7 +95,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Tharros - Custom AI Agents for Ottawa Small Businesses",
+    title: "Tharros | High-Performance AI Agents for Ottawa Enterprises",
     description:
       "Recover your time and capture every lead with practical AI agents built for local trades, professional services, and small businesses in Ottawa. No corporate fluff, just performance.",
     url: "https://tharros.ca",
@@ -93,15 +107,16 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros AI Agent Studio Ottawa",
+        alt: "Tharros AI Agent Studio Ottawa - High Density Automation",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tharros — AI Agents for Ottawa Small Businesses",
+    title: "Tharros | AI Agents for Ottawa Small Businesses",
     description: "High-performance AI agents that work for your local business. 24/7 lead capture and admin automation with Ottawa-specific context.",
     images: ["/og-image.jpg"],
+    creator: "@TharrosAI",
   },
   alternates: {
     canonical: "/",
@@ -183,20 +198,22 @@ export default function RootLayout({
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "AI Services",
+        "name": "AI Agent Solutions",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Custom Lead Intake Agents"
+              "name": "Autonomous Lead Intake Agent",
+              "description": "24/7 lead capture and qualification agent for small businesses."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "CRM & Admin Automation"
+              "name": "Customer Inquiry Automation",
+              "description": "Instant answers for common business questions via AI."
             }
           }
         ]

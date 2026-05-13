@@ -4,8 +4,16 @@ import FooterSection from "@/components/FooterSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Clients | Tharros AI Agents",
-  description: "Explore how Ottawa businesses are recovering time and capturing more revenue with Tharros Autonomous AI Agents.",
+  title: "Client Portfolio | AI Agent Success Stories",
+  description: "Explore how Ottawa businesses are recovering time and capturing more revenue with Tharros Autonomous AI Agents. Case studies in local trades and professional services.",
+  alternates: {
+    canonical: "/clients",
+  },
+  openGraph: {
+    title: "Client Portfolio | Tharros AI Success Stories",
+    description: "Real-world impact of autonomous AI agents for Ottawa businesses.",
+    url: "https://tharros.ca/clients",
+  }
 };
 
 export default function ClientsPage() {
