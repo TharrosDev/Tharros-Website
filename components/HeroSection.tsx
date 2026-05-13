@@ -7,7 +7,7 @@ import Magnetic from "./Magnetic";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[70svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-10 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-white">
+    <section id="hero" className="relative min-h-[70svh] md:min-h-[100svh] flex items-center justify-center px-6 pt-16 md:pt-28 pb-4 md:pb-8 overflow-hidden bg-white">
       {/* Background: Industrial Geometric Depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/4 opacity-70" />
