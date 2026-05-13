@@ -62,19 +62,19 @@ export default function IntakeForm() {
               >
                 {/* Left Side: Briefing Header */}
                 <div className="lg:col-span-5 pt-4">
-                  <p className="section-label mb-6 tracking-[0.3em] text-[10px] uppercase font-bold text-slate-400">Project Initiation</p>
+                  <p className="section-label mb-6 tracking-[0.3em] text-[10px] uppercase font-bold text-slate-400">Get Started</p>
                   <h1 className="text-4xl md:text-6xl font-bold text-text tracking-tighter mb-8 leading-[1.1]">
-                    Strategic <br />
-                    <span className="text-accent-3">Briefing.</span>
+                    Project <br />
+                    <span className="text-accent-3">Intake.</span>
                   </h1>
                   <p className="text-subdued text-lg leading-relaxed mb-10">
-                    Formalize your project requirements. Our executive team will review your briefing to design a high-performance agent profile tailored to your specific lead capture objectives.
+                    Tell us about your project. We'll review your details and design a custom AI agent tailored to your business goals.
                   </p>
                   
                   <div className="space-y-6">
                     {[
-                      { title: "Direct Intake", desc: "Your data bypasses triage and goes straight to engineering." },
-                      { title: "Secure Transmission", desc: "Encrypted briefing protocols for institutional security." }
+                      { title: "Quick Review", desc: "Our team reviews all submissions within 24 business hours." },
+                      { title: "Custom Design", desc: "Every agent is built from scratch based on your specific needs." }
                     ].map((item) => (
                       <div key={item.title} className="flex gap-4 items-start">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-3 mt-1.5 shrink-0" />
@@ -122,12 +122,12 @@ export default function IntakeForm() {
                         >
                           {isLoading ? (
                             <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                          ) : "Submit Strategic Briefing"}
+                          ) : "Submit Project Details"}
                         </button>
                       </div>
 
                       <p className="text-center text-[9px] text-slate-300 font-bold uppercase tracking-[0.2em]">
-                        System encrypted & secured // Q3 2026 Intake active
+                        Secure submission // Q3 2026 intake active
                       </p>
                     </form>
                   </div>
@@ -145,15 +145,15 @@ export default function IntakeForm() {
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 </div>
-                <h2 className="text-4xl font-bold text-text mb-6 tracking-tighter">Briefing Received.</h2>
+                <h2 className="text-4xl font-bold text-text mb-6 tracking-tighter">Details Received.</h2>
                 <p className="text-subdued text-lg leading-relaxed mb-10">
-                  Your strategic briefing has been encrypted and successfully transmitted. An executive specialist will contact you within 12 business hours to finalize deployment specs.
+                  Thanks for reaching out. We've received your project details and our team will contact you within one business day to discuss next steps.
                 </p>
                 <button 
                   onClick={() => setIsSubmitted(false)}
                   className="px-8 py-3 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm"
                 >
-                  New Briefing
+                  New Request
                 </button>
               </motion.div>
             )}
