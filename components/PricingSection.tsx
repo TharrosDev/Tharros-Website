@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 import Magnetic from "./Magnetic";
 
@@ -100,7 +99,7 @@ export default function PricingSection() {
                   <Magnetic strength={0.2}>
                     <a
                       href="/intake"
-                      aria-label="Request a custom AI automation quote"
+                      aria-label="Request a custom AI training and setup quote"
                       className="primary-button px-10 py-5 md:px-12 md:py-6 xl:px-14 xl:py-7 3xl:px-24 3xl:py-12 text-xs md:text-lg xl:text-xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-2xl"
                     >
                       <span className="relative z-10">Request Briefing</span>
