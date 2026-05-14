@@ -11,8 +11,8 @@ const pricingFactors = [
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
     ),
-    title: "Solution Complexity",
-    description: "From simple website concierges to deep integrations with CRMs and business workflows."
+    title: "Engagement Scope",
+    description: "From a single coaching sprint on a website concierge to multi-month advisory on agents wired into your CRM."
   },
   {
     icon: (
@@ -21,8 +21,8 @@ const pricingFactors = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
       </svg>
     ),
-    title: "Data Depth",
-    description: "The volume of training data: from basic FAQs to complex technical manuals."
+    title: "Team Depth",
+    description: "How many people we coach and how deep the curriculum goes, from a solo owner to a small ops team."
   },
   {
     icon: (
@@ -33,8 +33,8 @@ const pricingFactors = [
         <path d="M6 12h.01" />
       </svg>
     ),
-    title: "Channel Support",
-    description: "Deploying to Web, SMS, WhatsApp, or all at once with unified intelligence."
+    title: "Ongoing Advisory",
+    description: "One-off coaching, a fixed-length engagement, or a monthly retainer for ongoing tuning and Q&A."
   }
 ];
 
@@ -53,11 +53,11 @@ export default function PricingSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] tracking-tighter">
-              Tailored Pricing for <br className="hidden md:block" />
-              <span className="text-accent-3">Tailored Results.</span>
+              Tailored Coaching for <br className="hidden md:block" />
+              <span className="text-accent-3">Tailored Businesses.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Our pricing is as custom as the agents we build. Mapped strictly to the value they create for your business.
+              Our pricing is as custom as the engagements we run. Mapped strictly to the time we spend with you and the skill we leave behind.
             </p>
           </AnimatedSection>
         </div>
@@ -92,8 +92,8 @@ export default function PricingSection() {
                   Why no fixed price list?
                 </h3>
                 <p className="text-slate-600 text-sm md:text-lg xl:text-xl 3xl:text-3xl 4xl:text-4xl leading-relaxed mb-8 3xl:mb-16 max-w-4xl 3xl:max-w-[90rem] mx-auto font-medium opacity-80">
-                  Because an AI agent for a boutique law firm has different requirements than one for a high-volume plumbing contractor. 
-                  We provide a firm, no-obligation quote following our initial briefing.
+                  Coaching a solo lawyer through their first agent is a different engagement than upskilling a plumbing team on three.
+                  After a free briefing we send a firm, no-obligation proposal scoped to your business.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 3xl:gap-12">

@@ -5,21 +5,21 @@ import AnimatedSection from "./AnimatedSection";
 
 const TIERS = [
   {
-    label: "Commercial Tier",
-    title: "The Light Model",
-    desc: "Our most popular digital intake agent for Ottawa small businesses. Recovers your time by capturing leads and answering common inquiries 24/7 without the high overhead.",
+    label: "Starter Engagement",
+    title: "The Coaching Sprint",
+    desc: "A focused two-week sprint for owner-operators. We pick one agent, sit beside you while you build it, and leave you with a working system and the confidence to tune it.",
     color: "text-slate-400"
   },
   {
-    label: "Growth Tier",
-    title: "The Medium Model",
-    desc: "A high-performance tier for scaling local brands. Handles complex customer logic and syncs directly with your CRM, acting as a specialized office admin for your team.",
+    label: "Growth Engagement",
+    title: "The Operator Program",
+    desc: "A multi-week program for scaling local brands. We coach you and your team through a CRM-connected agent, document your playbook, and run weekly working sessions until it sticks.",
     color: "text-slate-600"
   },
   {
-    label: "Enterprise Tier",
-    title: "The Elite Model",
-    desc: "The ultimate automated workforce for high-volume enterprises. A bespoke AI system built to master your specific business logic and run entire workflows with zero-touch precision.",
+    label: "Advisory Retainer",
+    title: "The Fractional AI Lead",
+    desc: "A monthly advisory retainer for owners who want a Tharros operator on speed dial. Roadmap reviews, new agent rollouts, and live troubleshooting as your operation grows.",
     color: "text-accent-3"
   }
 ] as const;
@@ -38,11 +38,11 @@ export default function ModelTiersSection() {
           <AnimatedSection>
 
             <h2 className="text-5xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-12 3xl:mb-20 leading-[1.1] tracking-tighter">
-              Engineered for <br />
+              Coaching shaped for <br />
               <span className="text-slate-400">every stage of growth.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
-              Select the intelligence density required for your operational scale.
+              Pick the engagement depth that matches where your business actually is.
             </p>
           </AnimatedSection>
         </div>

@@ -53,17 +53,16 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[14rem] font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.2] sm:leading-[1.1] md:leading-[1] 3xl:leading-[0.9]"
           >
-            Your small business doesn&apos;t need <br className="hidden md:block" />
-            <span className="text-slate-500">corporate AI theory.</span>
+            Stop paying agencies <br className="hidden md:block" />
+            <span className="text-slate-500">to build your AI.</span>
             <br className="hidden sm:block" />
-            It needs <span className="text-accent-3">AI Agents</span> that{" "}
-            <span className="relative inline-block text-accent-3">
-              work
-              <motion.span 
+            We teach you to <span className="relative inline-block text-accent-3">
+              own it
+              <motion.span
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 1.2, duration: 1, ease: [0.22, 1, 0.36, 1] as any }}
-                className="absolute -bottom-1 md:-bottom-4 left-0 right-0 h-[3px] md:h-[8px] bg-accent-3/20 rounded-full" 
+                className="absolute -bottom-1 md:-bottom-4 left-0 right-0 h-[3px] md:h-[8px] bg-accent-3/20 rounded-full"
               />
             </span>
             .
@@ -73,8 +72,8 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl text-slate-200 max-w-2xl xl:max-w-5xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
-            High-performance AI Agents for trades and small businesses. <br className="hidden lg:block" />
-            We build the digital workforce that recovers your time.
+            AI agent consulting and coaching for trades and small business owners. <br className="hidden lg:block" />
+            We sit beside you, teach the platforms, and leave you with an agent you understand.
           </motion.p>
 
           <motion.div 
@@ -86,7 +85,7 @@ export default function HeroSection() {
                 href="/intake"
                 className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] py-4 md:py-6 3xl:py-8 3xl:px-12"
               >
-                <span className="relative z-10">Get Started</span>
+                <span className="relative z-10">Book a Coaching Call</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               </a>
             </Magnetic>
@@ -96,7 +95,7 @@ export default function HeroSection() {
               className="group flex items-center justify-center gap-4 text-white font-black text-[10px] md:text-sm 3xl:text-base uppercase tracking-[0.4em] hover:text-accent-3 transition-all px-6 py-4 w-full sm:w-auto"
             >
               <span className="hidden sm:block w-10 h-px bg-white/20 group-hover:w-16 group-hover:bg-accent-3 transition-all" />
-              Live System Demo
+              See a Live Agent
             </a>
           </motion.div>
 

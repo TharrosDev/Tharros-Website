@@ -5,18 +5,18 @@ import AnimatedSection from "./AnimatedSection";
 const steps = [
   {
     number: "01",
-    headline: "Consult",
-    body: "We spend time understanding your business, your biggest time drains, and which repetitive conversations are costing you the most. No sales pitch, just listening.",
+    headline: "Diagnose",
+    body: "We map your business, your biggest time drains, and the repetitive conversations costing you the most. Together we pick the one agent worth building first.",
   },
   {
     number: "02",
-    headline: "Build",
-    body: "We build and configure your agent in 1-2 weeks. You review it, request changes, and we refine until it sounds exactly like your business. No code on your end.",
+    headline: "Coach",
+    body: "Over 1-2 weeks of live sessions, we sit beside you in the platform of your choice. You configure your agent, we explain every decision, and you walk away knowing how it works.",
   },
   {
     number: "03",
     headline: "Launch",
-    body: "We deploy it to your website or messaging channel. We monitor the first two weeks, tune responses, and hand you a system that runs itself.",
+    body: "We help you publish it to your website or messaging channel and review the first two weeks together. You own the keys, the prompts, and the playbook.",
   },
 ];
 
@@ -34,10 +34,10 @@ export default function HowItWorksSection() {
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-slate-900 mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
               From conversation to <br className="hidden md:block" />
-              <span className="text-accent-3">live in under 2 weeks.</span>
+              <span className="text-accent-3">your own agent in 2 weeks.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-12 3xl:mb-20 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Three stages. Zero jargon. No complex enterprise rollout.
+              Three stages of coaching. Zero jargon. You finish owning the system, not renting it.
             </p>
           </div>
         </AnimatedSection>

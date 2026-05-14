@@ -24,52 +24,58 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://tharros.ca"),
   title: {
-    default: "Tharros | Keep it Local, Keep it Canadian | Custom AI Agents for Ottawa Small Businesses",
-    template: "%s | Tharros AI Studio",
+    default: "Tharros | Keep it Local, Keep it Canadian | AI Agent Consulting & Coaching for Ottawa Small Businesses",
+    template: "%s | Tharros AI Consulting",
   },
   description:
-    "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Tharros engineers high-performance AI agents for Ottawa trades and small businesses. Automate lead capture and admin with 24/7 autonomous intelligence.",
+    "Keep it Local, Keep it Canadian. AI agent consulting and coaching for Ottawa trades and small business owners. We teach you to set up AI agents you actually own, no agency lock-in.",
   keywords: [
-    "AI Agents Ottawa",
-    "Autonomous AI Agents",
-    "AI Business Automation",
-    "Intelligent Agents for Small Business",
-    "AI Lead Capture Systems",
-    "Agentic Workflow Automation",
-    "Ottawa AI Studio",
-    "Custom AI Agent Development",
-    "LLM Business Integration",
-    "GPT-4 Business Agents",
-    "Anthropic Claude Business Solutions",
-    "AI Customer Service Agents",
-    "Automated AI Intake Portal",
-    "AI Appointment Setting",
-    "Smart AI Receptionists",
-    "Industrial AI Solutions",
-    "Enterprise AI Agents for SMB",
-    "Tharros AI Automation",
+    "AI Agent Consulting Ottawa",
+    "AI Coaching for Small Business",
+    "AI Agent Training",
+    "AI Consultant Ottawa",
+    "Learn to Build AI Agents",
+    "No-Code AI Coaching",
+    "AI Workshops for Small Business",
+    "AI Strategy Coaching",
     "Ottawa AI Consulting",
+    "AI Implementation Coaching",
+    "AI Agent Setup Help",
+    "AI Mentoring Small Business",
+    "Fractional AI Lead",
+    "AI Advisory Retainer",
+    "AI Skills Training Ottawa",
+    "Custom AI Agent Coaching",
+    "LLM Coaching for Business Owners",
+    "GPT Coaching for Trades",
+    "Anthropic Claude Coaching",
+    "AI Customer Service Coaching",
+    "AI Intake Setup Training",
+    "AI Appointment Setting Coaching",
+    "Smart AI Receptionist Setup",
+    "AI Consulting for SMB",
+    "Tharros AI Consulting",
     "AI Strategy for Trades",
-    "Contractor AI Agents",
-    "Legal AI Intake Agents",
-    "Medical AI Assistants Ottawa",
-    "Real Estate AI Agents",
-    "AI SDR for Small Business",
-    "Autonomous Office Admin AI",
-    "Kanata AI Solutions",
-    "Nepean Business Automation",
+    "Contractor AI Coaching",
+    "Legal AI Coaching",
+    "Medical AI Consulting Ottawa",
+    "Real Estate AI Coaching",
+    "AI SDR Coaching",
+    "AI Office Admin Training",
+    "Kanata AI Consulting",
+    "Nepean AI Coaching",
     "Stittsville AI Consulting",
-    "Orleans Lead Capture",
-    "Barrhaven AI Agents",
-    "Ottawa Tech Automation",
-    "HVAC AI Intake",
-    "Plumbing AI Customer Service",
-    "Roofing Lead Generation AI",
-    "Dental Office AI Assistant",
-    "Veterinary AI Intake",
-    "Auto Repair AI Agent",
-    "Knowledge Management AI",
-    "Digital Workforce Ottawa",
+    "Orleans AI Coaching",
+    "Barrhaven AI Consulting",
+    "Ottawa Tech Coaching",
+    "HVAC AI Coaching",
+    "Plumbing AI Setup",
+    "Roofing AI Coaching",
+    "Dental Office AI Coaching",
+    "Veterinary AI Setup",
+    "Auto Repair AI Coaching",
+    "Knowledge Management Coaching",
+    "AI Skill Transfer Ottawa",
     "Keep it Local",
     "Keep it Canadian",
     "Tharros Slogan",
@@ -98,11 +104,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Tharros | Keep it Local, Keep it Canadian | AI Agents for Ottawa",
+    title: "Tharros | Keep it Local, Keep it Canadian | AI Agent Coaching for Ottawa",
     description:
-      "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Recover your time and capture every lead with practical AI agents built for local trades and small businesses in Ottawa. No corporate fluff, just performance.",
+      "Keep it Local, Keep it Canadian. AI agent consulting and coaching for Ottawa trades and small businesses. We sit beside you and teach you to set up agents you actually own. No agency lock-in.",
     url: "https://tharros.ca",
-    siteName: "Tharros AI Studio",
+    siteName: "Tharros AI Consulting",
     locale: "en_CA",
     type: "website",
     images: [
@@ -110,14 +116,14 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros AI Agent Studio Ottawa - High Density Automation",
+        alt: "Tharros AI Consulting Ottawa - Coaching for Small Business Owners",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tharros | Keep it Local, Keep it Canadian",
-    description: "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. High-performance AI agents for your local business. 24/7 lead capture and admin automation with Ottawa-specific context.",
+    description: "Keep it Local, Keep it Canadian. AI agent consulting and coaching for Ottawa small businesses. We teach you to set up the agents, not sell them to you.",
     images: ["/og-image.jpg"],
     creator: "@TharrosAI",
   },
@@ -127,7 +133,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Tharros AI",
+    title: "Tharros AI Consulting",
   },
   manifest: "/manifest.json",
 };
@@ -142,8 +148,8 @@ export default function RootLayout({
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Tharros",
-      "alternateName": "Tharros AI Studio",
-      "slogan": "Recovering time. Rescuing revenue.",
+      "alternateName": "Tharros AI Consulting",
+      "slogan": "We teach you to own it.",
       "url": "https://tharros.ca",
       "logo": "https://tharros.ca/tharros-logo.svg",
       "sameAs": [
@@ -179,7 +185,7 @@ export default function RootLayout({
         "latitude": 45.3483,
         "longitude": -75.9103
       },
-      "description": "Keep it Local, Keep it Canadian. Recovering time. Rescuing revenue. Custom AI agents for Ottawa trades and small businesses. Automating lead capture and office admin.",
+      "description": "Keep it Local, Keep it Canadian. AI agent consulting and coaching for Ottawa trades and small businesses. We teach owners and operators to set up AI agents for lead capture and office admin.",
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -191,7 +197,7 @@ export default function RootLayout({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "serviceType": "AI Automation and Agent Development",
+      "serviceType": "AI Agent Consulting and Coaching",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Tharros"
@@ -202,22 +208,30 @@ export default function RootLayout({
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "AI Agent Solutions",
+        "name": "AI Coaching Engagements",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Autonomous Lead Intake Agent",
-              "description": "24/7 lead capture and qualification agent for small businesses."
+              "name": "Coaching Sprint",
+              "description": "A two-week, hands-on coaching engagement that walks an owner through standing up their first AI agent."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Customer Inquiry Automation",
-              "description": "Instant answers for common business questions via AI."
+              "name": "Operator Program",
+              "description": "A multi-week coaching program for small business teams to set up CRM-connected AI agents and document an internal playbook."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Fractional AI Lead",
+              "description": "A monthly advisory retainer for ongoing AI agent rollouts, tuning, and roadmap reviews."
             }
           }
         ]
