@@ -9,7 +9,7 @@ const pillars = [
       </svg>
     ),
     headline: "Ottawa-local",
-    body: "Keep it Local, Keep it Canadian. We know Kanata trades companies and Centretown law offices. Our training is rooted in local context, local pricing questions, and the real shape of small business in this city.",
+    body: "We know Kanata trades companies and Centretown law offices. Our training is rooted in local context, local pricing questions, and the real shape of small business in this city.",
   },
   {
     icon: (

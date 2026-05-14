@@ -93,7 +93,7 @@ export default function WhatWeBuildsSection() {
                   {agent.description}
                 </p>
  
-                <div className="relative z-10 pt-5 3xl:pt-10 border-t border-white/[0.03]">
+                <div className="relative z-10 pt-5 3xl:pt-10 border-t border-white/10">
                   <div className="flex flex-wrap gap-2.5 3xl:gap-6">
                     {agent.examples.map((ex) => (
                       <span 

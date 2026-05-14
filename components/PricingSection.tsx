@@ -84,7 +84,7 @@ export default function PricingSection() {
               
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-4 mb-6 3xl:mb-12 px-5 py-1.5 3xl:px-10 3xl:py-3 rounded-full bg-slate-950/5 border border-slate-900/5">
-                  <span className="text-[9px] 3xl:text-base font-black text-slate-900/40 uppercase tracking-[0.5em]">COMMERCIAL LOGIC</span>
+                  <span className="text-[9px] 3xl:text-base font-black text-slate-900/40 uppercase tracking-[0.5em]">How We Price</span>
                 </div>
                 
                 <h3 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl 4xl:text-7xl font-bold text-slate-900 mb-6 3xl:mb-10 tracking-tighter leading-tight">

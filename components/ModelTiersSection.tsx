@@ -42,8 +42,8 @@ export default function ModelTiersSection() {
         <div className="text-center mb-24 md:mb-32 3xl:mb-48">
           <AnimatedSection>
 
-            <h2 className="text-5xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-12 3xl:mb-20 leading-[1.1] tracking-tighter">
-              Training shaped for <br />
+            <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] md:leading-[1.1] tracking-tighter">
+              Training shaped for <br className="hidden md:block" />
               <span className="text-slate-400">every stage of growth.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
@@ -69,11 +69,11 @@ export default function ModelTiersSection() {
                   {tier.desc}
                 </p>
 
-                <div className="mt-6 3xl:mt-12 flex flex-wrap gap-2 3xl:gap-4">
+                <div className="mt-auto pt-8 3xl:pt-16 flex flex-wrap gap-2.5 3xl:gap-6">
                   {tier.includes.map((item) => (
                     <span
                       key={item}
-                      className="px-3 py-1.5 3xl:px-6 3xl:py-3 bg-slate-100 border border-slate-200 rounded-lg 3xl:rounded-2xl text-[10px] 3xl:text-base font-black text-slate-700 uppercase tracking-[0.15em] group-hover:bg-accent-3/10 group-hover:border-accent-3/30 group-hover:text-slate-900 transition-colors"
+                      className="px-4 py-1.5 3xl:px-8 3xl:py-3 bg-slate-100 border border-slate-200 rounded-xl 3xl:rounded-3xl text-[10px] 3xl:text-base font-black text-slate-600 uppercase tracking-[0.2em] group-hover:bg-accent-3/10 group-hover:border-accent-3/30 group-hover:text-slate-900 transition-colors"
                     >
                       {item}
                     </span>
@@ -81,7 +81,7 @@ export default function ModelTiersSection() {
                 </div>
 
                 {/* Visual Accent */}
-                <div className="mt-8 pt-8 3xl:mt-16 3xl:pt-16 border-t border-slate-200 w-16 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                <div className="mt-6 pt-6 3xl:mt-12 3xl:pt-12 border-t border-slate-200 w-16 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                 <div className="absolute -bottom-2 left-0 w-0 h-[2px] 3xl:h-[4px] bg-accent-3 group-hover:w-full transition-all duration-700 shadow-[0_0_10px_rgba(14,165,233,0.3)]" />
               </div>
             </AnimatedSection>
