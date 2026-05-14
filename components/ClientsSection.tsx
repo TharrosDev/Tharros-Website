@@ -10,7 +10,7 @@ const clients = [
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
-    description: "Deployed a custom Knowledge Q&A Agent for 24/7 member insights and forum automation. Bridging the gap between student talent and industry scholars via an on-demand intelligence layer.",
+    description: "Coached the Meridian team through standing up a Knowledge Q&A Agent for 24/7 member insights and forum automation. They now own and operate the system themselves, with Tharros on call for tuning.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.png",
@@ -100,7 +100,7 @@ function ClientsHero() {
               <div className="flex flex-col lg:items-end">
                 <span className="text-[9px] md:text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-4 md:mb-6">Strategic Overview</span>
                 <p className="text-subdued text-lg md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
-                  Tharros agents deliver autonomous customer service and lead capture, ensuring local businesses remain responsive 24/7.
+                  Tharros coaching helps local owners stand up AI agents for customer service and lead capture, then hands them the keys.
                 </p>
               </div>
             </div>
@@ -180,7 +180,7 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
 
           {/* Simplified Footer */}
           <div className="pt-4 mt-auto relative flex items-center justify-between">
-            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Active Deployment</span>
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Client-Owned & Running</span>
             
             <a 
               href={client.link}

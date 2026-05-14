@@ -28,11 +28,11 @@ export default function FooterSection() {
             <div className="flex flex-col items-center">
 
               <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-6 md:mb-8 3xl:mb-16 leading-[1.1] md:leading-[0.9] tracking-tighter">
-                Ready to stop <br className="hidden md:block" />
-                <span className="text-accent-3">missing leads?</span>
+                Ready to build <br className="hidden md:block" />
+                <span className="text-accent-3">your own agent?</span>
               </h2>
               <p className="text-slate-300 text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-10 md:mb-10 3xl:mb-20 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto leading-relaxed font-medium opacity-80 px-4 sm:px-0">
-                Set up a free initial briefing. We&apos;ll listen to your business operations and identify your best use case, no obligation.
+                Book a free briefing. We&apos;ll listen to your operation, identify the highest-leverage agent to build first, and show you what coaching looks like, no obligation.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 3xl:gap-24 w-full px-6 sm:px-0">
@@ -40,10 +40,10 @@ export default function FooterSection() {
                   <a
                     href="/intake"
                     onClick={handleScrollToTop}
-                    aria-label="Start your AI intake journey and consultation"
+                    aria-label="Book your free AI coaching briefing"
                     className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] 3xl:px-20 3xl:py-10"
                   >
-                    <span className="relative z-10">Get Started</span>
+                    <span className="relative z-10">Book a Coaching Call</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                   </a>
                 </Magnetic>

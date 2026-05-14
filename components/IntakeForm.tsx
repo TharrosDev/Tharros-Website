@@ -50,19 +50,19 @@ export default function IntakeForm() {
               >
                 {/* Left Side: Briefing Header */}
                 <div className="lg:col-span-5 pt-4">
-                  <p className="section-label mb-6 tracking-[0.3em] text-[9px] md:text-[10px] uppercase font-bold text-slate-500">Get Started</p>
+                  <p className="section-label mb-6 tracking-[0.3em] text-[9px] md:text-[10px] uppercase font-bold text-slate-500">Book Your Briefing</p>
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-900 tracking-tighter mb-8 leading-[1.2] sm:leading-[1.1]">
-                    Project <br />
-                    <span className="text-accent-3">Intake.</span>
+                    Coaching <br />
+                    <span className="text-accent-3">Briefing.</span>
                   </h1>
                   <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-10">
-                    Share your project goals and requirements. Once submitted, a Tharros representative will review your details and reach out to discuss the next steps.
+                    Share where your business is and what&apos;s eating your week. We&apos;ll review your details and reach out to scope a coaching engagement that leaves you with an agent you actually own.
                   </p>
-                  
+
                   <div className="space-y-6">
                     {[
-                      { title: "Quick Review", desc: "Our team reviews all submissions within 1-3 business days." },
-                      { title: "Custom Design", desc: "Every agent is built from scratch based on your specific needs." }
+                      { title: "Quick Review", desc: "We respond to every briefing within 1-3 business days." },
+                      { title: "Custom Curriculum", desc: "Every coaching engagement is shaped around your business, your team, and the agent worth building first." }
                     ].map((item) => (
                       <div key={item.title} className="flex gap-4 items-start">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-3 mt-1.5 shrink-0" />
@@ -108,7 +108,7 @@ export default function IntakeForm() {
 
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Needs</label>
-                        <textarea required name="needs" rows={4} placeholder="Tell us about your goals. What specific tasks or inquiries should your AI agent handle?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
+                        <textarea required name="needs" rows={4} placeholder="Tell us about your business and where AI could help. What tasks or inquiries are eating your week? Are you coaching just yourself, or your whole team?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
                         <ValidationError prefix="Needs" field="needs" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 
@@ -120,7 +120,7 @@ export default function IntakeForm() {
                         >
                           {state.submitting ? (
                             <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                          ) : "Submit Project Details"}
+                          ) : "Request Coaching Briefing"}
                         </button>
                       </div>
 
@@ -144,9 +144,9 @@ export default function IntakeForm() {
                       <path d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Project Received.</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Briefing Received.</h2>
                   <p className="text-slate-500 text-base md:text-lg leading-relaxed mb-10 max-w-md mx-auto">
-                    Thanks for reaching out. We&apos;ve received your details and will follow up within one business day.
+                    Thanks for reaching out. We&apos;ve got your details and will follow up within one business day to schedule your coaching call.
                   </p>
                   <button 
                     onClick={() => window.location.reload()}

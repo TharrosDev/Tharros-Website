@@ -2,14 +2,14 @@ import IntakeForm from "@/components/IntakeForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Client Intake | Strategic AI Briefing",
-  description: "Formalize your project requirements. Submit your strategic briefing to design a high-performance agent profile tailored to your specific lead capture objectives in the Ottawa market.",
+  title: "Coaching Briefing | Tharros AI Consulting",
+  description: "Book your free coaching briefing. Tell us about your business and we'll map the highest-leverage AI agent we can coach you to build, tailored to your Ottawa small business.",
   alternates: {
     canonical: "https://tharros.ca/intake",
   },
   openGraph: {
-    title: "Strategic Briefing | Tharros Intake Portal",
-    description: "Submit your business needs. We'll use this data to design your custom AI automation strategy. Tailored for Ottawa small businesses.",
+    title: "Coaching Briefing | Tharros AI Consulting",
+    description: "Share your business context. We use this to scope a coaching engagement that leaves you with an AI agent you actually own. Built for Ottawa small businesses.",
     url: "https://tharros.ca/intake",
     type: "website",
   }
