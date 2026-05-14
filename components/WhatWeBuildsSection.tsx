@@ -66,7 +66,7 @@ export default function WhatWeBuildsSection() {
               <span className="text-accent-3">to set up yourself.</span>
             </h2>
             <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Live training. Hands-on setup sessions. Step-by-step playbooks. You leave with an agent that&apos;s up and running, and the skills to set up the next one without us.
+              Live training. Hands-on setup sessions for agents and AI tools. Optional website modernization with the agent embedded directly into your site. You leave with the system and the skills to run it.
             </p>
           </div>
         </AnimatedSection>
