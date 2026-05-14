@@ -108,7 +108,7 @@ export default function IntakeForm() {
 
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 ml-1">Needs</label>
-                        <textarea required name="needs" rows={4} placeholder="Tell us about your business and where AI could help. What tasks or inquiries are eating your week? Are you coaching just yourself, or your whole team?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
+                        <textarea required name="needs" rows={4} placeholder="Tell us about your business and where AI could help. What tasks or inquiries are eating your week? Are you training just yourself, or your whole team?" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 md:py-4 text-base md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-accent-3/50 focus:bg-white transition-all shadow-sm resize-none" />
                         <ValidationError prefix="Needs" field="needs" errors={state.errors} className="text-red-500 text-[10px] font-bold mt-1" />
                       </div>
 

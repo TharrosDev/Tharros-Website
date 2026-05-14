@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const TIERS = [
