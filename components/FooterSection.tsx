@@ -27,12 +27,16 @@ export default function FooterSection() {
           <AnimatedSection variant="scale-in">
             <div className="flex flex-col items-center">
 
+              <div className="mb-6 md:mb-8 inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full border border-white/15 bg-white/[0.04] text-white font-black uppercase tracking-[0.4em] text-[9px] md:text-[11px]">
+                <span>Keep it Local, Keep it Canadian</span>
+                <img src="/canada-flag.svg" alt="Canada" className="w-4 md:w-5 h-auto rounded-sm" />
+              </div>
               <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-6 md:mb-8 3xl:mb-16 leading-[1.1] md:leading-[0.9] tracking-tighter">
-                Ready to build <br className="hidden md:block" />
+                Ready to set up <br className="hidden md:block" />
                 <span className="text-accent-3">your own agent?</span>
               </h2>
               <p className="text-slate-300 text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-10 md:mb-10 3xl:mb-20 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto leading-relaxed font-medium opacity-80 px-4 sm:px-0">
-                Book a free briefing. We&apos;ll listen to your operation, identify the highest-leverage agent to build first, and show you what coaching looks like, no obligation.
+                Book a free briefing. We&apos;ll listen to your operation, pick the highest-leverage agent to set up first, and walk you through what training looks like, no obligation.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 3xl:gap-24 w-full px-6 sm:px-0">
@@ -40,10 +44,10 @@ export default function FooterSection() {
                   <a
                     href="/intake"
                     onClick={handleScrollToTop}
-                    aria-label="Book your free AI coaching briefing"
+                    aria-label="Book your free AI training and setup briefing"
                     className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] 3xl:px-20 3xl:py-10"
                   >
-                    <span className="relative z-10">Book a Coaching Call</span>
+                    <span className="relative z-10">Book a Training Call</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                   </a>
                 </Magnetic>

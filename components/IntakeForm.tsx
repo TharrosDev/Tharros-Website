@@ -50,19 +50,19 @@ export default function IntakeForm() {
               >
                 {/* Left Side: Briefing Header */}
                 <div className="lg:col-span-5 pt-4">
-                  <p className="section-label mb-6 tracking-[0.3em] text-[9px] md:text-[10px] uppercase font-bold text-slate-500">Book Your Briefing</p>
+                  <p className="section-label mb-6 tracking-[0.3em] text-[9px] md:text-[10px] uppercase font-bold text-slate-500">Keep it Local, Keep it Canadian</p>
                   <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-900 tracking-tighter mb-8 leading-[1.2] sm:leading-[1.1]">
-                    Coaching <br />
+                    Training & Setup <br />
                     <span className="text-accent-3">Briefing.</span>
                   </h1>
                   <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-10">
-                    Share where your business is and what&apos;s eating your week. We&apos;ll review your details and reach out to scope a coaching engagement that leaves you with an agent you actually own.
+                    Share where your business is and what&apos;s eating your week. We&apos;ll review your details and reach out to scope a training and setup engagement that leaves you with an agent you actually own.
                   </p>
 
                   <div className="space-y-6">
                     {[
                       { title: "Quick Review", desc: "We respond to every briefing within 1-3 business days." },
-                      { title: "Custom Curriculum", desc: "Every coaching engagement is shaped around your business, your team, and the agent worth building first." }
+                      { title: "Custom Curriculum", desc: "Every training is shaped around your business, your team, and the agent worth setting up first." }
                     ].map((item) => (
                       <div key={item.title} className="flex gap-4 items-start">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-3 mt-1.5 shrink-0" />
@@ -120,7 +120,7 @@ export default function IntakeForm() {
                         >
                           {state.submitting ? (
                             <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                          ) : "Request Coaching Briefing"}
+                          ) : "Request Training Briefing"}
                         </button>
                       </div>
 
@@ -146,7 +146,7 @@ export default function IntakeForm() {
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Briefing Received.</h2>
                   <p className="text-slate-500 text-base md:text-lg leading-relaxed mb-10 max-w-md mx-auto">
-                    Thanks for reaching out. We&apos;ve got your details and will follow up within one business day to schedule your coaching call.
+                    Thanks for reaching out. We&apos;ve got your details and will follow up within one business day to schedule your training and setup call.
                   </p>
                   <button 
                     onClick={() => window.location.reload()}

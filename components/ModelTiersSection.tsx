@@ -5,21 +5,21 @@ import AnimatedSection from "./AnimatedSection";
 
 const TIERS = [
   {
-    label: "Starter Engagement",
-    title: "The Coaching Sprint",
-    desc: "A focused two-week sprint for owner-operators. We pick one agent, sit beside you while you build it, and leave you with a working system and the confidence to tune it.",
+    label: "Starter Training",
+    title: "The Setup Sprint",
+    desc: "A focused two-week training for owner-operators. We pick one agent, run live setup sessions until it's live, and leave you with a working system and the skills to tune it.",
     color: "text-slate-400"
   },
   {
-    label: "Growth Engagement",
+    label: "Team Training",
     title: "The Operator Program",
-    desc: "A multi-week program for scaling local brands. We coach you and your team through a CRM-connected agent, document your playbook, and run weekly working sessions until it sticks.",
+    desc: "A multi-week training program for scaling local brands. We train you and your team to set up a CRM-connected agent, document your internal playbook, and run weekly working sessions until it sticks.",
     color: "text-slate-600"
   },
   {
-    label: "Advisory Retainer",
+    label: "Ongoing Advisory",
     title: "The Fractional AI Lead",
-    desc: "A monthly advisory retainer for owners who want a Tharros operator on speed dial. Roadmap reviews, new agent rollouts, and live troubleshooting as your operation grows.",
+    desc: "A monthly retainer for owners who want a Tharros trainer on speed dial. New agent setups, roadmap reviews, and live troubleshooting as your operation grows.",
     color: "text-accent-3"
   }
 ] as const;
@@ -38,11 +38,11 @@ export default function ModelTiersSection() {
           <AnimatedSection>
 
             <h2 className="text-5xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-12 3xl:mb-20 leading-[1.1] tracking-tighter">
-              Coaching shaped for <br />
+              Training shaped for <br />
               <span className="text-slate-400">every stage of growth.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
-              Pick the engagement depth that matches where your business actually is.
+              Pick the training depth that matches where your business actually is.
             </p>
           </AnimatedSection>
         </div>

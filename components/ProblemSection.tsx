@@ -61,7 +61,7 @@ export default function ProblemSection() {
               <span className="text-slate-400">bleeding time.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
-              You don&apos;t need another vendor. You need someone to <span className="text-accent-3">coach you through setting up</span> the agent that finally fixes this.
+              You don&apos;t need another vendor. You need <span className="text-accent-3">training and live setup</span> on the agent that finally fixes this.
             </p>
           </div>
         </AnimatedSection>

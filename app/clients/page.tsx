@@ -4,14 +4,14 @@ import FooterSection from "@/components/FooterSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Coaching Clients | AI Agent Success Stories",
-  description: "Meet Ottawa businesses we've coached through setting up their own AI agents. Case studies in trades, professional services, and small operator-led teams.",
+  title: "Training Clients | AI Agent Success Stories",
+  description: "Keep it Local, Keep it Canadian. Meet Ottawa businesses we've trained to set up their own AI agents. Case studies in trades, professional services, and small operator-led teams.",
   alternates: {
     canonical: "/clients",
   },
   openGraph: {
-    title: "Coaching Clients | Tharros AI Success Stories",
-    description: "Real-world impact from Tharros coaching engagements with Ottawa small businesses.",
+    title: "Training Clients | Tharros AI Success Stories",
+    description: "Real-world impact from Tharros training and setup engagements with Ottawa small businesses.",
     url: "https://tharros.ca/clients",
   }
 };

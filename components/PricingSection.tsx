@@ -11,8 +11,8 @@ const pricingFactors = [
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
     ),
-    title: "Engagement Scope",
-    description: "From a single coaching sprint on a website concierge to multi-month advisory on agents wired into your CRM."
+    title: "Training Scope",
+    description: "From a single setup sprint on a website concierge to multi-month training on agents wired into your CRM."
   },
   {
     icon: (
@@ -22,7 +22,7 @@ const pricingFactors = [
       </svg>
     ),
     title: "Team Depth",
-    description: "How many people we coach and how deep the curriculum goes, from a solo owner to a small ops team."
+    description: "How many people we train and how deep the curriculum goes, from a solo owner to a small ops team."
   },
   {
     icon: (
@@ -34,7 +34,7 @@ const pricingFactors = [
       </svg>
     ),
     title: "Ongoing Advisory",
-    description: "One-off coaching, a fixed-length engagement, or a monthly retainer for ongoing tuning and Q&A."
+    description: "One-off training, a fixed-length setup engagement, or a monthly retainer for ongoing tuning and Q&A."
   }
 ];
 
@@ -53,11 +53,11 @@ export default function PricingSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] tracking-tighter">
-              Tailored Coaching for <br className="hidden md:block" />
+              Tailored Training for <br className="hidden md:block" />
               <span className="text-accent-3">Tailored Businesses.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Our pricing is as custom as the engagements we run. Mapped strictly to the time we spend with you and the skill we leave behind.
+              Our pricing is as custom as the training we run. Mapped strictly to the setup time we spend with you and the skill we leave behind.
             </p>
           </AnimatedSection>
         </div>
@@ -92,7 +92,7 @@ export default function PricingSection() {
                   Why no fixed price list?
                 </h3>
                 <p className="text-slate-600 text-sm md:text-lg xl:text-xl 3xl:text-3xl 4xl:text-4xl leading-relaxed mb-8 3xl:mb-16 max-w-4xl 3xl:max-w-[90rem] mx-auto font-medium opacity-80">
-                  Coaching a solo lawyer through their first agent is a different engagement than upskilling a plumbing team on three.
+                  Training a solo lawyer through their first setup is a different job than training a plumbing team on three agents.
                   After a free briefing we send a firm, no-obligation proposal scoped to your business.
                 </p>
                 
@@ -109,7 +109,7 @@ export default function PricingSection() {
                   </Magnetic>
                 </div>
                 <p className="mt-10 3xl:mt-20 text-slate-400 text-[10px] 3xl:text-lg font-bold uppercase tracking-[0.2em]">
-                  Free consultation &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline transition-colors">Direct Inquiry</a> &bull; Ottawa, Canada
+                  Free briefing &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline transition-colors">Direct Inquiry</a> &bull; Keep it Local, Keep it Canadian
                 </p>
               </div>
             </div>

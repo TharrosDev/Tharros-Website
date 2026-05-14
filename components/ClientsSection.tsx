@@ -10,7 +10,7 @@ const clients = [
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
-    description: "Coached the Meridian team through standing up a Knowledge Q&A Agent for 24/7 member insights and forum automation. They now own and operate the system themselves, with Tharros on call for tuning.",
+    description: "Trained the Meridian team on the live setup of a Knowledge Q&A Agent for 24/7 member insights and forum automation. They now own and operate the system themselves, with Tharros on call for tuning.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.png",
@@ -100,7 +100,7 @@ function ClientsHero() {
               <div className="flex flex-col lg:items-end">
                 <span className="text-[9px] md:text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-4 md:mb-6">Strategic Overview</span>
                 <p className="text-subdued text-lg md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
-                  Tharros coaching helps local owners stand up AI agents for customer service and lead capture, then hands them the keys.
+                  Keep it Local, Keep it Canadian. Tharros trains local owners to set up AI agents for customer service and lead capture, then hands them the keys.
                 </p>
               </div>
             </div>

@@ -6,17 +6,17 @@ const steps = [
   {
     number: "01",
     headline: "Diagnose",
-    body: "We map your business, your biggest time drains, and the repetitive conversations costing you the most. Together we pick the one agent worth building first.",
+    body: "We map your business, your biggest time drains, and the repetitive conversations costing you the most. Together we pick the one agent worth setting up first.",
   },
   {
     number: "02",
-    headline: "Coach",
-    body: "Over 1-2 weeks of live sessions, we sit beside you in the platform of your choice. You configure your agent, we explain every decision, and you walk away knowing how it works.",
+    headline: "Train & Set Up",
+    body: "Over 1-2 weeks of live training sessions, we set up your agent together in the platform of your choice. You learn the tools, write the prompts, and configure every step with us guiding you.",
   },
   {
     number: "03",
     headline: "Launch",
-    body: "We help you publish it to your website or messaging channel and review the first two weeks together. You own the keys, the prompts, and the playbook.",
+    body: "We help you publish it to your website or messaging channel and review the first two weeks together. You walk away with the agent, the playbook, and the training to keep going.",
   },
 ];
 
@@ -33,11 +33,11 @@ export default function HowItWorksSection() {
           <div className="flex flex-col items-center mb-16 md:mb-32 3xl:mb-48">
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-slate-900 mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
-              From conversation to <br className="hidden md:block" />
-              <span className="text-accent-3">your own agent in 2 weeks.</span>
+              From first call to <br className="hidden md:block" />
+              <span className="text-accent-3">trained and set up in 2 weeks.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-12 3xl:mb-20 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Three stages of coaching. Zero jargon. You finish owning the system, not renting it.
+              Three stages of training and live setup. Zero jargon. You finish owning the system, not renting it.
             </p>
           </div>
         </AnimatedSection>

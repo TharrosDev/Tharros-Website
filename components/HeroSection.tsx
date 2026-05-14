@@ -53,10 +53,10 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[14rem] font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.2] sm:leading-[1.1] md:leading-[1] 3xl:leading-[0.9]"
           >
-            Stop paying agencies <br className="hidden md:block" />
-            <span className="text-slate-500">to build your AI.</span>
+            Hands-on AI agent <br className="hidden md:block" />
+            <span className="text-slate-500">training and setup.</span>
             <br className="hidden sm:block" />
-            We teach you to <span className="relative inline-block text-accent-3">
+            For owners who want to <span className="relative inline-block text-accent-3">
               own it
               <motion.span
                 initial={{ width: 0 }}
@@ -72,8 +72,8 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl text-slate-200 max-w-2xl xl:max-w-5xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
-            AI agent consulting and coaching for trades and small business owners. <br className="hidden lg:block" />
-            We sit beside you, teach the platforms, and leave you with an agent you understand.
+            One-on-one training and live setup sessions for Ottawa trades and small business owners. <br className="hidden lg:block" />
+            We train you on the platforms, set up your first agent with you, and leave you with a system you can run.
           </motion.p>
 
           <motion.div 
@@ -85,7 +85,7 @@ export default function HeroSection() {
                 href="/intake"
                 className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] py-4 md:py-6 3xl:py-8 3xl:px-12"
               >
-                <span className="relative z-10">Book a Coaching Call</span>
+                <span className="relative z-10">Book a Training Call</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               </a>
             </Magnetic>
@@ -99,9 +99,9 @@ export default function HeroSection() {
             </a>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={itemVariants}
-            className="mt-16 md:mt-20 flex items-center justify-center gap-4 text-white/70 font-black uppercase tracking-[0.4em] text-[10px] md:text-sm select-none"
+            className="mt-16 md:mt-20 inline-flex items-center justify-center gap-3 md:gap-4 px-5 py-2.5 md:px-7 md:py-3 rounded-full border border-white/15 bg-white/[0.04] text-white font-black uppercase tracking-[0.4em] text-[10px] md:text-sm select-none shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
           >
             <span>Keep it Local, Keep it Canadian</span>
             <img src="/canada-flag.svg" alt="Canada" className="w-6 md:w-8 h-auto rounded-sm shadow-sm" />

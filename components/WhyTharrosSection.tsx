@@ -9,7 +9,7 @@ const pillars = [
       </svg>
     ),
     headline: "Ottawa-local",
-    body: "We know Kanata trades companies and Centretown law offices. Our coaching is rooted in local context, local pricing questions, and the real shape of small business in this city.",
+    body: "Keep it Local, Keep it Canadian. We know Kanata trades companies and Centretown law offices. Our training is rooted in local context, local pricing questions, and the real shape of small business in this city.",
   },
   {
     icon: (
@@ -17,8 +17,8 @@ const pillars = [
         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
       </svg>
     ),
-    headline: "You own it",
-    body: "Most agencies hand you a black box and a recurring invoice. We hand you the keys, the prompts, and the know-how. When we leave, your agent stays, and so does your team's ability to change it.",
+    headline: "Training, not handoff",
+    body: "Most agencies hand you a black box and a recurring invoice. We train you through every setup decision. When we leave, your agent stays, and so does your team's ability to change it.",
   },
   {
     icon: (
@@ -26,8 +26,8 @@ const pillars = [
         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
       </svg>
     ),
-    headline: "No-code, plain English",
-    body: "You don't need to be technical. We teach using no-code platforms and plain-English prompts. If you can describe how your business works, you can configure your agent. We just sit beside you while you do it.",
+    headline: "No-code setup",
+    body: "You don't need to be technical. We train on no-code platforms and plain-English prompts. If you can describe how your business works, you can set up your agent. We sit beside you while you do it.",
   },
 ];
 
@@ -45,11 +45,11 @@ export default function WhyTharrosSection() {
           <div className="flex flex-col items-center mb-12 md:mb-16 3xl:mb-24">
 
             <h2 className="text-4xl sm:text-5xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-white mb-10 md:mb-12 3xl:mb-16 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
-              Coaching built for <br className="hidden md:block" />
+              Training built for <br className="hidden md:block" />
               <span className="text-accent-3">small business owners.</span>
             </h2>
             <p className="text-slate-300 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-12 3xl:mb-20 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
-              We close the AI skill gap on your team, efficiently, affordably, and without lock-in.
+              Keep it Local, Keep it Canadian. We close the AI skill gap on your team, efficiently, affordably, and without lock-in.
             </p>
           </div>
         </AnimatedSection>
@@ -81,8 +81,8 @@ export default function WhyTharrosSection() {
               <div className="relative z-10">
                 <p className="text-white text-lg md:text-xl xl:text-2xl 3xl:text-4xl 4xl:text-5xl leading-[1.2] mb-6 3xl:mb-12 font-bold tracking-tighter max-w-5xl 3xl:max-w-[90rem] mx-auto">
                   &ldquo;Ottawa small businesses don&apos;t need another agency. They need
-                  someone who&apos;ll <span className="text-accent-3">sit beside them on Tuesday morning</span> and show
-                  them how to build the thing themselves.&rdquo;
+                  someone who&apos;ll <span className="text-accent-3">sit beside them on Tuesday morning</span> and train
+                  them to set the thing up themselves.&rdquo;
                 </p>
                 
                 <div className="flex flex-col items-center justify-center gap-3 3xl:gap-6">
