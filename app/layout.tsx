@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | Tharros AI Consulting",
   },
   description:
-    "Keep it Local, Keep it Canadian. AI agent training and live setup for Ottawa trades and small business owners. We train you, we set it up with you, and you walk away owning the agent.",
+    "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small business owners. We train you, set it up with you, and integrate it into your site.",
   keywords: [
     "AI Agent Training Ottawa",
     "AI Agent Setup Ottawa",
@@ -78,6 +78,12 @@ export const metadata: Metadata = {
     "Auto Repair AI Training",
     "Knowledge Management Training",
     "AI Skill Transfer Ottawa",
+    "Website Modernization Ottawa",
+    "Small Business Website Redesign Ottawa",
+    "AI Agent Website Integration",
+    "Embed AI Agent on Website",
+    "AI Tool Training for Small Business",
+    "Ottawa Web Development with AI",
     "Keep it Local",
     "Keep it Canadian",
     "Keep it Local Keep it Canadian",
@@ -107,9 +113,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Tharros | Keep it Local, Keep it Canadian | AI Agent Training & Setup for Ottawa",
+    title: "Tharros | Keep it Local, Keep it Canadian | AI Training, Setup & Website Modernization for Ottawa",
     description:
-      "Keep it Local, Keep it Canadian. AI agent training and live setup for Ottawa trades and small businesses. We train you on the platforms, set up your first agent with you, and leave you owning it.",
+      "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small businesses. We train you, set it up with you, and integrate it into your site.",
     url: "https://tharros.ca",
     siteName: "Tharros AI Consulting",
     locale: "en_CA",
@@ -126,7 +132,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Tharros | Keep it Local, Keep it Canadian",
-    description: "Keep it Local, Keep it Canadian. AI agent training and setup for Ottawa small businesses. We train you to set up the agents, not sell them to you.",
+    description: "Keep it Local, Keep it Canadian. AI agent training, setup, and website modernization for Ottawa small businesses. We train you to set up the agents, not sell them to you.",
     images: ["/og-image.jpg"],
     creator: "@TharrosAI",
   },
@@ -188,7 +194,7 @@ export default function RootLayout({
         "latitude": 45.3483,
         "longitude": -75.9103
       },
-      "description": "Keep it Local, Keep it Canadian. AI agent training and live setup for Ottawa trades and small businesses. We train owners and operators to set up AI agents for lead capture and office admin.",
+      "description": "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small businesses. We train owners and operators, set agents up with them, and integrate them into their site.",
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -200,7 +206,7 @@ export default function RootLayout({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "serviceType": "AI Agent Training and Setup Consulting",
+      "serviceType": "AI Agent Training, Setup, and Website Modernization Consulting",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Tharros"
@@ -226,7 +232,7 @@ export default function RootLayout({
             "itemOffered": {
               "@type": "Service",
               "name": "Operator Program",
-              "description": "A one-week team training program to set up CRM-connected AI agents and document an internal setup playbook."
+              "description": "A one-week team training program covering agents and AI tools, including website modernization and direct agent embedding. Leaves the team with an internal setup playbook."
             }
           },
           {
@@ -234,7 +240,15 @@ export default function RootLayout({
             "itemOffered": {
               "@type": "Service",
               "name": "Fractional AI Lead",
-              "description": "A 1-2 week intensive of AI agent training and live build, followed by an ongoing retainer for new agent setups, tuning, and roadmap reviews."
+              "description": "A 1-2 week intensive of agent and AI tool training and live build, including a full website modernization with the agent integrated across the site, followed by an ongoing retainer for new agent setups, tuning, and roadmap reviews."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Website Modernization with AI Agent Integration",
+              "description": "Modernize the marketing website of an Ottawa small business and embed an AI agent directly into the site. Included with the Operator Program and Fractional AI Lead packages."
             }
           }
         ]

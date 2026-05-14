@@ -7,21 +7,24 @@ const TIERS = [
     label: "Starter Training",
     title: "The Setup Sprint",
     duration: "1 - 3 Days",
-    desc: "A focused 1-3 day training for owner-operators. We pick one agent, run live setup sessions until it's live, and leave you with a working system and the skills to tune it.",
+    desc: "A focused 1-3 day training for owner-operators. We pick one agent or AI tool, run live setup sessions until it's live, and leave you with a working system and the skills to tune it.",
+    includes: ["Agent Setup", "Live Training", "Setup Playbook"],
     color: "text-slate-400"
   },
   {
     label: "Team Training",
     title: "The Operator Program",
     duration: "1 Week",
-    desc: "A one-week training program for scaling local brands. We train you and your team to set up a CRM-connected agent and document an internal playbook you can keep using after we leave.",
+    desc: "A one-week training program for scaling local brands. We train you and your team on agents and AI tools, modernize your website, and embed the agent directly into it. You walk away with an internal playbook you can keep using.",
+    includes: ["Team Training", "Website Modernization", "Agent Embed", "Internal Playbook"],
     color: "text-slate-600"
   },
   {
     label: "Training, Build & Retainer",
     title: "The Fractional AI Lead",
     duration: "1 - 2 Weeks + Retainer",
-    desc: "A 1-2 week intensive of training and live build, followed by an ongoing retainer. New agent setups, roadmap reviews, and live troubleshooting as your operation grows.",
+    desc: "A 1-2 week intensive of agent and AI tool training, a full website modernization with the agent integrated across your site, and then an ongoing retainer. New agent setups, roadmap reviews, and live troubleshooting as your operation grows.",
+    includes: ["Intensive Training", "Website Modernization", "Agent Integration", "Ongoing Retainer"],
     color: "text-accent-3"
   }
 ] as const;
@@ -44,7 +47,7 @@ export default function ModelTiersSection() {
               <span className="text-slate-400">every stage of growth.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
-              Pick the training depth that matches where your business actually is.
+              Pick the training depth that matches where your business actually is. Operator and Fractional packages add website modernization and direct agent integration.
             </p>
           </AnimatedSection>
         </div>
@@ -65,7 +68,18 @@ export default function ModelTiersSection() {
                 <p className="text-lg xl:text-xl 3xl:text-3xl text-slate-600 leading-relaxed font-medium group-hover:text-slate-900 transition-colors">
                   {tier.desc}
                 </p>
-                
+
+                <div className="mt-6 3xl:mt-12 flex flex-wrap gap-2 3xl:gap-4">
+                  {tier.includes.map((item) => (
+                    <span
+                      key={item}
+                      className="px-3 py-1.5 3xl:px-6 3xl:py-3 bg-slate-100 border border-slate-200 rounded-lg 3xl:rounded-2xl text-[10px] 3xl:text-base font-black text-slate-700 uppercase tracking-[0.15em] group-hover:bg-accent-3/10 group-hover:border-accent-3/30 group-hover:text-slate-900 transition-colors"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
                 {/* Visual Accent */}
                 <div className="mt-8 pt-8 3xl:mt-16 3xl:pt-16 border-t border-slate-200 w-16 group-hover:w-full transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                 <div className="absolute -bottom-2 left-0 w-0 h-[2px] 3xl:h-[4px] bg-accent-3 group-hover:w-full transition-all duration-700 shadow-[0_0_10px_rgba(14,165,233,0.3)]" />
