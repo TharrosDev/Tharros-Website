@@ -80,7 +80,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 md:gap-12 w-full max-w-sm sm:max-w-none mx-auto"
           >
-            <Magnetic strength={0.1}>
+            <Magnetic strength={0.1} className="inline-block w-full sm:w-auto">
               <a
                 href="/intake"
                 className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] md:py-6 3xl:py-8 3xl:px-12"
