@@ -11,7 +11,7 @@ const pricingFactors = [
       </svg>
     ),
     title: "Build Scope",
-    description: "From a clean website refresh to a full site with a multi-agent platform wired into your operation."
+    description: "From a clean website refresh to a full site with multiple agents wired directly into your operation."
   },
   {
     icon: (
@@ -52,8 +52,8 @@ export default function PricingSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] tracking-tighter">
-              Tailored Builds for <br className="hidden md:block" />
-              <span className="text-accent-3">Tailored Businesses.</span>
+              Pricing as tailored <br className="hidden md:block" />
+              <span className="text-accent-3">as the work.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
               Pricing as custom as the build. Mapped strictly to the scope, the integration depth, and whether you want us on call after launch.
