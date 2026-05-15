@@ -50,55 +50,55 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="py-14 sm:py-16 md:py-24 xl:py-32 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
       <div id="solutions" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      
+
       {/* Industrial Grid Accents */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
+
       <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-12 md:mb-16 3xl:mb-32">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16 3xl:mb-32">
 
-            <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
+            <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-6 sm:mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto md:leading-[1.2] tracking-tighter">
               Agents we build <br className="hidden sm:block" />
               <span className="text-accent-3">into your site.</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
+            <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl font-medium opacity-80">
               Three agents that fit most small business operations. Each is built end-to-end and embedded into your modernized site. New agents and tweaks happen via retainer or per call.
             </p>
           </div>
         </AnimatedSection>
- 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 3xl:gap-20">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8 lg:gap-10 3xl:gap-20">
           {agents.map((agent, i) => (
             <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
-              <motion.div 
+              <motion.div
                 className="clean-card h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden 3xl:p-16 4xl:p-20"
               >
-                <div className="flex flex-col gap-8 3xl:gap-16 mb-10 3xl:mb-20 relative z-10">
-                  <div className="w-16 h-16 3xl:w-32 3xl:h-32 rounded-[1.25rem] 3xl:rounded-[2.5rem] bg-white border border-white flex items-center justify-center text-slate-950 transition-all duration-500 shrink-0 shadow-2xl">
-                    <span className="scale-125 3xl:scale-[2.5]">{agent.icon}</span>
+                <div className="flex flex-col gap-6 sm:gap-8 3xl:gap-16 mb-8 sm:mb-10 3xl:mb-20 relative z-10">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 3xl:w-32 3xl:h-32 rounded-2xl sm:rounded-[1.25rem] 3xl:rounded-[2.5rem] bg-white border border-white flex items-center justify-center text-slate-950 transition-all duration-500 shrink-0 shadow-2xl">
+                    <span className="scale-110 sm:scale-125 3xl:scale-[2.5]">{agent.icon}</span>
                   </div>
                   <div className="flex flex-col gap-3 3xl:gap-8">
                     <p className="text-[11px] 3xl:text-xl font-black text-accent-3 uppercase tracking-[0.3em]">{agent.tagline}</p>
-                    <h3 className="text-2xl sm:text-3xl xl:text-4xl 3xl:text-6xl font-bold text-white tracking-tighter leading-[1.1]">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl font-bold text-white tracking-tighter leading-[1.15] sm:leading-[1.1]">
                       {agent.name}
                     </h3>
                   </div>
                 </div>
-                
-                <p className="text-slate-200 text-lg md:text-xl 3xl:text-3xl leading-relaxed mb-6 3xl:mb-12 relative z-10 flex-1">
+
+                <p className="text-slate-200 text-base sm:text-lg md:text-xl 3xl:text-3xl leading-relaxed mb-6 3xl:mb-12 relative z-10 flex-1">
                   {agent.description}
                 </p>
- 
+
                 <div className="relative z-10 pt-5 3xl:pt-10 border-t border-white/10">
-                  <div className="flex flex-wrap gap-2.5 3xl:gap-6">
+                  <div className="flex flex-wrap gap-2 sm:gap-2.5 3xl:gap-6">
                     {agent.examples.map((ex) => (
-                      <span 
-                        key={ex} 
-                        className="px-4 py-1.5 3xl:px-8 3xl:py-3 bg-white/[0.05] border border-white/20 rounded-xl 3xl:rounded-3xl text-[10px] 3xl:text-base font-black text-white/60 uppercase tracking-[0.2em]"
+                      <span
+                        key={ex}
+                        className="px-3 py-1.5 sm:px-4 3xl:px-8 3xl:py-3 bg-white/[0.05] border border-white/20 rounded-lg sm:rounded-xl 3xl:rounded-3xl text-[9px] sm:text-[10px] 3xl:text-base font-black text-white/60 uppercase tracking-[0.2em]"
                       >
                         {ex}
                       </span>

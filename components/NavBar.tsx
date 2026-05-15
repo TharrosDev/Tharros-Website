@@ -119,9 +119,9 @@ export default function NavBar() {
     <>
       <header
         suppressHydrationWarning
-        className="fixed top-2 md:top-4 z-50 flex items-center gap-4 px-4 md:px-5 3xl:px-12 py-1.5 md:py-2 3xl:py-6 rounded-2xl md:rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
-        style={{ 
-          width: "min(92%, var(--nav-width, 1300px))",
+        className="fixed top-3 md:top-4 z-50 flex items-center gap-2 md:gap-4 px-3 md:px-5 3xl:px-12 py-2 md:py-2 3xl:py-6 rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
+        style={{
+          width: "min(94%, var(--nav-width, 1300px))",
           opacity: mounted ? 1 : 0,
           // Fluidly increase width for large monitors
           ...({ "--nav-width": "clamp(1300px, 60vw, 2200px)" } as any)
@@ -160,38 +160,48 @@ export default function NavBar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1.5 md:gap-3 3xl:gap-8 h-full">
+        <div className="flex items-center gap-2 md:gap-3 3xl:gap-8 h-full">
           <Magnetic strength={0.2}>
             <Link
               href="/intake"
               prefetch={false}
               aria-label="Book your free discovery call"
-              className="inline-block px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 primary-button text-[11px] md:text-sm 3xl:text-xl transition-all duration-300"
+              className="hidden sm:inline-flex items-center justify-center px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 primary-button !min-h-0 text-[11px] md:text-sm 3xl:text-xl transition-all duration-300"
             >
-              Book a Discovery Call
+              <span className="hidden md:inline">Book a Discovery Call</span>
+              <span className="md:hidden">Book a Call</span>
             </Link>
           </Magnetic>
 
+          <Link
+            href="/intake"
+            prefetch={false}
+            aria-label="Book your free discovery call"
+            className="sm:hidden inline-flex items-center justify-center primary-button !min-h-0 !w-auto !px-4 !py-2 text-[11px] tracking-[0.15em]"
+          >
+            Book Call
+          </Link>
+
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex relative z-[60] w-8 h-8 flex-col items-center justify-center gap-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all duration-300 active:scale-90"
+            className="md:hidden flex relative z-[60] w-11 h-11 flex-col items-center justify-center gap-1 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-200 border border-slate-200 transition-all duration-300 active:scale-90"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
           >
             <span
-              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 origin-center ${
-                mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
+              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
+                mobileOpen ? "rotate-45 translate-y-[4px]" : ""
               }`}
             />
             <span
-              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 ${
+              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 ${
                 mobileOpen ? "opacity-0 scale-0" : ""
               }`}
             />
             <span
-              className={`block w-4 h-[1.5px] bg-slate-900 transition-all duration-300 origin-center ${
-                mobileOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
+              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
+                mobileOpen ? "-rotate-45 -translate-y-[4px]" : ""
               }`}
             />
           </button>
@@ -218,7 +228,7 @@ export default function NavBar() {
             <div className="absolute bottom-12 left-8 w-4 h-4 border-b border-l border-white/20" />
             <div className="absolute bottom-12 right-8 w-4 h-4 border-b border-r border-white/20" />
 
-            <div className="flex flex-col items-center justify-center gap-8 w-full px-8 relative z-10">
+            <div className="flex flex-col items-center justify-center gap-6 w-full px-6 relative z-10 max-h-[calc(100dvh-6rem)] overflow-y-auto py-12">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -229,20 +239,20 @@ export default function NavBar() {
                   }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.08 + 0.1, ease: [0.22, 1, 0.36, 1] as any }}
-                  className="group flex flex-col items-center gap-1"
+                  transition={{ delay: i * 0.05 + 0.05, ease: [0.22, 1, 0.36, 1] as any }}
+                  className="group flex flex-col items-center gap-1 py-2 px-4 active:opacity-60 transition-opacity"
                 >
-                  <span className="text-3xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors uppercase">
+                  <span className="text-4xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors uppercase">
                     {link.label}
                   </span>
                 </motion.a>
               ))}
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="w-full max-w-xs mt-8 pt-8 border-t border-white/5 flex flex-col items-center"
+                transition={{ delay: 0.3 }}
+                className="w-full max-w-xs mt-6 pt-8 border-t border-white/10 flex flex-col items-center safe-bottom"
               >
                 <Link
                   href="/intake"
@@ -252,10 +262,10 @@ export default function NavBar() {
                 >
                   Book a Discovery Call
                 </Link>
-                
-                <a 
-                  href="mailto:tharrosdev@gmail.com" 
-                  className="mt-8 text-white/40 text-[10px] font-black uppercase tracking-[0.4em] hover:text-accent-3 transition-colors flex items-center gap-3"
+
+                <a
+                  href="mailto:tharrosdev@gmail.com"
+                  className="mt-8 text-white/50 text-[10px] font-black uppercase tracking-[0.35em] hover:text-accent-3 transition-colors flex items-center gap-3 py-2"
                 >
                   Contact our Team
                 </a>

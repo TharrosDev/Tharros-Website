@@ -254,45 +254,45 @@ export default function ChatDemoSection() {
   }, [agentInstance, currentTask, isTyping]);
 
   return (
-    <section className="section-padding px-4 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="section-padding px-4 sm:px-5 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
       {/* Anchor for navigation */}
       <div id="demo" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      
+
       {/* Background Sophistication */}
       <div className="scanline" />
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
-      
+
       {/* Neural Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" style={{ animationDelay: '1s' }} />
 
       <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative flex flex-col items-center z-10">
-        
+
         {/* Section Header */}
-        <div className="text-center mb-16 md:mb-32 3xl:mb-48">
+        <div className="text-center mb-12 sm:mb-16 md:mb-32 3xl:mb-48 w-full">
           <AnimatedSection>
 
-            
-            <h2 className="text-4xl sm:text-5xl md:text-8xl xl:text-9xl 3xl:text-[11rem] 4xl:text-[13rem] font-bold text-white mb-10 md:mb-12 3xl:mb-20 leading-[1.2] sm:leading-[1.1] tracking-tighter">
+
+            <h2 className="text-[2.4rem] leading-[1.05] sm:text-5xl md:text-8xl xl:text-9xl 3xl:text-[11rem] 4xl:text-[13rem] font-bold text-white mb-6 sm:mb-10 md:mb-12 3xl:mb-20 sm:leading-[1.1] tracking-tighter">
               An agent that <br />
               <span className="text-slate-500">shows up.</span>
             </h2>
 
-            <p className="text-slate-200 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-16 3xl:mb-24 leading-relaxed max-w-3xl 3xl:max-w-6xl mx-auto font-medium opacity-90">
+            <p className="text-slate-200 text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-10 sm:mb-16 3xl:mb-24 max-w-md sm:max-w-3xl 3xl:max-w-6xl mx-auto font-medium opacity-90">
               Built once, embedded into your site, live the moment your visitors land. <br className="hidden md:block" />
               Try ours in <span className="text-accent-3">real time</span>.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-12 md:gap-20 lg:gap-24 3xl:gap-32">
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap justify-center gap-6 sm:gap-12 md:gap-20 lg:gap-24 3xl:gap-32 max-w-md sm:max-w-none mx-auto">
               {NEURAL_LOGIC_FEATURES.map((feature, i) => (
-                <motion.div 
+                <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex flex-col items-center text-center max-w-[280px] 3xl:max-w-[400px]"
+                  className="flex flex-col items-center text-center max-w-full sm:max-w-[280px] 3xl:max-w-[400px]"
                 >
-                  <h4 className="text-accent-3 font-black text-xs md:text-sm 3xl:text-base uppercase tracking-[0.3em] mb-4 3xl:mb-8">
+                  <h4 className="text-accent-3 font-black text-[11px] sm:text-xs md:text-sm 3xl:text-base uppercase tracking-[0.3em] mb-2.5 sm:mb-4 3xl:mb-8">
                     {feature.title}
                   </h4>
                   <p className="text-slate-200 text-base md:text-lg lg:text-xl 3xl:text-3xl font-medium leading-relaxed">
@@ -307,19 +307,19 @@ export default function ChatDemoSection() {
         {/* Re-arranged Split Layout: Header & Console side-by-side */}
         <div className="w-full">
           <AnimatedSection delay={0.2} variant="scale-in">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24 3xl:gap-32 items-start">
-              
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 xl:gap-24 3xl:gap-32 items-start">
+
               {/* Left Column: Briefing & Strategy */}
               <div className="lg:col-span-5 xl:col-span-4 3xl:col-span-3 lg:sticky lg:top-32">
-                <div className="mb-12 3xl:mb-24">
-                  <div className="flex items-center gap-3 mb-6 3xl:mb-12">
+                <div className="mb-6 sm:mb-8 lg:mb-12 3xl:mb-24">
+                  <div className="flex items-center gap-3 mb-4 sm:mb-6 3xl:mb-12">
                     <div className="w-8 h-px bg-accent-3 3xl:w-16" />
                   </div>
-                  <h3 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl 3xl:text-8xl 4xl:text-9xl font-bold text-white tracking-tighter mb-8 md:mb-10 3xl:mb-16 leading-[1.1]">
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 3xl:text-8xl 4xl:text-9xl font-bold text-white tracking-tighter mb-5 sm:mb-8 md:mb-10 3xl:mb-16 leading-[1.1]">
                     A live agent, <br />
                     <span className="text-accent-3">right now.</span>
                   </h3>
-                  <p className="text-lg text-slate-300 3xl:text-2xl leading-relaxed mb-10 3xl:mb-20 max-w-sm 3xl:max-w-xl">
+                  <p className="text-base sm:text-lg text-slate-300 3xl:text-2xl leading-relaxed mb-6 sm:mb-10 3xl:mb-20 max-w-md lg:max-w-sm 3xl:max-w-xl">
                     Same engine we embed into Ottawa small business sites. Ask it about Tharros, or how we&apos;d build one for you.
                   </p>
                 </div>
@@ -337,13 +337,13 @@ export default function ChatDemoSection() {
 
               {/* Right Column: Chat Console */}
               <div className="lg:col-span-7 xl:col-span-8 3xl:col-span-9 relative">
-                {/* Decorative Frame Elements */}
-                <div className="absolute -top-12 -right-12 w-48 h-48 3xl:w-80 3xl:h-80 border-t-2 border-r-2 border-white/5 rounded-tr-[4rem] 3xl:rounded-tr-[8rem] pointer-events-none" />
-                <div className="absolute -bottom-12 -left-12 w-48 h-48 3xl:w-80 3xl:h-80 border-b-2 border-l-2 border-white/5 rounded-bl-[4rem] 3xl:rounded-bl-[8rem] pointer-events-none" />
+                {/* Decorative Frame Elements (hidden on mobile to avoid clipping) */}
+                <div className="hidden lg:block absolute -top-12 -right-12 w-48 h-48 3xl:w-80 3xl:h-80 border-t-2 border-r-2 border-white/5 rounded-tr-[4rem] 3xl:rounded-tr-[8rem] pointer-events-none" />
+                <div className="hidden lg:block absolute -bottom-12 -left-12 w-48 h-48 3xl:w-80 3xl:h-80 border-b-2 border-l-2 border-white/5 rounded-bl-[4rem] 3xl:rounded-bl-[8rem] pointer-events-none" />
 
                 <div className="relative w-full">
                   {/* Industrial Disclaimer */}
-                  <div className="mb-6 3xl:mb-10 px-4">
+                  <div className="mb-4 sm:mb-6 3xl:mb-10 px-2 sm:px-4">
                     <p className="text-[10px] 3xl:text-sm font-black text-white/30 uppercase tracking-[0.25em] flex items-center gap-2.5">
                       <span className="relative flex w-1.5 h-1.5 3xl:w-3 3xl:h-3">
                         <span className="absolute inset-0 rounded-full bg-accent-3/60 animate-ping" />

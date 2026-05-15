@@ -45,52 +45,52 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section className="py-16 md:py-24 xl:py-32 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="py-14 sm:py-16 md:py-24 xl:py-32 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div id="problem" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      
+
       {/* Industrial Sophistication */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
       <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-12 md:mb-16">
+          <div className="flex flex-col items-center mb-10 sm:mb-12 md:mb-16">
 
-            <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-8 md:mb-10 max-w-4xl xl:max-w-6xl mx-auto leading-[1.2] tracking-tighter">
+            <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-6 sm:mb-8 md:mb-10 max-w-4xl xl:max-w-6xl mx-auto md:leading-[1.2] tracking-tighter">
               Ottawa businesses are <br className="hidden md:block" />
               <span className="text-slate-400">bleeding time.</span>
             </h2>
-            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-lg md:text-2xl xl:text-3xl leading-relaxed font-medium opacity-80 px-2">
+            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl font-medium opacity-80">
               You don&apos;t need another vendor. You need <span className="text-accent-3">a modern site, an integrated agent</span>, and a number you can call when things change.
             </p>
           </div>
         </AnimatedSection>
- 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8 lg:gap-10">
           {pains.map((pain, i) => (
             <AnimatedSection key={pain.headline} delay={i * 0.1} variant="scale-in">
-              <motion.div 
-                className="bg-white border border-slate-200 p-6 sm:p-8 md:p-10 xl:p-12 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-2xl sm:rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
+              <motion.div
+                className="bg-white border border-slate-200 p-5 sm:p-7 md:p-10 xl:p-12 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-2xl sm:rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
               >
                 {/* Industrial Corner Accents */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center gap-6 mb-10">
-                    <div 
+                  <div className="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
+                    <div
                       aria-hidden="true"
-                      className="w-16 h-16 rounded-[1.25rem] bg-slate-950 text-white flex items-center justify-center group-hover:bg-accent-3 group-hover:shadow-2xl transition-all duration-500 shrink-0"
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl sm:rounded-[1.25rem] bg-slate-950 text-white flex items-center justify-center group-hover:bg-accent-3 group-hover:shadow-2xl transition-all duration-500 shrink-0"
                     >
-                      <span className="scale-125">{pain.icon}</span>
+                      <span className="scale-110 sm:scale-125">{pain.icon}</span>
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{pain.stat}</span>
                     </div>
                   </div>
-                  
-                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight tracking-tighter mb-6 group-hover:text-accent-3 transition-colors">{pain.headline}</h3>
-                  <p className="text-slate-600 leading-relaxed text-lg md:text-xl group-hover:text-slate-800 transition-colors mb-8 flex-1">{pain.body}</p>
-                  
+
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 leading-tight tracking-tighter mb-4 sm:mb-6 group-hover:text-accent-3 transition-colors">{pain.headline}</h3>
+                  <p className="text-slate-600 leading-relaxed text-base sm:text-lg md:text-xl group-hover:text-slate-800 transition-colors mb-6 sm:mb-8 flex-1">{pain.body}</p>
+
 
                 </div>
                 
