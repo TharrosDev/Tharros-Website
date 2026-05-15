@@ -6,9 +6,9 @@ const SITE_URL = "https://tharros.ca";
 const PAGE_URL = `${SITE_URL}/intake`;
 
 export const metadata: Metadata = {
-  title: "Discovery Briefing | Book a Free Discovery Call",
+  title: "Discovery Briefing — Book a Free Call",
   description:
-    "Keep it Local, Keep it Canadian. Book your free Tharros discovery call. Tell us about your Ottawa small business and we'll scope a tailored build — website modernization, AI agent integration, or the full On-Call retainer.",
+    "Book a free Tharros discovery call. Tell us about your Ottawa business and we'll scope a build — The Refresh, The Integrate, or The On-Call. Keep it Local, Keep it Canadian.",
   keywords: [
     "Tharros Discovery Call",
     "Book Discovery Call Ottawa",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Discovery Briefing | Tharros",
+    title: "Discovery Briefing — Book a Free Call | Tharros",
     description:
-      "Share your business context. We use it to scope a build that fits your operation — website modernization, AI agent integration, or the full On-Call retainer. Built for Ottawa small businesses.",
+      "Share your business context and we'll scope a build that fits your operation — The Refresh, The Integrate, or The On-Call. Keep it Local, Keep it Canadian.",
     url: PAGE_URL,
     siteName: "Tharros",
     type: "website",
@@ -41,15 +41,15 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Book a free discovery call with Tharros — Ottawa website modernization and AI agent integration.",
+        alt: "Discovery Briefing — book a free call with Tharros.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Discovery Briefing | Tharros",
+    title: "Discovery Briefing — Book a Free Call | Tharros",
     description:
-      "Book a free discovery call. Tharros scopes a tailored website and AI agent build for your Ottawa small business.",
+      "Book a free discovery call. We'll scope a website and AI agent build for your Ottawa business. Keep it Local, Keep it Canadian.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -65,9 +65,9 @@ export default function IntakePage() {
       "@type": "ContactPage",
       "@id": `${PAGE_URL}#contactpage`,
       url: PAGE_URL,
-      name: "Discovery Briefing | Tharros",
+      name: "Discovery Briefing — Book a Free Call | Tharros",
       description:
-        "Book a free discovery call with Tharros. Share your business context and we'll scope a tailored website modernization or AI agent integration build.",
+        "Book a free discovery call with Tharros. Share your business context and we'll scope a website modernization or AI agent integration build for your Ottawa operation.",
       inLanguage: "en-CA",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#localbusiness` },

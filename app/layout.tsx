@@ -47,11 +47,11 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   title: {
     default:
-      "Tharros | Keep it Local, Keep it Canadian | Website Modernization & AI Agent Integration for Ottawa Small Businesses",
+      "Tharros — Modern Websites & AI Agents for Ottawa Businesses",
     template: "%s | Tharros",
   },
   description:
-    "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.",
+    "Modern websites and integrated AI agents for Ottawa trades and small businesses. The Refresh, The Integrate, The On-Call. Keep it Local, Keep it Canadian.",
   keywords: [
     "Website Modernization Ottawa",
     "Small Business Website Redesign Ottawa",
@@ -146,9 +146,9 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      "Tharros | Keep it Local, Keep it Canadian | Website Modernization & AI Agent Integration for Ottawa",
+      "Tharros — Modern Websites & AI Agents for Ottawa Businesses",
     description:
-      "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.",
+      "Modern websites. Integrated AI agents. One team, on call. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. Keep it Local, Keep it Canadian.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
@@ -160,16 +160,16 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros Ottawa - Website Modernization & AI Agent Integration for Small Businesses | Keep it Local, Keep it Canadian",
+        alt: "Tharros — modern websites and integrated AI agents for Ottawa businesses.",
         type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tharros | Keep it Local, Keep it Canadian",
+    title: "Tharros — Modern Websites & AI Agents | Ottawa",
     description:
-      "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa small businesses. One team, end-to-end.",
+      "Modern websites. Integrated AI agents. One team, on call. Built in Ottawa for trades and small businesses. Keep it Local, Keep it Canadian.",
     images: ["/og-image.jpg"],
     creator: "@TharrosAI",
     site: "@TharrosAI",

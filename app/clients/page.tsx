@@ -7,9 +7,9 @@ const SITE_URL = "https://tharros.ca";
 const PAGE_URL = `${SITE_URL}/clients`;
 
 export const metadata: Metadata = {
-  title: "Clients | Build & Integration Success Stories",
+  title: "Clients — Real-World Impact",
   description:
-    "Keep it Local, Keep it Canadian. Ottawa businesses with modernized websites and integrated AI agents built by Tharros. Real-world results for trades, professional services, and small operator-led teams.",
+    "Live Tharros builds. The Meridian Society runs a Knowledge Q&A Agent built and integrated by Tharros for 24/7 member insights. Keep it Local, Keep it Canadian.",
   keywords: [
     "Tharros Clients",
     "Tharros Case Studies",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Clients | Tharros Build & Integration Success Stories",
+    title: "Clients — Real-World Impact | Tharros",
     description:
-      "Real-world results from Tharros website modernization and AI agent integration builds with Ottawa small businesses.",
+      "Live Tharros builds. The Meridian Society runs a Knowledge Q&A Agent built and integrated by Tharros for 24/7 member insights and forum automation.",
     url: PAGE_URL,
     siteName: "Tharros",
     type: "website",
@@ -41,15 +41,15 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros clients — Ottawa small businesses with modernized sites and integrated AI agents.",
+        alt: "Tharros clients — Real-World Impact.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clients | Tharros",
+    title: "Clients — Real-World Impact | Tharros",
     description:
-      "Ottawa small businesses running modernized websites with integrated AI agents, built by Tharros.",
+      "Live Tharros builds, starting with The Meridian Society's 24/7 Knowledge Q&A Agent. Keep it Local, Keep it Canadian.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -65,9 +65,9 @@ export default function ClientsPage() {
       "@type": "CollectionPage",
       "@id": `${PAGE_URL}#collectionpage`,
       url: PAGE_URL,
-      name: "Clients | Tharros",
+      name: "Clients — Real-World Impact | Tharros",
       description:
-        "Ottawa businesses with modernized websites and integrated AI agents built by Tharros.",
+        "Live Tharros builds for Ottawa businesses. Modernized websites with integrated AI agents — real-world results, with the team on call after launch.",
       inLanguage: "en-CA",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#localbusiness` },
