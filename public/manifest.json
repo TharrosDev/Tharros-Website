@@ -1,21 +1,58 @@
 {
+  "id": "/",
   "name": "Tharros | Keep it Local, Keep it Canadian",
   "short_name": "Tharros",
-  "description": "Keep it Local, Keep it Canadian. High-performance AI agents for Ottawa trades and small businesses. Automate lead capture and admin 24/7.",
+  "description": "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#0f172a",
+  "lang": "en-CA",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Book a Discovery Call",
+      "short_name": "Discovery",
+      "description": "Book a free discovery call with Tharros",
+      "url": "/intake",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "View Clients",
+      "short_name": "Clients",
+      "description": "See Tharros build and integration clients",
+      "url": "/clients",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
     }
   ]
 }

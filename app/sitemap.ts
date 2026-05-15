@@ -1,24 +1,43 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+
+const SITE_URL = "https://tharros.ca";
+
+const LAST_MODIFIED = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://tharros.ca',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
+      url: SITE_URL,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 1.0,
+      alternates: {
+        languages: {
+          "en-CA": SITE_URL,
+        },
+      },
     },
     {
-      url: 'https://tharros.ca/clients',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${SITE_URL}/intake`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
       priority: 0.9,
+      alternates: {
+        languages: {
+          "en-CA": `${SITE_URL}/intake`,
+        },
+      },
     },
     {
-      url: 'https://tharros.ca/intake',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${SITE_URL}/clients`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
       priority: 0.8,
+      alternates: {
+        languages: {
+          "en-CA": `${SITE_URL}/clients`,
+        },
+      },
     },
-  ]
+  ];
 }
