@@ -77,7 +77,7 @@ const MobileChatConsole = memo(({
               </div>
               <div className="text-left">
                 <h3 className="text-[11px] sm:text-xs font-bold text-slate-950 tracking-tight leading-none mb-1">{title}</h3>
-                <span className="text-[8px] font-black text-accent-3 uppercase tracking-[0.25em]">● Online · Ottawa</span>
+                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.25em]">Online · Ottawa</span>
               </div>
             </div>
 
@@ -102,8 +102,7 @@ const MobileChatConsole = memo(({
         ref={scrollRef}
         className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 relative scroll-smooth bg-gradient-to-b from-slate-50/40 via-white to-slate-50/40"
       >
-        <div className="absolute top-8 -left-16 w-48 h-48 bg-accent-3/[0.06] blur-[60px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-8 -right-16 w-48 h-48 bg-slate-900/[0.04] blur-[60px] rounded-full pointer-events-none" />
+        <div className="absolute top-10 -left-20 w-56 h-56 bg-accent-3/[0.05] blur-[70px] rounded-full pointer-events-none" />
 
         {isLoading ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-3 relative">
@@ -128,8 +127,6 @@ const MobileChatConsole = memo(({
 
       {/* Input Area */}
       <div className="relative p-4 bg-white border-t border-slate-200 shrink-0">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
         <AnimatePresence>
           {recommendedQuestions.length > 0 && !isTyping && !isLimitReached && (
             <motion.div
@@ -158,16 +155,13 @@ const MobileChatConsole = memo(({
           onSubmit={(e) => handleSend(inputValue, e)}
           className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-full border border-slate-200 transition-all duration-300 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.12)]"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-slate-300 shrink-0 ml-3">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={isLimitReached ? "Demo complete." : "Ask anything..."}
             disabled={isLoading || isTyping || isLimitReached}
-            className="flex-1 min-w-0 bg-transparent px-2 py-2.5 text-[16px] text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium"
+            className="flex-1 min-w-0 bg-transparent px-4 py-2.5 text-[16px] text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium"
           />
           <button
             type="submit"
@@ -218,8 +212,8 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => {
         >
           {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
         </div>
-        <span className={`text-[8px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] ${isAgent ? "text-slate-400" : "text-slate-300"}`}>
-          {isAgent ? `Tharros · ${msg.time}` : msg.time}
+        <span className="text-[8px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] text-slate-400">
+          {msg.time}
         </span>
       </div>
     </motion.div>
