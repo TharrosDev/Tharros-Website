@@ -399,15 +399,19 @@ export default function ChatDemoSection() {
 
                           <div className="flex items-center gap-3 3xl:gap-6">
                             <div className="flex flex-col items-end gap-1.5 3xl:gap-3">
-                              <span className="text-[8px] 3xl:text-xs font-black text-slate-400 uppercase tracking-[0.25em] leading-none">Left</span>
+                              <span className={`text-[8px] 3xl:text-xs font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
+                                {isLimitReached ? "Limit Reached" : "Left"}
+                              </span>
                               <div className="flex items-center gap-1 3xl:gap-2">
                                 {Array.from({ length: MAX_PROMPTS }).map((_, i) => (
                                   <span
                                     key={i}
                                     className={`h-1.5 w-6 3xl:h-3 3xl:w-12 rounded-full transition-colors duration-500 ${
-                                      i < MAX_PROMPTS - userMessageCount
-                                        ? "bg-slate-950"
-                                        : "bg-slate-200"
+                                      isLimitReached
+                                        ? "bg-red-500"
+                                        : i < MAX_PROMPTS - userMessageCount
+                                          ? "bg-slate-950"
+                                          : "bg-slate-200"
                                     }`}
                                   />
                                 ))}
@@ -454,9 +458,38 @@ export default function ChatDemoSection() {
 
                       {/* Footer / Input Area */}
                       <div className="relative p-5 md:p-6 3xl:p-14 bg-white border-t border-slate-200">
+                        {/* Limit Reached Banner */}
+                        <AnimatePresence>
+                          {isLimitReached && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -6 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0 }}
+                              className="mb-4 3xl:mb-10 flex items-center justify-between gap-3 px-4 py-3 3xl:px-8 3xl:py-6 rounded-2xl 3xl:rounded-[2rem] bg-red-50 border border-red-200"
+                            >
+                              <div className="flex items-center gap-3 3xl:gap-5 min-w-0">
+                                <span className="flex w-2 h-2 3xl:w-3.5 3xl:h-3.5 rounded-full bg-red-500 shrink-0" />
+                                <div className="flex flex-col min-w-0">
+                                  <span className="text-[10px] 3xl:text-sm font-black text-red-600 uppercase tracking-[0.25em] leading-none">Demo Limit Reached</span>
+                                  <span className="text-xs 3xl:text-lg text-slate-600 font-medium mt-1 3xl:mt-2 truncate">Want one trained on your business? Let&apos;s talk.</span>
+                                </div>
+                              </div>
+                              <a
+                                href="/intake"
+                                className="shrink-0 inline-flex items-center gap-1.5 3xl:gap-3 px-4 py-2 3xl:px-8 3xl:py-4 rounded-full bg-slate-950 text-white text-[10px] 3xl:text-base font-black uppercase tracking-[0.2em] hover:bg-accent-3 transition-colors duration-300"
+                              >
+                                Get Started
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="3xl:w-4 3xl:h-4">
+                                  <path d="M5 12h14M13 5l7 7-7 7" />
+                                </svg>
+                              </a>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
                         {/* Suggestions */}
                         <AnimatePresence>
-                          {recommendedQuestions.length > 0 && !isTyping && (
+                          {recommendedQuestions.length > 0 && !isTyping && !isLimitReached && (
                             <motion.div
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -488,7 +521,11 @@ export default function ChatDemoSection() {
 
                         <form
                           onSubmit={(e) => handleSend(inputValue, e)}
-                          className="relative flex items-center gap-3 3xl:gap-6 bg-slate-50 p-1.5 3xl:p-3 rounded-full border border-slate-200 transition-all duration-300 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_4px_rgba(14,165,233,0.12)]"
+                          className={`relative flex items-center gap-3 3xl:gap-6 p-1.5 3xl:p-3 rounded-full border transition-all duration-300 ${
+                            isLimitReached
+                              ? "bg-red-50/60 border-red-200"
+                              : "bg-slate-50 border-slate-200 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_4px_rgba(14,165,233,0.12)]"
+                          }`}
                         >
                           <input
                             type="text"
