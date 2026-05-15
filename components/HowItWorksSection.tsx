@@ -5,18 +5,18 @@ import AnimatedSection from "./AnimatedSection";
 const steps = [
   {
     number: "01",
-    headline: "Diagnose",
-    body: "We map your business, your biggest time drains, and the repetitive conversations costing you the most. Together we pick the one agent worth setting up first.",
+    headline: "Discovery",
+    body: "We map your business, your biggest time drains, and where a modern site and an agent would move the needle. Together we scope the build that fits.",
   },
   {
     number: "02",
-    headline: "Train & Set Up",
-    body: "Across a focused training window (1-3 days, a week, or up to two), we set up your agent together in the platform of your choice. You learn the tools, write the prompts, and configure every step with us guiding you.",
+    headline: "Build & Integrate",
+    body: "We modernize your website and, on Integrate and On-Call packages, embed an AI agent directly into it. You see progress as we go and sign off at each checkpoint.",
   },
   {
     number: "03",
-    headline: "Launch",
-    body: "We help you publish it to your website or messaging channel and check in after launch. You walk away with the agent, the playbook, and the training to keep going.",
+    headline: "Launch & Support",
+    body: "We publish, monitor, and stay reachable. Refresh and Integrate clients call us per job. On-Call clients have us on a monthly retainer for fixes, improvements, and unlimited new agents.",
   },
 ];
 
@@ -34,10 +34,10 @@ export default function HowItWorksSection() {
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-slate-900 mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
               From first call to <br className="hidden md:block" />
-              <span className="text-accent-3">trained and set up in days.</span>
+              <span className="text-accent-3">live and supported.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-12 3xl:mb-20 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Three stages of training and live setup. Zero jargon. You finish owning the system, not renting it.
+              Three stages. Zero jargon. After launch, choose pay-per-call or the On-Call retainer.
             </p>
           </div>
         </AnimatedSection>

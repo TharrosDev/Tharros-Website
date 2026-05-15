@@ -24,70 +24,49 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://tharros.ca"),
   title: {
-    default: "Tharros | Keep it Local, Keep it Canadian | AI Agent Training & Setup for Ottawa Small Businesses",
-    template: "%s | Tharros AI Consulting",
+    default: "Tharros | Keep it Local, Keep it Canadian | Website Modernization & AI Agent Integration for Ottawa Small Businesses",
+    template: "%s | Tharros",
   },
   description:
-    "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small business owners. We train you, set it up with you, and integrate it into your site.",
+    "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.",
   keywords: [
-    "AI Agent Training Ottawa",
-    "AI Agent Setup Ottawa",
-    "AI Training for Small Business",
-    "AI Setup Service Ottawa",
-    "AI Agent Consulting Ottawa",
-    "Learn to Set Up AI Agents",
-    "No-Code AI Training",
-    "AI Workshops for Small Business",
-    "Hands-on AI Training",
-    "Live AI Agent Setup",
-    "Ottawa AI Consulting",
-    "AI Implementation Training",
-    "AI Agent Setup Help",
-    "Small Business AI Training",
-    "Fractional AI Lead",
-    "AI Advisory Retainer",
-    "AI Skills Training Ottawa",
-    "Custom AI Agent Training",
-    "LLM Training for Business Owners",
-    "GPT Training for Trades",
-    "Anthropic Claude Training",
-    "AI Customer Service Setup",
-    "AI Intake Setup Training",
-    "AI Appointment Setting Training",
-    "Smart AI Receptionist Setup",
-    "AI Training for SMB",
-    "Tharros AI Consulting",
-    "AI Strategy for Trades",
-    "Contractor AI Training",
-    "Legal AI Training",
-    "Medical AI Training Ottawa",
-    "Real Estate AI Training",
-    "AI SDR Training",
-    "AI Office Admin Training",
-    "Kanata AI Training",
-    "Nepean AI Training",
-    "Stittsville AI Training",
-    "Orleans AI Training",
-    "Barrhaven AI Training",
-    "Ottawa Tech Training",
-    "HVAC AI Training",
-    "Plumbing AI Setup",
-    "Roofing AI Training",
-    "Dental Office AI Training",
-    "Veterinary AI Setup",
-    "Auto Repair AI Training",
-    "Knowledge Management Training",
-    "AI Skill Transfer Ottawa",
     "Website Modernization Ottawa",
     "Small Business Website Redesign Ottawa",
-    "AI Agent Website Integration",
+    "AI Agent Integration Ottawa",
+    "AI Agent Build Ottawa",
     "Embed AI Agent on Website",
-    "AI Tool Training for Small Business",
     "Ottawa Web Development with AI",
+    "AI Customer Service Agent Ottawa",
+    "AI Lead Capture Agent Ottawa",
+    "AI After-Hours Intake Agent",
+    "Ottawa AI Consulting",
+    "AI Agent for Small Business",
+    "On-Call Web Retainer Ottawa",
+    "Website and AI Agent Package",
+    "Ottawa Small Business Website",
+    "Ottawa Trades Website",
+    "HVAC Website Ottawa",
+    "Plumbing Website Ottawa",
+    "Roofing Website Ottawa",
+    "Dental Office Website Ottawa",
+    "Law Firm Website Ottawa",
+    "Contractor Website Ottawa",
+    "Kanata Small Business Website",
+    "Nepean Small Business Website",
+    "Barrhaven Small Business Website",
+    "Orleans Small Business Website",
+    "Stittsville Small Business Website",
+    "Ottawa Local Business AI",
+    "AI Receptionist for Small Business",
+    "AI Inquiry Agent Ottawa",
+    "AI Intake Automation Ottawa",
+    "CRM Integration Ottawa",
+    "Per-Call Web Support Ottawa",
+    "Monthly Retainer Web Ottawa",
+    "Tharros",
     "Keep it Local",
     "Keep it Canadian",
     "Keep it Local Keep it Canadian",
-    "Tharros Slogan",
   ],
   authors: [{ name: "Magnus Abdelnour" }],
   creator: "Tharros",
@@ -113,11 +92,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Tharros | Keep it Local, Keep it Canadian | AI Training, Setup & Website Modernization for Ottawa",
+    title: "Tharros | Keep it Local, Keep it Canadian | Website Modernization & AI Agent Integration for Ottawa",
     description:
-      "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small businesses. We train you, set it up with you, and integrate it into your site.",
+      "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.",
     url: "https://tharros.ca",
-    siteName: "Tharros AI Consulting",
+    siteName: "Tharros",
     locale: "en_CA",
     type: "website",
     images: [
@@ -125,14 +104,14 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros AI Consulting Ottawa - Training & Setup for Small Business Owners | Keep it Local, Keep it Canadian",
+        alt: "Tharros Ottawa - Website Modernization & AI Agent Integration for Small Businesses | Keep it Local, Keep it Canadian",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tharros | Keep it Local, Keep it Canadian",
-    description: "Keep it Local, Keep it Canadian. AI agent training, setup, and website modernization for Ottawa small businesses. We train you to set up the agents, not sell them to you.",
+    description: "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa small businesses. One team, end-to-end.",
     images: ["/og-image.jpg"],
     creator: "@TharrosAI",
   },
@@ -142,7 +121,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Tharros AI Consulting",
+    title: "Tharros",
   },
   manifest: "/manifest.json",
 };
@@ -194,7 +173,7 @@ export default function RootLayout({
         "latitude": 45.3483,
         "longitude": -75.9103
       },
-      "description": "Keep it Local, Keep it Canadian. AI agent and AI tool training, live setup, and website modernization with embedded agents for Ottawa trades and small businesses. We train owners and operators, set agents up with them, and integrate them into their site.",
+      "description": "Keep it Local, Keep it Canadian. Website modernization, AI agent integration, and an On-Call retainer for Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.",
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -206,7 +185,7 @@ export default function RootLayout({
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "serviceType": "AI Agent Training, Setup, and Website Modernization Consulting",
+      "serviceType": "Website Modernization and AI Agent Integration",
       "provider": {
         "@type": "LocalBusiness",
         "name": "Tharros"
@@ -217,38 +196,30 @@ export default function RootLayout({
       },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "AI Training and Setup Engagements",
+        "name": "Website and AI Agent Build Packages",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Setup Sprint",
-              "description": "A 1-3 day hands-on training and live setup engagement that walks an Ottawa owner through standing up their first AI agent."
+              "name": "The Refresh",
+              "description": "Project-based website modernization for Ottawa small businesses. We update the design, copy, and structure so your front door reflects the operation behind it. Fixes and changes after launch are billed per call."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Operator Program",
-              "description": "A one-week team training program covering agents and AI tools, including website modernization and direct agent embedding. Leaves the team with an internal setup playbook."
+              "name": "The Integrate",
+              "description": "Website modernization plus a custom AI agent built and embedded directly into the site. Covers customer inquiry, lead capture, or after-hours intake. Fixes and additional agents after launch are billed per call."
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Fractional AI Lead",
-              "description": "A 1-2 week intensive of agent and AI tool training and live build, including a full website modernization with the agent integrated across the site, followed by an ongoing retainer for new agent setups, tuning, and roadmap reviews."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Website Modernization with AI Agent Integration",
-              "description": "Modernize the marketing website of an Ottawa small business and embed an AI agent directly into the site. Included with the Operator Program and Fractional AI Lead packages."
+              "name": "The On-Call",
+              "description": "Website modernization plus AI agent integration, followed by a monthly On-Call retainer. We stay on call for fixes, site improvements, and unlimited new agent builds while the retainer runs."
             }
           }
         ]

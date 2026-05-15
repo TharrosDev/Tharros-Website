@@ -53,11 +53,11 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl sm:text-6xl md:text-8xl xl:text-9xl 3xl:text-[12rem] 4xl:text-[14rem] font-bold tracking-tighter text-white mb-6 md:mb-12 leading-[1.2] sm:leading-[1.1] md:leading-[1] 3xl:leading-[0.9]"
           >
-            Hands-on AI agent <br className="hidden md:block" />
-            <span className="text-slate-500">training and setup.</span>
+            Modern websites. <br className="hidden md:block" />
+            <span className="text-slate-500">Integrated AI agents.</span>
             <br className="hidden sm:block" />
-            For owners who want to <span className="relative inline-block text-accent-3">
-              own it
+            One team, <span className="relative inline-block text-accent-3">
+              on call
               <motion.span
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
@@ -72,8 +72,8 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-base md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl text-slate-200 max-w-2xl xl:max-w-5xl 3xl:max-w-[80rem] mx-auto mb-10 md:mb-16 leading-relaxed font-medium opacity-80 px-2 sm:px-0"
           >
-            One-on-one training and live setup sessions for Ottawa trades and small business owners. <br className="hidden lg:block" />
-            We train you on the platforms, set up your first agent with you, and leave you with a system you can run.
+            Website modernization, AI agent integration, and an optional retainer for Ottawa trades and small businesses. <br className="hidden lg:block" />
+            We build the site, embed the agent, and stay reachable when things change.
           </motion.p>
 
           <motion.div 
@@ -85,7 +85,7 @@ export default function HeroSection() {
                 href="/intake"
                 className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] py-4 md:py-6 3xl:py-8 3xl:px-12"
               >
-                <span className="relative z-10">Book a Training Call</span>
+                <span className="relative z-10">Book a Discovery Call</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               </a>
             </Magnetic>

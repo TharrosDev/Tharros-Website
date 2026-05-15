@@ -165,10 +165,10 @@ export default function NavBar() {
             <Link
               href="/intake"
               prefetch={false}
-              aria-label="Book your AI training and setup call"
+              aria-label="Book your free discovery call"
               className="inline-block px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 primary-button text-[11px] md:text-sm 3xl:text-xl transition-all duration-300"
             >
-              Book a Training Call
+              Book a Discovery Call
             </Link>
           </Magnetic>
 
@@ -250,7 +250,7 @@ export default function NavBar() {
                   onClick={() => setMobileOpen(false)}
                   className="primary-button flex items-center justify-center px-10 py-5 text-base shadow-2xl shadow-accent-3/20 w-full"
                 >
-                  Book a Training Call
+                  Book a Discovery Call
                 </Link>
                 
                 <a 
