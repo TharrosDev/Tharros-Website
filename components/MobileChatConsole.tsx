@@ -39,7 +39,7 @@ const MobileChatConsole = memo(({
   userMessageCount,
   maxPrompts,
   isLoading = false,
-  height = "h-[65dvh]",
+  height = "h-[70dvh] min-h-[520px] max-h-[760px]",
 }: MobileChatConsoleProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isLimitReached = userMessageCount >= maxPrompts;
@@ -55,18 +55,18 @@ const MobileChatConsole = memo(({
   }, [messages, isTyping]);
 
   return (
-    <div className={`flex flex-col ${height} w-[calc(100%-24px)] max-w-full bg-white border border-slate-200 ring-1 ring-slate-900/5 shadow-[0_40px_80px_-20px_rgba(2,6,23,0.35)] rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
+    <div className={`flex flex-col ${height} w-full max-w-full bg-white border border-slate-200 ring-1 ring-slate-900/5 shadow-[0_40px_80px_-20px_rgba(2,6,23,0.35)] rounded-[1.75rem] sm:rounded-[2.5rem] overflow-hidden relative mx-auto mb-4`}>
       {/* Accent strip */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-3/60 to-transparent pointer-events-none z-20" />
 
       {/* Header */}
-      <div className="relative px-4 py-3 border-b border-slate-200 bg-gradient-to-b from-white to-slate-50/60 backdrop-blur-2xl shrink-0">
+      <div className="relative px-4 py-3.5 border-b border-slate-200 bg-gradient-to-b from-white to-slate-50/60 backdrop-blur-2xl shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="absolute inset-0 rounded-xl bg-accent-3/20 blur-md" />
-                <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center text-white shadow-md ring-1 ring-white/10">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center text-white shadow-md ring-1 ring-white/10">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                   </svg>
                 </div>
@@ -76,20 +76,20 @@ const MobileChatConsole = memo(({
                 </span>
               </div>
               <div className="text-left">
-                <h3 className="text-[11px] sm:text-xs font-bold text-slate-950 tracking-tight leading-none mb-1">{title}</h3>
-                <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.25em]">Online · Ottawa</span>
+                <h3 className="text-sm font-bold text-slate-950 tracking-tight leading-none mb-1">{title}</h3>
+                <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.25em]">Online · Ottawa</span>
               </div>
             </div>
 
-            <div className="flex flex-col items-end gap-1">
-              <span className={`text-[7px] font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
+            <div className="flex flex-col items-end gap-1.5">
+              <span className={`text-[8px] font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
                 {isLimitReached ? "Done" : "Left"}
               </span>
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1">
                 {Array.from({ length: maxPrompts }).map((_, i) => (
                   <span
                     key={i}
-                    className={`h-1 w-4 rounded-full transition-colors duration-500 ${
+                    className={`h-1.5 w-5 rounded-full transition-colors duration-500 ${
                       isLimitReached
                         ? "bg-red-500"
                         : i < maxPrompts - userMessageCount
@@ -166,13 +166,13 @@ const MobileChatConsole = memo(({
               exit={{ opacity: 0 }}
               className="mb-3"
             >
-              <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 px-1">Try asking</p>
-              <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1">
+              <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 px-1">Try asking</p>
+              <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1 -mx-4 px-4">
                 {recommendedQuestions.map((q) => (
                   <button
                     key={q}
                     onClick={() => handleSend(q)}
-                    className="px-3.5 py-2 bg-white border border-slate-200 rounded-full text-[11px] font-medium text-slate-700 whitespace-nowrap active:scale-95 active:bg-slate-950 active:text-white transition-all shadow-sm shrink-0"
+                    className="px-4 py-2.5 bg-white border border-slate-200 rounded-full text-[12px] font-medium text-slate-700 whitespace-nowrap active:scale-95 active:bg-slate-950 active:text-white transition-all shadow-sm shrink-0 min-h-[40px]"
                   >
                     {q}
                   </button>
@@ -196,14 +196,18 @@ const MobileChatConsole = memo(({
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={isLimitReached ? "Demo complete." : "Ask anything..."}
             disabled={isLoading || isTyping || isLimitReached}
-            className="flex-1 min-w-0 bg-transparent px-4 py-2.5 text-[16px] text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium"
+            enterKeyHint="send"
+            autoComplete="off"
+            autoCorrect="off"
+            className="flex-1 min-w-0 bg-transparent px-4 py-3 text-[16px] text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium"
           />
           <button
             type="submit"
+            aria-label="Send message"
             disabled={!inputValue.trim() || isLoading || isTyping || isLimitReached}
-            className="h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-accent-3 to-accent-bright text-white shadow-[0_6px_18px_-4px_rgba(14,165,233,0.55)] active:scale-90 disabled:from-slate-200 disabled:to-slate-200 disabled:shadow-none shrink-0 transition-all"
+            className="h-11 w-11 flex items-center justify-center rounded-full bg-gradient-to-br from-accent-3 to-accent-bright text-white shadow-[0_6px_18px_-4px_rgba(14,165,233,0.55)] active:scale-90 disabled:from-slate-200 disabled:to-slate-200 disabled:shadow-none shrink-0 transition-all"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
             </svg>
           </button>
@@ -237,7 +241,7 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => {
       className={`flex ${isAgent ? "items-start gap-2" : "justify-end"}`}
     >
       {isAgent && <MobileAgentAvatar />}
-      <div className={`flex flex-col ${isAgent ? "items-start max-w-[calc(85%-2rem)]" : "items-end max-w-[85%]"}`}>
+      <div className={`flex flex-col ${isAgent ? "items-start max-w-[calc(88%-2rem)]" : "items-end max-w-[88%]"}`}>
         <div
           className={`text-[15px] leading-relaxed px-4 py-3 rounded-2xl transition-all duration-300 ${
             isAgent
@@ -247,7 +251,7 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => {
         >
           {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
         </div>
-        <span className="text-[8px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] text-slate-400">
+        <span className="text-[9px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] text-slate-400">
           {msg.time}
         </span>
       </div>

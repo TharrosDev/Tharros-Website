@@ -43,7 +43,8 @@ export default function Magnetic({ children, strength = 0.5 }: MagneticProps) {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: moveX, y: moveY, display: "inline-block" }}
+      style={{ x: moveX, y: moveY }}
+      className="inline-block w-full sm:w-auto"
     >
       {children}
     </motion.div>

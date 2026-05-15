@@ -34,7 +34,7 @@ export default function ClientsSection() {
 
 function ClientsHero() {
   return (
-    <section className="pt-32 md:pt-12 pb-8 md:pb-12 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
+    <section className="pt-28 md:pt-12 pb-8 md:pb-12 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
       {/* Subtle Background Grid */}
       <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
       
@@ -51,7 +51,7 @@ function ClientsHero() {
                 <div className="h-px w-8 md:w-12 bg-white/10" />
                 <span className="text-[9px] md:text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
               </div>
-              <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] leading-[0.9] md:leading-[0.8]">
+              <h1 className="text-[3rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] sm:leading-[0.9] md:leading-[0.8]">
                 Real-World <br/>
                 <span className="text-slate-700/60">Impact.</span>
               </h1>
@@ -113,13 +113,13 @@ function ClientsHero() {
 
 function ClientsGallery() {
   return (
-    <section className="py-10 md:py-16 xl:py-20 px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="py-10 md:py-16 xl:py-20 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       {/* Background decoration - Standard site-wide separators */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[minmax(280px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 auto-rows-[minmax(280px,auto)]">
           {clients.map((client, idx) => (
             client.isPlaceholder ? (
               <PlaceholderCard key={client.id} index={idx} gridPos={client.gridPos} />
@@ -142,20 +142,20 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
         whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
         className="group relative h-full bg-bg border border-white/10 hover:border-accent-3/40 rounded-2xl sm:rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col shadow-2xl shadow-black/40 gpu-accelerated"
       >
-        <div className="p-6 md:p-10 flex flex-col h-full relative z-10">
+        <div className="p-5 sm:p-7 md:p-10 flex flex-col h-full relative z-10">
           {/* Header Bar */}
-          <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+          <div className="flex items-center justify-between mb-6 sm:mb-8 border-b border-white/5 pb-4">
             <span className="text-[10px] font-bold text-accent-3 uppercase tracking-[0.2em]">{client.date}</span>
             <span className="text-[10px] text-slate-300 font-bold tracking-tight uppercase">{client.location}</span>
           </div>
 
           {/* Core Content */}
           <div className="flex-grow">
-            <div className={`flex ${isLarge ? 'flex-row items-center' : 'flex-col'} gap-6 mb-6`}>
+            <div className={`flex ${isLarge ? 'flex-col sm:flex-row sm:items-center' : 'flex-col'} gap-5 sm:gap-6 mb-5 sm:mb-6`}>
               {client.image && (
-                <div className="w-16 h-16 shrink-0 relative rounded-2xl overflow-hidden bg-bg border border-white/10 group-hover:border-accent-3/20 transition-colors">
-                  <Image 
-                    src={client.image} 
+                <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 relative rounded-2xl overflow-hidden bg-bg border border-white/10 group-hover:border-accent-3/20 transition-colors">
+                  <Image
+                    src={client.image}
                     alt={client.name}
                     fill
                     priority={isPriority}
@@ -167,26 +167,26 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-1">
                   {client.type}
                 </span>
-                <h3 className={`font-bold text-white tracking-tighter group-hover:text-accent-3 transition-colors duration-300 ${isLarge ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-3xl'}`}>
+                <h3 className={`font-bold text-white tracking-tighter group-hover:text-accent-3 transition-colors duration-300 leading-tight ${isLarge ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl' : 'text-2xl sm:text-3xl'}`}>
                   {client.name}
                 </h3>
               </div>
             </div>
-            
-            <p className={`text-slate-200 leading-relaxed mb-6 ${isLarge ? 'text-xl md:text-2xl max-w-2xl font-light' : 'text-base line-clamp-4'}`}>
+
+            <p className={`text-slate-200 leading-relaxed mb-5 sm:mb-6 ${isLarge ? 'text-base sm:text-xl md:text-2xl max-w-2xl font-light' : 'text-base line-clamp-4'}`}>
               {client.description}
             </p>
           </div>
 
           {/* Simplified Footer */}
-          <div className="pt-4 mt-auto relative flex items-center justify-between">
+          <div className="pt-4 mt-auto relative flex items-center justify-between gap-3 flex-wrap">
             <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Live & On-Call</span>
-            
-            <a 
+
+            <a
               href={client.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-bg transition-all text-white"
+              className="px-5 py-2.5 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-bg active:bg-white active:text-bg transition-all text-white min-h-[40px] inline-flex items-center"
             >
                View Project
             </a>

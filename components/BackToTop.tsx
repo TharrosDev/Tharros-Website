@@ -37,7 +37,8 @@ export default function BackToTop() {
           whileHover={{ y: -4, scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[100] w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white text-slate-950 shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-slate-100 flex items-center justify-center group transition-all duration-300"
+          className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[100] w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white text-slate-950 shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-slate-100 flex items-center justify-center group transition-all duration-300"
+          style={{ marginBottom: "env(safe-area-inset-bottom)" }}
           aria-label="Return to top of page"
         >
           {/* Industrial Arrow Icon */}
