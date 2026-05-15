@@ -18,7 +18,7 @@ const pillars = [
       </svg>
     ),
     headline: "One team, end-to-end",
-    body: "One team handles your website, your AI agent, and the integrations between them. No design vendor pointing at a dev vendor pointing at an AI vendor. We own the whole stack and the bill that comes with it.",
+    body: "One team handles your website, your AI agent, and the integrations between them. We work across a diversified stack of tools and software — whatever fits the job — coordinated under a single point of contact. No handoffs, no finger-pointing between vendors.",
   },
   {
     icon: (
