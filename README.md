@@ -1,66 +1,233 @@
-# Tharros — Premium AI Agent Studio
+# Tharros
 
-**Recovering time. Rescuing revenue.**
+**Website modernization, AI agent integration, and an On-Call retainer for Ottawa small businesses.**
 
-Tharros is an Ottawa-based specialized studio dedicated to building high-performance, practical AI agents for small businesses. We solve the "Small Business Trap" by automating lead capture, customer inquiry handling, and back-office admin.
+> Keep it Local, Keep it Canadian. 🇨🇦
 
-**Keep it Local, Keep it Canadian 🇨🇦**
+This repository hosts the Tharros marketing site — a Next.js application at [https://tharros.ca](https://tharros.ca) — and a separate embeddable Preact chat widget under [`my-chat/`](./my-chat/).
 
-**Live Site:** [https://tharros.ca](https://tharros.ca)
+---
 
-## 🚀 The Tharros Philosophy
+## Table of Contents
 
-We believe small businesses don't need "corporate AI strategies"—they need lightweight agents that work on Tuesday morning when the phone won't stop ringing.
+- [What Tharros Does](#what-tharros-does)
+- [The Three Packages](#the-three-packages)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Local Development](#local-development)
+- [Environment Variables](#environment-variables)
+- [Architecture Overview](#architecture-overview)
+- [SEO & Metadata](#seo--metadata)
+- [Deployment](#deployment)
+- [Branch & Contribution Conventions](#branch--contribution-conventions)
+- [Further Docs](#further-docs)
+- [License](#license)
 
--   **Tailored, Not Generic**: Every agent is custom-trained on specific business knowledge, ensuring absolute brand integrity.
--   **Industrial Executive Console**: We deploy agents through a sleek, high-contrast, dark-mode interface featuring CRT scanlines, geometric grid overlays, and a "Command Pod" persona. No "bubbly" consumer-grade UI.
--   **Bento Grid Architecture**: High-density, asymmetric layouts that organize complex information hierarchies with industrial precision.
--   **Cinematic Motion**: Optimized `PageTransition` system and GPU-accelerated micro-interactions providing a premium, "weighted" digital experience.
--   **Hyper-Local Focus**: Deeply integrated Ottawa-local context (Kanata, Stittsville, Orleans, the Glebe) to build immediate trust with local clientele.
--   **Performance Hardened**: Implemented `content-visibility: auto`, dynamic imports, and strict hydration patterns for flawless mobile performance.
--   **Search Dominance**: Comprehensive JSON-LD suite (LocalBusiness, Organization, Service) tailored for the Ottawa market.
+---
 
-## 💎 Core Value Proposition
+## What Tharros Does
 
-We don't just build chatbots; we deploy a **Digital Workforce**.
+Tharros is an Ottawa-based team that builds and integrates AI agents into modernized small business websites — then stays on call for fixes, improvements, and new agents. One team, one point of contact, working across a diversified stack of tools tuned to the job.
 
-1.  **Zero Lead Leakage**: Our agents engage 100% of website visitors instantly, qualifying leads while you sleep or work on-site.
-2.  **Administrative Freedom**: Automate routine FAQ and booking tasks, reclaiming up to 10+ hours per week for business owners.
-3.  **Industrial Reliability**: Built on the CRM Intake Agent Model, ensuring consistent, professional, and authoritative communication that matches your brand's integrity.
-4.  **Local Expertise**: Deeply familiar with the Ottawa-Gatineau landscape, from trade-specific terminology to neighborhood-level logistics.
+The service model is deliberately small-business shaped:
 
-## 🛠 Tech Stack
+- A modern site that reflects the operation behind it.
+- An AI agent that handles inquiries, captures leads, or covers after-hours intake — embedded directly into the site.
+- A phone number you can actually call when things change. Pay-per-call like a plumber, or roll it into the On-Call retainer.
 
-- **Core**: Next.js (App Router), React 19, TypeScript
-- **Logic**: Relevance AI SDK (CRM Intake Agent Model)
-- **Styling**: Tailwind CSS 4.0
-- **Animations**: motion/react (Framer Motion)
-- **Performance**: Content-visibility, Progressive Hydration, GPU acceleration
+## The Three Packages
 
-## 📁 Project Structure
+| Package | What it is | Pricing | After-launch |
+|---|---|---|---|
+| **The Refresh** | Modern website only | Project-based | Per-call support |
+| **The Integrate** | Site + AI agent embedded | Project-based | Per-call support |
+| **The On-Call** | Site + agent + monthly retainer | Project + monthly | Unlimited fixes & new agents |
 
-- `/app`: Next.js App Router pages and global configurations.
-- `/components`: Modular UI components (Hero, ChatDemo, ProblemSection, etc.).
-- `/components/wrappers`: Client-side hydration wrappers for heavy AI components.
-- `/public`: Static assets (Logos, OG images, favicon, icons).
-- `THARROS_KNOWLEDGE_BASE.md`: The definitive source of truth for the Tharros brand mission.
-- `AGENTS.md`: Internal guidelines for AI agent behavior and interface standards.
-- `CLAUDE.md`: Developer-facing guidelines for design systems and code style.
+The site walks visitors through these packages, demos a live agent, and points to the Discovery Briefing intake form.
 
-## ⚡ Development
+## Tech Stack
 
-```bash
-# Install dependencies
-npm install
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Runtime | React 19, TypeScript 5 |
+| Styling | Tailwind CSS 4 (CSS-first config via `@theme`) |
+| Animation | `motion/react` (Framer Motion successor) |
+| Live agent demo | `@relevanceai/sdk` |
+| Intake form | `@formspree/react` |
+| Analytics | `@vercel/analytics` |
+| Hosting | Vercel (recommended) |
 
-# Run development server
-npm run dev
+Sub-project (`my-chat/`) — an embeddable chat widget for client deployments:
 
-# Build for production
-npm run build
+| Layer | Tech |
+|---|---|
+| Framework | Preact 10 + Vite 7 |
+| State | `@preact/signals` |
+| UI | Radix UI + Tailwind CSS 4 + Lucide icons |
+| Data fetching | SWR |
+| Agent | `@relevanceai/sdk` |
+| Tooling | Biome |
+
+## Project Structure
+
+```
+.
+├── app/                       Next.js App Router
+│   ├── layout.tsx             Root layout, metadata, JSON-LD graph
+│   ├── page.tsx               Home page composition
+│   ├── globals.css            Tailwind 4 theme + design tokens
+│   ├── robots.ts              Bot allowlist (search + AI)
+│   ├── sitemap.ts             Sitemap with hreflang
+│   ├── intake/page.tsx        Discovery Briefing form
+│   └── clients/page.tsx       Build & integration case studies
+│
+├── components/                All UI sections (see below)
+├── hooks/                     useIsMobile (viewport hook)
+├── public/                    Static assets, og-image, manifest
+│
+├── my-chat/                   Embeddable Preact chat widget
+│   ├── src/components/        Widget sub-components
+│   └── ...
+│
+├── docs/                      Internal documentation
+│   ├── ARCHITECTURE.md        Technical architecture deep-dive
+│   ├── CONTENT_GUIDE.md       Voice, copy, terminology rules
+│   └── SEO.md                 SEO implementation reference
+│
+├── CLAUDE.md                  AI coding-assistant guidelines
+├── AGENTS.md                  Repo guide for coding agents
+├── CONTRIBUTING.md            Contribution conventions
+├── THARROS_KNOWLEDGE_BASE.md  Source of truth for the live demo agent
+└── README.md                  You are here
 ```
 
-## 📄 License
+### Component map
+
+The home page composes the following sections in order (`app/page.tsx`):
+
+| Order | Component | Background | Purpose |
+|---:|---|---|---|
+| 1 | `HeroSection` | dark | Headline, primary CTA, slogan chip |
+| 2 | `ProblemSection` | light | Three pain points (missed calls, repeat questions, admin) |
+| 3 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo |
+| 4 | `ModelTiersSection` | light | The Refresh / The Integrate / The On-Call |
+| 5 | `WhatWeBuildsSection` | dark | The three agent patterns |
+| 6 | `HowItWorksSection` | light | Discovery → Build & Integrate → Launch & Support |
+| 7 | `WhyTharrosSection` | dark | Three pillars + founder quote |
+| 8 | `PricingSection` | light | Pricing factors + "why no fixed price list" |
+| 9 | `FooterSection` | dark + white strip | Final CTA, legal strip |
+
+Cross-cutting components: `NavBar`, `PageTransition`, `BackToTop`, `AnimatedSection`, `Magnetic`, `SectionSkeleton`, `MobileChatConsole`.
+
+**Orphaned:** `IntakeAgent.tsx` and `IntakeAgentWrapper.tsx` are unused leftovers from a previous AI-driven intake architecture. The current `/intake` page uses `IntakeForm.tsx` (Formspree).
+
+## Local Development
+
+```bash
+# Install
+npm install
+
+# Dev server (Turbopack)
+npm run dev          # http://localhost:3000
+
+# Production build
+npm run build
+
+# Lint
+npm run lint
+```
+
+Working on the chat widget:
+
+```bash
+cd my-chat
+npm install
+npm run dev          # http://localhost:5173
+npm run build        # emits to dist/
+npm run preview
+```
+
+## Environment Variables
+
+The live agent demo on the home page reads three vars at build time:
+
+```env
+NEXT_PUBLIC_RELEVANCE_REGION=...
+NEXT_PUBLIC_RELEVANCE_PROJECT=...
+NEXT_PUBLIC_RELEVANCE_AGENT_ID=...
+```
+
+The Formspree intake form has its form ID hardcoded in `components/IntakeForm.tsx` (`xvzlykgz`).
+
+The embeddable widget (`my-chat/`) reads:
+
+```env
+VITE_REGION=...
+VITE_PROJECT=...
+VITE_AGENT_ID=...
+VITE_WORKFORCE_ID=...
+```
+
+Without these vars, the home-page agent will display `Agent not configured` and the demo will degrade gracefully.
+
+## Architecture Overview
+
+A short list of the choices that matter most when reading the code:
+
+- **Server-rendered shell, dynamically-hydrated body.** `HeroSection` and `FooterSection` ship eagerly. Every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback — keeps the initial JS payload tight on mobile.
+- **The live agent runs client-only.** `ChatDemoSection` is wrapped in `ChatDemoSectionWrapper` and uses the Relevance AI SDK directly in the browser; an `EmbedKey` is generated once per visitor and persisted in `localStorage`. Three free prompts per session, enforced via `localStorage` counter.
+- **Mobile chat path is separate.** `MobileChatConsole` renders a touch-optimized layout when `useIsMobile()` returns true; the desktop console is inlined in `ChatDemoSection`.
+- **Animation primitives, not animation soup.** `AnimatedSection` wraps scroll-triggered fades/scales; `Magnetic` adds cursor-pull to CTAs; `PageTransition` cross-fades between routes. Effects use GPU-accelerated transforms and `will-change: transform`.
+- **Design tokens are real CSS variables.** See `app/globals.css` — `--color-bg`, `--color-accent-3`, etc. are exposed to Tailwind 4 via `@theme inline`. The `text-accent-3`, `bg-bg`, `border-border` classes work because of this.
+- **JSON-LD is a linked graph, not a list.** `app/layout.tsx` builds one Organization, one LocalBusiness, one Service, one WebSite, one FAQPage, one Person, one SiteNavigationElement, and one BreadcrumbList — all cross-referenced by `@id`. Individual pages inject their own `ContactPage` / `CollectionPage` + `BreadcrumbList`.
+
+For more, see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+
+## SEO & Metadata
+
+This site treats SEO as a feature, not a checklist:
+
+- Linked-entity JSON-LD graph (Organization → LocalBusiness → Service → WebSite → FAQPage → Person → BreadcrumbList).
+- FAQPage with 10 questions covering pricing, retainer model, service area, agent types, and onboarding — eligible for SERP rich snippets.
+- Geo meta tags (`geo.region`, `geo.placename`, `geo.position`, `ICBM`) for Ottawa local SEO.
+- Per-page metadata with `hreflang` alternates (`en-CA`, `x-default`).
+- `robots.ts` with explicit allowlists for all major search engines and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) and disallows for spam scrapers.
+- `sitemap.ts` with per-URL hreflang alternates.
+- Open Graph + Twitter cards with locale-correct copy.
+- Web App Manifest with shortcuts, maskable icons, and `en-CA` locale.
+
+Full reference: [`docs/SEO.md`](./docs/SEO.md).
+
+## Deployment
+
+The site is designed to deploy on Vercel:
+
+1. Connect the repo.
+2. Set the four `NEXT_PUBLIC_RELEVANCE_*` environment variables.
+3. Push to `main` to deploy production, or to any other branch for a preview deployment.
+
+The `my-chat/` widget builds independently (`cd my-chat && npm run build`) and is intended to be self-hosted at a client subdomain or embedded into client sites via a small `<script>` tag.
+
+## Branch & Contribution Conventions
+
+- **Default branch**: `main` (production).
+- **Feature branches**: `claude/<topic>-<slug>` for AI-assisted work, or `feat/<topic>` for human-led work.
+- **Commits**: Imperative subject, concise body that explains *why*. No emoji prefixes.
+- **Builds must pass** before merge: `npm run build` should compile + typecheck cleanly.
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for full guidance.
+
+## Further Docs
+
+- **[`CLAUDE.md`](./CLAUDE.md)** — Guidelines for AI coding assistants working in this repo.
+- **[`AGENTS.md`](./AGENTS.md)** — Repo conventions for autonomous coding agents.
+- **[`THARROS_KNOWLEDGE_BASE.md`](./THARROS_KNOWLEDGE_BASE.md)** — Source of truth for the live demo agent's training material.
+- **[`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)** — Technical deep-dive.
+- **[`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md)** — Voice, copy, and terminology rules.
+- **[`docs/SEO.md`](./docs/SEO.md)** — Full SEO implementation reference.
+- **[`my-chat/README.md`](./my-chat/README.md)** — Embeddable widget docs.
+
+## License
 
 Private. All rights reserved by Tharros.
-
