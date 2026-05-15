@@ -68,7 +68,6 @@ body {
   position: relative;
   width: 100%;
   line-height: 1.6;
-  overscroll-behavior-y: none;
 }
 
 /* Make all interactive elements meet 44px minimum touch target on mobile */
