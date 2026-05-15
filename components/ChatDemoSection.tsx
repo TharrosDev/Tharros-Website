@@ -18,14 +18,14 @@ const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: '2-digit', minute: '2
 const formatTime = () => TIME_FORMATTER.format(new Date());
 
 const NEURAL_LOGIC_FEATURES = [
-  { title: "Core Reasoning", desc: "Handles complex multi-step tasks." },
-  { title: "Brand Identity", desc: "Perfectly mirrors your professional tone." },
-  { title: "System Integration", desc: "Syncs directly with your existing tools." }
+  { title: "Real Answers", desc: "Answers questions the way your front desk would." },
+  { title: "Your Voice", desc: "Tuned to your services, your tone, your scope." },
+  { title: "Wired In", desc: "Connects to your CRM, intake, and messaging." }
 ] as const;
 
 const VERIFICATION_BLOCKS = [
-  { label: "Logic Flow", title: "Adaptive Reasoning", desc: "Dynamically adjusts response depth based on inquiry complexity." },
-  { label: "Identity", title: "Brand Safe", desc: "Hard-coded boundaries ensure absolute professional integrity." },
+  { label: "Plain Talk", title: "Clear Answers", desc: "Short for simple questions, deeper when the work calls for it." },
+  { label: "On Topic", title: "Stays in Scope", desc: "Trained on your services. Won't wander into territory it shouldn't." },
 ] as const;
 
 type LocalMessage = {
@@ -274,12 +274,12 @@ export default function ChatDemoSection() {
             
             <h2 className="text-4xl sm:text-5xl md:text-8xl xl:text-9xl 3xl:text-[11rem] 4xl:text-[13rem] font-bold text-white mb-10 md:mb-12 3xl:mb-20 leading-[1.2] sm:leading-[1.1] tracking-tighter">
               An agent that <br />
-              <span className="text-slate-500">commands results.</span>
+              <span className="text-slate-500">shows up.</span>
             </h2>
-            
+
             <p className="text-slate-200 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-16 3xl:mb-24 leading-relaxed max-w-3xl 3xl:max-w-6xl mx-auto font-medium opacity-90">
-              High-stakes automation for high-impact businesses. <br className="hidden md:block" />
-              Test our <span className="text-accent-3">Commercial Model</span> in real-time.
+              Built once, embedded into your site, live the moment your visitors land. <br className="hidden md:block" />
+              Try ours in <span className="text-accent-3">real time</span>.
             </p>
 
             <div className="flex flex-wrap justify-center gap-12 md:gap-20 lg:gap-24 3xl:gap-32">
@@ -315,11 +315,11 @@ export default function ChatDemoSection() {
                     <div className="w-8 h-px bg-accent-3 3xl:w-16" />
                   </div>
                   <h3 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl 3xl:text-8xl 4xl:text-9xl font-bold text-white tracking-tighter mb-8 md:mb-10 3xl:mb-16 leading-[1.1]">
-                    Operational <br />
-                    <span className="text-accent-3">Excellence.</span>
+                    A live agent, <br />
+                    <span className="text-accent-3">right now.</span>
                   </h3>
                   <p className="text-lg text-slate-300 3xl:text-2xl leading-relaxed mb-10 3xl:mb-20 max-w-sm 3xl:max-w-xl">
-                    This instance demonstrates the core intelligence used in our custom service deployments.
+                    Same engine we embed into Ottawa small business sites. Ask it about Tharros, or how we&apos;d build one for you.
                   </p>
                 </div>
 
@@ -345,7 +345,7 @@ export default function ChatDemoSection() {
                   <div className="mb-6 3xl:mb-10 flex items-center justify-between px-4">
                     <p className="text-[10px] 3xl:text-sm font-black text-white/30 uppercase tracking-[0.2em] flex items-center gap-2">
                       <span className="w-1.5 h-1.5 3xl:w-3 3xl:h-3 rounded-full bg-white/20" />
-                      SESSION CAPACITY: {MAX_PROMPTS} INQUIRIES
+                      SESSION LIMIT: {MAX_PROMPTS} QUESTIONS
                     </p>
                   </div>
 
@@ -358,8 +358,8 @@ export default function ChatDemoSection() {
                       isTyping={isTyping}
                       recommendedQuestions={recommendedQuestions}
                       title="Tharros AI Agent"
-                      subtitle="Live Operational"
-                      modelType="Commercial Demo"
+                      subtitle="Online"
+                      modelType="Live Demo"
                       userMessageCount={userMessageCount}
                       maxPrompts={MAX_PROMPTS}
                       isLoading={isLoading}
@@ -385,7 +385,7 @@ export default function ChatDemoSection() {
                             <div className="flex flex-col">
                               <h3 className="text-slate-950 font-bold text-base 3xl:text-4xl tracking-tighter leading-none mb-1 3xl:mb-3">Tharros AI Agent</h3>
                               <div className="flex items-center gap-2">
-                                <span className="text-slate-400 text-[9px] 3xl:text-sm font-black uppercase tracking-[0.2em]">Operational</span>
+                                <span className="text-slate-400 text-[9px] 3xl:text-sm font-black uppercase tracking-[0.2em]">Online</span>
                               </div>
                             </div>
                           </div>
@@ -407,7 +407,7 @@ export default function ChatDemoSection() {
                         {isLoading && (
                           <div className="flex-1 flex flex-col items-center justify-center gap-4 py-16">
                             <div className="w-8 h-8 3xl:w-16 3xl:h-16 border-2 3xl:border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
-                            <p className="text-[11px] 3xl:text-sm font-black text-slate-300 uppercase tracking-[0.3em]">System_Initializing</p>
+                            <p className="text-[11px] 3xl:text-sm font-black text-slate-300 uppercase tracking-[0.3em]">Starting Up</p>
                           </div>
                         )}
 

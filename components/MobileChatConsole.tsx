@@ -71,7 +71,7 @@ const MobileChatConsole = memo(({
               </div>
               <div className="text-left">
                 <h3 className="text-[10px] sm:text-xs font-black text-slate-950 tracking-tight leading-none mb-1 uppercase">{title}</h3>
-                <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.2em]">Operational</span>
+                <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.2em]">Online</span>
               </div>
             </div>
             
@@ -93,7 +93,7 @@ const MobileChatConsole = memo(({
         {isLoading ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-4">
             <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-slate-950 animate-spin" />
-            <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">System_Initializing</span>
+            <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Starting Up</span>
           </div>
         ) : (
           <AnimatePresence initial={false}>
