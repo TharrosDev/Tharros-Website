@@ -96,7 +96,7 @@ export default function PricingSection() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 3xl:gap-12">
-                  <Magnetic strength={0.2}>
+                  <Magnetic strength={0.2} className="inline-block w-full sm:w-auto">
                     <a
                       href="/intake"
                       aria-label="Request a custom website and AI agent build quote"

@@ -40,7 +40,7 @@ export default function FooterSection() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-6 md:gap-12 3xl:gap-24 w-full max-w-sm sm:max-w-none mx-auto">
-                <Magnetic strength={0.1}>
+                <Magnetic strength={0.1} className="inline-block w-full sm:w-auto">
                   <a
                     href="/intake"
                     onClick={handleScrollToTop}

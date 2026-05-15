@@ -119,7 +119,7 @@ export default function NavBar() {
     <>
       <header
         suppressHydrationWarning
-        className="fixed top-3 md:top-4 z-50 flex items-center gap-2 md:gap-4 px-3 md:px-5 3xl:px-12 py-2 md:py-2 3xl:py-6 rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
+        className="fixed top-3 md:top-4 z-[60] flex items-center gap-2 md:gap-4 px-3 md:px-5 3xl:px-12 py-2 md:py-2 3xl:py-6 rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
         style={{
           width: "min(94%, var(--nav-width, 1300px))",
           opacity: mounted ? 1 : 0,
@@ -207,19 +207,19 @@ export default function NavBar() {
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as any }}
-            className="fixed inset-0 z-[55] bg-slate-950/98 flex flex-col items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[55] bg-slate-950/98 overflow-y-auto overflow-x-hidden"
           >
             {/* Industrial Background Elements */}
             <div className="scanline opacity-[0.15]" />
-            <div className="absolute inset-0 industrial-grid opacity-[0.05] pointer-events-none" />
-            
-            {/* Corner Markers */}
-            <div className="absolute top-24 left-8 w-4 h-4 border-t border-l border-white/20" />
-            <div className="absolute top-24 right-8 w-4 h-4 border-t border-r border-white/20" />
-            <div className="absolute bottom-12 left-8 w-4 h-4 border-b border-l border-white/20" />
-            <div className="absolute bottom-12 right-8 w-4 h-4 border-b border-r border-white/20" />
+            <div className="fixed inset-0 industrial-grid opacity-[0.05] pointer-events-none" />
 
-            <div className="flex flex-col items-center justify-center gap-6 w-full px-6 relative z-10 max-h-[calc(100dvh-6rem)] overflow-y-auto py-12">
+            {/* Corner Markers */}
+            <div className="fixed top-24 left-8 w-4 h-4 border-t border-l border-white/20" />
+            <div className="fixed top-24 right-8 w-4 h-4 border-t border-r border-white/20" />
+            <div className="fixed bottom-12 left-8 w-4 h-4 border-b border-l border-white/20" />
+            <div className="fixed bottom-12 right-8 w-4 h-4 border-b border-r border-white/20" />
+
+            <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-6 w-full px-6 relative z-10 py-24">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}

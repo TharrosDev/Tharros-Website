@@ -6,9 +6,10 @@ import { motion, useSpring, useMotionValue, useTransform } from "motion/react";
 interface MagneticProps {
   children: React.ReactElement;
   strength?: number;
+  className?: string;
 }
 
-export default function Magnetic({ children, strength = 0.5 }: MagneticProps) {
+export default function Magnetic({ children, strength = 0.5, className = "inline-block" }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
   
   const mouseX = useMotionValue(0);
@@ -44,7 +45,7 @@ export default function Magnetic({ children, strength = 0.5 }: MagneticProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: moveX, y: moveY }}
-      className="inline-block w-full sm:w-auto"
+      className={className}
     >
       {children}
     </motion.div>
