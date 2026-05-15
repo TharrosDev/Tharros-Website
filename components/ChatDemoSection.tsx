@@ -343,19 +343,13 @@ export default function ChatDemoSection() {
 
                 <div className="relative w-full">
                   {/* Industrial Disclaimer */}
-                  <div className="mb-6 3xl:mb-10 flex items-center justify-between px-4">
-                    <p className="text-[10px] 3xl:text-sm font-black text-white/30 uppercase tracking-[0.2em] flex items-center gap-2">
+                  <div className="mb-6 3xl:mb-10 px-4">
+                    <p className="text-[10px] 3xl:text-sm font-black text-white/30 uppercase tracking-[0.25em] flex items-center gap-2.5">
                       <span className="relative flex w-1.5 h-1.5 3xl:w-3 3xl:h-3">
                         <span className="absolute inset-0 rounded-full bg-accent-3/60 animate-ping" />
                         <span className="relative w-1.5 h-1.5 3xl:w-3 3xl:h-3 rounded-full bg-accent-3" />
                       </span>
-                      LIVE PREVIEW · {MAX_PROMPTS}-QUESTION DEMO
-                    </p>
-                    <p className="hidden md:flex text-[10px] 3xl:text-sm font-black text-white/20 uppercase tracking-[0.2em] items-center gap-2">
-                      <span>WHAT YOURS COULD LOOK LIKE</span>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="3xl:w-4 3xl:h-4">
-                        <path d="M5 12h14M13 5l7 7-7 7" />
-                      </svg>
+                      Live Preview
                     </p>
                   </div>
 
@@ -399,15 +393,13 @@ export default function ChatDemoSection() {
                             </div>
                             <div className="flex flex-col">
                               <h3 className="text-slate-950 font-bold text-base 3xl:text-4xl tracking-tighter leading-none mb-1.5 3xl:mb-3">Tharros AI Agent</h3>
-                              <div className="flex items-center gap-2">
-                                <span className="text-accent-3 text-[9px] 3xl:text-sm font-black uppercase tracking-[0.25em]">● Online · Ottawa</span>
-                              </div>
+                              <span className="text-slate-400 text-[9px] 3xl:text-sm font-black uppercase tracking-[0.25em]">Online · Ottawa</span>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-3 3xl:gap-6">
                             <div className="flex flex-col items-end gap-1.5 3xl:gap-3">
-                              <span className="text-[8px] 3xl:text-xs font-black text-slate-400 uppercase tracking-[0.25em] leading-none">Questions Left</span>
+                              <span className="text-[8px] 3xl:text-xs font-black text-slate-400 uppercase tracking-[0.25em] leading-none">Left</span>
                               <div className="flex items-center gap-1 3xl:gap-2">
                                 {Array.from({ length: MAX_PROMPTS }).map((_, i) => (
                                   <span
@@ -429,9 +421,8 @@ export default function ChatDemoSection() {
                         ref={scrollRef}
                         className="flex-1 overflow-y-auto p-6 md:p-10 3xl:p-20 flex flex-col gap-6 3xl:gap-14 scroll-smooth relative bg-gradient-to-b from-slate-50/40 via-white to-slate-50/40"
                       >
-                        {/* Ambient accent glows */}
-                        <div className="absolute top-10 -left-20 w-64 h-64 3xl:w-[28rem] 3xl:h-[28rem] bg-accent-3/[0.06] blur-[80px] rounded-full pointer-events-none" />
-                        <div className="absolute bottom-10 -right-20 w-64 h-64 3xl:w-[28rem] 3xl:h-[28rem] bg-slate-900/[0.04] blur-[80px] rounded-full pointer-events-none" />
+                        {/* Ambient accent glow */}
+                        <div className="absolute top-12 -left-24 w-72 h-72 3xl:w-[32rem] 3xl:h-[32rem] bg-accent-3/[0.05] blur-[90px] rounded-full pointer-events-none" />
 
                         {isLoading && (
                           <div className="flex-1 flex flex-col items-center justify-center gap-4 py-16 relative">
@@ -463,8 +454,6 @@ export default function ChatDemoSection() {
 
                       {/* Footer / Input Area */}
                       <div className="relative p-5 md:p-6 3xl:p-14 bg-white border-t border-slate-200">
-                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
                         {/* Suggestions */}
                         <AnimatePresence>
                           {recommendedQuestions.length > 0 && !isTyping && (
@@ -501,19 +490,14 @@ export default function ChatDemoSection() {
                           onSubmit={(e) => handleSend(inputValue, e)}
                           className="relative flex items-center gap-3 3xl:gap-6 bg-slate-50 p-1.5 3xl:p-3 rounded-full border border-slate-200 transition-all duration-300 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_4px_rgba(14,165,233,0.12)]"
                         >
-                          <div className="flex items-center gap-3 3xl:gap-6 px-5 3xl:px-12 py-3 3xl:py-8 flex-1 min-w-0">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-slate-300 shrink-0 3xl:w-7 3xl:h-7">
-                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                            </svg>
-                            <input
-                              type="text"
-                              value={inputValue}
-                              onChange={(e) => setInputValue(e.target.value)}
-                              placeholder={isLoading ? "Connecting agent..." : isLimitReached ? "Demo complete — let's build yours." : "Ask anything about your business..."}
-                              disabled={isLoading || isTyping || isLimitReached || !!initError}
-                              className="flex-1 min-w-0 bg-transparent text-base 3xl:text-3xl text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium tracking-tight"
-                            />
-                          </div>
+                          <input
+                            type="text"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            placeholder={isLoading ? "Connecting agent..." : isLimitReached ? "Demo complete — let's build yours." : "Ask anything about your business..."}
+                            disabled={isLoading || isTyping || isLimitReached || !!initError}
+                            className="flex-1 min-w-0 bg-transparent px-5 3xl:px-12 py-3 3xl:py-8 text-base 3xl:text-3xl text-slate-950 placeholder:text-slate-400 focus:outline-none disabled:opacity-50 font-medium tracking-tight"
+                          />
                           <button
                             type="submit"
                             aria-label="Send message"
@@ -572,8 +556,8 @@ const MessageItem = memo(({ msg }: { msg: LocalMessage }) => {
         >
           {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
         </div>
-        <span className={`text-[9px] 3xl:text-sm font-bold mt-1.5 3xl:mt-3 px-2 uppercase tracking-[0.2em] ${isAgent ? "text-slate-400" : "text-slate-300"}`}>
-          {isAgent ? `Tharros · ${msg.time}` : msg.time}
+        <span className="text-[9px] 3xl:text-sm font-bold mt-1.5 3xl:mt-3 px-2 uppercase tracking-[0.2em] text-slate-400">
+          {msg.time}
         </span>
       </div>
     </motion.div>
