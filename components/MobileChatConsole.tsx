@@ -82,13 +82,19 @@ const MobileChatConsole = memo(({
             </div>
 
             <div className="flex flex-col items-end gap-1">
-              <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none">Left</span>
+              <span className={`text-[7px] font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
+                {isLimitReached ? "Done" : "Left"}
+              </span>
               <div className="flex items-center gap-0.5">
                 {Array.from({ length: maxPrompts }).map((_, i) => (
                   <span
                     key={i}
                     className={`h-1 w-4 rounded-full transition-colors duration-500 ${
-                      i < maxPrompts - userMessageCount ? (isLimitReached ? "bg-red-400" : "bg-slate-950") : "bg-slate-200"
+                      isLimitReached
+                        ? "bg-red-500"
+                        : i < maxPrompts - userMessageCount
+                          ? "bg-slate-950"
+                          : "bg-slate-200"
                     }`}
                   />
                 ))}
@@ -128,6 +134,31 @@ const MobileChatConsole = memo(({
       {/* Input Area */}
       <div className="relative p-4 bg-white border-t border-slate-200 shrink-0">
         <AnimatePresence>
+          {isLimitReached && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mb-3 flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-red-50 border border-red-200"
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                <span className="text-[10px] font-black text-red-600 uppercase tracking-[0.2em] truncate">Demo Limit Reached</span>
+              </div>
+              <a
+                href="/intake"
+                className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-950 text-white text-[9px] font-black uppercase tracking-[0.2em] active:scale-95 transition-transform"
+              >
+                Start
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <path d="M5 12h14M13 5l7 7-7 7" />
+                </svg>
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
           {recommendedQuestions.length > 0 && !isTyping && !isLimitReached && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -153,7 +184,11 @@ const MobileChatConsole = memo(({
 
         <form
           onSubmit={(e) => handleSend(inputValue, e)}
-          className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-full border border-slate-200 transition-all duration-300 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.12)]"
+          className={`flex items-center gap-2 p-1.5 rounded-full border transition-all duration-300 ${
+            isLimitReached
+              ? "bg-red-50/60 border-red-200"
+              : "bg-slate-50 border-slate-200 focus-within:bg-white focus-within:border-slate-900 focus-within:shadow-[0_0_0_3px_rgba(14,165,233,0.12)]"
+          }`}
         >
           <input
             type="text"
