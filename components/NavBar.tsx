@@ -140,7 +140,7 @@ export default function NavBar() {
               height={35}
               priority
               style={{ width: "auto", height: "auto" }}
-              alt="Tharros AI Automation Logo"
+              alt="Tharros"
             />
           </Link>
         </Magnetic>
