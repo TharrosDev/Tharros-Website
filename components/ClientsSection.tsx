@@ -113,18 +113,25 @@ function ClientsHero() {
 
 function ClientsGallery() {
   return (
-    <section className="py-10 md:py-16 xl:py-20 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
-      {/* Background decoration - Standard site-wide separators */}
+    <section className="py-12 md:py-20 xl:py-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 auto-rows-[minmax(280px,auto)]">
+        <AnimatedSection>
+          <div className="flex items-center gap-3 mb-8 md:mb-12">
+            <span className="text-[10px] md:text-[11px] font-black text-slate-900 tracking-[0.4em] uppercase">Case Files</span>
+            <div className="h-px flex-1 bg-slate-200" />
+            <span className="text-[10px] md:text-[11px] font-bold text-slate-500 tracking-[0.3em] uppercase tabular-nums">02 Records</span>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6 auto-rows-[minmax(320px,auto)]">
           {clients.map((client, idx) => (
             client.isPlaceholder ? (
-              <PlaceholderCard key={client.id} index={idx} gridPos={client.gridPos} />
+              <PlaceholderCard key={client.id} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} gridPos={client.gridPos} />
             ) : (
-              <ClientCard key={client.id} client={client} index={idx} isPriority={idx === 0} />
+              <ClientCard key={client.id} client={client} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} isPriority={idx === 0} />
             )
           ))}
         </div>
@@ -133,62 +140,111 @@ function ClientsGallery() {
   );
 }
 
-function ClientCard({ client, index, isPriority }: { client: any, index: number, isPriority?: boolean }) {
-  const isLarge = client.gridPos.includes("lg:col-span-2");
-  
+function ClientCard({ client, index, fileNumber, isPriority }: { client: any, index: number, fileNumber: string, isPriority?: boolean }) {
   return (
     <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${client.gridPos} h-full`}>
-      <motion.div 
-        whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-bg border border-white/10 hover:border-accent-3/40 rounded-2xl sm:rounded-[2.5rem] overflow-hidden transition-all duration-500 flex flex-col shadow-2xl shadow-black/40 gpu-accelerated"
+      <motion.div
+        whileHover={{ y: -6, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+        className="group relative h-full bg-slate-950 border border-slate-800 hover:border-accent-3/50 rounded-xl overflow-hidden transition-colors duration-500 flex flex-col shadow-[0_30px_80px_-30px_rgba(2,6,23,0.6)] gpu-accelerated"
       >
-        <div className="p-5 sm:p-7 md:p-10 flex flex-col h-full relative z-10">
-          {/* Header Bar */}
-          <div className="flex items-center justify-between mb-6 sm:mb-8 border-b border-white/5 pb-4">
-            <span className="text-[10px] font-bold text-accent-3 uppercase tracking-[0.2em]">{client.date}</span>
-            <span className="text-[10px] text-slate-300 font-bold tracking-tight uppercase">{client.location}</span>
+        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-accent-3 via-accent-3/40 to-transparent" />
+        <div className="absolute inset-0 industrial-grid opacity-[0.04] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-accent-3/[0.06] blur-[100px] rounded-full pointer-events-none gpu-accelerated" />
+
+        <div className="relative z-10 flex flex-col h-full">
+          {/* Classification strip */}
+          <div className="flex items-center justify-between gap-3 px-5 sm:px-7 md:px-9 py-3.5 border-b border-slate-800 bg-slate-900/40">
+            <div className="flex items-center gap-3">
+              <span className="text-[9px] md:text-[10px] font-black text-accent-3 uppercase tracking-[0.3em] tabular-nums">FILE / {fileNumber}</span>
+              <span className="h-3 w-px bg-slate-700" />
+              <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em]">{client.date}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <motion.span
+                  animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+                  className="absolute inset-0 rounded-full bg-accent-3"
+                />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-3" />
+              </span>
+              <span className="text-[9px] md:text-[10px] font-black text-white uppercase tracking-[0.25em]">Live</span>
+            </div>
           </div>
 
-          {/* Core Content */}
-          <div className="flex-grow">
-            <div className={`flex ${isLarge ? 'flex-col sm:flex-row sm:items-center' : 'flex-col'} gap-5 sm:gap-6 mb-5 sm:mb-6`}>
-              {client.image && (
-                <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 relative rounded-2xl overflow-hidden bg-bg border border-white/10 group-hover:border-accent-3/20 transition-colors">
-                  <Image
-                    src={client.image}
-                    alt={client.name}
-                    fill
-                    priority={isPriority}
-                    className="object-cover transition-all duration-700 group-hover:scale-110"
-                  />
+          {/* Body */}
+          <div className="flex-grow flex flex-col lg:flex-row gap-6 lg:gap-10 px-5 sm:px-7 md:px-9 py-7 md:py-10">
+            {/* Left identity column */}
+            <div className="flex flex-col gap-5 lg:w-[40%] lg:border-r lg:border-slate-800/80 lg:pr-10">
+              <div className="flex items-center gap-4">
+                {client.image && (
+                  <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 relative rounded-lg overflow-hidden bg-white border border-slate-800 group-hover:border-accent-3/40 transition-colors">
+                    <Image
+                      src={client.image}
+                      alt={client.name}
+                      fill
+                      priority={isPriority}
+                      className="object-contain p-2 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Client</span>
+                  <span className="text-[10px] md:text-[11px] font-bold text-slate-300 uppercase tracking-[0.2em]">{client.location}</span>
                 </div>
-              )}
-              <div className="flex flex-col justify-center">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-1">
-                  {client.type}
-                </span>
-                <h3 className={`font-bold text-white tracking-tighter group-hover:text-accent-3 transition-colors duration-300 leading-tight ${isLarge ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl' : 'text-2xl sm:text-3xl'}`}>
-                  {client.name}
-                </h3>
+              </div>
+
+              <h3 className="font-bold text-white tracking-tighter leading-[0.95] text-3xl sm:text-4xl md:text-5xl group-hover:text-accent-3 transition-colors duration-300">
+                {client.name}
+              </h3>
+
+              <div className="flex flex-col gap-1.5 pt-2 border-t border-slate-800/80">
+                <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Build Type</span>
+                <span className="text-sm md:text-base font-semibold text-white tracking-tight">{client.type}</span>
               </div>
             </div>
 
-            <p className={`text-slate-200 leading-relaxed mb-5 sm:mb-6 ${isLarge ? 'text-base sm:text-xl md:text-2xl max-w-2xl font-light' : 'text-base line-clamp-4'}`}>
-              {client.description}
-            </p>
+            {/* Right narrative column */}
+            <div className="flex-1 flex flex-col gap-5">
+              <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Engagement Notes</span>
+              <p className="text-slate-200 leading-relaxed text-base md:text-lg font-light max-w-2xl">
+                {client.description}
+              </p>
+
+              {/* Status pills */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {["Modernized Site", "Integrated Agent", "On-Call Support"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-[9px] md:text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Simplified Footer */}
-          <div className="pt-4 mt-auto relative flex items-center justify-between gap-3 flex-wrap">
-            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Live & On-Call</span>
+          {/* Footer rail */}
+          <div className="border-t border-slate-800 bg-slate-900/40 px-5 sm:px-7 md:px-9 py-4 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent-3">
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>Live &amp; On-Call</span>
+            </div>
 
             <a
               href={client.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-bg active:bg-white active:text-bg transition-all text-white min-h-[40px] inline-flex items-center"
+              className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-slate-950 hover:bg-accent-3 hover:text-white active:bg-accent-3 active:text-white transition-colors text-[10px] md:text-[11px] font-black uppercase tracking-[0.25em] min-h-[40px]"
             >
-               View Project
+              View Project
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
+                <path d="M7 17L17 7M9 7h8v8" />
+              </svg>
             </a>
           </div>
         </div>
@@ -197,41 +253,89 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
   );
 }
 
-function PlaceholderCard({ index, gridPos }: { index: number, gridPos: string }) {
+function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNumber: string, gridPos: string }) {
   return (
     <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${gridPos} h-full`}>
-      <motion.div 
-        whileHover={{ y: -8, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-bg border border-white/5 border-dashed rounded-2xl sm:rounded-[2.5rem] overflow-hidden flex flex-col items-center justify-center p-6 md:p-10 text-center transition-all duration-500 gpu-accelerated shadow-2xl shadow-black/20"
+      <motion.div
+        whileHover={{ y: -6, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+        className="group relative h-full bg-slate-950 border border-dashed border-slate-800 hover:border-accent-3/40 rounded-xl overflow-hidden flex flex-col transition-colors duration-500 gpu-accelerated shadow-[0_30px_80px_-30px_rgba(2,6,23,0.4)]"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.05)_0%,transparent_70%)]" />
-        
-        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center mb-6 relative">
-           <motion.div 
-             animate={{ scale: [1, 2.8], opacity: [0.3, 0] }}
-             transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
-             className="absolute inset-0 rounded-full border-2 border-accent-3/20" 
-           />
-           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/40 group-hover:text-accent-3 transition-colors relative z-10">
-             <path d="M12 5v14M5 12h14" />
-           </svg>
-        </div>
-        
-        <h3 className="text-xl font-bold text-white/80 mb-2 tracking-tight">New Client in Progress</h3>
-        <p className="text-slate-200 text-sm max-w-[220px] leading-relaxed">
-          We are currently preparing a new success story with an Ottawa commercial partner.
-        </p>
+        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-slate-700 via-slate-800 to-transparent" />
+        <div className="absolute inset-0 industrial-grid opacity-[0.04] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(14,165,233,0.08)_0%,transparent_60%)]" />
 
-        {/* Pulsing Dots */}
-        <div className="mt-6 flex gap-1.5 justify-center">
-           {[1,2,3].map(i => (
-             <motion.div 
-               key={i}
-               animate={{ opacity: [0.2, 1, 0.2] }}
-               transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
-               className="w-1 h-1 rounded-full bg-accent-3/60"
-             />
-           ))}
+        <div className="relative z-10 flex flex-col h-full">
+          {/* Classification strip */}
+          <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-3.5 border-b border-dashed border-slate-800 bg-slate-900/40">
+            <div className="flex items-center gap-3">
+              <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] tabular-nums">FILE / {fileNumber}</span>
+              <span className="h-3 w-px bg-slate-700" />
+              <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em]">Drafting</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <motion.span
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="inline-flex h-1.5 w-1.5 rounded-full bg-accent-3/60"
+              />
+              <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Pending</span>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="flex-grow flex flex-col justify-center px-5 sm:px-7 py-8 md:py-10 text-center items-center gap-5">
+            <div className="relative w-14 h-14 rounded-lg border border-slate-800 flex items-center justify-center bg-slate-900/40 overflow-hidden">
+              <motion.div
+                animate={{ y: [-56, 56] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-x-0 h-px bg-accent-3/70 shadow-[0_0_8px_2px_rgba(14,165,233,0.5)]"
+              />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400 group-hover:text-accent-3 transition-colors relative z-10">
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
+              </svg>
+            </div>
+
+            <div className="flex flex-col gap-2 max-w-[260px]">
+              <span className="text-[9px] md:text-[10px] font-black text-accent-3 uppercase tracking-[0.3em]">New Engagement</span>
+              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">
+                New Client in Progress
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed font-light">
+                We are currently preparing a new success story with an Ottawa commercial partner.
+              </p>
+            </div>
+
+            {/* Progress bar */}
+            <div className="w-full max-w-[220px] mt-2 flex flex-col gap-2">
+              <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">
+                <span>Progress</span>
+                <span className="tabular-nums">In Build</span>
+              </div>
+              <div className="relative h-[3px] w-full bg-slate-900 rounded-full overflow-hidden">
+                <motion.div
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-accent-3 to-transparent"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Footer rail */}
+          <div className="border-t border-dashed border-slate-800 bg-slate-900/40 px-5 sm:px-7 py-4 flex items-center justify-between gap-2">
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Awaiting Launch</span>
+            <div className="flex gap-1.5">
+              {[1,2,3].map(i => (
+                <motion.div
+                  key={i}
+                  animate={{ opacity: [0.2, 1, 0.2] }}
+                  transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.3 }}
+                  className="w-1 h-1 rounded-full bg-accent-3/70"
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </motion.div>
     </AnimatedSection>
