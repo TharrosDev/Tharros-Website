@@ -6,6 +6,7 @@ import { Client, Key, Agent, type Task } from "@relevanceai/sdk";
 import AnimatedSection from "./AnimatedSection";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import MobileChatConsole from "./MobileChatConsole";
+import FormattedMessage from "./FormattedMessage";
 
 // Relevance AI Configuration
 const REGION = process.env.NEXT_PUBLIC_RELEVANCE_REGION || "";
@@ -502,14 +503,14 @@ const MessageItem = memo(({ msg }: { msg: LocalMessage }) => {
       animate={{ opacity: 1, y: 0 }}
       className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
     >
-      <div 
+      <div
         className={`max-w-[85%] md:max-w-[75%] text-base 3xl:text-3xl leading-relaxed px-6 py-4 3xl:px-12 3xl:py-8 rounded-2xl 3xl:rounded-[3rem] shadow-sm border transition-all duration-300 ${
-          isAgent 
-          ? "bg-slate-50 text-slate-700 border-slate-100 rounded-tl-none" 
+          isAgent
+          ? "bg-slate-50 text-slate-700 border-slate-100 rounded-tl-none"
           : "bg-slate-950 text-white border-slate-900 rounded-tr-none font-medium"
         }`}
       >
-        {msg.text}
+        {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
       </div>
       <span className="text-[9px] 3xl:text-lg text-slate-300 font-bold mt-2 3xl:mt-4 px-1 uppercase tracking-widest">{msg.time}</span>
     </motion.div>

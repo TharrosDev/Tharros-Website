@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import { useRef, useEffect, memo } from "react";
+import FormattedMessage from "./FormattedMessage";
 
 type LocalMessage = {
   id: string;
@@ -167,14 +168,14 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => (
     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as any }}
     className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
   >
-    <div 
+    <div
       className={`max-w-[90%] text-[15px] leading-relaxed px-5 py-3.5 rounded-2xl border transition-all duration-300 ${
-        msg.sender === "user" 
-        ? "bg-slate-950 text-white border-slate-900 rounded-tr-none shadow-md font-medium" 
+        msg.sender === "user"
+        ? "bg-slate-950 text-white border-slate-900 rounded-tr-none shadow-md font-medium"
         : "bg-slate-50 text-slate-700 border-slate-100 rounded-tl-none"
       }`}
     >
-      {msg.text}
+      {msg.sender === "agent" ? <FormattedMessage text={msg.text} /> : msg.text}
     </div>
     <span className="text-[8px] text-slate-300 font-black mt-2 px-1 uppercase tracking-widest opacity-60">{msg.time}</span>
   </motion.div>
