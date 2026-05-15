@@ -6,7 +6,7 @@ const steps = [
   {
     number: "01",
     headline: "Discovery",
-    body: "We map your business, your biggest time drains, and where a modern site and an agent would move the needle. Together we scope the build that fits.",
+    body: "We map your business, your biggest time drains, and where a modern site and an integrated agent have the most impact. Together we scope the build that fits.",
   },
   {
     number: "02",

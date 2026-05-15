@@ -180,7 +180,7 @@ function ClientCard({ client, index, isPriority }: { client: any, index: number,
 
           {/* Simplified Footer */}
           <div className="pt-4 mt-auto relative flex items-center justify-between">
-            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Client-Owned & Running</span>
+            <span className="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Live & On-Call</span>
             
             <a 
               href={client.link}

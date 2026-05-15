@@ -43,8 +43,8 @@ export default function ModelTiersSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] md:leading-[1.1] tracking-tighter">
-              Built for <br className="hidden md:block" />
-              <span className="text-slate-400">every stage of growth.</span>
+              Three builds. <br className="hidden md:block" />
+              <span className="text-slate-400">Pick yours.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
               Pick the build that matches where your business is. After launch, fixes and new agents are billed per call &mdash; or roll it all into the On-Call retainer.
