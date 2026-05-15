@@ -16,7 +16,7 @@ const agents = [
     name: "Customer Inquiry Agent",
     tagline: "Never let a question go unanswered",
     description:
-      "Live setup sessions where we train you to configure an agent that answers services, pricing, availability, and location questions on your website or messaging channel, and knows when to escalate to you.",
+      "An agent that answers services, pricing, availability, and location questions on your modernized site, and knows when to escalate to you. Built, integrated, and on call.",
     examples: ["Plumbers", "HVAC", "Cleaning services", "Landscapers"],
   },
   {
@@ -30,7 +30,7 @@ const agents = [
     name: "Lead Capture Agent",
     tagline: "Turn website visitors into qualified leads",
     description:
-      "We train you through the full setup of an agent that greets visitors, asks smart qualifying questions, and routes contact info to your inbox while you're on the job or asleep.",
+      "An agent that greets visitors on your new site, asks smart qualifying questions, and routes contact info to your inbox while you're on the job or asleep.",
     examples: ["Lawyers", "Accountants", "Consultants", "Contractors"],
   },
   {
@@ -43,7 +43,7 @@ const agents = [
     name: "After-Hours Intake Agent",
     tagline: "Capture every lead, even when you're off the clock",
     description:
-      "Step-by-step training to set up an agent that handles inbound messages after business hours, collects job details and urgency, and sends you a clean summary at dawn.",
+      "An agent that handles inbound messages after business hours, collects job details and urgency, and sends you a clean summary at dawn. Embedded into your site or messaging channel.",
     examples: ["Emergency trades", "Property managers", "Auto repair", "Clinics"],
   },
 ];
@@ -62,11 +62,11 @@ export default function WhatWeBuildsSection() {
           <div className="text-center mb-12 md:mb-16 3xl:mb-32">
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto leading-[1.2] tracking-tighter">
-              Agents we&apos;ll <span className="text-slate-500">train you</span> <br className="hidden sm:block" />
-              <span className="text-accent-3">to set up yourself.</span>
+              Agents we build <br className="hidden sm:block" />
+              <span className="text-accent-3">into your site.</span>
             </h2>
             <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Live training. Hands-on setup sessions for agents and AI tools. Optional website modernization with the agent embedded directly into your site. You leave with the system and the skills to run it.
+              Three agents that fit most small business operations. Each is built end-to-end and embedded into your modernized site. New agents and tweaks happen via retainer or per call.
             </p>
           </div>
         </AnimatedSection>

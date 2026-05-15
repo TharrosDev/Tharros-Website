@@ -4,27 +4,27 @@ import AnimatedSection from "./AnimatedSection";
 
 const TIERS = [
   {
-    label: "Starter Training",
-    title: "The Setup Sprint",
-    duration: "1 - 3 Days",
-    desc: "A focused 1-3 day training for owner-operators. We pick one agent or AI tool, run live setup sessions until it's live, and leave you with a working system and the skills to tune it.",
-    includes: ["Agent Setup", "Live Training", "Setup Playbook"],
+    label: "Starter Build",
+    title: "The Refresh",
+    duration: "Project-based",
+    desc: "A modern website built for Ottawa small businesses. We update your design, your copy, and your structure so your front door looks like the operation behind it.",
+    includes: ["Website Modernization", "Project-based", "Per-Call Support"],
     color: "text-slate-400"
   },
   {
-    label: "Team Training",
-    title: "The Operator Program",
-    duration: "1 Week",
-    desc: "A one-week training program for scaling local brands. We train you and your team on agents and AI tools, modernize your website, and embed the agent directly into it. You walk away with an internal playbook you can keep using.",
-    includes: ["Team Training", "Website Modernization", "Agent Embed", "Internal Playbook"],
+    label: "Build + Integrate",
+    title: "The Integrate",
+    duration: "Project-based",
+    desc: "Everything in the Refresh, plus an AI agent embedded directly into your site. We build, integrate, and hand you a live system. Fixes and additional agents after launch are billed per call.",
+    includes: ["Website Modernization", "Agent Integration", "Project-based", "Per-Call Support"],
     color: "text-slate-600"
   },
   {
-    label: "Training, Build & Retainer",
-    title: "The Fractional AI Lead",
-    duration: "1 - 2 Weeks + Retainer",
-    desc: "A 1-2 week intensive of agent and AI tool training, a full website modernization with the agent integrated across your site, and then an ongoing retainer. New agent setups, roadmap reviews, and live troubleshooting as your operation grows.",
-    includes: ["Intensive Training", "Website Modernization", "Agent Integration", "Ongoing Retainer"],
+    label: "Build + Retainer",
+    title: "The On-Call",
+    duration: "Project + Monthly Retainer",
+    desc: "Everything in the Integrate, plus a monthly retainer. We're on call to fix, improve, and build new agents, and to keep your site evolving. Unlimited new agents while the retainer runs.",
+    includes: ["Website Modernization", "Agent Integration", "Unlimited New Agents", "Monthly Retainer"],
     color: "text-accent-3"
   }
 ] as const;
@@ -43,11 +43,11 @@ export default function ModelTiersSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] md:leading-[1.1] tracking-tighter">
-              Training shaped for <br className="hidden md:block" />
+              Built for <br className="hidden md:block" />
               <span className="text-slate-400">every stage of growth.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80">
-              Pick the training depth that matches where your business actually is. Operator and Fractional packages add website modernization and direct agent integration.
+              Pick the build that matches where your business is. After launch, fixes and new agents are billed per call &mdash; or roll it all into the On-Call retainer.
             </p>
           </AnimatedSection>
         </div>
@@ -87,6 +87,22 @@ export default function ModelTiersSection() {
             </AnimatedSection>
           ))}
         </div>
+
+        <AnimatedSection delay={0.2}>
+          <div className="mt-16 md:mt-24 3xl:mt-32 max-w-4xl xl:max-w-5xl 3xl:max-w-[90rem] mx-auto">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl md:rounded-[2rem] 3xl:rounded-[3rem] p-6 md:p-10 3xl:p-20 relative overflow-hidden">
+              <span className="text-[9px] md:text-[10px] 3xl:text-lg font-black uppercase tracking-[0.4em] text-accent-3 mb-4 3xl:mb-8 block">
+                After Launch
+              </span>
+              <h3 className="text-2xl md:text-3xl xl:text-4xl 3xl:text-5xl font-bold text-slate-900 tracking-tighter mb-4 3xl:mb-8 leading-tight">
+                Pay-per-call, or roll it into a retainer.
+              </h3>
+              <p className="text-slate-600 text-base md:text-lg xl:text-xl 3xl:text-3xl leading-relaxed font-medium">
+                Refresh and Integrate clients get fixes and new agents the way you&apos;d call a plumber &mdash; one job, one invoice. The On-Call retainer rolls fixes, improvements, and unlimited new agents into a flat monthly fee, so you stop counting calls.
+              </p>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );

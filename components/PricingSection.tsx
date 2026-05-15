@@ -10,8 +10,8 @@ const pricingFactors = [
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
     ),
-    title: "Training Scope",
-    description: "From a single setup sprint on a website concierge to multi-month training on agents wired into your CRM."
+    title: "Build Scope",
+    description: "From a clean website refresh to a full site with a multi-agent platform wired into your operation."
   },
   {
     icon: (
@@ -20,8 +20,8 @@ const pricingFactors = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
       </svg>
     ),
-    title: "Team Depth",
-    description: "How many people we train and how deep the curriculum goes, from a solo owner to a small ops team."
+    title: "Integration Depth",
+    description: "How deep the agent wires in — site embed, CRM sync, intake automation, messaging channels."
   },
   {
     icon: (
@@ -32,8 +32,8 @@ const pricingFactors = [
         <path d="M6 12h.01" />
       </svg>
     ),
-    title: "Ongoing Advisory",
-    description: "One-off training, a fixed-length setup engagement, or a monthly retainer for ongoing tuning and Q&A."
+    title: "After-Launch Model",
+    description: "Pay-per-call for fixes and new agents, or a flat-rate On-Call retainer that rolls everything in."
   }
 ];
 
@@ -52,11 +52,11 @@ export default function PricingSection() {
           <AnimatedSection>
 
             <h2 className="text-3xl sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-slate-900 mb-8 md:mb-12 3xl:mb-20 leading-[1.2] tracking-tighter">
-              Tailored Training for <br className="hidden md:block" />
+              Tailored Builds for <br className="hidden md:block" />
               <span className="text-accent-3">Tailored Businesses.</span>
             </h2>
             <p className="text-slate-600 text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl leading-relaxed font-medium opacity-80 px-2">
-              Our pricing is as custom as the training we run. Mapped strictly to the setup time we spend with you and the skill we leave behind.
+              Pricing as custom as the build. Mapped strictly to the scope, the integration depth, and whether you want us on call after launch.
             </p>
           </AnimatedSection>
         </div>
@@ -91,24 +91,24 @@ export default function PricingSection() {
                   Why no fixed price list?
                 </h3>
                 <p className="text-slate-600 text-sm md:text-lg xl:text-xl 3xl:text-3xl 4xl:text-4xl leading-relaxed mb-8 3xl:mb-16 max-w-4xl 3xl:max-w-[90rem] mx-auto font-medium opacity-80">
-                  Training a solo lawyer through their first setup is a different job than training a plumbing team on three agents.
-                  After a free briefing we send a firm, no-obligation proposal scoped to your business.
+                  A clean website refresh for a solo lawyer is a different job than a site plus three agents and a monthly retainer for a plumbing team.
+                  After a free discovery call we send a firm, no-obligation proposal scoped to your business.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 3xl:gap-12">
                   <Magnetic strength={0.2}>
                     <a
                       href="/intake"
-                      aria-label="Request a custom AI training and setup quote"
+                      aria-label="Request a custom website and AI agent build quote"
                       className="primary-button px-10 py-5 md:px-12 md:py-6 xl:px-14 xl:py-7 3xl:px-24 3xl:py-12 text-xs md:text-lg xl:text-xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-2xl"
                     >
-                      <span className="relative z-10">Request Briefing</span>
+                      <span className="relative z-10">Book a Discovery Call</span>
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                     </a>
                   </Magnetic>
                 </div>
                 <p className="mt-10 3xl:mt-20 text-slate-400 text-[10px] 3xl:text-lg font-bold uppercase tracking-[0.2em]">
-                  Free briefing &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline transition-colors">Direct Inquiry</a> &bull; Keep it Local, Keep it Canadian
+                  Free discovery call &bull; <a href="mailto:tharrosdev@gmail.com" className="hover:text-accent-3 underline transition-colors">Direct Inquiry</a> &bull; Keep it Local, Keep it Canadian
                 </p>
               </div>
             </div>
