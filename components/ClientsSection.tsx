@@ -53,7 +53,7 @@ function ClientsHero() {
               </div>
               <h1 className="text-[3rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] sm:leading-[0.9] md:leading-[0.8]">
                 Real-World <br/>
-                <span className="text-slate-700/60">Impact.</span>
+                <span className="text-slate-500/70">Impact.</span>
               </h1>
             </div>
             

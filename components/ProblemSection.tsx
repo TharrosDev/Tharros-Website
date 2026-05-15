@@ -58,7 +58,7 @@ export default function ProblemSection() {
 
             <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-6 sm:mb-8 md:mb-10 max-w-4xl xl:max-w-6xl mx-auto md:leading-[1.2] tracking-tighter">
               Ottawa businesses are <br className="hidden md:block" />
-              <span className="text-slate-400">bleeding time.</span>
+              <span className="text-slate-500">bleeding time.</span>
             </h2>
             <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl font-medium opacity-80">
               You don&apos;t need another vendor. You need <span className="text-accent-3">a modern site, an integrated agent</span>, and a number you can call when things change.
@@ -84,7 +84,7 @@ export default function ProblemSection() {
                       <span className="scale-110 sm:scale-125">{pain.icon}</span>
                     </div>
                     <div className="flex flex-col gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">{pain.stat}</span>
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{pain.stat}</span>
                     </div>
                   </div>
 
