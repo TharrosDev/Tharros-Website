@@ -166,21 +166,12 @@ export default function NavBar() {
               href="/intake"
               prefetch={false}
               aria-label="Book your free discovery call"
-              className="hidden sm:inline-flex items-center justify-center px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 primary-button !min-h-0 text-[11px] md:text-sm 3xl:text-xl transition-all duration-300"
+              className="primary-button !min-h-0 !w-auto px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 text-[11px] md:text-sm 3xl:text-xl tracking-[0.15em] md:tracking-[0.1em]"
             >
               <span className="hidden md:inline">Book a Discovery Call</span>
-              <span className="md:hidden">Book a Call</span>
+              <span className="md:hidden">Book Call</span>
             </Link>
           </Magnetic>
-
-          <Link
-            href="/intake"
-            prefetch={false}
-            aria-label="Book your free discovery call"
-            className="sm:hidden inline-flex items-center justify-center primary-button !min-h-0 !w-auto !px-4 !py-2 text-[11px] tracking-[0.15em]"
-          >
-            Book Call
-          </Link>
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
