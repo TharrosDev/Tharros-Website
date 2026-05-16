@@ -17,8 +17,8 @@ const SITE_URL = "https://tharros.ca";
 const SITE_NAME = "Tharros";
 const FOUNDER_NAME = "Magnus Abdelnour";
 const CONTACT_EMAIL = "tharrosdev@gmail.com";
-const GEO_LAT = 45.3483;
-const GEO_LON = -75.9103;
+const GEO_LAT = 45.4215;
+const GEO_LON = -75.6972;
 const SERVICE_AREAS = [
   "Ottawa",
   "Kanata",
@@ -26,8 +26,6 @@ const SERVICE_AREAS = [
   "Barrhaven",
   "Orleans",
   "Stittsville",
-  "Gatineau",
-  "Manotick",
 ];
 
 export const viewport: Viewport = {
@@ -90,8 +88,6 @@ export const metadata: Metadata = {
     "Barrhaven Small Business Website",
     "Orleans Small Business Website",
     "Stittsville Small Business Website",
-    "Gatineau Small Business Website",
-    "Manotick Small Business Website",
     "Ottawa Local Business AI",
     "AI Receptionist for Small Business",
     "AI Inquiry Agent Ottawa",
@@ -474,7 +470,7 @@ export default function RootLayout({
         name: "Do you only work with Ottawa businesses?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Tharros focuses on Ottawa and the surrounding region — Kanata, Nepean, Barrhaven, Orleans, Stittsville, and Gatineau. The advantage is local context: we know the trades and small business landscape in this region.",
+          text: "Tharros focuses on the Ottawa area — Kanata, Nepean, Barrhaven, Orleans, and Stittsville included. The advantage is local context: we know the trades and small business landscape in this city.",
         },
       },
       {
