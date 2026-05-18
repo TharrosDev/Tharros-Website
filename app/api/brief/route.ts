@@ -1,10 +1,3 @@
-// app/api/brief/route.ts — Server-side endpoint that catches form submissions
-// and forwards them to your Zapier webhook. Keeps the webhook URL out of the
-// client bundle (it's only available as a server-side env var).
-//
-// POST body: { state, prompt, timestamp, id, source }
-// Response:  { ok: true } on success, { ok: false, error } on failure.
-
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -17,8 +10,8 @@ export async function POST(req: Request) {
 
   const webhook = process.env.THARROS_WEBHOOK_URL;
   if (!webhook) {
-    // No webhook configured — that's OK, the submission still got saved
-    // client-side. Don't block the user; log a warning for the operator.
+    // Webhook is optional — client already saved locally and the operator can
+    // re-export from /admin/briefs. Log but don't fail the user-facing flow.
     console.warn("[/api/brief] THARROS_WEBHOOK_URL not set — skipping forward");
     return NextResponse.json({ ok: true, forwarded: false });
   }
@@ -46,7 +39,6 @@ export async function POST(req: Request) {
   }
 }
 
-// Reject anything other than POST cleanly.
 export async function GET() {
   return NextResponse.json(
     { error: "POST a submission payload — see /brief for the form" },

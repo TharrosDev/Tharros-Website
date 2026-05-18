@@ -1,9 +1,5 @@
 "use client";
 
-// OnboardingApp.tsx — Root client component. Holds form state, drives the
-// wizard / review / thanks flow, persists to localStorage, and posts to
-// /api/brief on submission.
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OB_STEPS, defaultState, stepComplete } from "./lib/schema";
 import { buildPrompt } from "./lib/prompt";
@@ -19,7 +15,6 @@ import { Thanks } from "./Thanks";
 import "./onboarding.css";
 
 export function OnboardingApp() {
-  // ----- Form state (hydrates from localStorage on mount) -----
   const [state, setState] = useState<FormState>(() => defaultState());
   const [stepIndex, setStepIndex] = useState<number>(-1);
   const [visited, setVisited] = useState<Set<number>>(new Set());
@@ -27,7 +22,7 @@ export function OnboardingApp() {
   const [submitting, setSubmitting] = useState(false);
   const saveTimer = useRef<number | null>(null);
 
-  // Hydrate after mount (Next.js: localStorage isn't available during SSR)
+  // localStorage isn't available during SSR — hydrate after mount.
   useEffect(() => {
     const loaded = loadDraft();
     if (loaded) setState(loaded);
@@ -38,7 +33,6 @@ export function OnboardingApp() {
     }
   }, []);
 
-  // Mark a step as visited once it becomes the current step.
   useEffect(() => {
     if (stepIndex >= 0 && stepIndex < OB_STEPS.length) {
       setVisited((prev) => {
@@ -53,14 +47,12 @@ export function OnboardingApp() {
   const setField = useCallback((id: string, v: FieldValue | ((prev: FieldValue) => FieldValue)) => {
     setState((prev) => ({
       ...prev,
-      // Accept either a value or a functional updater so rapid synchronous
-      // toggles (chips, checkboxes) don't read stale state through the
-      // child's prop closure.
+      // Functional-updater form lets rapid synchronous toggles (chips, checks)
+      // avoid stale state from the child's prop closure.
       [id]: typeof v === "function" ? (v as (prev: FieldValue) => FieldValue)(prev[id]) : v,
     }));
   }, []);
 
-  // A step is "done" only if visited AND valid.
   const completedSteps = useMemo(() => {
     const set = new Set<number>();
     OB_STEPS.forEach((step, i) => {
@@ -69,7 +61,6 @@ export function OnboardingApp() {
     return set;
   }, [state, visited]);
 
-  // Debounced auto-save on every change.
   useEffect(() => {
     if (saveTimer.current) window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
@@ -80,7 +71,6 @@ export function OnboardingApp() {
     };
   }, [state, stepIndex, visited]);
 
-  /* ----- Submit ----- */
   const submit = useCallback(async () => {
     setSubmitting(true);
     const prompt = buildPrompt(state);
@@ -91,11 +81,9 @@ export function OnboardingApp() {
       prompt,
     };
 
-    // Local backup (always)
     saveSubmission(record);
 
-    // Forward to server — which forwards to Zapier. Don't block thank-you on
-    // network errors; we already saved locally and the user expects a reply.
+    // Local backup already happened; don't block the thank-you on network errors.
     try {
       const res = await fetch("/api/brief", {
         method: "POST",
@@ -127,7 +115,31 @@ export function OnboardingApp() {
 
   const goToReview = useCallback(() => setStepIndex(OB_STEPS.length), []);
 
-  /* ----- Render ----- */
+  function renderScreen() {
+    if (submitted) return <Thanks state={state} onReset={reset} />;
+    if (stepIndex === OB_STEPS.length) {
+      return (
+        <Review
+          state={state}
+          onEdit={(i) => setStepIndex(i)}
+          onBack={() => setStepIndex(OB_STEPS.length - 1)}
+          onSubmit={submit}
+          submitting={submitting}
+        />
+      );
+    }
+    return (
+      <Wizard
+        state={state}
+        setField={setField}
+        stepIndex={stepIndex}
+        setStepIndex={setStepIndex}
+        completedSteps={completedSteps}
+        onReview={goToReview}
+      />
+    );
+  }
+
   return (
     <div className="ob-shell">
       <div className="ob-shell__bg" aria-hidden="true">
@@ -137,28 +149,7 @@ export function OnboardingApp() {
         <div className="glow glow--b" />
       </div>
 
-      <main className="ob-stage">
-        {submitted ? (
-          <Thanks state={state} onReset={reset} />
-        ) : stepIndex === OB_STEPS.length ? (
-          <Review
-            state={state}
-            onEdit={(i) => setStepIndex(i)}
-            onBack={() => setStepIndex(OB_STEPS.length - 1)}
-            onSubmit={submit}
-            submitting={submitting}
-          />
-        ) : (
-          <Wizard
-            state={state}
-            setField={setField}
-            stepIndex={stepIndex}
-            setStepIndex={setStepIndex}
-            completedSteps={completedSteps}
-            onReview={goToReview}
-          />
-        )}
-      </main>
+      <main className="ob-stage">{renderScreen()}</main>
     </div>
   );
 }
