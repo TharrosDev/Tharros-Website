@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       // (instead of as a page-level permanentRedirect) so it emits a real HTTP
       // 308 at the edge rather than a meta-refresh in a prerendered page.
       { source: "/intake", destination: "/brief", permanent: true },
+      // Forgive a common typo: singular /admin/brief → plural /admin/briefs.
+      { source: "/admin/brief", destination: "/admin/briefs", permanent: true },
     ];
   },
   async headers() {
