@@ -1,0 +1,198 @@
+// prompt.ts — Build the structured Markdown brief from form state.
+// EDIT THIS FILE to change how the prompt reads (section headers, build
+// guidance footer, package recommendation logic, etc).
+
+import { OB_STEPS, findField } from "./schema";
+import type { FieldDef, FieldValue, FormState } from "./types";
+
+/* Format one field value into its Markdown inline representation. */
+function formatField(field: FieldDef | null, value: FieldValue): string {
+  if (!field || value == null) return "_(not provided)_";
+
+  if (field.kind === "chips") {
+    const arr = Array.isArray(value) ? value.filter(Boolean) : [];
+    return arr.length ? arr.map((v) => `\`${v}\``).join(", ") : "_(not provided)_";
+  }
+
+  if (field.kind === "checks") {
+    const arr = Array.isArray(value) ? value.filter(Boolean) : [];
+    if (!arr.length) return "_(not provided)_";
+    return arr.map((v) => {
+      const opt = field.options?.find((o) => o.v === v);
+      return opt ? opt.label : v;
+    }).map((s) => `- ${s}`).join("\n");
+  }
+
+  if (field.kind === "radio") {
+    const opt = field.options?.find((o) => o.v === value);
+    return opt ? opt.label : (typeof value === "string" ? value : "_(not provided)_");
+  }
+
+  if (field.kind === "slider") {
+    const labels = field.labels || [];
+    return labels[value as number] || `${value}`;
+  }
+
+  if (field.kind === "colors") {
+    const opt = field.options?.find((o) => o.v === value);
+    return value ? `\`${value}\`${opt ? " (" + opt.label + ")" : ""}` : "_(not provided)_";
+  }
+
+  if (field.kind === "file") {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return "_(not provided)_";
+    return `\`${value.name}\` (${(value.size / 1024).toFixed(1)} kB)`;
+  }
+
+  return (typeof value === "string" ? value.trim() : `${value}`) || "_(not provided)_";
+}
+
+/* ============================================================
+   buildPrompt — the entire structured Markdown brief
+   ============================================================ */
+
+export function buildPrompt(state: FormState): string {
+  const ts = new Date().toISOString();
+  const get = (id: string): FieldValue => state[id];
+  const str = (id: string): string => {
+    const v = state[id];
+    return typeof v === "string" ? v : "";
+  };
+  const arr = (id: string): string[] => {
+    const v = state[id];
+    return Array.isArray(v) ? v : [];
+  };
+
+  const lines: string[] = [];
+
+  lines.push("# Client Brief — New Tharros Build");
+  lines.push("");
+  lines.push(`> Generated ${ts.split("T")[0]} from client onboarding.`);
+  lines.push("> Use this as a system prompt or first-turn message when generating the site.");
+  lines.push("");
+
+  // ----- Business
+  lines.push("## 1. Business");
+  lines.push(`- **Name:** ${str("businessName") || "_(missing)_"}`);
+  lines.push(`- **Owner / contact:** ${str("ownerName") || "_(missing)_"}`);
+  lines.push(`- **Based in:** ${str("city") || "_(missing)_"}`);
+  lines.push(`- **What they do:** ${str("industry") || "_(missing)_"}`);
+  lines.push("");
+
+  // ----- Current site
+  lines.push("## 2. Current site");
+  lines.push(`- **URL:** ${str("currentUrl") || "_(none — greenfield build)_"}`);
+  if (str("siteWorking")) lines.push(`- **Working:** ${str("siteWorking")}`);
+  lines.push(`- **Biggest issue:** ${str("siteBroken") || "_(not specified)_"}`);
+  lines.push("");
+
+  // ----- Customers
+  lines.push("## 3. Audience");
+  lines.push(`- **Customer types:** ${formatField(findField("customers"), get("customers"))}`);
+  lines.push(`- **Service areas:** ${formatField(findField("serviceArea"), get("serviceArea"))}`);
+  lines.push("");
+
+  // ----- Offering
+  lines.push("## 4. Offering");
+  lines.push(`- **Services:** ${formatField(findField("services"), get("services"))}`);
+  lines.push("- **Pages to build:**");
+  const pagesField = findField("pages");
+  const pages = arr("pages");
+  if (!pages.length) {
+    lines.push("  - _(not specified — propose a sensible default)_");
+  } else {
+    pages.forEach((v) => {
+      const opt = pagesField?.options?.find((o) => o.v === v);
+      lines.push(`  - ${opt ? opt.label : v}`);
+    });
+  }
+  lines.push("");
+
+  // ----- Assistant
+  lines.push("## 5. AI agent");
+  const scope = arr("assistantScope");
+  if (!scope.length || scope.includes("none")) {
+    lines.push("- **Status:** Skipped — site only, no embedded agent for v1.");
+    lines.push("- **Suggested Tharros package:** The Refresh.");
+  } else {
+    lines.push("- **Patterns requested:**");
+    const scopeField = findField("assistantScope");
+    scope.filter((v) => v !== "none").forEach((v) => {
+      const opt = scopeField?.options?.find((o) => o.v === v);
+      lines.push(`  - ${opt ? opt.label : v}`);
+    });
+    if (str("hoursOfOperation")) lines.push(`- **Hours of operation:** ${str("hoursOfOperation")}`);
+    if (get("afterHours")) lines.push(`- **After-hours behaviour:** ${formatField(findField("afterHours"), get("afterHours"))}`);
+
+    if (scope.includes("after-hours") || scope.length >= 2) {
+      lines.push("- **Suggested Tharros package:** The On-Call (site + agent + monthly retainer).");
+    } else {
+      lines.push("- **Suggested Tharros package:** The Integrate.");
+    }
+  }
+  lines.push("");
+
+  // ----- Brand
+  lines.push("## 6. Visual direction");
+  lines.push(`- **Primary colour:** ${formatField(findField("primaryColor"), get("primaryColor"))}`);
+  lines.push(`- **Mood / feel:** ${formatField(findField("moodWords"), get("moodWords"))}`);
+  if (arr("avoid").length) {
+    lines.push(`- **Avoid:** ${formatField(findField("avoid"), get("avoid"))}`);
+  }
+  lines.push("");
+
+  // ----- Voice
+  lines.push("## 7. Voice & tone");
+  lines.push(`- **Position on scale:** ${formatField(findField("voiceTone"), get("voiceTone"))}`);
+  if (arr("voiceMust").length) {
+    lines.push(`- **Must include / claims:** ${formatField(findField("voiceMust"), get("voiceMust"))}`);
+  }
+  lines.push("");
+
+  // ----- Timeline & assets
+  lines.push("## 8. Timeline & assets");
+  lines.push(`- **Target launch:** ${formatField(findField("timeline"), get("timeline"))}`);
+  if (get("logo")) {
+    lines.push(`- **Logo:** provided — ${formatField(findField("logo"), get("logo"))} _(file not attached; request from client during follow-up)_`);
+  } else {
+    lines.push("- **Logo:** not yet provided — flag for follow-up.");
+  }
+  if (arr("haveAssets").length) {
+    lines.push("- **Other assets client can supply:**");
+    const af = findField("haveAssets");
+    arr("haveAssets").filter((v) => v !== "none").forEach((v) => {
+      const opt = af?.options?.find((o) => o.v === v);
+      lines.push(`  - ${opt ? opt.label : v}`);
+    });
+  }
+  if (arr("refSites").length) {
+    lines.push(`- **Reference sites:** ${formatField(findField("refSites"), get("refSites"))}`);
+  }
+  lines.push("");
+
+  // ----- Contact
+  lines.push("## 9. Contact");
+  lines.push(`- **Email:** ${str("email") || "_(missing)_"}`);
+  if (str("phone")) lines.push(`- **Phone:** ${str("phone")}`);
+  if (str("bestTime")) lines.push(`- **Best time to reach:** ${str("bestTime")}`);
+  lines.push("");
+
+  // ----- Build guidance footer
+  lines.push("---");
+  lines.push("");
+  lines.push("## Build guidance");
+  lines.push("");
+  lines.push("Generate a Tharros-style website that matches the brief above. Apply the Tharros design language: industrial-executive voice, slate base, single sky-blue accent, sharp corners, decisive copy. Voice should sound like a competent tradesperson who happens to build software — short sentences, plain words, locally grounded.");
+  lines.push("");
+  lines.push("**Hard requirements:**");
+  lines.push("- Section layouts: hero → problem/why → services → process → social proof → contact.");
+  lines.push("- Mobile-first responsive. Test at 375px, 768px, 1280px.");
+  lines.push("- Accessibility: WCAG AA contrast, proper headings, alt text placeholders.");
+  lines.push("- SEO: per-page metadata, JSON-LD `LocalBusiness` schema with service areas above.");
+  lines.push("- CTA on every section: \"Book a Discovery Call\" or a phone number.");
+  lines.push("");
+  lines.push("**If gaps exist above (`_(missing)_` or `_(not provided)_`), make reasonable assumptions in the spirit of the rest of the brief and flag them in a `// TODO:` comment next to the relevant section.**");
+
+  return lines.join("\n");
+}
+
+export { formatField };
