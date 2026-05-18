@@ -4,6 +4,14 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  async redirects() {
+    return [
+      // Legacy onboarding URL — the wizard now lives at /brief. Declared here
+      // (instead of as a page-level permanentRedirect) so it emits a real HTTP
+      // 308 at the edge rather than a meta-refresh in a prerendered page.
+      { source: "/intake", destination: "/brief", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
