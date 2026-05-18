@@ -18,13 +18,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      url: `${SITE_URL}/intake`,
+      url: `${SITE_URL}/brief`,
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly",
       priority: 0.9,
       alternates: {
         languages: {
-          "en-CA": `${SITE_URL}/intake`,
+          "en-CA": `${SITE_URL}/brief`,
         },
       },
     },
