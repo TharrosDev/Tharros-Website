@@ -1,8 +1,6 @@
 "use client";
 
-// Wizard.tsx — Main 9-step wizard layout with sidebar progress.
-
-import type { ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { OB_STEPS, stepComplete } from "./lib/schema";
 import type { FieldValue, FormState } from "./lib/types";
 import { Fields } from "./controls/Field";
@@ -25,16 +23,26 @@ export function Wizard({
   const totalSteps = OB_STEPS.length;
 
   const goTo = (i: number) => {
-    if (i < -1) i = -1;
-    if (i > totalSteps) i = totalSteps;
-    setStepIndex(i);
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
+    const clamped = Math.max(-1, Math.min(totalSteps, i));
+    setStepIndex(clamped);
+    requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
   };
 
   const currentStep = stepIndex >= 0 && stepIndex < totalSteps ? OB_STEPS[stepIndex] : null;
   const stepValid = currentStep ? stepComplete(currentStep, state) : true;
 
-  // ------------------------- WELCOME (intro)
+  const stepMeta = useMemo(
+    () => OB_STEPS.map((s, i) => {
+      const done = completedSteps.has(i) && i !== stepIndex;
+      const current = i === stepIndex;
+      const locked = i > stepIndex && !completedSteps.has(i);
+      const className = ["ob-step", done && "is-done", current && "is-current", locked && "is-locked"]
+        .filter(Boolean).join(" ");
+      return { id: s.id, name: s.name, className, locked };
+    }),
+    [stepIndex, completedSteps],
+  );
+
   if (stepIndex === -1) {
     return (
       <div className="ob-stage__inner">
@@ -60,11 +68,11 @@ export function Wizard({
 
             <div className="ob-welcome">
               <span className="ob-card__chip">Welcome</span>
-              <h1>What we’ll <span className="accent">cover.</span></h1>
+              <h1>What we&apos;ll <span className="accent">cover.</span></h1>
               <p className="lede">
                 Nine quick sections — the shape of your business, your customers,
                 the look you want, and a couple of practical bits about timing
-                and contact. No homework, no jargon. If a question doesn’t
+                and contact. No homework, no jargon. If a question doesn&apos;t
                 apply, skip it.
               </p>
 
@@ -83,11 +91,12 @@ export function Wizard({
                 </div>
               </div>
 
-              <button type="button" className="primary-button primary-button--lg"
+              <button
+                type="button"
+                className="primary-button primary-button--lg ob-primary-action"
                 onClick={() => goTo(0)}
-                style={{ display: "inline-flex", gap: 12 }}>
+              >
                 <span className="label">Start the brief</span>
-                <span className="sweep" />
                 <IconArrowRight />
               </button>
             </div>
@@ -97,16 +106,9 @@ export function Wizard({
     );
   }
 
-  // ------------------------- REVIEW
-  if (stepIndex === totalSteps) {
-    // Delegated to <Review> by the parent — parent flips `stepIndex` to
-    // `totalSteps` and renders <Review> instead of <Wizard>.
-    return null;
-  }
+  // Parent renders <Review> at stepIndex === totalSteps; Wizard is unmounted.
+  if (stepIndex === totalSteps || !currentStep) return null;
 
-  if (!currentStep) return null;
-
-  // ------------------------- STEP
   return (
     <div className="ob-stage__inner">
       <aside className="ob-side">
@@ -119,28 +121,17 @@ export function Wizard({
           <p className="ob-side__sub">{currentStep.subtitle}</p>
 
           <ul className="ob-steps">
-            {OB_STEPS.map((s, i) => {
-              const done = completedSteps.has(i) && i !== stepIndex;
-              const current = i === stepIndex;
-              const locked = i > stepIndex && !completedSteps.has(i);
-              const classes = [
-                "ob-step",
-                done && "is-done",
-                current && "is-current",
-                locked && "is-locked",
-              ].filter(Boolean).join(" ");
-              return (
-                <li
-                  key={s.id}
-                  className={classes}
-                  onClick={() => { if (!locked) goTo(i); }}
-                >
-                  <span className="ob-step__n">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="ob-step__name">{s.name}</span>
-                  <span className="ob-step__tick"><IconCheck size={12} /></span>
-                </li>
-              );
-            })}
+            {stepMeta.map((s, i) => (
+              <li
+                key={s.id}
+                className={s.className}
+                onClick={() => { if (!s.locked) goTo(i); }}
+              >
+                <span className="ob-step__n">{String(i + 1).padStart(2, "0")}</span>
+                <span className="ob-step__name">{s.name}</span>
+                <span className="ob-step__tick"><IconCheck size={12} /></span>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
@@ -188,22 +179,14 @@ export function Wizard({
             <div className="ob-actions__spacer" />
             <button
               type="button"
-              className="primary-button primary-button--lg"
-              onClick={() => {
-                if (stepIndex === totalSteps - 1) onReview();
-                else goTo(stepIndex + 1);
-              }}
+              className="primary-button primary-button--lg ob-primary-action"
+              onClick={() => (stepIndex === totalSteps - 1 ? onReview() : goTo(stepIndex + 1))}
               disabled={!stepValid}
-              style={{
-                display: "inline-flex", gap: 12,
-                opacity: stepValid ? 1 : 0.45,
-                cursor: stepValid ? "pointer" : "not-allowed",
-              }}
+              data-invalid={!stepValid || undefined}
             >
               <span className="label">
                 {stepIndex === totalSteps - 1 ? "Review brief" : "Continue"}
               </span>
-              <span className="sweep" />
               <IconArrowRight />
             </button>
           </div>
@@ -213,7 +196,7 @@ export function Wizard({
   );
 }
 
-// Split a title at the midpoint for the sidebar headline.
+// Split a title at the midpoint so the sidebar headline wraps cleanly.
 function splitTitle(title: string): ReactNode {
   if (!title) return null;
   const t = title.replace(/\.$/, "");

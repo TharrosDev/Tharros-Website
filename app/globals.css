@@ -17,7 +17,6 @@
   --color-accent-bright: #38bdf8;
 
   /* Onboarding tokens (used by components/onboarding/onboarding.css). */
-  --color-text-soft: #94a3b8;                    /* slate-400, alias of --color-subdued */
   --color-danger:    #dc2626;                    /* red-600, used by admin bar */
   --ease-industrial: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -37,7 +36,6 @@
   --color-accent-2:  var(--color-accent-2);
   --color-accent-3:  var(--color-accent-3);
   --color-accent-bright: var(--color-accent-bright);
-  --color-text-soft: var(--color-text-soft);
   --color-danger:    var(--color-danger);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;

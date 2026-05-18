@@ -1,7 +1,6 @@
 "use client";
 
-// Thanks.tsx — Post-submission screen with a 4-step timeline.
-
+import Link from "next/link";
 import type { FormState } from "./lib/types";
 
 interface ThanksProps {
@@ -13,11 +12,17 @@ export function Thanks({ state, onReset }: ThanksProps) {
   const launch = typeof state.timeline === "string" ? state.timeline : "flex";
   const owner = typeof state.ownerName === "string" ? state.ownerName : "";
 
+  const buildWhen =
+    launch === "asap" ? "Weeks 2–4" :
+    launch === "soon" ? "Weeks 2–6" :
+    launch === "quarter" ? "Weeks 2–10" :
+    "On your timeline";
+
   const timeline = [
     {
       when: "Within 24 hours",
       what: "Magnus reads your brief.",
-      desc: "Personal review. Expect a reply with a proposed discovery-call time, or a couple of clarifying questions if anything’s unclear.",
+      desc: "Personal review. Expect a reply with a proposed discovery-call time, or a couple of clarifying questions if anything's unclear.",
     },
     {
       when: "Week 1",
@@ -25,11 +30,7 @@ export function Thanks({ state, onReset }: ThanksProps) {
       desc: "A 30-minute call to walk through the brief, lock the package, and lay out a clear deliverable list with dates.",
     },
     {
-      when:
-        launch === "asap" ? "Weeks 2–4" :
-        launch === "soon" ? "Weeks 2–6" :
-        launch === "quarter" ? "Weeks 2–10" :
-        "On your timeline",
+      when: buildWhen,
       what: "Build & integrate.",
       desc: "Site goes up on a private staging URL. Iterations happen in 2–3 day cycles — you review, we adjust, we move.",
     },
@@ -43,7 +44,7 @@ export function Thanks({ state, onReset }: ThanksProps) {
   const firstName = owner.split(" ")[0] || "friend";
 
   return (
-    <div className="ob-stage__inner" style={{ gridTemplateColumns: "1fr" }}>
+    <div className="ob-stage__inner ob-thanks-stage">
       <div className="ob-main">
         <div className="ob-thanks">
           <div className="ob-thanks__seal">
@@ -56,11 +57,11 @@ export function Thanks({ state, onReset }: ThanksProps) {
           </div>
           <span className="ob-thanks__chip">Brief Received</span>
           <h1>
-            We’re on it,&nbsp;<span className="accent">{firstName}.</span>
+            We&apos;re on it,&nbsp;<span className="accent">{firstName}.</span>
           </h1>
           <p className="lede">
             Your brief is in. Magnus reads every one personally — expect a reply
-            within one business day. Here’s what happens next.
+            within one business day. Here&apos;s what happens next.
           </p>
 
           <ol className="ob-timeline">
@@ -76,15 +77,10 @@ export function Thanks({ state, onReset }: ThanksProps) {
             ))}
           </ol>
 
-          <div style={{
-            marginTop: 40, display: "flex", justifyContent: "center",
-            gap: 20, flexWrap: "wrap",
-          }}>
-            <a href="/" className="primary-button primary-button--lg"
-               style={{ display: "inline-flex", gap: 10 }}>
+          <div className="ob-thanks__actions">
+            <Link href="/" className="primary-button primary-button--lg ob-primary-action">
               <span className="label">Back to Tharros</span>
-              <span className="sweep" />
-            </a>
+            </Link>
             <button type="button" className="ob-back" onClick={onReset}>
               <span className="rule" />Submit another brief
             </button>
