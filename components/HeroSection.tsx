@@ -82,7 +82,7 @@ export default function HeroSection() {
           >
             <Magnetic strength={0.1} className="inline-block w-full sm:w-auto">
               <a
-                href="/intake"
+                href="/brief"
                 className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-3xl 4xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] md:py-6 3xl:py-8 3xl:px-12"
               >
                 <span className="relative z-10">Book a Discovery Call</span>

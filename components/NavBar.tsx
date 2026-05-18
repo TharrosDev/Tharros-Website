@@ -21,7 +21,7 @@ export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const isIntakePage = pathname === "/intake";
+  const isBriefPage = pathname === "/brief";
   const isHomePage = pathname === "/";
 
   useEffect(() => {
@@ -163,7 +163,7 @@ export default function NavBar() {
         <div className="flex items-center gap-2 md:gap-3 3xl:gap-8 h-full">
           <Magnetic strength={0.2}>
             <Link
-              href="/intake"
+              href="/brief"
               prefetch={false}
               aria-label="Book your free discovery call"
               className="primary-button !min-h-0 !w-auto px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 text-[11px] md:text-sm 3xl:text-xl tracking-[0.15em] md:tracking-[0.1em]"
@@ -246,7 +246,7 @@ export default function NavBar() {
                 className="w-full max-w-xs mt-6 pt-8 border-t border-white/10 flex flex-col items-center safe-bottom"
               >
                 <Link
-                  href="/intake"
+                  href="/brief"
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
                   className="primary-button flex items-center justify-center px-10 py-5 text-base shadow-2xl shadow-accent-3/20 w-full"

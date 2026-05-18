@@ -20,7 +20,9 @@ Technical reference for the Tharros website. Read this when you need to understa
 │                                                                 │
 │   app/layout.tsx ─── Global JSON-LD graph, metadata, NavBar     │
 │   app/page.tsx ───── Home page composition                      │
-│   app/intake/ ────── Discovery Briefing (Formspree)             │
+│   app/brief/ ─────── Discovery Briefing wizard (9-step)         │
+│   app/admin/briefs ─ Auth-gated admin (middleware Basic auth)   │
+│   app/api/brief/ ─── Zapier-forwarding submission endpoint      │
 │   app/clients/ ───── Build case studies                         │
 │                                                                 │
 │   Server-rendered shell. Below-the-fold sections are dynamic.   │
@@ -149,7 +151,7 @@ Rules:
 See [`SEO.md`](./SEO.md) for the full reference. Summary:
 
 - **One JSON-LD graph in `app/layout.tsx`** — Organization, LocalBusiness, Service, WebSite, FAQPage, Person, SiteNavigationElement, BreadcrumbList, all cross-referenced by `@id`.
-- **Per-page JSON-LD** for `/intake` (ContactPage) and `/clients` (CollectionPage + Article entries). Each page also injects its own `BreadcrumbList`.
+- **Per-page JSON-LD** for `/clients` (CollectionPage + Article entries) — injects its own `BreadcrumbList`.
 - **Geo meta tags** in the `other` field of root metadata.
 - **`hreflang`** alternates in every page's metadata.
 - **`robots.ts`** explicitly allows search + AI crawlers, blocks scraper bots.
@@ -158,34 +160,18 @@ See [`SEO.md`](./SEO.md) for the full reference. Summary:
 
 ---
 
-## Form architecture
+## Discovery Briefing wizard
 
-`/intake` uses `@formspree/react` for the Discovery Briefing form. The form ID (`xvzlykgz`) is hardcoded in `components/IntakeForm.tsx`. Formspree handles spam filtering, email delivery, and submission storage. There's no server-side handler in this repo for the form.
+`/brief` is a 9-step wizard rendered by `components/onboarding/OnboardingApp.tsx` (client component). Schema, prompt builder, and storage helpers live in `components/onboarding/lib/`. Draft state persists to `localStorage` between steps; on submit, the client POSTs to `/api/brief/route.ts` which forwards to Zapier via the server-side `THARROS_WEBHOOK_URL` env var (kept off the client bundle).
 
-The form has five fields:
-
-- Full name (required)
-- Email (required)
-- Business / Company (required)
-- Website (optional)
-- Needs / business context (required, textarea)
-
-On submit, Formspree returns a state object via `useForm`. The component renders a success state via `AnimatePresence`.
-
----
-
-## Why the unused IntakeAgent files exist
-
-`components/IntakeAgent.tsx` and `components/IntakeAgentWrapper.tsx` are leftovers from an earlier iteration of `/intake` that used a conversational AI agent for intake (Relevance AI again). The current model is simpler — a static Formspree form — so these files are orphaned. They're left in the repo for now in case a future iteration wants to revive the agent-driven intake path.
-
-Don't import them. Don't refactor them. Don't delete them without checking with the team.
+`/admin/briefs` is a local-backup admin view of submissions cached in the operator's browser. It's gated by HTTP Basic auth via `middleware.ts` (username `magnus`, password from `ADMIN_PASSWORD`).
 
 ---
 
 ## Build pipeline
 
 - **`npm run build`** runs Turbopack-powered Next.js production build. Output: `.next/`.
-- Static pages are pre-rendered at build time (`/`, `/intake`, `/clients`, `/icon.svg`, `/robots.txt`, `/sitemap.xml`).
+- Static pages are pre-rendered at build time (`/`, `/brief`, `/admin/briefs`, `/clients`, `/icon.svg`, `/robots.txt`, `/sitemap.xml`).
 - The build also typechecks the entire repo.
 
 Builds should be deterministic. If a build fails, the problem is real — don't bypass it with `--no-verify` or `--no-typescript-check`.

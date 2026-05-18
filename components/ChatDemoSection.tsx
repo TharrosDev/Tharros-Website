@@ -475,7 +475,7 @@ export default function ChatDemoSection() {
                                 </div>
                               </div>
                               <a
-                                href="/intake"
+                                href="/brief"
                                 className="shrink-0 inline-flex items-center gap-1.5 3xl:gap-3 px-4 py-2 3xl:px-8 3xl:py-4 rounded-full bg-slate-950 text-white text-[10px] 3xl:text-base font-black uppercase tracking-[0.2em] hover:bg-accent-3 transition-colors duration-300"
                               >
                                 Get Started

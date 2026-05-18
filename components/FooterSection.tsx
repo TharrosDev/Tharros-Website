@@ -7,10 +7,10 @@ import Magnetic from "./Magnetic";
 export default function FooterSection() {
   const year = new Date().getFullYear();
   const pathname = usePathname();
-  const isIntakePage = pathname === "/intake";
+  const isBriefPage = pathname === "/brief";
 
   const handleScrollToTop = (e: React.MouseEvent) => {
-    if (isIntakePage) {
+    if (isBriefPage) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -42,7 +42,7 @@ export default function FooterSection() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-6 md:gap-12 3xl:gap-24 w-full max-w-sm sm:max-w-none mx-auto">
                 <Magnetic strength={0.1} className="inline-block w-full sm:w-auto">
                   <a
-                    href="/intake"
+                    href="/brief"
                     onClick={handleScrollToTop}
                     aria-label="Book your free discovery call"
                     className="primary-button text-sm md:text-xl xl:text-2xl 3xl:text-4xl w-full sm:w-auto relative overflow-hidden group shadow-[0_20px_50px_-10px_rgba(14,165,233,0.3)] 3xl:px-20 3xl:py-10"

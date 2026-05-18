@@ -43,7 +43,7 @@ The service model is deliberately small-business shaped:
 | **The Integrate** | Site + AI agent embedded | Project-based | Per-call support |
 | **The On-Call** | Site + agent + monthly retainer | Project + monthly | Unlimited fixes & new agents |
 
-The site walks visitors through these packages, demos a live agent, and points to the Discovery Briefing intake form.
+The site walks visitors through these packages, demos a live agent, and points to the Discovery Briefing wizard at `/brief`.
 
 ## Tech Stack
 
@@ -54,7 +54,6 @@ The site walks visitors through these packages, demos a live agent, and points t
 | Styling | Tailwind CSS 4 (CSS-first config via `@theme`) |
 | Animation | `motion/react` (Framer Motion successor) |
 | Live agent demo | `@relevanceai/sdk` |
-| Intake form | `@formspree/react` |
 | Analytics | `@vercel/analytics` |
 | Hosting | Vercel (recommended) |
 
@@ -79,7 +78,9 @@ Sub-project (`my-chat/`) — an embeddable chat widget for client deployments:
 │   ├── globals.css            Tailwind 4 theme + design tokens
 │   ├── robots.ts              Bot allowlist (search + AI)
 │   ├── sitemap.ts             Sitemap with hreflang
-│   ├── intake/page.tsx        Discovery Briefing form
+│   ├── brief/page.tsx         Discovery Briefing wizard (9 steps)
+│   ├── admin/briefs/page.tsx  Admin view of submissions (auth-gated)
+│   ├── api/brief/route.ts     Server-side Zapier forwarder
 │   └── clients/page.tsx       Build & integration case studies
 │
 ├── components/                All UI sections (see below)
@@ -120,7 +121,7 @@ The home page composes the following sections in order (`app/page.tsx`):
 
 Cross-cutting components: `NavBar`, `PageTransition`, `BackToTop`, `AnimatedSection`, `Magnetic`, `SectionSkeleton`, `MobileChatConsole`.
 
-**Orphaned:** `IntakeAgent.tsx` and `IntakeAgentWrapper.tsx` are unused leftovers from a previous AI-driven intake architecture. The current `/intake` page uses `IntakeForm.tsx` (Formspree).
+The discovery briefing lives at `/brief` (9-step wizard in `components/onboarding/`). Submissions POST to `/api/brief` which forwards to Zapier server-side; `/admin/briefs` is the auth-gated admin view.
 
 ## Local Development
 
@@ -157,8 +158,6 @@ NEXT_PUBLIC_RELEVANCE_REGION=...
 NEXT_PUBLIC_RELEVANCE_PROJECT=...
 NEXT_PUBLIC_RELEVANCE_AGENT_ID=...
 ```
-
-The Formspree intake form has its form ID hardcoded in `components/IntakeForm.tsx` (`xvzlykgz`).
 
 The embeddable widget (`my-chat/`) reads:
 

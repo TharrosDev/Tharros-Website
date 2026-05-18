@@ -76,7 +76,7 @@ Do **not** create new top-level directories without a clear reason.
 
 ## File-level rules
 
-- **`app/layout.tsx`** is the only place global JSON-LD lives. Per-page JSON-LD goes in each page file (see `app/intake/page.tsx`, `app/clients/page.tsx`).
+- **`app/layout.tsx`** is the only place global JSON-LD lives. Per-page JSON-LD goes in each page file (see `app/clients/page.tsx`).
 - **`app/globals.css`** defines all design tokens. Don't redefine colors in components; use `text-accent-3`, `bg-bg`, etc.
 - **`components/`** is flat. No nested folders. Wrappers sit next to the components they wrap (`ChatDemoSection.tsx` + `ChatDemoSectionWrapper.tsx`).
 - **`my-chat/`** is a separate package — don't import from it into the main Next app, and vice versa.
@@ -85,10 +85,7 @@ Do **not** create new top-level directories without a clear reason.
 
 ## Known orphans (do not touch unless asked)
 
-- `components/IntakeAgent.tsx`
-- `components/IntakeAgentWrapper.tsx`
-
-These were superseded by `IntakeForm.tsx` and are not rendered anywhere. They contain dated enterprise-jargon copy that would need a full rewrite if revived. Leave them alone.
+_(none — orphaned intake components were removed when the wizard moved to `/brief`.)_
 
 ---
 

@@ -11,7 +11,7 @@ Everything you need to know before changing anything that touches search or soci
 | Surface | File | Notes |
 |---|---|---|
 | Metadata API (root) | `app/layout.tsx` | Title template, description, OG, Twitter, hreflang, keywords, geo, format detection |
-| Metadata API (per-page) | `app/intake/page.tsx`, `app/clients/page.tsx` | Page-specific metadata + per-page JSON-LD |
+| Metadata API (per-page) | `app/brief/page.tsx`, `app/clients/page.tsx` | Page-specific metadata + per-page JSON-LD |
 | JSON-LD graph | `app/layout.tsx` | 8 cross-referenced entities, see below |
 | Robots | `app/robots.ts` | Explicit allowlist for search + AI bots, blocklist for scrapers |
 | Sitemap | `app/sitemap.ts` | Per-URL hreflang alternates |
@@ -80,7 +80,6 @@ BreadcrumbList (root)
 
 Pages that aren't the homepage inject their own additional structured data:
 
-- **`/intake`** → ContactPage + BreadcrumbList (Home → Discovery Briefing)
 - **`/clients`** → CollectionPage with Article entries for each case + BreadcrumbList (Home → Clients)
 
 Both reference the root WebSite and LocalBusiness via `@id`, so Google can resolve them into the same entity graph.
@@ -166,7 +165,7 @@ Three URLs:
 | URL | Priority | changeFrequency |
 |---|---|---|
 | `/` | 1.0 | weekly |
-| `/intake` | 0.9 | monthly |
+| `/brief` | 0.9 | monthly |
 | `/clients` | 0.8 | monthly |
 
 Each URL declares its own `en-CA` hreflang alternate.

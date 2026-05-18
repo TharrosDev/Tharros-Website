@@ -176,7 +176,7 @@ PRICING IS DETERMINED BY THREE FACTORS:
    - Multi-channel (Web + SMS + WhatsApp with unified intelligence) is more complex.
 
 HOW TO GET A QUOTE:
-- Book a free initial consultation via the intake agent at tharros.ca/intake
+- Book a free initial consultation via the Discovery Briefing at tharros.ca/brief
 - OR email directly: tharrosdev@gmail.com
 - A firm, no-obligation quote is provided immediately following the initial consult.
 
@@ -371,7 +371,7 @@ A: Our core strength and specialization is Ottawa, Ontario. We have deep local
 
 Q: How do I get started?
 A: Two options:
-   1. Use the intake agent at tharros.ca/intake — our AI specialist will gather
+   1. Use the Discovery Briefing at tharros.ca/brief — our AI specialist will gather
       your business objectives and brief our team.
    2. Email Magnus directly at tharrosdev@gmail.com with your business name
       and a brief description of your challenge.
@@ -521,16 +521,11 @@ PAGES & SECTIONS:
 - Pricing (#pricing): Custom pricing explanation and quote CTA
 - Footer/Contact (#contact): Final CTA and direct contact options
 
-INTAKE PAGE: https://tharros.ca/intake
-- Full "CRM Intake Agent Model" console
-- Where prospective clients brief the Tharros Intake Specialist
-- Collects business objectives, use case, and contact details
-- Briefings are analyzed and forwarded to the executive team for review
-
-INTAKE PROCESS (three objectives):
-1. Objective Definition — Outline primary lead capture and automation goals
-2. Brand Alignment — Define tone and professional guardrails for the agent
-3. Deployment Specs — Identify high-traffic areas for agent operation
+DISCOVERY BRIEFING: https://tharros.ca/brief
+- 9-step wizard where prospective clients brief Tharros on their operation
+- Collects business shape, customer profile, look/feel preferences, timing, contact
+- Submissions are forwarded to Magnus directly and stored for review
+- Auto-saved in the browser as the visitor works through the steps
 
 ================================================================================
 SECTION 14: CONTACT & ENGAGEMENT DETAILS
@@ -538,11 +533,11 @@ SECTION 14: CONTACT & ENGAGEMENT DETAILS
 
 FOUNDER & PRIMARY CONTACT: Magnus Abdelnour
 EMAIL: tharrosdev@gmail.com
-INTAKE AGENT: https://tharros.ca/intake (available 24/7)
+DISCOVERY BRIEFING: https://tharros.ca/brief (open 24/7, ~5 min)
 LOCATION: Ottawa, Ontario, Canada
 
 HOW TO ENGAGE:
-Option 1 (Recommended): Use the intake agent at tharros.ca/intake
+Option 1 (Recommended): Use the Discovery Briefing at tharros.ca/brief
   - Converse with the AI specialist to outline your business objectives
   - Briefing is analyzed by the Tharros executive team
   - Custom quote follows immediately after review
@@ -565,15 +560,6 @@ DEMO AGENT ("LIGHT MODEL"):
 - Purpose: Live demonstration of Tharros-engineered conversational interface
 - Features: Brand-aligned responses, recommended follow-up questions,
   animated typing indicators, full chat history
-
-INTAKE SPECIALIST AGENT:
-- Type: CRM Intake Agent Model
-- Status: Active System
-- Purpose: Qualifying and briefing new prospective clients
-- Capabilities: Business objective collection, use case identification,
-  urgency assessment, executive team briefing
-- Greeting: "Hello! I'm the Tharros Intake Specialist. I'm here to learn
-  about your business and how we can help automate your workflow."
 
 AGENT CAPABILITIES (all deployed agents):
 - Natural language understanding with Ottawa-local context

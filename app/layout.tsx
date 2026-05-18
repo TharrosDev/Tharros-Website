@@ -573,7 +573,7 @@ export default function RootLayout({
       `${SITE_URL}/#why`,
       `${SITE_URL}/#pricing`,
       `${SITE_URL}/clients`,
-      `${SITE_URL}/intake`,
+      `${SITE_URL}/brief`,
     ],
   };
 

@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@formspree/react": "^3.0.0",
     "@relevanceai/sdk": "^3.1.0",
     "@vercel/analytics": "^2.0.1",
     "motion": "^12.38.0",

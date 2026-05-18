@@ -50,7 +50,7 @@
       "name": "Book a Discovery Call",
       "short_name": "Discovery",
       "description": "Book a free discovery call with Tharros",
-      "url": "/intake",
+      "url": "/brief",
       "icons": [{ "src": "/icon.svg", "sizes": "any" }]
     },
     {

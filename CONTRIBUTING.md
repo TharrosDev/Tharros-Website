@@ -99,7 +99,6 @@ Before requesting review, verify all of these:
 - **Changing package names, slogans, or pricing language.** Brand-level decisions.
 - **Adding a new top-level dependency.** The dependency list is intentionally small.
 - **Adding state management (Redux, Zustand, Jotai).** The site doesn't need one. Have a hard reason.
-- **Deleting `IntakeAgent.tsx` or `IntakeAgentWrapper.tsx`.** They're orphaned but kept on purpose.
 
 ---
 

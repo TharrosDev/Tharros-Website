@@ -797,19 +797,25 @@ body {
 }
 
 /* Admin panel --------------------------------------------- */
+/* `position: relative` (not fixed) — PageTransition wraps the page tree in
+   a motion.div with will-change:transform, which creates a containing block
+   for fixed descendants. A fixed admin-shell would collapse to 0 height
+   inside that container. Relative + min-height keeps the panel full-height
+   without depending on a viewport-relative containing block. */
 .admin-shell {
-  position: fixed; inset: 0; z-index: 999;
+  position: relative;
+  min-height: 100dvh;
   background: var(--color-bg);
-  overflow: auto;
 }
 .admin-shell__bg {
   position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
 }
 .admin-inner {
   position: relative; max-width: 1100px; margin: 0 auto;
-  padding: 32px 28px 96px;
+  /* Top padding clears the site's fixed NavBar (~60px from top of viewport). */
+  padding: 104px 28px 96px;
 }
-@media (min-width: 768px) { .admin-inner { padding: 56px 56px 120px; } }
+@media (min-width: 768px) { .admin-inner { padding: 128px 56px 120px; } }
 .admin-bar {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   margin: 0 0 36px;

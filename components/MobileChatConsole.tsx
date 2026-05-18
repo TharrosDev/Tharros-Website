@@ -146,7 +146,7 @@ const MobileChatConsole = memo(({
                 <span className="text-[10px] font-black text-red-600 uppercase tracking-[0.2em] truncate">Demo Limit Reached</span>
               </div>
               <a
-                href="/intake"
+                href="/brief"
                 className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-950 text-white text-[9px] font-black uppercase tracking-[0.2em] active:scale-95 transition-transform"
               >
                 Start

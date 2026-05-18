@@ -96,9 +96,10 @@ Read [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) for the full version. Qu
 
 ---
 
-## What's orphaned
+## Onboarding wizard
 
-- `components/IntakeAgent.tsx` and `components/IntakeAgentWrapper.tsx` are unused leftovers from a previous AI-driven intake design. The current `/intake` page uses `IntakeForm.tsx` (Formspree). Do not import IntakeAgent into anything. Don't refactor it for the sake of refactoring — if the user asks for changes to the intake, work in `IntakeForm.tsx`.
+- The discovery-briefing route is `/brief` — a 9-step wizard at `app/brief/page.tsx` rendering `components/onboarding/OnboardingApp` (client component). Schema, prompt builder, and storage are in `components/onboarding/lib/`. Submissions POST to `/api/brief` (forwards to Zapier via `THARROS_WEBHOOK_URL`, kept server-side).
+- The admin view at `/admin/briefs` is gated by HTTP Basic auth in `middleware.ts` (username `magnus`, password from `ADMIN_PASSWORD`).
 
 ---
 
@@ -115,7 +116,7 @@ Read [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) for the full version. Qu
 
 ## SEO & metadata
 
-The SEO surface area is large. Before touching `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `app/intake/page.tsx`, `app/clients/page.tsx`, or `public/manifest.json`, read [`docs/SEO.md`](./docs/SEO.md).
+The SEO surface area is large. Before touching `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `app/brief/page.tsx`, `app/clients/page.tsx`, or `public/manifest.json`, read [`docs/SEO.md`](./docs/SEO.md).
 
 Key rules:
 - Don't break the `@id`-linked JSON-LD graph. Every Organization/LocalBusiness/Service/WebSite reference must resolve.
@@ -129,7 +130,6 @@ Key rules:
 - **The site uses Tailwind 4**, not Tailwind 3. No `tailwind.config.ts` — config lives in `app/globals.css` via `@theme inline`.
 - **Next.js 16 with Turbopack.** Some older RSC patterns don't apply; check `node_modules/next/dist/docs/` if anything looks unfamiliar.
 - **React 19.** Effects fire under stricter rules. `useEffect` cleanup needs to be exact.
-- The intake form is **Formspree-based**, not a custom endpoint. The form ID is hardcoded.
 - The demo chat uses **`localStorage`** for both rate-limiting and key persistence. SSR-safe by checking `typeof window !== "undefined"` first.
 
 ---
