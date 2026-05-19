@@ -1105,3 +1105,83 @@ body {
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
+
+/* Mobile step picker --------------------------------------- */
+.ob-msteps { display: none; position: relative; margin-top: 18px; }
+
+.ob-msteps__trigger {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; min-height: 52px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text, #f8fafc);
+  font: inherit; text-align: left;
+  cursor: pointer;
+}
+.ob-msteps__trigger .eyebrow {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  opacity: 0.65;
+  display: block;
+}
+.ob-msteps__trigger strong {
+  font-size: 14px; font-weight: 700;
+  flex: 1; min-width: 0;
+  display: block;
+  margin-top: 2px;
+}
+.ob-msteps__trigger > span:first-child { flex: 1; min-width: 0; }
+.ob-msteps__trigger .caret { font-size: 14px; opacity: 0.75; }
+
+.ob-msteps__menu {
+  list-style: none; margin: 6px 0 0; padding: 6px;
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: rgba(15, 23, 42, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 60vh; overflow-y: auto;
+  z-index: 30;
+}
+.ob-msteps__menu li button {
+  display: flex; gap: 12px; align-items: center;
+  width: 100%; padding: 10px 12px;
+  background: none; border: 0; color: var(--color-text, #f8fafc);
+  font: inherit; text-align: left;
+  cursor: pointer;
+}
+.ob-msteps__menu li button:disabled { opacity: 0.4; cursor: not-allowed; }
+.ob-msteps__menu li button.is-current { background: rgba(14, 165, 233, 0.14); }
+.ob-msteps__menu .n {
+  font-family: ui-monospace, monospace;
+  font-size: 12px; opacity: 0.55;
+  min-width: 26px;
+}
+.ob-msteps__menu .label { font-size: 14px; }
+
+@media (max-width: 760px) {
+  .ob-msteps { display: block; }
+  .ob-side .ob-steps { display: none; }
+  .ob-side__sticky { position: static; }
+}
+
+/* Saved-indicator pill ------------------------------------ */
+.ob-saved-pill {
+  position: fixed; right: 16px; bottom: 16px;
+  z-index: 50;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+}
+.ob-saved-pill .dot {
+  width: 6px; height: 6px;
+  background: var(--color-accent-3, #0ea5e9);
+  border-radius: 50%;
+}
+@media (max-width: 760px) {
+  .ob-saved-pill { bottom: 12px; right: 12px; padding: 6px 10px; font-size: 10px; }
+}

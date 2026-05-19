@@ -11,6 +11,7 @@ import type { FieldValue, FormState } from "./lib/types";
 import { Wizard } from "./Wizard";
 import { Review } from "./Review";
 import { Thanks } from "./Thanks";
+import { SavedPill } from "./SavedPill";
 
 import "./onboarding.css";
 
@@ -20,6 +21,7 @@ export function OnboardingApp() {
   const [visited, setVisited] = useState<Set<number>>(new Set());
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [savedAt, setSavedAt] = useState<number | null>(null);
   const saveTimer = useRef<number | null>(null);
 
   // localStorage isn't available during SSR — hydrate after mount.
@@ -65,6 +67,7 @@ export function OnboardingApp() {
     if (saveTimer.current) window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       saveDraft(state, stepIndex, [...visited]);
+      setSavedAt(Date.now());
     }, 400);
     return () => {
       if (saveTimer.current) window.clearTimeout(saveTimer.current);
@@ -150,6 +153,7 @@ export function OnboardingApp() {
       </div>
 
       <main className="ob-stage">{renderScreen()}</main>
+      <SavedPill savedAt={savedAt} />
     </div>
   );
 }

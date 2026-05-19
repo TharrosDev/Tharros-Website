@@ -5,6 +5,7 @@ import { OB_STEPS, stepComplete } from "./lib/schema";
 import type { FieldValue, FormState } from "./lib/types";
 import { Fields } from "./controls/Field";
 import { IconArrowRight, IconCheck } from "./controls/icons";
+import { MobileStepSelect } from "./controls/MobileStepSelect";
 
 interface WizardProps {
   state: FormState;
@@ -119,6 +120,12 @@ export function Wizard({
           </span>
           <h2 className="ob-side__title">{splitTitle(currentStep.title)}</h2>
           <p className="ob-side__sub">{currentStep.subtitle}</p>
+
+          <MobileStepSelect
+            steps={stepMeta.map((s) => ({ id: s.id, name: s.name, locked: s.locked }))}
+            current={stepIndex}
+            onPick={goTo}
+          />
 
           <ul className="ob-steps">
             {stepMeta.map((s, i) => (
