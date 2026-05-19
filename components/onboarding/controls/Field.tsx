@@ -6,7 +6,42 @@
 import { useState } from "react";
 import type { ChangeEvent, KeyboardEvent, DragEvent } from "react";
 import type { FieldDef, FieldValue, FileInfo, FormState } from "../lib/types";
+import { ensureDraftId } from "../lib/storage";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 import { IconCheck, IconGlobe, IconUpload, IconX } from "./icons";
+
+async function uploadOne(file: File, draftId: string): Promise<FileInfo> {
+  const base: FileInfo = { name: file.name, size: file.size, type: file.type, status: "uploading" };
+  try {
+    const prep = await fetch("/api/brief/upload-url", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ draftId, filename: file.name, size: file.size, type: file.type }),
+    });
+    if (!prep.ok) {
+      const body = await prep.json().catch(() => ({} as { error?: string }));
+      return { ...base, status: "error", error: body.error || `Upload prep failed (${prep.status})` };
+    }
+    const { path, token } = (await prep.json()) as { path: string; token: string };
+
+    const { error: upErr } = await supabaseBrowser.storage
+      .from("brief-uploads")
+      .uploadToSignedUrl(path, token, file, { contentType: file.type });
+    if (upErr) return { ...base, status: "error", error: upErr.message };
+
+    const { data: signed, error: signErr } = await supabaseBrowser.storage
+      .from("brief-uploads")
+      .createSignedUrl(path, 60 * 60 * 24 * 7);
+    if (signErr || !signed) return { ...base, status: "error", error: "Could not sign download URL" };
+
+    return {
+      name: file.name, size: file.size, type: file.type,
+      path, url: signed.signedUrl, status: "uploaded",
+    };
+  } catch (e) {
+    return { ...base, status: "error", error: e instanceof Error ? e.message : "Upload failed" };
+  }
+}
 
 interface FieldProps {
   field: FieldDef;
@@ -347,15 +382,18 @@ function ColorsField({ field, value, onChange }: FieldProps) {
    ============================================================ */
 function FileField({ field, value, onChange }: FieldProps) {
   const [drag, setDrag] = useState(false);
-  const toInfo = (f: File): FileInfo => ({ name: f.name, size: f.size, type: f.type });
 
   if (field.multiple) {
     const list: FileInfo[] = Array.isArray(value) && value.length && typeof value[0] === "object"
       ? (value as FileInfo[])
       : [];
-    const addFiles = (files: FileList | null) => {
+
+    const addFiles = async (files: FileList | null) => {
       if (!files || !files.length) return;
-      const incoming = Array.from(files).map(toInfo);
+      const draftId = ensureDraftId();
+      const incoming = Array.from(files);
+
+      // Optimistic "pending" rows so the user sees progress immediately.
       onChange((prev) => {
         const cur = Array.isArray(prev) && prev.length && typeof prev[0] === "object"
           ? (prev as FileInfo[])
@@ -364,16 +402,42 @@ function FileField({ field, value, onChange }: FieldProps) {
         const merged = [...cur];
         for (const f of incoming) {
           const key = f.name + ":" + f.size;
-          if (!seen.has(key)) { merged.push(f); seen.add(key); }
+          if (!seen.has(key)) {
+            merged.push({ name: f.name, size: f.size, type: f.type, status: "pending" });
+            seen.add(key);
+          }
         }
         return merged;
       });
+
+      // Sequential uploads — bandwidth + simpler error UX than parallel.
+      for (const file of incoming) {
+        const info = await uploadOne(file, draftId);
+        onChange((prev) => {
+          if (!Array.isArray(prev)) return prev;
+          return (prev as FileInfo[]).map((row) =>
+            row.name === info.name && row.size === info.size && row.status !== "uploaded"
+              ? info
+              : row
+          );
+        });
+      }
     };
-    const removeAt = (i: number) => onChange((prev) => {
-      if (!Array.isArray(prev)) return prev;
-      const arr = prev as FileInfo[];
-      return arr.filter((_, idx) => idx !== i);
-    });
+
+    const removeAt = async (i: number) => {
+      const target = list[i];
+      onChange((prev) => {
+        if (!Array.isArray(prev)) return prev;
+        return (prev as FileInfo[]).filter((_, idx) => idx !== i);
+      });
+      if (target?.path) {
+        // Best-effort: clean up the orphaned object so we don't accumulate
+        // garbage in the bucket. Failures are non-blocking.
+        try {
+          await supabaseBrowser.storage.from("brief-uploads").remove([target.path]);
+        } catch { /* ignore */ }
+      }
+    };
 
     return (
       <div className="ob-field">
@@ -383,14 +447,14 @@ function FileField({ field, value, onChange }: FieldProps) {
           className={`ob-file ${drag ? "is-drag" : ""}`}
           onDragOver={(e: DragEvent) => { e.preventDefault(); setDrag(true); }}
           onDragLeave={() => setDrag(false)}
-          onDrop={(e: DragEvent) => { e.preventDefault(); setDrag(false); addFiles(e.dataTransfer.files); }}
+          onDrop={(e: DragEvent) => { e.preventDefault(); setDrag(false); void addFiles(e.dataTransfer.files); }}
         >
           <input
             id={`f-${field.id}`}
             type="file"
             multiple
             accept={field.accept || undefined}
-            onChange={(e) => { addFiles(e.target.files); e.target.value = ""; }}
+            onChange={(e) => { void addFiles(e.target.files); e.target.value = ""; }}
           />
           <div className="ob-file__icon"><IconUpload /></div>
           <div className="ob-file__title">
@@ -405,11 +469,22 @@ function FileField({ field, value, onChange }: FieldProps) {
         {list.length > 0 && (
           <div className="ob-file__list">
             {list.map((f, i) => (
-              <div className="ob-file__item" key={f.name + ":" + f.size + ":" + i}>
-                <IconCheck size={14} />
+              <div
+                className={`ob-file__item is-${f.status ?? "uploaded"}`}
+                key={f.name + ":" + f.size + ":" + i}
+                title={f.error || f.url || ""}
+              >
+                {f.status === "uploading" || f.status === "pending"
+                  ? <span className="ob-file__spinner" aria-hidden="true" />
+                  : f.status === "error"
+                    ? <IconX size={14} />
+                    : <IconCheck size={14} />}
                 <span>{f.name}</span>
                 <span className="size">{(f.size / 1024).toFixed(1)} kB</span>
-                <button type="button" onClick={() => removeAt(i)} aria-label={`Remove ${f.name}`}>
+                {f.status === "error" && f.error && (
+                  <span className="ob-file__err">{f.error}</span>
+                )}
+                <button type="button" onClick={() => void removeAt(i)} aria-label={`Remove ${f.name}`}>
                   <IconX size={14} />
                 </button>
               </div>
@@ -421,9 +496,21 @@ function FileField({ field, value, onChange }: FieldProps) {
   }
 
   const v = value && typeof value === "object" && !Array.isArray(value) ? value as FileInfo : null;
-  const onFiles = (files: FileList | null) => {
+  const onFiles = async (files: FileList | null) => {
     if (!files || !files.length) return;
-    onChange(toInfo(files[0]));
+    const draftId = ensureDraftId();
+    const f = files[0];
+    onChange({ name: f.name, size: f.size, type: f.type, status: "uploading" });
+    const info = await uploadOne(f, draftId);
+    onChange(info);
+  };
+
+  const removeSingle = async () => {
+    const path = v?.path;
+    onChange(null);
+    if (path) {
+      try { await supabaseBrowser.storage.from("brief-uploads").remove([path]); } catch {}
+    }
   };
 
   return (
@@ -434,13 +521,13 @@ function FileField({ field, value, onChange }: FieldProps) {
         className={`ob-file ${drag ? "is-drag" : ""}`}
         onDragOver={(e: DragEvent) => { e.preventDefault(); setDrag(true); }}
         onDragLeave={() => setDrag(false)}
-        onDrop={(e: DragEvent) => { e.preventDefault(); setDrag(false); onFiles(e.dataTransfer.files); }}
+        onDrop={(e: DragEvent) => { e.preventDefault(); setDrag(false); void onFiles(e.dataTransfer.files); }}
       >
         <input
           id={`f-${field.id}`}
           type="file"
           accept={field.accept || undefined}
-          onChange={(e) => onFiles(e.target.files)}
+          onChange={(e) => void onFiles(e.target.files)}
         />
         <div className="ob-file__icon"><IconUpload /></div>
         <div className="ob-file__title">
@@ -454,11 +541,16 @@ function FileField({ field, value, onChange }: FieldProps) {
       </div>
       {v && (
         <div className="ob-file__list">
-          <div className="ob-file__item">
-            <IconCheck size={14} />
+          <div className={`ob-file__item is-${v.status ?? "uploaded"}`} title={v.error || v.url || ""}>
+            {v.status === "uploading" || v.status === "pending"
+              ? <span className="ob-file__spinner" aria-hidden="true" />
+              : v.status === "error"
+                ? <IconX size={14} />
+                : <IconCheck size={14} />}
             <span>{v.name}</span>
             <span className="size">{(v.size / 1024).toFixed(1)} kB</span>
-            <button type="button" onClick={() => onChange(null)} aria-label="Remove file">
+            {v.status === "error" && v.error && <span className="ob-file__err">{v.error}</span>}
+            <button type="button" onClick={() => void removeSingle()} aria-label="Remove file">
               <IconX size={14} />
             </button>
           </div>

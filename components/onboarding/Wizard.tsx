@@ -178,6 +178,20 @@ export function Wizard({
 
           <Fields step={currentStep} state={state} setField={setField} />
 
+          {/* Honeypot — must be visually hidden but in the DOM. Don't remove. */}
+          <div className="ob-honeypot" aria-hidden="true">
+            <label>
+              Company name (do not fill)
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={typeof state.company_name_alt === "string" ? state.company_name_alt : ""}
+                onChange={(e) => setField("company_name_alt", e.target.value)}
+              />
+            </label>
+          </div>
+
           <div className="ob-actions">
             <button
               type="button"

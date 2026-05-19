@@ -10,6 +10,7 @@ import type { FormState, Submission } from "./types";
 
 const STATE_KEY = "tharros_ob_state_v1";
 const SUBMISSIONS_KEY = "tharros_ob_submissions_v1";
+const DRAFT_ID_KEY = "tharros_ob_draft_id_v1";
 
 interface StoredMeta {
   state: FormState;
@@ -97,4 +98,57 @@ export function deleteSubmission(id: string): void {
 
 export function newSubmissionId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/* ============================================================
+   DRAFT ID (one per browser; ties uploads + server drafts together)
+   ============================================================ */
+
+export function ensureDraftId(): string {
+  if (typeof window === "undefined") return "ssr";
+  try {
+    const existing = window.localStorage.getItem(DRAFT_ID_KEY);
+    if (existing) return existing;
+    const fresh = (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function")
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    window.localStorage.setItem(DRAFT_ID_KEY, fresh);
+    return fresh;
+  } catch {
+    return `local-${Date.now()}`;
+  }
+}
+
+export function loadDraftId(): string | null {
+  if (typeof window === "undefined") return null;
+  try { return window.localStorage.getItem(DRAFT_ID_KEY); } catch { return null; }
+}
+
+export function clearDraftId(): void {
+  if (typeof window === "undefined") return;
+  try { window.localStorage.removeItem(DRAFT_ID_KEY); } catch {}
+}
+
+/* ============================================================
+   SERVER DRAFT SYNC — best-effort; falls back to local-only on failure
+   ============================================================ */
+
+export async function syncDraftToServer(args: {
+  draftId: string;
+  state: FormState;
+  stepIndex: number;
+  visited: number[];
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/brief/draft", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(args),
+    });
+    if (!res.ok) return false;
+    const body = await res.json().catch(() => ({}));
+    return body?.ok === true;
+  } catch {
+    return false;
+  }
 }
