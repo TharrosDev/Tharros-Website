@@ -1214,7 +1214,16 @@ body {
 /* Light variant — used by /brief so the page background is white
    while the form card itself stays the standard dark blue. */
 body:has(.ob-shell--light) { background: #ffffff; }
-.ob-shell--light .ob-shell__bg { background: #ffffff; }
+.ob-shell--light .ob-shell__bg {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+@media (min-width: 768px) {
+  .ob-shell--light .ob-shell__bg { background-size: 40px 40px; }
+}
 .ob-shell--light .ob-side__title { color: #0f172a; }
 .ob-shell--light .ob-side__sub { color: rgba(15,23,42,0.7); }
 .ob-shell--light .ob-step { color: rgba(15,23,42,0.55); }

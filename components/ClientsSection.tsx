@@ -11,6 +11,7 @@ type Client = {
   name: string;
   location: string;
   type: string;
+  lede: string;
   description: string;
   link: string;
   date: string;
@@ -27,8 +28,9 @@ const clients: Client[] = [
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
+    lede: "An Ottawa member society with a busy community forum.",
     description:
-      "Built the Meridian Society's member-facing knowledge agent — a 24/7 Q&A layer that reads the live forum and resource library so members get answers without waiting on a moderator. Tharros stays on call to tune answers and ship new agents as the community grows.",
+      "Tharros built a knowledge agent that reads the forum live so members get instant answers.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.webp",
@@ -41,8 +43,9 @@ const clients: Client[] = [
     name: "ADVANTA365",
     location: "Ottawa, ON",
     type: "Marketing Site Build",
+    lede: "An enterprise Microsoft 365 adoption and governance practice.",
     description:
-      "Shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 practice — packaging SharePoint, Teams, and OneDrive rollout work as a single governance product, with a clean route from positioning to a discovery call.",
+      "Tharros built and shipped their marketing site, and stays on call for updates.",
     link: "https://advanta365.com",
     date: "MAY 2026",
     size: "sm",
@@ -54,8 +57,9 @@ const clients: Client[] = [
     name: "Echo Five Consulting",
     location: "Ottawa, ON",
     type: "Positioning Site Build",
+    lede: "A public-sector change-management consultancy in Ottawa.",
     description:
-      "Built the Echo Five site around their public-sector change-management voice — \"Change that lands. Tools that get used.\" A tight funnel that takes government teams from problem statement to booked call, with copy and structure tuned for the buying cycle they actually run.",
+      "Tharros built their positioning site and the funnel from problem statement to booked call.",
     link: "https://echo-five-website.vercel.app",
     date: "MAY 2026",
     size: "md",
@@ -64,27 +68,30 @@ const clients: Client[] = [
   },
 ];
 
-const sizeConfig: Record<Size, { gridPos: string; title: string; logoBox: string; pad: string; descSize: string }> = {
+const sizeConfig: Record<Size, { gridPos: string; title: string; lede: string; logoBox: string; pad: string; descSize: string }> = {
   lg: {
     gridPos: "md:col-span-2 lg:col-span-4",
-    title: "text-3xl sm:text-4xl md:text-5xl",
+    title: "text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]",
+    lede: "text-xl md:text-2xl",
     logoBox: "w-16 h-16 md:w-20 md:h-20",
     pad: "p-7 md:p-9",
-    descSize: "text-base md:text-lg",
+    descSize: "text-sm md:text-base",
   },
   md: {
     gridPos: "md:col-span-1 lg:col-span-3",
     title: "text-2xl sm:text-3xl",
+    lede: "text-base md:text-lg",
     logoBox: "w-14 h-14",
     pad: "p-6 md:p-8",
-    descSize: "text-sm md:text-base",
+    descSize: "text-sm",
   },
   sm: {
     gridPos: "md:col-span-1 lg:col-span-2",
     title: "text-2xl",
+    lede: "text-sm md:text-base",
     logoBox: "w-12 h-12",
     pad: "p-6",
-    descSize: "text-sm",
+    descSize: "text-xs md:text-sm",
   },
 };
 
@@ -94,7 +101,7 @@ export default function ClientsSection() {
 
 function ClientsGallery() {
   return (
-    <section className="pt-28 md:pt-32 xl:pt-40 pb-12 md:pb-20 xl:pb-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white">
+    <section className="pt-28 md:pt-32 xl:pt-40 pb-12 md:pb-20 xl:pb-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 md:gap-6 auto-rows-[minmax(300px,auto)]">
           {clients.map((client, idx) => (
@@ -121,6 +128,78 @@ function Monogram({ text, className }: { text: string; className: string }) {
   );
 }
 
+function CardSignature({ id }: { id: string }) {
+  const wrap = "pointer-events-none absolute top-0 right-0 w-[200px] h-[110px] md:w-[260px] md:h-[130px] text-accent-3";
+
+  if (id === "meridian") {
+    // Sonar rings — knowledge agent listening across the forum
+    return (
+      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="meridian-fade" cx="80%" cy="20%" r="70%">
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0.32" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+          </radialGradient>
+          <mask id="meridian-mask">
+            <rect width="260" height="130" fill="url(#meridian-fade)" />
+          </mask>
+        </defs>
+        <g stroke="currentColor" strokeWidth="1" fill="none" mask="url(#meridian-mask)">
+          <circle cx="208" cy="26" r="16" />
+          <circle cx="208" cy="26" r="32" />
+          <circle cx="208" cy="26" r="50" />
+          <circle cx="208" cy="26" r="70" />
+          <circle cx="208" cy="26" r="92" />
+        </g>
+        <circle cx="208" cy="26" r="2.5" fill="currentColor" opacity="0.65" />
+      </svg>
+    );
+  }
+
+  if (id === "advanta365") {
+    // Governance grid — structured dot matrix
+    const cols = 13;
+    const rows = 6;
+    const dots = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cx = 30 + c * 17;
+        const cy = 14 + r * 16;
+        const dist = Math.hypot(c - cols + 2, r);
+        const op = Math.max(0, 0.4 - dist * 0.05);
+        dots.push(<circle key={`${r}-${c}`} cx={cx} cy={cy} r="1.1" fill="currentColor" opacity={op} />);
+      }
+    }
+    return (
+      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
+        {dots}
+      </svg>
+    );
+  }
+
+  if (id === "echo-five") {
+    // Waveform — signal / echo
+    return (
+      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="echo-fade" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
+            <stop offset="60%" stopColor="currentColor" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0.45" />
+          </linearGradient>
+        </defs>
+        <g stroke="url(#echo-fade)" strokeWidth="1" fill="none">
+          <path d="M0 38 Q 32 18, 65 38 T 130 38 T 195 38 T 260 38" />
+          <path d="M0 56 Q 32 40, 65 56 T 130 56 T 195 56 T 260 56" opacity="0.7" />
+          <path d="M0 74 Q 32 60, 65 74 T 130 74 T 195 74 T 260 74" opacity="0.4" />
+        </g>
+      </svg>
+    );
+  }
+
+  return null;
+}
+
 function ClientCard({ client, index, isPriority }: { client: Client; index: number; isPriority?: boolean }) {
   const cfg = sizeConfig[client.size];
 
@@ -131,6 +210,7 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
         className={`group relative h-full bg-slate-900 hover:bg-slate-900/90 border border-white/[0.06] hover:border-accent-3/30 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col shadow-[0_20px_60px_-25px_rgba(2,6,23,0.5)] gpu-accelerated ${cfg.pad}`}
       >
         <div className="absolute top-0 right-0 w-[280px] h-[280px] bg-accent-3/[0.05] blur-[100px] rounded-full pointer-events-none" />
+        <CardSignature id={client.id} />
 
         <div className="relative z-10 flex flex-col h-full gap-5 md:gap-6">
           {/* Identity */}
@@ -150,19 +230,24 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
               <Monogram text={client.monogram} className={cfg.logoBox} />
             ) : null}
             <div className="flex flex-col gap-1 min-w-0">
-              <h2 className={`${cfg.title} font-bold text-white tracking-tight leading-[1.05] break-words`}>
+              <h2 className={`${cfg.title} font-bold text-white tracking-[-0.02em] leading-[1.02] break-words`}>
                 {client.name}
               </h2>
-              <p className="text-sm text-slate-300 font-medium">
-                {client.location} <span className="text-slate-500">·</span> {client.type}
+              <p className="text-xs md:text-sm text-slate-400 font-normal tracking-wide">
+                {client.location} <span className="text-slate-600">·</span> {client.type}
               </p>
             </div>
           </div>
 
-          {/* Description */}
-          <p className={`text-slate-200 leading-relaxed ${cfg.descSize} font-normal`}>
-            {client.description}
-          </p>
+          {/* Lede + body */}
+          <div className="flex flex-col gap-2.5">
+            <p className={`text-white font-medium leading-snug tracking-tight ${cfg.lede}`}>
+              {client.lede}
+            </p>
+            <p className={`text-slate-300 leading-relaxed ${cfg.descSize} font-normal`}>
+              {client.description}
+            </p>
+          </div>
 
           {/* Metrics (featured only) */}
           {client.metrics && (
