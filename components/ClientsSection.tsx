@@ -18,6 +18,7 @@ type Client = {
   size: Size;
   tags: string[];
   image?: string;
+  imageBg?: string;
   monogram?: string;
   metrics?: string[];
 };
@@ -63,7 +64,8 @@ const clients: Client[] = [
     link: "https://echo-five-website.vercel.app",
     date: "MAY 2026",
     size: "md",
-    monogram: "E5",
+    image: "/echo-five-logo.svg",
+    imageBg: "bg-slate-800 border border-white/10",
     tags: ["Modernized Site", "On-Call Support"],
   },
 ];
@@ -216,7 +218,7 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
           {/* Identity */}
           <div className="flex items-center gap-4">
             {client.image ? (
-              <div className={`${cfg.logoBox} shrink-0 relative rounded-xl overflow-hidden bg-white`}>
+              <div className={`${cfg.logoBox} shrink-0 relative rounded-xl overflow-hidden ${client.imageBg ?? "bg-white"}`}>
                 <Image
                   src={client.image}
                   alt={client.name}
