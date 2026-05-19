@@ -93,83 +93,12 @@ const sizeConfig: Record<Size, { gridPos: string; title: string; logoBox: string
 };
 
 export default function ClientsSection() {
-  return (
-    <>
-      <ClientsHero />
-      <ClientsGallery />
-    </>
-  );
-}
-
-function ClientsHero() {
-  return (
-    <section className="pt-28 md:pt-12 pb-8 md:pb-12 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
-      <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
-
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-3/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none gpu-accelerated" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-900/30 blur-[150px] rounded-full translate-y-1/3 -translate-x-1/4 pointer-events-none gpu-accelerated" />
-
-      <div className="max-w-7xl mx-auto relative">
-        <AnimatedSection>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 lg:gap-12 border-b border-white/5 pb-8 md:pb-12">
-            <div className="flex-grow">
-              <div className="flex items-center gap-4 mb-6 md:mb-8">
-                <span className="text-[9px] md:text-[10px] font-bold text-accent-3 tracking-[0.3em] uppercase">Trusted Partnerships</span>
-                <div className="h-px w-8 md:w-12 bg-white/10" />
-                <span className="text-[9px] md:text-[10px] font-bold text-muted tracking-widest uppercase">Ottawa, Canada</span>
-              </div>
-              <h1 className="text-[3rem] leading-[0.95] sm:text-7xl md:text-8xl lg:text-[10rem] font-bold text-white mb-0 tracking-[-0.06em] sm:leading-[0.9] md:leading-[0.8]">
-                Real-World <br/>
-                <span className="text-slate-500/70">Impact.</span>
-              </h1>
-            </div>
-
-            <div className="max-w-xl lg:text-right lg:pb-4 flex flex-col lg:items-end gap-10 lg:gap-12">
-              <div className="w-full h-32 md:h-48 relative mt-8 lg:mt-12 mb-2 lg:mb-4 opacity-70 group select-none pointer-events-none">
-                <svg width="100%" height="100%" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
-                  {[...Array(4)].map((_, i) => (
-                    <circle key={`p-${i}`} cx={350 - (i * 80)} cy={75 + (Math.sin(i) * 30)} r="1.5" fill="currentColor" className="text-white/30" />
-                  ))}
-                  <path d="M100 80 L180 50 L260 90 L340 60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-accent-3/50" />
-                  <circle cx="340" cy="60" r="40" stroke="currentColor" strokeWidth="1" className="text-accent-3/30" />
-                  <circle cx="340" cy="60" r="25" stroke="currentColor" strokeWidth="0.5" className="text-accent-3/20" />
-                  <motion.circle
-                    cx="340" cy="60" r="4"
-                    fill="currentColor" className="text-accent-3"
-                    animate={{ r: [4, 6, 4], opacity: [1, 0.7, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-                  <circle cx="180" cy="50" r="15" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-                  <circle cx="180" cy="50" r="2.5" fill="currentColor" className="text-white/60" />
-                  <circle cx="260" cy="90" r="12" stroke="currentColor" strokeWidth="1" className="text-white/20" />
-                  <circle cx="260" cy="90" r="2.5" fill="currentColor" className="text-white/60" />
-                  <motion.circle
-                    cx="340" cy="60" r="60"
-                    stroke="currentColor" strokeWidth="1"
-                    className="text-accent-3/10"
-                    animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
-                  />
-                </svg>
-              </div>
-
-              <div className="flex flex-col lg:items-end">
-                <span className="text-[9px] md:text-[10px] font-bold text-accent-3 uppercase tracking-[0.4em] mb-4 md:mb-6">Strategic Overview</span>
-                <p className="text-subdued text-lg md:text-2xl lg:text-3xl leading-relaxed font-medium tracking-tight">
-                  Keep it Local, Keep it Canadian. Tharros builds and integrates AI agents into Ottawa small business sites, then stays on call to keep them running.
-                </p>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </div>
-    </section>
-  );
+  return <ClientsGallery />;
 }
 
 function ClientsGallery() {
   return (
-    <section className="py-12 md:py-20 xl:py-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
+    <section className="pt-28 md:pt-32 xl:pt-40 pb-12 md:pb-20 xl:pb-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
