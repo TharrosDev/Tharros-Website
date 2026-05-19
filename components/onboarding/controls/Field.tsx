@@ -29,14 +29,23 @@ async function uploadOne(file: File, draftId: string): Promise<FileInfo> {
       .uploadToSignedUrl(path, token, file, { contentType: file.type });
     if (upErr) return { ...base, status: "error", error: upErr.message };
 
-    const { data: signed, error: signErr } = await supabaseBrowser().storage
-      .from("brief-uploads")
-      .createSignedUrl(path, 60 * 60 * 24 * 7);
-    if (signErr || !signed) return { ...base, status: "error", error: "Could not sign download URL" };
+    // Sign the download URL server-side AFTER the PUT lands — Supabase
+    // requires the object to exist at sign time, and the anon key has no
+    // SELECT on private bucket objects so the browser can't sign it itself.
+    const signRes = await fetch("/api/brief/download-url", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path }),
+    });
+    if (!signRes.ok) {
+      const body = await signRes.json().catch(() => ({} as { error?: string }));
+      return { ...base, status: "error", error: body.error || `Could not sign download URL (${signRes.status})` };
+    }
+    const { downloadUrl } = (await signRes.json()) as { downloadUrl: string };
 
     return {
       name: file.name, size: file.size, type: file.type,
-      path, url: signed.signedUrl, status: "uploaded",
+      path, url: downloadUrl, status: "uploaded",
     };
   } catch (e) {
     return { ...base, status: "error", error: e instanceof Error ? e.message : "Upload failed" };
