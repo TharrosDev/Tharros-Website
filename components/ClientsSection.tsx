@@ -4,42 +4,93 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 
-const clients = [
+type Size = "lg" | "md" | "sm";
+
+type Client = {
+  id: string;
+  name: string;
+  location: string;
+  type: string;
+  description: string;
+  link: string;
+  date: string;
+  size: Size;
+  tags: string[];
+  image?: string;
+  monogram?: string;
+  metrics?: { label: string; value: string }[];
+};
+
+const clients: Client[] = [
   {
     id: "meridian",
     name: "The Meridian Society",
     location: "Ottawa, ON",
     type: "Knowledge Q&A Agent",
-    description: "Built and integrated a Knowledge Q&A Agent into the Meridian Society site for 24/7 member insights and forum automation. Live and running, with Tharros on call for tuning and new agents.",
+    description:
+      "Built the Meridian Society's member-facing knowledge agent — a 24/7 Q&A layer that reads the live forum and resource library so members get answers without waiting on a moderator. Tharros stays on call to tune answers and ship new agents as the community grows.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.png",
-    gridPos: "lg:col-span-1",
-    tags: ["Modernized Site", "Integrated Agent", "On-Call Support"]
+    size: "lg",
+    tags: ["Modernized Site", "Integrated Agent", "On-Call Support"],
+    metrics: [
+      { label: "Coverage", value: "24/7" },
+      { label: "Source", value: "Live forum" },
+      { label: "Cadence", value: "Tuned weekly" },
+    ],
   },
   {
     id: "advanta365",
     name: "ADVANTA365",
     location: "Ottawa, ON",
-    type: "Full Site Build",
-    description: "Built and shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 adoption, governance, and rollout practice. Tharros stays on call for ongoing fixes and updates.",
+    type: "Marketing Site Build",
+    description:
+      "Shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 practice — packaging SharePoint, Teams, and OneDrive rollout work as a single governance product, with a clean route from positioning to a discovery call.",
     link: "https://advanta365.com",
     date: "MAY 2026",
-    gridPos: "lg:col-span-1",
-    tags: ["Modernized Site", "On-Call Support"]
+    size: "sm",
+    monogram: "A3",
+    tags: ["Modernized Site", "On-Call Support"],
   },
   {
     id: "echo-five",
     name: "Echo Five Consulting",
     location: "Ottawa, ON",
-    type: "Full Site Build",
-    description: "Built and shipped the Echo Five Consulting site for their public-sector Microsoft 365 change-management practice. Tharros stays on call for ongoing fixes and updates.",
+    type: "Positioning Site Build",
+    description:
+      "Built the Echo Five site around their public-sector change-management voice — \"Change that lands. Tools that get used.\" A tight funnel that takes government teams from problem statement to booked call, with copy and structure tuned for the buying cycle they actually run.",
     link: "https://echo-five-website.vercel.app",
     date: "MAY 2026",
-    gridPos: "lg:col-span-1",
-    tags: ["Modernized Site", "On-Call Support"]
-  }
+    size: "md",
+    monogram: "E5",
+    tags: ["Modernized Site", "On-Call Support"],
+  },
 ];
+
+const sizeConfig: Record<Size, { gridPos: string; title: string; logoBox: string; bodyPad: string; descSize: string }> = {
+  lg: {
+    gridPos: "md:col-span-2 lg:col-span-4 lg:row-span-2",
+    title: "text-4xl sm:text-5xl md:text-6xl",
+    logoBox: "w-20 h-20 md:w-24 md:h-24",
+    bodyPad: "px-6 sm:px-8 md:px-10 py-8 md:py-10",
+    descSize: "text-base md:text-lg",
+  },
+  md: {
+    gridPos: "md:col-span-1 lg:col-span-3",
+    title: "text-3xl sm:text-4xl",
+    logoBox: "w-14 h-14 md:w-16 md:h-16",
+    bodyPad: "px-5 sm:px-7 py-6 md:py-8",
+    descSize: "text-sm md:text-base",
+  },
+  sm: {
+    gridPos: "md:col-span-1 lg:col-span-2",
+    title: "text-2xl sm:text-3xl",
+    logoBox: "w-12 h-12 md:w-14 md:h-14",
+    bodyPad: "px-5 sm:px-6 py-6",
+    descSize: "text-sm",
+  },
+};
 
 export default function ClientsSection() {
   return (
@@ -53,10 +104,8 @@ export default function ClientsSection() {
 function ClientsHero() {
   return (
     <section className="pt-28 md:pt-12 pb-8 md:pb-12 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-bg content-visibility-auto">
-      {/* Subtle Background Grid */}
       <div className="industrial-grid absolute inset-0 opacity-[0.05] pointer-events-none gpu-accelerated" />
-      
-      {/* Background Depth Glows */}
+
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-3/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none gpu-accelerated" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-900/30 blur-[150px] rounded-full translate-y-1/3 -translate-x-1/4 pointer-events-none gpu-accelerated" />
 
@@ -74,40 +123,29 @@ function ClientsHero() {
                 <span className="text-slate-500/70">Impact.</span>
               </h1>
             </div>
-            
+
             <div className="max-w-xl lg:text-right lg:pb-4 flex flex-col lg:items-end gap-10 lg:gap-12">
-              {/* Abstract Visual Anchor: Operational Network */}
               <div className="w-full h-32 md:h-48 relative mt-8 lg:mt-12 mb-2 lg:mb-4 opacity-70 group select-none pointer-events-none">
                 <svg width="100%" height="100%" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="overflow-visible">
-                  {/* Background Grid Points */}
                   {[...Array(4)].map((_, i) => (
                     <circle key={`p-${i}`} cx={350 - (i * 80)} cy={75 + (Math.sin(i) * 30)} r="1.5" fill="currentColor" className="text-white/30" />
                   ))}
-                  
-                  {/* Connecting Lines */}
                   <path d="M100 80 L180 50 L260 90 L340 60" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="text-accent-3/50" />
-                  
-                  {/* Main Focal Circles */}
                   <circle cx="340" cy="60" r="40" stroke="currentColor" strokeWidth="1" className="text-accent-3/30" />
                   <circle cx="340" cy="60" r="25" stroke="currentColor" strokeWidth="0.5" className="text-accent-3/20" />
-                  <motion.circle 
-                    cx="340" cy="60" r="4" 
-                    fill="currentColor" className="text-accent-3" 
+                  <motion.circle
+                    cx="340" cy="60" r="4"
+                    fill="currentColor" className="text-accent-3"
                     animate={{ r: [4, 6, 4], opacity: [1, 0.7, 1] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   />
-                  
-                  {/* Secondary Points */}
                   <circle cx="180" cy="50" r="15" stroke="currentColor" strokeWidth="1" className="text-white/20" />
                   <circle cx="180" cy="50" r="2.5" fill="currentColor" className="text-white/60" />
-                  
                   <circle cx="260" cy="90" r="12" stroke="currentColor" strokeWidth="1" className="text-white/20" />
                   <circle cx="260" cy="90" r="2.5" fill="currentColor" className="text-white/60" />
-                  
-                  {/* Subtle 'Signal' waves */}
-                  <motion.circle 
-                    cx="340" cy="60" r="60" 
-                    stroke="currentColor" strokeWidth="1" 
+                  <motion.circle
+                    cx="340" cy="60" r="60"
+                    stroke="currentColor" strokeWidth="1"
                     className="text-accent-3/10"
                     animate={{ scale: [0.8, 1.2], opacity: [0.5, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
@@ -144,20 +182,53 @@ function ClientsGallery() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6 auto-rows-[minmax(320px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 md:gap-6 auto-rows-[minmax(280px,auto)]">
           {clients.map((client, idx) => (
-            <ClientCard key={client.id} client={client} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} isPriority={idx === 0} />
+            <ClientCard
+              key={client.id}
+              client={client}
+              index={idx}
+              fileNumber={String(idx + 1).padStart(3, "0")}
+              isPriority={idx === 0}
+            />
           ))}
-          <PlaceholderCard index={clients.length} fileNumber={String(clients.length + 1).padStart(3, "0")} gridPos="lg:col-span-1" />
+          <PlaceholderCard
+            index={clients.length}
+            fileNumber={String(clients.length + 1).padStart(3, "0")}
+            gridPos="md:col-span-2 lg:col-span-3"
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function ClientCard({ client, index, fileNumber, isPriority }: { client: any, index: number, fileNumber: string, isPriority?: boolean }) {
+function CornerBrackets() {
   return (
-    <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${client.gridPos} h-full`}>
+    <>
+      <span className="pointer-events-none absolute top-2.5 left-2.5 w-3 h-3 border-l border-t border-accent-3/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <span className="pointer-events-none absolute top-2.5 right-2.5 w-3 h-3 border-r border-t border-accent-3/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <span className="pointer-events-none absolute bottom-2.5 left-2.5 w-3 h-3 border-l border-b border-accent-3/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <span className="pointer-events-none absolute bottom-2.5 right-2.5 w-3 h-3 border-r border-b border-accent-3/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    </>
+  );
+}
+
+function Monogram({ text, className }: { text: string; className: string }) {
+  return (
+    <div className={`${className} shrink-0 relative rounded-lg overflow-hidden bg-slate-900 border border-slate-800 group-hover:border-accent-3/40 transition-colors flex items-center justify-center`}>
+      <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.25)_0%,transparent_70%)]" />
+      <span className="relative font-black text-white tracking-tight text-lg md:text-xl">{text}</span>
+    </div>
+  );
+}
+
+function ClientCard({ client, index, fileNumber, isPriority }: { client: Client; index: number; fileNumber: string; isPriority?: boolean }) {
+  const cfg = sizeConfig[client.size];
+  const isFeatured = client.size === "lg";
+
+  return (
+    <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${cfg.gridPos} h-full`}>
       <motion.div
         whileHover={{ y: -6, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
         className="group relative h-full bg-slate-950 border border-slate-800 hover:border-accent-3/50 rounded-xl overflow-hidden transition-colors duration-500 flex flex-col shadow-[0_30px_80px_-30px_rgba(2,6,23,0.6)] gpu-accelerated"
@@ -165,16 +236,17 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
         <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-accent-3 via-accent-3/40 to-transparent" />
         <div className="absolute inset-0 industrial-grid opacity-[0.04] pointer-events-none" />
         <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-accent-3/[0.06] blur-[100px] rounded-full pointer-events-none gpu-accelerated" />
+        <CornerBrackets />
 
         <div className="relative z-10 flex flex-col h-full">
           {/* Classification strip */}
           <div className="flex items-center justify-between gap-3 px-5 sm:px-7 md:px-9 py-3.5 border-b border-slate-800 bg-slate-900/40">
-            <div className="flex items-center gap-3">
-              <span className="text-[9px] md:text-[10px] font-black text-accent-3 uppercase tracking-[0.3em] tabular-nums">FILE / {fileNumber}</span>
-              <span className="h-3 w-px bg-slate-700" />
-              <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em]">{client.date}</span>
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="text-[9px] md:text-[10px] font-black text-accent-3 uppercase tracking-[0.3em] tabular-nums whitespace-nowrap">FILE / {fileNumber}</span>
+              <span className="h-3 w-px bg-slate-700 shrink-0" />
+              <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em] truncate">{client.date}</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <span className="relative flex h-1.5 w-1.5">
                 <motion.span
                   animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
@@ -188,12 +260,12 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
           </div>
 
           {/* Body */}
-          <div className="flex-grow flex flex-col gap-6 px-5 sm:px-7 md:px-9 py-7 md:py-10">
+          <div className={`flex-grow flex ${isFeatured ? "flex-col lg:flex-row" : "flex-col"} gap-6 lg:gap-8 ${cfg.bodyPad}`}>
             {/* Identity */}
-            <div className="flex flex-col gap-5 pb-5 border-b border-slate-800/80">
+            <div className={`flex flex-col gap-4 md:gap-5 ${isFeatured ? "lg:w-[42%] lg:border-r lg:border-slate-800/80 lg:pr-8 pb-5 border-b border-slate-800/80 lg:pb-0 lg:border-b-0" : "pb-5 border-b border-slate-800/80"}`}>
               <div className="flex items-center gap-4">
-                {client.image && (
-                  <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 relative rounded-lg overflow-hidden bg-white border border-slate-800 group-hover:border-accent-3/40 transition-colors">
+                {client.image ? (
+                  <div className={`${cfg.logoBox} shrink-0 relative rounded-lg overflow-hidden bg-white border border-slate-800 group-hover:border-accent-3/40 transition-colors`}>
                     <Image
                       src={client.image}
                       alt={client.name}
@@ -202,14 +274,16 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
                       className="object-contain p-2 transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                )}
-                <div className="flex flex-col gap-1">
+                ) : client.monogram ? (
+                  <Monogram text={client.monogram} className={cfg.logoBox} />
+                ) : null}
+                <div className="flex flex-col gap-1 min-w-0">
                   <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Client</span>
-                  <span className="text-[10px] md:text-[11px] font-bold text-slate-300 uppercase tracking-[0.2em]">{client.location}</span>
+                  <span className="text-[10px] md:text-[11px] font-bold text-slate-300 uppercase tracking-[0.2em] truncate">{client.location}</span>
                 </div>
               </div>
 
-              <h3 className="font-bold text-white tracking-tighter leading-[0.95] text-3xl sm:text-4xl md:text-4xl group-hover:text-accent-3 transition-colors duration-300 break-words">
+              <h3 className={`font-bold text-white tracking-tighter leading-[0.95] ${cfg.title} group-hover:text-accent-3 transition-colors duration-300 break-words`}>
                 {client.name}
               </h3>
 
@@ -217,21 +291,31 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
                 <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Build Type</span>
                 <span className="text-sm md:text-base font-semibold text-white tracking-tight">{client.type}</span>
               </div>
+
+              {isFeatured && client.metrics && (
+                <div className="grid grid-cols-3 gap-3 pt-3 mt-auto">
+                  {client.metrics.map((m) => (
+                    <div key={m.label} className="flex flex-col gap-1 border-l border-accent-3/40 pl-2.5">
+                      <span className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.25em]">{m.label}</span>
+                      <span className="text-xs md:text-sm font-bold text-white tracking-tight">{m.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Right narrative column */}
-            <div className="flex-1 flex flex-col gap-5">
+            {/* Narrative */}
+            <div className="flex-1 flex flex-col gap-4 md:gap-5">
               <span className="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Engagement Notes</span>
-              <p className="text-slate-200 leading-relaxed text-base md:text-lg font-light max-w-2xl">
+              <p className={`text-slate-200 leading-relaxed ${cfg.descSize} font-light max-w-2xl`}>
                 {client.description}
               </p>
 
-              {/* Status pills */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                {client.tags.map((tag: string) => (
+              <div className="flex flex-wrap gap-2 pt-2 mt-auto">
+                {client.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-[9px] md:text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em]"
+                    className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-[9px] md:text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em] group-hover:border-accent-3/30 transition-colors"
                   >
                     {tag}
                   </span>
@@ -279,9 +363,9 @@ function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNu
         <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-slate-700 via-slate-800 to-transparent" />
         <div className="absolute inset-0 industrial-grid opacity-[0.04] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(14,165,233,0.08)_0%,transparent_60%)]" />
+        <CornerBrackets />
 
         <div className="relative z-10 flex flex-col h-full">
-          {/* Classification strip */}
           <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-3.5 border-b border-dashed border-slate-800 bg-slate-900/40">
             <div className="flex items-center gap-3">
               <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] tabular-nums">FILE / {fileNumber}</span>
@@ -298,7 +382,6 @@ function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNu
             </div>
           </div>
 
-          {/* Body */}
           <div className="flex-grow flex flex-col justify-center px-5 sm:px-7 py-8 md:py-10 text-center items-center gap-5">
             <div className="relative w-14 h-14 rounded-lg border border-slate-800 flex items-center justify-center bg-slate-900/40 overflow-hidden">
               <motion.div
@@ -322,7 +405,6 @@ function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNu
               </p>
             </div>
 
-            {/* Progress bar */}
             <div className="w-full max-w-[220px] mt-2 flex flex-col gap-2">
               <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">
                 <span>Progress</span>
@@ -338,7 +420,6 @@ function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNu
             </div>
           </div>
 
-          {/* Footer rail */}
           <div className="border-t border-dashed border-slate-800 bg-slate-900/40 px-5 sm:px-7 py-4 flex items-center justify-between gap-2">
             <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Awaiting Launch</span>
             <div className="flex gap-1.5">
