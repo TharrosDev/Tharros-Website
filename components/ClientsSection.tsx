@@ -14,27 +14,30 @@ const clients = [
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.png",
-    gridPos: "lg:col-span-1"
+    gridPos: "lg:col-span-1",
+    tags: ["Modernized Site", "Integrated Agent", "On-Call Support"]
   },
   {
     id: "advanta365",
     name: "ADVANTA365",
     location: "Ottawa, ON",
-    type: "Full Site Build + AI Agent",
-    description: "Built and shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 adoption, governance, and rollout practice, with an integrated AI agent for visitor questions. Tharros stays on call for tuning and new agents.",
+    type: "Full Site Build",
+    description: "Built and shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 adoption, governance, and rollout practice. Tharros stays on call for ongoing fixes and updates.",
     link: "https://advanta365.com",
     date: "MAY 2026",
-    gridPos: "lg:col-span-1"
+    gridPos: "lg:col-span-1",
+    tags: ["Modernized Site", "On-Call Support"]
   },
   {
     id: "echo-five",
     name: "Echo Five Consulting",
     location: "Ottawa, ON",
-    type: "Full Site Build + AI Agent",
-    description: "Built and shipped the Echo Five Consulting site for their public-sector Microsoft 365 change-management practice, with an integrated AI agent for visitor questions. Tharros stays on call for tuning and new agents.",
+    type: "Full Site Build",
+    description: "Built and shipped the Echo Five Consulting site for their public-sector Microsoft 365 change-management practice. Tharros stays on call for ongoing fixes and updates.",
     link: "https://echo-five-website.vercel.app",
     date: "MAY 2026",
-    gridPos: "lg:col-span-1"
+    gridPos: "lg:col-span-1",
+    tags: ["Modernized Site", "On-Call Support"]
   }
 ];
 
@@ -225,7 +228,7 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
 
               {/* Status pills */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {["Modernized Site", "Integrated Agent", "On-Call Support"].map((tag) => (
+                {client.tags.map((tag: string) => (
                   <span
                     key={tag}
                     className="px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-[9px] md:text-[10px] font-bold text-slate-300 uppercase tracking-[0.2em]"
