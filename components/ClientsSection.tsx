@@ -18,6 +18,7 @@ type Client = {
   size: Size;
   tags: string[];
   image?: string;
+  imageBg?: string;
   monogram?: string;
   metrics?: string[];
 };
@@ -30,7 +31,7 @@ const clients: Client[] = [
     type: "Knowledge Q&A Agent",
     lede: "An Ottawa member society with a busy community forum.",
     description:
-      "Tharros built a knowledge agent that reads the forum live so members get instant answers.",
+      "Tharros built and integrated a Q&A agent that answers member questions from the live forum.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.webp",
@@ -45,7 +46,7 @@ const clients: Client[] = [
     type: "Marketing Site Build",
     lede: "An enterprise Microsoft 365 adoption and governance practice.",
     description:
-      "Tharros built and shipped their marketing site, and stays on call for updates.",
+      "Tharros built and shipped their marketing site, with ongoing on-call support.",
     link: "https://advanta365.com",
     date: "MAY 2026",
     size: "sm",
@@ -59,11 +60,12 @@ const clients: Client[] = [
     type: "Positioning Site Build",
     lede: "A public-sector change-management consultancy in Ottawa.",
     description:
-      "Tharros built their positioning site and the funnel from problem statement to booked call.",
+      "Tharros built and shipped their consulting site, with ongoing on-call support.",
     link: "https://echo-five-website.vercel.app",
     date: "MAY 2026",
     size: "md",
-    monogram: "E5",
+    image: "/echo-five-logo.svg",
+    imageBg: "bg-slate-800 border border-white/10",
     tags: ["Modernized Site", "On-Call Support"],
   },
 ];
@@ -216,7 +218,7 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
           {/* Identity */}
           <div className="flex items-center gap-4">
             {client.image ? (
-              <div className={`${cfg.logoBox} shrink-0 relative rounded-xl overflow-hidden bg-white`}>
+              <div className={`${cfg.logoBox} shrink-0 relative rounded-xl overflow-hidden ${client.imageBg ?? "bg-white"}`}>
                 <Image
                   src={client.image}
                   alt={client.name}
