@@ -47,6 +47,9 @@ export interface FieldDef {
   multiple?: boolean;
   /** For `textarea` kind — rows hint. */
   rows?: number;
+  /** When supplied and returns false, the field is hidden, treated as
+   *  satisfied in `stepComplete`, and skipped in the merged prompt. */
+  visibleWhen?: (state: FormState) => boolean;
 }
 
 export interface StepDef {
@@ -55,13 +58,20 @@ export interface StepDef {
   title: string;
   subtitle: string;
   fields: FieldDef[];
+  /** When supplied and returns false, the entire step is filtered out. */
+  visibleWhen?: (state: FormState) => boolean;
 }
 
-/** Lightweight metadata stored for an uploaded file (we don't ship blobs). */
+/** Metadata for an uploaded file. `path` + `url` are populated after the
+ *  upload to Supabase Storage completes; `status` drives the row UI. */
 export interface FileInfo {
   name: string;
   size: number;
   type: string;
+  path?: string;
+  url?: string;
+  status?: "pending" | "uploading" | "uploaded" | "error";
+  error?: string;
 }
 
 /** All possible value types a field can hold. */

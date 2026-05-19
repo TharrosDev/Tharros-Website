@@ -132,7 +132,12 @@ export const OB_STEPS: StepDef[] = [
       { id: "hoursOfOperation", kind: "text", label: "Hours of operation",
         placeholder: "e.g. Mon–Fri 9am–5pm; closed weekends",
         hint: "So the assistant knows when to say “we’re open” vs “we’ll reply soon”.",
-        optional: true },
+        optional: true,
+        visibleWhen: (s) => {
+          const scope = Array.isArray(s.assistantScope) ? (s.assistantScope as string[]) : [];
+          return scope.length > 0 && !scope.includes("none");
+        },
+      },
       { id: "afterHours", kind: "radio", label: "After-hours behaviour",
         options: [
           { v: "message", label: "Take a message" },
@@ -141,6 +146,10 @@ export const OB_STEPS: StepDef[] = [
           { v: "none", label: "Don’t handle after-hours" },
         ],
         optional: true,
+        visibleWhen: (s) => {
+          const scope = Array.isArray(s.assistantScope) ? (s.assistantScope as string[]) : [];
+          return scope.includes("after-hours");
+        },
       },
     ],
   },
@@ -310,7 +319,14 @@ export function fieldComplete(field: FieldDef, value: FieldValue): boolean {
 }
 
 export function stepComplete(step: StepDef, state: FormState): boolean {
-  return step.fields.every((f) => fieldComplete(f, state[f.id]));
+  return step.fields.every((f) => {
+    if (f.visibleWhen && !f.visibleWhen(state)) return true;
+    return fieldComplete(f, state[f.id]);
+  });
+}
+
+export function visibleSteps(state: FormState): StepDef[] {
+  return OB_STEPS.filter((s) => !s.visibleWhen || s.visibleWhen(state));
 }
 
 export function findField(id: string): FieldDef | null {
