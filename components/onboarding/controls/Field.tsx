@@ -24,12 +24,12 @@ async function uploadOne(file: File, draftId: string): Promise<FileInfo> {
     }
     const { path, token } = (await prep.json()) as { path: string; token: string };
 
-    const { error: upErr } = await supabaseBrowser.storage
+    const { error: upErr } = await supabaseBrowser().storage
       .from("brief-uploads")
       .uploadToSignedUrl(path, token, file, { contentType: file.type });
     if (upErr) return { ...base, status: "error", error: upErr.message };
 
-    const { data: signed, error: signErr } = await supabaseBrowser.storage
+    const { data: signed, error: signErr } = await supabaseBrowser().storage
       .from("brief-uploads")
       .createSignedUrl(path, 60 * 60 * 24 * 7);
     if (signErr || !signed) return { ...base, status: "error", error: "Could not sign download URL" };
@@ -434,7 +434,7 @@ function FileField({ field, value, onChange }: FieldProps) {
         // Best-effort: clean up the orphaned object so we don't accumulate
         // garbage in the bucket. Failures are non-blocking.
         try {
-          await supabaseBrowser.storage.from("brief-uploads").remove([target.path]);
+          await supabaseBrowser().storage.from("brief-uploads").remove([target.path]);
         } catch { /* ignore */ }
       }
     };
@@ -509,7 +509,7 @@ function FileField({ field, value, onChange }: FieldProps) {
     const path = v?.path;
     onChange(null);
     if (path) {
-      try { await supabaseBrowser.storage.from("brief-uploads").remove([path]); } catch {}
+      try { await supabaseBrowser().storage.from("brief-uploads").remove([path]); } catch {}
     }
   };
 
