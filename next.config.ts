@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Legacy onboarding URL — wizard moved to /brief. Kept as a 308 so
+      // external backlinks and indexed search results pointing at /intake
+      // forward cleanly and transfer link-equity to the new canonical URL.
+      { source: "/intake", destination: "/brief", permanent: true },
       // Forgive a common typo: singular /admin/brief → plural /admin/briefs.
       { source: "/admin/brief", destination: "/admin/briefs", permanent: true },
     ];
