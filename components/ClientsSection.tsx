@@ -114,9 +114,9 @@ function ClientsGallery() {
 
 function Monogram({ text, className }: { text: string; className: string }) {
   return (
-    <div className={`${className} shrink-0 relative rounded-xl overflow-hidden bg-slate-800/60 flex items-center justify-center`}>
-      <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.2)_0%,transparent_70%)]" />
-      <span className="relative font-semibold text-white tracking-tight text-base md:text-lg">{text}</span>
+    <div className={`${className} shrink-0 relative rounded-xl overflow-hidden bg-slate-800 border border-white/10 flex items-center justify-center`}>
+      <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.25)_0%,transparent_70%)]" />
+      <span className="relative font-bold text-white tracking-tight text-base md:text-lg">{text}</span>
     </div>
   );
 }
@@ -153,23 +153,22 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
               <h2 className={`${cfg.title} font-bold text-white tracking-tight leading-[1.05] break-words`}>
                 {client.name}
               </h2>
-              <p className="text-sm text-slate-400 font-medium">
-                {client.location} <span className="text-slate-600">·</span> {client.type}
+              <p className="text-sm text-slate-300 font-medium">
+                {client.location} <span className="text-slate-500">·</span> {client.type}
               </p>
             </div>
           </div>
 
           {/* Description */}
-          <p className={`text-slate-300 leading-relaxed ${cfg.descSize} font-light`}>
+          <p className={`text-slate-200 leading-relaxed ${cfg.descSize} font-normal`}>
             {client.description}
           </p>
 
           {/* Metrics (featured only) */}
           {client.metrics && (
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-200 font-medium">
-              {client.metrics.map((m, i) => (
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-100 font-medium">
+              {client.metrics.map((m) => (
                 <span key={m} className="flex items-center gap-2">
-                  {i > 0 && <span className="text-slate-600">·</span>}
                   <span className="text-accent-3 text-xs">●</span>
                   {m}
                 </span>
@@ -183,7 +182,7 @@ function ClientCard({ client, index, isPriority }: { client: Client; index: numb
               {client.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 rounded-md bg-white/[0.04] text-[11px] font-medium text-slate-300"
+                  className="px-2.5 py-1 rounded-md bg-white/[0.08] border border-white/5 text-[11px] font-semibold text-slate-100"
                 >
                   {tag}
                 </span>
@@ -213,13 +212,13 @@ function PlaceholderCard({ index, gridPos }: { index: number; gridPos: string })
     <AnimatedSection variant="scale-in" delay={index * 0.08} className={`${gridPos} h-full`}>
       <motion.div
         whileHover={{ y: -4, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-slate-900/40 border border-dashed border-white/10 hover:border-accent-3/30 rounded-2xl overflow-hidden flex flex-col transition-colors duration-300 p-7 md:p-9"
+        className="group relative h-full bg-slate-900 border border-dashed border-white/15 hover:border-accent-3/40 rounded-2xl overflow-hidden flex flex-col transition-colors duration-300 p-7 md:p-9"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(14,165,233,0.06)_0%,transparent_60%)] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col h-full items-center justify-center text-center gap-5">
-          <div className="w-14 h-14 rounded-xl border border-white/10 flex items-center justify-center bg-slate-900/60">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-slate-400 group-hover:text-accent-3 transition-colors">
+          <div className="w-14 h-14 rounded-xl border border-white/15 flex items-center justify-center bg-slate-800">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-slate-300 group-hover:text-accent-3 transition-colors">
               <path d="M12 5v14M5 12h14" />
             </svg>
           </div>
@@ -228,7 +227,7 @@ function PlaceholderCard({ index, gridPos }: { index: number; gridPos: string })
             <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">
               Your business, here.
             </h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <p className="text-slate-300 text-sm leading-relaxed">
               Tharros is taking on new Ottawa clients. If you want your site featured next, get in touch.
             </p>
           </div>
