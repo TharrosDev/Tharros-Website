@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { getBriefRateLimit, ipFrom } from "@/lib/ratelimit";
 
 interface Payload {
   source?: string;
@@ -11,6 +10,12 @@ interface Payload {
   draftId?: string;
   /** Honeypot — real users never see this field; if filled, treat as bot. */
   company_name_alt?: string;
+}
+
+function ipFrom(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "anon";
 }
 
 export async function POST(req: Request) {
@@ -25,18 +30,6 @@ export async function POST(req: Request) {
   if (payload.company_name_alt && payload.company_name_alt.trim().length > 0) {
     console.warn("[/api/brief] honeypot tripped from", ipFrom(req));
     return NextResponse.json({ ok: true, accepted: true });
-  }
-
-  // Optional rate limit. No-ops until UPSTASH_REDIS_REST_URL/_TOKEN are set.
-  const rl = getBriefRateLimit();
-  if (rl) {
-    const verdict = await rl.limit(ipFrom(req));
-    if (!verdict.success) {
-      return NextResponse.json(
-        { ok: false, error: "Too many requests" },
-        { status: 429, headers: { "Retry-After": "600" } },
-      );
-    }
   }
 
   // Persist to Supabase. RLS is on; service-role bypasses it.
