@@ -272,6 +272,8 @@ function SliderField({ field, value, onChange }: FieldProps) {
             step={field.step || 1}
             value={numValue}
             onChange={(e) => onChange(Number(e.target.value))}
+            aria-label={field.label}
+            aria-valuetext={field.labels?.[numValue] ?? `${numValue}`}
           />
         </div>
         <div className="ob-slider__labels">
@@ -486,11 +488,12 @@ export function Field({ field, value, onChange }: FieldProps) {
 }
 
 export function Fields({ step, state, setField }: FieldsProps) {
-  const allShort = step.fields.every((f) => f.kind === "text" || f.kind === "url");
-  const useGrid = allShort && step.fields.length >= 2 && step.fields.length <= 4;
+  const visible = step.fields.filter((f) => !f.visibleWhen || f.visibleWhen(state));
+  const allShort = visible.every((f) => f.kind === "text" || f.kind === "url");
+  const useGrid = allShort && visible.length >= 2 && visible.length <= 4;
   return (
     <div className={useGrid ? "ob-fields ob-fields--grid" : "ob-fields"}>
-      {step.fields.map((field) => (
+      {visible.map((field) => (
         <Field
           key={field.id}
           field={field}
