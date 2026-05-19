@@ -58,8 +58,6 @@ export interface StepDef {
   title: string;
   subtitle: string;
   fields: FieldDef[];
-  /** When supplied and returns false, the entire step is filtered out. */
-  visibleWhen?: (state: FormState) => boolean;
 }
 
 /** Metadata for an uploaded file. `path` + `url` are populated after the
