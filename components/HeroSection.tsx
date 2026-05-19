@@ -104,7 +104,7 @@ export default function HeroSection() {
             className="mt-12 sm:mt-16 md:mt-20 inline-flex items-center justify-center gap-3 md:gap-4 px-4 py-2 sm:px-5 sm:py-2.5 md:px-7 md:py-3 rounded-full border border-white/15 bg-white/[0.04] text-white font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[9px] sm:text-[10px] md:text-sm select-none shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
           >
             <span>Keep it Local, Keep it Canadian</span>
-            <img src="/canada-flag.svg" alt="Canada" className="w-5 sm:w-6 md:w-8 h-auto rounded-sm shadow-sm" />
+            <img src="/canada-flag.svg" alt="Canada" width={32} height={20} decoding="async" className="w-5 sm:w-6 md:w-8 h-auto rounded-sm shadow-sm" />
           </motion.div>
         </div>
       </motion.div>

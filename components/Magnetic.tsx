@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useSpring, useMotionValue, useTransform } from "motion/react";
 
 interface MagneticProps {
@@ -11,7 +11,16 @@ interface MagneticProps {
 
 export default function Magnetic({ children, strength = 0.5, className = "inline-block" }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
-  
+  const [coarsePointer, setCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    setCoarsePointer(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setCoarsePointer(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -19,13 +28,11 @@ export default function Magnetic({ children, strength = 0.5, className = "inline
   const springX = useSpring(mouseX, springConfig);
   const springY = useSpring(mouseY, springConfig);
 
-  // Map mouse position to movement based on strength
   const moveX = useTransform(springX, (val) => val * strength);
   const moveY = useTransform(springY, (val) => val * strength);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    // Disable on touch devices or small screens to save performance
-    if (!ref.current || window.matchMedia("(pointer: coarse)").matches) return;
+    if (!ref.current || coarsePointer) return;
     const { clientX, clientY } = e;
     const { width, height, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);

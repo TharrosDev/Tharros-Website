@@ -31,7 +31,7 @@ const clients: Client[] = [
       "Built the Meridian Society's member-facing knowledge agent — a 24/7 Q&A layer that reads the live forum and resource library so members get answers without waiting on a moderator. Tharros stays on call to tune answers and ship new agents as the community grows.",
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
-    image: "/meridian-logo.png",
+    image: "/meridian-logo.webp",
     size: "lg",
     tags: ["Modernized Site", "Integrated Agent", "On-Call Support"],
     metrics: [
@@ -270,6 +270,7 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: Client;
                       src={client.image}
                       alt={client.name}
                       fill
+                      sizes="(max-width: 768px) 64px, 96px"
                       priority={isPriority}
                       className="object-contain p-2 transition-transform duration-700 group-hover:scale-105"
                     />

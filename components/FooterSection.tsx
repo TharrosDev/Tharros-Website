@@ -29,7 +29,7 @@ export default function FooterSection() {
 
               <div className="mb-5 sm:mb-6 md:mb-8 inline-flex items-center justify-center gap-2.5 sm:gap-3 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/15 bg-white/[0.04] text-white font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[8px] sm:text-[9px] md:text-[11px]">
                 <span>Keep it Local, Keep it Canadian</span>
-                <img src="/canada-flag.svg" alt="Canada" className="w-3.5 sm:w-4 md:w-5 h-auto rounded-sm" />
+                <img src="/canada-flag.svg" alt="Canada" width={20} height={12} decoding="async" loading="lazy" className="w-3.5 sm:w-4 md:w-5 h-auto rounded-sm" />
               </div>
               <h2 className="text-[2.1rem] leading-[1.05] sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-5 sm:mb-6 md:mb-8 3xl:mb-16 sm:leading-[1.1] md:leading-[0.9] tracking-tighter">
                 Ready to modernize <br className="hidden md:block" />
@@ -75,7 +75,7 @@ export default function FooterSection() {
             <span className="hidden md:block text-slate-600/30">|</span>
             <span className="flex items-center gap-2 text-slate-500">
               <span>Keep it Local, Keep it Canadian</span>
-              <img src="/canada-flag.svg" alt="Canada" className="w-3.5 sm:w-4 h-auto 3xl:w-8 rounded-[1px] opacity-80" />
+              <img src="/canada-flag.svg" alt="Canada" width={16} height={10} decoding="async" loading="lazy" className="w-3.5 sm:w-4 h-auto 3xl:w-8 rounded-[1px] opacity-80" />
             </span>
           </div>
         </div>
