@@ -66,12 +66,16 @@ export function OnboardingApp() {
   useEffect(() => {
     if (saveTimer.current) window.clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
-      saveDraft(state, stepIndex, [...visited]);
+      // Strip the honeypot before persisting so bot-typed values never sit in
+      // localStorage or brief_drafts.state.
+      const { company_name_alt: _drop, ...cleanState } = state as FormState & { company_name_alt?: string };
+      void _drop;
+      saveDraft(cleanState, stepIndex, [...visited]);
       setSavedAt(Date.now());
       // Mirror to Supabase. Fire-and-forget; localStorage is the fast path
       // and the server copy is a backup + the input feed for /admin/briefs.
       const draftId = ensureDraftId();
-      void syncDraftToServer({ draftId, state, stepIndex, visited: [...visited] });
+      void syncDraftToServer({ draftId, state: cleanState, stepIndex, visited: [...visited] });
     }, 600);
     return () => {
       if (saveTimer.current) window.clearTimeout(saveTimer.current);

@@ -325,10 +325,6 @@ export function stepComplete(step: StepDef, state: FormState): boolean {
   });
 }
 
-export function visibleSteps(state: FormState): StepDef[] {
-  return OB_STEPS.filter((s) => !s.visibleWhen || s.visibleWhen(state));
-}
-
 export function findField(id: string): FieldDef | null {
   for (const step of OB_STEPS) {
     for (const f of step.fields) {
