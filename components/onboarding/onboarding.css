@@ -1210,3 +1210,25 @@ body {
 @media (max-width: 760px) {
   .ob-saved-pill { bottom: 12px; right: 12px; padding: 6px 10px; font-size: 10px; }
 }
+
+/* Light variant — used by /brief so the page background is white
+   while the form card itself stays the standard dark blue. */
+body:has(.ob-shell--light) { background: #ffffff; }
+.ob-shell--light .ob-shell__bg { background: #ffffff; }
+.ob-shell--light .ob-side__title { color: #0f172a; }
+.ob-shell--light .ob-side__sub { color: rgba(15,23,42,0.7); }
+.ob-shell--light .ob-step { color: rgba(15,23,42,0.55); }
+.ob-shell--light .ob-step:hover { color: rgba(15,23,42,0.85); }
+.ob-shell--light .ob-step.is-done { color: rgba(15,23,42,0.65); }
+.ob-shell--light .ob-step.is-current { color: #0f172a; }
+.ob-shell--light .ob-step.is-locked:hover { color: rgba(15,23,42,0.45); }
+.ob-shell--light .ob-step__n {
+  border-color: rgba(15,23,42,0.18);
+  background: rgba(15,23,42,0.03);
+  color: rgba(15,23,42,0.7);
+}
+.ob-shell--light .ob-steps { border-top-color: rgba(15,23,42,0.12); }
+.ob-shell--light .ob-step { border-bottom-color: rgba(15,23,42,0.08); }
+.ob-shell--light .ob-card {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+}

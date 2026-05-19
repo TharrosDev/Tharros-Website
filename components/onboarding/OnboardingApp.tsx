@@ -166,13 +166,8 @@ export function OnboardingApp() {
   }
 
   return (
-    <div className="ob-shell">
-      <div className="ob-shell__bg" aria-hidden="true">
-        <div className="industrial-grid--dark" />
-        <div className="panel" />
-        <div className="glow glow--a" />
-        <div className="glow glow--b" />
-      </div>
+    <div className="ob-shell ob-shell--light">
+      <div className="ob-shell__bg" aria-hidden="true" />
 
       <main className="ob-stage">{renderScreen()}</main>
       <SavedPill savedAt={savedAt} />
