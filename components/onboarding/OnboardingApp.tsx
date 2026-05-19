@@ -4,8 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OB_STEPS, defaultState, stepComplete } from "./lib/schema";
 import { buildPrompt } from "./lib/prompt";
 import {
-  clearDraft, loadDraft, loadDraftMeta, newSubmissionId,
-  saveDraft, saveSubmission,
+  clearDraft, clearDraftId, ensureDraftId, loadDraft, loadDraftId, loadDraftMeta,
+  newSubmissionId, saveDraft, saveSubmission, syncDraftToServer,
 } from "./lib/storage";
 import type { FieldValue, FormState } from "./lib/types";
 import { Wizard } from "./Wizard";
@@ -68,7 +68,11 @@ export function OnboardingApp() {
     saveTimer.current = window.setTimeout(() => {
       saveDraft(state, stepIndex, [...visited]);
       setSavedAt(Date.now());
-    }, 400);
+      // Mirror to Supabase. Fire-and-forget; localStorage is the fast path
+      // and the server copy is a backup + the input feed for /admin/briefs.
+      const draftId = ensureDraftId();
+      void syncDraftToServer({ draftId, state, stepIndex, visited: [...visited] });
+    }, 600);
     return () => {
       if (saveTimer.current) window.clearTimeout(saveTimer.current);
     };
@@ -76,22 +80,33 @@ export function OnboardingApp() {
 
   const submit = useCallback(async () => {
     setSubmitting(true);
-    const prompt = buildPrompt(state);
+
+    // Pull the honeypot value off the top level; strip it from `state` so it
+    // never reaches the merged prompt or admin view.
+    const { company_name_alt, ...cleanState } = state as FormState & { company_name_alt?: string };
+    const honeypot = typeof company_name_alt === "string" ? company_name_alt : "";
+    const draftId = loadDraftId();
+
+    const prompt = buildPrompt(cleanState);
     const record = {
       id: newSubmissionId(),
       timestamp: new Date().toISOString(),
-      state: { ...state },
+      state: cleanState,
       prompt,
     };
 
     saveSubmission(record);
 
-    // Local backup already happened; don't block the thank-you on network errors.
     try {
       const res = await fetch("/api/brief", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source: "tharros-onboarding", ...record }),
+        body: JSON.stringify({
+          source: "tharros-onboarding",
+          ...record,
+          draftId,
+          company_name_alt: honeypot,
+        }),
       });
       if (!res.ok) {
         const body = await res.text().catch(() => "");
@@ -102,6 +117,7 @@ export function OnboardingApp() {
     }
 
     clearDraft();
+    clearDraftId();
     setSubmitted(true);
     setSubmitting(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -109,10 +125,12 @@ export function OnboardingApp() {
 
   const reset = useCallback(() => {
     clearDraft();
+    clearDraftId();
     setState(defaultState());
     setVisited(new Set());
     setStepIndex(-1);
     setSubmitted(false);
+    setSavedAt(null);
     window.scrollTo({ top: 0 });
   }, []);
 

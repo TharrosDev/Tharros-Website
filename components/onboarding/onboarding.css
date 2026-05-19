@@ -1106,6 +1106,13 @@ body {
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
+/* Honeypot (anti-spam) ------------------------------------- */
+.ob-honeypot {
+  position: absolute; left: -9999px; top: -9999px;
+  width: 1px; height: 1px;
+  overflow: hidden; opacity: 0;
+}
+
 /* File upload status --------------------------------------- */
 .ob-file__spinner {
   display: inline-block;

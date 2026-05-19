@@ -13,21 +13,29 @@ type Tab = "prompt" | "json" | "data";
 const str = (v: FieldValue, fallback = "—"): string =>
   typeof v === "string" && v ? v : fallback;
 
-export function AdminApp() {
-  // Hydrate from localStorage AFTER mount — SSR returns [] from loadSubmissions,
-  // and using that as the initial useState value on the client would diverge
-  // from the server-rendered HTML and trip React 19's hydration mismatch.
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [currentId, setCurrentId] = useState<string | null>(null);
+interface AdminAppProps {
+  /** Server-loaded list from Supabase. Acts as the source of truth; the
+   *  legacy localStorage cache is layered underneath for older briefs that
+   *  pre-date the Supabase migration. */
+  initialRemote?: Submission[];
+}
+
+export function AdminApp({ initialRemote = [] }: AdminAppProps) {
+  // Seed with the SSR-loaded remote rows so the initial paint matches the
+  // server response. Local cache merges in after mount.
+  const [submissions, setSubmissions] = useState<Submission[]>(initialRemote);
+  const [currentId, setCurrentId] = useState<string | null>(initialRemote[0]?.id ?? null);
   const [tab, setTab] = useState<Tab>("prompt");
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const initial = loadSubmissions();
-    setSubmissions(initial);
-    setCurrentId(initial[0]?.id ?? null);
-  }, []);
+    const local = loadSubmissions();
+    const seen = new Set(initialRemote.map((r) => r.id));
+    const merged = [...initialRemote, ...local.filter((r) => !seen.has(r.id))];
+    setSubmissions(merged);
+    setCurrentId((cur) => cur ?? merged[0]?.id ?? null);
+  }, [initialRemote]);
 
   useEffect(() => () => {
     if (toastTimer.current) clearTimeout(toastTimer.current);

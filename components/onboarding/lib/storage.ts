@@ -128,3 +128,27 @@ export function clearDraftId(): void {
   if (typeof window === "undefined") return;
   try { window.localStorage.removeItem(DRAFT_ID_KEY); } catch {}
 }
+
+/* ============================================================
+   SERVER DRAFT SYNC — best-effort; falls back to local-only on failure
+   ============================================================ */
+
+export async function syncDraftToServer(args: {
+  draftId: string;
+  state: FormState;
+  stepIndex: number;
+  visited: number[];
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/brief/draft", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(args),
+    });
+    if (!res.ok) return false;
+    const body = await res.json().catch(() => ({}));
+    return body?.ok === true;
+  } catch {
+    return false;
+  }
+}
