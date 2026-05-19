@@ -41,11 +41,15 @@ function formatField(field: FieldDef | null, value: FieldValue): string {
   if (field.kind === "file") {
     if (field.multiple) {
       if (!Array.isArray(value) || value.length === 0) return "_(not provided)_";
-      const files = value as Array<{ name: string; size: number }>;
-      return "\n" + files.map((f) => `  - \`${f.name}\` (${(f.size / 1024).toFixed(1)} kB)`).join("\n");
+      const files = value as Array<{ name: string; size: number; url?: string }>;
+      return "\n" + files.map((f) => {
+        const meta = `\`${f.name}\` (${(f.size / 1024).toFixed(1)} kB)`;
+        return f.url ? `  - ${meta} — ${f.url}` : `  - ${meta} — *upload incomplete*`;
+      }).join("\n");
     }
     if (!value || typeof value !== "object" || Array.isArray(value)) return "_(not provided)_";
-    return `\`${value.name}\` (${(value.size / 1024).toFixed(1)} kB)`;
+    const single = value as { name: string; size: number; url?: string };
+    return `\`${single.name}\` (${(single.size / 1024).toFixed(1)} kB)${single.url ? ` — ${single.url}` : ""}`;
   }
 
   return (typeof value === "string" ? value.trim() : `${value}`) || "_(not provided)_";
@@ -172,9 +176,10 @@ export function buildPrompt(state: FormState): string {
   }
   const assetFiles = get("assetFiles");
   if (Array.isArray(assetFiles) && assetFiles.length) {
-    lines.push("- **Files uploaded (metadata captured; request actual files in follow-up):**");
-    (assetFiles as Array<{ name: string; size: number }>).forEach((f) => {
-      lines.push(`  - \`${f.name}\` (${(f.size / 1024).toFixed(1)} kB)`);
+    lines.push("- **Files uploaded:**");
+    (assetFiles as Array<{ name: string; size: number; url?: string }>).forEach((f) => {
+      const meta = `\`${f.name}\` (${(f.size / 1024).toFixed(1)} kB)`;
+      lines.push(f.url ? `  - ${meta} — ${f.url}` : `  - ${meta} — *upload incomplete*`);
     });
   } else {
     lines.push("- **Files:** none uploaded.");
