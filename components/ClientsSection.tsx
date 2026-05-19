@@ -14,12 +14,27 @@ const clients = [
     link: "https://meridiansociety.ca",
     date: "MAY 2026",
     image: "/meridian-logo.png",
-    gridPos: "lg:col-span-2 lg:row-span-2"
+    gridPos: "lg:col-span-1"
   },
   {
-    id: "in-progress",
-    isPlaceholder: true,
-    gridPos: "lg:col-span-1 lg:row-span-2"
+    id: "advanta365",
+    name: "ADVANTA365",
+    location: "Ottawa, ON",
+    type: "Full Site Build + AI Agent",
+    description: "Built and shipped the ADVANTA365 marketing site for their enterprise Microsoft 365 adoption, governance, and rollout practice, with an integrated AI agent for visitor questions. Tharros stays on call for tuning and new agents.",
+    link: "https://advanta365.com",
+    date: "MAY 2026",
+    gridPos: "lg:col-span-1"
+  },
+  {
+    id: "echo-five",
+    name: "Echo Five Consulting",
+    location: "Ottawa, ON",
+    type: "Full Site Build + AI Agent",
+    description: "Built and shipped the Echo Five Consulting site for their public-sector Microsoft 365 change-management practice, with an integrated AI agent for visitor questions. Tharros stays on call for tuning and new agents.",
+    link: "https://echo-five-website.vercel.app",
+    date: "MAY 2026",
+    gridPos: "lg:col-span-1"
   }
 ];
 
@@ -122,17 +137,13 @@ function ClientsGallery() {
           <div className="flex items-center gap-3 mb-8 md:mb-12">
             <span className="text-[10px] md:text-[11px] font-black text-slate-900 tracking-[0.4em] uppercase">Case Files</span>
             <div className="h-px flex-1 bg-slate-200" />
-            <span className="text-[10px] md:text-[11px] font-bold text-slate-500 tracking-[0.3em] uppercase tabular-nums">02 Records</span>
+            <span className="text-[10px] md:text-[11px] font-bold text-slate-500 tracking-[0.3em] uppercase tabular-nums">03 Records</span>
           </div>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6 auto-rows-[minmax(320px,auto)]">
           {clients.map((client, idx) => (
-            client.isPlaceholder ? (
-              <PlaceholderCard key={client.id} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} gridPos={client.gridPos} />
-            ) : (
-              <ClientCard key={client.id} client={client} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} isPriority={idx === 0} />
-            )
+            <ClientCard key={client.id} client={client} index={idx} fileNumber={String(idx + 1).padStart(3, "0")} isPriority={idx === 0} />
           ))}
         </div>
       </div>
@@ -173,9 +184,9 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
           </div>
 
           {/* Body */}
-          <div className="flex-grow flex flex-col lg:flex-row gap-6 lg:gap-10 px-5 sm:px-7 md:px-9 py-7 md:py-10">
-            {/* Left identity column */}
-            <div className="flex flex-col gap-5 lg:w-[40%] lg:border-r lg:border-slate-800/80 lg:pr-10">
+          <div className="flex-grow flex flex-col gap-6 px-5 sm:px-7 md:px-9 py-7 md:py-10">
+            {/* Identity */}
+            <div className="flex flex-col gap-5 pb-5 border-b border-slate-800/80">
               <div className="flex items-center gap-4">
                 {client.image && (
                   <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 relative rounded-lg overflow-hidden bg-white border border-slate-800 group-hover:border-accent-3/40 transition-colors">
@@ -194,7 +205,7 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
                 </div>
               </div>
 
-              <h3 className="font-bold text-white tracking-tighter leading-[0.95] text-3xl sm:text-4xl md:text-5xl group-hover:text-accent-3 transition-colors duration-300">
+              <h3 className="font-bold text-white tracking-tighter leading-[0.95] text-3xl sm:text-4xl md:text-4xl group-hover:text-accent-3 transition-colors duration-300 break-words">
                 {client.name}
               </h3>
 
@@ -246,95 +257,6 @@ function ClientCard({ client, index, fileNumber, isPriority }: { client: any, in
                 <path d="M7 17L17 7M9 7h8v8" />
               </svg>
             </a>
-          </div>
-        </div>
-      </motion.div>
-    </AnimatedSection>
-  );
-}
-
-function PlaceholderCard({ index, fileNumber, gridPos }: { index: number, fileNumber: string, gridPos: string }) {
-  return (
-    <AnimatedSection variant="scale-in" delay={index * 0.1} className={`${gridPos} h-full`}>
-      <motion.div
-        whileHover={{ y: -6, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-slate-950 border border-dashed border-slate-800 hover:border-accent-3/40 rounded-xl overflow-hidden flex flex-col transition-colors duration-500 gpu-accelerated shadow-[0_30px_80px_-30px_rgba(2,6,23,0.4)]"
-      >
-        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-slate-700 via-slate-800 to-transparent" />
-        <div className="absolute inset-0 industrial-grid opacity-[0.04] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(14,165,233,0.08)_0%,transparent_60%)]" />
-
-        <div className="relative z-10 flex flex-col h-full">
-          {/* Classification strip */}
-          <div className="flex items-center justify-between gap-3 px-5 sm:px-7 py-3.5 border-b border-dashed border-slate-800 bg-slate-900/40">
-            <div className="flex items-center gap-3">
-              <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] tabular-nums">FILE / {fileNumber}</span>
-              <span className="h-3 w-px bg-slate-700" />
-              <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em]">Drafting</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <motion.span
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="inline-flex h-1.5 w-1.5 rounded-full bg-accent-3/60"
-              />
-              <span className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Pending</span>
-            </div>
-          </div>
-
-          {/* Body */}
-          <div className="flex-grow flex flex-col justify-center px-5 sm:px-7 py-8 md:py-10 text-center items-center gap-5">
-            <div className="relative w-14 h-14 rounded-lg border border-slate-800 flex items-center justify-center bg-slate-900/40 overflow-hidden">
-              <motion.div
-                animate={{ y: [-56, 56] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-x-0 h-px bg-accent-3/70 shadow-[0_0_8px_2px_rgba(14,165,233,0.5)]"
-              />
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400 group-hover:text-accent-3 transition-colors relative z-10">
-                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" />
-              </svg>
-            </div>
-
-            <div className="flex flex-col gap-2 max-w-[260px]">
-              <span className="text-[9px] md:text-[10px] font-black text-accent-3 uppercase tracking-[0.3em]">New Engagement</span>
-              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">
-                New Client in Progress
-              </h3>
-              <p className="text-slate-300 text-sm leading-relaxed font-light">
-                We are currently preparing a new success story with an Ottawa commercial partner.
-              </p>
-            </div>
-
-            {/* Progress bar */}
-            <div className="w-full max-w-[220px] mt-2 flex flex-col gap-2">
-              <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">
-                <span>Progress</span>
-                <span className="tabular-nums">In Build</span>
-              </div>
-              <div className="relative h-[3px] w-full bg-slate-900 rounded-full overflow-hidden">
-                <motion.div
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-accent-3 to-transparent"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Footer rail */}
-          <div className="border-t border-dashed border-slate-800 bg-slate-900/40 px-5 sm:px-7 py-4 flex items-center justify-between gap-2">
-            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Awaiting Launch</span>
-            <div className="flex gap-1.5">
-              {[1,2,3].map(i => (
-                <motion.div
-                  key={i}
-                  animate={{ opacity: [0.2, 1, 0.2] }}
-                  transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.3 }}
-                  className="w-1 h-1 rounded-full bg-accent-3/70"
-                />
-              ))}
-            </div>
           </div>
         </div>
       </motion.div>
