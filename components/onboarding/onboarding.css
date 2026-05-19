@@ -346,7 +346,7 @@ body {
 .ob-check__hint {
   font-size: 13px; line-height: 1.5;
   color: var(--color-subdued);
-  margin-top: 2px;
+  margin-top: 6px;
 }
 
 /* Radio (segmented) ---------------------------------------- */
@@ -401,14 +401,22 @@ body {
   background: var(--color-accent-3); border: 3px solid #fff;
   cursor: pointer; box-shadow: 0 0 0 4px rgba(14,165,233,0.2);
 }
+/* Labels are absolutely positioned per index so each label's CENTER sits
+   directly under its slider tick (0%, 25%, 50%, 75%, 100% for 5 labels). */
 .ob-slider__labels {
-  display: flex; justify-content: space-between;
-  gap: 8px;
-  font-size: 11px; font-weight: 900; letter-spacing: 0.22em;
+  position: relative;
+  height: 14px;
+  font-size: 11px; font-weight: 900; letter-spacing: 0.18em;
   text-transform: uppercase;
 }
-.ob-slider__labels span { text-align: center; }
-.ob-slider__labels span { color: rgba(255,255,255,0.4); }
+.ob-slider__labels span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: rgba(255,255,255,0.5);
+  transition: color .2s var(--ease-industrial);
+}
 .ob-slider__labels span.is-on { color: var(--color-accent-3); }
 
 /* Color swatches ------------------------------------------- */
@@ -438,6 +446,8 @@ body {
   letter-spacing: 0.04em; color: #fff;
 }
 .ob-color__hex {
+  display: block;
+  margin-top: 3px;
   font-size: 11px; color: var(--color-subdued);
   letter-spacing: 0.05em; font-weight: 600;
 }

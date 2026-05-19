@@ -13,9 +13,9 @@ export function Thanks({ state, onReset }: ThanksProps) {
   const owner = typeof state.ownerName === "string" ? state.ownerName : "";
 
   const buildWhen =
-    launch === "asap" ? "Weeks 2–4" :
-    launch === "soon" ? "Weeks 2–6" :
-    launch === "quarter" ? "Weeks 2–10" :
+    launch === "rush" ? "Week 1" :
+    launch === "soon" ? "Weeks 1–2" :
+    launch === "month" ? "Weeks 1–4" :
     "On your timeline";
 
   const timeline = [

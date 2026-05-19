@@ -275,9 +275,18 @@ function SliderField({ field, value, onChange }: FieldProps) {
           />
         </div>
         <div className="ob-slider__labels">
-          {(field.labels || []).map((label, i) => (
-            <span key={label + i} className={numValue === i ? "is-on" : ""}>{label}</span>
-          ))}
+          {(field.labels || []).map((label, i, all) => {
+            const pct = all.length > 1 ? (i / (all.length - 1)) * 100 : 50;
+            return (
+              <span
+                key={label + i}
+                className={numValue === i ? "is-on" : ""}
+                style={{ left: `${pct}%` }}
+              >
+                {label}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>

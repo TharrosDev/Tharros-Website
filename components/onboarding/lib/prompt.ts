@@ -157,28 +157,27 @@ export function buildPrompt(state: FormState): string {
   // ----- Timeline & assets
   lines.push("## 8. Timeline & assets");
   lines.push(`- **Target launch:** ${formatField(findField("timeline"), get("timeline"))}`);
-  if (get("logo")) {
-    lines.push(`- **Logo:** provided — ${formatField(findField("logo"), get("logo"))} _(file not attached; request from client during follow-up)_`);
-  } else {
-    lines.push("- **Logo:** not yet provided — flag for follow-up.");
-  }
   if (arr("haveAssets").length) {
-    lines.push("- **Other assets client can supply:**");
+    lines.push("- **Assets supplied or coming in follow-up:**");
     const af = findField("haveAssets");
     arr("haveAssets").filter((v) => v !== "none").forEach((v) => {
       const opt = af?.options?.find((o) => o.v === v);
       lines.push(`  - ${opt ? opt.label : v}`);
     });
+  } else {
+    lines.push("- **Assets:** none tagged — flag in follow-up call.");
   }
   if (arr("refSites").length) {
     lines.push(`- **Reference sites:** ${formatField(findField("refSites"), get("refSites"))}`);
   }
-  const extraFiles = get("extraAssetFiles");
-  if (Array.isArray(extraFiles) && extraFiles.length) {
-    lines.push("- **Files supplied (metadata captured; request actual files in follow-up):**");
-    (extraFiles as Array<{ name: string; size: number }>).forEach((f) => {
+  const assetFiles = get("assetFiles");
+  if (Array.isArray(assetFiles) && assetFiles.length) {
+    lines.push("- **Files uploaded (metadata captured; request actual files in follow-up):**");
+    (assetFiles as Array<{ name: string; size: number }>).forEach((f) => {
       lines.push(`  - \`${f.name}\` (${(f.size / 1024).toFixed(1)} kB)`);
     });
+  } else {
+    lines.push("- **Files:** none uploaded.");
   }
   lines.push("");
 
