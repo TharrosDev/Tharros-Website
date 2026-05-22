@@ -15,8 +15,8 @@ export default function HeroSection() {
         {/* Left: eyebrow + headline + CTAs */}
         <div className="col-span-12 lg:col-span-8 flex flex-col justify-between">
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: easeOutExpo }}
             className="flex items-center gap-4"
           >
@@ -27,8 +27,8 @@ export default function HeroSection() {
 
           <div className="mt-12 md:mt-16">
             <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 16 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.85, delay: 0.1, ease: easeOutExpo }}
               className="type-display-1 max-w-[18ch]"
             >
@@ -38,8 +38,8 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 12 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
               className="type-lead mt-8 md:mt-10 max-w-[52ch]"
             >
@@ -49,8 +49,8 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 8 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.45, ease: easeOutExpo }}
               className="mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none"
             >
@@ -65,28 +65,18 @@ export default function HeroSection() {
           </div>
 
           {/* Bottom metadata strip */}
-          <motion.dl
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="meta-row mt-16 md:mt-24 pt-6 border-t border-[color:var(--rule)]"
-          >
+          <dl className="meta-row mt-16 md:mt-24 pt-6 border-t border-[color:var(--rule)]">
             <div><dt>Slogan</dt> <dd>Keep it Local, Keep it Canadian</dd></div>
             <div><dt>Service area</dt> <dd>Ottawa · Kanata · Nepean · Orleans · Gatineau</dd></div>
             <div><dt>Contact</dt> <dd>tharrosdev@gmail.com</dd></div>
-          </motion.dl>
+          </dl>
         </div>
 
-        {/* Right: wiring diagram */}
+        {/* Right: wiring diagram (desktop) */}
         <div className="hidden lg:flex col-span-4 items-center justify-center pl-8 border-l border-[color:var(--rule)]">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            className="w-full"
-          >
+          <div className="w-full">
             <WiringDiagram />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 
@@ -141,13 +142,7 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
             className="group block relative aspect-[16/10] overflow-hidden bg-[color:var(--surface-elevated)] border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors"
             aria-label={`Visit ${client.name}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={client.screenshot}
-              alt={`${client.name}: live site preview`}
-              className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
-              loading="lazy"
-            />
+            <ClientPreview src={client.screenshot} alt={`${client.name}: live site preview`} fallbackUrl={client.url} />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[color:var(--surface-dark)]/85 to-transparent p-5 md:p-7 flex items-end justify-between gap-4">
               <span className="num text-[10px] text-[color:var(--ink-on-dark)]">
                 {client.url.replace(/^https?:\/\//, "").toUpperCase()}
@@ -203,6 +198,36 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
         </div>
       </article>
     </AnimatedSection>
+  );
+}
+
+function ClientPreview({ src, alt, fallbackUrl }: { src: string; alt: string; fallbackUrl: string }) {
+  const [errored, setErrored] = useState(false);
+  if (errored) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-[color:var(--surface-elevated)]">
+        <svg viewBox="0 0 240 150" className="diagram w-1/2 max-w-[200px] opacity-60" aria-hidden="true">
+          <rect x="20" y="20" width="200" height="110" stroke="currentColor" strokeWidth="1" fill="none" />
+          <line x1="20" y1="50" x2="220" y2="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+          <text x="34" y="78" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.7">
+            PREVIEW UNAVAILABLE
+          </text>
+          <text x="34" y="94" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.55">
+            {fallbackUrl.replace(/^https?:\/\//, "").toUpperCase().slice(0, 28)}
+          </text>
+        </svg>
+      </div>
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+      loading="lazy"
+      onError={() => setErrored(true)}
+    />
   );
 }
 
