@@ -36,7 +36,7 @@ export default function ModelTiersSection() {
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ 02</span>
+            <span className="num text-xs text-[color:var(--ink-faint)]">§ 02</span>
             <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
             <span className="type-meta-strong">Builds</span>
           </div>
@@ -72,7 +72,7 @@ export default function ModelTiersSection() {
                       className={`py-6 px-4 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)]" : ""}`}
                     >
                       <div className="flex flex-col gap-1">
-                        <span className="num text-[10px] text-[color:var(--ink-faint)]">
+                        <span className="num text-[11px] text-[color:var(--ink-faint)]">
                           {String(i + 1).padStart(2, "0")} / {t.sub.toUpperCase()}
                         </span>
                         <span className="type-display-3 leading-none">{t.name}</span>
@@ -109,7 +109,7 @@ export default function ModelTiersSection() {
             <AnimatedSection key={t.key} delay={i * 0.08}>
               <div className={`py-8 border-t border-[color:var(--rule)] ${i === 2 ? "-mx-[clamp(1.25rem,4vw,4.5rem)] px-[clamp(1.25rem,4vw,4.5rem)] bg-[color:var(--accent-soft)]" : ""}`}>
                 <div className="flex items-baseline gap-3 mb-1">
-                  <span className="num text-[10px] text-[color:var(--ink-faint)]">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="num text-[11px] text-[color:var(--ink-faint)]">{String(i + 1).padStart(2, "0")}</span>
                   <span className="type-meta">{t.sub}</span>
                 </div>
                 <h3 className="type-display-3 mb-4">{t.name}</h3>

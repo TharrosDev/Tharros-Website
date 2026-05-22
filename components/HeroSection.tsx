@@ -22,7 +22,7 @@ export default function HeroSection() {
             transition={{ duration: 0.7, ease: easeOutExpo }}
             className="flex items-center gap-4"
           >
-            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ 00</span>
+            <span className="num text-xs text-[color:var(--ink-faint)]">§ 00</span>
             <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
             <span className="type-meta-strong">Ottawa · Est. 2025</span>
           </motion.div>
@@ -99,7 +99,7 @@ function WiringDiagramCompact() {
   ];
   return (
     <div>
-      <div className="num text-[10px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
+      <div className="num text-[11px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
       <svg viewBox="0 0 360 70" className="diagram w-full h-auto" fill="none" aria-hidden="true">
         {nodes.map((n, i) => {
           const x = 4 + i * 92;
@@ -130,7 +130,7 @@ function WiringDiagramCompact() {
       </svg>
       <div className="meta-row mt-3">
         {nodes.map((n) => (
-          <span key={n.label} className="num text-[9px]">{n.label.toUpperCase()} · {n.sub}</span>
+          <span key={n.label} className="num text-[11px]">{n.label.toUpperCase()} · {n.sub}</span>
         ))}
       </div>
     </div>

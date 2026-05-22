@@ -77,12 +77,12 @@ const MobileChatConsole = memo(({
               </div>
               <div className="text-left">
                 <h3 className="text-sm font-bold text-slate-950 tracking-tight leading-none mb-1">{title}</h3>
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.25em]">Online · Ottawa</span>
+                <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em]">Online · Ottawa</span>
               </div>
             </div>
 
             <div className="flex flex-col items-end gap-1.5">
-              <span className={`text-[8px] font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
+              <span className={`text-[10px] font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
                 {isLimitReached ? "Done" : "Left"}
               </span>
               <div className="flex items-center gap-1">
@@ -116,7 +116,7 @@ const MobileChatConsole = memo(({
               <div className="absolute inset-0 rounded-full bg-accent-3/20 blur-md" />
               <div className="relative w-8 h-8 rounded-full border-2 border-slate-200 border-t-accent-3 animate-spin" />
             </div>
-            <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Warming Up</span>
+            <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">Warming Up</span>
           </div>
         ) : (
           <AnimatePresence initial={false}>
@@ -147,7 +147,7 @@ const MobileChatConsole = memo(({
               </div>
               <a
                 href="/brief"
-                className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-950 text-white text-[9px] font-black uppercase tracking-[0.2em] active:scale-95 transition-transform"
+                className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-950 text-white text-[11px] font-black uppercase tracking-[0.2em] active:scale-95 transition-transform"
               >
                 Start
                 <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -166,7 +166,7 @@ const MobileChatConsole = memo(({
               exit={{ opacity: 0 }}
               className="mb-3"
             >
-              <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 px-1">Try asking</p>
+              <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2 px-1">Try asking</p>
               <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1 -mx-4 px-4">
                 {recommendedQuestions.map((q) => (
                   <button
@@ -251,7 +251,7 @@ const MobileMessageItem = memo(({ msg }: { msg: LocalMessage }) => {
         >
           {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
         </div>
-        <span className="text-[9px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] text-slate-400">
+        <span className="text-[11px] font-bold mt-1.5 px-1.5 uppercase tracking-[0.2em] text-slate-400">
           {msg.time}
         </span>
       </div>
@@ -279,7 +279,7 @@ const MobileTypingIndicator = memo(() => (
           />
         ))}
       </div>
-      <span className="text-[8px] font-black text-slate-400 uppercase tracking-[0.25em]">Thinking</span>
+      <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Thinking</span>
     </div>
   </motion.div>
 ));

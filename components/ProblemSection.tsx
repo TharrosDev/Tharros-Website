@@ -29,7 +29,7 @@ export default function ProblemSection() {
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ 01</span>
+            <span className="num text-xs text-[color:var(--ink-faint)]">§ 01</span>
             <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
             <span className="type-meta-strong">The problem</span>
           </div>
