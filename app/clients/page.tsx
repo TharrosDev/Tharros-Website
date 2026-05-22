@@ -80,7 +80,7 @@ export default function ClientsPage() {
           author: { "@id": `${SITE_URL}/#organization` },
           publisher: { "@id": `${SITE_URL}/#organization` },
           datePublished: "2026-05-01",
-          image: `${SITE_URL}/meridian-logo.png`,
+          image: `${SITE_URL}/meridian-logo.webp`,
           mainEntityOfPage: PAGE_URL,
           about: {
             "@type": "Organization",

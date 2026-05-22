@@ -8,11 +8,14 @@ type Client = {
   name: string;
   location: string;
   buildType: string;
+  lede: string;
   description: string;
   url: string;
   date: string;
-  logo: string;
-  // Live screenshot via thum.io (free, no key). Resolves on first load.
+  logo?: string;
+  monogram?: string;
+  tags: string[];
+  // Live screenshot via thum.io (free, no key).
   screenshot: string;
 };
 
@@ -22,12 +25,42 @@ const clients: Client[] = [
     name: "The Meridian Society",
     location: "Ottawa, ON",
     buildType: "Knowledge Q&A Agent",
+    lede: "An Ottawa member society with a busy community forum.",
     description:
-      "Built and integrated a Knowledge Q&A Agent into the Meridian Society site for 24/7 member insights and forum automation. Live and running, with Tharros on call for tuning and new agents.",
+      "Tharros built and integrated a Q&A agent that answers member questions from the live forum. Live and on call for tuning and new agents.",
     url: "https://meridiansociety.ca",
     date: "May 2026",
-    logo: "/meridian-logo.png",
+    logo: "/meridian-logo.webp",
+    tags: ["Modernized Site", "Integrated Agent", "On-Call Support"],
     screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://meridiansociety.ca",
+  },
+  {
+    id: "advanta365",
+    name: "ADVANTA365",
+    location: "Ottawa, ON",
+    buildType: "Marketing Site Build",
+    lede: "An enterprise Microsoft 365 adoption and governance practice.",
+    description:
+      "Tharros built and shipped their marketing site, with ongoing on-call support.",
+    url: "https://advanta365.com",
+    date: "May 2026",
+    monogram: "A3",
+    tags: ["Modernized Site", "On-Call Support"],
+    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://advanta365.com",
+  },
+  {
+    id: "echo-five",
+    name: "Echo Five Consulting",
+    location: "Ottawa, ON",
+    buildType: "Positioning Site Build",
+    lede: "A public-sector change-management consultancy in Ottawa.",
+    description:
+      "Tharros built and shipped their consulting site, with ongoing on-call support.",
+    url: "https://echo-five-website.vercel.app",
+    date: "May 2026",
+    logo: "/echo-five-logo.svg",
+    tags: ["Modernized Site", "On-Call Support"],
+    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://echo-five-website.vercel.app",
   },
 ];
 
@@ -108,7 +141,6 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
             className="group block relative aspect-[16/10] overflow-hidden bg-[color:var(--surface-elevated)] border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors"
             aria-label={`Visit ${client.name}`}
           >
-            {/* Use raw img: external screenshot service, no Next domain whitelist required */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={client.screenshot}
@@ -117,7 +149,9 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
               loading="lazy"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[color:var(--surface-dark)]/85 to-transparent p-5 md:p-7 flex items-end justify-between gap-4">
-              <span className="num text-[10px] text-[color:var(--ink-on-dark)]">{client.url.replace(/^https?:\/\//, "").toUpperCase()}</span>
+              <span className="num text-[10px] text-[color:var(--ink-on-dark)]">
+                {client.url.replace(/^https?:\/\//, "").toUpperCase()}
+              </span>
               <span className="num text-[10px] text-[color:var(--accent-on-dark)] flex items-center gap-2">
                 Visit
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
@@ -140,25 +174,32 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
           </div>
 
           <h2 className="type-display-3 mb-2">{client.name}</h2>
-          <span className="type-meta mb-6">{client.location}</span>
+          <span className="type-meta mb-5">{client.location}</span>
 
-          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[44ch]">
-            {client.description}
-          </p>
+          <p className="type-body text-[color:var(--ink)] mb-3 max-w-[44ch] font-medium">{client.lede}</p>
+          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[44ch]">{client.description}</p>
 
           <dl className="meta-row border-t border-[color:var(--rule)] pt-5 flex-col md:flex-row">
             <div><dt>Build</dt> <dd>{client.buildType}</dd></div>
             <div><dt>Launched</dt> <dd>{client.date.toUpperCase()}</dd></div>
           </dl>
 
-          {client.logo && (
-            <div className="mt-6 pt-5 border-t border-[color:var(--rule)] flex items-center gap-3">
+          <div className="mt-6 pt-5 border-t border-[color:var(--rule)] flex items-center gap-3">
+            {client.logo ? (
               <div className="relative w-10 h-10 bg-[color:var(--surface-elevated)] border border-[color:var(--rule)]">
                 <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
               </div>
-              <span className="type-meta">Client mark</span>
+            ) : (
+              <div className="w-10 h-10 bg-[color:var(--ink)] text-[color:var(--ink-on-dark)] border border-[color:var(--ink)] flex items-center justify-center">
+                <span className="num text-xs">{client.monogram ?? client.name.slice(0, 2)}</span>
+              </div>
+            )}
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              {client.tags.map((t) => (
+                <span key={t} className="num text-[10px] text-[color:var(--ink-muted)]">{t.toUpperCase()}</span>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </article>
     </AnimatedSection>
