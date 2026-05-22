@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -53,10 +54,10 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.45, ease: easeOutExpo }}
               className="mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none"
             >
-              <a href="/brief" className="btn-primary">
+              <Link href="/brief" className="btn-primary">
                 Book a discovery call
                 <Arrow />
-              </a>
+              </Link>
               <a href="#demo" className="btn-ghost">
                 Try the agent
               </a>
@@ -155,7 +156,7 @@ function WiringDiagram() {
       <path d="M 150 310 L 220 310 L 220 334" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
 
       {/* Footer label */}
-      <text x="40" y="420" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">FIG. 01 — END-TO-END BUILD</text>
+      <text x="40" y="420" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">FIG. 01 · END-TO-END BUILD</text>
       <text x="40" y="436" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">ONE TEAM · SITE + AGENT + SUPPORT</text>
     </svg>
   );

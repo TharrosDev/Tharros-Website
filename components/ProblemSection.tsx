@@ -19,7 +19,7 @@ const pains = [
     num: "03",
     when: "Hours per week",
     headline: "Admin that never ends.",
-    body: "Inquiry triage, intake forms, follow-up emails — the paperwork quietly eats your week.",
+    body: "Inquiry triage, intake forms, follow-up emails: the paperwork quietly eats your week.",
   },
 ];
 

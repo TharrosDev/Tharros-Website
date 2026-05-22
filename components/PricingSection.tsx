@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 
 const factors = [
@@ -62,7 +63,7 @@ export default function PricingSection() {
                 send a firm, no-obligation proposal scoped to your business.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                <a href="/brief" className="btn-primary">Book a discovery call</a>
+                <Link href="/brief" className="btn-primary">Book a discovery call</Link>
                 <a href="mailto:tharrosdev@gmail.com" className="btn-ghost">tharrosdev@gmail.com</a>
               </div>
             </div>

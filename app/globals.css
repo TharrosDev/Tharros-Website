@@ -162,6 +162,36 @@ body {
 }
 
 /* ============================================================
+   Focus — keyboard rings, never default browser outlines on cobalt
+   ============================================================ */
+
+*:focus { outline: none; }
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Buttons + links override: inline ring instead of outline-offset, snaps
+   tighter to the shape. */
+a:focus-visible,
+button:focus-visible,
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.primary-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* On dark surfaces, accent-on-dark reads better */
+.btn-ghost-on-dark:focus-visible,
+[class*="surface-dark"] a:focus-visible,
+[class*="surface-dark"] button:focus-visible {
+  outline-color: var(--accent-on-dark);
+}
+
+/* ============================================================
    Reduced motion — global killswitch
    ============================================================ */
 
@@ -344,22 +374,6 @@ body {
     .btn-primary, .btn-ghost { width: 100%; min-height: 52px; }
   }
 
-  /* Vertical rule — the spine of the page */
-  .spine {
-    position: relative;
-  }
-  .spine::before {
-    content: "";
-    position: absolute;
-    left: clamp(1.25rem, 4vw, 4.5rem);
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--rule);
-    pointer-events: none;
-  }
-  .spine-dark::before { background: var(--rule-on-dark); }
-
   /* Tabular metadata row */
   .meta-row {
     display: flex;
@@ -407,20 +421,6 @@ body {
     transform: translateZ(0);
     backface-visibility: hidden;
   }
-
-  /* Subtle ambient grain — adds material feel without decoration */
-  .grain {
-    position: relative;
-  }
-  .grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    mix-blend-mode: multiply;
-  }
 }
 
 /* ============================================================
@@ -429,13 +429,6 @@ body {
    ============================================================ */
 
 @layer utilities {
-  .clean-card {
-    background: var(--surface-dark-elevated);
-    border: 1px solid var(--rule-on-dark);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-  }
-
   .primary-button {
     display: inline-flex;
     align-items: center;
@@ -473,40 +466,7 @@ body {
   .section-padding { padding-block: var(--rhythm-default); }
   @media (min-width: 1920px) { .section-padding { padding-block: var(--rhythm-breath); } }
 
-  .max-w-ultra { max-width: 1480px; margin-inline: auto; }
-
-  /* Legacy decoration — neutralized. Kept as no-ops so existing JSX doesn't break. */
+  /* Legacy decoration — neutralized so unmigrated JSX still renders. */
   .industrial-grid { background-image: none; }
   .scanline { display: none; }
-
-  .accent-text {
-    color: var(--accent);
-    font-weight: 600;
-    letter-spacing: -0.005em;
-  }
-
-  .icon-container {
-    width: 44px;
-    height: 44px;
-    border-radius: 0.375rem;
-    background: var(--surface-elevated);
-    border: 1px solid var(--rule);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tag-pill {
-    font-family: var(--font-mono);
-    font-size: var(--type-meta);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.625rem;
-    border-radius: 0.25rem;
-    background: transparent;
-    border: 1px solid var(--rule);
-    color: var(--ink-muted);
-  }
-
-  .subtle-divider { height: 1px; background: var(--rule); }
 }

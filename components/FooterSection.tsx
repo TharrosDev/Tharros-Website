@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AnimatedSection from "./AnimatedSection";
 
@@ -30,9 +31,9 @@ export default function FooterSection() {
                 and walk you through pay-per-call vs the On-Call retainer. No obligation.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                <a href="/brief" onClick={handleScrollToTop} className="btn-primary">
+                <Link href="/brief" onClick={handleScrollToTop} className="btn-primary">
                   Book a discovery call
-                </a>
+                </Link>
                 <a href="mailto:tharrosdev@gmail.com" className="btn-ghost btn-ghost-on-dark">
                   tharrosdev@gmail.com
                 </a>
