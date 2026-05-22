@@ -37,8 +37,8 @@ export default function ProblemSection() {
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
           <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h2 className="type-display-2 max-w-[16ch]">
-              Ottawa businesses are <span className="text-[color:var(--ink-muted)]">bleeding time.</span>
+            <h2 className="type-display-2 max-w-[14ch]">
+              Ottawa businesses are bleeding <span className="text-[color:var(--accent)]">time.</span>
             </h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">

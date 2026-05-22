@@ -25,6 +25,9 @@ export default function NavBar() {
 
   useEffect(() => { setMounted(true); }, []);
 
+  const navOffset = () =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches ? 112 : 96;
+
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     if (href === "/" && isHomePage) {
       e.preventDefault();
@@ -36,7 +39,7 @@ export default function NavBar() {
       const id = href.replace("/#", "");
       const el = document.getElementById(id);
       if (el) {
-        const top = el.getBoundingClientRect().top + window.pageYOffset - 96;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - navOffset();
         window.scrollTo({ top, behavior: "smooth" });
         window.history.pushState(null, "", href);
       }
@@ -50,7 +53,7 @@ export default function NavBar() {
     setTimeout(() => {
       const el = document.getElementById(hash.replace("#", ""));
       if (el) {
-        const top = el.getBoundingClientRect().top + window.pageYOffset - 96;
+        const top = el.getBoundingClientRect().top + window.pageYOffset - navOffset();
         window.scrollTo({ top, behavior: "smooth" });
       }
     }, 150);

@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function HeroSection() {
+  const reduce = useReducedMotion();
+  const slide = (y: number) => (reduce ? { y: 0 } : { y });
   return (
     <section
       id="hero"
@@ -15,8 +17,8 @@ export default function HeroSection() {
         {/* Left: eyebrow + headline + CTAs */}
         <div className="col-span-12 lg:col-span-8 flex flex-col justify-between">
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={slide(12)}
+            animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: easeOutExpo }}
             className="flex items-center gap-4"
           >
@@ -27,8 +29,8 @@ export default function HeroSection() {
 
           <div className="mt-12 md:mt-16">
             <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={slide(16)}
+              animate={{ y: 0 }}
               transition={{ duration: 0.85, delay: 0.1, ease: easeOutExpo }}
               className="type-display-1 max-w-[18ch]"
             >
@@ -38,8 +40,8 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={slide(12)}
+              animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
               className="type-lead mt-8 md:mt-10 max-w-[52ch]"
             >
@@ -49,8 +51,8 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={slide(8)}
+              animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.45, ease: easeOutExpo }}
               className="mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none"
             >
@@ -62,34 +64,76 @@ export default function HeroSection() {
                 Try the agent
               </a>
             </motion.div>
+
+            {/* Mobile-only compact wiring diagram */}
+            <div className="lg:hidden mt-12 pt-8 border-t border-[color:var(--rule)]">
+              <WiringDiagramCompact />
+            </div>
           </div>
 
           {/* Bottom metadata strip */}
-          <motion.dl
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="meta-row mt-16 md:mt-24 pt-6 border-t border-[color:var(--rule)]"
-          >
+          <dl className="meta-row mt-16 md:mt-24 pt-6 border-t border-[color:var(--rule)]">
             <div><dt>Slogan</dt> <dd>Keep it Local, Keep it Canadian</dd></div>
             <div><dt>Service area</dt> <dd>Ottawa · Kanata · Nepean · Orleans · Gatineau</dd></div>
             <div><dt>Contact</dt> <dd>tharrosdev@gmail.com</dd></div>
-          </motion.dl>
+          </dl>
         </div>
 
-        {/* Right: wiring diagram */}
+        {/* Right: wiring diagram (desktop) */}
         <div className="hidden lg:flex col-span-4 items-center justify-center pl-8 border-l border-[color:var(--rule)]">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            className="w-full"
-          >
+          <div className="w-full">
             <WiringDiagram />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function WiringDiagramCompact() {
+  const nodes = [
+    { label: "Visitor", sub: "Asks" },
+    { label: "Site",    sub: "We build" },
+    { label: "Agent",   sub: "We embed", accent: true },
+    { label: "You",     sub: "Routed in" },
+  ];
+  return (
+    <div>
+      <div className="num text-[10px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
+      <svg viewBox="0 0 360 70" className="diagram w-full h-auto" fill="none" aria-hidden="true">
+        {nodes.map((n, i) => {
+          const x = 4 + i * 92;
+          return (
+            <g key={i} className={n.accent ? "accent" : ""}>
+              <rect
+                x={x}
+                y={6}
+                width={80}
+                height={42}
+                stroke="currentColor"
+                strokeWidth={n.accent ? 1.5 : 1}
+                fill={n.accent ? "currentColor" : "none"}
+                fillOpacity={n.accent ? 0.08 : 0}
+              />
+              <text x={x + 8} y={24} fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.2" fill="currentColor" opacity="0.55">
+                {String(i + 1).padStart(2, "0")}
+              </text>
+              <text x={x + 8} y={38} fontFamily="var(--font-sans)" fontSize="11" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+                {n.label}
+              </text>
+              {i < nodes.length - 1 && (
+                <line x1={x + 80} y1={27} x2={x + 92} y2={27} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
+              )}
+            </g>
+          );
+        })}
+      </svg>
+      <div className="meta-row mt-3">
+        {nodes.map((n) => (
+          <span key={n.label} className="num text-[9px]">{n.label.toUpperCase()} · {n.sub}</span>
+        ))}
+      </div>
+    </div>
   );
 }
 

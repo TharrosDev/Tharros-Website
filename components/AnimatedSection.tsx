@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 
 type Variant = "fade-up" | "fade-left" | "fade-right" | "scale-in" | "fade";
 
-const variants: Record<Variant, { hidden: any; visible: any }> = {
+const variants: Record<Variant, Variants> = {
   "fade-up": {
     hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0 },
@@ -51,7 +51,7 @@ export default function AnimatedSection({
       transition={{
         duration: 0.7,
         delay: delay,
-        ease: [0.16, 1, 0.3, 1], // More responsive, fluid easing
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
       style={{ willChange: "transform, opacity" }}
       className={className}

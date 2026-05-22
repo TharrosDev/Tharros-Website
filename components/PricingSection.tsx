@@ -24,7 +24,7 @@ export default function PricingSection() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 max-w-[18ch]">
-              Pricing as tailored <span className="text-[color:var(--ink-muted)]">as the work.</span>
+              Pricing is shaped by the work, not a list.
             </h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
