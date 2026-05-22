@@ -33,42 +33,54 @@ Always run `npm run build` before declaring work done. The build includes TypeSc
 
 ## Design system
 
-**Philosophy:** Industrial Executive. High contrast, sharp corners, command-oriented. Avoid soft consumer-app UI.
+**Read [`DESIGN.md`](./DESIGN.md) first.** It's the canonical spec for the Field Engineer system. Quick summary:
+
+**Philosophy:** Field Engineer. Typographic + diagrammatic marketing surface that signals modern tech (Geist, schematic SVGs, cobalt) and grounded tradesperson (hairline rules, mono numerals, no decorative noise). Explicitly rejects the slate-on-sky AI-SaaS reflex.
 
 **Surfaces:**
-- Dark sections — `bg-slate-950`, white text, accent strip at top/bottom (`via-white/10`).
-- Light sections — `bg-white`, slate-900 text, slate-200 hairline dividers.
-- Both use `industrial-grid` and (on dark) optional `scanline` overlay.
+- Light sections (default): `bg-[color:var(--surface)]` (bone-warm `oklch(98% 0.004 80)`), ink text, hairline `--rule` dividers.
+- Dark sections (WhatWeBuilds, WhyTharros, footer, ChatDemo): `bg-[color:var(--surface-dark)]` (tool-steel graphite `oklch(20% 0.012 250)`), ink-on-dark text, `--rule-on-dark` dividers.
+- No grid overlays. No scanlines. No decorative blurs.
 
-**Tokens** (defined in `app/globals.css`, exposed via Tailwind 4 `@theme inline`):
+**Tokens** (defined in `app/globals.css`, OKLCH only, surfaced to Tailwind via `@theme inline`):
 
 | Token | Value | Use |
 |---|---|---|
-| `--color-bg` | `#020617` (slate-950) | Dark surface base |
-| `--color-bg-alt` | `#0f172a` (slate-900) | Secondary dark surface |
-| `--color-surface` | `#1e293b` (slate-800) | Card surface on dark |
-| `--color-text` | `#f8fafc` (slate-50) | Primary text on dark |
-| `--color-accent-3` | `#0ea5e9` (sky-500) | **Brand accent** — every primary action, every highlighted word |
-| `--color-accent-bright` | `#38bdf8` (sky-400) | Glow / hover variant |
+| `--surface` | `oklch(98% 0.004 80)` | Default page background |
+| `--surface-dark` | `oklch(20% 0.012 250)` | Dark sections |
+| `--ink` | `oklch(18% 0.02 250)` | Primary text on light |
+| `--ink-muted` | `oklch(50% 0.015 250)` | Body / secondary text |
+| `--ink-on-dark` | `oklch(96% 0.003 80)` | Primary text on dark |
+| `--rule` | `oklch(90% 0.005 250)` | Hairline divider |
+| `--accent` | `oklch(50% 0.20 260)` | **Cobalt** — the only saturated color |
+| `--accent-soft` | `oklch(95% 0.04 260)` | Wash (e.g. On-Call column) |
+| `--accent-on-dark` | `oklch(72% 0.18 260)` | Cobalt lifted for dark surfaces |
 
-`accent-3` is *the* brand color. Use it sparingly and intentionally — a single span of `text-accent-3` per heading, a single `primary-button`, a single underline. Sprinkling it everywhere kills its weight.
+Cobalt is the only pigment. ≤10% of any visible surface. Sprinkling kills the weight.
 
 **Typography:**
-- Inter, with display sizes from `text-3xl` (mobile h2) up to `text-[14rem]` (4xl monitors).
-- Headings: `tracking-tighter`, `font-bold`, with `<br className="hidden md:block">` for controlled line breaks.
-- Labels: `font-black uppercase tracking-[0.3em]` to `tracking-[0.4em]`. This is the "industrial executive" voice in CSS form — use it for chips, eyebrows, badges.
-- Body: `text-base` / `text-lg` / `text-xl` ladder with `leading-relaxed font-medium`.
+- Geist (display + body) and Geist Mono (numerals, metadata, eyebrows, diagram labels). No third family.
+- Type ladder lives in `globals.css` as `.type-display-1` ... `.type-meta` utility classes. Use them; do not hand-roll per-breakpoint font sizes.
+- Every meaningful number renders in Geist Mono with `tabular-nums` via the `.num` utility.
+
+**Spacing & structure:**
+- `.page-frame` — 12-col asymmetric container, left-set, `max-width: 1480px`.
+- `.rhythm-tight | .rhythm-default | .rhythm-breath` — three named vertical paddings via `clamp()`. Stop adding per-section `py-N md:py-M xl:py-O`.
+- `.eyebrow` + `§ 0X` mono numeral opens every section.
 
 **Components & wrappers:**
-- `AnimatedSection` for scroll-triggered fades and scale-ins.
-- `Magnetic` for cursor-pull on CTAs.
-- `clean-card` is a utility CSS class (`bg-slate-800` surface with rounded card).
-- `primary-button` is the accent-3 CTA button.
+- `.btn-primary` (cobalt) and `.btn-ghost` / `.btn-ghost-on-dark` are the only buttons. Min-height 48px.
+- `AnimatedSection` for scroll-triggered slide-up reveals. Respects `useReducedMotion`.
+- `<dl class="meta-row">` is the metadata-row pattern (mono `<dt>` faint + `<dd>` ink).
+- Diagrams are inline SVG; reference `.diagram` / `.diagram-dark` utility for theming.
+- No card pattern. No shadows. Surfaces are flat at rest.
+
+**Legacy aliases still in `globals.css`** (`.primary-button`, `.section-padding`, `.industrial-grid` no-op, `.scanline` no-op): kept only so the untouched `ChatDemoSection` and onboarding wizard still render. Do not use in new code.
 
 **Performance:**
 - All below-the-fold sections are `next/dynamic` with `SectionSkeleton` fallback.
 - `useIsMobile()` switches the chat demo to `MobileChatConsole` on touch devices.
-- Animations should use `will-change: transform` or `gpu-accelerated`. No animating box-shadow, no animating background-position on large surfaces.
+- Reveals slide-up only (no opacity dependency) so SSR'd content is always visible if JS is slow.
 
 ---
 
