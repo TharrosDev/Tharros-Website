@@ -38,7 +38,7 @@ export default function WhatWeBuildsSection() {
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">§ 03</span>
+            <span className="num text-xs text-[color:var(--ink-on-dark-muted)]">§ 03</span>
             <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
             <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Agents we build</span>
           </div>
@@ -75,7 +75,7 @@ export default function WhatWeBuildsSection() {
                   </p>
                   <div className="flex flex-wrap gap-x-5 gap-y-1">
                     {agent.examples.map((ex) => (
-                      <span key={ex} className="num text-[10px] text-[color:var(--ink-on-dark-muted)]">
+                      <span key={ex} className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
                         {ex.toUpperCase()}
                       </span>
                     ))}

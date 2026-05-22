@@ -116,7 +116,7 @@ export default function NavBar() {
                 onClick={(e) => handleLinkClick(e, link.href)}
                 className="group flex items-center gap-2 px-3 py-2 text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors"
               >
-                <span className="num text-[10px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
+                <span className="num text-[11px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
                 <span className="text-sm font-medium">{link.label}</span>
               </a>
             ))}

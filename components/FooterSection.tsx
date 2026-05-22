@@ -63,10 +63,10 @@ export default function FooterSection() {
         </AnimatedSection>
 
         <div className="border-t border-[color:var(--rule-on-dark)] pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <span className="num text-[10px] text-[color:var(--ink-on-dark-muted)]">
+          <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
             © {year} THARROS · OTTAWA · ALL RIGHTS RESERVED
           </span>
-          <span className="num text-[10px] text-[color:var(--ink-on-dark-muted)]">
+          <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
             KEEP IT LOCAL, KEEP IT CANADIAN
           </span>
         </div>

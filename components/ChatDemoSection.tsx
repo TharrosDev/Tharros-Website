@@ -258,9 +258,6 @@ export default function ChatDemoSection() {
       {/* Anchor for navigation */}
       <div id="demo" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
 
-      {/* Neural Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-white/5 blur-[120px] rounded-full pointer-events-none" style={{ animationDelay: '1s' }} />
 
       <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative flex flex-col items-center z-10">
 
@@ -271,7 +268,7 @@ export default function ChatDemoSection() {
 
             <h2 className="text-[2.4rem] leading-[1.05] sm:text-5xl md:text-8xl xl:text-9xl 3xl:text-[11rem] 4xl:text-[13rem] font-bold text-white mb-6 sm:mb-10 md:mb-12 3xl:mb-20 sm:leading-[1.1] tracking-tighter">
               An agent that <br />
-              <span className="text-slate-500">shows up.</span>
+              <span className="text-slate-300">shows up.</span>
             </h2>
 
             <p className="text-slate-200 text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl mb-10 sm:mb-16 3xl:mb-24 max-w-md sm:max-w-3xl 3xl:max-w-6xl mx-auto font-medium opacity-90">
@@ -323,9 +320,9 @@ export default function ChatDemoSection() {
                 <div className="space-y-4 3xl:space-y-8 hidden lg:block">
                   {VERIFICATION_BLOCKS.map((item) => (
                     <div key={item.title} className="flex flex-col gap-2 3xl:gap-4 p-5 3xl:p-10 rounded-[2rem] 3xl:rounded-[3rem] bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all duration-500 group">
-                      <span className="text-[9px] 3xl:text-xs font-black uppercase tracking-[0.3em] text-accent-3 opacity-50 group-hover:opacity-100 transition-opacity">{item.label}</span>
+                      <span className="text-[11px] 3xl:text-xs font-black uppercase tracking-[0.3em] text-accent-3 group-hover:text-accent-bright transition-colors">{item.label}</span>
                       <h4 className="text-sm 3xl:text-xl font-bold text-white uppercase tracking-tight">{item.title}</h4>
-                      <p className="text-xs 3xl:text-lg text-slate-400 leading-relaxed font-medium">{item.desc}</p>
+                      <p className="text-sm 3xl:text-lg text-slate-300 leading-relaxed font-medium">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -333,14 +330,10 @@ export default function ChatDemoSection() {
 
               {/* Right Column: Chat Console */}
               <div className="lg:col-span-7 xl:col-span-8 3xl:col-span-9 relative">
-                {/* Decorative Frame Elements (hidden on mobile to avoid clipping) */}
-                <div className="hidden lg:block absolute -top-12 -right-12 w-48 h-48 3xl:w-80 3xl:h-80 border-t-2 border-r-2 border-white/5 rounded-tr-[4rem] 3xl:rounded-tr-[8rem] pointer-events-none" />
-                <div className="hidden lg:block absolute -bottom-12 -left-12 w-48 h-48 3xl:w-80 3xl:h-80 border-b-2 border-l-2 border-white/5 rounded-bl-[4rem] 3xl:rounded-bl-[8rem] pointer-events-none" />
-
                 <div className="relative w-full">
-                  {/* Industrial Disclaimer */}
+                  {/* Live status */}
                   <div className="mb-4 sm:mb-6 3xl:mb-10 px-2 sm:px-4">
-                    <p className="text-[10px] 3xl:text-sm font-black text-white/30 uppercase tracking-[0.25em] flex items-center gap-2.5">
+                    <p className="text-[11px] 3xl:text-sm font-bold text-white/75 uppercase tracking-[0.25em] flex items-center gap-2.5">
                       <span className="relative flex w-1.5 h-1.5 3xl:w-3 3xl:h-3">
                         <span className="absolute inset-0 rounded-full bg-accent-3/60 animate-ping" />
                         <span className="relative w-1.5 h-1.5 3xl:w-3 3xl:h-3 rounded-full bg-accent-3" />
@@ -389,13 +382,13 @@ export default function ChatDemoSection() {
                             </div>
                             <div className="flex flex-col">
                               <h3 className="text-slate-950 font-bold text-base 3xl:text-4xl tracking-tighter leading-none mb-1.5 3xl:mb-3">Tharros AI Agent</h3>
-                              <span className="text-slate-400 text-[9px] 3xl:text-sm font-black uppercase tracking-[0.25em]">Online · Ottawa</span>
+                              <span className="text-slate-400 text-[11px] 3xl:text-sm font-black uppercase tracking-[0.25em]">Online · Ottawa</span>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-3 3xl:gap-6">
                             <div className="flex flex-col items-end gap-1.5 3xl:gap-3">
-                              <span className={`text-[8px] 3xl:text-xs font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
+                              <span className={`text-[10px] 3xl:text-xs font-black uppercase tracking-[0.25em] leading-none transition-colors duration-500 ${isLimitReached ? "text-red-500" : "text-slate-400"}`}>
                                 {isLimitReached ? "Limit Reached" : "Left"}
                               </span>
                               <div className="flex items-center gap-1 3xl:gap-2">
@@ -492,7 +485,7 @@ export default function ChatDemoSection() {
                               exit={{ opacity: 0, y: 5 }}
                               className="mb-5 3xl:mb-12"
                             >
-                              <p className="text-[9px] 3xl:text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-3 3xl:mb-6 px-1">Try asking</p>
+                              <p className="text-[11px] 3xl:text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-3 3xl:mb-6 px-1">Try asking</p>
                               <div className="flex overflow-x-auto no-scrollbar gap-2 3xl:gap-4 -mx-1 px-1 pb-1">
                                 {recommendedQuestions.map((q) => (
                                   <motion.button
@@ -589,7 +582,7 @@ const MessageItem = memo(({ msg }: { msg: LocalMessage }) => {
         >
           {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
         </div>
-        <span className="text-[9px] 3xl:text-sm font-bold mt-1.5 3xl:mt-3 px-2 uppercase tracking-[0.2em] text-slate-400">
+        <span className="text-[11px] 3xl:text-sm font-bold mt-1.5 3xl:mt-3 px-2 uppercase tracking-[0.2em] text-slate-400">
           {msg.time}
         </span>
       </div>
@@ -617,7 +610,7 @@ const TypingIndicator = memo(() => (
           />
         ))}
       </div>
-      <span className="text-[9px] 3xl:text-sm font-black text-slate-400 uppercase tracking-[0.25em]">Thinking</span>
+      <span className="text-[11px] 3xl:text-sm font-black text-slate-400 uppercase tracking-[0.25em]">Thinking</span>
     </div>
   </motion.div>
 ));

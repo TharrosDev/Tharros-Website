@@ -84,7 +84,7 @@ function ClientsHero() {
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ CL</span>
+            <span className="num text-xs text-[color:var(--ink-faint)]">§ CL</span>
             <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
             <span className="type-meta-strong">Clients</span>
           </div>
@@ -144,10 +144,10 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
           >
             <ClientPreview src={client.screenshot} alt={`${client.name}: live site preview`} fallbackUrl={client.url} />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[color:var(--surface-dark)]/85 to-transparent p-5 md:p-7 flex items-end justify-between gap-4">
-              <span className="num text-[10px] text-[color:var(--ink-on-dark)]">
+              <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
                 {client.url.replace(/^https?:\/\//, "").toUpperCase()}
               </span>
-              <span className="num text-[10px] text-[color:var(--accent-on-dark)] flex items-center gap-2">
+              <span className="num text-[11px] text-[color:var(--accent-on-dark)] flex items-center gap-2">
                 Visit
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                   <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
@@ -191,7 +191,7 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
             )}
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               {client.tags.map((t) => (
-                <span key={t} className="num text-[10px] text-[color:var(--ink-muted)]">{t.toUpperCase()}</span>
+                <span key={t} className="num text-[11px] text-[color:var(--ink-muted)]">{t.toUpperCase()}</span>
               ))}
             </div>
           </div>

@@ -20,8 +20,8 @@
      ink-on-dark-muted (72%) → ~7.8:1 on graphite
      ink-on-dark-faint (64%) → ~4.6:1 on graphite (passes AA body) */
   --ink:           oklch(18% 0.02 250);
-  --ink-muted:     oklch(45% 0.022 250);
-  --ink-faint:     oklch(55% 0.022 250);
+  --ink-muted:     oklch(42% 0.024 250);
+  --ink-faint:     oklch(48% 0.025 250);
   --ink-on-dark:        oklch(96% 0.003 80);
   --ink-on-dark-muted:  oklch(72% 0.008 250);
   --ink-on-dark-faint:  oklch(64% 0.014 250);
@@ -52,9 +52,9 @@
   --rhythm-breath:  clamp(6rem, 12vw, 14rem);
 
   /* — Type scale (1.33 ratio, clamp() fluid) —— */
-  --type-meta:      0.6875rem;                                     /* 11px static, mono */
-  --type-body:      clamp(1rem, 0.95rem + 0.25vw, 1.125rem);       /* 16→18 */
-  --type-lead:      clamp(1.125rem, 1rem + 0.6vw, 1.5rem);         /* 18→24 */
+  --type-meta:      0.75rem;                                       /* 12px static, mono */
+  --type-body:      clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);     /* 17→19 */
+  --type-lead:      clamp(1.1875rem, 1.0625rem + 0.6vw, 1.625rem); /* 19→26 */
   --type-display-3: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);       /* 28→44 */
   --type-display-2: clamp(2.75rem, 2.1rem + 3.2vw, 4.75rem);       /* 44→76 */
   --type-display-1: clamp(3.75rem, 2.6rem + 5.8vw, 8.5rem);        /* 60→136 */
