@@ -144,7 +144,7 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={client.screenshot}
-              alt={`${client.name} — live site`}
+              alt={`${client.name}: live site preview`}
               className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
               loading="lazy"
             />
