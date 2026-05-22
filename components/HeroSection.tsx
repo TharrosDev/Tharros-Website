@@ -62,6 +62,11 @@ export default function HeroSection() {
                 Try the agent
               </a>
             </motion.div>
+
+            {/* Mobile-only compact wiring diagram */}
+            <div className="lg:hidden mt-12 pt-8 border-t border-[color:var(--rule)]">
+              <WiringDiagramCompact />
+            </div>
           </div>
 
           {/* Bottom metadata strip */}
@@ -80,6 +85,53 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function WiringDiagramCompact() {
+  const nodes = [
+    { label: "Visitor", sub: "Asks" },
+    { label: "Site",    sub: "We build" },
+    { label: "Agent",   sub: "We embed", accent: true },
+    { label: "You",     sub: "Routed in" },
+  ];
+  return (
+    <div>
+      <div className="num text-[10px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
+      <svg viewBox="0 0 360 70" className="diagram w-full h-auto" fill="none" aria-hidden="true">
+        {nodes.map((n, i) => {
+          const x = 4 + i * 92;
+          return (
+            <g key={i} className={n.accent ? "accent" : ""}>
+              <rect
+                x={x}
+                y={6}
+                width={80}
+                height={42}
+                stroke="currentColor"
+                strokeWidth={n.accent ? 1.5 : 1}
+                fill={n.accent ? "currentColor" : "none"}
+                fillOpacity={n.accent ? 0.08 : 0}
+              />
+              <text x={x + 8} y={24} fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.2" fill="currentColor" opacity="0.55">
+                {String(i + 1).padStart(2, "0")}
+              </text>
+              <text x={x + 8} y={38} fontFamily="var(--font-sans)" fontSize="11" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+                {n.label}
+              </text>
+              {i < nodes.length - 1 && (
+                <line x1={x + 80} y1={27} x2={x + 92} y2={27} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
+              )}
+            </g>
+          );
+        })}
+      </svg>
+      <div className="meta-row mt-3">
+        {nodes.map((n) => (
+          <span key={n.label} className="num text-[9px]">{n.label.toUpperCase()} · {n.sub}</span>
+        ))}
+      </div>
+    </div>
   );
 }
 
