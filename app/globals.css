@@ -1,400 +1,512 @@
 @import "tailwindcss";
 
+/* ============================================================
+   FIELD ENGINEER — Tharros design tokens
+   OKLCH palette, real type scale, named spacing rhythm.
+   ============================================================ */
+
 :root {
-  --color-bg:        #020617; /* Deep slate-950 */
-  --color-bg-alt:    #0f172a; /* slate-900 */
-  --color-surface:   #1e293b; /* slate-800 */
-  --color-surface-2: #334155; /* slate-700 */
-  --color-text:      #f8fafc; /* slate-50 */
-  --color-subdued:   #94a3b8; /* slate-400 */
-  --color-muted:     #475569; /* slate-600 */
-  --color-border:    rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.15);
+  /* — Surfaces ————————————————————————————————— */
+  --surface:          oklch(98% 0.004 80);    /* bone, warm tint */
+  --surface-elevated: oklch(99.2% 0.003 80);  /* card / inset above surface */
+  --surface-dark:     oklch(20% 0.012 250);   /* tool-steel graphite (dark sections) */
+  --surface-dark-elevated: oklch(24% 0.014 250);
 
-  --color-accent:    #ffffff;
-  --color-accent-2:  #e2e8f0;
-  --color-accent-3:  #0ea5e9; /* Sky-500 */
-  --color-accent-bright: #38bdf8;
+  /* — Ink ————————————————————————————————————— */
+  --ink:           oklch(18% 0.02 250);   /* primary text on light */
+  --ink-muted:     oklch(50% 0.015 250);  /* secondary text on light */
+  --ink-faint:     oklch(72% 0.01 250);   /* tertiary, captions */
+  --ink-on-dark:        oklch(96% 0.003 80);
+  --ink-on-dark-muted:  oklch(72% 0.008 250);
+  --ink-on-dark-faint:  oklch(55% 0.012 250);
 
-  /* Onboarding tokens (used by components/onboarding/onboarding.css). */
-  --color-danger:    #dc2626;                    /* red-600, used by admin bar */
+  /* — Rules ————————————————————————————————————— */
+  --rule:        oklch(90% 0.005 250);
+  --rule-strong: oklch(82% 0.008 250);
+  --rule-on-dark:        oklch(30% 0.012 250);
+  --rule-on-dark-strong: oklch(38% 0.014 250);
+
+  /* — Accent (committed cobalt) ——————————————— */
+  --accent:        oklch(50% 0.20 260);
+  --accent-strong: oklch(42% 0.22 260);
+  --accent-soft:   oklch(95% 0.04 260);
+  --accent-on-dark: oklch(72% 0.18 260);
+
+  /* — Danger (admin only) ——————————————————— */
+  --color-danger: oklch(58% 0.20 27);
+
+  /* — Motion ————————————————————————————————————— */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
   --ease-industrial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* — Spacing rhythm —————————————————————————— */
+  --rhythm-tight:   clamp(2.5rem, 4vw, 4rem);
+  --rhythm-default: clamp(4rem, 8vw, 8rem);
+  --rhythm-breath:  clamp(6rem, 12vw, 14rem);
+
+  /* — Type scale (1.33 ratio, clamp() fluid) —— */
+  --type-meta:      0.6875rem;                                     /* 11px static, mono */
+  --type-body:      clamp(1rem, 0.95rem + 0.25vw, 1.125rem);       /* 16→18 */
+  --type-lead:      clamp(1.125rem, 1rem + 0.6vw, 1.5rem);         /* 18→24 */
+  --type-display-3: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);       /* 28→44 */
+  --type-display-2: clamp(2.75rem, 2.1rem + 3.2vw, 4.75rem);       /* 44→76 */
+  --type-display-1: clamp(3.75rem, 2.6rem + 5.8vw, 8.5rem);        /* 60→136 */
+
+  /* — Legacy aliases (kept so unmigrated components still build) — */
+  --color-bg:        var(--surface-dark);
+  --color-bg-alt:    var(--surface-dark-elevated);
+  --color-surface:   var(--surface-dark-elevated);
+  --color-surface-2: oklch(28% 0.014 250);
+  --color-text:      var(--ink-on-dark);
+  --color-subdued:   var(--ink-on-dark-muted);
+  --color-muted:     var(--ink-on-dark-faint);
+  --color-border:        var(--rule-on-dark);
+  --color-border-hover:  var(--rule-on-dark-strong);
+  --color-accent:    var(--ink-on-dark);
+  --color-accent-2:  var(--ink-on-dark-muted);
+  --color-accent-3:  var(--accent);
+  --color-accent-bright: var(--accent-on-dark);
 }
 
 @theme inline {
+  /* Surfaces */
+  --color-surface:          var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-dark:     var(--surface-dark);
+  --color-surface-dark-elevated: var(--surface-dark-elevated);
+
+  /* Ink */
+  --color-ink:        var(--ink);
+  --color-ink-muted:  var(--ink-muted);
+  --color-ink-faint:  var(--ink-faint);
+  --color-ink-on-dark:       var(--ink-on-dark);
+  --color-ink-on-dark-muted: var(--ink-on-dark-muted);
+
+  /* Rules */
+  --color-rule:        var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rule-on-dark: var(--rule-on-dark);
+  --color-rule-on-dark-strong: var(--rule-on-dark-strong);
+
+  /* Accent */
+  --color-accent:        var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft:   var(--accent-soft);
+  --color-accent-on-dark: var(--accent-on-dark);
+
+  /* Legacy aliases (still surfaced to Tailwind) */
   --color-bg:        var(--color-bg);
   --color-bg-alt:    var(--color-bg-alt);
-  --color-surface:   var(--color-surface);
-  --color-surface-2: var(--color-surface-2);
   --color-text:      var(--color-text);
   --color-subdued:   var(--color-subdued);
-  --color-muted:     var(--color-muted);
-  --color-border:    var(--color-border);
-  --color-border-hover: var(--color-border-hover);
-
-  --color-accent:    var(--color-accent);
-  --color-accent-2:  var(--color-accent-2);
-  --color-accent-3:  var(--color-accent-3);
-  --color-accent-bright: var(--color-accent-bright);
+  --color-accent-3:  var(--accent);
+  --color-accent-bright: var(--accent-on-dark);
   --color-danger:    var(--color-danger);
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-/* ── Reset ────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+/* ============================================================
+   Reset + base
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 96px;
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--color-bg);
+  background-color: var(--surface);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 768px) {
-  html {
-    scroll-padding-top: 100px;
-  }
+  html { scroll-padding-top: 112px; }
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--surface);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-size: var(--type-body);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   max-width: 100vw;
   position: relative;
   width: 100%;
-  line-height: 1.6;
+  font-feature-settings: "ss01", "cv11";
 }
 
-/* Make all interactive elements meet 44px minimum touch target on mobile */
 @media (max-width: 768px) and (pointer: coarse) {
-  button,
-  a[href],
-  [role="button"] {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  input,
-  textarea,
-  select {
-    font-size: 16px; /* Prevent iOS zoom on focus */
-  }
+  input, textarea, select { font-size: 16px; }
 }
 
-/* ── Custom Scrollbar ─────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface);
-  border-radius: 10px;
+  background: var(--rule-strong);
+  border-radius: 6px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted);
-}
+::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
 
-/* ── Clean Card (Industrial Upgrade) ──────────────────── */
-.clean-card {
-  background: var(--color-surface); /* solid slate-800 or slate-900 */
-  border: 1px solid var(--color-border);
-  border-radius: 1.25rem;
-  padding: 1.5rem;
-  transition: border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (min-width: 640px) {
-  .clean-card {
-    border-radius: 1.5rem;
-    padding: 1.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .clean-card {
-    border-radius: 2rem;
-    padding: 2.5rem;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .clean-card:hover {
-    border-color: var(--color-accent-3);
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5),
-                0 0 40px -10px rgba(14, 165, 233, 0.2);
-  }
-}
-
-/* ── Accent Text ──────────────────────────────────────── */
-.accent-text {
-  color: var(--color-accent-3);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-/* ── Primary Button (Industrial High-Contrast) ───────── */
-.primary-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-accent);
-  color: #020617;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.75rem;
-  padding: 1rem 1.5rem;
-  border-radius: 1rem;
-  min-height: 48px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-              color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.1);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-@media (min-width: 768px) {
-  .primary-button {
-    padding: 1.25rem 2.5rem;
-    border-radius: 1.25rem;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .primary-button:hover {
-    background: var(--color-accent-3);
-    color: #ffffff;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.4);
-  }
-}
-
-.primary-button:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 640px) {
-  .primary-button {
-    width: 100%;
-    padding: 1.125rem 1.5rem;
-    min-height: 52px;
-  }
-}
-
-/* ── Section Label ────────────────────────────────────── */
-.section-label {
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--color-accent-3);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-
-/* ── Icon Container ───────────────────────────────────── */
-.icon-container {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.clean-card:hover .icon-container {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-}
-
-/* ── Tag Pill ─────────────────────────────────────────── */
-.tag-pill {
-  font-size: 0.75rem;
-  padding: 0.3rem 0.85rem;
-  border-radius: 9999px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-subdued);
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-.tag-pill:hover {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: var(--color-accent-3);
-}
-
-/* ── Keyframes ────────────────────────────────────────── */
-@keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-/* ── Divider ──────────────────────────────────────────── */
-.subtle-divider {
-  height: 1px;
-  background: var(--color-border);
-}
-
-/* ── Selection ────────────────────────────────────────── */
 ::selection {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-text);
+  background: var(--accent-soft);
+  color: var(--ink);
 }
 
-/* ── Industrial Styles & Performance ─────────────────── */
+/* ============================================================
+   Reduced motion — global killswitch
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Type utilities
+   ============================================================ */
+
 @layer utilities {
-  .scanline {
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink-muted);
+  }
+  .type-meta-strong {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .type-body {
+    font-size: var(--type-body);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .type-lead {
+    font-size: var(--type-lead);
+    line-height: 1.45;
+    color: var(--ink-muted);
+    font-weight: 400;
+    max-width: 62ch;
+  }
+  .type-display-3 {
+    font-size: var(--type-display-3);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .type-display-2 {
+    font-size: var(--type-display-2);
+    line-height: 1.0;
+    letter-spacing: -0.028em;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .type-display-1 {
+    font-size: var(--type-display-1);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ============================================================
+   Structural utilities (Field Engineer)
+   ============================================================ */
+
+@layer utilities {
+  /* Page rhythm */
+  .rhythm-tight   { padding-block: var(--rhythm-tight); }
+  .rhythm-default { padding-block: var(--rhythm-default); }
+  .rhythm-breath  { padding-block: var(--rhythm-breath); }
+
+  /* Container — asymmetric, left-set with breathing right margin */
+  .page-frame {
     width: 100%;
-    height: 100px;
-    z-index: 1;
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(59, 130, 246, 0.02) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    opacity: 0.2;
-    position: absolute;
-    top: -100px;
-    left: 0;
-    /* animation: scanline 10s linear infinite; (Disabled for performance) */
-    pointer-events: none;
+    max-width: 1480px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 4.5rem);
   }
 
-  .industrial-grid {
-    background-image:
-      linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-    background-size: 24px 24px;
+  /* Hairline rules */
+  .rule-h { height: 1px; background: var(--rule); width: 100%; }
+  .rule-h-strong { height: 1px; background: var(--rule-strong); width: 100%; }
+  .rule-h-dark { height: 1px; background: var(--rule-on-dark); width: 100%; }
+
+  /* Section eyebrow — mono label that sits in left margin */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .eyebrow-on-dark { color: var(--ink-on-dark-muted); }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.45;
   }
 
-  @media (min-width: 768px) {
-    .industrial-grid {
-      background-size: 40px 40px;
+  /* Primary button — Field Engineer (cobalt, square corners, decisive) */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    background: var(--accent);
+    color: var(--ink-on-dark);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: -0.005em;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.375rem;
+    min-height: 48px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s var(--ease-out-quart),
+                transform 0.25s var(--ease-out-quart);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
     }
   }
+  .btn-primary:active { transform: translateY(0); }
 
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
+  /* Ghost button — for secondary actions */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 0.875rem 1.25rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 0.375rem;
+    min-height: 48px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease-out-quart),
+                color 0.2s var(--ease-out-quart);
+  }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-ghost-on-dark {
+    color: var(--ink-on-dark);
+    border-color: var(--rule-on-dark-strong);
+  }
+  .btn-ghost-on-dark:hover {
+    border-color: var(--ink-on-dark);
+    color: var(--ink-on-dark);
   }
 
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
+  @media (max-width: 640px) {
+    .btn-primary, .btn-ghost { width: 100%; min-height: 52px; }
   }
 
-  .tap-target {
-    min-height: 44px;
-    min-width: 44px;
+  /* Vertical rule — the spine of the page */
+  .spine {
+    position: relative;
   }
+  .spine::before {
+    content: "";
+    position: absolute;
+    left: clamp(1.25rem, 4vw, 4.5rem);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+    pointer-events: none;
+  }
+  .spine-dark::before { background: var(--rule-on-dark); }
 
+  /* Tabular metadata row */
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .meta-row dt { color: var(--ink-faint); margin-right: 0.5rem; }
+  .meta-row dd { color: var(--ink); font-weight: 500; display: inline; }
+
+  /* Diagram surface — for inline SVG schematics */
+  .diagram {
+    width: 100%;
+    height: auto;
+    color: var(--ink);
+    stroke: currentColor;
+  }
+  .diagram .accent { color: var(--accent); }
+  .diagram-dark { color: var(--ink-on-dark); }
+  .diagram-dark .accent { color: var(--accent-on-dark); }
+}
+
+/* ============================================================
+   Generic helpers
+   ============================================================ */
+
+@layer utilities {
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-top    { padding-top:    env(safe-area-inset-top); }
+  .tap-target  { min-height: 44px; min-width: 44px; }
   .content-visibility-auto {
     content-visibility: auto;
     contain-intrinsic-size: auto 500px;
   }
-
-  .section-padding {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
-  @media (min-width: 640px) {
-    .section-padding {
-      padding-top: 5rem;
-      padding-bottom: 5rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .section-padding {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .section-padding {
-      padding-top: 10rem;
-      padding-bottom: 10rem;
-    }
-  }
-
-  @media (min-width: 1920px) {
-    .section-padding {
-      padding-top: 12rem;
-      padding-bottom: 12rem;
-    }
-  }
-
-  @media (min-width: 2560px) {
-    .section-padding {
-      padding-top: 16rem;
-      padding-bottom: 16rem;
-    }
-  }
-
-  .max-w-ultra {
-    max-width: 160rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .ultra-grid {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 2rem;
-  }
-
-  @media (min-width: 1920px) {
-    .ultra-grid-cols-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-    .ultra-grid-cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 2560px) {
-    .ultra-grid-cols-5 {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-
   .gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
   }
 
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  /* Subtle ambient grain — adds material feel without decoration */
+  .grain {
+    position: relative;
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
   }
 }
 
+/* ============================================================
+   LEGACY — kept temporarily so unmigrated components still render.
+   Will be deleted once every section is migrated.
+   ============================================================ */
+
+@layer utilities {
+  .clean-card {
+    background: var(--surface-dark-elevated);
+    border: 1px solid var(--rule-on-dark);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--ink-on-dark);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    font-size: 0.9375rem;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.375rem;
+    min-height: 48px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s var(--ease-out-quart),
+                transform 0.25s var(--ease-out-quart);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .primary-button:hover { background: var(--accent-strong); transform: translateY(-1px); }
+  .primary-button:active { transform: translateY(0); }
+  @media (max-width: 640px) {
+    .primary-button { width: 100%; min-height: 52px; }
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-padding { padding-block: var(--rhythm-default); }
+  @media (min-width: 1920px) { .section-padding { padding-block: var(--rhythm-breath); } }
+
+  .max-w-ultra { max-width: 1480px; margin-inline: auto; }
+
+  /* Legacy decoration — neutralized. Kept as no-ops so existing JSX doesn't break. */
+  .industrial-grid { background-image: none; }
+  .scanline { display: none; }
+
+  .accent-text {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  .icon-container {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.375rem;
+    background: var(--surface-elevated);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tag-pill {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.625rem;
+    border-radius: 0.25rem;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-muted);
+  }
+
+  .subtle-divider { height: 1px; background: var(--rule); }
+}

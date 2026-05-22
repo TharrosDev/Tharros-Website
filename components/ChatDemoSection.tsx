@@ -254,13 +254,9 @@ export default function ChatDemoSection() {
   }, [agentInstance, currentTask, isTyping]);
 
   return (
-    <section className="section-padding px-4 sm:px-5 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
+    <section className="section-padding px-4 sm:px-5 md:px-12 xl:px-20 relative overflow-hidden bg-[color:var(--surface-dark)]">
       {/* Anchor for navigation */}
       <div id="demo" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-
-      {/* Background Sophistication */}
-      <div className="scanline" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/40 -skew-x-12 translate-x-1/4 pointer-events-none" />
 
       {/* Neural Glows */}
       <div className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-accent-3/5 blur-[150px] rounded-full pointer-events-none" />

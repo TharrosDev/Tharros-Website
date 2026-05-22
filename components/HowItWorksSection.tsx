@@ -4,87 +4,76 @@ import AnimatedSection from "./AnimatedSection";
 
 const steps = [
   {
-    number: "01",
-    headline: "Discovery",
-    body: "We map your business, your biggest time drains, and where a modern site and an integrated agent have the most impact. Together we scope the build that fits.",
+    num: "01",
+    label: "Discovery",
+    duration: "Free, ~30 min",
+    body: "We map the business, the biggest time drains, and where a modern site plus an integrated agent have the most impact. Together we scope the build that fits.",
   },
   {
-    number: "02",
-    headline: "Build & Integrate",
-    body: "We modernize your website and, on Integrate and On-Call packages, embed an AI agent directly into it. You see progress as we go and sign off at each checkpoint.",
+    num: "02",
+    label: "Build & integrate",
+    duration: "Days to weeks",
+    body: "We modernize the website and, on Integrate and On-Call packages, embed an AI agent directly into it. You see progress and sign off at each checkpoint.",
   },
   {
-    number: "03",
-    headline: "Launch & Support",
-    body: "We publish, monitor, and stay reachable. Refresh and Integrate clients call us per job. On-Call clients have us on a monthly retainer for fixes, improvements, and unlimited new agents.",
+    num: "03",
+    label: "Launch & support",
+    duration: "Per call · or monthly",
+    body: "We publish, monitor, and stay reachable. Refresh and Integrate clients call per job. On-Call clients have us on a monthly retainer for fixes, improvements, and unlimited new agents.",
   },
 ];
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-14 sm:py-16 md:py-24 xl:py-32 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
-      <div id="process" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      {/* Background Sophistication */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
-      <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative">
+    <section id="process" className="rhythm-default bg-[color:var(--surface)]">
+      <div className="page-frame">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-12 sm:mb-16 md:mb-32 3xl:mb-48">
-
-            <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-slate-900 mb-6 sm:mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto md:leading-[1.2] tracking-tighter">
-              From first call to <br className="hidden md:block" />
-              <span className="text-accent-3">live and supported.</span>
-            </h2>
-            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-6 sm:mb-10 md:mb-12 3xl:mb-20 text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl font-medium opacity-80">
-              Three stages. Zero jargon. After launch, choose pay-per-call or the On-Call retainer.
-            </p>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ 04</span>
+            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
+            <span className="type-meta-strong">Process</span>
           </div>
         </AnimatedSection>
 
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+          <AnimatedSection className="col-span-12 lg:col-span-8">
+            <h2 className="type-display-2 max-w-[18ch]">
+              From first call to <span className="text-[color:var(--accent)]">live and supported.</span>
+            </h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+            <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
+              Three stages. Zero jargon. After launch, choose pay-per-call or the On-Call retainer.
+            </p>
+          </AnimatedSection>
+        </div>
+
         <div className="relative">
-          {/* Connecting line - desktop horizontal */}
-          <div className="hidden md:block absolute top-[50px] 3xl:top-[80px] left-[15%] right-[15%] h-[1px]">
-            <div className="w-full h-full bg-gradient-to-r from-transparent via-slate-200 to-transparent rounded-full" />
-          </div>
+          {/* Vertical pipeline rail */}
+          <div className="absolute left-[14px] md:left-[28px] top-2 bottom-2 w-px bg-[color:var(--rule-strong)]" aria-hidden="true" />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-8 lg:gap-10 3xl:gap-20">
+          <ol className="flex flex-col">
             {steps.map((step, i) => (
-              <AnimatedSection key={step.number} delay={i * 0.1}>
-                <div className="flex flex-col items-center text-center relative group">
-                  {/* Step circle */}
-                  <div className="relative mb-6 sm:mb-8 3xl:mb-16">
-                    <div className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] xl:w-[120px] xl:h-[120px] 3xl:w-[200px] 3xl:h-[200px] rounded-full bg-white border border-slate-200 flex items-center justify-center relative z-10 shadow-xl group-hover:border-accent-3 group-hover:shadow-[0_0_30px_rgba(14,165,233,0.2)] transition-all duration-700">
-                      <span className="text-slate-900 font-black text-3xl sm:text-3xl md:text-4xl xl:text-5xl 3xl:text-8xl tracking-tighter">
-                        {step.number}
-                      </span>
-                    </div>
-                    {/* Pulsing ring */}
-                    <div className="absolute inset-0 rounded-full bg-accent-3/5 animate-ping group-hover:bg-accent-3/10 transition-colors" />
-                  </div>
-
-                  {/* Content card */}
-                  <div className="bg-white border border-slate-200 p-5 sm:p-7 md:p-10 xl:p-12 3xl:p-24 w-full flex-1 rounded-2xl sm:rounded-3xl md:rounded-[3rem] 3xl:rounded-[5rem] shadow-xl transition-all duration-700 group-hover:border-accent-3/50">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl font-bold text-slate-900 mb-3 sm:mb-4 3xl:mb-10 tracking-tighter leading-tight group-hover:text-accent-3 transition-colors">
-                      {step.headline}
-                    </h3>
-                    <p className="text-slate-600 text-base sm:text-lg md:text-xl xl:text-2xl 3xl:text-4xl leading-relaxed font-medium group-hover:text-slate-900 transition-colors">{step.body}</p>
-
-                    <div className="mt-5 pt-5 sm:mt-6 sm:pt-6 3xl:mt-12 3xl:pt-12 border-t border-slate-200 flex justify-center">
-                      <div className="flex gap-1.5 3xl:gap-3">
-                        {[0, 1, 2].map((dot) => (
-                          <div key={dot} className={`w-1.5 h-1.5 3xl:w-3 3xl:h-3 rounded-full ${dot === i ? 'bg-accent-3' : 'bg-slate-300'}`} />
-                        ))}
-                      </div>
+              <AnimatedSection key={step.num} delay={i * 0.1}>
+                <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] last:border-b-0 items-start group">
+                  <div className="col-span-12 md:col-span-1 relative">
+                    <div className="w-7 h-7 md:w-14 md:h-14 -ml-[6px] md:-ml-[14px] flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--rule-strong)] group-hover:border-[color:var(--accent)] transition-colors">
+                      <span className="num text-xs md:text-sm text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">{step.num}</span>
                     </div>
                   </div>
-                </div>
+                  <div className="col-span-12 md:col-span-5 mt-4 md:mt-2">
+                    <h3 className="type-display-3">{step.label}</h3>
+                    <span className="type-meta block mt-3">{step.duration}</span>
+                  </div>
+                  <div className="col-span-12 md:col-span-6 mt-4 md:mt-2">
+                    <p className="type-body text-[color:var(--ink-muted)] max-w-[56ch]">{step.body}</p>
+                  </div>
+                </li>
               </AnimatedSection>
             ))}
-          </div>
+          </ol>
         </div>
       </div>
     </section>
-
   );
 }

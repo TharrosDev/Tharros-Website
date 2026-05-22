@@ -2,106 +2,88 @@ import AnimatedSection from "./AnimatedSection";
 
 const pillars = [
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
-        <path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2c0 7.3 8 11.8 8 11.8z" />
-        <circle cx="12" cy="10" r="3" />
-      </svg>
-    ),
-    headline: "Ottawa-local",
-    body: "We know Kanata trades companies and Centretown law offices. The site we build and the agent we embed are tuned to local context, local pricing questions, and the real shape of small business in this city.",
+    num: "01",
+    label: "Ottawa-local",
+    body: "We know Kanata trades companies and Centretown law offices. The site and the agent are tuned to local context, local pricing questions, and the real shape of small business in this city.",
   },
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-      </svg>
-    ),
-    headline: "One team, end-to-end",
-    body: "One team handles your website, your AI agent, and the integrations between them. We work across a diversified stack of tools and software — whatever fits the job — coordinated under a single point of contact. No handoffs, no finger-pointing between vendors.",
+    num: "02",
+    label: "One team, end-to-end",
+    body: "One team handles your website, your AI agent, and the integrations between them. We work across a diversified stack of tools, coordinated under a single point of contact. No handoffs, no finger-pointing between vendors.",
   },
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-3">
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-      </svg>
-    ),
-    headline: "A number you can call",
-    body: "Pick the On-Call retainer and we're on a flat monthly fee for fixes, improvements, and unlimited new agents. Skip the retainer and you pay per call, the way you'd call a plumber. Either way, you reach a person.",
+    num: "03",
+    label: "A number you can call",
+    body: "Pick the On-Call retainer and we're on a flat monthly fee for fixes, improvements, and unlimited new agents. Skip the retainer and pay per call. Either way, you reach a person.",
   },
 ];
 
 export default function WhyTharrosSection() {
   return (
-    <section className="section-padding px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
-      <div id="why" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-      {/* Background Sophistication */}
-      <div className="scanline" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-      <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative">
+    <section id="why" className="rhythm-default bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
+      <div className="page-frame">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-10 sm:mb-12 md:mb-16 3xl:mb-24">
-
-            <h2 className="text-[2.1rem] leading-[1.1] sm:text-5xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-center text-white mb-6 sm:mb-10 md:mb-12 3xl:mb-16 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto md:leading-[1.2] tracking-tighter">
-              Built for <br className="hidden md:block" />
-              <span className="text-accent-3">small business owners.</span>
-            </h2>
-            <p className="text-slate-300 text-center max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto mb-6 sm:mb-10 md:mb-12 3xl:mb-20 text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl font-medium opacity-80">
-              Keep it Local, Keep it Canadian. End-to-end web and AI, with a number you can actually call.
-            </p>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">§ 05</span>
+            <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
+            <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Why Tharros</span>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 md:gap-10 xl:gap-12 3xl:gap-20 mb-10 sm:mb-12 md:mb-16 3xl:mb-32">
-          {pillars.map((pillar, i) => (
-            <AnimatedSection key={pillar.headline} delay={i * 0.1}>
-              <div className="clean-card h-full flex flex-col gap-5 sm:gap-6 md:gap-8 3xl:gap-12 group shadow-2xl relative overflow-hidden 3xl:p-16 4xl:p-20">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="w-12 h-12 sm:w-14 sm:h-14 3xl:w-24 3xl:h-24 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-slate-950 transition-all duration-700">
-                  <span aria-hidden="true" className="scale-110 md:scale-125 3xl:scale-[2]">{pillar.icon}</span>
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+          <AnimatedSection className="col-span-12 lg:col-span-8">
+            <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">
+              Built for small <br className="hidden md:block" />
+              <span className="text-[color:var(--accent-on-dark)]">business owners.</span>
+            </h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+            <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">
+              Keep it Local, Keep it Canadian. End-to-end web and AI, with a number you can actually call.
+            </p>
+          </AnimatedSection>
+        </div>
+
+        <div className="border-t border-[color:var(--rule-on-dark)] mb-16 md:mb-24">
+          {pillars.map((p, i) => (
+            <AnimatedSection key={p.num} delay={i * 0.08}>
+              <div className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule-on-dark)] items-start">
+                <div className="col-span-12 md:col-span-1">
+                  <span className="num text-sm text-[color:var(--ink-on-dark-muted)]">{p.num}</span>
                 </div>
-                <div className="flex flex-col gap-3 sm:gap-4 3xl:gap-8">
-                  <h3 className="text-xl sm:text-2xl xl:text-3xl 3xl:text-5xl font-bold text-white tracking-tighter leading-tight group-hover:text-accent-3 transition-colors">{pillar.headline}</h3>
-                  <p className="text-slate-400 text-base sm:text-lg xl:text-xl 3xl:text-3xl leading-relaxed font-medium group-hover:text-slate-200 transition-colors">{pillar.body}</p>
-                </div>
+                <h3 className="col-span-12 md:col-span-4 type-display-3 text-[color:var(--ink-on-dark)] mt-3 md:mt-0">
+                  {p.label}
+                </h3>
+                <p className="col-span-12 md:col-span-7 type-body text-[color:var(--ink-on-dark-muted)] mt-3 md:mt-0 max-w-[60ch]">
+                  {p.body}
+                </p>
               </div>
             </AnimatedSection>
           ))}
         </div>
 
-        {/* Founder quote */}
-        <AnimatedSection variant="scale-in">
-          <div className="max-w-5xl md:max-w-6xl xl:max-w-[80rem] 3xl:max-w-[110rem] 4xl:max-w-[130rem] mx-auto">
-            <div className="bg-slate-900 border border-slate-800 hover:border-accent-3/50 rounded-2xl sm:rounded-[2rem] md:rounded-[3rem] 3xl:rounded-[5rem] px-5 py-8 sm:px-8 sm:py-10 md:px-20 md:py-12 3xl:px-32 3xl:py-24 text-center relative overflow-hidden group shadow-2xl hover:-translate-y-1 hover:scale-[1.01] transition-all duration-500">
-              {/* Subtle background pattern */}
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:32px_32px] 3xl:[background-size:64px_64px]" />
-
-              <div className="relative z-10">
-                <p className="text-white text-base leading-snug sm:text-lg md:text-xl xl:text-2xl 3xl:text-4xl 4xl:text-5xl md:leading-[1.2] mb-6 3xl:mb-12 font-bold tracking-tight md:tracking-tighter max-w-5xl 3xl:max-w-[90rem] mx-auto">
-                  &ldquo;Ottawa small businesses don&apos;t need another agency. They need
-                  one number to call when the site is broken, the
-                  <span className="text-accent-3"> agent needs tweaking</span>, or a new one needs to exist by Friday.&rdquo;
-                </p>
-
-                <div className="flex flex-col items-center justify-center gap-3 3xl:gap-6">
-                  <div className="w-11 h-11 sm:w-10 sm:h-10 3xl:w-20 3xl:h-20 rounded-full bg-white flex items-center justify-center text-slate-950 font-black text-base 3xl:text-3xl shadow-2xl transition-transform group-hover:scale-110">
-                    M
-                  </div>
-                  <div>
-                    <p className="text-white text-sm 3xl:text-2xl font-bold tracking-tight">
-                      Magnus Abdelnour
-                    </p>
-                    <p className="text-accent-3 text-[9px] sm:text-[8px] 3xl:text-xs font-black uppercase tracking-[0.3em] mt-0.5">Founder | Tharros</p>
-                  </div>
-                </div>
+        {/* Founder line — no portrait, treated as a quoted manifesto */}
+        <AnimatedSection delay={0.1}>
+          <figure className="grid grid-cols-12 gap-x-6">
+            <div className="col-span-12 md:col-span-2 flex md:flex-col items-center md:items-start gap-4 md:gap-2 mb-6 md:mb-0">
+              <div className="w-12 h-12 border border-[color:var(--rule-on-dark-strong)] flex items-center justify-center">
+                <span className="num text-base text-[color:var(--accent-on-dark)]">M</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="type-meta text-[color:var(--ink-on-dark)]">Magnus Abdelnour</span>
+                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Founder</span>
               </div>
             </div>
-          </div>
+            <blockquote className="col-span-12 md:col-span-10 md:pl-8 md:border-l md:border-[color:var(--rule-on-dark)]">
+              <p className="type-display-3 text-[color:var(--ink-on-dark)] max-w-[28ch]">
+                &ldquo;Ottawa small businesses don&apos;t need another agency. They need one number
+                to call when the site is broken, the <span className="text-[color:var(--accent-on-dark)]">agent needs tweaking</span>,
+                or a new one needs to exist by Friday.&rdquo;
+              </p>
+            </blockquote>
+          </figure>
         </AnimatedSection>
       </div>
     </section>
-
   );
 }
