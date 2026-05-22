@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function HeroSection() {
+  const reduce = useReducedMotion();
+  const slide = (y: number) => (reduce ? { y: 0 } : { y });
   return (
     <section
       id="hero"
@@ -15,7 +17,7 @@ export default function HeroSection() {
         {/* Left: eyebrow + headline + CTAs */}
         <div className="col-span-12 lg:col-span-8 flex flex-col justify-between">
           <motion.div
-            initial={{ y: 12 }}
+            initial={slide(12)}
             animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: easeOutExpo }}
             className="flex items-center gap-4"
@@ -27,7 +29,7 @@ export default function HeroSection() {
 
           <div className="mt-12 md:mt-16">
             <motion.h1
-              initial={{ y: 16 }}
+              initial={slide(16)}
               animate={{ y: 0 }}
               transition={{ duration: 0.85, delay: 0.1, ease: easeOutExpo }}
               className="type-display-1 max-w-[18ch]"
@@ -38,7 +40,7 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              initial={{ y: 12 }}
+              initial={slide(12)}
               animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
               className="type-lead mt-8 md:mt-10 max-w-[52ch]"
@@ -49,7 +51,7 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              initial={{ y: 8 }}
+              initial={slide(8)}
               animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.45, ease: easeOutExpo }}
               className="mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none"
