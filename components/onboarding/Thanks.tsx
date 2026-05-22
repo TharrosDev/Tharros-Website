@@ -48,10 +48,9 @@ export function Thanks({ state, onReset }: ThanksProps) {
       <div className="ob-main">
         <div className="ob-thanks">
           <div className="ob-thanks__seal">
-            <span className="pulse-ring" />
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2.2"
-                 strokeLinecap="round" strokeLinejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.75"
+                 strokeLinecap="square" strokeLinejoin="miter">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>

@@ -31,10 +31,6 @@ export function Review({ state, onEdit, onBack, onSubmit, submitting }: ReviewPr
 
       <div className="ob-main ob-step-enter">
         <div className="ob-card">
-          <span className="ob-card__corner tl" />
-          <span className="ob-card__corner tr" />
-          <span className="ob-card__corner bl" />
-          <span className="ob-card__corner br" />
 
           <div className="ob-card__head">
             <span className="ob-card__chip">Review</span>
@@ -62,7 +58,7 @@ export function Review({ state, onEdit, onBack, onSubmit, submitting }: ReviewPr
                       <ReviewRow
                         key={f.id}
                         label={f.label}
-                        value={empty ? "— not provided —" : renderValue(f, v)}
+                        value={empty ? "Not provided" : renderValue(f, v)}
                         empty={empty}
                       />
                     );
