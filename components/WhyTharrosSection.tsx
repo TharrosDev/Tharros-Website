@@ -20,7 +20,7 @@ const pillars = [
 
 export default function WhyTharrosSection() {
   return (
-    <section id="why" className="rhythm-default bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
+    <section id="why" className="rhythm-breath bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">
