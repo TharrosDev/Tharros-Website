@@ -5,6 +5,7 @@ import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
 import NavBar from "@/components/NavBar";
 import BackToTop from "@/components/BackToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
@@ -613,6 +614,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <ScrollProgress />
         <NavBar />
         <PageTransition>{children}</PageTransition>
         <BackToTop />

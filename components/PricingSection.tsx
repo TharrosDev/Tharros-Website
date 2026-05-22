@@ -11,7 +11,7 @@ const factors = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="rhythm-default bg-[color:var(--surface)]">
+    <section id="pricing" className="rhythm-tight bg-[color:var(--surface)]">
       <div className="page-frame">
         <AnimatedSection>
           <div className="flex items-center gap-4 mb-12 md:mb-16">

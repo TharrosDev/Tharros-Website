@@ -5,26 +5,11 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 type Variant = "fade-up" | "fade-left" | "fade-right" | "scale-in" | "fade";
 
 const variants: Record<Variant, Variants> = {
-  "fade-up": {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
-  },
-  "fade-left": {
-    hidden: { opacity: 0, x: -10 },
-    visible: { opacity: 1, x: 0 },
-  },
-  "fade-right": {
-    hidden: { opacity: 0, x: 10 },
-    visible: { opacity: 1, x: 0 },
-  },
-  "scale-in": {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1 },
-  },
-  fade: {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  },
+  "fade-up":    { hidden: { y: 12 },  visible: { y: 0 } },
+  "fade-left":  { hidden: { x: -12 }, visible: { x: 0 } },
+  "fade-right": { hidden: { x: 12 },  visible: { x: 0 } },
+  "scale-in":   { hidden: { scale: 0.98 }, visible: { scale: 1 } },
+  "fade":       { hidden: {}, visible: {} },
 };
 
 interface AnimatedSectionProps {
@@ -40,20 +25,20 @@ export default function AnimatedSection({
   delay = 0,
   variant = "fade-up",
 }: AnimatedSectionProps) {
-  const shouldReduceMotion = useReducedMotion();
-  
+  const reduce = useReducedMotion();
+
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.05 }}
-      variants={shouldReduceMotion ? variants.fade : variants[variant]}
+      variants={reduce ? variants.fade : variants[variant]}
       transition={{
-        duration: 0.7,
-        delay: delay,
+        duration: 0.6,
+        delay,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
-      style={{ willChange: "transform, opacity" }}
+      style={{ willChange: "transform" }}
       className={className}
     >
       {children}
