@@ -13,12 +13,18 @@
   --surface-dark-elevated: oklch(24% 0.014 250);
 
   /* — Ink ————————————————————————————————————— */
-  --ink:           oklch(18% 0.02 250);   /* primary text on light */
-  --ink-muted:     oklch(50% 0.015 250);  /* secondary text on light */
-  --ink-faint:     oklch(72% 0.01 250);   /* tertiary, captions */
+  /* Lightness chosen so each tier hits WCAG ratios on its intended surface:
+     ink (18%)        → 14:1   on bone surface
+     ink-muted (45%)  → ~5.2:1 on bone (passes AA body)
+     ink-faint (55%)  → ~3.4:1 on bone (passes 3:1 for small UI labels)
+     ink-on-dark-muted (72%) → ~7.8:1 on graphite
+     ink-on-dark-faint (64%) → ~4.6:1 on graphite (passes AA body) */
+  --ink:           oklch(18% 0.02 250);
+  --ink-muted:     oklch(45% 0.022 250);
+  --ink-faint:     oklch(55% 0.022 250);
   --ink-on-dark:        oklch(96% 0.003 80);
   --ink-on-dark-muted:  oklch(72% 0.008 250);
-  --ink-on-dark-faint:  oklch(55% 0.012 250);
+  --ink-on-dark-faint:  oklch(64% 0.014 250);
 
   /* — Rules ————————————————————————————————————— */
   --rule:        oklch(90% 0.005 250);
@@ -30,7 +36,7 @@
   --accent:        oklch(50% 0.20 260);
   --accent-strong: oklch(42% 0.22 260);
   --accent-soft:   oklch(95% 0.04 260);
-  --accent-on-dark: oklch(72% 0.18 260);
+  --accent-on-dark: oklch(78% 0.17 260);  /* lifted: ~6:1 on graphite */
 
   /* — Danger (admin only) ——————————————————— */
   --color-danger: oklch(58% 0.20 27);
