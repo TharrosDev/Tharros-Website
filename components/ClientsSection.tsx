@@ -1,26 +1,22 @@
 "use client";
 
-import { motion } from "motion/react";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
-
-type Size = "lg" | "md" | "sm";
 
 type Client = {
   id: string;
   name: string;
   location: string;
-  type: string;
+  buildType: string;
   lede: string;
   description: string;
-  link: string;
+  url: string;
   date: string;
-  size: Size;
-  tags: string[];
-  image?: string;
-  imageBg?: string;
+  logo?: string;
   monogram?: string;
-  metrics?: string[];
+  tags: string[];
+  // Live screenshot via thum.io (free, no key).
+  screenshot: string;
 };
 
 const clients: Client[] = [
@@ -28,308 +24,215 @@ const clients: Client[] = [
     id: "meridian",
     name: "The Meridian Society",
     location: "Ottawa, ON",
-    type: "Knowledge Q&A Agent",
+    buildType: "Knowledge Q&A Agent",
     lede: "An Ottawa member society with a busy community forum.",
     description:
-      "Tharros built and integrated a Q&A agent that answers member questions from the live forum.",
-    link: "https://meridiansociety.ca",
-    date: "MAY 2026",
-    image: "/meridian-logo.webp",
-    size: "lg",
+      "Tharros built and integrated a Q&A agent that answers member questions from the live forum. Live and on call for tuning and new agents.",
+    url: "https://meridiansociety.ca",
+    date: "May 2026",
+    logo: "/meridian-logo.webp",
     tags: ["Modernized Site", "Integrated Agent", "On-Call Support"],
-    metrics: ["24/7 coverage", "Live forum sync", "Tuned weekly"],
+    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://meridiansociety.ca",
   },
   {
     id: "advanta365",
     name: "ADVANTA365",
     location: "Ottawa, ON",
-    type: "Marketing Site Build",
+    buildType: "Marketing Site Build",
     lede: "An enterprise Microsoft 365 adoption and governance practice.",
     description:
       "Tharros built and shipped their marketing site, with ongoing on-call support.",
-    link: "https://advanta365.com",
-    date: "MAY 2026",
-    size: "sm",
+    url: "https://advanta365.com",
+    date: "May 2026",
     monogram: "A3",
     tags: ["Modernized Site", "On-Call Support"],
+    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://advanta365.com",
   },
   {
     id: "echo-five",
     name: "Echo Five Consulting",
     location: "Ottawa, ON",
-    type: "Positioning Site Build",
+    buildType: "Positioning Site Build",
     lede: "A public-sector change-management consultancy in Ottawa.",
     description:
       "Tharros built and shipped their consulting site, with ongoing on-call support.",
-    link: "https://echo-five-website.vercel.app",
-    date: "MAY 2026",
-    size: "md",
-    image: "/echo-five-logo.svg",
-    imageBg: "bg-slate-800 border border-white/10",
+    url: "https://echo-five-website.vercel.app",
+    date: "May 2026",
+    logo: "/echo-five-logo.svg",
     tags: ["Modernized Site", "On-Call Support"],
+    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://echo-five-website.vercel.app",
   },
 ];
 
-const sizeConfig: Record<Size, { gridPos: string; title: string; lede: string; logoBox: string; pad: string; descSize: string }> = {
-  lg: {
-    gridPos: "md:col-span-2 lg:col-span-4",
-    title: "text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem]",
-    lede: "text-xl md:text-2xl",
-    logoBox: "w-16 h-16 md:w-20 md:h-20",
-    pad: "p-7 md:p-9",
-    descSize: "text-sm md:text-base",
-  },
-  md: {
-    gridPos: "md:col-span-1 lg:col-span-3",
-    title: "text-2xl sm:text-3xl",
-    lede: "text-base md:text-lg",
-    logoBox: "w-14 h-14",
-    pad: "p-6 md:p-8",
-    descSize: "text-sm",
-  },
-  sm: {
-    gridPos: "md:col-span-1 lg:col-span-2",
-    title: "text-2xl",
-    lede: "text-sm md:text-base",
-    logoBox: "w-12 h-12",
-    pad: "p-6",
-    descSize: "text-xs md:text-sm",
-  },
-};
+const placeholders = [
+  { id: "p-01", note: "Engagement in build", stage: "Drafting" },
+];
 
 export default function ClientsSection() {
-  return <ClientsGallery />;
+  return (
+    <>
+      <ClientsHero />
+      <ClientsGallery />
+    </>
+  );
 }
 
-function ClientsGallery() {
+function ClientsHero() {
   return (
-    <section className="pt-28 md:pt-32 xl:pt-40 pb-12 md:pb-20 xl:pb-28 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 md:gap-6 auto-rows-[minmax(300px,auto)]">
-          {clients.map((client, idx) => (
-            <ClientCard
-              key={client.id}
-              client={client}
-              index={idx}
-              isPriority={idx === 0}
-            />
-          ))}
-          <PlaceholderCard index={clients.length} gridPos="md:col-span-2 lg:col-span-3" />
+    <section className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-12 md:pb-16">
+      <div className="page-frame">
+        <AnimatedSection>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ CL</span>
+            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
+            <span className="type-meta-strong">Clients</span>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-12 gap-x-6 gap-y-8 border-b border-[color:var(--rule)] pb-12 md:pb-16">
+          <AnimatedSection className="col-span-12 lg:col-span-8">
+            <h1 className="type-display-1 max-w-[16ch]">
+              Real-world <span className="text-[color:var(--accent)]">impact.</span>
+            </h1>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-4">
+            <p className="type-lead">
+              Live Tharros builds for Ottawa businesses. Modern site, embedded agent, and a number
+              they can call when things change.
+            </p>
+            <dl className="meta-row mt-8 pt-6 border-t border-[color:var(--rule)]">
+              <div><dt>Records</dt> <dd className="num">{String(clients.length).padStart(2, "0")}</dd></div>
+              <div><dt>In build</dt> <dd className="num">{String(placeholders.length).padStart(2, "0")}</dd></div>
+              <div><dt>Region</dt> <dd>Ottawa, ON</dd></div>
+            </dl>
+          </AnimatedSection>
         </div>
       </div>
     </section>
   );
 }
 
-function Monogram({ text, className }: { text: string; className: string }) {
+function ClientsGallery() {
   return (
-    <div className={`${className} shrink-0 relative rounded-xl overflow-hidden bg-slate-800 border border-white/10 flex items-center justify-center`}>
-      <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.25)_0%,transparent_70%)]" />
-      <span className="relative font-bold text-white tracking-tight text-base md:text-lg">{text}</span>
-    </div>
+    <section className="bg-[color:var(--surface)] pb-20 md:pb-32">
+      <div className="page-frame">
+        {clients.map((client, i) => (
+          <ClientRow key={client.id} client={client} index={i} />
+        ))}
+        {placeholders.map((p, i) => (
+          <PlaceholderRow key={p.id} index={clients.length + i} note={p.note} stage={p.stage} />
+        ))}
+      </div>
+    </section>
   );
 }
 
-function CardSignature({ id }: { id: string }) {
-  const wrap = "pointer-events-none absolute top-0 right-0 w-[200px] h-[110px] md:w-[260px] md:h-[130px] text-accent-3";
-
-  if (id === "meridian") {
-    // Sonar rings — knowledge agent listening across the forum
-    return (
-      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
-        <defs>
-          <radialGradient id="meridian-fade" cx="80%" cy="20%" r="70%">
-            <stop offset="0%" stopColor="currentColor" stopOpacity="0.32" />
-            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-          </radialGradient>
-          <mask id="meridian-mask">
-            <rect width="260" height="130" fill="url(#meridian-fade)" />
-          </mask>
-        </defs>
-        <g stroke="currentColor" strokeWidth="1" fill="none" mask="url(#meridian-mask)">
-          <circle cx="208" cy="26" r="16" />
-          <circle cx="208" cy="26" r="32" />
-          <circle cx="208" cy="26" r="50" />
-          <circle cx="208" cy="26" r="70" />
-          <circle cx="208" cy="26" r="92" />
-        </g>
-        <circle cx="208" cy="26" r="2.5" fill="currentColor" opacity="0.65" />
-      </svg>
-    );
-  }
-
-  if (id === "advanta365") {
-    // Governance grid — structured dot matrix
-    const cols = 13;
-    const rows = 6;
-    const dots = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const cx = 30 + c * 17;
-        const cy = 14 + r * 16;
-        const dist = Math.hypot(c - cols + 2, r);
-        const op = Math.max(0, 0.4 - dist * 0.05);
-        dots.push(<circle key={`${r}-${c}`} cx={cx} cy={cy} r="1.1" fill="currentColor" opacity={op} />);
-      }
-    }
-    return (
-      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
-        {dots}
-      </svg>
-    );
-  }
-
-  if (id === "echo-five") {
-    // Waveform — signal / echo
-    return (
-      <svg className={wrap} viewBox="0 0 260 130" fill="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="echo-fade" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
-            <stop offset="60%" stopColor="currentColor" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="currentColor" stopOpacity="0.45" />
-          </linearGradient>
-        </defs>
-        <g stroke="url(#echo-fade)" strokeWidth="1" fill="none">
-          <path d="M0 38 Q 32 18, 65 38 T 130 38 T 195 38 T 260 38" />
-          <path d="M0 56 Q 32 40, 65 56 T 130 56 T 195 56 T 260 56" opacity="0.7" />
-          <path d="M0 74 Q 32 60, 65 74 T 130 74 T 195 74 T 260 74" opacity="0.4" />
-        </g>
-      </svg>
-    );
-  }
-
-  return null;
-}
-
-function ClientCard({ client, index, isPriority }: { client: Client; index: number; isPriority?: boolean }) {
-  const cfg = sizeConfig[client.size];
-
+function ClientRow({ client, index }: { client: Client; index: number }) {
+  const isEven = index % 2 === 0;
   return (
-    <AnimatedSection variant="scale-in" delay={index * 0.08} className={`${cfg.gridPos} h-full`}>
-      <motion.div
-        whileHover={{ y: -4, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }}
-        className={`group relative h-full bg-slate-900 hover:bg-slate-900/90 border border-white/[0.06] hover:border-accent-3/30 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col shadow-[0_20px_60px_-25px_rgba(2,6,23,0.5)] gpu-accelerated ${cfg.pad}`}
-      >
-        <div className="absolute top-0 right-0 w-[280px] h-[280px] bg-accent-3/[0.05] blur-[100px] rounded-full pointer-events-none" />
-        <CardSignature id={client.id} />
+    <AnimatedSection delay={index * 0.08}>
+      <article className="grid grid-cols-12 gap-x-6 gap-y-8 py-16 md:py-24 border-b border-[color:var(--rule)]">
+        {/* Screenshot — large, dominant */}
+        <div className={`col-span-12 lg:col-span-8 ${isEven ? "lg:order-1" : "lg:order-2"}`}>
+          <a
+            href={client.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block relative aspect-[16/10] overflow-hidden bg-[color:var(--surface-elevated)] border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors"
+            aria-label={`Visit ${client.name}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={client.screenshot}
+              alt={`${client.name} — live site`}
+              className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[color:var(--surface-dark)]/85 to-transparent p-5 md:p-7 flex items-end justify-between gap-4">
+              <span className="num text-[10px] text-[color:var(--ink-on-dark)]">
+                {client.url.replace(/^https?:\/\//, "").toUpperCase()}
+              </span>
+              <span className="num text-[10px] text-[color:var(--accent-on-dark)] flex items-center gap-2">
+                Visit
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                  <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+                </svg>
+              </span>
+            </div>
+          </a>
+        </div>
 
-        <div className="relative z-10 flex flex-col h-full gap-5 md:gap-6">
-          {/* Identity */}
-          <div className="flex items-center gap-4">
-            {client.image ? (
-              <div className={`${cfg.logoBox} shrink-0 relative rounded-xl overflow-hidden ${client.imageBg ?? "bg-white"}`}>
-                <Image
-                  src={client.image}
-                  alt={client.name}
-                  fill
-                  sizes="(max-width: 768px) 64px, 80px"
-                  priority={isPriority}
-                  className="object-contain p-2"
-                />
+        {/* Metadata column */}
+        <div className={`col-span-12 lg:col-span-4 flex flex-col ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
+            <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
+            <span className="num text-xs text-[color:var(--accent)] flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
+              Live
+            </span>
+          </div>
+
+          <h2 className="type-display-3 mb-2">{client.name}</h2>
+          <span className="type-meta mb-5">{client.location}</span>
+
+          <p className="type-body text-[color:var(--ink)] mb-3 max-w-[44ch] font-medium">{client.lede}</p>
+          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[44ch]">{client.description}</p>
+
+          <dl className="meta-row border-t border-[color:var(--rule)] pt-5 flex-col md:flex-row">
+            <div><dt>Build</dt> <dd>{client.buildType}</dd></div>
+            <div><dt>Launched</dt> <dd>{client.date.toUpperCase()}</dd></div>
+          </dl>
+
+          <div className="mt-6 pt-5 border-t border-[color:var(--rule)] flex items-center gap-3">
+            {client.logo ? (
+              <div className="relative w-10 h-10 bg-[color:var(--surface-elevated)] border border-[color:var(--rule)]">
+                <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
               </div>
-            ) : client.monogram ? (
-              <Monogram text={client.monogram} className={cfg.logoBox} />
-            ) : null}
-            <div className="flex flex-col gap-1 min-w-0">
-              <h2 className={`${cfg.title} font-bold text-white tracking-[-0.02em] leading-[1.02] break-words`}>
-                {client.name}
-              </h2>
-              <p className="text-xs md:text-sm text-slate-400 font-normal tracking-wide">
-                {client.location} <span className="text-slate-600">·</span> {client.type}
-              </p>
-            </div>
-          </div>
-
-          {/* Lede + body */}
-          <div className="flex flex-col gap-2.5">
-            <p className={`text-white font-medium leading-snug tracking-tight ${cfg.lede}`}>
-              {client.lede}
-            </p>
-            <p className={`text-slate-300 leading-relaxed ${cfg.descSize} font-normal`}>
-              {client.description}
-            </p>
-          </div>
-
-          {/* Metrics (featured only) */}
-          {client.metrics && (
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-100 font-medium">
-              {client.metrics.map((m) => (
-                <span key={m} className="flex items-center gap-2">
-                  <span className="text-accent-3 text-xs">●</span>
-                  {m}
-                </span>
+            ) : (
+              <div className="w-10 h-10 bg-[color:var(--ink)] text-[color:var(--ink-on-dark)] border border-[color:var(--ink)] flex items-center justify-center">
+                <span className="num text-xs">{client.monogram ?? client.name.slice(0, 2)}</span>
+              </div>
+            )}
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              {client.tags.map((t) => (
+                <span key={t} className="num text-[10px] text-[color:var(--ink-muted)]">{t.toUpperCase()}</span>
               ))}
             </div>
-          )}
-
-          {/* Tags + visit */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mt-auto pt-2">
-            <div className="flex flex-wrap gap-1.5">
-              {client.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2.5 py-1 rounded-md bg-white/[0.08] border border-white/5 text-[11px] font-semibold text-slate-100"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href={client.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group/btn inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-accent-3 transition-colors"
-            >
-              Visit site
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
-                <path d="M7 17L17 7M9 7h8v8" />
-              </svg>
-            </a>
           </div>
         </div>
-      </motion.div>
+      </article>
     </AnimatedSection>
   );
 }
 
-function PlaceholderCard({ index, gridPos }: { index: number; gridPos: string }) {
+function PlaceholderRow({ index, note, stage }: { index: number; note: string; stage: string }) {
   return (
-    <AnimatedSection variant="scale-in" delay={index * 0.08} className={`${gridPos} h-full`}>
-      <motion.div
-        whileHover={{ y: -4, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }}
-        className="group relative h-full bg-slate-900 border border-dashed border-white/15 hover:border-accent-3/40 rounded-2xl overflow-hidden flex flex-col transition-colors duration-300 p-7 md:p-9"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(14,165,233,0.06)_0%,transparent_60%)] pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col h-full items-center justify-center text-center gap-5">
-          <div className="w-14 h-14 rounded-xl border border-white/15 flex items-center justify-center bg-slate-800">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-slate-300 group-hover:text-accent-3 transition-colors">
-              <path d="M12 5v14M5 12h14" />
+    <AnimatedSection delay={index * 0.08}>
+      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-16 md:py-20 border-b border-[color:var(--rule)]">
+        <div className="col-span-12 lg:col-span-8">
+          <div className="aspect-[16/10] border border-dashed border-[color:var(--rule-strong)] flex items-center justify-center bg-[color:var(--surface-elevated)] relative overflow-hidden">
+            <svg viewBox="0 0 240 150" className="diagram w-1/2 max-w-[200px] opacity-50" aria-hidden="true">
+              <rect x="20" y="20" width="200" height="110" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none" />
+              <line x1="20" y1="50" x2="220" y2="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+              <line x1="50" y1="20" x2="50" y2="130" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+              <text x="60" y="75" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.6">CASE FILE</text>
+              <text x="60" y="92" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.6">IN PROGRESS</text>
             </svg>
           </div>
-
-          <div className="flex flex-col gap-2 max-w-[300px]">
-            <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">
-              Your business, here.
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Tharros is taking on new Ottawa clients. If you want your site featured next, get in touch.
-            </p>
-          </div>
-
-          <div className="w-full max-w-[220px] mt-1">
-            <div className="relative h-[3px] w-full bg-white/5 rounded-full overflow-hidden">
-              <motion.div
-                animate={{ x: ["-100%", "100%"] }}
-                transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-accent-3 to-transparent"
-              />
-            </div>
-          </div>
         </div>
-      </motion.div>
+        <div className="col-span-12 lg:col-span-4 flex flex-col">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
+            <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
+            <span className="num text-xs text-[color:var(--ink-muted)]">{stage}</span>
+          </div>
+          <h2 className="type-display-3 text-[color:var(--ink-muted)] mb-3">New engagement.</h2>
+          <p className="type-body text-[color:var(--ink-muted)] max-w-[44ch]">
+            {note}. We are currently preparing a new build with an Ottawa partner. Updates land here when the site launches.
+          </p>
+        </div>
+      </article>
     </AnimatedSection>
   );
 }

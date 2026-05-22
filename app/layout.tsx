@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
@@ -7,10 +7,16 @@ import NavBar from "@/components/NavBar";
 import BackToTop from "@/components/BackToTop";
 import { Analytics } from "@vercel/analytics/next";
 
-const inter = Inter({
+const geistSans = Geist({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-geist-sans",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
 });
 
 const SITE_URL = "https://tharros.ca";
@@ -31,7 +37,7 @@ const SERVICE_AREAS = [
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+    { media: "(prefers-color-scheme: dark)", color: "#1d2330" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -559,7 +565,8 @@ export default function RootLayout({
     "@type": "SiteNavigationElement",
     name: [
       "Demo",
-      "Solutions",
+      "Builds",
+      "Agents",
       "Process",
       "Why",
       "Pricing",
@@ -568,6 +575,7 @@ export default function RootLayout({
     ],
     url: [
       `${SITE_URL}/#demo`,
+      `${SITE_URL}/#builds`,
       `${SITE_URL}/#solutions`,
       `${SITE_URL}/#process`,
       `${SITE_URL}/#why`,
@@ -589,7 +597,7 @@ export default function RootLayout({
   ];
 
   return (
-    <html lang="en-CA" className={`${inter.variable} antialiased`}>
+    <html lang="en-CA" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <head>
         <link rel="preconnect" href="https://api-bc654b.stack.relevance.ai" />
         <link rel="dns-prefetch" href="https://api-bc654b.stack.relevance.ai" />

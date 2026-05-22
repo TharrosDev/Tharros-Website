@@ -1,109 +1,75 @@
 "use client";
 
-import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const pains = [
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-      </svg>
-    ),
-    stat: "After hours",
-    headline: "Missed calls = missed revenue",
-    body: "A lead that calls at 8pm and gets voicemail calls your competitor at 8:01pm. Your business loses money while you sleep.",
-    color: "bg-red-50 text-red-600 border-red-100",
+    num: "01",
+    when: "After hours",
+    headline: "Missed calls become missed revenue.",
+    body: "A lead that calls at 8pm and gets voicemail calls your competitor at 8:01pm.",
   },
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 2l4 4-4 4" />
-        <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
-        <path d="M7 22l-4-4 4-4" />
-        <path d="M21 13v1a4 4 0 0 1-4 4H3" />
-      </svg>
-    ),
-    stat: "Every day",
-    headline: "The same questions, over and over",
-    body: "\"What are your hours?\" \"Do you service my area?\" \"How much does it cost?\" Your time is worth more than answering these on repeat.",
-    color: "bg-amber-50 text-amber-600 border-amber-100",
+    num: "02",
+    when: "Every day",
+    headline: "The same questions, on repeat.",
+    body: "Hours. Service area. Pricing. Your time is worth more than answering those one at a time.",
   },
   {
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-      </svg>
-    ),
-    stat: "Hours per week",
-    headline: "Admin that never ends",
-    body: "Inquiry management, intake forms, follow-up emails, the paperwork that comes with running a small business quietly eats your week.",
-    color: "bg-slate-100 text-slate-600 border-slate-200",
+    num: "03",
+    when: "Hours per week",
+    headline: "Admin that never ends.",
+    body: "Inquiry triage, intake forms, follow-up emails — the paperwork quietly eats your week.",
   },
 ];
 
 export default function ProblemSection() {
   return (
-    <section className="py-14 sm:py-16 md:py-24 xl:py-32 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-white industrial-grid">
-      <div id="problem" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-
-      {/* Industrial Sophistication */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-
-      <div className="max-w-7xl xl:max-w-[90rem] mx-auto relative z-10">
+    <section id="problem" className="rhythm-default bg-[color:var(--surface)]">
+      <div className="page-frame">
         <AnimatedSection>
-          <div className="flex flex-col items-center mb-10 sm:mb-12 md:mb-16">
-
-            <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl font-bold text-center text-slate-900 mb-6 sm:mb-8 md:mb-10 max-w-4xl xl:max-w-6xl mx-auto md:leading-[1.2] tracking-tighter">
-              Ottawa businesses are <br className="hidden md:block" />
-              <span className="text-slate-500">bleeding time.</span>
-            </h2>
-            <p className="text-slate-600 text-center max-w-2xl xl:max-w-4xl text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl font-medium opacity-80">
-              You don&apos;t need another vendor. You need <span className="text-accent-3">a modern site, an integrated agent</span>, and a number you can call when things change.
-            </p>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-[11px] text-[color:var(--ink-faint)]">§ 01</span>
+            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
+            <span className="type-meta-strong">The problem</span>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8 lg:gap-10">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+          <AnimatedSection className="col-span-12 lg:col-span-8">
+            <h2 className="type-display-2 max-w-[16ch]">
+              Ottawa businesses are <span className="text-[color:var(--ink-muted)]">bleeding time.</span>
+            </h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+            <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
+              You don&apos;t need another vendor. You need a modern site, an embedded agent, and a
+              number you can call when things change.
+            </p>
+          </AnimatedSection>
+        </div>
+
+        <div className="border-t border-[color:var(--rule)]">
           {pains.map((pain, i) => (
-            <AnimatedSection key={pain.headline} delay={i * 0.1} variant="scale-in">
-              <motion.div
-                className="bg-white border border-slate-200 p-5 sm:p-7 md:p-10 xl:p-12 h-full flex flex-col group overflow-hidden cursor-default shadow-xl relative rounded-2xl sm:rounded-3xl md:rounded-[3rem] hover:border-accent-3/50 transition-all duration-500"
-              >
-                {/* Industrial Corner Accents */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-3/[0.03] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
-                    <div
-                      aria-hidden="true"
-                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl sm:rounded-[1.25rem] bg-slate-950 text-white flex items-center justify-center group-hover:bg-accent-3 group-hover:shadow-2xl transition-all duration-500 shrink-0"
-                    >
-                      <span className="scale-110 sm:scale-125">{pain.icon}</span>
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">{pain.stat}</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 leading-tight tracking-tighter mb-4 sm:mb-6 group-hover:text-accent-3 transition-colors">{pain.headline}</h3>
-                  <p className="text-slate-600 leading-relaxed text-base sm:text-lg md:text-xl group-hover:text-slate-800 transition-colors mb-6 sm:mb-8 flex-1">{pain.body}</p>
-
-
+            <AnimatedSection key={pain.num} delay={i * 0.06}>
+              <div className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] items-start group">
+                <div className="col-span-12 md:col-span-1 mb-3 md:mb-0">
+                  <span className="num text-sm text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] transition-colors">{pain.num}</span>
                 </div>
-                
-                {/* Progress bar accent */}
-                <div className="absolute bottom-0 left-0 h-1 bg-accent-3 w-0 group-hover:w-full transition-all duration-700 ease-out shadow-[0_0_15px_rgba(14,165,233,0.5)]" />
-              </motion.div>
+                <div className="col-span-12 md:col-span-3">
+                  <span className="type-meta">{pain.when}</span>
+                </div>
+                <h3 className="col-span-12 md:col-span-5 type-display-3 mt-3 md:mt-0">
+                  {pain.headline}
+                </h3>
+                <p className="col-span-12 md:col-span-3 type-body text-[color:var(--ink-muted)] mt-3 md:mt-0">
+                  {pain.body}
+                </p>
+              </div>
             </AnimatedSection>
           ))}
         </div>
       </div>
     </section>
-
   );
 }
-
-

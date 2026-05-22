@@ -5,15 +5,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import Magnetic from "./Magnetic";
 
 const navLinks = [
-  { label: "Demo", href: "/#demo" },
-  { label: "Solutions", href: "/#solutions" },
-  { label: "Process", href: "/#process" },
-  { label: "Why", href: "/#why" },
-  { label: "Pricing", href: "/#pricing" },
-  { label: "Clients", href: "/clients" },
+  { label: "Demo",     href: "/#demo",     num: "01" },
+  { label: "Builds",   href: "/#builds",    num: "02" },
+  { label: "Agents",   href: "/#solutions", num: "03" },
+  { label: "Process",  href: "/#process",   num: "04" },
+  { label: "Why",      href: "/#why",       num: "05" },
+  { label: "Pricing",  href: "/#pricing",   num: "06" },
+  { label: "Clients",  href: "/clients",    num: "07" },
 ];
 
 export default function NavBar() {
@@ -21,181 +21,126 @@ export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const isBriefPage = pathname === "/brief";
   const isHomePage = pathname === "/";
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
-    // Handle logo/scroll to top
     if (href === "/" && isHomePage) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-
-    // Handle hash links on the home page
     if (href.startsWith("/#") && isHomePage) {
       e.preventDefault();
       const id = href.replace("/#", "");
-      const element = document.getElementById(id);
-      if (element) {
-        const offset = 100; // Account for sticky nav
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-        
-        // Update URL hash without jumping
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 96;
+        window.scrollTo({ top, behavior: "smooth" });
         window.history.pushState(null, "", href);
       }
     }
   };
 
-  // Robust Cross-Page Anchor Handling
   useEffect(() => {
-    const handleHashScroll = () => {
-      const hash = window.location.hash;
-      if (hash && isHomePage) {
-        const id = hash.replace("#", "");
-        // Short delay to ensure PageTransition and dynamic sections are laid out
-        setTimeout(() => {
-          const element = document.getElementById(id);
-          if (element) {
-            const offset = 100;
-            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo({
-              top: elementPosition - offset,
-              behavior: "smooth"
-            });
-          }
-        }, 150); // Increased for safety
+    if (!isHomePage || !mounted) return;
+    const hash = window.location.hash;
+    if (!hash) return;
+    setTimeout(() => {
+      const el = document.getElementById(hash.replace("#", ""));
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 96;
+        window.scrollTo({ top, behavior: "smooth" });
       }
-    };
-
-    if (isHomePage && mounted) {
-      handleHashScroll();
-    }
+    }, 150);
   }, [isHomePage, pathname, mounted]);
 
   useEffect(() => {
     let ticking = false;
-    const handler = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const isScrolled = window.scrollY > 20;
-          setScrolled(isScrolled);
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 24);
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handler, { passive: true });
-    // Initial check
-    handler();
-    return () => window.removeEventListener("scroll", handler);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  const isMinimized = false;
-
-  // Prevent flicker by not rendering specific parts or using suppressHydrationWarning
   return (
     <>
       <header
         suppressHydrationWarning
-        className="fixed top-3 md:top-4 z-[60] flex items-center gap-2 md:gap-4 px-3 md:px-5 3xl:px-12 py-2 md:py-2 3xl:py-6 rounded-full bg-white/95 backdrop-blur-xl border border-slate-300/40 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] left-1/2 -translate-x-1/2 justify-between"
-        style={{
-          width: "min(94%, var(--nav-width, 1300px))",
-          opacity: mounted ? 1 : 0,
-          // Fluidly increase width for large monitors
-          ...({ "--nav-width": "clamp(1300px, 60vw, 2200px)" } as any)
-        }}
+        className={`fixed top-0 left-0 right-0 z-[60] transition-[border-color,background-color] duration-300 ease-out ${
+          scrolled
+            ? "bg-[color:var(--surface)]/95 border-b border-[color:var(--rule)]"
+            : "bg-transparent border-b border-transparent"
+        }`}
+        style={{ opacity: mounted ? 1 : 0 }}
       >
-        <Magnetic strength={0.1}>
+        <div className="page-frame flex items-center justify-between h-16 md:h-20">
           <Link
             href="/"
             onClick={(e) => handleLinkClick(e, "/")}
-            className="relative z-10 block transition-all duration-700 scale-[0.85] md:scale-100 3xl:scale-150 origin-left"
-            aria-label="Tharros Home"
+            className="flex items-center gap-3 group"
+            aria-label="Tharros home"
           >
             <Image
               src="/tharros-logo.svg"
-              width={140}
-              height={35}
+              width={120}
+              height={28}
               priority
-              style={{ width: "auto", height: "auto" }}
-              alt="Tharros AI Automation Logo"
+              style={{ width: "auto", height: 22 }}
+              alt="Tharros"
+              className="opacity-90 group-hover:opacity-100 transition-opacity"
             />
           </Link>
-        </Magnetic>
 
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2 3xl:gap-8">
-          {navLinks.map((link) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-full hover:bg-slate-100 transition-all duration-300 uppercase tracking-widest text-[10px] 3xl:text-lg"
-            >
-              {link.label}
-            </motion.a>
-          ))}
-        </nav>
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="group flex items-center gap-2 px-3 py-2 text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors"
+              >
+                <span className="num text-[10px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
+                <span className="text-sm font-medium">{link.label}</span>
+              </a>
+            ))}
+          </nav>
 
-        <div className="flex items-center gap-2 md:gap-3 3xl:gap-8 h-full">
-          <Magnetic strength={0.2}>
+          <div className="flex items-center gap-3">
             <Link
               href="/brief"
               prefetch={false}
               aria-label="Book your free discovery call"
-              className="primary-button !min-h-0 !w-auto px-4 py-2 md:px-5 md:py-2 3xl:px-12 3xl:py-6 text-[11px] md:text-sm 3xl:text-xl tracking-[0.15em] md:tracking-[0.1em]"
+              className="btn-primary !min-h-0 !w-auto py-2.5 px-4 md:px-5 text-sm"
             >
-              <span className="hidden md:inline">Book a Discovery Call</span>
-              <span className="md:hidden">Book Call</span>
+              <span className="hidden sm:inline">Book a call</span>
+              <span className="sm:hidden">Book</span>
             </Link>
-          </Magnetic>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex relative z-[60] w-11 h-11 flex-col items-center justify-center gap-1 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-200 border border-slate-200 transition-all duration-300 active:scale-90"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-          >
-            <span
-              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
-                mobileOpen ? "rotate-45 translate-y-[4px]" : ""
-              }`}
-            />
-            <span
-              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 ${
-                mobileOpen ? "opacity-0 scale-0" : ""
-              }`}
-            />
-            <span
-              className={`block w-5 h-[2px] bg-slate-900 rounded-full transition-all duration-300 origin-center ${
-                mobileOpen ? "-rotate-45 -translate-y-[4px]" : ""
-              }`}
-            />
-          </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden tap-target flex flex-col items-center justify-center gap-1.5 -mr-2"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+            >
+              <span className={`block w-5 h-px bg-[color:var(--ink)] transition-transform duration-300 ${mobileOpen ? "rotate-45 translate-y-[3px]" : ""}`} />
+              <span className={`block w-5 h-px bg-[color:var(--ink)] transition-transform duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""}`} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -204,65 +149,48 @@ export default function NavBar() {
           <motion.div
             id="mobile-menu"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as any }}
-            className="fixed inset-0 z-[55] bg-slate-950/98 overflow-y-auto overflow-x-hidden"
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+            className="fixed inset-0 z-[55] bg-[color:var(--surface)] overflow-y-auto md:hidden"
           >
-            {/* Industrial Background Elements */}
-            <div className="scanline opacity-[0.15]" />
-            <div className="fixed inset-0 industrial-grid opacity-[0.05] pointer-events-none" />
+            <div className="page-frame pt-24 pb-12 min-h-[100dvh] flex flex-col">
+              <span className="eyebrow mb-10">Menu</span>
 
-            {/* Corner Markers */}
-            <div className="fixed top-24 left-8 w-4 h-4 border-t border-l border-white/20" />
-            <div className="fixed top-24 right-8 w-4 h-4 border-t border-r border-white/20" />
-            <div className="fixed bottom-12 left-8 w-4 h-4 border-b border-l border-white/20" />
-            <div className="fixed bottom-12 right-8 w-4 h-4 border-b border-r border-white/20" />
+              <nav className="flex flex-col">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => { handleLinkClick(e, link.href); setMobileOpen(false); }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.04, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                    className="group flex items-baseline gap-5 py-5 border-b border-[color:var(--rule)]"
+                  >
+                    <span className="num text-xs text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
+                    <span className="type-display-3 group-hover:text-[color:var(--accent)] transition-colors">{link.label}</span>
+                  </motion.a>
+                ))}
+              </nav>
 
-            <div className="min-h-[100dvh] flex flex-col items-center justify-center gap-6 w-full px-6 relative z-10 py-24">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => {
-                    handleLinkClick(e, link.href);
-                    setMobileOpen(false);
-                  }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 + 0.05, ease: [0.22, 1, 0.36, 1] as any }}
-                  className="group flex flex-col items-center gap-1 py-2 px-4 active:opacity-60 transition-opacity"
-                >
-                  <span className="text-4xl font-bold tracking-tighter text-white group-hover:text-accent-3 transition-colors uppercase">
-                    {link.label}
-                  </span>
-                </motion.a>
-              ))}
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="w-full max-w-xs mt-6 pt-8 border-t border-white/10 flex flex-col items-center safe-bottom"
-              >
+              <div className="mt-auto pt-10 flex flex-col gap-4 safe-bottom">
                 <Link
                   href="/brief"
                   prefetch={false}
                   onClick={() => setMobileOpen(false)}
-                  className="primary-button flex items-center justify-center px-10 py-5 text-base shadow-2xl shadow-accent-3/20 w-full"
+                  className="btn-primary w-full"
                 >
-                  Book a Discovery Call
+                  Book a discovery call
                 </Link>
-
                 <a
                   href="mailto:tharrosdev@gmail.com"
-                  className="mt-8 text-white/50 text-[10px] font-black uppercase tracking-[0.35em] hover:text-accent-3 transition-colors flex items-center gap-3 py-2"
+                  className="type-meta text-center py-2 hover:text-[color:var(--accent)] transition-colors"
                 >
-                  Contact our Team
+                  tharrosdev@gmail.com
                 </a>
-              </motion.div>
+              </div>
             </div>
-            
           </motion.div>
         )}
       </AnimatePresence>

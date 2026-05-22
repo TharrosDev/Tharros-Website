@@ -7,57 +7,26 @@ export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      // Show button after 500px scroll
-      if (window.scrollY > 500) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", toggleVisibility, { passive: true });
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    const toggle = () => setIsVisible(window.scrollY > 600);
+    window.addEventListener("scroll", toggle, { passive: true });
+    return () => window.removeEventListener("scroll", toggle);
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          whileHover={{ y: -4, scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={scrollToTop}
-          className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[100] w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white text-slate-950 shadow-[0_20px_50px_rgba(0,0,0,0.2)] border border-slate-100 flex items-center justify-center group transition-all duration-300"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[100] w-11 h-11 bg-[color:var(--ink)] text-[color:var(--ink-on-dark)] border border-[color:var(--ink)] flex items-center justify-center hover:bg-[color:var(--accent)] hover:border-[color:var(--accent)] transition-colors"
           style={{ marginBottom: "env(safe-area-inset-bottom)" }}
-          aria-label="Return to top of page"
+          aria-label="Return to top"
         >
-          {/* Industrial Arrow Icon */}
-          <svg 
-            width="22" 
-            height="22" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="3" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-            className="group-hover:text-accent-3 transition-colors"
-          >
-            <path d="m18 15-6-6-6 6"/>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 12V2M3 6l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
           </svg>
-          
-          {/* Subtle Glow Effect */}
-          <div className="absolute inset-0 rounded-2xl bg-accent-3/5 opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.button>
       )}
     </AnimatePresence>

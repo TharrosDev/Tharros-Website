@@ -1,116 +1,153 @@
 "use client";
 
-import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const agents = [
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path d="M4 18 Q14 6 24 18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="2.5" fill="#64748b" />
-        <circle cx="4" cy="18" r="2" fill="currentColor" />
-        <circle cx="24" cy="18" r="2" fill="currentColor" />
-      </svg>
-    ),
+    num: "01",
     name: "Customer Inquiry Agent",
-    tagline: "Never let a question go unanswered",
+    tagline: "Never let a question go unanswered.",
     description:
-      "An agent that answers services, pricing, availability, and location questions on your modernized site, and knows when to escalate to you. Built, integrated, and on call.",
+      "Answers services, pricing, availability, and location questions on your site. Knows when to escalate to you.",
     examples: ["Plumbers", "HVAC", "Cleaning services", "Landscapers"],
+    diagram: "inquiry",
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect x="4" y="6" width="20" height="16" rx="3" stroke="currentColor" strokeWidth="2" />
-        <path d="M9 13h10M9 17h6" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="22" cy="6" r="3.5" fill="currentColor" />
-      </svg>
-    ),
+    num: "02",
     name: "Lead Capture Agent",
-    tagline: "Turn website visitors into qualified leads",
+    tagline: "Turn website visitors into qualified leads.",
     description:
-      "An agent that greets visitors on your new site, asks smart qualifying questions, and routes contact info to your inbox while you're on the job or asleep.",
+      "Greets visitors, asks smart qualifying questions, and routes contact info to your inbox while you're on the job or asleep.",
     examples: ["Lawyers", "Accountants", "Consultants", "Contractors"],
+    diagram: "lead",
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="11" r="5" stroke="currentColor" strokeWidth="2" />
-        <path d="M5 25c0-5 4-8 9-8s9 3 9 8" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
+    num: "03",
     name: "After-Hours Intake Agent",
-    tagline: "Capture every lead, even when you're off the clock",
+    tagline: "Capture every lead, even when you're off the clock.",
     description:
-      "An agent that handles inbound messages after business hours, collects job details and urgency, and sends you a clean summary at dawn. Embedded into your site or messaging channel.",
+      "Handles inbound messages after business hours, collects job details and urgency, and sends a clean summary at dawn.",
     examples: ["Emergency trades", "Property managers", "Auto repair", "Clinics"],
+    diagram: "afterhours",
   },
-];
+] as const;
 
 export default function WhatWeBuildsSection() {
   return (
-    <section className="py-14 sm:py-16 md:py-24 xl:py-32 px-5 sm:px-6 md:px-12 xl:px-20 relative overflow-hidden bg-slate-950 industrial-grid">
-      <div id="solutions" className="absolute top-16 md:top-24 xl:top-32 pointer-events-none" />
-
-      {/* Industrial Grid Accents */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-      <div className="max-w-7xl xl:max-w-[90rem] 3xl:max-w-[120rem] 4xl:max-w-[140rem] mx-auto relative z-10">
+    <section id="solutions" className="rhythm-default bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
+      <div className="page-frame">
         <AnimatedSection>
-          <div className="text-center mb-10 sm:mb-12 md:mb-16 3xl:mb-32">
-
-            <h2 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-7xl xl:text-8xl 3xl:text-9xl 4xl:text-[11rem] font-bold text-white mb-6 sm:mb-8 md:mb-12 3xl:mb-20 max-w-4xl xl:max-w-6xl 3xl:max-w-[100rem] mx-auto md:leading-[1.2] tracking-tighter">
-              Agents we build <br className="hidden sm:block" />
-              <span className="text-accent-3">into your site.</span>
-            </h2>
-            <p className="text-slate-300 max-w-2xl xl:max-w-4xl 3xl:max-w-[80rem] mx-auto text-base leading-relaxed sm:text-lg md:text-2xl xl:text-3xl 3xl:text-4xl 4xl:text-5xl font-medium opacity-80">
-              Three agents that fit most small business operations. Each is built end-to-end and embedded into your modernized site. New agents and tweaks happen via retainer or per call.
-            </p>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">§ 03</span>
+            <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
+            <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Agents we build</span>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8 lg:gap-10 3xl:gap-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+          <AnimatedSection className="col-span-12 lg:col-span-8">
+            <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">
+              Three agents.<br />
+              <span className="text-[color:var(--accent-on-dark)]">Built into your site.</span>
+            </h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+            <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">
+              Three patterns fit most small business operations. Each is built end-to-end and
+              embedded into the modernized site.
+            </p>
+          </AnimatedSection>
+        </div>
+
+        <div className="border-t border-[color:var(--rule-on-dark)]">
           {agents.map((agent, i) => (
-            <AnimatedSection key={agent.name} delay={i * 0.1} variant="scale-in">
-              <motion.div
-                className="clean-card h-full flex flex-col group cursor-default shadow-2xl relative overflow-hidden 3xl:p-16 4xl:p-20"
-              >
-                <div className="flex flex-col gap-6 sm:gap-8 3xl:gap-16 mb-8 sm:mb-10 3xl:mb-20 relative z-10">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 3xl:w-32 3xl:h-32 rounded-2xl sm:rounded-[1.25rem] 3xl:rounded-[2.5rem] bg-white border border-white flex items-center justify-center text-slate-950 transition-all duration-500 shrink-0 shadow-2xl">
-                    <span className="scale-110 sm:scale-125 3xl:scale-[2.5]">{agent.icon}</span>
-                  </div>
-                  <div className="flex flex-col gap-3 3xl:gap-8">
-                    <p className="text-[11px] 3xl:text-xl font-black text-accent-3 uppercase tracking-[0.3em]">{agent.tagline}</p>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl xl:text-4xl 3xl:text-6xl font-bold text-white tracking-tighter leading-[1.15] sm:leading-[1.1]">
-                      {agent.name}
-                    </h3>
-                  </div>
+            <AnimatedSection key={agent.num} delay={i * 0.08}>
+              <div className="grid grid-cols-12 gap-x-6 py-12 md:py-16 border-b border-[color:var(--rule-on-dark)] items-start">
+                <div className="col-span-12 md:col-span-1">
+                  <span className="num text-sm text-[color:var(--ink-on-dark-muted)]">{agent.num}</span>
                 </div>
 
-                <p className="text-slate-200 text-base sm:text-lg md:text-xl 3xl:text-3xl leading-relaxed mb-6 3xl:mb-12 relative z-10 flex-1">
-                  {agent.description}
-                </p>
-
-                <div className="relative z-10 pt-5 3xl:pt-10 border-t border-white/10">
-                  <div className="flex flex-wrap gap-2 sm:gap-2.5 3xl:gap-6">
+                <div className="col-span-12 md:col-span-6 mt-4 md:mt-0">
+                  <div className="type-meta text-[color:var(--accent-on-dark)] mb-4">{agent.tagline}</div>
+                  <h3 className="type-display-3 text-[color:var(--ink-on-dark)] mb-5">{agent.name}</h3>
+                  <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[52ch] mb-6">
+                    {agent.description}
+                  </p>
+                  <div className="flex flex-wrap gap-x-5 gap-y-1">
                     {agent.examples.map((ex) => (
-                      <span
-                        key={ex}
-                        className="px-3 py-1.5 sm:px-4 3xl:px-8 3xl:py-3 bg-white/[0.05] border border-white/20 rounded-lg sm:rounded-xl 3xl:rounded-3xl text-[9px] sm:text-[10px] 3xl:text-base font-black text-white/60 uppercase tracking-[0.2em]"
-                      >
-                        {ex}
+                      <span key={ex} className="num text-[10px] text-[color:var(--ink-on-dark-muted)]">
+                        {ex.toUpperCase()}
                       </span>
                     ))}
                   </div>
                 </div>
-              </motion.div>
+
+                <div className="col-span-12 md:col-span-5 mt-8 md:mt-0">
+                  <AgentDiagram kind={agent.diagram} />
+                </div>
+              </div>
             </AnimatedSection>
           ))}
         </div>
       </div>
     </section>
+  );
+}
 
+function AgentDiagram({ kind }: { kind: "inquiry" | "lead" | "afterhours" }) {
+  const nodes: Record<string, { label: string; sub: string; accent?: boolean }[]> = {
+    inquiry:    [
+      { label: "Visitor",  sub: "Asks a question" },
+      { label: "Agent",    sub: "Answers in scope", accent: true },
+      { label: "Escalate", sub: "When it can't" },
+    ],
+    lead:       [
+      { label: "Visitor",  sub: "Lands on site" },
+      { label: "Agent",    sub: "Qualifies", accent: true },
+      { label: "Inbox",    sub: "You get the lead" },
+    ],
+    afterhours: [
+      { label: "Visitor",  sub: "Messages at 11pm" },
+      { label: "Agent",    sub: "Collects details", accent: true },
+      { label: "Summary",  sub: "Sent at dawn" },
+    ],
+  };
+  const list = nodes[kind];
+
+  return (
+    <svg viewBox="0 0 360 200" className="diagram-dark w-full h-auto" fill="none" aria-hidden="true">
+      {list.map((n, i) => {
+        const x = 10 + i * 120;
+        return (
+          <g key={i} className={n.accent ? "accent" : ""}>
+            <rect
+              x={x}
+              y={70}
+              width={110}
+              height={60}
+              stroke="currentColor"
+              strokeWidth={n.accent ? 1.5 : 1}
+              fill={n.accent ? "currentColor" : "none"}
+              fillOpacity={n.accent ? 0.08 : 0}
+            />
+            <text x={x + 12} y={94} fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.55">
+              {String(i + 1).padStart(2, "0")}
+            </text>
+            <text x={x + 12} y={111} fontFamily="var(--font-sans)" fontSize="13" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+              {n.label}
+            </text>
+            <text x={x + 12} y={124} fontFamily="var(--font-sans)" fontSize="10" fill="currentColor" opacity="0.7">
+              {n.sub}
+            </text>
+            {i < list.length - 1 && (
+              <line x1={x + 110} y1={100} x2={x + 120} y2={100} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
+            )}
+          </g>
+        );
+      })}
+      <text x="10" y="170" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.45">
+        FIG · DATA FLOW
+      </text>
+    </svg>
   );
 }
