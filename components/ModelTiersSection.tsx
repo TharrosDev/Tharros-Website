@@ -42,14 +42,14 @@ export default function ModelTiersSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 max-w-[18ch]">
               Three builds.<br />
               <span className="text-[color:var(--ink-muted)]">Pick yours.</span>
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
               Pick the build that matches where the business is. After launch, fixes and new agents
               are billed per call, or rolled into the On-Call retainer.
@@ -69,7 +69,7 @@ export default function ModelTiersSection() {
                   {TIERS.map((t, i) => (
                     <th
                       key={t.key}
-                      className={`py-6 px-4 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)]" : ""}`}
+                      className={`py-6 px-4 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)] border-t-2 border-[color:var(--accent)]" : ""}`}
                     >
                       <div className="flex flex-col gap-1">
                         <span className="num text-[11px] text-[color:var(--ink-faint)]">

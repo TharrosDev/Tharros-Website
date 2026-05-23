@@ -21,13 +21,13 @@ export default function PricingSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 max-w-[18ch]">
               Pricing is shaped by the work, not a list.
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
               Mapped strictly to the scope, the integration depth, and whether you want us on call
               after launch.

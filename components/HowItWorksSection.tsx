@@ -35,44 +35,39 @@ export default function HowItWorksSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 max-w-[18ch]">
               From first call to <span className="text-[color:var(--accent)]">live and supported.</span>
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
               Three stages. Zero jargon. After launch, choose pay-per-call or the On-Call retainer.
             </p>
           </AnimatedSection>
         </div>
 
-        <div className="relative">
-          {/* Vertical pipeline rail */}
-          <div className="absolute left-[14px] md:left-[28px] top-2 bottom-2 w-px bg-[color:var(--rule-strong)]" aria-hidden="true" />
-
-          <ol className="flex flex-col">
-            {steps.map((step, i) => (
-              <AnimatedSection key={step.num} delay={i * 0.1}>
-                <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] last:border-b-0 items-start group">
-                  <div className="col-span-12 md:col-span-1 relative">
-                    <div className="w-7 h-7 md:w-14 md:h-14 -ml-[6px] md:-ml-[14px] flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--rule-strong)] group-hover:border-[color:var(--accent)] transition-colors">
-                      <span className="num text-xs md:text-sm text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">{step.num}</span>
-                    </div>
+        <ol className="flex flex-col border-t border-[color:var(--rule)]">
+          {steps.map((step, i) => (
+            <AnimatedSection key={step.num} delay={i * 0.1}>
+              <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] items-start group">
+                <div className="col-span-12 md:col-span-1">
+                  <div className="w-9 h-9 md:w-12 md:h-12 flex items-center justify-center border border-[color:var(--rule-strong)] group-hover:border-[color:var(--accent)] transition-colors">
+                    <span className="num text-xs md:text-sm text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">{step.num}</span>
                   </div>
-                  <div className="col-span-12 md:col-span-5 mt-4 md:mt-2">
-                    <h3 className="type-display-3">{step.label}</h3>
-                    <span className="type-meta block mt-3">{step.duration}</span>
-                  </div>
-                  <div className="col-span-12 md:col-span-6 mt-4 md:mt-2">
-                    <p className="type-body text-[color:var(--ink-muted)] max-w-[56ch]">{step.body}</p>
-                  </div>
-                </li>
-              </AnimatedSection>
-            ))}
-          </ol>
-        </div>
+                </div>
+                <div className="col-span-12 md:col-span-4 mt-4 md:mt-1.5">
+                  <h3 className="type-display-3">{step.label}</h3>
+                  <span className="type-meta block mt-3">{step.duration}</span>
+                </div>
+                <div className="col-span-12 md:col-span-7 mt-4 md:mt-1.5">
+                  <p className="type-body text-[color:var(--ink-muted)] max-w-[56ch]">{step.body}</p>
+                </div>
+              </li>
+            </AnimatedSection>
+          ))}
+        </ol>
       </div>
     </section>
   );

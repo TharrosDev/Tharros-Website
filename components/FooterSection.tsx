@@ -20,10 +20,15 @@ export default function FooterSection() {
     <footer id="contact" className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] safe-bottom">
       <div className="page-frame rhythm-default">
         <AnimatedSection>
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <span className="num text-xs text-[color:var(--ink-on-dark-muted)]">§ END</span>
+            <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
+            <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Ready when you are</span>
+          </div>
+
           <div className="grid grid-cols-12 gap-x-6 gap-y-12 mb-16">
             <div className="col-span-12 lg:col-span-8">
-              <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Ready when you are</span>
-              <h2 className="type-display-2 text-[color:var(--ink-on-dark)] mt-4 max-w-[16ch]">
+              <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[16ch]">
                 Modernize your <span className="text-[color:var(--accent-on-dark)]">front door.</span>
               </h2>
               <p className="type-lead text-[color:var(--ink-on-dark-muted)] mt-6 max-w-[52ch]">
