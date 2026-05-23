@@ -13,7 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED,
       changeFrequency: "weekly",
       priority: 1.0,
-      images: [`${SITE_URL}/og-image.jpg`, `${SITE_URL}/tharros-logo.svg`],
+      images: [
+        `${SITE_URL}/og-image.jpg`,
+        `${SITE_URL}/tharros-logo.svg`,
+        `${SITE_URL}/icon-512.png`,
+        `${SITE_URL}/apple-touch-icon.png`,
+      ],
       alternates: {
         languages: {
           "en-CA": SITE_URL,

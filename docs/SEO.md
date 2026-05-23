@@ -162,16 +162,19 @@ Paste only the `content` value (the token), not the full `<meta>` element. Set t
 
 ## robots.ts behavior
 
-The generated `robots.txt` has three groups:
+The generated `robots.txt` is intentionally **permissive** — Tharros wants maximum discoverability across web search, AI answer engines, and social link unfurls. There is no blocklist any more.
 
-1. **`User-agent: *`** — allow everything except `/api/`, `/_next/`, `/_vercel/`.
-2. **Major search bots** (Googlebot, Bingbot, DuckDuckBot, Slurp, YandexBot, Applebot) — same as the wildcard but listed explicitly so they're not lumped in with restrictive groups.
-3. **AI training bots** — explicit allow for the bots we want indexing or training on our content: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, CCBot, Bytespider, Amazonbot, Meta-External*. Plus social preview bots: FacebookExternalHit, Twitterbot, LinkedInBot.
-4. **Scraper blocklist** — `Disallow: /` for AhrefsBot, SemrushBot, DotBot, MJ12bot. These are SEO/marketing scrapers we don't want crawling.
+Groups:
+
+1. **`User-agent: *`** — allow everything except `/admin/`, `/api/`, `/_next/`, `/_vercel/`.
+2. **Major web search bots** — Googlebot (+ Images, News), Bingbot, DuckDuckBot, Slurp (Yahoo), YandexBot, Applebot, MojeekBot, SeznamBot, PetalBot, Bravebot, Kagibot, YouBot. Same as the wildcard but listed explicitly so future restrictive changes never accidentally exclude them.
+3. **AI search + answer engines** — explicit allow for every bot that surfaces site content inside ChatGPT, Claude, Perplexity, Gemini, Copilot, Apple Intelligence, DuckDuckGo Assist, Mistral, Cohere, etc.: GPTBot, OAI-SearchBot, ChatGPT-User, ChatGPT-User/2.0, ClaudeBot, Claude-Web, Claude-SearchBot, Claude-User, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, GoogleOther, Applebot-Extended, DuckAssistBot, MistralAI-User, Mistral-User, cohere-ai, Cohere-Training-Data-Crawler, Diffbot, Bytespider, Amazonbot, Meta-External*, FacebookBot, CCBot, TimpiBot, PanguBot, Quillbot.
+4. **Social preview / unfurl bots** — needed for OG cards in chat apps: FacebookExternalHit, Twitterbot, LinkedInBot, Slackbot, Slackbot-LinkExpanding, Discordbot, TelegramBot, WhatsApp, Snapchat, Pinterestbot.
+5. **Commercial SEO crawlers** (Ahrefs, Semrush, Moz/rogerbot, Majestic/MJ12bot, DotBot, AhrefsSiteAudit) — now **allowed** with the same path restrictions as the wildcard. Previously blocked; flipped 2026-05 because the discoverability upside outweighs the crawl-budget cost on a marketing site this small.
 
 The `Host` directive points to the canonical hostname.
 
-If you need to opt *out* of AI training (e.g. a client asks), flip the relevant AI bot entries from `allow: "/"` to `disallow: "/"`.
+If a client ever needs to opt *out* of AI training (legal / IP reasons), flip the relevant entries from `allow: "/"` to `disallow: "/"`. There is no global kill-switch by design.
 
 ---
 
