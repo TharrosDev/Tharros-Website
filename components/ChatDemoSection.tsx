@@ -501,7 +501,7 @@ function DesktopConsole({
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value.slice(0, 400))}
             placeholder={
               isLoading
                 ? "Connecting agent..."
@@ -510,6 +510,12 @@ function DesktopConsole({
                   : "Ask anything about your business..."
             }
             disabled={isLoading || isTyping || isLimitReached || !!initError}
+            maxLength={400}
+            enterKeyHint="send"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-label="Ask the Tharros agent"
             className="flex-1 min-w-0 bg-transparent py-4 pr-4 type-body text-[color:var(--ink-on-dark)] placeholder:text-[color:var(--ink-on-dark-faint)] focus:outline-none disabled:opacity-50"
           />
           <button
