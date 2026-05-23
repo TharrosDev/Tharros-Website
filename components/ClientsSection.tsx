@@ -220,11 +220,12 @@ function ClientPreview({ src, alt, fallbackUrl }: { src: string; alt: string; fa
     );
   }
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={src}
       alt={alt}
-      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+      fill
+      sizes="(max-width: 1024px) 100vw, 66vw"
+      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
       loading="lazy"
       onError={() => setErrored(true)}
     />

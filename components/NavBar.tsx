@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -79,6 +79,51 @@ export default function NavBar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  // Mobile menu: close on Escape + focus trap + restore focus on close.
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const node = menuRef.current;
+    if (!node) return;
+
+    const focusables = () =>
+      Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+
+    focusables()[0]?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      triggerRef.current?.focus();
+    };
+  }, [mobileOpen]);
+
   return (
     <>
       <header
@@ -134,6 +179,7 @@ export default function NavBar() {
             </Link>
 
             <button
+              ref={triggerRef}
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden tap-target flex flex-col items-center justify-center gap-1.5 -mr-2"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -151,6 +197,10 @@ export default function NavBar() {
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
+            ref={menuRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
