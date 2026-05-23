@@ -22,7 +22,6 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://tharros.ca";
 const SITE_NAME = "Tharros";
-const FOUNDER_NAME = "Magnus Abdelnour";
 const CONTACT_EMAIL = "tharrosdev@gmail.com";
 const GEO_LAT = 45.4215;
 const GEO_LON = -75.6972;
@@ -107,12 +106,11 @@ export const metadata: Metadata = {
     "Tharros",
     "Tharros AI",
     "Tharros Ottawa",
-    "Magnus Abdelnour",
     "Keep it Local",
     "Keep it Canadian",
     "Keep it Local Keep it Canadian",
   ],
-  authors: [{ name: FOUNDER_NAME, url: SITE_URL }],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
   category: "business",
@@ -232,13 +230,6 @@ export default function RootLayout({
     description:
       "Ottawa-based team delivering website modernization, AI agent integration, and an On-Call retainer for small businesses and trades.",
     foundingDate: "2025",
-    founder: {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#founder`,
-      name: FOUNDER_NAME,
-      jobTitle: "Founder",
-      worksFor: { "@id": `${SITE_URL}/#organization` },
-    },
     knowsAbout: [
       "Website Design",
       "Website Modernization",
@@ -327,7 +318,6 @@ export default function RootLayout({
     currenciesAccepted: "CAD",
     knowsLanguage: ["en-CA", "en"],
     parentOrganization: { "@id": `${SITE_URL}/#organization` },
-    founder: { "@id": `${SITE_URL}/#founder` },
     makesOffer: [
       {
         "@type": "Offer",
@@ -539,28 +529,6 @@ export default function RootLayout({
     ],
   };
 
-  const founder = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": `${SITE_URL}/#founder`,
-    name: FOUNDER_NAME,
-    jobTitle: "Founder",
-    description:
-      "Founder of Tharros, an Ottawa team delivering website modernization, AI agent integration, and an On-Call retainer for small businesses.",
-    worksFor: { "@id": `${SITE_URL}/#organization` },
-    email: CONTACT_EMAIL,
-    nationality: { "@type": "Country", name: "Canada" },
-    workLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Ottawa",
-        addressRegion: "ON",
-        addressCountry: "CA",
-      },
-    },
-  };
-
   const siteNavigation = {
     "@context": "https://schema.org",
     "@type": "SiteNavigationElement",
@@ -593,7 +561,6 @@ export default function RootLayout({
     website,
     breadcrumbs,
     faqPage,
-    founder,
     siteNavigation,
   ];
 

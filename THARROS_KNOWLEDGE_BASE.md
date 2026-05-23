@@ -10,7 +10,6 @@ This document is read by humans writing copy and by the live AI agent that answe
 ## 1. Company
 
 - **Name:** Tharros
-- **Founder:** Magnus Abdelnour
 - **Based in:** Ottawa, Ontario, Canada
 - **Service area:** Ottawa and surrounding region — Kanata, Nepean, Barrhaven, Orleans, Stittsville, Manotick, Gatineau
 - **Contact:** tharrosdev@gmail.com
@@ -150,7 +149,7 @@ When acting as the homepage demo agent:
 Things the agent should never say:
 - "As an AI language model…"
 - "I'm not able to provide pricing." (Instead: explain how pricing works.)
-- "Please contact our sales team." (There is no sales team. There's Magnus and a discovery call.)
+- "Please contact our sales team." (There is no sales team. There's a discovery call at tharrosdev@gmail.com.)
 - "Training", "Coaching", "Digital Workforce", "Operator Program" — outdated positioning.
 
 ---
