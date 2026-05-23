@@ -12,14 +12,31 @@ export const metadata: Metadata = {
     "Live Tharros builds. The Meridian Society runs a Knowledge Q&A Agent built and integrated by Tharros for 24/7 member insights. Keep it Local, Keep it Canadian.",
   keywords: [
     "Tharros Clients",
+    "Tharros Portfolio",
     "Tharros Case Studies",
+    "Tharros Work Examples",
     "Ottawa AI Agent Case Studies",
+    "Ottawa AI Agent Examples",
     "Ottawa Website Build Examples",
+    "Ottawa Web Development Portfolio",
     "AI Agent Integration Success Stories",
     "Ottawa Small Business AI Examples",
+    "Ottawa Small Business Website Examples",
     "Meridian Society AI Agent",
-    "Ottawa Web Development Portfolio",
-    "Tharros Portfolio",
+    "Ottawa AI Agent Live",
+    "Live AI Agent Ottawa",
+    "Ottawa Web Design Examples",
+    "Ottawa Contractor Website Examples",
+    "Ottawa Trades Website Portfolio",
+    "Real AI Agent Ottawa",
+    "Ottawa Business Website Examples",
+    "AI Agent for Membership Organization",
+    "Knowledge Q&A Agent Ottawa",
+    "Website Portfolio Ottawa",
+    "Ottawa Web Agency Portfolio",
+    "Ottawa Digital Agency Work",
+    "ADVANTA365 Website",
+    "Echo Five Consulting Website",
   ],
   alternates: {
     canonical: PAGE_URL,
@@ -38,7 +55,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image/hero",
         width: 1200,
         height: 630,
         alt: "Tharros clients — Real-World Impact.",
@@ -50,7 +67,7 @@ export const metadata: Metadata = {
     title: "Clients — Real-World Impact | Tharros",
     description:
       "Live Tharros builds, starting with The Meridian Society's 24/7 Knowledge Q&A Agent. Keep it Local, Keep it Canadian.",
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image/hero"],
   },
   robots: {
     index: true,
@@ -74,7 +91,7 @@ const CASE_STUDIES = [
     headline: "ADVANTA365 — Marketing Site Build",
     description:
       "Tharros built and shipped the marketing site for an enterprise Microsoft 365 adoption and governance practice, with ongoing on-call support.",
-    image: `${SITE_URL}/opengraph-image`,
+    image: `${SITE_URL}/opengraph-image/hero`,
     datePublished: "2026-05-01",
   },
   {
@@ -120,7 +137,7 @@ export default function ClientsPage() {
       about: { "@id": `${SITE_URL}/#localbusiness` },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/opengraph-image`,
+        url: `${SITE_URL}/opengraph-image/hero`,
         width: 1200,
         height: 630,
       },

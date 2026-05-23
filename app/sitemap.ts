@@ -14,10 +14,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1.0,
       images: [
-        `${SITE_URL}/og-image.jpg`,
+        `${SITE_URL}/opengraph-image/hero`,
+        `${SITE_URL}/opengraph-image/packages`,
+        `${SITE_URL}/opengraph-image/slogan`,
         `${SITE_URL}/tharros-logo.svg`,
         `${SITE_URL}/icon-512.png`,
-        `${SITE_URL}/apple-touch-icon.png`,
       ],
       alternates: {
         languages: {
@@ -32,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
       images: [
-        `${SITE_URL}/og-image.jpg`,
+        `${SITE_URL}/opengraph-image/hero`,
         `${SITE_URL}/meridian-logo.webp`,
         `${SITE_URL}/echo-five-logo.svg`,
       ],
@@ -48,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly",
       priority: 0.8,
-      images: [`${SITE_URL}/og-image.jpg`],
+      images: [`${SITE_URL}/opengraph-image/hero`],
       alternates: {
         languages: {
           "en-CA": `${SITE_URL}/brief`,

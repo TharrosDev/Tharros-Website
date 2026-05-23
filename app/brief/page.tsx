@@ -12,11 +12,25 @@ export const metadata: Metadata = {
     "Tell us about your operation in a short brief. We'll scope your website and AI agent build before the free discovery call. Ottawa trades and small businesses welcome.",
   keywords: [
     "Tharros Discovery Call",
-    "Ottawa Website Brief",
-    "AI Agent Build Brief Ottawa",
-    "Ottawa Web Development Quote",
-    "Custom AI Agent Quote Ottawa",
     "Tharros Project Brief",
+    "Ottawa Website Brief",
+    "Ottawa Web Development Quote",
+    "Ottawa Website Quote",
+    "Free Website Consultation Ottawa",
+    "Free Discovery Call Ottawa",
+    "AI Agent Build Brief Ottawa",
+    "Custom AI Agent Quote Ottawa",
+    "Ottawa Web Design Quote",
+    "Ottawa Web Agency Contact",
+    "Scope Website Build Ottawa",
+    "Ottawa Contractor Website Quote",
+    "Ottawa Small Business Website Quote",
+    "AI Agent Cost Ottawa",
+    "Website Redesign Quote Ottawa",
+    "Ottawa Web Developer Contact",
+    "Book Discovery Call Ottawa",
+    "Ottawa Website Build Inquiry",
+    "Get Website Quote Ottawa",
   ],
   alternates: {
     canonical: PAGE_URL,
@@ -35,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image/hero",
         width: 1200,
         height: 630,
         alt: "Tharros project brief, scope your Ottawa website and AI agent build.",
@@ -47,7 +61,7 @@ export const metadata: Metadata = {
     title: "Project Brief — Scope Your Build | Tharros",
     description:
       "Share a short brief on your operation. We scope the build before the free discovery call.",
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image/hero"],
   },
   robots: { index: true, follow: true },
 };
@@ -67,7 +81,7 @@ export default function BriefPage() {
       about: { "@id": `${SITE_URL}/#localbusiness` },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/opengraph-image`,
+        url: `${SITE_URL}/opengraph-image/hero`,
         width: 1200,
         height: 630,
       },
