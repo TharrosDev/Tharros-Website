@@ -30,18 +30,11 @@ export default function HowItWorksSection() {
       <div className="page-frame">
         <SectionEyebrow numeral="§ 04" label="Process" />
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
-          <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h2 className="type-display-2 max-w-[18ch]">
-              From first call to <span className="text-[color:var(--accent)]">live and supported.</span>
-            </h2>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
-            <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
-              Three stages. Zero jargon. After launch, choose pay-per-call or the On-Call retainer.
-            </p>
-          </AnimatedSection>
-        </div>
+        <AnimatedSection className="mb-12 md:mb-16">
+          <h2 className="type-display-2 max-w-[18ch]">
+            From first call to <span className="text-[color:var(--accent)]">live and supported.</span>
+          </h2>
+        </AnimatedSection>
 
         <ol className="flex flex-col border-t border-[color:var(--rule)]">
           {steps.map((step, i) => (
