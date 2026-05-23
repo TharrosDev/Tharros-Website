@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { clientIp, rateLimit, readJsonCapped, tooManyRequests } from "@/lib/api/guard";
 
 interface Body {
   /** Object key inside `brief-uploads`, as returned by /api/brief/upload-url. */
@@ -9,14 +10,17 @@ interface Body {
 }
 
 const MAX_EXPIRES = 60 * 60 * 24 * 30; // 30 days hard cap
+const MAX_BODY_BYTES = 16 * 1024;
+const RATE_MAX = 30;
+const RATE_WINDOW_MS = 60 * 1000;
 
 export async function POST(req: Request) {
-  let body: Body;
-  try {
-    body = (await req.json()) as Body;
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
-  }
+  const limit = rateLimit(`download:${clientIp(req)}`, RATE_MAX, RATE_WINDOW_MS);
+  if (!limit.allowed) return tooManyRequests(limit.retryAfter);
+
+  const parsed = await readJsonCapped<Body>(req, MAX_BODY_BYTES);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.data;
 
   if (!body.path || typeof body.path !== "string") {
     return NextResponse.json({ ok: false, error: "Missing path" }, { status: 400 });

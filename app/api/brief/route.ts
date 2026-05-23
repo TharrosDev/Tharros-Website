@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { clientIp, rateLimit, readJsonCapped, tooManyRequests } from "@/lib/api/guard";
 
 interface Payload {
   source?: string;
@@ -12,36 +13,43 @@ interface Payload {
   company_name_alt?: string;
 }
 
-function ipFrom(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0].trim();
-  return req.headers.get("x-real-ip") ?? "anon";
+// Final submissions are rare per visitor; keep the window tight so a single IP
+// can't flood brief_submissions or burn the Zapier quota.
+const MAX_BODY_BYTES = 512 * 1024;
+const RATE_MAX = 5;
+const RATE_WINDOW_MS = 5 * 60 * 1000;
+
+// Defensive caps for the indexed scalar columns so a 512 KB single field can't
+// bloat an index. The full payload still lives in `state`/`prompt`.
+function cap(v: unknown, max: number): string | null {
+  return typeof v === "string" && v ? v.slice(0, max) : null;
 }
 
 export async function POST(req: Request) {
-  let payload: Payload;
-  try {
-    payload = (await req.json()) as Payload;
-  } catch {
-    return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
-  }
+  const limit = rateLimit(`brief:${clientIp(req)}`, RATE_MAX, RATE_WINDOW_MS);
+  if (!limit.allowed) return tooManyRequests(limit.retryAfter);
+
+  const parsed = await readJsonCapped<Payload>(req, MAX_BODY_BYTES);
+  if (!parsed.ok) return parsed.response;
+  const payload = parsed.data;
 
   // Honeypot — return 200 so bots can't fingerprint the rule.
   if (payload.company_name_alt && payload.company_name_alt.trim().length > 0) {
-    console.warn("[/api/brief] honeypot tripped from", ipFrom(req));
+    console.warn("[/api/brief] honeypot tripped from", clientIp(req));
     return NextResponse.json({ ok: true, accepted: true });
   }
 
   // Persist to Supabase. RLS is on; service-role bypasses it.
   const state = payload.state ?? {};
+  const prompt = typeof payload.prompt === "string" ? payload.prompt.slice(0, 200_000) : "";
   try {
     const { error } = await supabaseAdmin().from("brief_submissions").insert({
       draft_id: payload.draftId ?? null,
       state,
-      prompt: payload.prompt,
-      business_name: typeof state.businessName === "string" ? state.businessName : null,
-      owner_name:    typeof state.ownerName    === "string" ? state.ownerName    : null,
-      email:         typeof state.email        === "string" ? state.email        : null,
+      prompt,
+      business_name: cap(state.businessName, 300),
+      owner_name:    cap(state.ownerName, 300),
+      email:         cap(state.email, 320),
     });
     if (error) console.error("[/api/brief] insert failed:", error);
     // Fall through. Zapier copy is the backup; never block a real submission

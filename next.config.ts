@@ -26,10 +26,37 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
+    // Content-Security-Policy. Dangerous directives are locked hard
+    // (frame-ancestors/base-uri/form-action/object-src); the resource-loading
+    // directives stay permissive enough not to break the integrations this site
+    // depends on: the Relevance AI chat (https/wss), Supabase uploads (https),
+    // Vercel Analytics (va.vercel-scripts.com), and thum.io thumbnails. Inline
+    // scripts/styles are allowed because Next's bootstrap + the JSON-LD blocks
+    // are inline; a nonce-based script-src is the recommended follow-up.
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' data: https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "connect-src 'self' https: wss:",
+      "worker-src 'self' blob:",
+      "manifest-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "upgrade-insecure-requests",
+    ].join("; ");
+
     return [
       {
         source: "/(.*)",
         headers: [
+          {
+            key: "Content-Security-Policy",
+            value: csp,
+          },
           {
             key: "X-Frame-Options",
             value: "DENY",
