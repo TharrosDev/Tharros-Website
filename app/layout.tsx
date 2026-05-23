@@ -153,7 +153,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_CA",
-    alternateLocale: ["en_US", "fr_CA"],
+    alternateLocale: ["en_US"],
     type: "website",
     countryName: "Canada",
     images: [
@@ -198,11 +198,16 @@ export const metadata: Metadata = {
     "msapplication-config": "/browserconfig.xml",
     rating: "general",
     "revisit-after": "7 days",
-    "og:phone_number": "",
     "business:contact_data:locality": "Ottawa",
     "business:contact_data:region": "ON",
     "business:contact_data:country_name": "Canada",
     "business:contact_data:email": CONTACT_EMAIL,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    other: {
+      "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? "",
+    },
   },
 };
 
@@ -219,6 +224,8 @@ export default function RootLayout({
     alternateName: ["Tharros AI", "Tharros Ottawa"],
     legalName: SITE_NAME,
     slogan: "Keep it Local, Keep it Canadian.",
+    inLanguage: "en-CA",
+    mainEntityOfPage: { "@id": `${SITE_URL}/#webpage` },
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
@@ -277,6 +284,7 @@ export default function RootLayout({
     name: SITE_NAME,
     image: `${SITE_URL}/og-image.jpg`,
     logo: `${SITE_URL}/tharros-logo.svg`,
+    inLanguage: "en-CA",
     url: SITE_URL,
     email: CONTACT_EMAIL,
     description:
@@ -286,7 +294,6 @@ export default function RootLayout({
       "@type": "PostalAddress",
       addressLocality: "Ottawa",
       addressRegion: "ON",
-      postalCode: "K2K",
       addressCountry: "CA",
     },
     geo: {
@@ -363,6 +370,11 @@ export default function RootLayout({
       "@type": "BusinessAudience",
       audienceType: "Ottawa Small Businesses and Trades",
     },
+    serviceOutput:
+      "A modernized website, optional embedded AI agent integrated with the client's CRM and intake tools, and ongoing per-call or monthly retainer support.",
+    termsOfService: `${SITE_URL}/brief`,
+    inLanguage: "en-CA",
+    mainEntityOfPage: { "@id": `${SITE_URL}/#webpage` },
     category: "Web Development & AI Integration",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -431,6 +443,7 @@ export default function RootLayout({
   const breadcrumbs = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    "@id": `${SITE_URL}/#breadcrumbs`,
     itemListElement: [
       {
         "@type": "ListItem",
@@ -441,10 +454,43 @@ export default function RootLayout({
     ],
   };
 
+  const webpage = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE_URL}/#webpage`,
+    url: SITE_URL,
+    name: "Tharros — Modern Websites & AI Agents for Ottawa Businesses",
+    description:
+      "Modern websites. Integrated AI agents. One team, on call. For Ottawa trades and small businesses. Keep it Local, Keep it Canadian.",
+    inLanguage: "en-CA",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${SITE_URL}/#localbusiness` },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/og-image.jpg`,
+      width: 1200,
+      height: 630,
+    },
+    breadcrumb: { "@id": `${SITE_URL}/#breadcrumbs` },
+    datePublished: "2025-09-01",
+    dateModified: new Date().toISOString().slice(0, 10),
+    mainContentOfPage: { "@id": `${SITE_URL}/#service` },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".type-display-2", ".type-lead"],
+    },
+  };
+
   const faqPage = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${SITE_URL}/#faq`,
+    inLanguage: "en-CA",
+    mainEntityOfPage: { "@id": `${SITE_URL}/#webpage` },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["[itemprop='name']", "[itemprop='acceptedAnswer']"],
+    },
     mainEntity: [
       {
         "@type": "Question",
@@ -559,6 +605,7 @@ export default function RootLayout({
     localBusiness,
     service,
     website,
+    webpage,
     breadcrumbs,
     faqPage,
     siteNavigation,
