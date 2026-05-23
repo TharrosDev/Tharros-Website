@@ -1,4 +1,5 @@
 import AnimatedSection from "./AnimatedSection";
+import SectionEyebrow from "./SectionEyebrow";
 
 const pillars = [
   {
@@ -22,13 +23,7 @@ export default function WhyTharrosSection() {
   return (
     <section id="why" className="rhythm-breath bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
       <div className="page-frame">
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-xs text-[color:var(--ink-on-dark-muted)]">§ 05</span>
-            <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
-            <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Why Tharros</span>
-          </div>
-        </AnimatedSection>
+        <SectionEyebrow numeral="§ 05" label="Why Tharros" tone="dark" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
+import SectionEyebrow from "./SectionEyebrow";
 
 type Client = {
   id: string;
@@ -82,13 +83,7 @@ function ClientsHero() {
   return (
     <section className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-12 md:pb-16">
       <div className="page-frame">
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-xs text-[color:var(--ink-faint)]">§ CL</span>
-            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
-            <span className="type-meta-strong">Clients</span>
-          </div>
-        </AnimatedSection>
+        <SectionEyebrow numeral="§ CL" label="Clients" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-8 border-b border-[color:var(--rule)] pb-12 md:pb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">

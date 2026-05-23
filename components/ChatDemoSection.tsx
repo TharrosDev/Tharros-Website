@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Client, Key, Agent, type Task } from "@relevanceai/sdk";
 import AnimatedSection from "./AnimatedSection";
+import SectionEyebrow from "./SectionEyebrow";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import MobileChatConsole from "./MobileChatConsole";
 import FormattedMessage from "./FormattedMessage";
@@ -223,14 +224,7 @@ export default function ChatDemoSection() {
   return (
     <section id="demo" className="rhythm-default bg-[color:var(--surface-dark)]">
       <div className="page-frame">
-        {/* §-eyebrow */}
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-xs text-[color:var(--ink-on-dark-muted)]">§ DEMO</span>
-            <span className="h-px w-8 bg-[color:var(--rule-on-dark-strong)]" />
-            <span className="type-meta-strong text-[color:var(--ink-on-dark-muted)]">Live console</span>
-          </div>
-        </AnimatedSection>
+        <SectionEyebrow numeral="§ DEMO" label="Live console" tone="dark" />
 
         {/* Headline */}
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-14 md:mb-20">
@@ -501,7 +495,7 @@ function DesktopConsole({
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value.slice(0, 400))}
             placeholder={
               isLoading
                 ? "Connecting agent..."
@@ -510,6 +504,12 @@ function DesktopConsole({
                   : "Ask anything about your business..."
             }
             disabled={isLoading || isTyping || isLimitReached || !!initError}
+            maxLength={400}
+            enterKeyHint="send"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-label="Ask the Tharros agent"
             className="flex-1 min-w-0 bg-transparent py-4 pr-4 type-body text-[color:var(--ink-on-dark)] placeholder:text-[color:var(--ink-on-dark-faint)] focus:outline-none disabled:opacity-50"
           />
           <button

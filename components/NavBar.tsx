@@ -17,13 +17,10 @@ const navLinks = [
 ];
 
 export default function NavBar() {
-  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-
-  useEffect(() => { setMounted(true); }, []);
 
   const navOffset = () =>
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches ? 112 : 96;
@@ -47,17 +44,18 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-    if (!isHomePage || !mounted) return;
+    if (!isHomePage) return;
     const hash = window.location.hash;
     if (!hash) return;
-    setTimeout(() => {
+    const t = setTimeout(() => {
       const el = document.getElementById(hash.replace("#", ""));
       if (el) {
         const top = el.getBoundingClientRect().top + window.pageYOffset - navOffset();
         window.scrollTo({ top, behavior: "smooth" });
       }
     }, 150);
-  }, [isHomePage, pathname, mounted]);
+    return () => clearTimeout(t);
+  }, [isHomePage, pathname]);
 
   useEffect(() => {
     let ticking = false;
@@ -127,13 +125,11 @@ export default function NavBar() {
   return (
     <>
       <header
-        suppressHydrationWarning
         className={`fixed top-0 left-0 right-0 z-[60] transition-[border-color,background-color] duration-300 ease-out ${
           scrolled
             ? "bg-[color:var(--surface)]/95 border-b border-[color:var(--rule)]"
             : "bg-transparent border-b border-transparent"
         }`}
-        style={{ opacity: mounted ? 1 : 0 }}
       >
         <div className="page-frame flex items-center justify-between h-16 md:h-20">
           <Link
