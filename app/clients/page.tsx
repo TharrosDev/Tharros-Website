@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Tharros clients — Real-World Impact.",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Clients — Real-World Impact | Tharros",
     description:
       "Live Tharros builds, starting with The Meridian Society's 24/7 Knowledge Q&A Agent. Keep it Local, Keep it Canadian.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -74,7 +74,7 @@ const CASE_STUDIES = [
     headline: "ADVANTA365 — Marketing Site Build",
     description:
       "Tharros built and shipped the marketing site for an enterprise Microsoft 365 adoption and governance practice, with ongoing on-call support.",
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/opengraph-image`,
     datePublished: "2026-05-01",
   },
   {
@@ -120,7 +120,7 @@ export default function ClientsPage() {
       about: { "@id": `${SITE_URL}/#localbusiness` },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/og-image.jpg`,
+        url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
       },

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Tharros project brief, scope your Ottawa website and AI agent build.",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Project Brief — Scope Your Build | Tharros",
     description:
       "Share a short brief on your operation. We scope the build before the free discovery call.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
   },
   robots: { index: true, follow: true },
 };
@@ -67,7 +67,7 @@ export default function BriefPage() {
       about: { "@id": `${SITE_URL}/#localbusiness` },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/og-image.jpg`,
+        url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
       },
