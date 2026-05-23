@@ -38,7 +38,7 @@ export default function AnimatedSection({
         delay,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
-      style={{ willChange: "transform" }}
+      style={reduce ? undefined : { willChange: "transform" }}
       className={className}
     >
       {children}

@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import SectionEyebrow from "./SectionEyebrow";
 
 const pains = [
   {
@@ -27,13 +28,7 @@ export default function ProblemSection() {
   return (
     <section id="problem" className="rhythm-default bg-[color:var(--surface)]">
       <div className="page-frame">
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-xs text-[color:var(--ink-faint)]">§ 01</span>
-            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
-            <span className="type-meta-strong">The problem</span>
-          </div>
-        </AnimatedSection>
+        <SectionEyebrow numeral="§ 01" label="The problem" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">

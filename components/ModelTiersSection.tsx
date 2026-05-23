@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedSection from "./AnimatedSection";
+import SectionEyebrow from "./SectionEyebrow";
 
 type Row = {
   label: string;
@@ -34,13 +35,7 @@ export default function ModelTiersSection() {
   return (
     <section id="builds" className="rhythm-default bg-[color:var(--surface)]">
       <div className="page-frame">
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
-            <span className="num text-xs text-[color:var(--ink-faint)]">§ 02</span>
-            <span className="h-px w-8 bg-[color:var(--rule-strong)]" />
-            <span className="type-meta-strong">Builds</span>
-          </div>
-        </AnimatedSection>
+        <SectionEyebrow numeral="§ 02" label="Builds" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
