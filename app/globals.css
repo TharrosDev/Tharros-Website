@@ -476,3 +476,31 @@ button:focus-visible,
   .industrial-grid { background-image: none; }
   .scanline { display: none; }
 }
+
+/* ============================================================
+   Auto-swap type utilities on dark surfaces.
+   Matches Tailwind arbitrary classes that reference --surface-dark
+   (e.g. bg-[color:var(--surface-dark)]) as well as any .surface-dark
+   helper class. Ensures type utilities never paint dark ink on
+   graphite without every element opting in by hand.
+   ============================================================ */
+
+@layer utilities {
+  [class*="surface-dark"] .type-display-1,
+  [class*="surface-dark"] .type-display-2,
+  [class*="surface-dark"] .type-display-3,
+  [class*="surface-dark"] .type-body,
+  [class*="surface-dark"] .type-meta-strong {
+    color: var(--ink-on-dark);
+  }
+
+  [class*="surface-dark"] .type-lead,
+  [class*="surface-dark"] .type-meta,
+  [class*="surface-dark"] .eyebrow {
+    color: var(--ink-on-dark-muted);
+  }
+
+  [class*="surface-dark"] .meta-row    { color: var(--ink-on-dark-muted); }
+  [class*="surface-dark"] .meta-row dt { color: var(--ink-on-dark-faint); }
+  [class*="surface-dark"] .meta-row dd { color: var(--ink-on-dark); }
+}
