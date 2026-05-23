@@ -35,13 +35,13 @@ export default function ProblemSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 max-w-[14ch]">
               Ottawa businesses are bleeding <span className="text-[color:var(--accent)]">time.</span>
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
               You don&apos;t need another vendor. You need a modern site, an embedded agent, and a
               number you can call when things change.
@@ -56,13 +56,13 @@ export default function ProblemSection() {
                 <div className="col-span-12 md:col-span-1 mb-3 md:mb-0">
                   <span className="num text-sm text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] transition-colors">{pain.num}</span>
                 </div>
-                <div className="col-span-12 md:col-span-3">
+                <div className="col-span-12 md:col-span-2">
                   <span className="type-meta">{pain.when}</span>
                 </div>
-                <h3 className="col-span-12 md:col-span-5 type-display-3 mt-3 md:mt-0">
+                <h3 className="col-span-12 md:col-span-4 type-display-3 mt-3 md:mt-0">
                   {pain.headline}
                 </h3>
-                <p className="col-span-12 md:col-span-3 type-body text-[color:var(--ink-muted)] mt-3 md:mt-0">
+                <p className="col-span-12 md:col-span-5 type-body text-[color:var(--ink-muted)] mt-3 md:mt-0 max-w-[44ch]">
                   {pain.body}
                 </p>
               </div>

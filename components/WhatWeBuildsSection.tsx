@@ -44,14 +44,14 @@ export default function WhatWeBuildsSection() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-16 md:mb-20">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">
               Three agents.<br />
               <span className="text-[color:var(--accent-on-dark)]">Built into your site.</span>
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">
               Three patterns fit most small business operations. Each is built end-to-end and
               embedded into the modernized site.

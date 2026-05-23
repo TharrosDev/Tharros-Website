@@ -80,8 +80,8 @@ export default function HeroSection() {
         </div>
 
         {/* Right: wiring diagram (desktop) */}
-        <div className="hidden lg:flex col-span-4 items-center justify-center pl-8 border-l border-[color:var(--rule)]">
-          <div className="w-full">
+        <div className="hidden lg:flex col-span-4 items-start justify-center pl-8 pt-14 xl:pt-20 border-l border-[color:var(--rule)]">
+          <div className="w-full max-w-[320px]">
             <WiringDiagram />
           </div>
         </div>

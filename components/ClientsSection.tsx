@@ -96,7 +96,7 @@ function ClientsHero() {
               Real-world <span className="text-[color:var(--accent)]">impact.</span>
             </h1>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-4">
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-lead">
               Live Tharros builds for Ottawa businesses. Modern site, embedded agent, and a number
               they can call when things change.
