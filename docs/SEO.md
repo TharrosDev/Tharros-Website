@@ -12,7 +12,7 @@ Everything you need to know before changing anything that touches search or soci
 |---|---|---|
 | Metadata API (root) | `app/layout.tsx` | Title template, description, OG, Twitter, hreflang, keywords, geo, format detection |
 | Metadata API (per-page) | `app/brief/page.tsx`, `app/clients/page.tsx` | Page-specific metadata + per-page JSON-LD |
-| JSON-LD graph | `app/layout.tsx` | 8 cross-referenced entities, see below |
+| JSON-LD graph | `app/layout.tsx` | 8 cross-referenced entities (Org + LB + Service + WebSite + WebPage + Breadcrumbs + FAQ + SiteNav), see below |
 | Robots | `app/robots.ts` | Explicit allowlist for search + AI bots, blocklist for scrapers |
 | Sitemap | `app/sitemap.ts` | Per-URL hreflang alternates |
 | Web App Manifest | `public/manifest.json` | PWA + iOS home screen |
@@ -32,6 +32,7 @@ The site uses a **single linked graph** of structured data, not a list of discon
 ```
 Organization (#organization)
   ├── areaServed ──► [Cities]
+  ├── mainEntityOfPage ──► WebPage (#webpage)
   └── contactPoint ──► [ContactPoints]
 
 LocalBusiness + ProfessionalService (#localbusiness)
@@ -42,19 +43,31 @@ LocalBusiness + ProfessionalService (#localbusiness)
 
 Service (#service)
   ├── provider ──► LocalBusiness (#localbusiness)
+  ├── mainEntityOfPage ──► WebPage (#webpage)
+  ├── termsOfService ──► /brief
   └── hasOfferCatalog.itemListElement[].itemOffered.provider ──► LocalBusiness
 
 WebSite (#website)
   ├── publisher ──► Organization (#organization)
   └── potentialAction ──► SearchAction (sitelinks search)
 
+WebPage (#webpage)  ← root page entity, ties everything together
+  ├── isPartOf ──► WebSite (#website)
+  ├── about ──► LocalBusiness (#localbusiness)
+  ├── breadcrumb ──► BreadcrumbList (#breadcrumbs)
+  ├── mainContentOfPage ──► Service (#service)
+  ├── primaryImageOfPage ──► ImageObject (og-image.jpg)
+  └── speakable ──► SpeakableSpecification (h1 / display-2 / lead selectors)
+
 FAQPage (#faq)
+  ├── mainEntityOfPage ──► WebPage (#webpage)
+  ├── speakable ──► SpeakableSpecification
   └── mainEntity[] ──► [10 Question/Answer pairs]
 
 SiteNavigationElement
   └── name[] / url[] ──► Top-level nav
 
-BreadcrumbList (root)
+BreadcrumbList (#breadcrumbs)
   └── itemListElement[] ──► Home only (page-level breadcrumbs in each page file)
 ```
 
@@ -64,19 +77,21 @@ BreadcrumbList (root)
 |---|---|---|
 | Organization | `https://tharros.ca/#organization` | The legal/business entity. Has areaServed, contactPoints |
 | LocalBusiness | `https://tharros.ca/#localbusiness` | The physical/local-SEO entity. Dual-typed as LocalBusiness + ProfessionalService for richer SERP eligibility |
-| Service | `https://tharros.ca/#service` | The services we offer, including the 3-package OfferCatalog |
+| Service | `https://tharros.ca/#service` | The services we offer, including the 3-package OfferCatalog. Has serviceOutput + termsOfService |
 | WebSite | `https://tharros.ca/#website` | The site itself. SearchAction enables sitelinks search box |
-| FAQPage | `https://tharros.ca/#faq` | 10 questions, eligible for rich-snippet display in SERP |
+| WebPage | `https://tharros.ca/#webpage` | The homepage as a page entity. Carries speakable selectors for voice search and links everything into one graph |
+| FAQPage | `https://tharros.ca/#faq` | 10 questions, eligible for rich-snippet display in SERP. Has speakable selectors |
 | SiteNavigationElement | (no id) | Nav structure hint to crawlers |
-| BreadcrumbList | (no id) | Home breadcrumb |
+| BreadcrumbList | `https://tharros.ca/#breadcrumbs` | Home breadcrumb |
 
 ### Per-page JSON-LD
 
 Pages that aren't the homepage inject their own additional structured data:
 
-- **`/clients`** → CollectionPage with Article entries for each case + BreadcrumbList (Home → Clients)
+- **`/clients`** → CollectionPage (with one `Article` per case study and `primaryImageOfPage`) + `ItemList` (ordered list of the same studies) + BreadcrumbList (Home → Clients).
+- **`/brief`** → ContactPage (`mainEntity` = ContactPoint, `potentialAction` = CommunicateAction for brief submission) + BreadcrumbList (Home → Brief).
 
-Both reference the root WebSite and LocalBusiness via `@id`, so Google can resolve them into the same entity graph.
+All page-level entities reference the root WebSite, WebPage, and LocalBusiness via `@id`, so Google can resolve them into a single entity graph.
 
 ---
 
@@ -131,9 +146,17 @@ Older but still-honored geo meta tags. Local SEO signal.
 
 ### What's deliberately *not* there
 
-- No `verification` block. Add Google/Bing site verification by editing `metadata.verification` when those are set up.
 - No `archives`, no `bookmarks`. Not relevant.
 - No `manifest` override on per-page metadata. The root manifest covers all pages.
+
+### Search engine site verification
+
+`metadata.verification` is driven by two env vars (see `.env.example`):
+
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` → renders `<meta name="google-site-verification">`. Get this from Google Search Console → Settings → Ownership verification → HTML tag.
+- `NEXT_PUBLIC_BING_SITE_VERIFICATION` → renders `<meta name="msvalidate.01">`. Get this from Bing Webmaster Tools → Site → Settings → Ownership verification → Meta tag.
+
+Paste only the `content` value (the token), not the full `<meta>` element. Set the env vars in Vercel Project Settings for each environment that needs verification.
 
 ---
 
@@ -156,13 +179,15 @@ If you need to opt *out* of AI training (e.g. a client asks), flip the relevant 
 
 Three URLs:
 
-| URL | Priority | changeFrequency |
-|---|---|---|
-| `/` | 1.0 | weekly |
-| `/brief` | 0.9 | monthly |
-| `/clients` | 0.8 | monthly |
+| URL | Priority | changeFrequency | images |
+|---|---|---|---|
+| `/` | 1.0 | weekly | og-image.jpg + tharros-logo.svg |
+| `/clients` | 0.85 | monthly | og-image.jpg + meridian-logo.webp + echo-five-logo.svg |
+| `/brief` | 0.8 | monthly | og-image.jpg |
 
-Each URL declares its own `en-CA` hreflang alternate.
+Each URL declares its own `en-CA` + `x-default` hreflang alternates and an `images` array (image sitemap entries Google can index alongside the page).
+
+`lastModified` is a **pinned string constant**, not `new Date()`. Crawlers should not see "lastmod = today" on every build when nothing actually changed. Bump the constant manually when a real content change ships.
 
 When you add a new page, add it here too — it doesn't auto-discover.
 
