@@ -57,16 +57,16 @@ export default function WhyTharrosSection() {
           ))}
         </div>
 
-        {/* Founder line — no portrait, treated as a quoted manifesto */}
+        {/* Closing manifesto — organizational attribution */}
         <AnimatedSection delay={0.1}>
           <figure className="grid grid-cols-12 gap-x-6">
             <div className="col-span-12 md:col-span-2 flex md:flex-col items-center md:items-start gap-4 md:gap-2 mb-6 md:mb-0">
               <div className="w-12 h-12 border border-[color:var(--rule-on-dark-strong)] flex items-center justify-center">
-                <span className="num text-base text-[color:var(--accent-on-dark)]">M</span>
+                <span className="num text-base text-[color:var(--accent-on-dark)]">T</span>
               </div>
               <div className="flex flex-col">
-                <span className="type-meta text-[color:var(--ink-on-dark)]">Magnus Abdelnour</span>
-                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Founder</span>
+                <span className="type-meta text-[color:var(--ink-on-dark)]">Tharros</span>
+                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Ottawa</span>
               </div>
             </div>
             <blockquote className="col-span-12 md:col-span-10 md:pl-8 md:border-l md:border-[color:var(--rule-on-dark)]">

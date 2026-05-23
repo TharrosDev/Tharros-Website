@@ -31,13 +31,11 @@ The site uses a **single linked graph** of structured data, not a list of discon
 
 ```
 Organization (#organization)
-  ├── founder ──► Person (#founder)
   ├── areaServed ──► [Cities]
   └── contactPoint ──► [ContactPoints]
 
 LocalBusiness + ProfessionalService (#localbusiness)
   ├── parentOrganization ──► Organization (#organization)
-  ├── founder ──► Person (#founder)
   ├── makesOffer ──► [Offer: Refresh, Integrate, On-Call]
   ├── areaServed ──► [Cities]
   └── serviceArea ──► GeoCircle (50km from Ottawa)
@@ -53,9 +51,6 @@ WebSite (#website)
 FAQPage (#faq)
   └── mainEntity[] ──► [10 Question/Answer pairs]
 
-Person (#founder)
-  └── worksFor ──► Organization (#organization)
-
 SiteNavigationElement
   └── name[] / url[] ──► Top-level nav
 
@@ -67,12 +62,11 @@ BreadcrumbList (root)
 
 | Entity | `@id` | Purpose |
 |---|---|---|
-| Organization | `https://tharros.ca/#organization` | The legal/business entity. Has founder, areaServed, contactPoints |
+| Organization | `https://tharros.ca/#organization` | The legal/business entity. Has areaServed, contactPoints |
 | LocalBusiness | `https://tharros.ca/#localbusiness` | The physical/local-SEO entity. Dual-typed as LocalBusiness + ProfessionalService for richer SERP eligibility |
 | Service | `https://tharros.ca/#service` | The services we offer, including the 3-package OfferCatalog |
 | WebSite | `https://tharros.ca/#website` | The site itself. SearchAction enables sitelinks search box |
 | FAQPage | `https://tharros.ca/#faq` | 10 questions, eligible for rich-snippet display in SERP |
-| Person | `https://tharros.ca/#founder` | Magnus Abdelnour (founder) |
 | SiteNavigationElement | (no id) | Nav structure hint to crawlers |
 | BreadcrumbList | (no id) | Home breadcrumb |
 
@@ -204,8 +198,7 @@ Twitter card type is `summary_large_image`. `@TharrosAI` is set as both `creator
 
 1. If pricing model changes → update FAQPage entries in `app/layout.tsx`.
 2. If service area changes → update `SERVICE_AREAS` constant in `app/layout.tsx` (cascades to areaServed and serviceArea).
-3. If the founder's name changes → update `FOUNDER_NAME` in `app/layout.tsx`.
-4. If package names change → update the Service `hasOfferCatalog` and LocalBusiness `makesOffer` arrays in `app/layout.tsx`, plus the per-page JSON-LD where relevant.
+3. If package names change → update the Service `hasOfferCatalog` and LocalBusiness `makesOffer` arrays in `app/layout.tsx`, plus the per-page JSON-LD where relevant.
 5. If a page is added → add it to `app/sitemap.ts`.
 6. If contact email changes → update `CONTACT_EMAIL` constant in `app/layout.tsx`.
 
