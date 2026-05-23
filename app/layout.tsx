@@ -158,10 +158,24 @@ export const metadata: Metadata = {
     countryName: "Canada",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image/hero",
         width: 1200,
         height: 630,
         alt: "Tharros — modern websites and integrated AI agents for Ottawa businesses.",
+        type: "image/png",
+      },
+      {
+        url: "/opengraph-image/packages",
+        width: 1200,
+        height: 630,
+        alt: "Tharros — The Refresh, The Integrate, The On-Call: three packages for Ottawa small businesses.",
+        type: "image/png",
+      },
+      {
+        url: "/opengraph-image/slogan",
+        width: 1200,
+        height: 630,
+        alt: "Keep it Local, Keep it Canadian. — Tharros, Ottawa's website and AI agent studio.",
         type: "image/png",
       },
     ],
@@ -171,7 +185,7 @@ export const metadata: Metadata = {
     title: "Tharros — Modern Websites & AI Agents | Ottawa",
     description:
       "Modern websites. Integrated AI agents. One team, on call. Built in Ottawa for trades and small businesses. Keep it Local, Keep it Canadian.",
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image/hero"],
     creator: "@TharrosAI",
     site: "@TharrosAI",
   },
@@ -234,7 +248,7 @@ export default function RootLayout({
       height: 512,
     },
     image: [
-      `${SITE_URL}/opengraph-image`,
+      `${SITE_URL}/opengraph-image/hero`,
       `${SITE_URL}/tharros-logo.svg`,
       `${SITE_URL}/icon-512.png`,
     ],
@@ -286,7 +300,7 @@ export default function RootLayout({
     "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${SITE_URL}/#localbusiness`,
     name: SITE_NAME,
-    image: `${SITE_URL}/opengraph-image`,
+    image: `${SITE_URL}/opengraph-image/hero`,
     logo: `${SITE_URL}/tharros-logo.svg`,
     inLanguage: "en-CA",
     url: SITE_URL,
@@ -471,7 +485,7 @@ export default function RootLayout({
     about: { "@id": `${SITE_URL}/#localbusiness` },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/opengraph-image`,
+      url: `${SITE_URL}/opengraph-image/hero`,
       width: 1200,
       height: 630,
     },
