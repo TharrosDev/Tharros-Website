@@ -45,9 +45,7 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
               className="type-lead mt-8 md:mt-10 max-w-[52ch]"
             >
-              Website modernization, AI agent integration, and an optional retainer for Ottawa
-              trades and small businesses. We build the site, embed the agent, and stay reachable
-              when things change.
+              For Ottawa trades and small businesses. We build the site, embed the agent, and stay reachable when things change.
             </motion.p>
 
             <motion.div

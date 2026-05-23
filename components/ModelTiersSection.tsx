@@ -37,20 +37,12 @@ export default function ModelTiersSection() {
       <div className="page-frame">
         <SectionEyebrow numeral="§ 02" label="Builds" />
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
-          <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h2 className="type-display-2 max-w-[18ch]">
-              Three builds.<br />
-              <span className="text-[color:var(--ink-muted)]">Pick yours.</span>
-            </h2>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
-            <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
-              Pick the build that matches where the business is. After launch, fixes and new agents
-              are billed per call, or rolled into the On-Call retainer.
-            </p>
-          </AnimatedSection>
-        </div>
+        <AnimatedSection className="mb-12 md:mb-16">
+          <h2 className="type-display-2 max-w-[18ch]">
+            Three builds.<br />
+            <span className="text-[color:var(--ink-muted)]">Pick yours.</span>
+          </h2>
+        </AnimatedSection>
 
         {/* Desktop comparison table */}
         <AnimatedSection delay={0.15}>

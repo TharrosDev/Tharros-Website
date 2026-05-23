@@ -34,7 +34,7 @@ export default function WhyTharrosSection() {
           </AnimatedSection>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">
-              Keep it Local, Keep it Canadian. End-to-end web and AI, with a number you can actually call.
+              Keep it Local, Keep it Canadian.
             </p>
           </AnimatedSection>
         </div>

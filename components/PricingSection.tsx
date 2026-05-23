@@ -16,19 +16,11 @@ export default function PricingSection() {
       <div className="page-frame">
         <SectionEyebrow numeral="§ 06" label="Pricing" />
 
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
-          <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h2 className="type-display-2 max-w-[18ch]">
-              Pricing is shaped by the work, not a list.
-            </h2>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
-            <p className="type-body text-[color:var(--ink-muted)] max-w-[42ch]">
-              Mapped strictly to the scope, the integration depth, and whether you want us on call
-              after launch.
-            </p>
-          </AnimatedSection>
-        </div>
+        <AnimatedSection className="mb-12 md:mb-16">
+          <h2 className="type-display-2 max-w-[18ch]">
+            Pricing is shaped by the work, not a list.
+          </h2>
+        </AnimatedSection>
 
         <AnimatedSection delay={0.15}>
           <div className="border-t border-[color:var(--rule-strong)] grid grid-cols-1 md:grid-cols-3">
