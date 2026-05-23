@@ -233,7 +233,11 @@ export default function RootLayout({
       width: 512,
       height: 512,
     },
-    image: `${SITE_URL}/og-image.jpg`,
+    image: [
+      `${SITE_URL}/og-image.jpg`,
+      `${SITE_URL}/tharros-logo.svg`,
+      `${SITE_URL}/icon-512.png`,
+    ],
     description:
       "Ottawa-based team delivering website modernization, AI agent integration, and an On-Call retainer for small businesses and trades.",
     foundingDate: "2025",

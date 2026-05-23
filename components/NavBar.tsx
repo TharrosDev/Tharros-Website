@@ -144,7 +144,8 @@ export default function NavBar() {
               height={28}
               priority
               style={{ width: "auto", height: 22 }}
-              alt="Tharros"
+              alt="Tharros logo"
+              title="Tharros — Ottawa websites and AI agents"
               className="opacity-90 group-hover:opacity-100 transition-opacity"
             />
           </Link>
