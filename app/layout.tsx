@@ -158,11 +158,11 @@ export const metadata: Metadata = {
     countryName: "Canada",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Tharros — modern websites and integrated AI agents for Ottawa businesses.",
-        type: "image/jpeg",
+        type: "image/png",
       },
     ],
   },
@@ -171,7 +171,7 @@ export const metadata: Metadata = {
     title: "Tharros — Modern Websites & AI Agents | Ottawa",
     description:
       "Modern websites. Integrated AI agents. One team, on call. Built in Ottawa for trades and small businesses. Keep it Local, Keep it Canadian.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
     creator: "@TharrosAI",
     site: "@TharrosAI",
   },
@@ -234,7 +234,7 @@ export default function RootLayout({
       height: 512,
     },
     image: [
-      `${SITE_URL}/og-image.jpg`,
+      `${SITE_URL}/opengraph-image`,
       `${SITE_URL}/tharros-logo.svg`,
       `${SITE_URL}/icon-512.png`,
     ],
@@ -286,7 +286,7 @@ export default function RootLayout({
     "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": `${SITE_URL}/#localbusiness`,
     name: SITE_NAME,
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/opengraph-image`,
     logo: `${SITE_URL}/tharros-logo.svg`,
     inLanguage: "en-CA",
     url: SITE_URL,
@@ -471,7 +471,7 @@ export default function RootLayout({
     about: { "@id": `${SITE_URL}/#localbusiness` },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/og-image.jpg`,
+      url: `${SITE_URL}/opengraph-image`,
       width: 1200,
       height: 630,
     },
