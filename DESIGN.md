@@ -9,17 +9,19 @@ colors:
   ink: "oklch(18% 0.02 250)"
   ink-muted: "oklch(42% 0.024 250)"
   ink-faint: "oklch(48% 0.025 250)"
-  ink-on-dark: "oklch(96% 0.003 80)"
-  ink-on-dark-muted: "oklch(72% 0.008 250)"
-  ink-on-dark-faint: "oklch(64% 0.014 250)"
+  ink-on-dark: "oklch(97% 0.003 80)"
+  ink-on-dark-muted: "oklch(84% 0.012 250)"
+  ink-on-dark-faint: "oklch(74% 0.014 250)"
   rule: "oklch(90% 0.005 250)"
   rule-strong: "oklch(82% 0.008 250)"
   rule-on-dark: "oklch(30% 0.012 250)"
   rule-on-dark-strong: "oklch(38% 0.014 250)"
+  surface-hover: "oklch(96.5% 0.006 250)"
   accent: "oklch(50% 0.20 260)"
   accent-strong: "oklch(42% 0.22 260)"
   accent-soft: "oklch(95% 0.04 260)"
-  accent-on-dark: "oklch(78% 0.17 260)"
+  accent-soft-strong: "oklch(92% 0.055 260)"
+  accent-on-dark: "oklch(82% 0.16 260)"
 typography:
   display-1:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
@@ -99,8 +101,9 @@ This system explicitly rejects the slate-on-sky AI-SaaS reflex (the training-dat
 - One committed accent: cobalt `oklch(50% 0.20 260)`. Rare appearances.
 - Hairline rules as the primary divider. Cards are absent.
 - Asymmetric long-form layouts on a 12-column grid; headlines left-set.
-- Schematic SVG content (wiring, data-flow, pipeline) replaces stock imagery.
-- Motion is restrained: a single staggered page-load reveal plus a thin cobalt scroll-progress strip at the top of the viewport. No scattered micro-interactions.
+- Schematic SVG content (wiring, data-flow, pipeline) replaces stock imagery, and it is the spine of the page: schematics draw themselves on scroll and route a live cobalt signal.
+- Each section carries a distinct composition (cascade, table, triptych, pipeline) so no two read alike. Variation in layout, unity in the drafting language.
+- Motion is choreographed but disciplined: plotter draw-on for schematics, a signal pulse riding the wires, a scroll-linked pipeline fill, and tuned reveals. Every animation has a static reduced-motion end-state. No decorative motion.
 
 ## 2. Colors
 
@@ -110,11 +113,13 @@ A two-surface palette (bone-warm and tool-steel graphite) with a single saturate
 - **Cobalt** (`oklch(50% 0.20 260)`): the only saturated color in the system. Used on primary buttons, the accented agent node in diagrams, single highlighted spans in headlines, the On-Call column wash in the comparison table, the scroll-progress strip at the top of the viewport. Should appear on ≤10% of any visible surface.
 - **Cobalt Strong** (`oklch(42% 0.22 260)`): hover state for primary buttons. Slightly darker, slightly more saturated.
 - **Cobalt Soft** (`oklch(95% 0.04 260)`): the wash. Used on the On-Call column in `ModelTiersSection`, on focused/selected form controls in the wizard, as text selection background. Whisper of accent without commitment.
-- **Cobalt On-Dark** (`oklch(78% 0.17 260)`): lifted variant for accent text on graphite surfaces. Brighter so it reads at distance and meets ~6:1 contrast.
+- **Cobalt Soft Strong** (`oklch(92% 0.055 260)`): the wash, one step deeper. Used only as the hover state of the On-Call column cells in the comparison table, so the recommended column responds to the pointer without leaving the soft-wash family.
+- **Cobalt On-Dark** (`oklch(82% 0.16 260)`): lifted variant for accent text on graphite surfaces. Brighter and slightly desaturated so it reads at distance and meets ~8:1 contrast.
 
 ### Neutral (light surfaces)
 - **Bone-Warm Surface** (`oklch(98% 0.004 80)`): the primary page background. Warm-tinted, never pure white. Used on home, brief, clients hero, and most sections.
 - **Bone-Warm Elevated** (`oklch(99.2% 0.003 80)`): faintly lifted from surface. Used for inset previews (client screenshot frame, placeholder card, wizard card body).
+- **Surface Hover** (`oklch(96.5% 0.006 250)`): faint cool-tinted wash, one step below surface. Used only as the hover state of comparison-table rows on bone.
 - **Ink** (`oklch(18% 0.02 250)`): primary text. Near-black with a cool tint toward cobalt's hue family. ~14:1 on bone surface.
 - **Ink Muted** (`oklch(42% 0.024 250)`): secondary text, lead paragraphs, body in metadata rows. ~6:1 on bone (passes AA body).
 - **Ink Faint** (`oklch(48% 0.025 250)`): tertiary marks (the `§ 0X` numerals, `<dt>` labels, FIG. captions). ~4.5:1 on bone (passes AA small text).
@@ -124,9 +129,9 @@ A two-surface palette (bone-warm and tool-steel graphite) with a single saturate
 ### Neutral (dark surfaces)
 - **Tool-Steel Graphite** (`oklch(20% 0.012 250)`): dark surface for `WhatWeBuildsSection`, `WhyTharrosSection`, footer, ChatDemoSection. Colder than slate-950, more "machined."
 - **Graphite Elevated** (`oklch(24% 0.014 250)`): legacy card-like inset.
-- **Ink On-Dark** (`oklch(96% 0.003 80)`): primary text on graphite. ~14:1.
-- **Ink On-Dark Muted** (`oklch(72% 0.008 250)`): secondary text on graphite. ~8:1.
-- **Ink On-Dark Faint** (`oklch(64% 0.014 250)`): tertiary on graphite. ~4.6:1.
+- **Ink On-Dark** (`oklch(97% 0.003 80)`): primary text on graphite. ~14:1.
+- **Ink On-Dark Muted** (`oklch(84% 0.012 250)`): secondary text on graphite. ~9:1. Tuned to AAA, not the AA floor.
+- **Ink On-Dark Faint** (`oklch(74% 0.014 250)`): tertiary on graphite (eyebrows, `<dt>`, mono tags). ~6.5:1.
 - **Rule On-Dark** (`oklch(30% 0.012 250)`): hairline on graphite.
 - **Rule On-Dark Strong** (`oklch(38% 0.014 250)`): emphasized hairline on graphite.
 
@@ -188,13 +193,24 @@ This system uses no shadows. Depth comes from tonal layering (bone surface → b
 ### Navigation
 - **Style:** fixed top-bar, full-width, no pill shape. Transparent until the user scrolls 24px, then bone-surface with a hairline rule at the bottom.
 - **Links:** mono section number + Geist label (`01 Demo`, `02 Builds`). Faint section number turns cobalt on hover.
+- **Active (scroll-spy):** the section currently under the navbar lights its mono number cobalt and its label to full ink, driven by an `IntersectionObserver` over the home sections (`data-active` on `.nav-link`). The active number is the same cobalt as hover, so the system reads as one state language.
 - **Mobile:** full-bleed overlay menu with display-3 link labels, mono section numbers, primary CTA pinned to bottom.
 
 ### Signature: Eyebrow + Spine
 Every section opens with a mono eyebrow: `§ 0X` numeral + hairline rule + uppercase mono label. This is the engineer-drawing convention that ties the system together. The 12-column page-frame grid is left-set; H2s, leads, and content stay in `col-span-8`, with the right `col-span-4` reserved for metadata, diagrams, or breathing room.
 
 ### Signature: Diagrams
-SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, 4 nodes vertical), compact wiring strip (hero mobile, 4 nodes horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern), placeholder schematic (`/clients` empty state, screenshot fallback).
+SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, vertical spine with a branch to inbox/CRM), compact wiring strip (hero mobile, 4 nodes horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern, each differentiated: in-scope branch / capture check / overnight gap), process pipeline (`HowItWorksSection`, scroll-linked rail), placeholder schematic (`/clients` empty state, screenshot fallback).
+
+Diagrams are **animated and live**, not static. On scroll into view they plot themselves (strokes trace via `pathLength`, labels fade up, accent node fills last) through a staggered parent, then a cobalt signal dot routes the wire path on a loop. Primitives live in `components/diagrams/schematic.tsx` (`useDrawInView`, `drawStroke`, `fadeNode`/`fadeLabel`, `SignalDot`). The hero diagram adds node-hover lift and a few-px pointer parallax. All diagrams are `aria-hidden`; their meaning is carried by adjacent text and `meta-row` callouts.
+
+### Signature: Motion System
+The page reads as a drawing assembling itself. The vocabulary, all gated on `prefers-reduced-motion` and built only from compositor-safe properties (transform, opacity, SVG `pathLength`, `offsetDistance` via per-frame `getPointAtLength`):
+- **Plotter draw-on:** schematic strokes trace in on first view (`useInView` `once`). The static end-state is the reduced-motion fallback.
+- **Signal pulse:** a cobalt dot rides a guide path on a loop. This is a meaningful schematic element (routing), not a decorative pulse-ring or ping. It **pauses when its diagram scrolls off-screen** (a separate live, non-`once`, in-view gate) so idle rAF loops don't run.
+- **Scroll-linked fills:** the Process pipeline rail and the Problem drain line fill via `scaleY` bound to `useScroll` progress; Process stage-nodes light cobalt as they enter the viewport.
+- **Reveals:** section content slides up via `AnimatedSection` (no opacity dependency, so SSR content shows even if JS is slow), with intentional per-section stagger.
+- **Micro-interactions:** primary-button arrow nudges forward on hover, comparison-table rows wash on hover, nav scroll-spy. All transition-based, so the reduced-motion killswitch neutralizes them.
 
 ### Signature: Metadata Row
 A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for contact strips, file metadata on client rows, footer office details, hero bottom strip. Replaces the "icon + label + caption" pattern.
@@ -203,7 +219,19 @@ A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for cont
 A 1px cobalt bar fixed at the very top of the viewport (`z-index: 70`, above NavBar). `scaleX` bound to scroll position via `useSpring` (stiffness 180, damping 28). Reads as a technical measurement strip, not decoration. Hidden under `prefers-reduced-motion`.
 
 ### Signature: Comparison Table
-The three packages render in a real `<table>` on desktop (not cards). The On-Call column has an `accent-soft` background wash to mark the recommended choice. Cells use `●` for "included," `—` for "not included" (typographic markers, mono numerals for string values). Mobile collapses to a stacked variant with the same data shape.
+The three packages render in a real `<table>` on desktop (not cards). The On-Call column has an `accent-soft` background wash to mark the recommended choice, plus a mono `◆ RECOMMENDED` tag (cobalt, 11px) and a row-hover wash (`surface-hover` on bone cells, `accent-soft-strong` on the On-Call column). Cells use `●` for "included," `—` for "not included" (typographic markers, mono numerals for string values). On scroll into view the `●` markers pop in column by column (a short staggered sequence), so the table reads as it assembles. Mobile collapses to a stacked variant with the same data shape and the same `◆ RECOMMENDED` tag.
+
+### Signature: Section Compositions
+No two home sections share a body layout; each is a distinct "plate" in one drawing set:
+- **Problem (§01):** an escalating cascade. Content steps rightward per item while numbered markers stay pinned to a left rail; a cobalt drain line fills down the rail on scroll.
+- **Builds (§02):** the comparison table above, treated as the centerpiece.
+- **Agents (§03):** numbered rows, each paired with a differentiated, animated data-flow diagram.
+- **Process (§04):** a scroll-linked vertical pipeline; stages light cobalt on entry.
+- **Why (§05):** a poster triptych (oversized faint numerals) followed by a near-full-bleed founder quote at display-2 scale, the emotional peak. `rhythm-breath`.
+- **Pricing (§06):** a terse three-factor grid with drafted `[ A ]` brackets. `rhythm-tight`, the quiet close.
+
+### Signature: End Plate
+The footer closes the drawing set with a terminal marker: a mono `◼ END OF DRAWING` / `FIG. 01–06` row over a hairline, echoing a drafting sheet's end plate.
 
 ## 6. Do's and Don'ts
 
@@ -216,15 +244,18 @@ The three packages render in a real `<table>` on desktop (not cards). The On-Cal
 - **Do** keep body line length to 60ch and lead paragraphs to 62ch.
 - **Do** use the `.type-display-*` / `.type-lead` / `.type-body` / `.type-meta` utility classes for size; never hand-roll per-breakpoint font-size ladders.
 - **Do** vary section vertical rhythm across the page: `.rhythm-tight`, `.rhythm-default`, `.rhythm-breath`. WhyTharros gets breath (manifesto); Pricing gets tight (terse close).
-- **Do** scope reveals to a single staggered page-load via `AnimatedSection`; use slide-up only (no opacity dependency, so content is visible even if JS is slow).
-- **Do** respect `prefers-reduced-motion` at both the global CSS layer and via `useReducedMotion` in HeroSection / ScrollProgress.
+- **Do** reveal reading content via `AnimatedSection` slide-up only (no opacity dependency, so content is visible even if JS is slow). Decorative-only diagram layers may use opacity.
+- **Do** build new diagrams from the shared primitives in `components/diagrams/schematic.tsx` (`useDrawInView`, `drawStroke`, `SignalDot`) rather than re-rolling draw-on or signal logic.
+- **Do** gate the signal pulse on a live (non-`once`) in-view check so it pauses off-screen; gate draw-on on a `once` check so it plays once.
+- **Do** give every animation a static reduced-motion end-state, and animate only transform / opacity / `pathLength` / `offsetDistance`. Never animate layout properties.
+- **Do** respect `prefers-reduced-motion` at both the global CSS layer and via `useReducedMotion` in every motion component (hero, schematics, scroll-linked rails, ScrollProgress).
 
 ### Don't:
 - **Don't** use `#fff` or `#000`. Every neutral is tinted toward cobalt's hue family.
 - **Don't** add a second saturated color. Cobalt is the only pigment.
 - **Don't** use `box-shadow` for elevation. Use hairlines and surface tone.
 - **Don't** use glassmorphism, `backdrop-blur`, or decorative blur effects.
-- **Don't** add `animate-ping`, decorative glow blobs, hover progress bars, or pulse-ring loaders.
+- **Don't** add `animate-ping`, decorative glow blobs, hover progress bars, or pulse-ring loaders. The cobalt signal dot is exempt only because it is a meaningful schematic element (it traces the wire path); it is never a free-floating pulse or ring.
 - **Don't** use side-stripe borders (`border-left` greater than 1px as a colored accent).
 - **Don't** use gradient text (`background-clip: text` on a gradient).
 - **Don't** use the hero-metric template (big number, small label, supporting stats, gradient accent).
