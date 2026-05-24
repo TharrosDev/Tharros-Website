@@ -122,7 +122,7 @@ A two-surface palette (bone-warm and tool-steel graphite) with a single saturate
 - **Rule Strong** (`oklch(82% 0.008 250)`): emphasized hairline. Under section eyebrows, around form inputs, along the HowItWorks pipeline rail.
 
 ### Neutral (dark surfaces)
-- **Tool-Steel Graphite** (`oklch(20% 0.012 250)`): dark surface for `WhatWeBuildsSection`, `WhyTharrosSection`, footer, ChatDemoSection. Colder than slate-950, more "machined."
+- **Tool-Steel Graphite** (`oklch(20% 0.012 250)`): dark surface for `WhyTharrosSection`, footer, ChatDemoSection, and the agent-rows band of `WhatWeBuildsSection` (whose header band is light). Colder than slate-950, more "machined."
 - **Graphite Elevated** (`oklch(24% 0.014 250)`): legacy card-like inset.
 - **Ink On-Dark** (`oklch(96% 0.003 80)`): primary text on graphite. ~14:1.
 - **Ink On-Dark Muted** (`oklch(72% 0.008 250)`): secondary text on graphite. ~8:1.
