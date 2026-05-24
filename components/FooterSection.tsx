@@ -62,6 +62,13 @@ export default function FooterSection() {
           </div>
         </AnimatedSection>
 
+        {/* Terminal plate marker — closes the drawing set */}
+        <div className="flex items-center gap-4 mb-6" aria-hidden="true">
+          <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)] whitespace-nowrap">◼ END OF DRAWING</span>
+          <span className="flex-1 h-px bg-[color:var(--rule-on-dark)]" />
+          <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)] whitespace-nowrap">FIG. 01–06</span>
+        </div>
+
         <div className="border-t border-[color:var(--rule-on-dark)] pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
             © {year} THARROS · OTTAWA · ALL RIGHTS RESERVED

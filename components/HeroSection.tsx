@@ -1,13 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import {
+  drawStroke,
+  fadeNode,
+  fadeLabel,
+  useDrawInView,
+  staggerParent,
+  SignalDot,
+} from "./diagrams/schematic";
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function HeroSection() {
   const reduce = useReducedMotion();
   const slide = (y: number) => (reduce ? { y: 0 } : { y });
+
+  // Pointer parallax for the desktop diagram (disabled under reduced motion).
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const px = useSpring(useTransform(mx, [-0.5, 0.5], [10, -10]), { stiffness: 120, damping: 22 });
+  const py = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 120, damping: 22 });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
     <section
       id="hero"
@@ -79,61 +112,18 @@ export default function HeroSection() {
           </dl>
         </div>
 
-        {/* Right: wiring diagram (desktop) */}
-        <div className="hidden lg:flex col-span-4 items-center justify-center pl-8 border-l border-[color:var(--rule)]">
-          <div className="w-full">
+        {/* Right: live wiring diagram (desktop) */}
+        <div
+          className="hidden lg:flex col-span-4 items-center justify-center pl-8 border-l border-[color:var(--rule)]"
+          onMouseMove={onMove}
+          onMouseLeave={onLeave}
+        >
+          <motion.div className="w-full" style={reduce ? undefined : { x: px, y: py }}>
             <WiringDiagram />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  );
-}
-
-function WiringDiagramCompact() {
-  const nodes = [
-    { label: "Visitor", sub: "Asks" },
-    { label: "Site",    sub: "We build" },
-    { label: "Agent",   sub: "We embed", accent: true },
-    { label: "You",     sub: "Routed in" },
-  ];
-  return (
-    <div>
-      <div className="num text-[11px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
-      <svg viewBox="0 0 360 70" className="diagram w-full h-auto" fill="none" aria-hidden="true">
-        {nodes.map((n, i) => {
-          const x = 4 + i * 92;
-          return (
-            <g key={i} className={n.accent ? "accent" : ""}>
-              <rect
-                x={x}
-                y={6}
-                width={80}
-                height={42}
-                stroke="currentColor"
-                strokeWidth={n.accent ? 1.5 : 1}
-                fill={n.accent ? "currentColor" : "none"}
-                fillOpacity={n.accent ? 0.08 : 0}
-              />
-              <text x={x + 8} y={24} fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.2" fill="currentColor" opacity="0.55">
-                {String(i + 1).padStart(2, "0")}
-              </text>
-              <text x={x + 8} y={38} fontFamily="var(--font-sans)" fontSize="11" fontWeight={n.accent ? 600 : 500} fill="currentColor">
-                {n.label}
-              </text>
-              {i < nodes.length - 1 && (
-                <line x1={x + 80} y1={27} x2={x + 92} y2={27} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
-              )}
-            </g>
-          );
-        })}
-      </svg>
-      <div className="meta-row mt-3">
-        {nodes.map((n) => (
-          <span key={n.label} className="num text-[11px]">{n.label.toUpperCase()} · {n.sub}</span>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -145,63 +135,165 @@ function Arrow() {
   );
 }
 
-function WiringDiagram() {
+/* ── Mobile: compact horizontal schematic, draws once, no pulse ── */
+function WiringDiagramCompact() {
+  const { ref, reduce, animate } = useDrawInView();
+  const nodes = [
+    { label: "Visitor", sub: "Asks" },
+    { label: "Site", sub: "We build" },
+    { label: "Agent", sub: "We embed", accent: true },
+    { label: "You", sub: "Routed in" },
+  ];
   return (
-    <svg viewBox="0 0 300 460" className="diagram w-full h-auto" fill="none" aria-hidden="true">
-      <defs>
-        <marker id="dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="6" markerHeight="6">
-          <circle cx="3" cy="3" r="2" fill="currentColor" />
-        </marker>
-      </defs>
+    <div>
+      <div className="num text-[11px] text-[color:var(--ink-faint)] mb-4">FIG. 01 · END-TO-END BUILD</div>
+      <motion.svg
+        ref={ref}
+        viewBox="0 0 360 70"
+        className="diagram w-full h-auto"
+        fill="none"
+        aria-hidden="true"
+        variants={staggerParent(reduce)}
+        initial={reduce ? "visible" : "hidden"}
+        animate={animate}
+      >
+        {nodes.map((n, i) => {
+          const x = 4 + i * 92;
+          return (
+            <g key={i} className={n.accent ? "accent" : ""}>
+              <motion.rect
+                variants={drawStroke}
+                x={x}
+                y={6}
+                width={80}
+                height={42}
+                stroke="currentColor"
+                strokeWidth={n.accent ? 1.5 : 1}
+                fill={n.accent ? "currentColor" : "none"}
+                fillOpacity={n.accent ? 0.08 : 0}
+              />
+              <motion.text variants={fadeLabel} x={x + 8} y={24} fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.2" fill="currentColor" opacity="0.55">
+                {String(i + 1).padStart(2, "0")}
+              </motion.text>
+              <motion.text variants={fadeLabel} x={x + 8} y={38} fontFamily="var(--font-sans)" fontSize="11" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+                {n.label}
+              </motion.text>
+              {i < nodes.length - 1 && (
+                <motion.line variants={drawStroke} x1={x + 80} y1={27} x2={x + 92} y2={27} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
+              )}
+            </g>
+          );
+        })}
+      </motion.svg>
+      <div className="meta-row mt-3">
+        {nodes.map((n) => (
+          <span key={n.label} className="num text-[11px]">{n.label.toUpperCase()} · {n.sub}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-      {/* Visitor node */}
-      <g>
-        <rect x="40" y="20" width="220" height="48" stroke="currentColor" strokeWidth="1" />
-        <text x="56" y="42" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">01 · VISITOR</text>
-        <text x="56" y="58" fontFamily="var(--font-sans)" fontSize="13" fontWeight="500" fill="currentColor">Lands on the site</text>
-      </g>
+/* ── Desktop: vertical wiring schematic, draws on load then routes a signal ── */
+function WiringDiagram() {
+  const { ref, visible, reduce, animate } = useDrawInView("-5%");
+  const [hover, setHover] = useState<number | null>(null);
 
-      {/* Connector */}
-      <line x1="150" y1="68" x2="150" y2="118" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
+  const nodes = [
+    { i: 0, y: 20, h: 48, code: "01 · VISITOR", label: "Lands on the site", sub: "Asks a question" },
+    { i: 1, y: 118, h: 48, code: "02 · SITE", label: "Modern website (we build)", sub: "The front door" },
+    { i: 2, y: 216, h: 68, code: "03 · AGENT", label: "AI agent (we embed)", sub: "Inquiry · Lead · After-hours", accent: true },
+  ];
+  // Signal guide: spine down through the nodes, then branch to the inbox.
+  const signalPath = "M150 44 L150 118 L150 216 L150 300 L80 320 L80 334";
 
-      {/* Site node */}
-      <g>
-        <rect x="40" y="118" width="220" height="48" stroke="currentColor" strokeWidth="1" />
-        <text x="56" y="140" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">02 · SITE</text>
-        <text x="56" y="156" fontFamily="var(--font-sans)" fontSize="13" fontWeight="500" fill="currentColor">Modern website (we build)</text>
-      </g>
+  return (
+    <div>
+      <motion.svg
+        ref={ref}
+        viewBox="0 0 300 460"
+        className="diagram w-full h-auto"
+        fill="none"
+        aria-hidden="true"
+        variants={staggerParent(reduce)}
+        initial={reduce ? "visible" : "hidden"}
+        animate={animate}
+      >
+        {/* connectors between stacked nodes */}
+        <motion.line variants={drawStroke} x1="150" y1="68" x2="150" y2="118" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
+        <motion.line variants={drawStroke} x1="150" y1="166" x2="150" y2="216" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
 
-      <line x1="150" y1="166" x2="150" y2="216" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
+        {nodes.map((n) => (
+          <g
+            key={n.i}
+            className={n.accent ? "accent node-hit" : "node-hit"}
+            onMouseEnter={() => setHover(n.i)}
+            onMouseLeave={() => setHover(null)}
+          >
+            <motion.rect
+              variants={drawStroke}
+              className="node-box"
+              x="40"
+              y={n.y}
+              width="220"
+              height={n.h}
+              stroke="currentColor"
+              strokeWidth={n.accent ? 1.5 : 1}
+              fill="currentColor"
+              fillOpacity={n.accent ? 0.06 : hover === n.i ? 0.04 : 0}
+              style={{ transition: "fill-opacity 0.25s" }}
+            />
+            <motion.text variants={fadeLabel} x="56" y={n.y + 22} fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity={n.accent ? 1 : 0.5}>
+              {n.code}
+            </motion.text>
+            <motion.text variants={fadeLabel} x="56" y={n.y + 38} fontFamily="var(--font-sans)" fontSize="13" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+              {n.label}
+            </motion.text>
+            {n.accent && (
+              <motion.text variants={fadeLabel} x="56" y={n.y + 54} fontFamily="var(--font-sans)" fontSize="11" fill="currentColor" opacity="0.75">
+                {n.sub}
+              </motion.text>
+            )}
+          </g>
+        ))}
 
-      {/* Agent node — accented */}
-      <g className="accent">
-        <rect x="40" y="216" width="220" height="68" stroke="currentColor" strokeWidth="1.5" fill="currentColor" fillOpacity="0.06" />
-        <text x="56" y="240" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor">03 · AGENT</text>
-        <text x="56" y="258" fontFamily="var(--font-sans)" fontSize="13" fontWeight="600" fill="currentColor">AI agent (we embed)</text>
-        <text x="56" y="274" fontFamily="var(--font-sans)" fontSize="11" fill="currentColor" opacity="0.75">Inquiry · Lead · After-hours</text>
-      </g>
+        {/* split branch to inbox + tools */}
+        <motion.path variants={drawStroke} d="M 150 284 L 150 310 L 80 310 L 80 334" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
+        <motion.path variants={drawStroke} d="M 150 310 L 220 310 L 220 334" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
 
-      <line x1="150" y1="284" x2="150" y2="334" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
+        <g onMouseEnter={() => setHover(3)} onMouseLeave={() => setHover(null)} className="node-hit">
+          <motion.rect variants={drawStroke} x="20" y="334" width="120" height="48" stroke="currentColor" strokeWidth="1" fill="currentColor" fillOpacity={hover === 3 ? 0.04 : 0} style={{ transition: "fill-opacity 0.25s" }} />
+          <motion.text variants={fadeLabel} x="34" y="356" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">04A · INBOX</motion.text>
+          <motion.text variants={fadeLabel} x="34" y="372" fontFamily="var(--font-sans)" fontSize="12" fontWeight="500" fill="currentColor">You, on the job</motion.text>
+        </g>
+        <g>
+          <motion.rect variants={drawStroke} x="160" y="334" width="120" height="48" stroke="currentColor" strokeWidth="1" />
+          <motion.text variants={fadeLabel} x="174" y="356" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">04B · CRM</motion.text>
+          <motion.text variants={fadeLabel} x="174" y="372" fontFamily="var(--font-sans)" fontSize="12" fontWeight="500" fill="currentColor">Your tools</motion.text>
+        </g>
 
-      {/* Inbox / CRM split */}
-      <g>
-        <rect x="20" y="334" width="120" height="48" stroke="currentColor" strokeWidth="1" />
-        <text x="34" y="356" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">04A · INBOX</text>
-        <text x="34" y="372" fontFamily="var(--font-sans)" fontSize="12" fontWeight="500" fill="currentColor">You, on the job</text>
-      </g>
-      <g>
-        <rect x="160" y="334" width="120" height="48" stroke="currentColor" strokeWidth="1" />
-        <text x="174" y="356" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.5">04B · CRM</text>
-        <text x="174" y="372" fontFamily="var(--font-sans)" fontSize="12" fontWeight="500" fill="currentColor">Your tools</text>
-      </g>
+        {/* the live signal */}
+        <g className="accent">
+          <SignalDot d={signalPath} duration={3.4} active={visible} r={3} />
+        </g>
 
-      {/* Branching connectors */}
-      <path d="M 150 284 L 150 310 L 80 310 L 80 334" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
-      <path d="M 150 310 L 220 310 L 220 334" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5" />
+        <motion.text variants={fadeNode} x="40" y="420" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">FIG. 01 · END-TO-END BUILD</motion.text>
+        <motion.text variants={fadeNode} x="40" y="436" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">ONE TEAM · SITE + AGENT + SUPPORT</motion.text>
+      </motion.svg>
 
-      {/* Footer label */}
-      <text x="40" y="420" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">FIG. 01 · END-TO-END BUILD</text>
-      <text x="40" y="436" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.4">ONE TEAM · SITE + AGENT + SUPPORT</text>
-    </svg>
+      <SignalStatus active={visible && !reduce} />
+    </div>
+  );
+}
+
+function SignalStatus({ active }: { active: boolean }) {
+  return (
+    <div className="mt-4 flex items-center gap-2 num text-[11px] text-[color:var(--ink-faint)]">
+      <span
+        className="inline-block w-1.5 h-1.5 rounded-full"
+        style={{ background: active ? "var(--accent)" : "var(--rule-strong)" }}
+      />
+      SIGNAL · {active ? "ROUTING" : "STATIC"}
+    </div>
   );
 }

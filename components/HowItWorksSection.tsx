@@ -1,5 +1,13 @@
 "use client";
 
+import { useRef } from "react";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useSpring,
+  useReducedMotion,
+} from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 const steps = [
@@ -24,6 +32,14 @@ const steps = [
 ];
 
 export default function HowItWorksSection() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ["start 65%", "end 55%"],
+  });
+  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+
   return (
     <section id="process" className="rhythm-default bg-[color:var(--surface)]">
       <div className="page-frame">
@@ -48,32 +64,64 @@ export default function HowItWorksSection() {
           </AnimatedSection>
         </div>
 
-        <div className="relative">
-          {/* Vertical pipeline rail */}
+        <div className="relative" ref={railRef}>
+          {/* Base pipeline rail */}
           <div className="absolute left-[14px] md:left-[28px] top-2 bottom-2 w-px bg-[color:var(--rule-strong)]" aria-hidden="true" />
+          {/* Cobalt fill that tracks scroll through the section */}
+          <motion.div
+            className="absolute left-[14px] md:left-[28px] top-2 bottom-2 w-px bg-[color:var(--accent)] origin-top"
+            style={{ scaleY: reduce ? 1 : fill }}
+            aria-hidden="true"
+          />
 
           <ol className="flex flex-col">
             {steps.map((step, i) => (
-              <AnimatedSection key={step.num} delay={i * 0.1}>
-                <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] last:border-b-0 items-start group">
-                  <div className="col-span-12 md:col-span-1 relative">
-                    <div className="w-7 h-7 md:w-14 md:h-14 -ml-[6px] md:-ml-[14px] flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--rule-strong)] group-hover:border-[color:var(--accent)] transition-colors">
-                      <span className="num text-xs md:text-sm text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">{step.num}</span>
-                    </div>
-                  </div>
-                  <div className="col-span-12 md:col-span-5 mt-4 md:mt-2">
-                    <h3 className="type-display-3">{step.label}</h3>
-                    <span className="type-meta block mt-3">{step.duration}</span>
-                  </div>
-                  <div className="col-span-12 md:col-span-6 mt-4 md:mt-2">
-                    <p className="type-body text-[color:var(--ink-muted)] max-w-[56ch]">{step.body}</p>
-                  </div>
-                </li>
-              </AnimatedSection>
+              <Step key={step.num} step={step} delay={i * 0.1} />
             ))}
           </ol>
         </div>
       </div>
     </section>
+  );
+}
+
+function Step({
+  step,
+  delay,
+}: {
+  step: { num: string; label: string; duration: string; body: string };
+  delay: number;
+}) {
+  const nodeRef = useRef<HTMLDivElement>(null);
+  const lit = useInView(nodeRef, { once: true, margin: "-45% 0px -45% 0px" });
+
+  return (
+    <AnimatedSection delay={delay}>
+      <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] last:border-b-0 items-start group">
+        <div className="col-span-12 md:col-span-1 relative">
+          <div
+            ref={nodeRef}
+            className="w-7 h-7 md:w-14 md:h-14 -ml-[6px] md:-ml-[14px] flex items-center justify-center bg-[color:var(--surface)] border transition-colors duration-500"
+            style={{
+              borderColor: lit ? "var(--accent)" : "var(--rule-strong)",
+            }}
+          >
+            <span
+              className="num text-xs md:text-sm transition-colors duration-500"
+              style={{ color: lit ? "var(--accent)" : "var(--ink)" }}
+            >
+              {step.num}
+            </span>
+          </div>
+        </div>
+        <div className="col-span-12 md:col-span-5 mt-4 md:mt-2">
+          <h3 className="type-display-3">{step.label}</h3>
+          <span className="type-meta block mt-3">{step.duration}</span>
+        </div>
+        <div className="col-span-12 md:col-span-6 mt-4 md:mt-2">
+          <p className="type-body text-[color:var(--ink-muted)] max-w-[56ch]">{step.body}</p>
+        </div>
+      </li>
+    </AnimatedSection>
   );
 }

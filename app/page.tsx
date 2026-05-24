@@ -14,7 +14,7 @@ const ModelTiersSection = dynamic(() => import("@/components/ModelTiersSection")
 
 export default function Home() {
   return (
-    <main className="bg-slate-950">
+    <main className="bg-[color:var(--surface)]">
       <HeroSection />
       
       <div className="flex flex-col">

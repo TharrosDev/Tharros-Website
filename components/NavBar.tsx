@@ -16,14 +16,47 @@ const navLinks = [
   { label: "Clients",  href: "/clients",    num: "07" },
 ];
 
+const sectionIdFromHref = (href: string) =>
+  href.startsWith("/#") ? href.replace("/#", "") : null;
+
 export default function NavBar() {
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 
   useEffect(() => { setMounted(true); }, []);
+
+  // Scroll-spy: light the nav number of the section currently under the navbar.
+  useEffect(() => {
+    if (!isHomePage || !mounted) return;
+    const ids = navLinks.map((l) => sectionIdFromHref(l.href)).filter(Boolean) as string[];
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (els.length === 0) return;
+
+    const visible = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
+          else visible.delete(e.target.id);
+        }
+        let best: string | null = null;
+        let bestRatio = 0;
+        for (const [id, ratio] of visible) {
+          if (ratio > bestRatio) { bestRatio = ratio; best = id; }
+        }
+        setActiveId(best);
+      },
+      { rootMargin: "-20% 0px -55% 0px", threshold: [0.1, 0.3, 0.6] }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isHomePage, mounted]);
 
   const navOffset = () =>
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches ? 112 : 96;
@@ -109,17 +142,23 @@ export default function NavBar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="group flex items-center gap-2 px-3 py-2 text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors"
-              >
-                <span className="num text-[11px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
-                <span className="text-sm font-medium">{link.label}</span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const id = sectionIdFromHref(link.href);
+              const active = id !== null && id === activeId;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  data-active={active}
+                  aria-current={active ? "true" : undefined}
+                  className="nav-link group flex items-center gap-2 px-3 py-2 text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors"
+                >
+                  <span className="nav-num num text-[11px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
+                  <span className="nav-label text-sm font-medium">{link.label}</span>
+                </a>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">

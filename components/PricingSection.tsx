@@ -40,7 +40,9 @@ export default function PricingSection() {
             {factors.map((f) => (
               <div key={f.num} className="py-8 md:py-10 md:px-8 md:first:pl-0 md:last:pr-0 border-b border-[color:var(--rule)] md:border-b-0 md:border-l first:border-l-0 border-[color:var(--rule)]">
                 <div className="flex items-baseline gap-3 mb-3">
-                  <span className="num text-xs text-[color:var(--accent)]">{f.num}</span>
+                  <span className="num text-xs text-[color:var(--accent)]">
+                    <span className="text-[color:var(--ink-faint)]">[</span>&thinsp;{f.num}&thinsp;<span className="text-[color:var(--ink-faint)]">]</span>
+                  </span>
                   <span className="type-meta">Factor</span>
                 </div>
                 <h3 className="type-display-3 mb-3">{f.title}</h3>

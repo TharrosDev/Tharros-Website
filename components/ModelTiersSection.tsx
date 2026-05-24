@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 type Row = {
@@ -24,13 +26,39 @@ const TIERS = [
   { key: "oncall",    name: "The On-Call",   sub: "Site + agent + retainer", note: "When you want one number to call for everything." },
 ] as const;
 
-function Cell({ value }: { value: string | boolean }) {
-  if (value === true)  return <span className="num text-[color:var(--accent)]">●</span>;
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+function Cell({ value, col, row, play, reduce }: { value: string | boolean; col: number; row: number; play: boolean; reduce: boolean }) {
+  const delay = reduce ? 0 : 0.12 + col * 0.14 + row * 0.05;
+  if (value === true)
+    return (
+      <motion.span
+        className="num text-[color:var(--accent)] inline-block"
+        initial={reduce ? false : { opacity: 0, scale: 0.4 }}
+        animate={play ? { opacity: 1, scale: 1 } : undefined}
+        transition={{ delay, duration: 0.35, ease: EASE }}
+      >
+        ●
+      </motion.span>
+    );
   if (value === false) return <span className="num text-[color:var(--ink-faint)]">—</span>;
-  return <span className="num text-xs text-[color:var(--ink)]">{value}</span>;
+  return (
+    <motion.span
+      className="num text-xs text-[color:var(--ink)] inline-block"
+      initial={reduce ? false : { opacity: 0 }}
+      animate={play ? { opacity: 1 } : undefined}
+      transition={{ delay, duration: 0.35, ease: EASE }}
+    >
+      {value}
+    </motion.span>
+  );
 }
 
 export default function ModelTiersSection() {
+  const tableRef = useRef<HTMLDivElement>(null);
+  const reduce = !!useReducedMotion();
+  const play = useInView(tableRef, { once: true, margin: "-10%" }) || reduce;
+
   return (
     <section id="builds" className="rhythm-default bg-[color:var(--surface)]">
       <div className="page-frame">
@@ -59,7 +87,7 @@ export default function ModelTiersSection() {
 
         {/* Desktop comparison table */}
         <AnimatedSection delay={0.15}>
-          <div className="hidden md:block overflow-hidden border-t border-[color:var(--rule-strong)]">
+          <div ref={tableRef} className="hidden md:block overflow-hidden border-t border-[color:var(--rule-strong)]">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[color:var(--rule)]">
@@ -72,6 +100,16 @@ export default function ModelTiersSection() {
                       className={`py-6 px-4 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)]" : ""}`}
                     >
                       <div className="flex flex-col gap-1">
+                        {i === 2 && (
+                          <motion.span
+                            className="num text-[11px] text-[color:var(--accent)] tracking-[0.14em] mb-1"
+                            initial={reduce ? false : { opacity: 0, y: 4 }}
+                            animate={play ? { opacity: 1, y: 0 } : undefined}
+                            transition={{ delay: reduce ? 0 : 0.5, duration: 0.4, ease: EASE }}
+                          >
+                            ◆ RECOMMENDED
+                          </motion.span>
+                        )}
                         <span className="num text-[11px] text-[color:var(--ink-faint)]">
                           {String(i + 1).padStart(2, "0")} / {t.sub.toUpperCase()}
                         </span>
@@ -82,18 +120,18 @@ export default function ModelTiersSection() {
                 </tr>
               </thead>
               <tbody>
-                {ROWS.map((row) => (
-                  <tr key={row.label} className="border-b border-[color:var(--rule)]">
+                {ROWS.map((row, r) => (
+                  <tr key={row.label} className="tier-row border-b border-[color:var(--rule)]">
                     <td className="py-5 pr-6 type-body text-[color:var(--ink)]">{row.label}</td>
-                    <td className="py-5 px-4"><Cell value={row.refresh} /></td>
-                    <td className="py-5 px-4"><Cell value={row.integrate} /></td>
-                    <td className="py-5 px-4 bg-[color:var(--accent-soft)]"><Cell value={row.oncall} /></td>
+                    <td className="py-5 px-4"><Cell value={row.refresh} col={0} row={r} play={play} reduce={reduce} /></td>
+                    <td className="py-5 px-4"><Cell value={row.integrate} col={1} row={r} play={play} reduce={reduce} /></td>
+                    <td className="py-5 px-4 is-accent bg-[color:var(--accent-soft)]"><Cell value={row.oncall} col={2} row={r} play={play} reduce={reduce} /></td>
                   </tr>
                 ))}
-                <tr>
+                <tr className="tier-row">
                   <td className="py-6 pr-6 type-meta align-top">Best for</td>
                   {TIERS.map((t, i) => (
-                    <td key={t.key} className={`py-6 px-4 align-top ${i === 2 ? "bg-[color:var(--accent-soft)]" : ""}`}>
+                    <td key={t.key} className={`py-6 px-4 align-top ${i === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
                       <p className="text-sm text-[color:var(--ink-muted)] max-w-[26ch] leading-snug">{t.note}</p>
                     </td>
                   ))}
@@ -111,6 +149,7 @@ export default function ModelTiersSection() {
                 <div className="flex items-baseline gap-3 mb-1">
                   <span className="num text-[11px] text-[color:var(--ink-faint)]">{String(i + 1).padStart(2, "0")}</span>
                   <span className="type-meta">{t.sub}</span>
+                  {i === 2 && <span className="num text-[11px] text-[color:var(--accent)] tracking-[0.14em] ml-auto">◆ RECOMMENDED</span>}
                 </div>
                 <h3 className="type-display-3 mb-4">{t.name}</h3>
                 <p className="text-sm text-[color:var(--ink-muted)] mb-5">{t.note}</p>

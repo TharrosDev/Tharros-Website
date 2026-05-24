@@ -22,9 +22,13 @@
   --ink:           oklch(18% 0.02 250);
   --ink-muted:     oklch(42% 0.024 250);
   --ink-faint:     oklch(48% 0.025 250);
-  --ink-on-dark:        oklch(96% 0.003 80);
-  --ink-on-dark-muted:  oklch(72% 0.008 250);
-  --ink-on-dark-faint:  oklch(64% 0.014 250);
+  /* Dark-surface tiers tuned for AAA-level legibility, not the AA floor:
+     ink-on-dark (97%)        → ~14:1 on graphite
+     ink-on-dark-muted (84%)  → ~9:1   (lead paragraphs, secondary body)
+     ink-on-dark-faint (74%)  → ~6.5:1 (eyebrows, dt, mono tags) */
+  --ink-on-dark:        oklch(97% 0.003 80);
+  --ink-on-dark-muted:  oklch(84% 0.012 250);
+  --ink-on-dark-faint:  oklch(74% 0.014 250);
 
   /* — Rules ————————————————————————————————————— */
   --rule:        oklch(90% 0.005 250);
@@ -36,7 +40,11 @@
   --accent:        oklch(50% 0.20 260);
   --accent-strong: oklch(42% 0.22 260);
   --accent-soft:   oklch(95% 0.04 260);
-  --accent-on-dark: oklch(78% 0.17 260);  /* lifted: ~6:1 on graphite */
+  --accent-soft-strong: oklch(92% 0.055 260); /* On-Call column hover wash */
+  --accent-on-dark: oklch(82% 0.16 260);  /* lifted further: ~8:1 on graphite */
+
+  /* — Interactive surface tints —————————————— */
+  --surface-hover: oklch(96.5% 0.006 250); /* table row hover on bone */
 
   /* — Danger (admin only) ——————————————————— */
   --color-danger: oklch(58% 0.20 27);
@@ -404,6 +412,38 @@ button:focus-visible,
   .diagram .accent { color: var(--accent); }
   .diagram-dark { color: var(--ink-on-dark); }
   .diagram-dark .accent { color: var(--accent-on-dark); }
+}
+
+/* ============================================================
+   Micro-interactions (Field Engineer evolution)
+   All transition-based, so the reduced-motion killswitch neutralizes them.
+   ============================================================ */
+
+@layer utilities {
+  /* Trailing arrow nudges forward on hover */
+  .btn-primary svg,
+  .btn-ghost svg { transition: transform 0.25s var(--ease-out-quart); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover svg,
+    .btn-ghost:hover svg { transform: translateX(3px); }
+  }
+
+  /* Comparison-table row wash on hover */
+  .tier-row td { transition: background-color 0.2s var(--ease-out-quart); }
+  @media (hover: hover) and (pointer: fine) {
+    .tier-row:hover td { background-color: var(--surface-hover); }
+    .tier-row:hover td.is-accent { background-color: var(--accent-soft-strong); }
+  }
+
+  /* Nav active-section indicator (scroll-spy) */
+  .nav-link .nav-num { transition: color 0.2s var(--ease-out-quart); }
+  .nav-link[data-active="true"] .nav-num { color: var(--accent); }
+  .nav-link[data-active="true"] .nav-label { color: var(--ink); }
+
+  /* Schematic node hover lift (hero) */
+  .node-hit { cursor: default; }
+  .node-box,
+  .node-fill { transition: opacity 0.25s var(--ease-out-quart); }
 }
 
 /* ============================================================
