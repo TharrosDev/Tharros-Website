@@ -1,5 +1,4 @@
 import ClientsSection from "@/components/ClientsSection";
-import FooterSection from "@/components/FooterSection";
 import { Metadata } from "next";
 import Script from "next/script";
 
@@ -162,7 +161,6 @@ export default function ClientsPage() {
       />
       <main>
         <ClientsSection />
-        <FooterSection />
       </main>
     </>
   );

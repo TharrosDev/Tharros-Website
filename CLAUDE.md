@@ -24,15 +24,16 @@ The marketing site is split across three primary pages plus the brief/clients ro
 
 | Route | File | Sections (in order) |
 |---|---|---|
-| `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02, ends the page) → `NextStep` → `FooterSection` |
-| `/product` | `app/product/page.tsx` | `WhatWeBuildsSection` (§01, the 3 agents) → `HowItWorksSection` (§02, process) → `WhyTharrosSection` (§03) → `NextStep` → `FooterSection` |
-| `/pricing` | `app/pricing/page.tsx` | `ModelTiersSection` (§01, package comparison) → `PricingSection` (§02, pricing factors) → `FooterSection` |
-| `/clients` | `app/clients/page.tsx` | `ClientsSection` → `FooterSection` |
+| `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02, ends the page) → `NextStep` |
+| `/product` | `app/product/page.tsx` | `WhatWeBuildsSection` (§01, the 3 agents) → `HowItWorksSection` (§02, process) → `WhyTharrosSection` (§03) → `NextStep` |
+| `/pricing` | `app/pricing/page.tsx` | `ModelTiersSection` (§01, package comparison) → `PricingSection` (§02, pricing factors) |
+| `/clients` | `app/clients/page.tsx` | `ClientsSection` |
 | `/brief` | `app/brief/page.tsx` | Onboarding wizard (see below) |
 
 Notes:
 - **First-on-page sections** (`WhatWeBuildsSection`, `ModelTiersSection`) carry `pt-28 md:pt-32 pb-[var(--rhythm-default)]` instead of `rhythm-default` so their content clears the fixed navbar. The `padding-block` shorthand from `.rhythm-default` can't be partially overridden in the same `@layer utilities`, so use explicit `pt`/`pb` utilities here.
-- **`NextStep`** (`components/NextStep.tsx`) is the slim dark cross-page CTA strip between the last content section and the footer on Home and Product. It is *not* a content section — keep it lightweight.
+- **No footer.** Pages do not render a site footer (`FooterSection.tsx` exists but is unused). Home and Product end on the `NextStep` CTA; Pricing ends on `PricingSection` (which carries its own "Book a call" CTA); Clients ends on `ClientsSection`.
+- **`NextStep`** (`components/NextStep.tsx`) is the slim dark cross-page CTA strip that ends Home and Product. It is *not* a content section — keep it lightweight.
 - **Nav** (`components/NavBar.tsx`) links to the page routes (`/`, `/product`, `/pricing`, `/clients`) with `usePathname` active-state highlighting — no more in-page anchor scrolling, except the hero's `#demo` "Try the agent" link on Home.
 - When you add or move a page, update **four** places: `app/sitemap.ts`, the `siteNavigation` JSON-LD in `app/layout.tsx`, `NavBar.tsx`, and per-page `metadata` + `WebPage`/`BreadcrumbList` JSON-LD (follow the `/clients` page as the template).
 

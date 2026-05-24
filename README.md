@@ -115,7 +115,6 @@ The marketing site is split across three pages. Each section component renders o
 | 2 | `ProblemSection` | light | Three pain points (missed calls, repeat questions, admin) |
 | 3 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo — ends the page |
 | – | `NextStep` | dark | Cross-page CTA → Product / Pricing |
-| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
 
 **`/product` — Product (`app/product/page.tsx`)**
 
@@ -125,15 +124,15 @@ The marketing site is split across three pages. Each section component renders o
 | 2 | `HowItWorksSection` | light | Discovery → Build & Integrate → Launch & Support |
 | 3 | `WhyTharrosSection` | dark | Three pillars + founder quote |
 | – | `NextStep` | dark | Cross-page CTA → Pricing / brief |
-| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
 
 **`/pricing` — Pricing (`app/pricing/page.tsx`)**
 
 | Order | Component | Background | Purpose |
 |---:|---|---|---|
 | 1 | `ModelTiersSection` | light | The Refresh / The Integrate / The On-Call comparison |
-| 2 | `PricingSection` | light | Pricing factors + "why no fixed price list" |
-| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
+| 2 | `PricingSection` | light | Pricing factors + "why no fixed price list" (carries its own CTA) |
+
+> **No site footer.** Pages don't render `FooterSection` — it exists in `components/` but is unused. Pages end on `NextStep` (Home/Product), `PricingSection` (Pricing), or `ClientsSection` (Clients).
 
 Cross-cutting components: `NavBar`, `PageTransition`, `BackToTop`, `AnimatedSection`, `Magnetic`, `SectionSkeleton`, `MobileChatConsole`, `NextStep`.
 
@@ -190,7 +189,7 @@ Without these vars, the home-page agent will display `Agent not configured` and 
 
 A short list of the choices that matter most when reading the code:
 
-- **Three-page marketing site.** Content is split across `/` (Home), `/product`, and `/pricing` — see the component map above. `HeroSection` ships eagerly on Home and `FooterSection` ships eagerly everywhere; every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback, keeping the initial JS payload tight on mobile.
+- **Three-page marketing site.** Content is split across `/` (Home), `/product`, and `/pricing` — see the component map above. `HeroSection` ships eagerly on Home; every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback, keeping the initial JS payload tight on mobile. There is no site footer.
 - **The live agent runs client-only.** `ChatDemoSection` is wrapped in `ChatDemoSectionWrapper` and uses the Relevance AI SDK directly in the browser; an `EmbedKey` is generated once per visitor and persisted in `localStorage`. Three free prompts per session, enforced via `localStorage` counter.
 - **Mobile chat path is separate.** `MobileChatConsole` renders a touch-optimized layout when `useIsMobile()` returns true; the desktop console is inlined in `ChatDemoSection`.
 - **Animation primitives, not animation soup.** `AnimatedSection` wraps scroll-triggered fades/scales; `Magnetic` adds cursor-pull to CTAs; `PageTransition` cross-fades between routes. Effects use GPU-accelerated transforms and `will-change: transform`.
