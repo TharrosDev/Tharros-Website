@@ -35,19 +35,26 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="pt-28 md:pt-32 pb-[var(--rhythm-default)] bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
-      <div className="page-frame">
-        <SectionEyebrow numeral="§ 01" label="Agents we build" tone="dark" />
+    <section id="solutions">
+      {/* Light header band */}
+      <div className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-10 md:pb-14">
+        <div className="page-frame">
+          <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
-        <AnimatedSection className="mb-12 md:mb-16">
-          <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">
-            Three agents.<br />
-            <span className="text-[color:var(--accent-on-dark)]">Built into your site.</span>
-          </h2>
-        </AnimatedSection>
+          <AnimatedSection>
+            <h2 className="type-display-2 max-w-[18ch]">
+              Three agents.<br />
+              <span className="text-[color:var(--accent)]">Built into your site.</span>
+            </h2>
+          </AnimatedSection>
+        </div>
+      </div>
 
-        <div className="border-t border-[color:var(--rule-on-dark)]">
-          {agents.map((agent, i) => (
+      {/* Dark content band */}
+      <div className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] pt-10 md:pt-14 pb-[var(--rhythm-default)]">
+        <div className="page-frame">
+          <div className="border-t border-[color:var(--rule-on-dark)]">
+            {agents.map((agent, i) => (
             <AnimatedSection key={agent.num} delay={i * 0.08}>
               <div className="grid grid-cols-12 gap-x-6 py-12 md:py-16 border-b border-[color:var(--rule-on-dark)] items-start">
                 <div className="col-span-12 md:col-span-1">
@@ -74,7 +81,8 @@ export default function WhatWeBuildsSection() {
                 </div>
               </div>
             </AnimatedSection>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

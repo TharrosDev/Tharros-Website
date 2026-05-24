@@ -60,7 +60,7 @@ Always run `npm run build` before declaring work done. The build includes TypeSc
 
 **Surfaces:**
 - Light sections (default): `bg-[color:var(--surface)]` (bone-warm `oklch(98% 0.004 80)`), ink text, hairline `--rule` dividers.
-- Dark sections (WhatWeBuilds, WhyTharros, footer, ChatDemo): `bg-[color:var(--surface-dark)]` (tool-steel graphite `oklch(20% 0.012 250)`), ink-on-dark text, `--rule-on-dark` dividers.
+- Dark sections (WhyTharros, footer, ChatDemo): `bg-[color:var(--surface-dark)]` (tool-steel graphite `oklch(20% 0.012 250)`), ink-on-dark text, `--rule-on-dark` dividers. `WhatWeBuilds` is a hybrid: a light (`--surface`) header band holding the §01 eyebrow + heading, then a dark band for the agent rows.
 - No grid overlays. No scanlines. No decorative blurs.
 
 **Tokens** (defined in `app/globals.css`, OKLCH only, surfaced to Tailwind via `@theme inline`):
