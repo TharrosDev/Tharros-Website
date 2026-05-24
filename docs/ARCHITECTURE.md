@@ -36,9 +36,9 @@ Technical reference for the Tharros website. Read this when you need to understa
 │  Eager (in initial JS)   │         │  Lazy (next/dynamic)     │
 │                          │         │                          │
 │  HeroSection   (Home)    │         │  ProblemSection   (Home) │
-│  FooterSection (all)     │         │  ChatDemoSection  (Home) │
-│  NavBar                  │         │  WhatWeBuilds  (Product) │
-│  PageTransition          │         │  HowItWorks    (Product) │
+│  NavBar                  │         │  ChatDemoSection  (Home) │
+│  PageTransition          │         │  WhatWeBuilds  (Product) │
+│                          │         │  HowItWorks    (Product) │
 │                          │         │  WhyTharros    (Product) │
 │                          │         │  ModelTiers    (Pricing) │
 │                          │         │  PricingSection(Pricing) │
@@ -58,7 +58,7 @@ Technical reference for the Tharros website. Read this when you need to understa
 
 - **Server components by default.** Most sections are server components — they emit static markup and ship zero client JS for their contents.
 - **`"use client"` only where needed.** Sections using `motion/react`, refs, effects, or browser APIs are client components. This is currently every section except `WhyTharrosSection` (and even that contains client-side `AnimatedSection` children).
-- **Dynamic imports for below-the-fold sections.** The three page files (`app/page.tsx`, `app/product/page.tsx`, `app/pricing/page.tsx`) use `next/dynamic` with a `SectionSkeleton` fallback for their sections; only `HeroSection` (Home) and `FooterSection` (all pages) ship eagerly. This keeps the initial JS payload small on mobile, where TTI is most fragile.
+- **Dynamic imports for below-the-fold sections.** The three page files (`app/page.tsx`, `app/product/page.tsx`, `app/pricing/page.tsx`) use `next/dynamic` with a `SectionSkeleton` fallback for their sections; only `HeroSection` (Home) ships eagerly. The pages render no site footer (`FooterSection` is unused). This keeps the initial JS payload small on mobile, where TTI is most fragile.
 - **`PageTransition`** wraps `{children}` in the root layout and cross-fades between routes.
 
 ---

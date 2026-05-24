@@ -168,6 +168,5 @@ The site has three marketing pages. If a visitor asks where to find something, p
 | `/product` | `WhyTharrosSection.tsx` | Three pillars + founder quote |
 | `/pricing` | `ModelTiersSection.tsx` | The Refresh / The Integrate / The On-Call comparison |
 | `/pricing` | `PricingSection.tsx` | Why no fixed price list |
-| all pages | `FooterSection.tsx` | Final CTA, slogan strip |
 
 If a question on the site contradicts this knowledge base, the site is right and this doc is wrong — update this doc.

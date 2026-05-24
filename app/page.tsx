@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import HeroSection from "@/components/HeroSection";
-import FooterSection from "@/components/FooterSection";
 import NextStep from "@/components/NextStep";
 import SectionSkeleton from "@/components/SectionSkeleton";
 
@@ -24,7 +23,6 @@ export default function Home() {
             { label: "View pricing", href: "/pricing" },
           ]}
         />
-        <FooterSection />
       </div>
     </main>
   );

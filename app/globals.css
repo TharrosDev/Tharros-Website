@@ -51,13 +51,13 @@
   --rhythm-default: clamp(4rem, 8vw, 8rem);
   --rhythm-breath:  clamp(6rem, 12vw, 14rem);
 
-  /* — Type scale (1.33 ratio, clamp() fluid) —— */
+  /* — Type scale (clamp() fluid, ~1.5 ratio between display steps) —— */
   --type-meta:      0.75rem;                                       /* 12px static, mono */
   --type-body:      clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);     /* 17→19 */
-  --type-lead:      clamp(1.1875rem, 1.0625rem + 0.6vw, 1.625rem); /* 19→26 */
-  --type-display-3: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);       /* 28→44 */
-  --type-display-2: clamp(2.75rem, 2.1rem + 3.2vw, 4.75rem);       /* 44→76 */
-  --type-display-1: clamp(3.75rem, 2.6rem + 5.8vw, 8.5rem);        /* 60→136 */
+  --type-lead:      clamp(1.1875rem, 1.075rem + 0.5vw, 1.5rem);    /* 19→24 */
+  --type-display-3: clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem);     /* 26→38 */
+  --type-display-2: clamp(2.5rem, 2rem + 2.6vw, 3.75rem);          /* 40→60 */
+  --type-display-1: clamp(3.5rem, 2.6rem + 4.6vw, 7rem);           /* 56→112 */
 
   /* — Legacy aliases (kept so unmigrated components still build) — */
   --color-bg:        var(--surface-dark);

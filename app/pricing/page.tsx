@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import FooterSection from "@/components/FooterSection";
 import SectionSkeleton from "@/components/SectionSkeleton";
 import { Metadata } from "next";
 import Script from "next/script";
@@ -105,7 +104,6 @@ export default function PricingPage() {
       <main>
         <ModelTiersSection />
         <PricingSection />
-        <FooterSection />
       </main>
     </>
   );

@@ -23,25 +23,25 @@ colors:
 typography:
   display-1:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(3.75rem, 2.6rem + 5.8vw, 8.5rem)"
+    fontSize: "clamp(3.5rem, 2.6rem + 4.6vw, 7rem)"
     fontWeight: 600
     lineHeight: 0.92
     letterSpacing: "-0.04em"
   display-2:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.75rem, 2.1rem + 3.2vw, 4.75rem)"
+    fontSize: "clamp(2.5rem, 2rem + 2.6vw, 3.75rem)"
     fontWeight: 600
     lineHeight: 1.0
     letterSpacing: "-0.028em"
   display-3:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem)"
+    fontSize: "clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem)"
     fontWeight: 600
     lineHeight: 1.05
     letterSpacing: "-0.022em"
   lead:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.1875rem, 1.0625rem + 0.6vw, 1.625rem)"
+    fontSize: "clamp(1.1875rem, 1.075rem + 0.5vw, 1.5rem)"
     fontWeight: 400
     lineHeight: 1.45
   body:
@@ -146,10 +146,10 @@ A two-surface palette (bone-warm and tool-steel graphite) with a single saturate
 **Character:** A single family carries display, body, and UI. Geist is contemporary geometric with enough humanist warmth to avoid the cold-grotesk trap. Geist Mono carries every numeral, metadata label, engineer-drawing caption, and `§ 0X` section marker. This is where the tradesperson-invoice voice lives.
 
 ### Hierarchy
-- **Display-1** (600, `clamp(3.75rem → 8.5rem)`, line-height 0.92, tracking -0.04em): hero headline, clients page H1.
-- **Display-2** (600, `clamp(2.75rem → 4.75rem)`, line-height 1.0, tracking -0.028em): section H2s.
-- **Display-3** (600, `clamp(1.75rem → 2.75rem)`, line-height 1.05, tracking -0.022em): section H3s, founder quote, package names in the comparison table.
-- **Lead** (400, `clamp(1.1875rem → 1.625rem)`, line-height 1.45, max-width 62ch): subheadlines, lead paragraphs that follow an H2.
+- **Display-1** (600, `clamp(3.5rem → 7rem)` / 56→112px, line-height 0.92, tracking -0.04em): hero headline, clients page H1.
+- **Display-2** (600, `clamp(2.5rem → 3.75rem)` / 40→60px, line-height 1.0, tracking -0.028em): section H2s. Capped so titles lead without dwarfing their content.
+- **Display-3** (600, `clamp(1.625rem → 2.375rem)` / 26→38px, line-height 1.05, tracking -0.022em): section H3s, founder quote, package names in the comparison table.
+- **Lead** (400, `clamp(1.1875rem → 1.5rem)` / 19→24px, line-height 1.45, max-width 62ch): subheadlines, lead paragraphs that follow an H2.
 - **Body** (400, `clamp(1.0625rem → 1.1875rem)`, line-height 1.6, max-width 60ch): primary reading text. Base 17px.
 - **Meta** (Mono, 500, 0.75rem / 12px, tracking 0.12em, uppercase): every label, eyebrow, `<dt>` in metadata rows, diagram callouts, section markers, wizard step numbers.
 

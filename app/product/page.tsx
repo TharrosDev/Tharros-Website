@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import FooterSection from "@/components/FooterSection";
 import NextStep from "@/components/NextStep";
 import SectionSkeleton from "@/components/SectionSkeleton";
 import { Metadata } from "next";
@@ -115,7 +114,6 @@ export default function ProductPage() {
             { label: "Book a discovery call", href: "/brief" },
           ]}
         />
-        <FooterSection />
       </main>
     </>
   );

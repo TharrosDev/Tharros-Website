@@ -28,7 +28,7 @@ const TIERS = [
 function Cell({ value }: { value: string | boolean }) {
   if (value === true)  return <span className="num text-[color:var(--accent)]">●</span>;
   if (value === false) return <span className="num text-[color:var(--ink-faint)]">—</span>;
-  return <span className="num text-xs text-[color:var(--ink)]">{value}</span>;
+  return <span className="num text-[13px] text-[color:var(--ink)]">{value}</span>;
 }
 
 export default function ModelTiersSection() {
@@ -81,7 +81,7 @@ export default function ModelTiersSection() {
                   <td className="py-6 pr-6 type-meta align-top">Best for</td>
                   {TIERS.map((t, i) => (
                     <td key={t.key} className={`py-6 px-4 align-top ${i === 2 ? "bg-[color:var(--accent-soft)]" : ""}`}>
-                      <p className="text-sm text-[color:var(--ink-muted)] max-w-[26ch] leading-snug">{t.note}</p>
+                      <p className="text-[15px] text-[color:var(--ink-muted)] max-w-[26ch] leading-snug">{t.note}</p>
                     </td>
                   ))}
                 </tr>
@@ -100,15 +100,15 @@ export default function ModelTiersSection() {
                   <span className="type-meta">{t.sub}</span>
                 </div>
                 <h3 className="type-display-3 mb-4">{t.name}</h3>
-                <p className="text-sm text-[color:var(--ink-muted)] mb-5">{t.note}</p>
+                <p className="text-[15px] text-[color:var(--ink-muted)] mb-5">{t.note}</p>
                 <ul className="flex flex-col gap-2">
                   {ROWS.map((row) => {
                     const v = row[t.key as "refresh" | "integrate" | "oncall"];
                     return (
-                      <li key={row.label} className="flex items-baseline gap-3 text-sm">
+                      <li key={row.label} className="flex items-baseline gap-3 text-[15px]">
                         <span className="num text-xs w-5 text-[color:var(--accent)]">{v === true ? "●" : v === false ? "—" : ""}</span>
                         <span className="text-[color:var(--ink)] flex-1">{row.label}</span>
-                        {typeof v === "string" && <span className="num text-xs text-[color:var(--ink-muted)]">{v}</span>}
+                        {typeof v === "string" && <span className="num text-[13px] text-[color:var(--ink-muted)]">{v}</span>}
                       </li>
                     );
                   })}
