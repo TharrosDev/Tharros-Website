@@ -116,7 +116,7 @@ _(none — orphaned intake components were removed when the wizard moved to `/br
 
 ## If you get stuck
 
-- Read the closest analogous existing section (the home page has 9; one of them is probably similar to what you're trying to build).
+- Read the closest analogous existing section (the site has ~7 marketing sections split across Home, `/product`, and `/pricing`; one of them is probably similar to what you're trying to build).
 - Check `node_modules/next/dist/docs/` for Next 16-specific patterns — your training data is probably for Next 14/15.
 - Ask the user before touching package copy, the JSON-LD graph, or anything in `docs/`.
 

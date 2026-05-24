@@ -19,7 +19,9 @@ Technical reference for the Tharros website. Read this when you need to understa
 │                       Next.js 16 App Router                     │
 │                                                                 │
 │   app/layout.tsx ─── Global JSON-LD graph, metadata, NavBar     │
-│   app/page.tsx ───── Home page composition                      │
+│   app/page.tsx ───── Home: Hero · Problem · ChatDemo            │
+│   app/product/ ───── Product: Agents · Process · Why            │
+│   app/pricing/ ───── Pricing: package table · pricing factors   │
 │   app/brief/ ─────── Discovery Briefing wizard (9-step)         │
 │   app/admin/briefs ─ Auth-gated admin (middleware Basic auth)   │
 │   app/api/brief/ ─── Zapier-forwarding submission endpoint      │
@@ -33,13 +35,13 @@ Technical reference for the Tharros website. Read this when you need to understa
 ┌──────────────────────────┐         ┌──────────────────────────┐
 │  Eager (in initial JS)   │         │  Lazy (next/dynamic)     │
 │                          │         │                          │
-│  HeroSection             │         │  ProblemSection          │
-│  FooterSection           │         │  ChatDemoSection         │
-│  NavBar                  │         │  ModelTiersSection       │
-│  PageTransition          │         │  WhatWeBuildsSection     │
-│                          │         │  HowItWorksSection       │
-│                          │         │  WhyTharrosSection       │
-│                          │         │  PricingSection          │
+│  HeroSection   (Home)    │         │  ProblemSection   (Home) │
+│  FooterSection (all)     │         │  ChatDemoSection  (Home) │
+│  NavBar                  │         │  WhatWeBuilds  (Product) │
+│  PageTransition          │         │  HowItWorks    (Product) │
+│                          │         │  WhyTharros    (Product) │
+│                          │         │  ModelTiers    (Pricing) │
+│                          │         │  PricingSection(Pricing) │
 └──────────────────────────┘         └──────────────────────────┘
                                                   │
                                                   ▼
@@ -56,7 +58,7 @@ Technical reference for the Tharros website. Read this when you need to understa
 
 - **Server components by default.** Most sections are server components — they emit static markup and ship zero client JS for their contents.
 - **`"use client"` only where needed.** Sections using `motion/react`, refs, effects, or browser APIs are client components. This is currently every section except `WhyTharrosSection` (and even that contains client-side `AnimatedSection` children).
-- **Dynamic imports for below-the-fold sections.** `app/page.tsx` uses `next/dynamic` with a `SectionSkeleton` fallback for every section except `HeroSection` and `FooterSection`. This keeps the initial JS payload small on mobile, where TTI is most fragile.
+- **Dynamic imports for below-the-fold sections.** The three page files (`app/page.tsx`, `app/product/page.tsx`, `app/pricing/page.tsx`) use `next/dynamic` with a `SectionSkeleton` fallback for their sections; only `HeroSection` (Home) and `FooterSection` (all pages) ship eagerly. This keeps the initial JS payload small on mobile, where TTI is most fragile.
 - **`PageTransition`** wraps `{children}` in the root layout and cross-fades between routes.
 
 ---

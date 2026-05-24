@@ -23,7 +23,7 @@ export default function WhyTharrosSection() {
   return (
     <section id="why" className="rhythm-breath bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 05" label="Why Tharros" tone="dark" />
+        <SectionEyebrow numeral="§ 03" label="Why Tharros" tone="dark" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-12 md:mb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">

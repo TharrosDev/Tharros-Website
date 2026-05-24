@@ -156,16 +156,18 @@ Things the agent should never say:
 
 ## 9. Reference: site sections that hold canonical copy
 
-| Section | What it covers |
-|---|---|
-| `HeroSection.tsx` | Top-line value prop, primary CTA |
-| `ProblemSection.tsx` | The three pains (missed calls, repeat questions, admin) |
-| `ChatDemoSection.tsx` | Live demo of this agent |
-| `ModelTiersSection.tsx` | The Refresh / The Integrate / The On-Call cards |
-| `WhatWeBuildsSection.tsx` | The three agent patterns |
-| `HowItWorksSection.tsx` | Discovery / Build & Integrate / Launch & Support |
-| `WhyTharrosSection.tsx` | Three pillars + founder quote |
-| `PricingSection.tsx` | Why no fixed price list |
-| `FooterSection.tsx` | Final CTA, slogan strip |
+The site has three marketing pages. If a visitor asks where to find something, point them to the right page (`/product` for what we build, `/pricing` for packages and pricing).
+
+| Page | Section | What it covers |
+|---|---|---|
+| `/` (Home) | `HeroSection.tsx` | Top-line value prop, primary CTA |
+| `/` (Home) | `ProblemSection.tsx` | The three pains (missed calls, repeat questions, admin) |
+| `/` (Home) | `ChatDemoSection.tsx` | Live demo of this agent (the page ends here) |
+| `/product` | `WhatWeBuildsSection.tsx` | The three agent patterns |
+| `/product` | `HowItWorksSection.tsx` | Discovery / Build & Integrate / Launch & Support |
+| `/product` | `WhyTharrosSection.tsx` | Three pillars + founder quote |
+| `/pricing` | `ModelTiersSection.tsx` | The Refresh / The Integrate / The On-Call comparison |
+| `/pricing` | `PricingSection.tsx` | Why no fixed price list |
+| all pages | `FooterSection.tsx` | Final CTA, slogan strip |
 
 If a question on the site contradicts this knowledge base, the site is right and this doc is wrong — update this doc.

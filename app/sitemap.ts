@@ -27,6 +27,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: `${SITE_URL}/product`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      images: [`${SITE_URL}/og-image.jpg`],
+      alternates: {
+        languages: {
+          "en-CA": `${SITE_URL}/product`,
+          "x-default": `${SITE_URL}/product`,
+        },
+      },
+    },
+    {
+      url: `${SITE_URL}/pricing`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      images: [`${SITE_URL}/og-image.jpg`],
+      alternates: {
+        languages: {
+          "en-CA": `${SITE_URL}/pricing`,
+          "x-default": `${SITE_URL}/pricing`,
+        },
+      },
+    },
+    {
       url: `${SITE_URL}/clients`,
       lastModified: LAST_MODIFIED,
       changeFrequency: "monthly",

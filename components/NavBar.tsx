@@ -6,14 +6,13 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 
+const MotionLink = motion.create(Link);
+
 const navLinks = [
-  { label: "Demo",     href: "/#demo",     num: "01" },
-  { label: "Builds",   href: "/#builds",    num: "02" },
-  { label: "Agents",   href: "/#solutions", num: "03" },
-  { label: "Process",  href: "/#process",   num: "04" },
-  { label: "Why",      href: "/#why",       num: "05" },
-  { label: "Pricing",  href: "/#pricing",   num: "06" },
-  { label: "Clients",  href: "/clients",    num: "07" },
+  { label: "Home",     href: "/",         num: "01" },
+  { label: "Product",  href: "/product",  num: "02" },
+  { label: "Pricing",  href: "/pricing",  num: "03" },
+  { label: "Clients",  href: "/clients",  num: "04" },
 ];
 
 export default function NavBar() {
@@ -25,21 +24,13 @@ export default function NavBar() {
   const navOffset = () =>
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches ? 112 : 96;
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     if (href === "/" && isHomePage) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    if (href.startsWith("/#") && isHomePage) {
-      e.preventDefault();
-      const id = href.replace("/#", "");
-      const el = document.getElementById(id);
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.pageYOffset - navOffset();
-        window.scrollTo({ top, behavior: "smooth" });
-        window.history.pushState(null, "", href);
-      }
     }
   };
 
@@ -151,17 +142,25 @@ export default function NavBar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="group flex items-center gap-2 px-3 py-2 text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors"
-              >
-                <span className="num text-[11px] text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
-                <span className="text-sm font-medium">{link.label}</span>
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  aria-current={active ? "page" : undefined}
+                  className={`group flex items-center gap-2 px-3 py-2 transition-colors ${
+                    active ? "text-[color:var(--ink)]" : "text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]"
+                  }`}
+                >
+                  <span className={`num text-[11px] transition-colors ${
+                    active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"
+                  }`}>{link.num}</span>
+                  <span className="text-sm font-medium">{link.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">
@@ -208,20 +207,24 @@ export default function NavBar() {
               <span className="eyebrow mb-10">Menu</span>
 
               <nav className="flex flex-col">
-                {navLinks.map((link, i) => (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => { handleLinkClick(e, link.href); setMobileOpen(false); }}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.04, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-                    className="group flex items-baseline gap-5 py-5 border-b border-[color:var(--rule)]"
-                  >
-                    <span className="num text-xs text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)] transition-colors">{link.num}</span>
-                    <span className="type-display-3 group-hover:text-[color:var(--accent)] transition-colors">{link.label}</span>
-                  </motion.a>
-                ))}
+                {navLinks.map((link, i) => {
+                  const active = isActive(link.href);
+                  return (
+                    <MotionLink
+                      key={link.href}
+                      href={link.href}
+                      onClick={(e) => { handleLinkClick(e, link.href); setMobileOpen(false); }}
+                      aria-current={active ? "page" : undefined}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.04, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                      className="group flex items-baseline gap-5 py-5 border-b border-[color:var(--rule)]"
+                    >
+                      <span className={`num text-xs transition-colors ${active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"}`}>{link.num}</span>
+                      <span className={`type-display-3 transition-colors ${active ? "text-[color:var(--accent)]" : "group-hover:text-[color:var(--accent)]"}`}>{link.label}</span>
+                    </MotionLink>
+                  );
+                })}
               </nav>
 
               <div className="mt-auto pt-10 flex flex-col gap-4 safe-bottom">
