@@ -406,6 +406,47 @@ button:focus-visible,
   .diagram .accent { color: var(--accent); }
   .diagram-dark { color: var(--ink-on-dark); }
   .diagram-dark .accent { color: var(--accent-on-dark); }
+
+  /* Vertical signal stack — a diagrammatic step list with square markers
+     joined by a hairline rail. Authored for dark surfaces. */
+  .signal-stack {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .signal-node {
+    position: relative;
+    padding-left: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-on-dark-faint);
+  }
+  .signal-node::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--rule-on-dark-strong);
+  }
+  .signal-node:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 2.5px;
+    top: calc(0.15em + 6px);
+    width: 1px;
+    height: calc(100% + 0.5rem - 6px);
+    background: var(--rule-on-dark);
+  }
+  .signal-node[data-accent] { color: var(--accent-on-dark); }
+  .signal-node[data-accent]::before {
+    background: var(--accent-on-dark);
+    border-color: var(--accent-on-dark);
+  }
 }
 
 /* ============================================================

@@ -40,7 +40,7 @@ export default function WhyTharrosSection() {
         </div>
 
         {/* Triptych: three poster panels, oversized faint numerals */}
-        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[color:var(--rule-on-dark)] mb-24 md:mb-36">
+        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[color:var(--rule-on-dark)]">
           {pillars.map((p, i) => (
             <AnimatedSection
               key={p.num}
@@ -59,29 +59,6 @@ export default function WhyTharrosSection() {
             </AnimatedSection>
           ))}
         </div>
-
-        {/* Closing manifesto — near-full-bleed, organizational attribution */}
-        <AnimatedSection delay={0.1}>
-          <figure>
-            <span className="type-meta text-[color:var(--ink-on-dark-muted)] block mb-8">The bet we make</span>
-            <blockquote>
-              <p className="text-[color:var(--ink-on-dark)] max-w-[22ch] md:max-w-[20ch] [font-size:var(--type-display-2)] [line-height:1.02] [letter-spacing:-0.028em] font-semibold">
-                Ottawa small businesses don&apos;t need another agency. They need one number to call
-                when the site is broken, the <span className="text-[color:var(--accent-on-dark)]">agent needs tweaking</span>,
-                or a new one needs to exist by Friday.
-              </p>
-            </blockquote>
-            <figcaption className="mt-10 flex items-center gap-4">
-              <span className="w-11 h-11 border border-[color:var(--rule-on-dark-strong)] flex items-center justify-center">
-                <span className="num text-base text-[color:var(--accent-on-dark)]">T</span>
-              </span>
-              <span className="flex flex-col">
-                <span className="type-meta text-[color:var(--ink-on-dark)]">Tharros</span>
-                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Ottawa</span>
-              </span>
-            </figcaption>
-          </figure>
-        </AnimatedSection>
       </div>
     </section>
   );
