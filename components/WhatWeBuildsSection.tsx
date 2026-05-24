@@ -1,7 +1,16 @@
 "use client";
 
+import { motion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import {
+  drawStroke,
+  fadeLabel,
+  fadeNode,
+  useDrawInView,
+  staggerParent,
+  SignalDot,
+} from "./diagrams/schematic";
 
 const agents = [
   {
@@ -90,6 +99,8 @@ export default function WhatWeBuildsSection() {
 }
 
 function AgentDiagram({ kind }: { kind: "inquiry" | "lead" | "afterhours" }) {
+  const { ref, visible, reduce, animate } = useDrawInView();
+
   const nodes: Record<string, { label: string; sub: string; accent?: boolean }[]> = {
     inquiry:    [
       { label: "Visitor",  sub: "Asks a question" },
@@ -108,14 +119,42 @@ function AgentDiagram({ kind }: { kind: "inquiry" | "lead" | "afterhours" }) {
     ],
   };
   const list = nodes[kind];
+  const cx = (i: number) => 10 + i * 120 + 55;
 
   return (
-    <svg viewBox="0 0 360 200" className="diagram-dark w-full h-auto" fill="none" aria-hidden="true">
+    <motion.svg
+      ref={ref}
+      viewBox="0 0 360 200"
+      className="diagram-dark w-full h-auto"
+      fill="none"
+      aria-hidden="true"
+      variants={staggerParent(reduce)}
+      initial={reduce ? "visible" : "hidden"}
+      animate={animate}
+    >
+      {list.map((_, i) =>
+        i < list.length - 1 ? (
+          <motion.line
+            key={`c${i}`}
+            variants={drawStroke}
+            x1={10 + i * 120 + 110}
+            y1={100}
+            x2={10 + (i + 1) * 120}
+            y2={100}
+            stroke="currentColor"
+            strokeWidth="1"
+            opacity="0.5"
+            strokeDasharray={kind === "afterhours" && i === 1 ? "1 5" : "2 3"}
+          />
+        ) : null
+      )}
+
       {list.map((n, i) => {
         const x = 10 + i * 120;
         return (
           <g key={i} className={n.accent ? "accent" : ""}>
-            <rect
+            <motion.rect
+              variants={drawStroke}
               x={x}
               y={70}
               width={110}
@@ -125,24 +164,61 @@ function AgentDiagram({ kind }: { kind: "inquiry" | "lead" | "afterhours" }) {
               fill={n.accent ? "currentColor" : "none"}
               fillOpacity={n.accent ? 0.08 : 0}
             />
-            <text x={x + 12} y={94} fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.55">
+            <motion.text variants={fadeLabel} x={x + 12} y={94} fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.2" fill="currentColor" opacity="0.55">
               {String(i + 1).padStart(2, "0")}
-            </text>
-            <text x={x + 12} y={111} fontFamily="var(--font-sans)" fontSize="13" fontWeight={n.accent ? 600 : 500} fill="currentColor">
+            </motion.text>
+            <motion.text variants={fadeLabel} x={x + 12} y={111} fontFamily="var(--font-sans)" fontSize="13" fontWeight={n.accent ? 600 : 500} fill="currentColor">
               {n.label}
-            </text>
-            <text x={x + 12} y={124} fontFamily="var(--font-sans)" fontSize="10" fill="currentColor" opacity="0.7">
+            </motion.text>
+            <motion.text variants={fadeLabel} x={x + 12} y={124} fontFamily="var(--font-sans)" fontSize="10" fill="currentColor" opacity="0.7">
               {n.sub}
-            </text>
-            {i < list.length - 1 && (
-              <line x1={x + 110} y1={100} x2={x + 120} y2={100} stroke="currentColor" strokeWidth="1" opacity="0.5" strokeDasharray="2 3" />
-            )}
+            </motion.text>
           </g>
         );
       })}
-      <text x="10" y="170" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.45">
-        FIG · DATA FLOW
-      </text>
-    </svg>
+
+      <AgentDiagramExtras kind={kind} />
+
+      <g className="accent">
+        <SignalDot
+          d={`M${cx(0)} 100 L${cx(2)} 100`}
+          duration={kind === "afterhours" ? 4.6 : 3.2}
+          active={visible}
+          r={2.6}
+        />
+      </g>
+
+      <motion.text variants={fadeNode} x="10" y="170" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.45">
+        {kind === "inquiry" ? "FIG · ANSWER / ESCALATE" : kind === "lead" ? "FIG · QUALIFY / ROUTE" : "FIG · OVERNIGHT INTAKE"}
+      </motion.text>
+    </motion.svg>
+  );
+}
+
+function AgentDiagramExtras({ kind }: { kind: "inquiry" | "lead" | "afterhours" }) {
+  if (kind === "inquiry") {
+    return (
+      <g className="accent">
+        <motion.path variants={drawStroke} d="M185 70 L185 44 L250 44" stroke="currentColor" strokeWidth="1" opacity="0.55" fill="none" />
+        <motion.text variants={fadeLabel} x="256" y="40" fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.2" fill="currentColor" opacity="0.7">IN-SCOPE ANSWER</motion.text>
+      </g>
+    );
+  }
+  if (kind === "lead") {
+    return (
+      <motion.path
+        variants={drawStroke}
+        d="M300 60 l4 4 l7 -9"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        className="accent"
+      />
+    );
+  }
+  return (
+    <motion.text variants={fadeLabel} x="245" y="64" fontFamily="var(--font-mono)" fontSize="8" letterSpacing="1.4" fill="currentColor" opacity="0.6">
+      ·· OVERNIGHT ··
+    </motion.text>
   );
 }

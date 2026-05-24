@@ -39,43 +39,47 @@ export default function WhyTharrosSection() {
           </AnimatedSection>
         </div>
 
-        <div className="border-t border-[color:var(--rule-on-dark)] mb-16 md:mb-24">
+        {/* Triptych: three poster panels, oversized faint numerals */}
+        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[color:var(--rule-on-dark)] mb-24 md:mb-36">
           {pillars.map((p, i) => (
-            <AnimatedSection key={p.num} delay={i * 0.08}>
-              <div className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule-on-dark)] items-start">
-                <div className="col-span-12 md:col-span-1">
-                  <span className="num text-sm text-[color:var(--ink-on-dark-muted)]">{p.num}</span>
-                </div>
-                <h3 className="col-span-12 md:col-span-4 type-display-3 text-[color:var(--ink-on-dark)] mt-3 md:mt-0">
-                  {p.label}
-                </h3>
-                <p className="col-span-12 md:col-span-7 type-body text-[color:var(--ink-on-dark-muted)] mt-3 md:mt-0 max-w-[60ch]">
-                  {p.body}
-                </p>
-              </div>
+            <AnimatedSection
+              key={p.num}
+              delay={i * 0.1}
+              className="relative py-10 md:py-14 md:px-8 md:first:pl-0 md:last:pr-0 border-b md:border-b-0 md:border-l first:border-l-0 border-[color:var(--rule-on-dark)]"
+            >
+              <span
+                className="num block leading-none text-[color:var(--accent-on-dark)] opacity-25 select-none"
+                style={{ fontSize: "clamp(3.5rem, 6vw, 5.5rem)" }}
+                aria-hidden="true"
+              >
+                {p.num}
+              </span>
+              <h3 className="type-display-3 text-[color:var(--ink-on-dark)] mt-5 mb-4">{p.label}</h3>
+              <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">{p.body}</p>
             </AnimatedSection>
           ))}
         </div>
 
-        {/* Closing manifesto — organizational attribution */}
+        {/* Closing manifesto — near-full-bleed, organizational attribution */}
         <AnimatedSection delay={0.1}>
-          <figure className="grid grid-cols-12 gap-x-6">
-            <div className="col-span-12 md:col-span-2 flex md:flex-col items-center md:items-start gap-4 md:gap-2 mb-6 md:mb-0">
-              <div className="w-12 h-12 border border-[color:var(--rule-on-dark-strong)] flex items-center justify-center">
-                <span className="num text-base text-[color:var(--accent-on-dark)]">T</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="type-meta text-[color:var(--ink-on-dark)]">Tharros</span>
-                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Ottawa</span>
-              </div>
-            </div>
-            <blockquote className="col-span-12 md:col-span-10 md:pl-8 md:border-l md:border-[color:var(--rule-on-dark)]">
-              <p className="type-display-3 text-[color:var(--ink-on-dark)] max-w-[28ch]">
-                &ldquo;Ottawa small businesses don&apos;t need another agency. They need one number
-                to call when the site is broken, the <span className="text-[color:var(--accent-on-dark)]">agent needs tweaking</span>,
-                or a new one needs to exist by Friday.&rdquo;
+          <figure>
+            <span className="type-meta text-[color:var(--ink-on-dark-muted)] block mb-8">The bet we make</span>
+            <blockquote>
+              <p className="text-[color:var(--ink-on-dark)] max-w-[22ch] md:max-w-[20ch] [font-size:var(--type-display-2)] [line-height:1.02] [letter-spacing:-0.028em] font-semibold">
+                Ottawa small businesses don&apos;t need another agency. They need one number to call
+                when the site is broken, the <span className="text-[color:var(--accent-on-dark)]">agent needs tweaking</span>,
+                or a new one needs to exist by Friday.
               </p>
             </blockquote>
+            <figcaption className="mt-10 flex items-center gap-4">
+              <span className="w-11 h-11 border border-[color:var(--rule-on-dark-strong)] flex items-center justify-center">
+                <span className="num text-base text-[color:var(--accent-on-dark)]">T</span>
+              </span>
+              <span className="flex flex-col">
+                <span className="type-meta text-[color:var(--ink-on-dark)]">Tharros</span>
+                <span className="type-meta text-[color:var(--ink-on-dark-muted)]">Ottawa</span>
+              </span>
+            </figcaption>
           </figure>
         </AnimatedSection>
       </div>

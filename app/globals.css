@@ -9,6 +9,7 @@
   /* — Surfaces ————————————————————————————————— */
   --surface:          oklch(98% 0.004 80);    /* bone, warm tint */
   --surface-elevated: oklch(99.2% 0.003 80);  /* card / inset above surface */
+  --surface-hover:    oklch(96.5% 0.006 250);  /* table row hover wash on bone */
   --surface-dark:     oklch(20% 0.012 250);   /* tool-steel graphite (dark sections) */
   --surface-dark-elevated: oklch(24% 0.014 250);
 
@@ -36,6 +37,7 @@
   --accent:        oklch(50% 0.20 260);
   --accent-strong: oklch(42% 0.22 260);
   --accent-soft:   oklch(95% 0.04 260);
+  --accent-soft-strong: oklch(92% 0.055 260);  /* On-Call column hover wash */
   --accent-on-dark: oklch(78% 0.17 260);  /* lifted: ~6:1 on graphite */
 
   /* — Danger (admin only) ——————————————————— */
@@ -503,4 +505,26 @@ button:focus-visible,
   [class*="surface-dark"] .meta-row    { color: var(--ink-on-dark-muted); }
   [class*="surface-dark"] .meta-row dt { color: var(--ink-on-dark-faint); }
   [class*="surface-dark"] .meta-row dd { color: var(--ink-on-dark); }
+}
+
+/* ============================================================
+   Micro-interactions (Field Engineer motion layer)
+   All transition-based, so the reduced-motion killswitch neutralizes them.
+   ============================================================ */
+
+@layer utilities {
+  /* Trailing arrow nudges forward on hover */
+  .btn-primary svg,
+  .btn-ghost svg { transition: transform 0.25s var(--ease-out-quart); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover svg,
+    .btn-ghost:hover svg { transform: translateX(3px); }
+  }
+
+  /* Comparison-table row wash on hover */
+  .tier-row td { transition: background-color 0.2s var(--ease-out-quart); }
+  @media (hover: hover) and (pointer: fine) {
+    .tier-row:hover td { background-color: var(--surface-hover); }
+    .tier-row:hover td.is-accent { background-color: var(--accent-soft-strong); }
+  }
 }
