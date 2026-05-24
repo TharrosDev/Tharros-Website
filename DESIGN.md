@@ -16,9 +16,11 @@ colors:
   rule-strong: "oklch(82% 0.008 250)"
   rule-on-dark: "oklch(30% 0.012 250)"
   rule-on-dark-strong: "oklch(38% 0.014 250)"
+  surface-hover: "oklch(96.5% 0.006 250)"
   accent: "oklch(50% 0.20 260)"
   accent-strong: "oklch(42% 0.22 260)"
   accent-soft: "oklch(95% 0.04 260)"
+  accent-soft-strong: "oklch(92% 0.055 260)"
   accent-on-dark: "oklch(78% 0.17 260)"
 typography:
   display-1:
@@ -99,8 +101,8 @@ This system explicitly rejects the slate-on-sky AI-SaaS reflex (the training-dat
 - One committed accent: cobalt `oklch(50% 0.20 260)`. Rare appearances.
 - Hairline rules as the primary divider. Cards are absent.
 - Asymmetric long-form layouts on a 12-column grid; headlines left-set.
-- Schematic SVG content (wiring, data-flow, pipeline) replaces stock imagery.
-- Motion is restrained: a single staggered page-load reveal plus a thin cobalt scroll-progress strip at the top of the viewport. No scattered micro-interactions.
+- Schematic SVG content (wiring, data-flow, pipeline) replaces stock imagery, and it is animated: schematics draw themselves on scroll and route a live cobalt signal.
+- Motion is choreographed but disciplined: plotter draw-on for schematics, a signal pulse on the wires, a scroll-linked Process pipeline that lights each stage on entry, a Problem drain line, and tuned reveals. Every animation has a static reduced-motion end-state; animate only transform / opacity / SVG pathLength / offsetDistance. No decorative motion.
 
 ## 2. Colors
 
@@ -187,14 +189,23 @@ This system uses no shadows. Depth comes from tonal layering (bone surface → b
 
 ### Navigation
 - **Style:** fixed top-bar, full-width, no pill shape. Transparent until the user scrolls 24px, then bone-surface with a hairline rule at the bottom.
-- **Links:** mono section number + Geist label (`01 Demo`, `02 Builds`). Faint section number turns cobalt on hover.
+- **Links:** mono section number + Geist label, pointing at the page routes (`/`, `/product`, `/pricing`, `/clients`). Active state is route-based (`usePathname`): the current page's number reads cobalt, its label full ink. There is no in-page scroll-spy (the site is multi-page).
 - **Mobile:** full-bleed overlay menu with display-3 link labels, mono section numbers, primary CTA pinned to bottom.
 
 ### Signature: Eyebrow + Spine
 Every section opens with a mono eyebrow: `§ 0X` numeral + hairline rule + uppercase mono label. This is the engineer-drawing convention that ties the system together. The 12-column page-frame grid is left-set; H2s, leads, and content stay in `col-span-8`, with the right `col-span-4` reserved for metadata, diagrams, or breathing room.
 
 ### Signature: Diagrams
-SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, 4 nodes vertical), compact wiring strip (hero mobile, 4 nodes horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern), placeholder schematic (`/clients` empty state, screenshot fallback).
+SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, vertical spine branching to inbox/CRM), compact wiring strip (hero mobile, horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern, each differentiated: in-scope branch / capture check / overnight gap), process pipeline (`HowItWorksSection`, scroll-linked rail), placeholder schematic (`/clients` empty state, screenshot fallback).
+
+Diagrams are **animated and live**, not static. On scroll into view they plot themselves (strokes trace via `pathLength`, labels fade up, accent node fills last) through a staggered parent, then a cobalt signal dot routes the wire on a loop. Primitives live in `components/diagrams/schematic.tsx` (`useDrawInView`, `drawStroke`, `fadeNode`/`fadeLabel`, `SignalDot`). The hero diagram adds node-hover lift and pointer parallax. All diagrams are `aria-hidden`; meaning is carried by adjacent text and `meta-row` callouts.
+
+### Signature: Motion System
+The page reads as a drawing assembling itself, all gated on `prefers-reduced-motion` and built only from compositor-safe properties (transform, opacity, SVG `pathLength`, `offsetDistance`):
+- **Plotter draw-on:** schematic strokes trace in on first view (`useInView` `once`); the static end-state is the reduced-motion fallback.
+- **Signal pulse:** a cobalt dot rides a guide path on a loop (a meaningful routing element, not a decorative pulse-ring). It **pauses when its diagram scrolls off-screen** via a separate live, non-`once`, in-view gate.
+- **Scroll-linked fills:** the Process pipeline rail and the Problem drain line fill via `scaleY` bound to `useScroll`; Process stage-nodes light cobalt as they enter the viewport.
+- **Micro-interactions:** primary-button arrow nudge on hover, comparison-table row wash (`surface-hover` / `accent-soft-strong`). All transition-based, so the reduced-motion killswitch neutralizes them.
 
 ### Signature: Metadata Row
 A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for contact strips, file metadata on client rows, footer office details, hero bottom strip. Replaces the "icon + label + caption" pattern.
@@ -203,7 +214,7 @@ A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for cont
 A 1px cobalt bar fixed at the very top of the viewport (`z-index: 70`, above NavBar). `scaleX` bound to scroll position via `useSpring` (stiffness 180, damping 28). Reads as a technical measurement strip, not decoration. Hidden under `prefers-reduced-motion`.
 
 ### Signature: Comparison Table
-The three packages render in a real `<table>` on desktop (not cards). The On-Call column has an `accent-soft` background wash to mark the recommended choice. Cells use `●` for "included," `—` for "not included" (typographic markers, mono numerals for string values). Mobile collapses to a stacked variant with the same data shape.
+The three packages render in a real `<table>` on desktop (not cards). The On-Call column has an `accent-soft` wash plus a 2px cobalt top border and a mono `◆ RECOMMENDED` tag (cobalt, 11px) to mark the recommended choice, with a row-hover wash (`surface-hover` on bone cells, `accent-soft-strong` on the On-Call column). Cells use `●` for "included," `—` for "not included" (typographic markers, mono numerals for string values), and the `●` markers pop in column by column on scroll-in. Mobile collapses to a stacked variant with the same data shape and the same `◆ RECOMMENDED` tag.
 
 ## 6. Do's and Don'ts
 
