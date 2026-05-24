@@ -28,7 +28,7 @@ export default function HowItWorksSection() {
   return (
     <section id="process" className="rhythm-default bg-[color:var(--surface)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 04" label="Process" />
+        <SectionEyebrow numeral="§ 02" label="Process" />
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">

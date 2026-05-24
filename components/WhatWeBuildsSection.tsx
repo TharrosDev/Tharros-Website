@@ -35,9 +35,9 @@ const agents = [
 
 export default function WhatWeBuildsSection() {
   return (
-    <section id="solutions" className="rhythm-default bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
+    <section id="solutions" className="pt-28 md:pt-32 pb-[var(--rhythm-default)] bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 03" label="Agents we build" tone="dark" />
+        <SectionEyebrow numeral="§ 01" label="Agents we build" tone="dark" />
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">

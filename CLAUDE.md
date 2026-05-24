@@ -18,6 +18,26 @@ Do **not** reintroduce older positioning ("training", "coaching", "Digital Workf
 
 ---
 
+## Pages & routes
+
+The marketing site is split across three primary pages plus the brief/clients routes. Each section component lives in `components/` and renders on exactly **one** page, so its `§ 0X` eyebrow numeral and top padding are tuned for that page — don't reuse a section on another page without re-checking both.
+
+| Route | File | Sections (in order) |
+|---|---|---|
+| `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02, ends the page) → `NextStep` → `FooterSection` |
+| `/product` | `app/product/page.tsx` | `WhatWeBuildsSection` (§01, the 3 agents) → `HowItWorksSection` (§02, process) → `WhyTharrosSection` (§03) → `NextStep` → `FooterSection` |
+| `/pricing` | `app/pricing/page.tsx` | `ModelTiersSection` (§01, package comparison) → `PricingSection` (§02, pricing factors) → `FooterSection` |
+| `/clients` | `app/clients/page.tsx` | `ClientsSection` → `FooterSection` |
+| `/brief` | `app/brief/page.tsx` | Onboarding wizard (see below) |
+
+Notes:
+- **First-on-page sections** (`WhatWeBuildsSection`, `ModelTiersSection`) carry `pt-28 md:pt-32 pb-[var(--rhythm-default)]` instead of `rhythm-default` so their content clears the fixed navbar. The `padding-block` shorthand from `.rhythm-default` can't be partially overridden in the same `@layer utilities`, so use explicit `pt`/`pb` utilities here.
+- **`NextStep`** (`components/NextStep.tsx`) is the slim dark cross-page CTA strip between the last content section and the footer on Home and Product. It is *not* a content section — keep it lightweight.
+- **Nav** (`components/NavBar.tsx`) links to the page routes (`/`, `/product`, `/pricing`, `/clients`) with `usePathname` active-state highlighting — no more in-page anchor scrolling, except the hero's `#demo` "Try the agent" link on Home.
+- When you add or move a page, update **four** places: `app/sitemap.ts`, the `siteNavigation` JSON-LD in `app/layout.tsx`, `NavBar.tsx`, and per-page `metadata` + `WebPage`/`BreadcrumbList` JSON-LD (follow the `/clients` page as the template).
+
+---
+
 ## Commands
 
 | Task | Command |
@@ -131,7 +151,7 @@ Read [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) for the full version. Qu
 
 ## SEO & metadata
 
-The SEO surface area is large. Before touching `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `app/brief/page.tsx`, `app/clients/page.tsx`, or `public/manifest.json`, read [`docs/SEO.md`](./docs/SEO.md).
+The SEO surface area is large. Before touching `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`, `app/product/page.tsx`, `app/pricing/page.tsx`, `app/brief/page.tsx`, `app/clients/page.tsx`, or `public/manifest.json`, read [`docs/SEO.md`](./docs/SEO.md).
 
 Key rules:
 - Don't break the `@id`-linked JSON-LD graph. Every Organization/LocalBusiness/Service/WebSite reference must resolve.

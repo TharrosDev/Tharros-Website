@@ -14,7 +14,7 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="rhythm-tight bg-[color:var(--surface)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 06" label="Pricing" />
+        <SectionEyebrow numeral="§ 02" label="Pricing" />
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">

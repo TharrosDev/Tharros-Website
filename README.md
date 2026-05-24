@@ -105,21 +105,37 @@ Sub-project (`my-chat/`) — an embeddable chat widget for client deployments:
 
 ### Component map
 
-The home page composes the following sections in order (`app/page.tsx`):
+The marketing site is split across three pages. Each section component renders on exactly one page (in order):
+
+**`/` — Home (`app/page.tsx`)**
 
 | Order | Component | Background | Purpose |
 |---:|---|---|---|
 | 1 | `HeroSection` | dark | Headline, primary CTA, slogan chip |
 | 2 | `ProblemSection` | light | Three pain points (missed calls, repeat questions, admin) |
-| 3 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo |
-| 4 | `ModelTiersSection` | light | The Refresh / The Integrate / The On-Call |
-| 5 | `WhatWeBuildsSection` | dark | The three agent patterns |
-| 6 | `HowItWorksSection` | light | Discovery → Build & Integrate → Launch & Support |
-| 7 | `WhyTharrosSection` | dark | Three pillars + founder quote |
-| 8 | `PricingSection` | light | Pricing factors + "why no fixed price list" |
-| 9 | `FooterSection` | dark + white strip | Final CTA, legal strip |
+| 3 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo — ends the page |
+| – | `NextStep` | dark | Cross-page CTA → Product / Pricing |
+| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
 
-Cross-cutting components: `NavBar`, `PageTransition`, `BackToTop`, `AnimatedSection`, `Magnetic`, `SectionSkeleton`, `MobileChatConsole`.
+**`/product` — Product (`app/product/page.tsx`)**
+
+| Order | Component | Background | Purpose |
+|---:|---|---|---|
+| 1 | `WhatWeBuildsSection` | dark | The three agent patterns |
+| 2 | `HowItWorksSection` | light | Discovery → Build & Integrate → Launch & Support |
+| 3 | `WhyTharrosSection` | dark | Three pillars + founder quote |
+| – | `NextStep` | dark | Cross-page CTA → Pricing / brief |
+| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
+
+**`/pricing` — Pricing (`app/pricing/page.tsx`)**
+
+| Order | Component | Background | Purpose |
+|---:|---|---|---|
+| 1 | `ModelTiersSection` | light | The Refresh / The Integrate / The On-Call comparison |
+| 2 | `PricingSection` | light | Pricing factors + "why no fixed price list" |
+| – | `FooterSection` | dark + white strip | Final CTA, legal strip |
+
+Cross-cutting components: `NavBar`, `PageTransition`, `BackToTop`, `AnimatedSection`, `Magnetic`, `SectionSkeleton`, `MobileChatConsole`, `NextStep`.
 
 The discovery briefing lives at `/brief` (9-step wizard in `components/onboarding/`). Submissions POST to `/api/brief` which forwards to Zapier server-side; `/admin/briefs` is the auth-gated admin view.
 
@@ -174,12 +190,12 @@ Without these vars, the home-page agent will display `Agent not configured` and 
 
 A short list of the choices that matter most when reading the code:
 
-- **Server-rendered shell, dynamically-hydrated body.** `HeroSection` and `FooterSection` ship eagerly. Every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback — keeps the initial JS payload tight on mobile.
+- **Three-page marketing site.** Content is split across `/` (Home), `/product`, and `/pricing` — see the component map above. `HeroSection` ships eagerly on Home and `FooterSection` ships eagerly everywhere; every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback, keeping the initial JS payload tight on mobile.
 - **The live agent runs client-only.** `ChatDemoSection` is wrapped in `ChatDemoSectionWrapper` and uses the Relevance AI SDK directly in the browser; an `EmbedKey` is generated once per visitor and persisted in `localStorage`. Three free prompts per session, enforced via `localStorage` counter.
 - **Mobile chat path is separate.** `MobileChatConsole` renders a touch-optimized layout when `useIsMobile()` returns true; the desktop console is inlined in `ChatDemoSection`.
 - **Animation primitives, not animation soup.** `AnimatedSection` wraps scroll-triggered fades/scales; `Magnetic` adds cursor-pull to CTAs; `PageTransition` cross-fades between routes. Effects use GPU-accelerated transforms and `will-change: transform`.
 - **Design tokens are real CSS variables.** See `app/globals.css` — `--color-bg`, `--color-accent-3`, etc. are exposed to Tailwind 4 via `@theme inline`. The `text-accent-3`, `bg-bg`, `border-border` classes work because of this.
-- **JSON-LD is a linked graph, not a list.** `app/layout.tsx` builds one Organization, one LocalBusiness, one Service, one WebSite, one FAQPage, one Person, one SiteNavigationElement, and one BreadcrumbList — all cross-referenced by `@id`. Individual pages inject their own `ContactPage` / `CollectionPage` + `BreadcrumbList`.
+- **JSON-LD is a linked graph, not a list.** `app/layout.tsx` builds one Organization, one LocalBusiness, one Service, one WebSite, one FAQPage, one Person, one SiteNavigationElement, and one BreadcrumbList — all cross-referenced by `@id`. Individual pages inject their own `WebPage` / `ContactPage` / `CollectionPage` + `BreadcrumbList` (e.g. `/product` and `/pricing` each add a `WebPage` linked to `#service`).
 
 For more, see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 

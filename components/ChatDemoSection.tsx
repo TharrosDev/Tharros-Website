@@ -224,7 +224,7 @@ export default function ChatDemoSection() {
   return (
     <section id="demo" className="rhythm-default bg-[color:var(--surface-dark)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ DEMO" label="Live console" tone="dark" />
+        <SectionEyebrow numeral="§ 02" label="Live console" tone="dark" />
 
         {/* Headline */}
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-14 md:mb-20">

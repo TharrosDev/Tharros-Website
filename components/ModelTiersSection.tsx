@@ -33,9 +33,9 @@ function Cell({ value }: { value: string | boolean }) {
 
 export default function ModelTiersSection() {
   return (
-    <section id="builds" className="rhythm-default bg-[color:var(--surface)]">
+    <section id="builds" className="pt-28 md:pt-32 pb-[var(--rhythm-default)] bg-[color:var(--surface)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 02" label="Builds" />
+        <SectionEyebrow numeral="§ 01" label="Builds" />
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">

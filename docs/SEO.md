@@ -11,7 +11,7 @@ Everything you need to know before changing anything that touches search or soci
 | Surface | File | Notes |
 |---|---|---|
 | Metadata API (root) | `app/layout.tsx` | Title template, description, OG, Twitter, hreflang, keywords, geo, format detection |
-| Metadata API (per-page) | `app/brief/page.tsx`, `app/clients/page.tsx` | Page-specific metadata + per-page JSON-LD |
+| Metadata API (per-page) | `app/product/page.tsx`, `app/pricing/page.tsx`, `app/brief/page.tsx`, `app/clients/page.tsx` | Page-specific metadata + per-page JSON-LD |
 | JSON-LD graph | `app/layout.tsx` | 8 cross-referenced entities (Org + LB + Service + WebSite + WebPage + Breadcrumbs + FAQ + SiteNav), see below |
 | Robots | `app/robots.ts` | Explicit allowlist for search + AI bots, blocklist for scrapers |
 | Sitemap | `app/sitemap.ts` | Per-URL hreflang alternates |
@@ -88,6 +88,8 @@ BreadcrumbList (#breadcrumbs)
 
 Pages that aren't the homepage inject their own additional structured data:
 
+- **`/product`** → WebPage (`about` → `#service`) + BreadcrumbList (Home → Product).
+- **`/pricing`** → WebPage (`about` + `mainContentOfPage` → `#service`) + BreadcrumbList (Home → Pricing).
 - **`/clients`** → CollectionPage (with one `Article` per case study and `primaryImageOfPage`) + `ItemList` (ordered list of the same studies) + BreadcrumbList (Home → Clients).
 - **`/brief`** → ContactPage (`mainEntity` = ContactPoint, `potentialAction` = CommunicateAction for brief submission) + BreadcrumbList (Home → Brief).
 
@@ -180,11 +182,13 @@ If a client ever needs to opt *out* of AI training (legal / IP reasons), flip th
 
 ## sitemap.ts behavior
 
-Three URLs:
+Five URLs:
 
 | URL | Priority | changeFrequency | images |
 |---|---|---|---|
 | `/` | 1.0 | weekly | og-image.jpg + tharros-logo.svg |
+| `/product` | 0.9 | monthly | og-image.jpg |
+| `/pricing` | 0.9 | monthly | og-image.jpg |
 | `/clients` | 0.85 | monthly | og-image.jpg + meridian-logo.webp + echo-five-logo.svg |
 | `/brief` | 0.8 | monthly | og-image.jpg |
 
