@@ -116,7 +116,6 @@ export default function PrivacyPage() {
                       ["Zapier", "Forwards brief submissions to our inbox", "USA"],
                       ["Google Analytics", "Site analytics", "USA"],
                       ["Vercel Analytics", "Performance monitoring", "USA"],
-                      ["Relevance AI", "Powers the AI chat demo on the homepage", "USA / Australia"],
                     ].map(([provider, purpose, location]) => (
                       <tr key={provider} className="border-b border-[color:var(--rule)]">
                         <td className="py-4 pr-6 text-[color:var(--ink)] font-medium">{provider}</td>
