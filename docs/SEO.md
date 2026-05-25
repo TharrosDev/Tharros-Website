@@ -189,7 +189,7 @@ Five URLs:
 | `/` | 1.0 | weekly | og-image.jpg + tharros-logo.svg |
 | `/product` | 0.9 | monthly | og-image.jpg |
 | `/pricing` | 0.9 | monthly | og-image.jpg |
-| `/clients` | 0.85 | monthly | og-image.jpg + meridian-logo.webp + echo-five-logo.svg |
+| `/clients` | 0.85 | monthly | og-image.jpg + meridian-logo.webp + advanta365-logo.svg + echo-five-logo.svg |
 | `/brief` | 0.8 | monthly | og-image.jpg |
 
 Each URL declares its own `en-CA` + `x-default` hreflang alternates and an `images` array (image sitemap entries Google can index alongside the page).
