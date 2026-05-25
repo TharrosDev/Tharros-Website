@@ -68,7 +68,6 @@ export default function NavBar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  // Mobile menu: close on Escape + focus trap + restore focus on close.
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -131,10 +130,10 @@ export default function NavBar() {
           >
             <Image
               src="/tharros-logo.svg"
-              width={150}
-              height={34}
+              width={180}
+              height={42}
               priority
-              style={{ width: "auto", height: 28 }}
+              style={{ width: "auto", height: 34 }}
               alt="Tharros logo"
               title="Tharros — Ottawa websites and AI agents"
               className="opacity-90 group-hover:opacity-100 transition-opacity"
@@ -150,14 +149,14 @@ export default function NavBar() {
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
                   aria-current={active ? "page" : undefined}
-                  className={`group flex items-center gap-2.5 px-3.5 py-2 transition-colors ${
+                  className={`group flex items-center gap-2.5 px-4 py-2 transition-colors ${
                     active ? "text-[color:var(--ink)]" : "text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]"
                   }`}
                 >
-                  <span className={`num text-[12px] transition-colors ${
+                  <span className={`num text-[13px] transition-colors ${
                     active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"
                   }`}>{link.num}</span>
-                  <span className="text-[15px] font-medium">{link.label}</span>
+                  <span className="text-[17px] font-medium">{link.label}</span>
                 </Link>
               );
             })}
