@@ -180,7 +180,9 @@ This system uses no shadows. Depth comes from tonal layering (bone surface → b
 ### Cards / Containers
 **The system avoids card patterns for marketing content.** Feature grids (icon + heading + body × N) belong to the SaaS reflex and are banned. New marketing sections default to (a) numbered rows on a hairline divider, (b) a real `<table>`, or (c) editorial vignettes paired with a wiring diagram.
 
-The one sanctioned card surface is `ClientsSection` (`components/ClientsSection.tsx`): a data-driven register of live engagements that is meant to grow to 20–30 entries. Cards use `border border-[color:var(--rule)]` with a `hover:border-[color:var(--accent)]` color shift — no shadow, no `border-radius`, no background fill change, no nested cards. If a future surface genuinely calls for cards (dense navigable data, not marketing copy), follow `ClientCard` as the spec. The wizard's `.ob-card` is a separate exception (full-bleed structural panel on bone-elevated, hairline border, no radius).
+The one sanctioned card surface is `ClientsSection` (`components/ClientsSection.tsx`): a data-driven register of live engagements that is meant to grow to 20–30 entries. Cards use `border border-[color:var(--rule)]` with a `hover:border-[color:var(--accent)]` color shift — no shadow, no `border-radius`, no background fill change, no nested cards. If a future surface genuinely calls for cards (dense navigable data, not marketing copy), follow `ClientCard` as the spec.
+
+`PlaceholderCard` is the pending-entry variant: dashed `rule-strong` border, muted ink throughout, no hover state, and a `LoadingDots` animation (see Motion System) in place of the logo slot. It signals "more coming" without committing to a count. The wizard's `.ob-card` is a separate exception (full-bleed structural panel on bone-elevated, hairline border, no radius).
 
 ### Inputs / Fields (brief wizard)
 - **Shape:** rectangular, 0 radius, hairline `rule-strong` border on bone surface.
@@ -208,6 +210,7 @@ The page reads as a drawing assembling itself, all gated on `prefers-reduced-mot
 - **Signal pulse:** a cobalt dot rides a guide path on a loop (a meaningful routing element, not a decorative pulse-ring). It **pauses when its diagram scrolls off-screen** via a separate live, non-`once`, in-view gate.
 - **Scroll-linked fills:** the Process pipeline rail and the Problem drain line fill via `scaleY` bound to `useScroll`; Process stage-nodes light cobalt as they enter the viewport.
 - **Micro-interactions:** primary-button arrow nudge on hover, comparison-table row wash (`surface-hover` / `accent-soft-strong`). All transition-based, so the reduced-motion killswitch neutralizes them.
+- **Loading dots (`LoadingDots` in `ClientsSection.tsx`):** three 4×4px cobalt squares that pulse opacity `0.2 → 1 → 0.2` in sequence (delays 0 / 220ms / 440ms, 1.6s cycle). Used exclusively in `PlaceholderCard`. Reduced-motion fallback holds all three at `opacity: 0.2` static.
 
 ### Signature: Metadata Row
 A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for contact strips, the clients-page hero summary strip (Records / In build / Region), footer office details, and the hero bottom strip. Replaces the "icon + label + caption" pattern.
