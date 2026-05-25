@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
@@ -17,8 +16,6 @@ type Client = {
   logo?: string;
   monogram?: string;
   tags: string[];
-  // Live screenshot via thum.io (free, no key).
-  screenshot: string;
 };
 
 const clients: Client[] = [
@@ -34,7 +31,6 @@ const clients: Client[] = [
     date: "May 2026",
     logo: "/meridian-logo.webp",
     tags: ["Modernized Site", "Integrated Agent", "On-Call Support"],
-    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://meridiansociety.ca",
   },
   {
     id: "advanta365",
@@ -48,7 +44,6 @@ const clients: Client[] = [
     date: "May 2026",
     logo: "/advanta365-logo.svg",
     tags: ["Modernized Site", "On-Call Support"],
-    screenshot: "https://image.thum.io/get/fresh/width/1600/crop/1000/png/https://advanta365.com",
   },
   {
     id: "echo-five",
@@ -62,7 +57,6 @@ const clients: Client[] = [
     date: "May 2026",
     logo: "/echo-five-logo.svg",
     tags: ["Modernized Site", "On-Call Support"],
-    screenshot: "https://image.thum.io/get/fresh/width/1600/crop/1000/png/https://echo-five-website.vercel.app",
   },
 ];
 
@@ -124,36 +118,10 @@ function ClientsGallery() {
 }
 
 function ClientRow({ client, index }: { client: Client; index: number }) {
-  const isEven = index % 2 === 0;
   return (
     <AnimatedSection delay={index * 0.08}>
-      <article className="grid grid-cols-12 gap-x-6 gap-y-8 py-16 md:py-24 border-b border-[color:var(--rule)]">
-        {/* Screenshot — large, dominant */}
-        <div className={`col-span-12 lg:col-span-8 ${isEven ? "lg:order-1" : "lg:order-2"}`}>
-          <a
-            href={client.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block relative aspect-[16/10] overflow-hidden bg-[color:var(--surface-elevated)] border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors"
-            aria-label={`Visit ${client.name}`}
-          >
-            <ClientPreview src={client.screenshot} alt={`${client.name}: live site preview`} fallbackUrl={client.url} />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[color:var(--surface-dark)]/85 to-transparent p-5 md:p-7 flex items-end justify-between gap-4">
-              <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
-                {client.url.replace(/^https?:\/\//, "").toUpperCase()}
-              </span>
-              <span className="num text-[11px] text-[color:var(--accent-on-dark)] flex items-center gap-2">
-                Visit
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                  <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
-                </svg>
-              </span>
-            </div>
-          </a>
-        </div>
-
-        {/* Metadata column */}
-        <div className={`col-span-12 lg:col-span-4 flex flex-col ${isEven ? "lg:order-2" : "lg:order-1"}`}>
+      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-14 md:py-20 border-b border-[color:var(--rule)]">
+        <div className="col-span-12 lg:col-span-8 flex flex-col">
           <div className="flex items-center gap-3 mb-4">
             <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
             <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
@@ -166,15 +134,33 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
           <h2 className="type-display-3 mb-2">{client.name}</h2>
           <span className="type-meta mb-5">{client.location}</span>
 
-          <p className="type-body text-[color:var(--ink)] mb-3 max-w-[44ch] font-medium">{client.lede}</p>
-          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[44ch]">{client.description}</p>
+          <p className="type-body text-[color:var(--ink)] mb-3 max-w-[52ch] font-medium">{client.lede}</p>
+          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[52ch]">{client.description}</p>
 
-          <dl className="meta-row border-t border-[color:var(--rule)] pt-5 flex-col md:flex-row">
+          <dl className="meta-row border-t border-[color:var(--rule)] pt-5">
             <div><dt>Build</dt> <dd>{client.buildType}</dd></div>
             <div><dt>Launched</dt> <dd>{client.date.toUpperCase()}</dd></div>
+            <div>
+              <dt>Site</dt>
+              <dd>
+                <a
+                  href={client.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 hover:underline"
+                >
+                  {client.url.replace(/^https?:\/\//, "")}
+                  <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                    <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+                  </svg>
+                </a>
+              </dd>
+            </div>
           </dl>
+        </div>
 
-          <div className="mt-6 pt-5 border-t border-[color:var(--rule)] flex items-center gap-3">
+        <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
+          <div className="pt-5 border-t border-[color:var(--rule)] lg:border-t-0 lg:pt-0 flex items-center gap-3">
             {client.logo ? (
               <div className="relative w-10 h-10 bg-[color:var(--surface-elevated)] border border-[color:var(--rule)]">
                 <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
@@ -196,60 +182,18 @@ function ClientRow({ client, index }: { client: Client; index: number }) {
   );
 }
 
-function ClientPreview({ src, alt, fallbackUrl }: { src: string; alt: string; fallbackUrl: string }) {
-  const [errored, setErrored] = useState(false);
-  if (errored) {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center bg-[color:var(--surface-elevated)]">
-        <svg viewBox="0 0 240 150" className="diagram w-1/2 max-w-[200px] opacity-60" aria-hidden="true">
-          <rect x="20" y="20" width="200" height="110" stroke="currentColor" strokeWidth="1" fill="none" />
-          <line x1="20" y1="50" x2="220" y2="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
-          <text x="34" y="78" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.7">
-            PREVIEW UNAVAILABLE
-          </text>
-          <text x="34" y="94" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.55">
-            {fallbackUrl.replace(/^https?:\/\//, "").toUpperCase().slice(0, 28)}
-          </text>
-        </svg>
-      </div>
-    );
-  }
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      sizes="(max-width: 1024px) 100vw, 66vw"
-      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
-      loading="lazy"
-      onError={() => setErrored(true)}
-    />
-  );
-}
-
 function PlaceholderRow({ index, note, stage }: { index: number; note: string; stage: string }) {
   return (
     <AnimatedSection delay={index * 0.08}>
-      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-16 md:py-20 border-b border-[color:var(--rule)]">
-        <div className="col-span-12 lg:col-span-8">
-          <div className="aspect-[16/10] border border-dashed border-[color:var(--rule-strong)] flex items-center justify-center bg-[color:var(--surface-elevated)] relative overflow-hidden">
-            <svg viewBox="0 0 240 150" className="diagram w-1/2 max-w-[200px] opacity-50" aria-hidden="true">
-              <rect x="20" y="20" width="200" height="110" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none" />
-              <line x1="20" y1="50" x2="220" y2="50" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
-              <line x1="50" y1="20" x2="50" y2="130" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
-              <text x="60" y="75" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.6">CASE FILE</text>
-              <text x="60" y="92" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="1.4" fill="currentColor" opacity="0.6">IN PROGRESS</text>
-            </svg>
-          </div>
-        </div>
-        <div className="col-span-12 lg:col-span-4 flex flex-col">
+      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-14 md:py-20 border-b border-[color:var(--rule)]">
+        <div className="col-span-12 lg:col-span-8 flex flex-col">
           <div className="flex items-center gap-3 mb-4">
             <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
             <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
             <span className="num text-xs text-[color:var(--ink-muted)]">{stage}</span>
           </div>
           <h2 className="type-display-3 text-[color:var(--ink-muted)] mb-3">New engagement.</h2>
-          <p className="type-body text-[color:var(--ink-muted)] max-w-[44ch]">
+          <p className="type-body text-[color:var(--ink-muted)] max-w-[52ch]">
             {note}. We are currently preparing a new build with an Ottawa partner. Updates land here when the site launches.
           </p>
         </div>
