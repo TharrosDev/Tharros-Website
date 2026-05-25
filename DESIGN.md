@@ -116,7 +116,7 @@ A two-surface palette (bone-warm and tool-steel graphite) with a single saturate
 
 ### Neutral (light surfaces)
 - **Bone-Warm Surface** (`oklch(98% 0.004 80)`): the primary page background. Warm-tinted, never pure white. Used on home, brief, clients hero, and most sections.
-- **Bone-Warm Elevated** (`oklch(99.2% 0.003 80)`): faintly lifted from surface. Used for inset previews (client screenshot frame, placeholder card, wizard card body).
+- **Bone-Warm Elevated** (`oklch(99.2% 0.003 80)`): faintly lifted from surface. Used for wizard card body and any inset containers.
 - **Ink** (`oklch(18% 0.02 250)`): primary text. Near-black with a cool tint toward cobalt's hue family. ~14:1 on bone surface.
 - **Ink Muted** (`oklch(42% 0.024 250)`): secondary text, lead paragraphs, body in metadata rows. ~6:1 on bone (passes AA body).
 - **Ink Faint** (`oklch(48% 0.025 250)`): tertiary marks (the `§ 0X` numerals, `<dt>` labels, FIG. captions). ~4.5:1 on bone (passes AA small text).
@@ -196,7 +196,7 @@ This system uses no shadows. Depth comes from tonal layering (bone surface → b
 Every section opens with a mono eyebrow: `§ 0X` numeral + hairline rule + uppercase mono label. This is the engineer-drawing convention that ties the system together. The 12-column page-frame grid is left-set; H2s, leads, and content stay in `col-span-8`, with the right `col-span-4` reserved for metadata, diagrams, or breathing room.
 
 ### Signature: Diagrams
-SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, vertical spine branching to inbox/CRM), compact wiring strip (hero mobile, horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern, each differentiated: in-scope branch / capture check / overnight gap), process pipeline (`HowItWorksSection`, scroll-linked rail), placeholder schematic (`/clients` empty state, screenshot fallback).
+SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, vertical spine branching to inbox/CRM), compact wiring strip (hero mobile, horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern, each differentiated: in-scope branch / capture check / overnight gap), process pipeline (`HowItWorksSection`, scroll-linked rail).
 
 Diagrams are **animated and live**, not static. On scroll into view they plot themselves (strokes trace via `pathLength`, labels fade up, accent node fills last) through a staggered parent, then a cobalt signal dot routes the wire on a loop. Primitives live in `components/diagrams/schematic.tsx` (`useDrawInView`, `drawStroke`, `fadeNode`/`fadeLabel`, `SignalDot`). The hero diagram adds node-hover lift and pointer parallax. All diagrams are `aria-hidden`; meaning is carried by adjacent text and `meta-row` callouts.
 
