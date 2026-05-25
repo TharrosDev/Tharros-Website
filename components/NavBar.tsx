@@ -131,10 +131,10 @@ export default function NavBar() {
           >
             <Image
               src="/tharros-logo.svg"
-              width={120}
-              height={28}
+              width={150}
+              height={34}
               priority
-              style={{ width: "auto", height: 22 }}
+              style={{ width: "auto", height: 28 }}
               alt="Tharros logo"
               title="Tharros — Ottawa websites and AI agents"
               className="opacity-90 group-hover:opacity-100 transition-opacity"
@@ -150,14 +150,14 @@ export default function NavBar() {
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
                   aria-current={active ? "page" : undefined}
-                  className={`group flex items-center gap-2 px-3 py-2 transition-colors ${
+                  className={`group flex items-center gap-2.5 px-3.5 py-2 transition-colors ${
                     active ? "text-[color:var(--ink)]" : "text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]"
                   }`}
                 >
-                  <span className={`num text-[11px] transition-colors ${
+                  <span className={`num text-[12px] transition-colors ${
                     active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"
                   }`}>{link.num}</span>
-                  <span className="text-sm font-medium">{link.label}</span>
+                  <span className="text-[15px] font-medium">{link.label}</span>
                 </Link>
               );
             })}
