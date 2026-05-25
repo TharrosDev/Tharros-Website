@@ -571,3 +571,73 @@ button:focus-visible,
     .tier-row:hover td.is-accent { background-color: var(--accent-soft-strong); }
   }
 }
+
+/* ── HeroSection: parallax depth + reveal animations ─────────────── */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-field-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+#hero .v3-dots {
+  position: absolute;
+  inset: -60px;
+  background-image: radial-gradient(circle, oklch(50% 0.20 260 / 0.15) 1.5px, transparent 1.5px);
+  background-size: 36px 36px;
+  transform: translate(
+    calc((var(--mx, 0.5) - 0.5) * -36px),
+    calc((var(--my, 0.5) - 0.5) * -18px)
+  );
+  transition: transform 0.25s ease-out;
+  animation: hero-field-appear 1.4s ease 0.15s both;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#hero .v3-content { position: relative; z-index: 1; }
+
+#hero .v3-back {
+  transform: translate(
+    calc((var(--mx, 0.5) - 0.5) * -14px),
+    calc((var(--my, 0.5) - 0.5) * -7px)
+  );
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#hero .v3-mid {
+  transform: translate(
+    calc((var(--mx, 0.5) - 0.5) * 22px),
+    calc((var(--my, 0.5) - 0.5) * 11px)
+  );
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#hero .v3-front {
+  transform: translate(
+    calc((var(--mx, 0.5) - 0.5) * 46px),
+    calc((var(--my, 0.5) - 0.5) * 23px)
+  );
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#hero .v3-eyebrow { animation: hero-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+#hero .v3-h1      { animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+#hero .v3-lead    { animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both; }
+#hero .v3-cta     { animation: hero-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both; }
+#hero .v3-meta    { animation: hero-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both; }
+#hero .v3-mag     { transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  #hero .v3-back,
+  #hero .v3-mid,
+  #hero .v3-front { transform: none !important; transition: none; }
+  #hero .v3-dots  { animation: none; opacity: 0.12; transform: none; }
+  #hero .v3-eyebrow,
+  #hero .v3-h1,
+  #hero .v3-lead,
+  #hero .v3-cta,
+  #hero .v3-meta  { animation: none; }
+}

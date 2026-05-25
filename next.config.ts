@@ -33,13 +33,17 @@ const nextConfig: NextConfig = {
     // Vercel Analytics (va.vercel-scripts.com), and thum.io thumbnails. Inline
     // scripts/styles are allowed because Next's bootstrap + the JSON-LD blocks
     // are inline; a nonce-based script-src is the recommended follow-up.
+    // Dev-only allowance so impeccable live mode can load. Guarded by NODE_ENV.
+    const __impeccableLiveDev =
+      process.env.NODE_ENV === "development" ? " http://localhost:8400" : "";
+
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${__impeccableLiveDev}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https: wss:",
+      `connect-src 'self' https: wss:${__impeccableLiveDev}`,
       "worker-src 'self' blob:",
       "manifest-src 'self'",
       "object-src 'none'",
