@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 
@@ -61,7 +62,7 @@ const clients: Client[] = [
 ];
 
 const placeholders = [
-  { id: "p-01", note: "Engagement in build", stage: "Drafting" },
+  { id: "p-01", stage: "Drafting" },
 ];
 
 export default function ClientsSection() {
@@ -112,7 +113,7 @@ function ClientsGallery() {
             <ClientCard key={client.id} client={client} index={i} />
           ))}
           {placeholders.map((p, i) => (
-            <PlaceholderCard key={p.id} index={clients.length + i} note={p.note} stage={p.stage} />
+            <PlaceholderCard key={p.id} index={clients.length + i} stage={p.stage} />
           ))}
         </div>
       </div>
@@ -200,7 +201,24 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
   );
 }
 
-function PlaceholderCard({ index, note, stage }: { index: number; note: string; stage: string }) {
+function LoadingDots() {
+  const reduce = useReducedMotion();
+  return (
+    <div className="flex items-center gap-2 my-5" aria-hidden="true">
+      {([0, 0.22, 0.44] as number[]).map((delay, i) => (
+        <motion.span
+          key={i}
+          className="w-1 h-1 bg-[color:var(--accent)]"
+          initial={{ opacity: 0.2 }}
+          animate={reduce ? undefined : { opacity: [0.2, 1, 0.2] }}
+          transition={{ duration: 1.6, delay, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function PlaceholderCard({ index, stage }: { index: number; stage: string }) {
   return (
     <AnimatedSection delay={index * 0.06} className="h-full">
       <article className="h-full flex flex-col border border-dashed border-[color:var(--rule-strong)] p-6 md:p-7">
@@ -215,27 +233,18 @@ function PlaceholderCard({ index, note, stage }: { index: number; note: string; 
           </span>
         </div>
 
-        {/* ── Schematic mark in logo slot ── */}
-        <div className="mb-5 w-9 h-9">
-          <svg viewBox="0 0 36 36" className="diagram w-full h-full opacity-30" aria-hidden="true">
-            <rect x="1.5" y="1.5" width="33" height="33" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2.5" fill="none" />
-            <line x1="10" y1="10" x2="26" y2="26" stroke="currentColor" strokeWidth="0.8" />
-            <line x1="26" y1="10" x2="10" y2="26" stroke="currentColor" strokeWidth="0.8" />
-          </svg>
-        </div>
+        {/* ── Title ── */}
+        <h2 className="type-display-3 text-[color:var(--ink-muted)]">More in Development</h2>
 
-        {/* ── Title + location ── */}
-        <h2 className="type-display-3 text-[color:var(--ink-muted)] mb-1">New engagement.</h2>
-        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase opacity-60">
-          Ottawa, ON
-        </p>
+        {/* ── Staggered cobalt pulse dots ── */}
+        <LoadingDots />
 
-        {/* ── Note ── */}
+        {/* ── Body ── */}
         <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
-          {note}. A new build with an Ottawa partner is underway — details land here at launch.
+          New engagements are underway. Each case study publishes here once the build ships.
         </p>
 
-        {/* ── Footer placeholder ── */}
+        {/* ── Footer ── */}
         <div className="border-t border-dashed border-[color:var(--rule-strong)] pt-4">
           <p className="num text-[10px] text-[color:var(--ink-muted)] opacity-50 uppercase tracking-widest">
             In progress
