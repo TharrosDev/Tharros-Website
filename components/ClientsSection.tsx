@@ -104,99 +104,144 @@ function ClientsHero() {
 
 function ClientsGallery() {
   return (
-    <section className="bg-[color:var(--surface)] pb-20 md:pb-32">
+    <section className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32">
       <div className="page-frame">
-        {clients.map((client, i) => (
-          <ClientRow key={client.id} client={client} index={i} />
-        ))}
-        {placeholders.map((p, i) => (
-          <PlaceholderRow key={p.id} index={clients.length + i} note={p.note} stage={p.stage} />
-        ))}
+        {/* sm: 2 cols, xl: 3 cols — add lg:grid-cols-3 when 6+ live clients */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {clients.map((client, i) => (
+            <ClientCard key={client.id} client={client} index={i} />
+          ))}
+          {placeholders.map((p, i) => (
+            <PlaceholderCard key={p.id} index={clients.length + i} note={p.note} stage={p.stage} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function ClientRow({ client, index }: { client: Client; index: number }) {
+function ClientCard({ client, index }: { client: Client; index: number }) {
   return (
-    <AnimatedSection delay={index * 0.08}>
-      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-14 md:py-20 border-b border-[color:var(--rule)]">
-        <div className="col-span-12 lg:col-span-8 flex flex-col">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
-            <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
-            <span className="num text-xs text-[color:var(--accent)] flex items-center gap-1.5">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
-              Live
+    <AnimatedSection delay={index * 0.06} className="h-full">
+      <article className="h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors duration-200 p-6 md:p-7">
+
+        {/* ── Top bar: index + live status ── */}
+        <div className="flex items-center justify-between mb-7">
+          <span className="num text-[11px] text-[color:var(--ink-muted)]">
+            FILE / {String(index + 1).padStart(3, "0")}
+          </span>
+          <span className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
+            LIVE
+          </span>
+        </div>
+
+        {/* ── Logo / monogram ── */}
+        <div className="mb-5">
+          {client.logo ? (
+            <div className="relative w-9 h-9 border border-[color:var(--rule)]">
+              <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
+            </div>
+          ) : (
+            <div className="w-9 h-9 bg-[color:var(--ink)] flex items-center justify-center">
+              <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
+                {client.monogram ?? client.name.slice(0, 2).toUpperCase()}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* ── Name + location ── */}
+        <h2 className="type-display-3 mb-1">{client.name}</h2>
+        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase">
+          {client.location}
+        </p>
+
+        {/* ── Lede — flex-1 keeps footer flush to bottom across all cards in a row ── */}
+        <p className="type-body text-[color:var(--ink-muted)] flex-1 mb-6">
+          {client.lede}
+        </p>
+
+        {/* ── Tags ── */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6">
+          {client.tags.map((t) => (
+            <span key={t} className="num text-[10px] text-[color:var(--ink-muted)] uppercase tracking-widest">
+              {t}
             </span>
-          </div>
-
-          <h2 className="type-display-3 mb-2">{client.name}</h2>
-          <span className="type-meta mb-5">{client.location}</span>
-
-          <p className="type-body text-[color:var(--ink)] mb-3 max-w-[52ch] font-medium">{client.lede}</p>
-          <p className="type-body text-[color:var(--ink-muted)] mb-8 max-w-[52ch]">{client.description}</p>
-
-          <dl className="meta-row border-t border-[color:var(--rule)] pt-5">
-            <div><dt>Build</dt> <dd>{client.buildType}</dd></div>
-            <div><dt>Launched</dt> <dd>{client.date.toUpperCase()}</dd></div>
-            <div>
-              <dt>Site</dt>
-              <dd>
-                <a
-                  href={client.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 hover:underline"
-                >
-                  {client.url.replace(/^https?:\/\//, "")}
-                  <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                    <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
-                  </svg>
-                </a>
-              </dd>
-            </div>
-          </dl>
+          ))}
         </div>
 
-        <div className="col-span-12 lg:col-span-4 flex flex-col justify-end">
-          <div className="pt-5 border-t border-[color:var(--rule)] lg:border-t-0 lg:pt-0 flex items-center gap-3">
-            {client.logo ? (
-              <div className="relative w-10 h-10 bg-[color:var(--surface-elevated)] border border-[color:var(--rule)]">
-                <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
-              </div>
-            ) : (
-              <div className="w-10 h-10 bg-[color:var(--ink)] text-[color:var(--ink-on-dark)] border border-[color:var(--ink)] flex items-center justify-center">
-                <span className="num text-xs">{client.monogram ?? client.name.slice(0, 2)}</span>
-              </div>
-            )}
-            <div className="flex flex-wrap gap-x-4 gap-y-1">
-              {client.tags.map((t) => (
-                <span key={t} className="num text-[11px] text-[color:var(--ink-muted)]">{t.toUpperCase()}</span>
-              ))}
-            </div>
+        {/* ── Footer: build meta + visit link ── */}
+        <div className="border-t border-[color:var(--rule)] pt-4 flex items-end justify-between gap-4">
+          <div>
+            <p className="num text-[11px] text-[color:var(--ink-muted)] uppercase leading-snug">
+              {client.buildType}
+            </p>
+            <p className="num text-[10px] text-[color:var(--ink-muted)] mt-0.5">
+              {client.date.toUpperCase()}
+            </p>
           </div>
+          <a
+            href={client.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 shrink-0 hover:underline"
+            aria-label={`Visit ${client.name}`}
+          >
+            Visit
+            <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+            </svg>
+          </a>
         </div>
+
       </article>
     </AnimatedSection>
   );
 }
 
-function PlaceholderRow({ index, note, stage }: { index: number; note: string; stage: string }) {
+function PlaceholderCard({ index, note, stage }: { index: number; note: string; stage: string }) {
   return (
-    <AnimatedSection delay={index * 0.08}>
-      <article className="grid grid-cols-12 gap-x-6 gap-y-6 py-14 md:py-20 border-b border-[color:var(--rule)]">
-        <div className="col-span-12 lg:col-span-8 flex flex-col">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="num text-xs text-[color:var(--ink-muted)]">FILE / {String(index + 1).padStart(3, "0")}</span>
-            <span className="h-px w-6 bg-[color:var(--rule-strong)]" />
-            <span className="num text-xs text-[color:var(--ink-muted)]">{stage}</span>
-          </div>
-          <h2 className="type-display-3 text-[color:var(--ink-muted)] mb-3">New engagement.</h2>
-          <p className="type-body text-[color:var(--ink-muted)] max-w-[52ch]">
-            {note}. We are currently preparing a new build with an Ottawa partner. Updates land here when the site launches.
+    <AnimatedSection delay={index * 0.06} className="h-full">
+      <article className="h-full flex flex-col border border-dashed border-[color:var(--rule-strong)] p-6 md:p-7">
+
+        {/* ── Top bar ── */}
+        <div className="flex items-center justify-between mb-7">
+          <span className="num text-[11px] text-[color:var(--ink-muted)]">
+            FILE / {String(index + 1).padStart(3, "0")}
+          </span>
+          <span className="num text-[11px] text-[color:var(--ink-muted)]">
+            {stage.toUpperCase()}
+          </span>
+        </div>
+
+        {/* ── Schematic mark in logo slot ── */}
+        <div className="mb-5 w-9 h-9">
+          <svg viewBox="0 0 36 36" className="diagram w-full h-full opacity-30" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="33" height="33" stroke="currentColor" strokeWidth="1" strokeDasharray="3 2.5" fill="none" />
+            <line x1="10" y1="10" x2="26" y2="26" stroke="currentColor" strokeWidth="0.8" />
+            <line x1="26" y1="10" x2="10" y2="26" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+        </div>
+
+        {/* ── Title + location ── */}
+        <h2 className="type-display-3 text-[color:var(--ink-muted)] mb-1">New engagement.</h2>
+        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase opacity-60">
+          Ottawa, ON
+        </p>
+
+        {/* ── Note ── */}
+        <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
+          {note}. A new build with an Ottawa partner is underway — details land here at launch.
+        </p>
+
+        {/* ── Footer placeholder ── */}
+        <div className="border-t border-dashed border-[color:var(--rule-strong)] pt-4">
+          <p className="num text-[10px] text-[color:var(--ink-muted)] opacity-50 uppercase tracking-widest">
+            In progress
           </p>
         </div>
+
       </article>
     </AnimatedSection>
   );
