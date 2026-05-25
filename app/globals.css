@@ -9,6 +9,7 @@
   /* — Surfaces ————————————————————————————————— */
   --surface:          oklch(98% 0.004 80);    /* bone, warm tint */
   --surface-elevated: oklch(99.2% 0.003 80);  /* card / inset above surface */
+  --surface-alt:      oklch(95.5% 0.008 250); /* cool-bone: alternate section surface */
   --surface-hover:    oklch(96.5% 0.006 250);  /* table row hover wash on bone */
   --surface-dark:     oklch(20% 0.012 250);   /* tool-steel graphite (dark sections) */
   --surface-dark-elevated: oklch(24% 0.014 250);
@@ -81,6 +82,7 @@
   /* Surfaces */
   --color-surface:          var(--surface);
   --color-surface-elevated: var(--surface-elevated);
+  --color-surface-alt:      var(--surface-alt);
   --color-surface-dark:     var(--surface-dark);
   --color-surface-dark-elevated: var(--surface-dark-elevated);
 

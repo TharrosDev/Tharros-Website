@@ -24,7 +24,7 @@ const pains = [
 
 export default function ProblemSection() {
   return (
-    <section id="problem" className="rhythm-default bg-[color:var(--surface)]">
+    <section id="problem" className="rhythm-default bg-[color:var(--surface-alt)] border-t border-[color:var(--rule)]">
       <div className="page-frame">
         <SectionEyebrow numeral="§ 01" label="The problem" className="mb-[1.8rem]" />
 

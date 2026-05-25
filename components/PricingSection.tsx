@@ -12,7 +12,7 @@ const factors = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="rhythm-tight bg-[color:var(--surface)]">
+    <section id="pricing" className="rhythm-tight bg-[color:var(--surface-alt)] border-t border-[color:var(--rule)]">
       <div className="page-frame">
         <SectionEyebrow numeral="§ 02" label="Pricing" />
 

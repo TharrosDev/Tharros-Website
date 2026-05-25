@@ -35,7 +35,7 @@ export default function WhatWeBuildsSection() {
   return (
     <section id="solutions">
       {/* Light header band */}
-      <div className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-10 md:pb-14">
+      <div className="bg-[color:var(--surface-alt)] pt-28 md:pt-32 pb-10 md:pb-14">
         <div className="page-frame">
           <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
