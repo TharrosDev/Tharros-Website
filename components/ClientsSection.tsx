@@ -46,9 +46,9 @@ const clients: Client[] = [
       "Tharros built and shipped their marketing site, with ongoing on-call support.",
     url: "https://advanta365.com",
     date: "May 2026",
-    monogram: "A3",
+    logo: "/advanta365-logo.svg",
     tags: ["Modernized Site", "On-Call Support"],
-    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://advanta365.com",
+    screenshot: "https://image.thum.io/get/fresh/width/1600/crop/1000/png/https://advanta365.com",
   },
   {
     id: "echo-five",
@@ -62,7 +62,7 @@ const clients: Client[] = [
     date: "May 2026",
     logo: "/echo-five-logo.svg",
     tags: ["Modernized Site", "On-Call Support"],
-    screenshot: "https://image.thum.io/get/width/1600/crop/1000/png/https://echo-five-website.vercel.app",
+    screenshot: "https://image.thum.io/get/fresh/width/1600/crop/1000/png/https://echo-five-website.vercel.app",
   },
 ];
 
