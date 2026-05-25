@@ -35,7 +35,7 @@ export default function WhatWeBuildsSection() {
   return (
     <section id="solutions">
       {/* Light header band */}
-      <div className="bg-[color:var(--surface-alt)] pt-28 md:pt-32 pb-10 md:pb-14">
+      <div className="bg-[color:var(--surface-alt)] pt-28 md:pt-32 pb-[var(--rhythm-tight)]">
         <div className="page-frame">
           <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
@@ -49,16 +49,16 @@ export default function WhatWeBuildsSection() {
       </div>
 
       {/* Dark content band */}
-      <div className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] pt-10 md:pt-14 pb-[var(--rhythm-default)]">
+      <div className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] pt-[var(--rhythm-tight)] pb-[var(--rhythm-default)]">
         <div className="page-frame">
           <AnimatedSection>
             <ol className="grid grid-cols-1 md:grid-cols-3 border-t border-[color:var(--rule-on-dark)]">
               {agents.map((agent, i) => (
                 <li
                   key={agent.num}
-                  className={`flex flex-col py-[1.5rem] px-0 md:px-[0.9rem] border-[color:var(--rule-on-dark)] ${
-                    i > 0 ? "border-t md:border-t-0 md:border-l" : ""
-                  } ${i === 0 ? "md:pl-0" : ""}`}
+                  className={`flex flex-col py-8 px-0 md:px-5 border-[color:var(--rule-on-dark)] ${
+                    i === 0 ? "md:pl-0" : "border-t md:border-t-0 md:border-l"
+                  }`}
                 >
                   <span className="num text-sm text-[color:var(--accent-on-dark)]">{agent.num}</span>
                   <div className="type-meta text-[color:var(--accent-on-dark)] mt-4">{agent.tagline}</div>
