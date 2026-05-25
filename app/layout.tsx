@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
 import NavBar from "@/components/NavBar";
@@ -776,6 +777,19 @@ export default function RootLayout({
         <PageTransition>{children}</PageTransition>
         <BackToTop />
         <Analytics />
+        <footer className="bg-[color:var(--surface-dark)] border-t border-[color:var(--rule-on-dark)]">
+          <div className="page-frame py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
+              © {new Date().getFullYear()} THARROS · OTTAWA · ALL RIGHTS RESERVED
+            </span>
+            <Link
+              href="/privacy"
+              className="num text-[11px] text-[color:var(--ink-on-dark-muted)] hover:text-[color:var(--ink-on-dark)] transition-colors"
+            >
+              PRIVACY
+            </Link>
+          </div>
+        </footer>
       </body>
     </html>
   );

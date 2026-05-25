@@ -83,5 +83,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
+    {
+      url: `${SITE_URL}/privacy`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: {
+        languages: {
+          "en-CA": `${SITE_URL}/privacy`,
+          "x-default": `${SITE_URL}/privacy`,
+        },
+      },
+    },
   ];
 }
