@@ -17,16 +17,13 @@ const MAX_PROMPTS = 3;
 const TIME_FORMATTER = new Intl.DateTimeFormat([], { hour: "2-digit", minute: "2-digit" });
 const formatTime = () => TIME_FORMATTER.format(new Date());
 
-const NEURAL_LOGIC_FEATURES = [
-  { title: "Real Answers", desc: "Answers questions the way your front desk would." },
-  { title: "Your Voice", desc: "Tuned to your services, your tone, your scope." },
-  { title: "Wired In", desc: "Connects to your CRM, intake, and messaging." },
+const TRUST_POINTS = [
+  { title: "Real Answers", desc: "Answers questions the way your front desk would, then knows when to hand off to you." },
+  { title: "Your Voice", desc: "Trained on your services, your tone, and your scope. It stays on topic." },
+  { title: "Wired In", desc: "Connects to your CRM, intake forms, and messaging channels." },
 ] as const;
 
-const VERIFICATION_BLOCKS = [
-  { label: "Plain Talk", title: "Clear Answers", desc: "Short for simple questions, deeper when the work calls for it." },
-  { label: "On Topic", title: "Stays in Scope", desc: "Trained on your services. Won't wander into territory it shouldn't." },
-] as const;
+const WHITE = "oklch(99% 0.002 25)";
 
 type LocalMessage = {
   id: string;
@@ -222,122 +219,92 @@ export default function ChatDemoSection() {
   );
 
   return (
-    <section id="demo" className="rhythm-default bg-[color:var(--surface-dark)]">
+    <section id="demo" className="rhythm-default bg-[color:var(--surface)] border-t border-[color:var(--rule)]">
       <div className="page-frame">
-        <SectionEyebrow numeral="§ 02" label="Live console" tone="dark" />
+        <SectionEyebrow numeral="§ 02" label="Live agent" />
 
         {/* Headline */}
-        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-14 md:mb-20">
-          <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h2 className="type-display-2 text-[color:var(--ink-on-dark)] max-w-[18ch]">
-              An agent that <br />
-              <span className="text-[color:var(--accent-on-dark)]">shows up.</span>
+        <div className="grid grid-cols-12 gap-x-6 gap-y-6 mb-12 md:mb-16">
+          <AnimatedSection className="col-span-12 lg:col-span-7">
+            <h2 className="type-display-2 max-w-[15ch]">
+              Don&apos;t take our word for it. <span className="accent-text">Ask it.</span>
             </h2>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:pt-2">
-            <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[42ch]">
-              Built once, embedded into your site, live the moment your visitors land. Try ours in real time.
+          <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-5 lg:pt-2">
+            <p className="type-lead">
+              The same engine we embed into Ottawa small business sites, live right here. Ask it
+              about Tharros, or how we&apos;d build one for you.
             </p>
+            <dl className="meta-row mt-6 pt-5 border-t-2 border-[color:var(--ink)]">
+              <div><dt>Cost</dt><dd>Free</dd></div>
+              <div><dt>Sign-up</dt><dd>None</dd></div>
+              <div><dt>Questions</dt><dd className="num">03</dd></div>
+            </dl>
           </AnimatedSection>
         </div>
 
-        {/* Feature row — three numbered hairline columns, no cards */}
+        {/* Console */}
         <AnimatedSection delay={0.1}>
-          <div className="border-t border-[color:var(--rule-on-dark)] mb-16 md:mb-24">
-            <div className="grid grid-cols-1 md:grid-cols-3">
-              {NEURAL_LOGIC_FEATURES.map((feature, i) => (
-                <div
-                  key={feature.title}
-                  className="py-8 md:py-10 md:px-8 md:first:pl-0 md:last:pr-0 border-b md:border-b-0 md:border-l first:border-l-0 border-[color:var(--rule-on-dark)] grid grid-cols-[auto_1fr] gap-x-4 items-start"
-                >
-                  <span className="num text-xs text-[color:var(--accent-on-dark)] mt-1">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h4 className="type-meta-strong text-[color:var(--ink-on-dark)] mb-3">{feature.title}</h4>
-                    <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[36ch]">{feature.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          {isMobile ? (
+            <MobileChatConsole
+              messages={messages}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              handleSend={handleSend}
+              isTyping={isTyping}
+              recommendedQuestions={recommendedQuestions}
+              title="Tharros AI Agent"
+              subtitle="Online"
+              modelType="Live Demo"
+              userMessageCount={userMessageCount}
+              maxPrompts={MAX_PROMPTS}
+              isLoading={isLoading}
+              debugInfo={initError ? { error: initError } : null}
+            />
+          ) : (
+            <DesktopConsole
+              scrollRef={scrollRef}
+              messages={messages}
+              isTyping={isTyping}
+              isLoading={isLoading}
+              initError={initError}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              handleSend={handleSend}
+              recommendedQuestions={recommendedQuestions}
+              remaining={remaining}
+              isLimitReached={isLimitReached}
+              agentInstance={agentInstance}
+            />
+          )}
         </AnimatedSection>
 
-        {/* Console + sidebar */}
-        <div className="grid grid-cols-12 gap-x-6 gap-y-12 lg:gap-y-0 items-start">
-          {/* Sidebar */}
-          <div className="col-span-12 lg:col-span-4 lg:sticky lg:top-32 lg:pr-4">
-            <AnimatedSection>
-              <h3 className="type-display-3 text-[color:var(--ink-on-dark)] max-w-[16ch] mb-5">
-                A live agent, <br />
-                <span className="text-[color:var(--accent-on-dark)]">right now.</span>
-              </h3>
-              <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[40ch] mb-10 lg:mb-12">
-                Same engine we embed into Ottawa small business sites. Ask it about Tharros, or how we&apos;d build one for you.
-              </p>
-
-              <div className="border-t border-[color:var(--rule-on-dark)] hidden lg:block">
-                {VERIFICATION_BLOCKS.map((item, i) => (
-                  <div key={item.title} className="py-6 border-b border-[color:var(--rule-on-dark)] grid grid-cols-[auto_1fr] gap-x-4 items-start">
-                    <span className="num text-xs text-[color:var(--accent-on-dark)] mt-1">{String.fromCharCode(65 + i)}</span>
-                    <div>
-                      <div className="flex items-baseline gap-3 mb-2">
-                        <span className="type-meta text-[color:var(--ink-on-dark-faint)]">{item.label}</span>
-                      </div>
-                      <h4 className="type-meta-strong text-[color:var(--ink-on-dark)] mb-2">{item.title}</h4>
-                      <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[36ch]">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+        {/* Trust row */}
+        <AnimatedSection delay={0.15}>
+          <div className="mt-12 md:mt-16 border-t-2 border-[color:var(--ink)] grid grid-cols-1 md:grid-cols-3">
+            {TRUST_POINTS.map((point, i) => (
+              <div
+                key={point.title}
+                className={`py-7 md:py-9 md:px-7 md:first:pl-0 md:last:pr-0 border-b md:border-b-0 md:border-l first:border-l-0 border-[color:var(--rule)] grid grid-cols-[auto_1fr] gap-x-4 items-start`}
+              >
+                <span className="num text-sm font-semibold text-[color:var(--red)] mt-0.5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="type-meta-strong mb-2.5">{point.title}</h3>
+                  <p className="type-body text-[color:var(--ink-muted)] max-w-[34ch]">{point.desc}</p>
+                </div>
               </div>
-            </AnimatedSection>
+            ))}
           </div>
-
-          {/* Console */}
-          <div className="col-span-12 lg:col-span-8">
-            <AnimatedSection delay={0.1}>
-              {isMobile ? (
-                <MobileChatConsole
-                  messages={messages}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  handleSend={handleSend}
-                  isTyping={isTyping}
-                  recommendedQuestions={recommendedQuestions}
-                  title="Tharros AI Agent"
-                  subtitle="Online"
-                  modelType="Live Demo"
-                  userMessageCount={userMessageCount}
-                  maxPrompts={MAX_PROMPTS}
-                  isLoading={isLoading}
-                  debugInfo={initError ? { error: initError } : null}
-                />
-              ) : (
-                <DesktopConsole
-                  scrollRef={scrollRef}
-                  messages={messages}
-                  isTyping={isTyping}
-                  isLoading={isLoading}
-                  initError={initError}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  handleSend={handleSend}
-                  recommendedQuestions={recommendedQuestions}
-                  remaining={remaining}
-                  isLimitReached={isLimitReached}
-                  agentInstance={agentInstance}
-                />
-              )}
-            </AnimatedSection>
-          </div>
-        </div>
+        </AnimatedSection>
       </div>
     </section>
   );
 }
 
 /* ============================================================
-   Desktop console — schematic figure on graphite
+   Desktop console — white surface, black machine header
    ============================================================ */
 
 type ConsoleProps = {
@@ -370,21 +337,21 @@ function DesktopConsole({
   agentInstance,
 }: ConsoleProps) {
   return (
-    <figure className="border border-[color:var(--rule-on-dark-strong)] bg-[color:var(--surface-dark-elevated)] flex flex-col h-[560px] xl:h-[680px] 3xl:h-[820px]">
-      {/* Top strip — FIG label + remaining counter */}
-      <header className="flex items-center justify-between px-5 md:px-6 py-3 border-b border-[color:var(--rule-on-dark)]">
+    <figure className="border-2 border-[color:var(--ink)] bg-[color:var(--surface-elevated)] flex flex-col h-[580px] xl:h-[700px] 3xl:h-[820px]">
+      {/* Top strip — black machine header */}
+      <header className="flex items-center justify-between px-5 md:px-7 py-3.5 bg-[color:var(--ink)]">
         <div className="flex items-center gap-3">
           <span
             aria-hidden="true"
-            className={`w-2 h-2 ${initError ? "bg-[color:var(--color-danger)]" : "bg-[color:var(--accent-on-dark)]"}`}
+            className={`w-2 h-2 ${initError ? "bg-[color:var(--color-danger)]" : "bg-[color:var(--red-bright)]"}`}
           />
-          <span className="num text-[11px] text-[color:var(--ink-on-dark-faint)] tracking-[0.14em]">
-            FIG · 001 / LIVE AGENT · OTTAWA
+          <span className="num text-[11px] tracking-[0.16em]" style={{ color: WHITE }}>
+            LIVE AGENT · OTTAWA
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)] tracking-[0.14em]">
+          <span className="num text-[11px] tracking-[0.16em] text-[color:var(--ink-on-dark-muted)]">
             {isLimitReached ? "LIMIT REACHED" : `${String(remaining).padStart(2, "0")} / ${String(MAX_PROMPTS).padStart(2, "0")} LEFT`}
           </span>
           <div className="flex items-center gap-[3px]" aria-hidden="true">
@@ -397,8 +364,8 @@ function DesktopConsole({
                     isLimitReached
                       ? "bg-[color:var(--color-danger)]"
                       : filled
-                        ? "bg-[color:var(--accent-on-dark)]"
-                        : "border border-[color:var(--rule-on-dark-strong)]"
+                        ? "bg-[color:var(--red-bright)]"
+                        : "border border-[color:oklch(97%_0.002_25/0.35)]"
                   }`}
                 />
               );
@@ -410,38 +377,40 @@ function DesktopConsole({
       {/* Transcript */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto px-5 md:px-6"
+        className="flex-1 overflow-y-auto px-5 md:px-7 bg-[color:var(--surface)]"
       >
         {isLoading && <LoadingRow />}
         {!isLoading && initError && <ErrorRow error={initError} />}
 
         {!isLoading && !initError && (
-          <AnimatePresence initial={false}>
-            {messages.map((msg) => (
-              <TranscriptRow key={msg.id} msg={msg} />
-            ))}
-            {isTyping && <TypingRow />}
-          </AnimatePresence>
+          <div className="py-6 flex flex-col gap-5">
+            <AnimatePresence initial={false}>
+              {messages.map((msg) => (
+                <TranscriptRow key={msg.id} msg={msg} />
+              ))}
+              {isTyping && <TypingRow />}
+            </AnimatePresence>
+          </div>
         )}
       </div>
 
-      {/* Bottom strip — suggestions, limit banner, input */}
-      <div className="border-t border-[color:var(--rule-on-dark)]">
+      {/* Bottom strip — limit banner, suggestions, input */}
+      <div className="border-t-2 border-[color:var(--ink)] bg-[color:var(--surface-elevated)]">
         <AnimatePresence>
           {isLimitReached && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex items-center justify-between gap-4 px-5 md:px-6 py-4 border-b border-[color:var(--rule-on-dark)]"
+              className="flex items-center justify-between gap-4 px-5 md:px-7 py-4 bg-[color:var(--red-soft)] border-b border-[color:var(--rule-strong)]"
             >
               <div className="flex items-baseline gap-3 min-w-0">
-                <span className="num text-[11px] text-[color:var(--color-danger)] tracking-[0.16em]">// LIMIT</span>
-                <span className="type-body text-[color:var(--ink-on-dark-muted)] truncate">
+                <span className="num text-[11px] text-[color:var(--red-deep)] font-semibold tracking-[0.16em]">// LIMIT</span>
+                <span className="type-body text-[color:var(--ink)] truncate">
                   Want one trained on your business? Let&apos;s talk.
                 </span>
               </div>
-              <a href="/brief" className="btn-primary !min-h-[36px] !py-2 !px-4 text-[13px] shrink-0">
+              <a href="/brief" className="btn-primary !min-h-[40px] !w-auto !py-2.5 !px-4 text-[13px] shrink-0">
                 Get started
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M13 5l7 7-7 7" />
@@ -457,21 +426,21 @@ function DesktopConsole({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="px-5 md:px-6 pt-4 pb-2"
+              className="px-5 md:px-7 pt-4 pb-2"
             >
-              <span className="num text-[11px] text-[color:var(--ink-on-dark-faint)] tracking-[0.18em] block mb-3">
+              <span className="num text-[11px] text-[color:var(--ink-faint)] tracking-[0.18em] block mb-3">
                 TRY ASKING
               </span>
-              <div className="grid grid-cols-1 md:grid-cols-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
                 {recommendedQuestions.slice(0, 3).map((q, i) => (
                   <button
                     key={q}
                     type="button"
                     onClick={() => handleSend(q)}
-                    className="group text-left grid grid-cols-[auto_1fr] gap-x-3 items-baseline py-3 md:px-3 md:first:pl-0 md:last:pr-0 border-t md:border-t-0 md:border-l first:border-l-0 border-[color:var(--rule-on-dark)] focus:outline-none"
+                    className="group text-left grid grid-cols-[auto_1fr] gap-x-2.5 items-baseline p-3 border border-[color:var(--rule-strong)] hover:border-[color:var(--red)] hover:bg-[color:var(--red-soft)] transition-colors focus:outline-none"
                   >
-                    <span className="num text-[11px] text-[color:var(--accent-on-dark)]">Q{i + 1}</span>
-                    <span className="type-body text-[color:var(--ink-on-dark-muted)] group-hover:text-[color:var(--ink-on-dark)] transition-colors">
+                    <span className="num text-[11px] text-[color:var(--red)] font-semibold">Q{i + 1}</span>
+                    <span className="text-[14px] leading-snug text-[color:var(--ink-muted)] group-hover:text-[color:var(--ink)] transition-colors">
                       {q}
                     </span>
                   </button>
@@ -484,11 +453,11 @@ function DesktopConsole({
         {/* Input bar */}
         <form
           onSubmit={(e) => handleSend(inputValue, e)}
-          className="flex items-stretch border-t border-[color:var(--rule-on-dark)]"
+          className="flex items-stretch border-t border-[color:var(--rule-strong)]"
         >
           <span
             aria-hidden="true"
-            className="num self-center pl-5 md:pl-6 pr-2 text-[color:var(--accent-on-dark)] select-none"
+            className="num self-center pl-5 md:pl-7 pr-2 text-[color:var(--red-deep)] font-semibold select-none"
           >
             &gt;
           </span>
@@ -510,13 +479,14 @@ function DesktopConsole({
             autoCorrect="off"
             spellCheck={false}
             aria-label="Ask the Tharros agent"
-            className="flex-1 min-w-0 bg-transparent py-4 pr-4 type-body text-[color:var(--ink-on-dark)] placeholder:text-[color:var(--ink-on-dark-faint)] focus:outline-none disabled:opacity-50"
+            className="flex-1 min-w-0 bg-transparent py-4 pr-4 type-body text-[color:var(--ink)] placeholder:text-[color:var(--ink-faint)] focus:outline-none disabled:opacity-50"
           />
           <button
             type="submit"
             aria-label="Send message"
             disabled={!inputValue.trim() || !agentInstance || isLoading || isTyping || isLimitReached}
-            className="flex items-center gap-2 bg-[color:var(--accent)] text-[color:var(--ink-on-dark)] px-5 md:px-6 type-meta-strong hover:bg-[color:var(--accent-strong)] disabled:bg-[color:var(--rule-on-dark-strong)] disabled:text-[color:var(--ink-on-dark-faint)] disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 bg-[color:var(--red-deep)] px-5 md:px-7 font-mono text-[12px] font-bold uppercase tracking-[0.14em] hover:bg-[color:var(--red-deeper)] disabled:bg-[color:var(--rule-strong)] disabled:text-[color:var(--ink-faint)] disabled:cursor-not-allowed transition-colors"
+            style={{ color: WHITE }}
           >
             <span>Send</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -532,35 +502,50 @@ function DesktopConsole({
 }
 
 /* ============================================================
-   Transcript rows
+   Transcript rows — agent left (plain), user right (black bubble)
    ============================================================ */
+
+const ROW_EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 const TranscriptRow = memo(({ msg }: { msg: LocalMessage }) => {
   const isAgent = msg.sender === "agent";
+
+  if (isAgent) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: ROW_EASE }}
+        className="flex flex-col items-start max-w-[88%] self-start"
+      >
+        <div className="flex items-center gap-2.5 mb-2">
+          <span className="num text-[10px] tracking-[0.2em] text-[color:var(--red)] font-semibold">AGENT</span>
+          <span className="num text-[10px] text-[color:var(--ink-faint)] tabular-nums">{msg.time}</span>
+        </div>
+        <div className="text-[15px] leading-relaxed text-[color:var(--ink)]">
+          <FormattedMessage text={msg.text} />
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 6 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="grid grid-cols-[64px_1fr_56px] gap-x-4 py-5 border-b border-[color:var(--rule-on-dark)] last:border-b-0 items-start"
+      transition={{ duration: 0.3, ease: ROW_EASE }}
+      className="flex flex-col items-end max-w-[82%] self-end"
     >
-      <span
-        className={`num text-[11px] tracking-[0.18em] mt-1 ${
-          isAgent ? "text-[color:var(--accent-on-dark)]" : "text-[color:var(--ink-on-dark-faint)]"
-        }`}
-      >
-        {isAgent ? "[AGENT]" : "[YOU]"}
-      </span>
-      <div
-        className={`type-body min-w-0 ${
-          isAgent ? "text-[color:var(--ink-on-dark)]" : "text-[color:var(--ink-on-dark-muted)]"
-        }`}
-      >
-        {isAgent ? <FormattedMessage text={msg.text} /> : msg.text}
+      <div className="flex items-center gap-2.5 mb-2">
+        <span className="num text-[10px] text-[color:var(--ink-faint)] tabular-nums">{msg.time}</span>
+        <span className="num text-[10px] tracking-[0.2em] text-[color:var(--ink-faint)]">YOU</span>
       </div>
-      <span className="num text-[11px] text-[color:var(--ink-on-dark-faint)] tabular-nums text-right mt-1">
-        {msg.time}
-      </span>
+      <div
+        className="px-4 py-2.5 text-[15px] leading-[1.5] bg-[color:var(--ink)]"
+        style={{ color: WHITE }}
+      >
+        {msg.text}
+      </div>
     </motion.div>
   );
 });
@@ -571,53 +556,47 @@ const TypingRow = memo(() => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="grid grid-cols-[64px_1fr_56px] gap-x-4 py-5 items-start"
+    className="flex flex-col items-start self-start"
   >
-    <span className="num text-[11px] tracking-[0.18em] text-[color:var(--accent-on-dark)] mt-1">[AGENT]</span>
-    <div className="flex items-center gap-3 type-body text-[color:var(--ink-on-dark-muted)]">
+    <span className="num text-[10px] tracking-[0.2em] text-[color:var(--red)] font-semibold mb-2">AGENT</span>
+    <div className="flex items-center gap-3 text-[color:var(--ink-muted)]">
       <motion.span
         aria-hidden="true"
         animate={{ opacity: [0.25, 1, 0.25] }}
         transition={{ repeat: Infinity, duration: 1.1, ease: "easeInOut" }}
-        className="inline-block w-[2px] h-[1.1em] bg-[color:var(--accent-on-dark)]"
+        className="inline-block w-[3px] h-[1.1em] bg-[color:var(--red)]"
       />
-      <span className="num text-[11px] tracking-[0.18em]">THINKING</span>
+      <span className="num text-[10px] tracking-[0.2em]">THINKING</span>
     </div>
-    <span aria-hidden="true" />
   </motion.div>
 ));
 TypingRow.displayName = "TypingRow";
 
 const LoadingRow = memo(() => (
-  <div className="grid grid-cols-[64px_1fr] gap-x-4 py-8 items-start">
-    <span className="num text-[11px] tracking-[0.18em] text-[color:var(--ink-on-dark-faint)] mt-1">[BOOT]</span>
-    <div>
-      <div className="flex items-baseline gap-3 mb-3">
-        <span className="num text-[11px] tracking-[0.18em] text-[color:var(--ink-on-dark-muted)]">WARMING UP</span>
-      </div>
-      <div className="h-px bg-[color:var(--rule-on-dark-strong)] relative overflow-hidden">
-        <motion.span
-          aria-hidden="true"
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-          className="absolute inset-y-[-1px] left-0 w-1/3 bg-[color:var(--accent-on-dark)]"
-        />
-      </div>
+  <div className="py-8">
+    <div className="flex items-baseline gap-3 mb-3">
+      <span className="num text-[11px] tracking-[0.2em] text-[color:var(--ink-faint)]">[BOOT]</span>
+      <span className="num text-[11px] tracking-[0.2em] text-[color:var(--ink-muted)]">WARMING UP</span>
+    </div>
+    <div className="h-[2px] bg-[color:var(--rule-strong)] relative overflow-hidden max-w-[280px]">
+      <motion.span
+        aria-hidden="true"
+        initial={{ x: "-100%" }}
+        animate={{ x: "100%" }}
+        transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+        className="absolute inset-y-0 left-0 w-1/3 bg-[color:var(--red)]"
+      />
     </div>
   </div>
 ));
 LoadingRow.displayName = "LoadingRow";
 
 const ErrorRow = memo(({ error }: { error: string }) => (
-  <div className="grid grid-cols-[64px_1fr] gap-x-4 py-8 items-start">
-    <span className="num text-[11px] tracking-[0.18em] text-[color:var(--color-danger)] mt-1">[ERR]</span>
-    <div>
-      <span className="num text-[11px] tracking-[0.18em] text-[color:var(--color-danger)] block mb-2">
-        AGENT OFFLINE
-      </span>
-      <p className="type-body text-[color:var(--ink-on-dark-muted)] max-w-[52ch]">{error}</p>
-    </div>
+  <div className="py-8">
+    <span className="num text-[11px] tracking-[0.2em] text-[color:var(--color-danger)] block mb-2">
+      [ERR] AGENT OFFLINE
+    </span>
+    <p className="type-body text-[color:var(--ink-muted)] max-w-[52ch]">{error}</p>
   </div>
 ));
 ErrorRow.displayName = "ErrorRow";

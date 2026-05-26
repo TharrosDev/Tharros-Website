@@ -83,7 +83,7 @@ function ClientsHero() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-8 border-b border-[color:var(--rule)] pb-12 md:pb-16">
           <AnimatedSection className="col-span-12 lg:col-span-8">
             <h1 className="type-display-1 max-w-[16ch]">
-              Real-world <span className="text-[color:var(--accent)]">impact.</span>
+              Real-world <span className="accent-text">impact.</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">

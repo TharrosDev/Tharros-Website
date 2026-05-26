@@ -21,8 +21,11 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 function Unit({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex flex-col items-center gap-1.5 min-w-[3.25rem]">
-      <span className="num text-[clamp(1.75rem,5vw,2.75rem)] leading-none text-[color:var(--ink)]" suppressHydrationWarning>
+    <div className="flex flex-col items-center gap-2">
+      <span
+        className="num font-semibold text-[clamp(1.75rem,5vw,2.75rem)] leading-none px-3.5 py-2.5 min-w-[3.25rem] text-center bg-[color:var(--ink)] text-[color:oklch(99%_0.002_25)]"
+        suppressHydrationWarning
+      >
         {value}
       </span>
       <span className="num text-[11px] tracking-[0.16em] uppercase text-[color:var(--ink-faint)]">{label}</span>
@@ -31,7 +34,7 @@ function Unit({ value, label }: { value: string; label: string }) {
 }
 
 function Sep() {
-  return <span className="num text-[clamp(1.5rem,4vw,2.25rem)] leading-none text-[color:var(--rule-strong)] self-start mt-0.5">:</span>;
+  return <span className="num text-[clamp(1.5rem,4vw,2.25rem)] leading-none text-[color:var(--red)] font-semibold self-center mb-6">:</span>;
 }
 
 export default function LaunchCountdown({ endIso }: { endIso: string }) {

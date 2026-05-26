@@ -42,21 +42,21 @@ export default function HowItWorksSection() {
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">
-            From first call to <span className="text-[color:var(--accent)]">live and supported.</span>
+            From first call to <span className="accent-text">live and supported.</span>
           </h2>
         </AnimatedSection>
 
         <div className="relative" ref={railRef}>
           {/* Base pipeline rail */}
-          <div className="absolute left-[14px] md:left-[24px] top-2 bottom-2 w-px bg-[color:var(--rule-strong)]" aria-hidden="true" />
-          {/* Cobalt fill that tracks scroll through the section */}
+          <div className="absolute left-[15px] md:left-[27px] top-2 bottom-2 w-[2px] bg-[color:var(--rule-strong)]" aria-hidden="true" />
+          {/* Red fill that tracks scroll through the section */}
           <motion.div
-            className="absolute left-[14px] md:left-[24px] top-2 bottom-2 w-px bg-[color:var(--accent)] origin-top"
+            className="absolute left-[15px] md:left-[27px] top-2 bottom-2 w-[2px] bg-[color:var(--red)] origin-top"
             style={{ scaleY: reduce ? 1 : fill }}
             aria-hidden="true"
           />
 
-          <ol className="flex flex-col border-t border-[color:var(--rule)]">
+          <ol className="flex flex-col border-t-2 border-[color:var(--ink)]">
             {steps.map((step, i) => (
               <Step key={step.num} step={step} delay={i * 0.1} />
             ))}
@@ -79,22 +79,27 @@ function Step({
 
   return (
     <AnimatedSection delay={delay}>
-      <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule)] items-start group">
+      <li className="grid grid-cols-12 gap-x-6 py-10 md:py-14 border-b border-[color:var(--rule-strong)] items-start group">
         <div className="col-span-12 md:col-span-1">
           <div
             ref={nodeRef}
-            className="w-7 h-7 md:w-12 md:h-12 -ml-[6px] md:-ml-[24px] flex items-center justify-center bg-[color:var(--surface)] border transition-colors duration-500"
-            style={{ borderColor: lit ? "var(--accent)" : "var(--rule-strong)" }}
+            className="w-9 h-9 md:w-14 md:h-14 -ml-[7px] md:-ml-[27px] flex items-center justify-center transition-colors duration-500"
+            style={{
+              backgroundColor: lit ? "var(--red)" : "var(--surface)",
+              borderWidth: 2,
+              borderStyle: "solid",
+              borderColor: lit ? "var(--red)" : "var(--ink)",
+            }}
           >
             <span
-              className="num text-xs md:text-sm transition-colors duration-500"
-              style={{ color: lit ? "var(--accent)" : "var(--ink)" }}
+              className="num text-sm md:text-base font-semibold transition-colors duration-500"
+              style={{ color: lit ? "oklch(99% 0.002 25)" : "var(--ink)" }}
             >
               {step.num}
             </span>
           </div>
         </div>
-        <div className="col-span-12 md:col-span-4 mt-4 md:mt-1.5">
+        <div className="col-span-12 md:col-span-4 mt-4 md:mt-1">
           <h3 className="type-display-3">{step.label}</h3>
           <span className="type-meta block mt-3">{step.duration}</span>
         </div>

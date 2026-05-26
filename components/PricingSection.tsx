@@ -23,7 +23,7 @@ export default function PricingSection() {
         </AnimatedSection>
 
         <AnimatedSection delay={0.15}>
-          <div className="border-t border-[color:var(--rule-strong)] grid grid-cols-1 md:grid-cols-3">
+          <div className="border-t-2 border-[color:var(--ink)] grid grid-cols-1 md:grid-cols-3">
             {factors.map((f) => (
               <div key={f.num} className="py-8 md:py-10 md:px-8 md:first:pl-0 md:last:pr-0 border-b border-[color:var(--rule)] md:border-b-0 md:border-l first:border-l-0 border-[color:var(--rule)]">
                 <div className="flex items-baseline gap-3 mb-3">

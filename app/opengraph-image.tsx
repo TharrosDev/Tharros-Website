@@ -5,15 +5,15 @@ import { join } from "path";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Design token hex approximations
-const COBALT = "#2f62e0";
-const COBALT_LIGHT = "#7a9ee8";
-const BG_DARK = "#1b1f2d";
-const BG_LIGHT = "#f5f3ee";
-const INK = "#1c2030";
-const INK_ON_DARK = "#f2f0eb";
-const MUTED_DARK = "#6b7280";
-const MUTED_LIGHT = "#8a8f9e";
+// Design token hex approximations (Redline: white / black / red)
+const COBALT = "#e23b2f"; // vibrant red (primary accent)
+const COBALT_LIGHT = "#ff5a45"; // lifted red for accent text on dark
+const BG_DARK = "#161312"; // warm near-black
+const BG_LIGHT = "#faf8f7"; // warm near-white
+const INK = "#1c1817"; // warm near-black ink
+const INK_ON_DARK = "#f7f4f3";
+const MUTED_DARK = "#8a8584";
+const MUTED_LIGHT = "#928d8b";
 
 export function generateImageMetadata() {
   return [
@@ -203,8 +203,8 @@ function renderHero(fontData: ArrayBuffer) {
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             <SloganPill
               textColor={COBALT_LIGHT}
-              borderColor="rgba(47,98,224,0.35)"
-              bgColor="rgba(47,98,224,0.08)"
+              borderColor="rgba(226,59,47,0.45)"
+              bgColor="rgba(226,59,47,0.12)"
             />
             <span
               style={{
@@ -436,8 +436,8 @@ function renderPackages(fontData: ArrayBuffer) {
         >
           <SloganPill
             textColor={COBALT}
-            borderColor="rgba(47,98,224,0.25)"
-            bgColor="rgba(47,98,224,0.06)"
+            borderColor="rgba(226,59,47,0.3)"
+            bgColor="rgba(226,59,47,0.07)"
           />
           <span
             style={{

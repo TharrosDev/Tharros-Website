@@ -138,13 +138,13 @@ export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnP
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">
             Three builds.<br />
-            <span className="text-[color:var(--ink-muted)]">Pick yours.</span>
+            <span className="accent-text">Pick yours.</span>
           </h2>
         </AnimatedSection>
 
         {/* Desktop comparison table */}
         <AnimatedSection delay={0.15}>
-          <div ref={tableRef} className="hidden md:block overflow-hidden border-t border-[color:var(--rule-strong)]">
+          <div ref={tableRef} className="hidden md:block overflow-hidden border-t-2 border-[color:var(--ink)]">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[color:var(--rule)]">

@@ -40,9 +40,9 @@ export default function WhatWeBuildsSection() {
           <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
           <AnimatedSection>
-            <h2 className="type-display-2 max-w-[18ch]">
+            <h2 className="type-display-2 max-w-[16ch]">
               Three agents.<br />
-              <span className="text-[color:var(--accent)]">Built into your site.</span>
+              <span className="accent-text">Built into your site.</span>
             </h2>
           </AnimatedSection>
         </div>
@@ -52,34 +52,51 @@ export default function WhatWeBuildsSection() {
       <div className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] pt-[var(--rhythm-tight)] pb-[var(--rhythm-default)]">
         <div className="page-frame">
           <AnimatedSection>
-            <ol className="grid grid-cols-1 md:grid-cols-3 border-t border-[color:var(--rule-on-dark)]">
+            <ol className="grid grid-cols-1 md:grid-cols-3 border-t-2 border-[color:var(--rule-on-dark-strong)]">
               {agents.map((agent, i) => (
                 <li
                   key={agent.num}
-                  className={`flex flex-col py-8 px-0 md:px-5 border-[color:var(--rule-on-dark)] ${
+                  className={`flex flex-col py-9 px-0 md:px-6 border-[color:var(--rule-on-dark)] ${
                     i === 0 ? "md:pl-0" : "border-t md:border-t-0 md:border-l"
                   }`}
                 >
-                  <span className="num text-sm text-[color:var(--accent-on-dark)]">{agent.num}</span>
-                  <div className="type-meta text-[color:var(--accent-on-dark)] mt-4">{agent.tagline}</div>
+                  <span className="big-num big-num--red text-[5rem] md:text-[6rem] leading-[0.8]">
+                    {agent.num}
+                  </span>
+                  <div className="type-meta-strong text-[color:var(--red-bright)] mt-6">{agent.tagline}</div>
                   <h3 className="type-display-3 text-[color:var(--ink-on-dark)] mt-3">{agent.name}</h3>
                   <p className="type-body text-[color:var(--ink-on-dark-muted)] mt-3.5">{agent.description}</p>
 
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-5">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-6">
                     {agent.examples.map((ex) => (
-                      <span key={ex} className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
+                      <span key={ex} className="num text-[11px] text-[color:var(--ink-on-dark-faint)]">
                         {ex.toUpperCase()}
                       </span>
                     ))}
                   </div>
 
-                  <ol className="signal-stack mt-auto pt-6 border-t border-[color:var(--rule-on-dark-strong)]" aria-hidden="true">
+                  {/* Flow strip — bold horizontal sequence, last stage in red */}
+                  <div
+                    className="flex items-center gap-2.5 mt-auto pt-7 flex-wrap"
+                    aria-hidden="true"
+                  >
                     {agent.flow.map((stage, si) => (
-                      <li key={stage} className="signal-node" data-accent={si === 1 ? "" : undefined}>
-                        {stage}
-                      </li>
+                      <span key={stage} className="flex items-center gap-2.5">
+                        <span
+                          className={`num text-[11px] tracking-[0.14em] uppercase ${
+                            si === agent.flow.length - 1
+                              ? "text-[color:var(--red-bright)] font-semibold"
+                              : "text-[color:var(--ink-on-dark-muted)]"
+                          }`}
+                        >
+                          {stage}
+                        </span>
+                        {si < agent.flow.length - 1 && (
+                          <span className="w-5 h-[2px] bg-[color:var(--red)]" />
+                        )}
+                      </span>
                     ))}
-                  </ol>
+                  </div>
                 </li>
               ))}
             </ol>

@@ -39,7 +39,7 @@ const SERVICE_AREAS = [
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#1d2330" },
+    { media: "(prefers-color-scheme: dark)", color: "#161312" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -282,7 +282,7 @@ export const metadata: Metadata = {
     "geo.placename": "Ottawa",
     "geo.position": `${GEO_LAT};${GEO_LON}`,
     ICBM: `${GEO_LAT}, ${GEO_LON}`,
-    "msapplication-TileColor": "#0f172a",
+    "msapplication-TileColor": "#161312",
     "msapplication-config": "/browserconfig.xml",
     rating: "general",
     "revisit-after": "7 days",
@@ -821,7 +821,7 @@ export default function RootLayout({
         <PageTransition>{children}</PageTransition>
         <BackToTop />
         <Analytics />
-        <footer className="bg-[color:var(--surface-dark)] border-t border-[color:var(--rule-on-dark)]">
+        <footer className="bg-[color:var(--surface-dark)] border-t-[3px] border-[color:var(--red)]">
           <div className="page-frame py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
               © {new Date().getFullYear()} THARROS · OTTAWA · ALL RIGHTS RESERVED

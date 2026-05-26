@@ -56,30 +56,34 @@ Always run `npm run build` before declaring work done. The build includes TypeSc
 
 ## Design system
 
-**Read [`DESIGN.md`](./DESIGN.md) first.** It's the canonical spec for the Field Engineer system. Quick summary:
+**Read [`DESIGN.md`](./DESIGN.md) first.** It's the canonical spec for the **Redline** system (May 2026 rebuild; replaced the calm "Field Engineer" cobalt system). Quick summary:
 
-**Philosophy:** Field Engineer. Typographic + diagrammatic marketing surface that signals modern tech (Geist, schematic SVGs, cobalt) and grounded tradesperson (hairline rules, mono numerals, no decorative noise). Explicitly rejects the slate-on-sky AI-SaaS reflex.
+**Philosophy:** Redline. Vibrant, high-energy marketing surface in white, black, and one committed red. Built to feel alive and eye-catching, the deliberate opposite of the old restrained cobalt system. Oversized weight-700 Geist type, square-cut buttons, bold 2px black / 3px red rules, full-black drama sections, red-drenched CTA strips, and kinetic motion (marquees, scroll-linked fills, sliding red blocks, count-up numerals). Mono metadata layer (Geist Mono numerals, `§ 0X` markers) keeps the grounded tradesperson voice. Still rejects the slate-on-sky AI-SaaS reflex, glassmorphism, and identical icon-card grids.
 
 **Surfaces:**
-- Light sections (default): `bg-[color:var(--surface)]` (bone-warm `oklch(98% 0.004 80)`), ink text, hairline `--rule` dividers.
-- Dark sections (WhyTharros, footer, ChatDemo): `bg-[color:var(--surface-dark)]` (tool-steel graphite `oklch(20% 0.012 250)`), ink-on-dark text, `--rule-on-dark` dividers. `WhatWeBuilds` is a hybrid: a light (`--surface`) header band holding the §01 eyebrow + heading, then a dark band for the agent rows.
-- No grid overlays. No scanlines. No decorative blurs.
+- Light sections (default): `bg-[color:var(--surface)]` (warm near-white `oklch(99% 0.002 25)`), ink text, `--rule` dividers (lean on 2px black `border-t-2 border-[color:var(--ink)]` for structure). `--surface-alt` for alternate light sections.
+- Dark sections (footer, WhatWeBuilds agent rows): `bg-[color:var(--surface-dark)]` (warm near-black `oklch(15% 0.012 25)`), ink-on-dark text, `--rule-on-dark` dividers. `WhatWeBuilds` is a hybrid: a light header band (§01 eyebrow + heading), then a black band for the agent rows. (`WhyTharros` and the `ChatDemo` console are now white.)
+- **Live agent console (ChatDemo, §02 Home)** is now on a **white** surface: `border-2` ink frame, solid-black machine header bar (red live dot, mono counter), agent messages plain ink / user messages in right-aligned black bubbles, red Send + suggested-question chips. `ChatDemoSectionWrapper` loads it `ssr: false` with a white skeleton fallback. Console restyle is purely presentational; the Relevance SDK logic, 3-prompt localStorage limit, and `useIsMobile` mobile swap are untouched.
+- Red-drenched strips: `NextStep` uses `bg-[color:var(--red-deep)]` with white text + `.btn-ink` CTA.
+- No grid overlays. No scanlines. No decorative blurs. No shadows.
 
 **Tokens** (defined in `app/globals.css`, OKLCH only, surfaced to Tailwind via `@theme inline`):
 
 | Token | Value | Use |
 |---|---|---|
-| `--surface` | `oklch(98% 0.004 80)` | Default page background |
-| `--surface-dark` | `oklch(20% 0.012 250)` | Dark sections |
-| `--ink` | `oklch(18% 0.02 250)` | Primary text on light |
-| `--ink-muted` | `oklch(50% 0.015 250)` | Body / secondary text |
-| `--ink-on-dark` | `oklch(96% 0.003 80)` | Primary text on dark |
-| `--rule` | `oklch(90% 0.005 250)` | Hairline divider |
-| `--accent` | `oklch(50% 0.20 260)` | **Cobalt** — the only saturated color |
-| `--accent-soft` | `oklch(95% 0.04 260)` | Wash (e.g. On-Call column) |
-| `--accent-on-dark` | `oklch(72% 0.18 260)` | Cobalt lifted for dark surfaces |
+| `--surface` | `oklch(99% 0.002 25)` | Default page background (warm near-white) |
+| `--surface-alt` | `oklch(96.3% 0.005 25)` | Alternate light sections |
+| `--surface-dark` | `oklch(15% 0.012 25)` | Black drama sections |
+| `--ink` | `oklch(17% 0.012 25)` | Primary text on light |
+| `--ink-muted` | `oklch(43% 0.016 25)` | Body / secondary text |
+| `--ink-on-dark` | `oklch(97% 0.002 25)` | Primary text on dark |
+| `--rule` | `oklch(89% 0.004 25)` | Hairline divider |
+| `--red` | `oklch(56% 0.235 25)` | Vibrant red — large text spans, blocks, ticks |
+| `--red-deep` (`--accent`) | `oklch(48% 0.225 25)` | Button fill / white-on-red / small red text |
+| `--red-bright` (`--accent-on-dark`) | `oklch(66% 0.225 25)` | Red lifted for dark surfaces |
+| `--red-soft` (`--accent-soft`) | `oklch(96% 0.035 25)` | Wash (flagship Integrate column) |
 
-Cobalt is the only pigment. ≤10% of any visible surface. Sprinkling kills the weight.
+Red is the only pigment, but it is **committed, not rationed**: bold red CTAs, one red span per heading, red eyebrow ticks, red-drenched strips, flagship wash. Use vibrant `--red` for large text, `--red-deep` (= `--accent`) wherever white text rides red or small red text sits on white (keeps AA).
 
 **Typography:**
 - Geist (display + body) and Geist Mono (numerals, metadata, eyebrows, diagram labels). No third family.
@@ -92,11 +96,11 @@ Cobalt is the only pigment. ≤10% of any visible surface. Sprinkling kills the 
 - `.eyebrow` + `§ 0X` mono numeral opens every section.
 
 **Components & wrappers:**
-- `.btn-primary` (cobalt) and `.btn-ghost` / `.btn-ghost-on-dark` are the only buttons. Min-height 48px.
+- `.btn-primary` (red fill, white text), `.btn-ink` (black fill, white text, for red surfaces), and `.btn-ghost` / `.btn-ghost-on-dark` / `.btn-ghost-on-red` are the buttons. Square corners (0 radius), min-height 50px. New kinetic helpers in `globals.css`: `.marquee` (+ `components/Marquee.tsx`), `.big-num` (oversized numeral motif), `.red-block`, `.rule-h-bold` / `.rule-h-red`, `.accent-text` (red headline span).
 - `AnimatedSection` for scroll-triggered slide-up reveals. Respects `useReducedMotion`.
 - `<dl class="meta-row">` is the metadata-row pattern (mono `<dt>` faint + `<dd>` ink).
-- Diagrams are inline SVG; reference `.diagram` / `.diagram-dark` utility for theming.
-- No card pattern. No shadows. Surfaces are flat at rest.
+- **No schematic diagrams.** Redline replaced the old SVG wiring/pipeline schematics with bold motifs: oversized numerals (`.big-num`), sliding red blocks (`.red-block` + motion `scaleX`), marquees, the kinetic HowItWorks rail, and the count-up LaunchCountdown. `components/diagrams/` and the `signal-stack` utility are legacy; don't revive them.
+- No card pattern (except `ClientCard`). No shadows. Surfaces are flat at rest.
 
 **Legacy aliases still in `globals.css`** (`.primary-button`, `.section-padding`, `.industrial-grid` no-op, `.scanline` no-op): kept only so the untouched `ChatDemoSection` and onboarding wizard still render. Do not use in new code.
 

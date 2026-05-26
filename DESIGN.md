@@ -1,51 +1,55 @@
 ---
 name: Tharros Website
-description: Field Engineer — typographic and diagrammatic marketing surface for an Ottawa AI + web shop.
+description: Redline — a vibrant white/black/red marketing surface for an Ottawa AI + web shop. Bold, kinetic, eye-catching.
 colors:
-  surface: "oklch(98% 0.004 80)"
-  surface-elevated: "oklch(99.2% 0.003 80)"
-  surface-dark: "oklch(20% 0.012 250)"
-  surface-dark-elevated: "oklch(24% 0.014 250)"
-  ink: "oklch(18% 0.02 250)"
-  ink-muted: "oklch(42% 0.024 250)"
-  ink-faint: "oklch(48% 0.025 250)"
-  ink-on-dark: "oklch(96% 0.003 80)"
-  ink-on-dark-muted: "oklch(72% 0.008 250)"
-  ink-on-dark-faint: "oklch(64% 0.014 250)"
-  rule: "oklch(90% 0.005 250)"
-  rule-strong: "oklch(82% 0.008 250)"
-  rule-on-dark: "oklch(30% 0.012 250)"
-  rule-on-dark-strong: "oklch(38% 0.014 250)"
-  surface-hover: "oklch(96.5% 0.006 250)"
-  accent: "oklch(50% 0.20 260)"
-  accent-strong: "oklch(42% 0.22 260)"
-  accent-soft: "oklch(95% 0.04 260)"
-  accent-soft-strong: "oklch(92% 0.055 260)"
-  accent-on-dark: "oklch(78% 0.17 260)"
+  surface: "oklch(99% 0.002 25)"
+  surface-elevated: "oklch(99.6% 0.0015 25)"
+  surface-alt: "oklch(96.3% 0.005 25)"
+  surface-hover: "oklch(97.2% 0.006 25)"
+  surface-dark: "oklch(15% 0.012 25)"
+  surface-dark-elevated: "oklch(20% 0.014 25)"
+  ink: "oklch(17% 0.012 25)"
+  ink-muted: "oklch(43% 0.016 25)"
+  ink-faint: "oklch(50% 0.018 25)"
+  ink-on-dark: "oklch(97% 0.002 25)"
+  ink-on-dark-muted: "oklch(75% 0.008 25)"
+  ink-on-dark-faint: "oklch(63% 0.012 25)"
+  rule: "oklch(89% 0.004 25)"
+  rule-strong: "oklch(80% 0.008 25)"
+  rule-on-dark: "oklch(27% 0.012 25)"
+  rule-on-dark-strong: "oklch(36% 0.014 25)"
+  red: "oklch(56% 0.235 25)"
+  red-deep: "oklch(48% 0.225 25)"
+  red-deeper: "oklch(41% 0.21 25)"
+  red-bright: "oklch(66% 0.225 25)"
+  red-soft: "oklch(96% 0.035 25)"
+  red-soft-strong: "oklch(92% 0.06 25)"
+  accent: "oklch(48% 0.225 25)"
+  accent-on-dark: "oklch(66% 0.225 25)"
 typography:
   display-1:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(3.5rem, 2.6rem + 4.6vw, 7rem)"
-    fontWeight: 600
-    lineHeight: 0.92
-    letterSpacing: "-0.04em"
+    fontSize: "clamp(3.75rem, 2.4rem + 6.8vw, 8.5rem)"
+    fontWeight: 700
+    lineHeight: 0.86
+    letterSpacing: "-0.045em"
   display-2:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.5rem, 2rem + 2.6vw, 3.75rem)"
-    fontWeight: 600
-    lineHeight: 1.0
-    letterSpacing: "-0.028em"
+    fontSize: "clamp(2.75rem, 2.05rem + 3.5vw, 4.75rem)"
+    fontWeight: 700
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
   display-3:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem)"
-    fontWeight: 600
-    lineHeight: 1.05
-    letterSpacing: "-0.022em"
+    fontSize: "clamp(1.75rem, 1.45rem + 1.5vw, 2.75rem)"
+    fontWeight: 700
+    lineHeight: 1.02
+    letterSpacing: "-0.03em"
   lead:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.1875rem, 1.075rem + 0.5vw, 1.5rem)"
+    fontSize: "clamp(1.25rem, 1.1rem + 0.62vw, 1.625rem)"
     fontWeight: 400
-    lineHeight: 1.45
+    lineHeight: 1.4
   body:
     fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif"
     fontSize: "clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem)"
@@ -55,199 +59,166 @@ typography:
     fontFamily: "Geist Mono, ui-monospace, SF Mono, Menlo, monospace"
     fontSize: "0.75rem"
     fontWeight: 500
-    letterSpacing: "0.12em"
+    letterSpacing: "0.14em"
 rounded:
-  sm: "0.25rem"
-  md: "0.375rem"
+  none: "0"
 spacing:
   tight: "clamp(2.5rem, 4vw, 4rem)"
   default: "clamp(4rem, 8vw, 8rem)"
   breath: "clamp(6rem, 12vw, 14rem)"
 components:
   btn-primary:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.ink-on-dark}"
-    rounded: "{rounded.md}"
-    padding: "0.875rem 1.5rem"
-    height: "48px"
+    backgroundColor: "{colors.red-deep}"
+    textColor: "oklch(99% 0.002 25)"
+    rounded: "0"
+    padding: "0.9375rem 1.625rem"
+    height: "50px"
   btn-primary-hover:
-    backgroundColor: "{colors.accent-strong}"
+    backgroundColor: "{colors.red-deeper}"
+  btn-ink:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.ink-on-dark}"
+    rounded: "0"
+    height: "50px"
   btn-ghost:
     backgroundColor: "transparent"
     textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    padding: "0.875rem 1.25rem"
-    height: "48px"
-  btn-ghost-on-dark:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-on-dark}"
-    rounded: "{rounded.md}"
-    padding: "0.875rem 1.25rem"
-    height: "48px"
+    border: "2px solid {colors.ink}"
+    rounded: "0"
+    height: "50px"
 ---
 
 # Design System: Tharros Website
 
 ## 1. Overview
 
-**Creative North Star: "Field Engineer"**
+**Creative North Star: "Redline"**
 
-A typographic and diagrammatic marketing surface that signals two things at once: cutting-edge technical practice (Geist, Geist Mono, schematic SVG diagrams, cobalt pigment, asymmetric layouts) and grounded, plain-spoken Ottawa tradesperson (hairline rules, tabular metadata, no decorative noise, declarative copy). The metaphor is a structural engineer's letterhead crossed with a plumber's invoice: everything earns its place.
+A vibrant, high-energy marketing surface in white, black, and one committed red. The system is built to feel *alive and eye-catching*, the deliberate opposite of the quiet, restrained "Field Engineer" system it replaces (May 2026 rebuild). Where the old system whispered with a single capped cobalt accent and hairline rules, Redline is loud where it counts: oversized type, decisive square-cut buttons, bold 2px black rules, full-black drama sections, red-drenched call-to-action strips, and kinetic motion (marquees, scroll-linked fills, sliding red blocks, count-up numerals).
 
-This system explicitly rejects the slate-on-sky AI-SaaS reflex (the training-data answer for "AI agency"). It rejects glassmorphism, decorative blurs, animated rings, hero-metric templates, and identical icon-card grids. It rejects the editorial-magazine second-order trap (display serif italic + drop caps + ruled columns) that catches first-time refusers of the SaaS reflex.
+It still rejects the slate-on-sky AI-SaaS reflex, the glassmorphism / decorative-blur trap, and the identical-icon-card-grid cliché. The grounded Ottawa-tradesperson voice survives in the mono metadata layer (Geist Mono numerals, `§ 0X` section markers, tabular figures): the difference is the volume.
 
-**Key Characteristics:**
-- Single family (Geist) for display and body; Geist Mono for numerals, metadata, and engineer-drawing labels.
-- One committed accent: cobalt `oklch(50% 0.20 260)`. Rare appearances.
-- Hairline rules as the primary divider. Cards are absent.
-- Asymmetric long-form layouts on a 12-column grid; headlines left-set.
-- Schematic SVG content (wiring, data-flow, pipeline) replaces stock imagery, and it is animated: schematics draw themselves on scroll and route a live cobalt signal.
-- Motion is choreographed but disciplined: plotter draw-on for schematics, a signal pulse on the wires, a scroll-linked Process pipeline that lights each stage on entry, a Problem drain line, and tuned reveals. Every animation has a static reduced-motion end-state; animate only transform / opacity / SVG pathLength / offsetDistance. No decorative motion.
+**Key characteristics:**
+- White (warm near-white) is the dominant canvas; full-black (`surface-dark`) sections provide contrast and drama; red is the one pigment that carries energy.
+- Single family (Geist) for display and body at weight **700**; Geist Mono for numerals, eyebrows, and metadata.
+- **Square corners** (0 radius) on buttons, inputs, tiles, and tags. Decisive, not soft.
+- Bold structural rules: 2px black (`rule-h-bold`) and 3px red (`rule-h-red`) dividers, not just hairlines.
+- **Bold motifs replace schematic diagrams**: oversized numerals, sliding red blocks, infinite marquees, kinetic count-up numerals, scroll-linked rails.
+- Motion is energetic but disciplined: every effect is compositor-safe (transform / opacity / SVG) and has a static `prefers-reduced-motion` end-state.
 
 ## 2. Colors
 
-A two-surface palette (bone-warm and tool-steel graphite) with a single saturated accent. Restrained on light surfaces, committed when the accent appears. All neutrals tinted toward the cobalt hue family (chroma 0.004–0.025); pure `#fff` and `#000` are forbidden.
+A two-surface palette (warm near-white and warm near-black) with one saturated red in two tiers. All neutrals are tinted toward the red hue family (hue 25, chroma 0.002–0.018). Pure `#fff` and `#000` are forbidden.
 
-### Primary
-- **Cobalt** (`oklch(50% 0.20 260)`): the only saturated color in the system. Used on primary buttons, the accented agent node in diagrams, single highlighted spans in headlines, the On-Call column wash in the comparison table, the scroll-progress strip at the top of the viewport. Should appear on ≤10% of any visible surface.
-- **Cobalt Strong** (`oklch(42% 0.22 260)`): hover state for primary buttons. Slightly darker, slightly more saturated.
-- **Cobalt Soft** (`oklch(95% 0.04 260)`): the wash. Used on the On-Call column in `ModelTiersSection`, on focused/selected form controls in the wizard, as text selection background. Whisper of accent without commitment.
-- **Cobalt On-Dark** (`oklch(78% 0.17 260)`): lifted variant for accent text on graphite surfaces. Brighter so it reads at distance and meets ~6:1 contrast.
+### Red (the pigment)
+Red carries every accent, CTA, active state, marker, and progress indicator. It runs hotter than the old cobalt: this is a *committed* accent, not a restrained one. It owns the hero punchline, every primary button, the NextStep strips (full red-drenched), the flagship pricing column, section eyebrow ticks, and the scroll-progress bar.
 
-### Neutral (light surfaces)
-- **Bone-Warm Surface** (`oklch(98% 0.004 80)`): the primary page background. Warm-tinted, never pure white. Used on home, brief, clients hero, and most sections.
-- **Bone-Warm Elevated** (`oklch(99.2% 0.003 80)`): faintly lifted from surface. Used for wizard card body and any inset containers.
-- **Ink** (`oklch(18% 0.02 250)`): primary text. Near-black with a cool tint toward cobalt's hue family. ~14:1 on bone surface.
-- **Ink Muted** (`oklch(42% 0.024 250)`): secondary text, lead paragraphs, body in metadata rows. ~6:1 on bone (passes AA body).
-- **Ink Faint** (`oklch(48% 0.025 250)`): tertiary marks (the `§ 0X` numerals, `<dt>` labels, FIG. captions). ~4.5:1 on bone (passes AA small text).
-- **Rule** (`oklch(90% 0.005 250)`): default hairline divider between rows and sections.
-- **Rule Strong** (`oklch(82% 0.008 250)`): emphasized hairline. Under section eyebrows, around form inputs, along the HowItWorks pipeline rail.
+- **Red** `oklch(56% 0.235 25)`: vibrant red for large headline spans (`.accent-text`), decorative blocks (`.red-block`), markers, ticks, marquee diamonds. Use on large text only (≥24px) on white; passes large-text AA.
+- **Red Deep** `oklch(48% 0.225 25)` (= `--accent`): button fill and any red surface carrying white reading text (white-on-red ≥4.5:1). Small red accent text on white (LIVE, Visit, factor letters).
+- **Red Deeper** `oklch(41% 0.21 25)`: primary-button hover / pressed.
+- **Red Bright** `oklch(66% 0.225 25)` (= `--accent-on-dark`): lifted red for accent text and spans on black surfaces (~5:1).
+- **Red Soft** `oklch(96% 0.035 25)` / **Red Soft Strong** `oklch(92% 0.06 25)`: washes for the flagship pricing column, selected form controls, text selection.
 
-### Neutral (dark surfaces)
-- **Tool-Steel Graphite** (`oklch(20% 0.012 250)`): dark surface for `WhyTharrosSection`, footer, ChatDemoSection, and the agent-rows band of `WhatWeBuildsSection` (whose header band is light). Colder than slate-950, more "machined."
-- **Graphite Elevated** (`oklch(24% 0.014 250)`): legacy card-like inset.
-- **Ink On-Dark** (`oklch(96% 0.003 80)`): primary text on graphite. ~14:1.
-- **Ink On-Dark Muted** (`oklch(72% 0.008 250)`): secondary text on graphite. ~8:1.
-- **Ink On-Dark Faint** (`oklch(64% 0.014 250)`): tertiary on graphite. ~4.6:1.
-- **Rule On-Dark** (`oklch(30% 0.012 250)`): hairline on graphite.
-- **Rule On-Dark Strong** (`oklch(38% 0.014 250)`): emphasized hairline on graphite.
+### Neutral (white side)
+- **Surface** `oklch(99% 0.002 25)`: dominant page background, warm near-white.
+- **Surface Elevated** `oklch(99.6% 0.0015 25)`: insets (wizard card body).
+- **Surface Alt** `oklch(96.3% 0.005 25)`: warm-grey alternate sections (Problem, Pricing factors).
+- **Ink** `oklch(17% 0.012 25)`: primary text, ~15:1.
+- **Ink Muted** `oklch(43% 0.016 25)`: body / lead, ~6:1 (AA body).
+- **Ink Faint** `oklch(50% 0.018 25)`: tertiary mono labels, ~4.6:1 (AA small).
+- **Rule** `oklch(89% 0.004 25)` / **Rule Strong** `oklch(80% 0.008 25)`: light dividers.
 
-### Named Rules
-**The One Pigment Rule.** Cobalt is the only saturated color in the system. Every accent, highlight, focus ring, active state, and progress strip uses cobalt or one of its four variants. No greens, no warm accents, no secondary brand colors. The restraint is the point.
+### Neutral (black side)
+- **Surface Dark** `oklch(15% 0.012 25)`: warm near-black. Drama sections: WhatWeBuilds agent rows, footer. (Also the live-agent console's machine header bar.)
+- **Ink On-Dark** `oklch(97% 0.002 25)` (~15:1), **Ink On-Dark Muted** `oklch(75% 0.008 25)` (~8:1), **Ink On-Dark Faint** `oklch(63% 0.012 25)` (~4.6:1).
+- **Rule On-Dark** `oklch(27% 0.012 25)` / **Rule On-Dark Strong** `oklch(36% 0.014 25)`.
 
-**The No Pure Black or White Rule.** Every neutral is tinted toward cobalt's hue family (chroma 0.004–0.025). Pure `#fff` and `#000` are forbidden; they read industrial-cold and break the warm-graphite system.
-
-**The Contrast Floor Rule.** Body and lead text use `ink-muted` (≥4.5:1) or stronger. Tertiary marks use `ink-faint` (≥4.5:1 for small mono). Never drop below 4.5:1 for any text the user reads. Decorative SVG opacity is allowed below that.
+### Named rules
+- **The One Pigment Rule.** Red is the only saturated color. No second hue. Restraint of *hue*, not of *quantity*: red appears boldly and often, but it is always the same red.
+- **The Two-Tier Red Rule.** Vibrant `--red` for large text and decoration; `--red-deep` (= `--accent`) wherever white text rides red or small red text sits on white. This keeps every red/white pairing AA-compliant.
+- **The No Pure Black or White Rule.** Every neutral is tinted toward hue 25. `#fff` / `#000` are forbidden.
+- **The Contrast Floor Rule.** Reading text never drops below 4.5:1 (large headline spans may use vibrant `--red` at ≥3:1, large-text AA).
 
 ## 3. Typography
 
-**Display Font:** Geist (with `ui-sans-serif, system-ui, sans-serif`)
-**Body Font:** Geist (same family, lighter weight)
-**Mono Font:** Geist Mono (with `ui-monospace, SF Mono, Menlo, monospace`)
+**Display + body:** Geist. **Mono:** Geist Mono. No third family.
 
-**Character:** A single family carries display, body, and UI. Geist is contemporary geometric with enough humanist warmth to avoid the cold-grotesk trap. Geist Mono carries every numeral, metadata label, engineer-drawing caption, and `§ 0X` section marker. This is where the tradesperson-invoice voice lives.
+Hierarchy comes from **scale + weight 700** display contrast against 400 body, plus the mono metadata layer. Display sizes are larger and tighter than the old system to read as bold, not polite.
 
-### Hierarchy
-- **Display-1** (600, `clamp(3.5rem → 7rem)` / 56→112px, line-height 0.92, tracking -0.04em): hero headline, clients page H1.
-- **Display-2** (600, `clamp(2.5rem → 3.75rem)` / 40→60px, line-height 1.0, tracking -0.028em): section H2s. Capped so titles lead without dwarfing their content.
-- **Display-3** (600, `clamp(1.625rem → 2.375rem)` / 26→38px, line-height 1.05, tracking -0.022em): section H3s, founder quote, package names in the comparison table.
-- **Lead** (400, `clamp(1.1875rem → 1.5rem)` / 19→24px, line-height 1.45, max-width 62ch): subheadlines, lead paragraphs that follow an H2.
-- **Body** (400, `clamp(1.0625rem → 1.1875rem)`, line-height 1.6, max-width 60ch): primary reading text. Base 17px.
-- **Meta** (Mono, 500, 0.75rem / 12px, tracking 0.12em, uppercase): every label, eyebrow, `<dt>` in metadata rows, diagram callouts, section markers, wizard step numbers.
+- **Display-1** (700, `clamp(3.75rem → 8.5rem)`, lh 0.86, tracking -0.045em): hero, clients H1.
+- **Display-2** (700, `clamp(2.75rem → 4.75rem)`, lh 0.95, tracking -0.035em): section H2s.
+- **Display-3** (700, `clamp(1.75rem → 2.75rem)`, lh 1.02): H3s, package/agent names.
+- **Lead** (400, `clamp(1.25rem → 1.625rem)`, lh 1.4, max 60ch).
+- **Body** (400, `clamp(1.0625rem → 1.1875rem)`, lh 1.6, max ~46–60ch).
+- **Meta** (Geist Mono, 500, 12px, tracking 0.14em, uppercase): eyebrows, `<dt>`, tags, markers.
+- **Big-Num** (`.big-num`): oversized mono numeral motif (4.5–7rem), weight 700, lh 0.8. Variants: `--red` (solid), `--outline` / `--outline-red` (text-stroke), used for Problem rows, agent cards, Why pillars.
 
-### Named Rules
-**The Mono Numeral Rule.** Every number that carries meaning (`01`, `02`, `§ 03`, FILE / 001, dates, hour ranges, wizard step indicators) renders in Geist Mono with `tabular-nums` via the `.num` utility. Mixing proportional digits into the metadata layer breaks the engineer-drawing voice.
-
-**The Single Family Rule.** Geist for display and body, Geist Mono for the engineer-drawing layer. No third family. Display serifs, hand-drawn scripts, and Inter are all prohibited.
-
-**The Minimum Size Rule.** No reading text smaller than 12px. Section eyebrows are `text-xs` (12px). Mono tags / file numbers / diagram captions are `text-[11px]` minimum. Body is at least 17px on the smallest viewport. 8–10px sizes are out.
+### Named rules
+- **The Mono Numeral Rule.** Every meaningful number (`01`, `§ 03`, prices, countdown, dates, hours) renders in Geist Mono with `tabular-nums` via `.num`.
+- **The Single Family Rule.** Geist + Geist Mono only. No display serifs, no Inter.
+- **The Minimum Size Rule.** No reading text below 12px; body ≥17px.
 
 ## 4. Elevation
 
-This system uses no shadows. Depth comes from tonal layering (bone surface → bone-elevated → graphite), hairline rules, and the cobalt accent. Surfaces are flat at rest and respond to state through border-color shifts and the global cobalt `:focus-visible` ring only.
-
-### Named Rules
-**The No Shadow Rule.** Elevation is conveyed by hairlines, surface tone, and cobalt accents. `box-shadow` is forbidden in new components. Hover states change `border-color`, surface tone, or apply the cobalt ring, never a shadow.
+No shadows. Depth comes from tonal layering (white → surface-alt → black), bold rules (2px black, 3px red), and red fills/blocks. Hover states shift background, border-color, or apply the red `:focus-visible` ring. `box-shadow` is forbidden in new components.
 
 ## 5. Components
 
-### Buttons
-- **Shape:** rectangular, faintly rounded corners (`0.375rem` / 6px). Decisive, not pill.
-- **Primary (`btn-primary`):** cobalt background, ink-on-dark text, weight 500, tracking near-default. Min-height 48px desktop / 52px mobile. Hover: cobalt-strong background + `translateY(-1px)`. No shadow.
-- **Ghost (`btn-ghost`):** transparent background, rule-strong border, ink text. Hover: border darkens to ink. On dark surfaces use `btn-ghost-on-dark` (lifted border + ink-on-dark text).
-- **Focus:** 2px solid cobalt outline at 2px offset (or accent-on-dark on graphite). Never removed.
+### Buttons (square, 0 radius, weight 600, min-height 50px / 54px mobile)
+- **`.btn-primary`** — red-deep fill, white text. Hover: red-deeper + `translateY(-2px)` + arrow nudge. The default CTA.
+- **`.btn-ink`** — solid black fill, white text. For placing on red surfaces (NextStep) or as an alternate solid on white.
+- **`.btn-ghost`** — transparent, 2px ink border, ink text. Hover: fills ink. Variants `.btn-ghost-on-dark` (on black) and `.btn-ghost-on-red` (on red strips).
+- **Focus:** 2px red outline (red-bright on dark). Never removed.
 
-### Cards / Containers
-**The system avoids card patterns for marketing content.** Feature grids (icon + heading + body × N) belong to the SaaS reflex and are banned. New marketing sections default to (a) numbered rows on a hairline divider, (b) a real `<table>`, or (c) editorial vignettes paired with a wiring diagram.
+### Signature: Section eyebrow
+Every section opens with `<SectionEyebrow>`: a 3px red tick + red mono `§ 0X` numeral + uppercase mono label. Bolder and redder than the old hairline-tick eyebrow.
 
-The one sanctioned card surface is `ClientsSection` (`components/ClientsSection.tsx`): a data-driven register of live engagements that is meant to grow to 20–30 entries. Cards use `border border-[color:var(--rule)]` with a `hover:border-[color:var(--accent)]` color shift — no shadow, no `border-radius`, no background fill change, no nested cards. If a future surface genuinely calls for cards (dense navigable data, not marketing copy), follow `ClientCard` as the spec.
+### Signature: Marquee (`components/Marquee.tsx`)
+Infinite horizontal scroller, the kinetic backbone of the site. Variants `dark` (black bar, white text, red diamonds), `red` (red-deep bar, white text), `light`. Pauses on hover; static first-copy under reduced motion. Used as the hero's bottom band and available site-wide.
 
-`PlaceholderCard` is the pending-entry variant: dashed `rule-strong` border, muted ink throughout, no hover state, and a `LoadingDots` animation (see Motion System) in place of the logo slot. It signals "more coming" without committing to a count. The wizard's `.ob-card` is a separate exception (full-bleed structural panel on bone-elevated, hairline border, no radius).
+### Signature: Oversized numerals + sliding red blocks
+Replaces the old SVG schematics. Problem rows pair a huge outlined-red numeral with a red bar (`.red-block`) that wipes in (`scaleX` 0→1, origin-left) on scroll. Agent cards (WhatWeBuilds) and Why pillars use big-num red numerals. Flow sequences render as bold horizontal label chains joined by 2px red rules, last stage in red.
 
-### Inputs / Fields (brief wizard)
-- **Shape:** rectangular, 0 radius, hairline `rule-strong` border on bone surface.
-- **Focus:** cobalt outline at 2px offset, border darkens to ink. Matches site-wide `:focus-visible`.
-- **Checked checkbox / selected radio / active chip:** cobalt-filled box, `accent-soft` background tint.
-- **Mono labels:** field labels, hints, file captions all render in Geist Mono at 12px / 0.12em tracking.
-- **File drop:** dashed `rule-strong` border, cobalt fill on drag-over. Uploaded items in `accent-soft` with cobalt border.
+### Signature: Live agent console (ChatDemo)
+The home `§02` live-agent demo sits on a **white** surface (`components/ChatDemoSection.tsx` + `MobileChatConsole.tsx`, Relevance SDK). The console is a `border-2` ink frame with a solid-black machine header bar (red live dot + mono `LIVE AGENT · OTTAWA` + a red/segment prompt counter). Transcript on white: agent messages plain ink text under a red `AGENT` label; user messages right-aligned in a square solid-black bubble with white text. Suggested questions are square bordered chips that fill `red-soft` on hover; the input bar has a red `>` prompt and a red Send button; the prompt-limit banner is a `red-soft` strip. Below the console, a 3-up trust row (`Real Answers / Your Voice / Wired In`) on a 2px black rule.
 
-### Navigation
-- **Style:** fixed top-bar, full-width, no pill shape. Transparent until the user scrolls 24px, then bone-surface with a hairline rule at the bottom.
-- **Links:** mono section number + Geist label, pointing at the page routes (`/`, `/product`, `/pricing`, `/clients`). Active state is route-based (`usePathname`): the current page's number reads cobalt, its label full ink. There is no in-page scroll-spy (the site is multi-page).
-- **Mobile:** full-bleed overlay menu with display-3 link labels, mono section numbers, primary CTA pinned to bottom.
+### Signature: Kinetic process rail (HowItWorks)
+A 2px rail with a red fill bound to `useScroll` (`scaleY`), and step nodes (2px black squares with mono numerals) that flip to a solid-red filled node with white numeral as they enter the viewport.
 
-### Signature: Eyebrow + Spine
-Every section opens with a mono eyebrow: `§ 0X` numeral + hairline rule + uppercase mono label. This is the engineer-drawing convention that ties the system together. The 12-column page-frame grid is left-set; H2s, leads, and content stay in `col-span-8`, with the right `col-span-4` reserved for metadata, diagrams, or breathing room.
+### Signature: Count-up countdown (LaunchCountdown)
+Live launch-discount timer: black digit tiles with white mono numerals, red `:` separators, red `◆ LAUNCH OFFER` marker, struck-through standard prices beside red launch prices.
 
-### Signature: Diagrams
-SVG schematics replace photography. Two stroke weights: 1px hairline (default), 1.5px (accent). Cobalt fill at 6–8% opacity inside accent rectangles. Mono labels at 9–11px with `letterSpacing: 1.2`. Diagrams carry meaning, not decoration: site-wiring (hero desktop, vertical spine branching to inbox/CRM), compact wiring strip (hero mobile, horizontal), agent data-flow (`WhatWeBuildsSection`, 3-node per pattern, each differentiated: in-scope branch / capture check / overnight gap), process pipeline (`HowItWorksSection`, scroll-linked rail).
+### Signature: Comparison table (ModelTiers)
+Real `<table>` on desktop. The flagship **The Integrate** column carries a `red-soft` wash, a 2px red top border, and a red `◆ RECOMMENDED` tag. `●` included markers pop in column-by-column (red); `—` for not-included. 2px black table top rule. Mobile collapses to a stacked variant with the same data + flagship wash.
 
-Diagrams are **animated and live**, not static. On scroll into view they plot themselves (strokes trace via `pathLength`, labels fade up, accent node fills last) through a staggered parent, then a cobalt signal dot routes the wire on a loop. Primitives live in `components/diagrams/schematic.tsx` (`useDrawInView`, `drawStroke`, `fadeNode`/`fadeLabel`, `SignalDot`). The hero diagram adds node-hover lift and pointer parallax. All diagrams are `aria-hidden`; meaning is carried by adjacent text and `meta-row` callouts.
+### Signature: Metadata row
+Horizontal `<dl class="meta-row">` with mono `<dt>` (ink-faint) and `<dd>` (ink, weight 600). Contact strips, hero bottom strip, clients summary. Sits under a 2px black rule on the hero.
 
-### Signature: Motion System
-The page reads as a drawing assembling itself, all gated on `prefers-reduced-motion` and built only from compositor-safe properties (transform, opacity, SVG `pathLength`, `offsetDistance`):
-- **Plotter draw-on:** schematic strokes trace in on first view (`useInView` `once`); the static end-state is the reduced-motion fallback.
-- **Signal pulse:** a cobalt dot rides a guide path on a loop (a meaningful routing element, not a decorative pulse-ring). It **pauses when its diagram scrolls off-screen** via a separate live, non-`once`, in-view gate.
-- **Scroll-linked fills:** the Process pipeline rail and the Problem drain line fill via `scaleY` bound to `useScroll`; Process stage-nodes light cobalt as they enter the viewport.
-- **Micro-interactions:** primary-button arrow nudge on hover, comparison-table row wash (`surface-hover` / `accent-soft-strong`). All transition-based, so the reduced-motion killswitch neutralizes them.
-- **Loading dots (`LoadingDots` in `ClientsSection.tsx`):** three 4×4px cobalt squares that pulse opacity `0.2 → 1 → 0.2` in sequence (delays 0 / 220ms / 440ms, 1.6s cycle). Used exclusively in `PlaceholderCard`. Reduced-motion fallback holds all three at `opacity: 0.2` static.
-
-### Signature: Metadata Row
-A horizontal `<dl>` with mono `<dt>` (ink-faint) and `<dd>` (ink). Used for contact strips, the clients-page hero summary strip (Records / In build / Region), footer office details, and the hero bottom strip. Replaces the "icon + label + caption" pattern.
-
-### Signature: Scroll Progress
-A 1px cobalt bar fixed at the very top of the viewport (`z-index: 70`, above NavBar). `scaleX` bound to scroll position via `useSpring` (stiffness 180, damping 28). Reads as a technical measurement strip, not decoration. Hidden under `prefers-reduced-motion`.
-
-### Signature: Comparison Table
-The three packages (The Refresh / The On-Call / The Integrate, ascending price) render in a real `<table>` on desktop (not cards). The flagship third column, **The Integrate**, has an `accent-soft` wash plus a 2px cobalt top border and a mono `◆ RECOMMENDED` tag (cobalt, 11px) to mark the recommended choice, with a row-hover wash (`surface-hover` on bone cells, `accent-soft-strong` on the Integrate column). Each column header carries a mono price block (`from $X`, plus the monthly retainer where it applies); The Refresh and The On-Call show a struck-through standard price beside a cobalt launch price during the launch promo. Cells use `●` for "included," `—` for "not included" (typographic markers, mono numerals for string values), and the `●` markers pop in column by column on scroll-in. Mobile collapses to a stacked variant with the same data shape, price block, and the same `◆ RECOMMENDED` tag.
+### Cards
+Avoided for marketing copy (prefer numbered rows, tables, bold motifs). The one sanctioned card surface is `ClientsSection` (`ClientCard`): square `border` that shifts to red on hover, no shadow, no radius, no nested cards. `PlaceholderCard` is the dashed pending variant with red `LoadingDots`.
 
 ## 6. Do's and Don'ts
 
-### Do:
-- **Do** use cobalt sparingly: one accented span per headline, one primary CTA per fold, one column wash per table.
-- **Do** lead every section with a `§ 0X` mono eyebrow followed by a hairline and uppercase label.
-- **Do** render every number that carries meaning in Geist Mono with `tabular-nums` via the `.num` utility.
-- **Do** use hairline rules (`oklch(90% 0.005 250)` / `oklch(30% 0.012 250)` on dark) as the primary divider.
-- **Do** reach for a real `<table>` or a numbered row list before reaching for cards.
-- **Do** keep body line length to 60ch and lead paragraphs to 62ch.
-- **Do** use the `.type-display-*` / `.type-lead` / `.type-body` / `.type-meta` utility classes for size; never hand-roll per-breakpoint font-size ladders.
-- **Do** vary section vertical rhythm across the page: `.rhythm-tight`, `.rhythm-default`, `.rhythm-breath`. WhyTharros gets breath (manifesto); Pricing gets tight (terse close).
-- **Do** scope reveals to a single staggered page-load via `AnimatedSection`; use slide-up only (no opacity dependency, so content is visible even if JS is slow).
-- **Do** respect `prefers-reduced-motion` at both the global CSS layer and via `useReducedMotion` in HeroSection / ScrollProgress.
+### Do
+- **Do** use red boldly: red CTAs, one red headline span per heading, red eyebrow ticks, red-drenched NextStep strips, the flagship pricing wash. Red is committed, not rationed.
+- **Do** keep red/white pairings AA: vibrant `--red` for large text, `--red-deep` for small text and white-on-red surfaces.
+- **Do** use square corners (0 radius) on buttons, inputs, tiles, tags.
+- **Do** reach for bold 2px black or 3px red rules as structural dividers, not just hairlines.
+- **Do** replace any "diagram" instinct with a bold motif: oversized numeral, marquee, sliding red block, kinetic rail, or count-up numeral.
+- **Do** render meaningful numbers in Geist Mono `tabular-nums` via `.num`.
+- **Do** lead every section with `<SectionEyebrow>` (red tick + red `§ 0X` + label).
+- **Do** vary rhythm: `.rhythm-tight | .rhythm-default | .rhythm-breath`.
+- **Do** respect `prefers-reduced-motion` (marquees stop, fills snap to end-state, reveals disable).
 
-### Don't:
-- **Don't** use `#fff` or `#000`. Every neutral is tinted toward cobalt's hue family.
-- **Don't** add a second saturated color. Cobalt is the only pigment.
-- **Don't** use `box-shadow` for elevation. Use hairlines and surface tone.
-- **Don't** use glassmorphism, `backdrop-blur`, or decorative blur effects.
-- **Don't** add `animate-ping`, decorative glow blobs, hover progress bars, or pulse-ring loaders.
-- **Don't** use side-stripe borders (`border-left` greater than 1px as a colored accent).
-- **Don't** use gradient text (`background-clip: text` on a gradient).
-- **Don't** use the hero-metric template (big number, small label, supporting stats, gradient accent).
-- **Don't** build identical card grids: H2 + subhead + 3 cards of icon-title-body.
-- **Don't** render corner-marker spans (`tl`/`tr`/`bl`/`br` decorative absolutely-positioned brackets). Banned.
-- **Don't** use em dashes (—) in body copy. Use periods, colons, semicolons, commas, or parentheses. Em-dash glyphs are allowed only as typographic markers in tables and diagrams, not in prose.
+### Don't
+- **Don't** use `#fff` or `#000`. Tint every neutral toward hue 25.
+- **Don't** add a second saturated hue. Red is the only pigment.
+- **Don't** use `box-shadow`, glassmorphism, or decorative blur.
+- **Don't** use side-stripe borders (`border-left/right` > 1px as a colored accent) on cards/list items/alerts. (The full-height rail inside an OG poster is a deliberate exception.)
+- **Don't** use gradient text (`background-clip: text`).
+- **Don't** build identical icon-card grids (H2 + subhead + 3 icon-title-body cards).
+- **Don't** use the hero-metric template (big number, small label, supporting stats).
+- **Don't** revive the SVG schematic diagrams (`components/diagrams/`) or the `signal-stack` flow; they read as the old calm system. Use bold motifs.
+- **Don't** use em dashes (—) in body copy. Em-dash glyphs are allowed only as typographic markers in tables/diagrams.
 - **Don't** introduce a third font family. Geist + Geist Mono only.
-- **Don't** name the SaaS palette by reflex: slate-950 + sky-500 is the training-data answer this system explicitly rejects.
-- **Don't** repeat the `subject. <grey>second-line.</grey>` headline template in more than one section per page. Reserved for ModelTiers.
-- **Don't** ship reading text smaller than 12px. Mono tags / file numbers / diagram captions are 11px minimum; body is 17px minimum.
+- **Don't** drop display weight below 700 or soften the square corners; that pulls the system back toward "calm."

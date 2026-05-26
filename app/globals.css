@@ -1,45 +1,60 @@
 @import "tailwindcss";
 
 /* ============================================================
-   FIELD ENGINEER — Tharros design tokens
-   OKLCH palette, real type scale, named spacing rhythm.
+   REDLINE — Tharros design tokens
+   White / black / vibrant red. OKLCH palette, bold type scale,
+   named spacing rhythm. Built to feel alive, not calm.
    ============================================================ */
 
 :root {
-  /* — Surfaces ————————————————————————————————— */
-  --surface:          oklch(98% 0.004 80);    /* bone, warm tint */
-  --surface-elevated: oklch(99.2% 0.003 80);  /* card / inset above surface */
-  --surface-alt:      oklch(95.5% 0.008 250); /* cool-bone: alternate section surface */
-  --surface-hover:    oklch(96.5% 0.006 250);  /* table row hover wash on bone */
-  --surface-dark:     oklch(20% 0.012 250);   /* tool-steel graphite (dark sections) */
-  --surface-dark-elevated: oklch(24% 0.014 250);
+  /* — Surfaces (white side) ————————————————————— */
+  --surface:          oklch(99% 0.002 25);     /* near-white, faint warm tint */
+  --surface-elevated: oklch(99.6% 0.0015 25);  /* inset / elevated above surface */
+  --surface-alt:      oklch(96.3% 0.005 25);   /* warm-grey alternate section */
+  --surface-hover:    oklch(97.2% 0.006 25);   /* row / cell hover wash on white */
+
+  /* — Surfaces (black side) —————————————————————— */
+  --surface-dark:          oklch(15% 0.012 25);  /* rich warm near-black */
+  --surface-dark-elevated: oklch(20% 0.014 25);
 
   /* — Ink ————————————————————————————————————— */
-  /* Lightness chosen so each tier hits WCAG ratios on its intended surface:
-     ink (18%)        → 14:1   on bone surface
-     ink-muted (45%)  → ~5.2:1 on bone (passes AA body)
-     ink-faint (55%)  → ~3.4:1 on bone (passes 3:1 for small UI labels)
-     ink-on-dark-muted (72%) → ~7.8:1 on graphite
-     ink-on-dark-faint (64%) → ~4.6:1 on graphite (passes AA body) */
-  --ink:           oklch(18% 0.02 250);
-  --ink-muted:     oklch(42% 0.024 250);
-  --ink-faint:     oklch(48% 0.025 250);
-  --ink-on-dark:        oklch(96% 0.003 80);
-  --ink-on-dark-muted:  oklch(72% 0.008 250);
-  --ink-on-dark-faint:  oklch(64% 0.014 250);
+  /* Lightness tuned for WCAG on the intended surface:
+     ink (17%)             → ~15:1  on white surface
+     ink-muted (43%)       → ~6:1   on white (AA body)
+     ink-faint (50%)       → ~4.6:1 on white (AA small)
+     ink-on-dark-muted(75%)→ ~8:1   on near-black
+     ink-on-dark-faint(63%)→ ~4.6:1 on near-black */
+  --ink:           oklch(17% 0.012 25);
+  --ink-muted:     oklch(43% 0.016 25);
+  --ink-faint:     oklch(50% 0.018 25);
+  --ink-on-dark:        oklch(97% 0.002 25);
+  --ink-on-dark-muted:  oklch(75% 0.008 25);
+  --ink-on-dark-faint:  oklch(63% 0.012 25);
 
   /* — Rules ————————————————————————————————————— */
-  --rule:        oklch(90% 0.005 250);
-  --rule-strong: oklch(82% 0.008 250);
-  --rule-on-dark:        oklch(30% 0.012 250);
-  --rule-on-dark-strong: oklch(38% 0.014 250);
+  --rule:        oklch(89% 0.004 25);
+  --rule-strong: oklch(80% 0.008 25);
+  --rule-bold:   var(--ink);                    /* heavy structural rule */
+  --rule-on-dark:        oklch(27% 0.012 25);
+  --rule-on-dark-strong: oklch(36% 0.014 25);
 
-  /* — Accent (committed cobalt) ——————————————— */
-  --accent:        oklch(50% 0.20 260);
-  --accent-strong: oklch(42% 0.22 260);
-  --accent-soft:   oklch(95% 0.04 260);
-  --accent-soft-strong: oklch(92% 0.055 260);  /* On-Call column hover wash */
-  --accent-on-dark: oklch(78% 0.17 260);  /* lifted: ~6:1 on graphite */
+  /* — Red (the pigment that carries the energy) ——————
+     Two tiers: vibrant red for large text / decoration, and a
+     deeper red for any surface that carries white reading text
+     (white-on-red needs ≥4.5:1 for small text). */
+  --red:        oklch(56% 0.235 25);   /* vibrant: headline spans, blocks, markers */
+  --red-deep:   oklch(48% 0.225 25);   /* button fill / white text rides this */
+  --red-deeper: oklch(41% 0.21 25);    /* button hover / pressed */
+  --red-bright: oklch(66% 0.225 25);   /* lifted: accent text/spans on black */
+  --red-soft:   oklch(96% 0.035 25);   /* whisper wash on white */
+  --red-soft-strong: oklch(92% 0.06 25);
+
+  /* Accent aliases (token-driven components recolor through these) */
+  --accent:        var(--red-deep);
+  --accent-strong: var(--red-deeper);
+  --accent-soft:   var(--red-soft);
+  --accent-soft-strong: var(--red-soft-strong);
+  --accent-on-dark: var(--red-bright);
 
   /* — Danger (admin only) ——————————————————— */
   --color-danger: oklch(58% 0.20 27);
@@ -54,19 +69,19 @@
   --rhythm-default: clamp(4rem, 8vw, 8rem);
   --rhythm-breath:  clamp(6rem, 12vw, 14rem);
 
-  /* — Type scale (clamp() fluid, ~1.5 ratio between display steps) —— */
+  /* — Type scale (clamp() fluid) —————————————————— */
   --type-meta:      0.75rem;                                       /* 12px static, mono */
   --type-body:      clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);     /* 17→19 */
-  --type-lead:      clamp(1.1875rem, 1.075rem + 0.5vw, 1.5rem);    /* 19→24 */
-  --type-display-3: clamp(1.625rem, 1.4rem + 1.2vw, 2.375rem);     /* 26→38 */
-  --type-display-2: clamp(2.5rem, 2rem + 2.6vw, 3.75rem);          /* 40→60 */
-  --type-display-1: clamp(3.5rem, 2.6rem + 4.6vw, 7rem);           /* 56→112 */
+  --type-lead:      clamp(1.25rem, 1.1rem + 0.62vw, 1.625rem);     /* 20→26 */
+  --type-display-3: clamp(1.75rem, 1.45rem + 1.5vw, 2.75rem);      /* 28→44 */
+  --type-display-2: clamp(2.75rem, 2.05rem + 3.5vw, 4.75rem);      /* 44→76 */
+  --type-display-1: clamp(3.75rem, 2.4rem + 6.8vw, 8.5rem);        /* 60→136 */
 
   /* — Legacy aliases (kept so unmigrated components still build) — */
   --color-bg:        var(--surface-dark);
   --color-bg-alt:    var(--surface-dark-elevated);
   --color-surface:   var(--surface-dark-elevated);
-  --color-surface-2: oklch(28% 0.014 250);
+  --color-surface-2: oklch(24% 0.014 25);
   --color-text:      var(--ink-on-dark);
   --color-subdued:   var(--ink-on-dark-muted);
   --color-muted:     var(--ink-on-dark-faint);
@@ -74,8 +89,8 @@
   --color-border-hover:  var(--rule-on-dark-strong);
   --color-accent:    var(--ink-on-dark);
   --color-accent-2:  var(--ink-on-dark-muted);
-  --color-accent-3:  var(--accent);
-  --color-accent-bright: var(--accent-on-dark);
+  --color-accent-3:  var(--red);
+  --color-accent-bright: var(--red-bright);
 }
 
 @theme inline {
@@ -99,19 +114,23 @@
   --color-rule-on-dark: var(--rule-on-dark);
   --color-rule-on-dark-strong: var(--rule-on-dark-strong);
 
-  /* Accent */
+  /* Accent / red */
   --color-accent:        var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-accent-soft:   var(--accent-soft);
   --color-accent-on-dark: var(--accent-on-dark);
+  --color-red:        var(--red);
+  --color-red-deep:   var(--red-deep);
+  --color-red-bright: var(--red-bright);
+  --color-red-soft:   var(--red-soft);
 
   /* Legacy aliases (still surfaced to Tailwind) */
   --color-bg:        var(--color-bg);
   --color-bg-alt:    var(--color-bg-alt);
   --color-text:      var(--color-text);
   --color-subdued:   var(--color-subdued);
-  --color-accent-3:  var(--accent);
-  --color-accent-bright: var(--accent-on-dark);
+  --color-accent-3:  var(--red);
+  --color-accent-bright: var(--red-bright);
   --color-danger:    var(--color-danger);
 
   /* Fonts */
@@ -162,43 +181,40 @@ body {
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb {
   background: var(--rule-strong);
-  border-radius: 6px;
+  border-radius: 0;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--ink-faint); }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
 
 ::selection {
-  background: var(--accent-soft);
-  color: var(--ink);
+  background: var(--red);
+  color: oklch(99% 0.002 25);
 }
 
 /* ============================================================
-   Focus — keyboard rings, never default browser outlines on cobalt
+   Focus — keyboard rings, never default browser outlines
    ============================================================ */
 
 *:focus { outline: none; }
 
 *:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--red-deep);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 0;
 }
 
-/* Buttons + links override: inline ring instead of outline-offset, snaps
-   tighter to the shape. */
 a:focus-visible,
 button:focus-visible,
 .btn-primary:focus-visible,
 .btn-ghost:focus-visible,
 .primary-button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--red-deep);
   outline-offset: 2px;
 }
 
-/* On dark surfaces, accent-on-dark reads better */
 .btn-ghost-on-dark:focus-visible,
 [class*="surface-dark"] a:focus-visible,
 [class*="surface-dark"] button:focus-visible {
-  outline-color: var(--accent-on-dark);
+  outline-color: var(--red-bright);
 }
 
 /* ============================================================
@@ -222,7 +238,7 @@ button:focus-visible,
   .type-meta {
     font-family: var(--font-mono);
     font-size: var(--type-meta);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 500;
     color: var(--ink-muted);
@@ -230,7 +246,7 @@ button:focus-visible,
   .type-meta-strong {
     font-family: var(--font-mono);
     font-size: var(--type-meta);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 600;
     color: var(--ink);
@@ -242,30 +258,30 @@ button:focus-visible,
   }
   .type-lead {
     font-size: var(--type-lead);
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--ink-muted);
     font-weight: 400;
-    max-width: 62ch;
+    max-width: 60ch;
   }
   .type-display-3 {
     font-size: var(--type-display-3);
-    line-height: 1.05;
-    letter-spacing: -0.022em;
-    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 700;
     color: var(--ink);
   }
   .type-display-2 {
     font-size: var(--type-display-2);
-    line-height: 1.0;
-    letter-spacing: -0.028em;
-    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-weight: 700;
     color: var(--ink);
   }
   .type-display-1 {
     font-size: var(--type-display-1);
-    line-height: 0.92;
-    letter-spacing: -0.04em;
-    font-weight: 600;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    font-weight: 700;
     color: var(--ink);
   }
   .num {
@@ -273,10 +289,14 @@ button:focus-visible,
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
   }
+
+  /* Red emphasis span inside a headline (large text only). */
+  .accent-text { color: var(--red); }
+  [class*="surface-dark"] .accent-text { color: var(--red-bright); }
 }
 
 /* ============================================================
-   Structural utilities (Field Engineer)
+   Structural utilities (Redline)
    ============================================================ */
 
 @layer utilities {
@@ -285,7 +305,7 @@ button:focus-visible,
   .rhythm-default { padding-block: var(--rhythm-default); }
   .rhythm-breath  { padding-block: var(--rhythm-breath); }
 
-  /* Container — asymmetric, left-set with breathing right margin */
+  /* Container — left-set with breathing right margin */
   .page-frame {
     width: 100%;
     max-width: 1480px;
@@ -293,64 +313,94 @@ button:focus-visible,
     padding-inline: clamp(1.25rem, 4vw, 4.5rem);
   }
 
-  /* Hairline rules */
-  .rule-h { height: 1px; background: var(--rule); width: 100%; }
+  /* Hairline + bold rules */
+  .rule-h        { height: 1px; background: var(--rule); width: 100%; }
   .rule-h-strong { height: 1px; background: var(--rule-strong); width: 100%; }
-  .rule-h-dark { height: 1px; background: var(--rule-on-dark); width: 100%; }
+  .rule-h-bold   { height: 2px; background: var(--ink); width: 100%; }
+  .rule-h-red    { height: 3px; background: var(--red); width: 100%; }
+  .rule-h-dark   { height: 1px; background: var(--rule-on-dark); width: 100%; }
 
-  /* Section eyebrow — mono label that sits in left margin */
+  /* Section eyebrow — mono label with a red tick + numeral */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: var(--type-meta);
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ink-muted);
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
   }
   .eyebrow-on-dark { color: var(--ink-on-dark-muted); }
   .eyebrow::before {
     content: "";
     display: inline-block;
-    width: 1.5rem;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.45;
+    width: 1.75rem;
+    height: 3px;
+    background: var(--red);
   }
+  .eyebrow-num { color: var(--red); }
+  [class*="surface-dark"] .eyebrow-num { color: var(--red-bright); }
 
-  /* Primary button — Field Engineer (cobalt, square corners, decisive) */
+  /* Primary button — Redline (red fill, decisive, snappy) */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.625rem;
-    background: var(--accent);
-    color: var(--ink-on-dark);
+    background: var(--red-deep);
+    color: oklch(99% 0.002 25);
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9375rem;
     letter-spacing: -0.005em;
-    padding: 0.875rem 1.5rem;
-    border-radius: 0.375rem;
-    min-height: 48px;
+    padding: 0.9375rem 1.625rem;
+    border-radius: 0;
+    min-height: 50px;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.25s var(--ease-out-quart),
-                transform 0.25s var(--ease-out-quart);
+    transition: background 0.22s var(--ease-out-quart),
+                transform 0.22s var(--ease-out-quart);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
   @media (hover: hover) and (pointer: fine) {
     .btn-primary:hover {
-      background: var(--accent-strong);
-      transform: translateY(-1px);
+      background: var(--red-deeper);
+      transform: translateY(-2px);
     }
   }
   .btn-primary:active { transform: translateY(0); }
 
-  /* Ghost button — for secondary actions */
+  /* Solid ink button — for placing on red or light surfaces */
+  .btn-ink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    background: var(--ink);
+    color: var(--ink-on-dark);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: -0.005em;
+    padding: 0.9375rem 1.625rem;
+    border-radius: 0;
+    min-height: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.22s var(--ease-out-quart),
+                transform 0.22s var(--ease-out-quart);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ink:hover { background: oklch(28% 0.02 25); transform: translateY(-2px); }
+  }
+  .btn-ink:active { transform: translateY(0); }
+
+  /* Ghost button — secondary actions */
   .btn-ghost {
     display: inline-flex;
     align-items: center;
@@ -359,36 +409,46 @@ button:focus-visible,
     background: transparent;
     color: var(--ink);
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.9375rem;
-    padding: 0.875rem 1.25rem;
-    border: 1px solid var(--rule-strong);
-    border-radius: 0.375rem;
-    min-height: 48px;
+    padding: 0.9375rem 1.375rem;
+    border: 2px solid var(--ink);
+    border-radius: 0;
+    min-height: 50px;
     cursor: pointer;
     text-decoration: none;
-    transition: border-color 0.2s var(--ease-out-quart),
+    transition: background 0.2s var(--ease-out-quart),
                 color 0.2s var(--ease-out-quart);
   }
-  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--ink-on-dark); }
   .btn-ghost-on-dark {
     color: var(--ink-on-dark);
-    border-color: var(--rule-on-dark-strong);
+    border-color: var(--ink-on-dark);
   }
   .btn-ghost-on-dark:hover {
-    border-color: var(--ink-on-dark);
-    color: var(--ink-on-dark);
+    background: var(--ink-on-dark);
+    color: var(--ink);
+  }
+  /* Ghost on a red surface */
+  .btn-ghost-on-red {
+    color: oklch(99% 0.002 25);
+    border-color: oklch(99% 0.002 25 / 0.7);
+  }
+  .btn-ghost-on-red:hover {
+    background: oklch(99% 0.002 25);
+    color: var(--red-deep);
+    border-color: oklch(99% 0.002 25);
   }
 
   @media (max-width: 640px) {
-    .btn-primary, .btn-ghost { width: 100%; min-height: 52px; }
+    .btn-primary, .btn-ink, .btn-ghost { width: 100%; min-height: 54px; }
   }
 
   /* Tabular metadata row */
   .meta-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem 2.5rem;
+    gap: 1.25rem 2.5rem;
     font-family: var(--font-mono);
     font-size: var(--type-meta);
     letter-spacing: 0.1em;
@@ -396,58 +456,67 @@ button:focus-visible,
     color: var(--ink-muted);
   }
   .meta-row dt { color: var(--ink-faint); margin-right: 0.5rem; }
-  .meta-row dd { color: var(--ink); font-weight: 500; display: inline; }
+  .meta-row dd { color: var(--ink); font-weight: 600; display: inline; }
 
-  /* Diagram surface — for inline SVG schematics */
-  .diagram {
-    width: 100%;
-    height: auto;
-    color: var(--ink);
-    stroke: currentColor;
-  }
-  .diagram .accent { color: var(--accent); }
-  .diagram-dark { color: var(--ink-on-dark); }
-  .diagram-dark .accent { color: var(--accent-on-dark); }
-
-  /* Vertical signal stack — a diagrammatic step list with square markers
-     joined by a hairline rail. Authored for dark surfaces. */
-  .signal-stack {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .signal-node {
-    position: relative;
-    padding-left: 1.25rem;
+  /* Oversized numeral motif (replaces schematic diagrams) */
+  .big-num {
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-on-dark-faint);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: var(--ink);
   }
-  .signal-node::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.15em;
-    width: 6px;
-    height: 6px;
-    border: 1px solid var(--rule-on-dark-strong);
+  .big-num--red { color: var(--red); }
+  .big-num--outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--rule-strong);
   }
-  .signal-node:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: 2.5px;
-    top: calc(0.15em + 6px);
-    width: 1px;
-    height: calc(100% + 0.5rem - 6px);
-    background: var(--rule-on-dark);
+  .big-num--outline-red {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--red);
   }
-  .signal-node[data-accent] { color: var(--accent-on-dark); }
-  .signal-node[data-accent]::before {
-    background: var(--accent-on-dark);
-    border-color: var(--accent-on-dark);
+  [class*="surface-dark"] .big-num { color: var(--ink-on-dark); }
+  [class*="surface-dark"] .big-num--outline {
+    -webkit-text-stroke-color: var(--rule-on-dark-strong);
+  }
+  [class*="surface-dark"] .big-num--red { color: var(--red-bright); }
+
+  /* Solid red block — decorative kinetic accent */
+  .red-block { background: var(--red); }
+}
+
+/* ============================================================
+   Marquee — infinite horizontal scroller (kinetic signature)
+   Duplicate the track twice in JSX for a seamless loop.
+   ============================================================ */
+
+@layer utilities {
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    width: 100%;
+  }
+  .marquee__track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--marquee-gap, 2.5rem);
+    padding-right: var(--marquee-gap, 2.5rem);
+    min-width: 100%;
+    animation: marquee var(--marquee-dur, 32s) linear infinite;
+  }
+  .marquee[data-reverse="true"] .marquee__track { animation-direction: reverse; }
+  @media (hover: hover) and (pointer: fine) {
+    .marquee:hover .marquee__track { animation-play-state: paused; }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; transform: none; }
   }
 }
 
@@ -475,8 +544,7 @@ button:focus-visible,
 }
 
 /* ============================================================
-   LEGACY — kept temporarily so unmigrated components still render.
-   Will be deleted once every section is migrated.
+   LEGACY — kept so unmigrated components still render.
    ============================================================ */
 
 @layer utilities {
@@ -484,50 +552,45 @@ button:focus-visible,
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--accent);
-    color: var(--ink-on-dark);
-    font-weight: 500;
+    background: var(--red-deep);
+    color: oklch(99% 0.002 25);
+    font-weight: 600;
     text-transform: none;
     letter-spacing: -0.005em;
     font-size: 0.9375rem;
-    padding: 0.875rem 1.5rem;
-    border-radius: 0.375rem;
-    min-height: 48px;
+    padding: 0.9375rem 1.625rem;
+    border-radius: 0;
+    min-height: 50px;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.25s var(--ease-out-quart),
-                transform 0.25s var(--ease-out-quart);
+    transition: background 0.22s var(--ease-out-quart),
+                transform 0.22s var(--ease-out-quart);
     -webkit-tap-highlight-color: transparent;
   }
-  .primary-button:hover { background: var(--accent-strong); transform: translateY(-1px); }
+  .primary-button:hover { background: var(--red-deeper); transform: translateY(-2px); }
   .primary-button:active { transform: translateY(0); }
   @media (max-width: 640px) {
-    .primary-button { width: 100%; min-height: 52px; }
+    .primary-button { width: 100%; min-height: 54px; }
   }
 
   .section-label {
     font-family: var(--font-mono);
     font-size: var(--type-meta);
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--red);
   }
 
   .section-padding { padding-block: var(--rhythm-default); }
   @media (min-width: 1920px) { .section-padding { padding-block: var(--rhythm-breath); } }
 
-  /* Legacy decoration — neutralized so unmigrated JSX still renders. */
   .industrial-grid { background-image: none; }
   .scanline { display: none; }
 }
 
 /* ============================================================
    Auto-swap type utilities on dark surfaces.
-   Matches Tailwind arbitrary classes that reference --surface-dark
-   (e.g. bg-[color:var(--surface-dark)]) as well as any .surface-dark
-   helper class. Ensures type utilities never paint dark ink on
-   graphite without every element opting in by hand.
    ============================================================ */
 
 @layer utilities {
@@ -551,17 +614,18 @@ button:focus-visible,
 }
 
 /* ============================================================
-   Micro-interactions (Field Engineer motion layer)
+   Micro-interactions (Redline motion layer)
    All transition-based, so the reduced-motion killswitch neutralizes them.
    ============================================================ */
 
 @layer utilities {
-  /* Trailing arrow nudges forward on hover */
   .btn-primary svg,
-  .btn-ghost svg { transition: transform 0.25s var(--ease-out-quart); }
+  .btn-ink svg,
+  .btn-ghost svg { transition: transform 0.22s var(--ease-out-quart); }
   @media (hover: hover) and (pointer: fine) {
     .btn-primary:hover svg,
-    .btn-ghost:hover svg { transform: translateX(3px); }
+    .btn-ink:hover svg,
+    .btn-ghost:hover svg { transform: translateX(4px); }
   }
 
   /* Comparison-table row wash on hover */
@@ -574,9 +638,9 @@ button:focus-visible,
   }
 }
 
-/* ── HeroSection: parallax depth + reveal animations ─────────────── */
+/* ── HeroSection: parallax dot field (recolored red) ─────────────── */
 @keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes hero-field-appear {
@@ -587,11 +651,11 @@ button:focus-visible,
 #hero .v3-dots {
   position: absolute;
   inset: -60px;
-  background-image: radial-gradient(circle, oklch(50% 0.20 260 / 0.15) 1.5px, transparent 1.5px);
-  background-size: 36px 36px;
+  background-image: radial-gradient(circle, oklch(56% 0.235 25 / 0.16) 1.5px, transparent 1.5px);
+  background-size: 38px 38px;
   transform: translate(
-    calc((var(--mx, 0.5) - 0.5) * -36px),
-    calc((var(--my, 0.5) - 0.5) * -18px)
+    calc((var(--mx, 0.5) - 0.5) * -38px),
+    calc((var(--my, 0.5) - 0.5) * -19px)
   );
   transition: transform 0.25s ease-out;
   animation: hero-field-appear 1.4s ease 0.15s both;

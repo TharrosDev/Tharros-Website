@@ -50,7 +50,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
     switch (token.type) {
       case "bold":
         return (
-          <strong key={key} className="font-bold text-slate-900">
+          <strong key={key} className="font-bold text-[color:var(--ink)]">
             {token.value}
           </strong>
         );
@@ -64,7 +64,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
         return (
           <code
             key={key}
-            className="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-900 font-mono text-[0.9em]"
+            className="px-1.5 py-0.5 bg-[color:var(--surface-alt)] text-[color:var(--ink)] border border-[color:var(--rule)] font-mono text-[0.9em]"
           >
             {token.value}
           </code>
@@ -76,7 +76,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
             href={token.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent-3 underline underline-offset-2 hover:text-accent-bright"
+            className="text-[color:var(--red-deep)] underline underline-offset-2 hover:text-[color:var(--red)]"
           >
             {token.value}
           </a>
@@ -171,14 +171,14 @@ const FormattedMessage = memo(({ text, className = "" }: FormattedMessageProps) 
         const key = `b-${idx}`;
         if (block.kind === "h") {
           const inner = renderInline(block.text, key);
-          const cls = "font-bold text-slate-900 tracking-tight";
+          const cls = "font-bold text-[color:var(--ink)] tracking-tight";
           if (block.level === 1) return <h3 key={key} className={cls}>{inner}</h3>;
           if (block.level === 2) return <h4 key={key} className={cls}>{inner}</h4>;
           return <h5 key={key} className={cls}>{inner}</h5>;
         }
         if (block.kind === "ul") {
           return (
-            <ul key={key} className="list-disc pl-5 space-y-1.5 marker:text-accent-3">
+            <ul key={key} className="list-disc pl-5 space-y-1.5 marker:text-[color:var(--red)]">
               {block.items.map((item, i) => (
                 <li key={`${key}-${i}`} className="leading-relaxed">
                   {renderInline(item, `${key}-${i}`)}
@@ -189,7 +189,7 @@ const FormattedMessage = memo(({ text, className = "" }: FormattedMessageProps) 
         }
         if (block.kind === "ol") {
           return (
-            <ol key={key} className="list-decimal pl-5 space-y-1.5 marker:text-accent-3 marker:font-bold">
+            <ol key={key} className="list-decimal pl-5 space-y-1.5 marker:text-[color:var(--red)] marker:font-bold">
               {block.items.map((item, i) => (
                 <li key={`${key}-${i}`} className="leading-relaxed">
                   {renderInline(item, `${key}-${i}`)}
