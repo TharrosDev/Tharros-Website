@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import WebsiteBuildsSection from "@/components/WebsiteBuildsSection";
 import NextStep from "@/components/NextStep";
 import SectionSkeleton from "@/components/SectionSkeleton";
 import { Metadata } from "next";
@@ -103,7 +104,8 @@ export default function ProductPage() {
       />
       <main>
         <h1 className="sr-only">Modern websites and AI agents we build for Ottawa businesses</h1>
-        <WhatWeBuildsSection />
+        <WebsiteBuildsSection />
+        <WhatWeBuildsSection isFirstOnPage={false} />
         <HowItWorksSection />
         <WhyTharrosSection />
         <NextStep

@@ -39,7 +39,7 @@ const agents = [
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-export default function WhatWeBuildsSection() {
+export default function WhatWeBuildsSection({ isFirstOnPage = true }: { isFirstOnPage?: boolean }) {
   const reduce = useReducedMotion();
   const root = useRef<HTMLDivElement>(null);
 
@@ -67,7 +67,7 @@ export default function WhatWeBuildsSection() {
   return (
     <section id="solutions" ref={root}>
       {/* Light header band */}
-      <div className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-[var(--rhythm-tight)]">
+      <div className={`bg-[color:var(--surface)] ${isFirstOnPage ? "pt-28 md:pt-32" : "pt-[var(--rhythm-tight)]"} pb-[var(--rhythm-tight)]`}>
         <div className="page-frame">
           <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
