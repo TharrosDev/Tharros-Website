@@ -639,10 +639,8 @@ button:focus-visible,
 }
 
 /* ── HeroSection: parallax dot field (recolored red) ─────────────── */
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* Entrance choreography (eyebrow / H1 split / lead / CTA / meta) is driven by
+   GSAP in HeroSection.tsx; only the parallax + field fade-in live here. */
 @keyframes hero-field-appear {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -689,21 +687,9 @@ button:focus-visible,
   transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-#hero .v3-eyebrow { animation: hero-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
-#hero .v3-h1      { animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
-#hero .v3-lead    { animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both; }
-#hero .v3-cta     { animation: hero-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both; }
-#hero .v3-meta    { animation: hero-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both; }
-#hero .v3-mag     { transition: transform 0.1s cubic-bezier(0.25, 1, 0.5, 1); }
-
 @media (prefers-reduced-motion: reduce) {
   #hero .v3-back,
   #hero .v3-mid,
   #hero .v3-front { transform: none !important; transition: none; }
   #hero .v3-dots  { animation: none; opacity: 0.12; transform: none; }
-  #hero .v3-eyebrow,
-  #hero .v3-h1,
-  #hero .v3-lead,
-  #hero .v3-cta,
-  #hero .v3-meta  { animation: none; }
 }

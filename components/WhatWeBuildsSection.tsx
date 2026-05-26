@@ -1,5 +1,11 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 const agents = [
   {
@@ -31,76 +37,102 @@ const agents = [
   },
 ] as const;
 
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 export default function WhatWeBuildsSection() {
+  const reduce = useReducedMotion();
+  const root = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const nums = gsap.utils.toArray<HTMLElement>(".wwb-num", root.current);
+        nums.forEach((n) =>
+          gsap.fromTo(
+            n,
+            { yPercent: 12 },
+            {
+              yPercent: -12,
+              ease: "none",
+              scrollTrigger: { trigger: n, start: "top bottom", end: "bottom top", scrub: true },
+            },
+          ),
+        );
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section id="solutions">
+    <section id="solutions" ref={root}>
       {/* Light header band */}
       <div className="bg-[color:var(--surface)] pt-28 md:pt-32 pb-[var(--rhythm-tight)]">
         <div className="page-frame">
           <SectionEyebrow numeral="§ 01" label="Agents we build" />
 
-          <AnimatedSection>
-            <h2 className="type-display-2 max-w-[16ch]">
-              Three agents.<br />
-              <span className="accent-text">Built into your site.</span>
-            </h2>
-          </AnimatedSection>
+          <SplitReveal as="h2" className="type-display-2 max-w-[16ch]" start="top 85%">
+            Three agents.<br />
+            <span className="accent-text">Built into your site.</span>
+          </SplitReveal>
         </div>
       </div>
 
       {/* Dark content band */}
       <div className="bg-[color:var(--surface-dark)] text-[color:var(--ink-on-dark)] pt-[var(--rhythm-tight)] pb-[var(--rhythm-default)]">
         <div className="page-frame">
-          <AnimatedSection>
-            <ol className="grid grid-cols-1 md:grid-cols-3 border-t-2 border-[color:var(--rule-on-dark-strong)]">
-              {agents.map((agent, i) => (
-                <li
-                  key={agent.num}
-                  className={`flex flex-col py-9 px-0 md:px-6 border-[color:var(--rule-on-dark)] ${
-                    i === 0 ? "md:pl-0" : "border-t md:border-t-0 md:border-l"
-                  }`}
-                >
-                  <span className="big-num big-num--red text-[5rem] md:text-[6rem] leading-[0.8]">
-                    {agent.num}
-                  </span>
-                  <div className="type-meta-strong text-[color:var(--red-bright)] mt-6">{agent.tagline}</div>
-                  <h3 className="type-display-3 text-[color:var(--ink-on-dark)] mt-3">{agent.name}</h3>
-                  <p className="type-body text-[color:var(--ink-on-dark-muted)] mt-3.5">{agent.description}</p>
+          <ol className="grid grid-cols-1 md:grid-cols-3 border-t-2 border-[color:var(--rule-on-dark-strong)]">
+            {agents.map((agent, i) => (
+              <AnimatedSection
+                key={agent.num}
+                delay={i * 0.12}
+                className={`flex flex-col py-9 px-0 md:px-6 border-[color:var(--rule-on-dark)] ${
+                  i === 0 ? "md:pl-0" : "border-t md:border-t-0 md:border-l"
+                }`}
+              >
+                <span className="wwb-num big-num big-num--red text-[5rem] md:text-[6rem] leading-[0.8] block">
+                  {agent.num}
+                </span>
+                <div className="type-meta-strong text-[color:var(--red-bright)] mt-6">{agent.tagline}</div>
+                <h3 className="type-display-3 text-[color:var(--ink-on-dark)] mt-3">{agent.name}</h3>
+                <p className="type-body text-[color:var(--ink-on-dark-muted)] mt-3.5">{agent.description}</p>
 
-                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-6">
-                    {agent.examples.map((ex) => (
-                      <span key={ex} className="num text-[11px] text-[color:var(--ink-on-dark-faint)]">
-                        {ex.toUpperCase()}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-6">
+                  {agent.examples.map((ex) => (
+                    <span key={ex} className="num text-[11px] text-[color:var(--ink-on-dark-faint)]">
+                      {ex.toUpperCase()}
+                    </span>
+                  ))}
+                </div>
 
-                  {/* Flow strip — bold horizontal sequence, last stage in red */}
-                  <div
-                    className="flex items-center gap-2.5 mt-auto pt-7 flex-wrap"
-                    aria-hidden="true"
-                  >
-                    {agent.flow.map((stage, si) => (
-                      <span key={stage} className="flex items-center gap-2.5">
-                        <span
-                          className={`num text-[11px] tracking-[0.14em] uppercase ${
-                            si === agent.flow.length - 1
-                              ? "text-[color:var(--red-bright)] font-semibold"
-                              : "text-[color:var(--ink-on-dark-muted)]"
-                          }`}
-                        >
-                          {stage}
-                        </span>
-                        {si < agent.flow.length - 1 && (
-                          <span className="w-5 h-[2px] bg-[color:var(--red)]" />
-                        )}
+                {/* Flow strip — bold horizontal sequence, last stage in red. Connectors draw in. */}
+                <div className="flex items-center gap-2.5 mt-auto pt-7 flex-wrap" aria-hidden="true">
+                  {agent.flow.map((stage, si) => (
+                    <span key={stage} className="flex items-center gap-2.5">
+                      <span
+                        className={`num text-[11px] tracking-[0.14em] uppercase ${
+                          si === agent.flow.length - 1
+                            ? "text-[color:var(--red-bright)] font-semibold"
+                            : "text-[color:var(--ink-on-dark-muted)]"
+                        }`}
+                      >
+                        {stage}
                       </span>
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </AnimatedSection>
+                      {si < agent.flow.length - 1 && (
+                        <motion.span
+                          className="block w-5 h-[2px] bg-[color:var(--red)] origin-left"
+                          initial={reduce ? false : { scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true, amount: 0.8 }}
+                          transition={{ duration: 0.4, delay: 0.3 + i * 0.12 + si * 0.08, ease }}
+                        />
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </AnimatedSection>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -806,8 +806,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api-bc654b.stack.relevance.ai" />
         <link rel="preconnect" href="https://va.vercel-scripts.com" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <Script
           id="json-ld"
           type="application/ld+json"

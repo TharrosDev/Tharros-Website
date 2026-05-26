@@ -1,7 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 const pains = [
   {
@@ -28,42 +31,65 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function ProblemSection() {
   const reduce = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const nums = gsap.utils.toArray<HTMLElement>(".problem-num", root.current);
+        nums.forEach((n) =>
+          gsap.fromTo(
+            n,
+            { yPercent: 10 },
+            {
+              yPercent: -10,
+              ease: "none",
+              scrollTrigger: { trigger: n, start: "top bottom", end: "bottom top", scrub: true },
+            },
+          ),
+        );
+      });
+    },
+    { scope: root },
+  );
 
   return (
     <section
+      ref={root}
       id="problem"
       className="rhythm-default bg-[color:var(--surface-alt)] border-t border-[color:var(--rule)]"
     >
       <div className="page-frame">
         <SectionEyebrow numeral="§ 01" label="The problem" className="mb-7" />
 
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease }}
-          className="grid gap-3 mb-12 md:mb-16"
-        >
-          <h2 className="type-display-2 max-w-[14ch]">
+        <div className="grid gap-4 mb-12 md:mb-16">
+          <SplitReveal as="h2" className="type-display-2 max-w-[14ch]" start="top 85%">
             Ottawa businesses are bleeding <span className="accent-text">time.</span>
-          </h2>
-          <p className="type-lead max-w-[50ch]">
+          </SplitReveal>
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.7, delay: 0.15, ease }}
+            className="type-lead max-w-[50ch]"
+          >
             You don&apos;t need another vendor. You need a modern site, an embedded agent, and a
             number you can call when things change.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         <ol className="border-t-2 border-[color:var(--ink)]">
           {pains.map((pain, i) => (
             <motion.li
               key={pain.num}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
+              initial={reduce ? false : { opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease }}
+              transition={{ duration: 0.65, delay: i * 0.08, ease }}
               className="group relative grid grid-cols-1 md:grid-cols-[minmax(0,7.5rem)_1fr] gap-x-8 gap-y-3 py-8 md:py-11 border-b border-[color:var(--rule-strong)]"
             >
-              <span className="big-num big-num--outline-red text-[4.5rem] md:text-[6.5rem] leading-[0.8] transition-[color,-webkit-text-stroke-color] duration-300 group-hover:[color:var(--red)] group-hover:[-webkit-text-stroke-color:var(--red)]">
+              <span className="problem-num big-num big-num--outline-red text-[4.5rem] md:text-[6.5rem] leading-[0.8] transition-[color,-webkit-text-stroke-color] duration-300 group-hover:[color:var(--red)] group-hover:[-webkit-text-stroke-color:var(--red)]">
                 {pain.num}
               </span>
 

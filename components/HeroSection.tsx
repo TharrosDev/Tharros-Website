@@ -1,11 +1,69 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import Marquee from "./Marquee";
+import Magnetic from "./Magnetic";
+import { gsap, SplitText, useGSAP, EASE_EXPO } from "@/lib/gsap";
 
 export default function HeroSection() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const q = gsap.utils.selector(root);
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const h1 = q(".v3-h1")[0];
+        const items = [
+          q(".v3-eyebrow")[0],
+          q(".v3-lead")[0],
+          q(".v3-cta")[0],
+          q(".v3-meta")[0],
+        ];
+        const split = SplitText.create(h1, { type: "lines", mask: "lines" });
+
+        gsap.set(items, { autoAlpha: 0, y: 24 });
+
+        const tl = gsap.timeline({ defaults: { ease: EASE_EXPO } });
+        tl.to(items[0], { autoAlpha: 1, y: 0, duration: 0.5 }, 0.05)
+          .from(split.lines, { yPercent: 120, duration: 1.05, stagger: 0.12 }, 0.16)
+          .to(items[1], { autoAlpha: 1, y: 0, duration: 0.7 }, 0.5)
+          .to(items[2], { autoAlpha: 1, y: 0, duration: 0.6 }, 0.7)
+          .to(items[3], { autoAlpha: 1, y: 0, duration: 0.55 }, 0.84);
+
+        // Gentle scroll parallax as the hero departs (never pins).
+        gsap.to(q(".v3-content"), {
+          yPercent: -7,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+        gsap.to(q(".v3-dots"), {
+          opacity: 0.22,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        return () => split.revert();
+      });
+    },
+    { scope: root },
+  );
+
   return (
     <section
+      ref={root}
       id="hero"
       className="relative min-h-[94svh] md:min-h-[100svh] flex flex-col bg-[color:var(--surface)] overflow-hidden"
       onMouseMove={(e: React.MouseEvent<HTMLElement>) => {
@@ -40,22 +98,11 @@ export default function HeroSection() {
             reachable when things change.
           </p>
           <div className="mt-9 md:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none v3-cta">
-            <Link
-              href="/brief"
-              className="btn-primary v3-mag"
-              onMouseMove={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-                const r = e.currentTarget.getBoundingClientRect();
-                const x = ((e.clientX - r.left) / r.width - 0.5) * 14;
-                const y = ((e.clientY - r.top) / r.height - 0.5) * 9;
-                e.currentTarget.style.transform = `translate(${x}px, ${y}px)`;
-              }}
-              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.currentTarget.style.transform = "";
-              }}
-            >
-              Book a discovery call<Arrow />
-            </Link>
+            <Magnetic className="w-full sm:w-auto">
+              <Link href="/brief" className="btn-primary w-full">
+                Book a discovery call<Arrow />
+              </Link>
+            </Magnetic>
             <a href="#demo" className="btn-ghost">Try the agent</a>
           </div>
         </div>
@@ -79,6 +126,7 @@ export default function HeroSection() {
         ]}
         variant="dark"
         durationSec={34}
+        velocity
         className="relative z-[1]"
       />
     </section>

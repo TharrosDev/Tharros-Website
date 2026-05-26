@@ -3,6 +3,7 @@
 import Link from "next/link";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 const factors = [
   { num: "A", title: "Build scope",        body: "From a clean website refresh to a full site with an agent wired into your operation." },
@@ -16,11 +17,9 @@ export default function PricingSection() {
       <div className="page-frame">
         <SectionEyebrow numeral="§ 02" label="Pricing" />
 
-        <AnimatedSection className="mb-12 md:mb-16">
-          <h2 className="type-display-2 max-w-[18ch]">
-            Starting prices, shaped by the work.
-          </h2>
-        </AnimatedSection>
+        <SplitReveal as="h2" className="type-display-2 max-w-[18ch] mb-12 md:mb-16" start="top 85%">
+          Starting prices, shaped by the work.
+        </SplitReveal>
 
         <AnimatedSection delay={0.15}>
           <div className="border-t-2 border-[color:var(--ink)] grid grid-cols-1 md:grid-cols-3">

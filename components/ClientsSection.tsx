@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 type Client = {
   id: string;
@@ -81,11 +82,9 @@ function ClientsHero() {
         <SectionEyebrow numeral="§ CL" label="Clients" />
 
         <div className="grid grid-cols-12 gap-x-6 gap-y-8 border-b border-[color:var(--rule)] pb-12 md:pb-16">
-          <AnimatedSection className="col-span-12 lg:col-span-8">
-            <h1 className="type-display-1 max-w-[16ch]">
-              Real-world <span className="accent-text">impact.</span>
-            </h1>
-          </AnimatedSection>
+          <SplitReveal as="h1" className="type-display-1 max-w-[16ch] col-span-12 lg:col-span-8">
+            Real-world <span className="accent-text">impact.</span>
+          </SplitReveal>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-4 lg:self-end lg:pb-2">
             <p className="type-lead">
               Live Tharros builds for Ottawa businesses. Modern site, embedded agent, and a number
@@ -110,7 +109,7 @@ function ClientsGallery() {
         {/* sm: 2 cols, xl: 3 cols — add lg:grid-cols-3 when 6+ live clients */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {clients.map((client, i) => (
-            <ClientCard key={client.id} client={client} index={i} />
+            <ClientCard key={client.id} client={client} index={i} featured={i === 0} />
           ))}
           {placeholders.map((p, i) => (
             <PlaceholderCard key={p.id} index={clients.length + i} stage={p.stage} />
@@ -121,10 +120,10 @@ function ClientsGallery() {
   );
 }
 
-function ClientCard({ client, index }: { client: Client; index: number }) {
+function ClientCard({ client, index, featured = false }: { client: Client; index: number; featured?: boolean }) {
   return (
-    <AnimatedSection delay={index * 0.06} className="h-full">
-      <article className="h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-colors duration-200 p-6 md:p-7">
+    <AnimatedSection delay={index * 0.06} className={`h-full ${featured ? "xl:col-span-2" : ""}`}>
+      <article className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7">
 
         {/* ── Top bar: index + live status ── */}
         <div className="flex items-center justify-between mb-7">
@@ -141,7 +140,7 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
         <div className="mb-5">
           {client.logo ? (
             <div className="relative w-9 h-9 border border-[color:var(--rule)]">
-              <Image src={client.logo} alt={client.name} fill className="object-contain p-1.5" />
+              <Image src={client.logo} alt={client.name} fill sizes="36px" className="object-contain p-1.5" />
             </div>
           ) : (
             <div className="w-9 h-9 bg-[color:var(--ink)] flex items-center justify-center">
@@ -153,15 +152,20 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
         </div>
 
         {/* ── Name + location ── */}
-        <h2 className="type-display-3 mb-1">{client.name}</h2>
-        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase">
+        <h2 className="type-display-3 mb-1 break-words hyphens-auto">{client.name}</h2>
+        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase break-words">
           {client.location}
         </p>
 
-        {/* ── Lede — flex-1 keeps footer flush to bottom across all cards in a row ── */}
-        <p className="type-body text-[color:var(--ink-muted)] flex-1 mb-6">
-          {client.lede}
-        </p>
+        {/* ── Lede (+ fuller description on the featured card) — flex-1 keeps footer flush ── */}
+        <div className="flex-1 mb-6">
+          <p className="type-body text-[color:var(--ink-muted)]">{client.lede}</p>
+          {featured && (
+            <p className="type-body text-[color:var(--ink-muted)] mt-3 max-w-[62ch]">
+              {client.description}
+            </p>
+          )}
+        </div>
 
         {/* ── Tags ── */}
         <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6">
@@ -174,8 +178,8 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
 
         {/* ── Footer: build meta + visit link ── */}
         <div className="border-t border-[color:var(--rule)] pt-4 flex items-end justify-between gap-4">
-          <div>
-            <p className="num text-[11px] text-[color:var(--ink-muted)] uppercase leading-snug">
+          <div className="min-w-0">
+            <p className="num text-[11px] text-[color:var(--ink-muted)] uppercase leading-snug break-words">
               {client.buildType}
             </p>
             <p className="num text-[10px] text-[color:var(--ink-muted)] mt-0.5">
@@ -190,7 +194,14 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             aria-label={`Visit ${client.name}`}
           >
             Visit
-            <svg width="9" height="9" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <svg
+              width="9"
+              height="9"
+              viewBox="0 0 10 10"
+              fill="none"
+              aria-hidden="true"
+              className="transition-transform duration-200 ease-out group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+            >
               <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
             </svg>
           </a>

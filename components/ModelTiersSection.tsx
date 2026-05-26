@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 type TierKey = "refresh" | "oncall" | "integrate";
 
@@ -135,12 +136,10 @@ export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnP
       <div className="page-frame">
         <SectionEyebrow numeral="§ 01" label="Builds" />
 
-        <AnimatedSection className="mb-12 md:mb-16">
-          <h2 className="type-display-2 max-w-[18ch]">
-            Three builds.<br />
-            <span className="accent-text">Pick yours.</span>
-          </h2>
-        </AnimatedSection>
+        <SplitReveal as="h2" className="type-display-2 max-w-[18ch] mb-12 md:mb-16" start="top 85%">
+          Three builds.<br />
+          <span className="accent-text">Pick yours.</span>
+        </SplitReveal>
 
         {/* Desktop comparison table */}
         <AnimatedSection delay={0.15}>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 
 type Remaining = { days: number; hours: number; mins: number; secs: number };
@@ -19,14 +20,34 @@ function diff(target: number): Remaining | null {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+const tileEase = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
 function Unit({ value, label }: { value: string; label: string }) {
+  const reduce = useReducedMotion();
   return (
     <div className="flex flex-col items-center gap-2">
       <span
-        className="num font-semibold text-[clamp(1.75rem,5vw,2.75rem)] leading-none px-3.5 py-2.5 min-w-[3.25rem] text-center bg-[color:var(--ink)] text-[color:oklch(99%_0.002_25)]"
+        className="relative num font-semibold text-[clamp(1.75rem,5vw,2.75rem)] leading-none px-3.5 py-2.5 min-w-[3.25rem] text-center bg-[color:var(--ink)] text-[color:oklch(99%_0.002_25)] overflow-hidden"
         suppressHydrationWarning
       >
-        {value}
+        {/* invisible spacer reserves the tile size while digits slide */}
+        <span aria-hidden="true" className="invisible">{value}</span>
+        {reduce ? (
+          <span className="absolute inset-0 flex items-center justify-center">{value}</span>
+        ) : (
+          <AnimatePresence initial={false}>
+            <motion.span
+              key={value}
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ y: "110%" }}
+              animate={{ y: "0%" }}
+              exit={{ y: "-110%" }}
+              transition={{ duration: 0.4, ease: tileEase }}
+            >
+              {value}
+            </motion.span>
+          </AnimatePresence>
+        )}
       </span>
       <span className="num text-[11px] tracking-[0.16em] uppercase text-[color:var(--ink-faint)]">{label}</span>
     </div>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 const MotionLink = motion.create(Link);
 
@@ -20,6 +20,7 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const reduce = useReducedMotion();
 
   const navOffset = () =>
     typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches ? 112 : 96;
@@ -149,7 +150,7 @@ export default function NavBar() {
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
                   aria-current={active ? "page" : undefined}
-                  className={`group flex items-center gap-2.5 px-4 py-2 transition-colors ${
+                  className={`group relative flex items-center gap-2.5 px-4 py-2 transition-colors ${
                     active ? "text-[color:var(--ink)]" : "text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]"
                   }`}
                 >
@@ -157,6 +158,13 @@ export default function NavBar() {
                     active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"
                   }`}>{link.num}</span>
                   <span className="text-[17px] font-medium">{link.label}</span>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-4 right-4 -bottom-0.5 h-[2px] bg-[color:var(--accent)]"
+                      transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
                 </Link>
               );
             })}
@@ -214,9 +222,9 @@ export default function NavBar() {
                       href={link.href}
                       onClick={(e) => { handleLinkClick(e, link.href); setMobileOpen(false); }}
                       aria-current={active ? "page" : undefined}
-                      initial={{ opacity: 0, y: 8 }}
+                      initial={reduce ? false : { opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.04, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                      transition={{ delay: reduce ? 0 : i * 0.04, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                       className="group flex items-baseline gap-5 py-5 border-b border-[color:var(--rule)]"
                     >
                       <span className={`num text-xs transition-colors ${active ? "text-[color:var(--accent)]" : "text-[color:var(--ink-faint)] group-hover:text-[color:var(--accent)]"}`}>{link.num}</span>

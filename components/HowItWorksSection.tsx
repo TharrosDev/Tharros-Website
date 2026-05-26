@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView, useScroll, useSpring, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
+import SplitReveal from "./SplitReveal";
 
 const steps = [
   {
@@ -40,11 +41,9 @@ export default function HowItWorksSection() {
       <div className="page-frame">
         <SectionEyebrow numeral="§ 02" label="Process" />
 
-        <AnimatedSection className="mb-12 md:mb-16">
-          <h2 className="type-display-2 max-w-[18ch]">
-            From first call to <span className="accent-text">live and supported.</span>
-          </h2>
-        </AnimatedSection>
+        <SplitReveal as="h2" className="type-display-2 max-w-[18ch] mb-12 md:mb-16" start="top 85%">
+          From first call to <span className="accent-text">live and supported.</span>
+        </SplitReveal>
 
         <div className="relative" ref={railRef}>
           {/* Base pipeline rail */}
