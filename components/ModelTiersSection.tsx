@@ -65,17 +65,17 @@ function PriceBlock({ price }: { price: Price }) {
   return (
     <div className="mt-3 flex flex-col gap-1">
       <div className="flex items-baseline gap-x-2.5 gap-y-1 flex-wrap">
-        {accent && (
-          <span className="num text-[13px] line-through text-[color:var(--ink-faint)]">
-            ${price.from}
-          </span>
-        )}
         <span className="flex items-baseline gap-1.5">
           <span className="num text-[12px] uppercase tracking-[0.1em] text-[color:var(--ink-faint)]">from</span>
           <span className={`num text-[1.375rem] leading-none font-semibold ${accent ? "text-[color:var(--accent)]" : "text-[color:var(--ink)]"}`}>
             ${accent ? price.launchFrom : price.from}
           </span>
         </span>
+        {accent && (
+          <span className="num text-[13px] line-through text-[color:var(--ink-faint)]">
+            ${price.from}
+          </span>
+        )}
         {accent && (
           <span className="num text-[11px] tracking-[0.16em] text-[color:var(--accent)] self-center">LAUNCH</span>
         )}

@@ -71,17 +71,15 @@ export default function LaunchCountdown({ endIso }: { endIso: string }) {
             <h2 className="type-display-3 max-w-[24ch]">
               Launch pricing on our first builds.
             </h2>
-            <p className="type-body text-[color:var(--ink-muted)] mt-3 max-w-[46ch]">
-              For a limited window we&apos;re cutting our build fees. The Refresh drops to{" "}
-              <span className="num text-[color:var(--ink)] whitespace-nowrap">
-                <span className="line-through text-[color:var(--ink-faint)]">$1,000</span>{" "}
-                <span className="text-[color:var(--accent)] font-semibold">from&nbsp;$250</span>
-              </span>
-              , and The On-Call to{" "}
-              <span className="num text-[color:var(--ink)] whitespace-nowrap">
-                <span className="line-through text-[color:var(--ink-faint)]">$1,500</span>{" "}
-                <span className="text-[color:var(--accent)] font-semibold">from&nbsp;$500</span>
-              </span>{" "}
+            <p className="type-body text-[color:var(--ink-muted)] mt-3 max-w-[48ch]">
+              For a limited window we&apos;re cutting our build fees. The Refresh now starts at{" "}
+              <span className="num text-[color:var(--accent)] font-semibold whitespace-nowrap">$250</span>
+              , down from{" "}
+              <span className="num line-through text-[color:var(--ink-faint)] whitespace-nowrap">$1,000</span>
+              , and The On-Call at{" "}
+              <span className="num text-[color:var(--accent)] font-semibold whitespace-nowrap">$500</span>
+              , down from{" "}
+              <span className="num line-through text-[color:var(--ink-faint)] whitespace-nowrap">$1,500</span>{" "}
               (retainer stays $150/mo).
             </p>
           </AnimatedSection>
