@@ -30,7 +30,7 @@ export default function FooterSection() {
               </h2>
               <p className="type-lead text-[color:var(--ink-on-dark-muted)] mt-6 max-w-[52ch]">
                 Book a free discovery call. We&apos;ll listen to your operation, scope the build,
-                and walk you through pay-per-call vs the On-Call retainer. No obligation.
+                and walk you through per-call support vs a monthly retainer. No obligation.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <Link href="/brief" onClick={handleScrollToTop} className="btn-primary">

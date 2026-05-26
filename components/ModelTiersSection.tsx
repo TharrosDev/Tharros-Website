@@ -5,29 +5,81 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 
+type TierKey = "refresh" | "oncall" | "integrate";
+
 type Row = {
   label: string;
   refresh: string | boolean;
-  integrate: string | boolean;
   oncall: string | boolean;
+  integrate: string | boolean;
 };
 
 const ROWS: Row[] = [
-  { label: "Modern website build",   refresh: true,                 integrate: true,                 oncall: true },
-  { label: "AI agent, embedded",     refresh: false,                integrate: true,                 oncall: true },
-  { label: "Per-call support",       refresh: "Included",           integrate: "Included",           oncall: "Rolled in" },
-  { label: "Unlimited fixes",        refresh: false,                integrate: false,                oncall: true },
-  { label: "Unlimited new agents",   refresh: false,                integrate: false,                oncall: true },
-  { label: "Billing",                refresh: "Project",            integrate: "Project",            oncall: "Project + monthly" },
+  { label: "Modern website build", refresh: true,        oncall: true,                integrate: true },
+  { label: "AI agent, embedded",   refresh: false,       oncall: false,               integrate: true },
+  { label: "After-launch fixes",   refresh: "Per call",  oncall: "Unlimited",         integrate: "Unlimited" },
+  { label: "Unlimited new agents", refresh: false,       oncall: false,               integrate: true },
+  { label: "Billing",              refresh: "Project",   oncall: "Project + monthly", integrate: "Project + monthly" },
 ];
 
-const TIERS = [
-  { key: "refresh",   name: "The Refresh",   sub: "Site only",            note: "When your site is the front door, and the agent comes later." },
-  { key: "integrate", name: "The Integrate", sub: "Site + agent",         note: "When you want both, scoped once, billed per call after." },
-  { key: "oncall",    name: "The On-Call",   sub: "Site + agent + retainer", note: "When you want one number to call for everything." },
-] as const;
+type Price = {
+  from: string;
+  launchFrom?: string;
+  monthly?: string;
+};
+
+const TIERS: {
+  key: TierKey;
+  name: string;
+  sub: string;
+  note: string;
+  price: Price;
+}[] = [
+  {
+    key: "refresh",
+    name: "The Refresh",
+    sub: "Site only",
+    note: "When your site is the front door, and the agent comes later.",
+    price: { from: "1,000", launchFrom: "250" },
+  },
+  {
+    key: "oncall",
+    name: "The On-Call",
+    sub: "Site + retainer",
+    note: "When you want a modern site plus a standing line for fixes and edits.",
+    price: { from: "1,500", launchFrom: "500", monthly: "150" },
+  },
+  {
+    key: "integrate",
+    name: "The Integrate",
+    sub: "Site + agent + retainer",
+    note: "When you want the site, the agent, and one number for everything.",
+    price: { from: "3,000", monthly: "300" },
+  },
+];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+function PriceBlock({ price }: { price: Price }) {
+  return (
+    <div className="mt-3 flex flex-col gap-0.5">
+      <div className="flex items-baseline gap-2 flex-wrap">
+        {price.launchFrom ? (
+          <>
+            <span className="num text-[13px] line-through text-[color:var(--ink-faint)]">from&nbsp;${price.from}</span>
+            <span className="num text-[16px] font-semibold text-[color:var(--accent)]">from&nbsp;${price.launchFrom}</span>
+            <span className="num text-[10px] tracking-[0.14em] text-[color:var(--accent)]">LAUNCH</span>
+          </>
+        ) : (
+          <span className="num text-[16px] font-semibold text-[color:var(--ink)]">from&nbsp;${price.from}</span>
+        )}
+      </div>
+      {price.monthly && (
+        <span className="num text-[12px] text-[color:var(--ink-muted)]">+&nbsp;${price.monthly}/mo retainer</span>
+      )}
+    </div>
+  );
+}
 
 function Cell({ value, col, row, play, reduce }: { value: string | boolean; col: number; row: number; play: boolean; reduce: boolean }) {
   const delay = reduce ? 0 : 0.12 + col * 0.14 + row * 0.05;
@@ -55,13 +107,15 @@ function Cell({ value, col, row, play, reduce }: { value: string | boolean; col:
   );
 }
 
-export default function ModelTiersSection() {
+export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnPage?: boolean }) {
   const tableRef = useRef<HTMLDivElement>(null);
   const reduce = !!useReducedMotion();
   const play = useInView(tableRef, { once: true, margin: "-10%" }) || reduce;
 
+  const topPad = isFirstOnPage ? "pt-28 md:pt-32" : "pt-[var(--rhythm-default)]";
+
   return (
-    <section id="builds" className="pt-28 md:pt-32 pb-[var(--rhythm-default)] bg-[color:var(--surface)]">
+    <section id="builds" className={`${topPad} pb-[var(--rhythm-default)] bg-[color:var(--surface)]`}>
       <div className="page-frame">
         <SectionEyebrow numeral="§ 01" label="Builds" />
 
@@ -101,6 +155,7 @@ export default function ModelTiersSection() {
                           {String(i + 1).padStart(2, "0")} / {t.sub.toUpperCase()}
                         </span>
                         <span className="type-display-3 leading-none">{t.name}</span>
+                        <PriceBlock price={t.price} />
                       </div>
                     </th>
                   ))}
@@ -110,9 +165,11 @@ export default function ModelTiersSection() {
                 {ROWS.map((row, r) => (
                   <tr key={row.label} className="tier-row border-b border-[color:var(--rule)]">
                     <td className="py-5 pr-6 type-body text-[color:var(--ink)]">{row.label}</td>
-                    <td className="py-5 px-4"><Cell value={row.refresh} col={0} row={r} play={play} reduce={reduce} /></td>
-                    <td className="py-5 px-4"><Cell value={row.integrate} col={1} row={r} play={play} reduce={reduce} /></td>
-                    <td className="py-5 px-4 is-accent bg-[color:var(--accent-soft)]"><Cell value={row.oncall} col={2} row={r} play={play} reduce={reduce} /></td>
+                    {TIERS.map((t, c) => (
+                      <td key={t.key} className={`py-5 px-4 ${c === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
+                        <Cell value={row[t.key]} col={c} row={r} play={play} reduce={reduce} />
+                      </td>
+                    ))}
                   </tr>
                 ))}
                 <tr className="tier-row">
@@ -138,11 +195,12 @@ export default function ModelTiersSection() {
                   <span className="type-meta">{t.sub}</span>
                   {i === 2 && <span className="num text-[11px] text-[color:var(--accent)] tracking-[0.14em] ml-auto">◆ RECOMMENDED</span>}
                 </div>
-                <h3 className="type-display-3 mb-4">{t.name}</h3>
-                <p className="text-[15px] text-[color:var(--ink-muted)] mb-5">{t.note}</p>
+                <h3 className="type-display-3 mb-1">{t.name}</h3>
+                <PriceBlock price={t.price} />
+                <p className="text-[15px] text-[color:var(--ink-muted)] mt-4 mb-5">{t.note}</p>
                 <ul className="flex flex-col gap-2">
                   {ROWS.map((row) => {
-                    const v = row[t.key as "refresh" | "integrate" | "oncall"];
+                    const v = row[t.key];
                     return (
                       <li key={row.label} className="flex items-baseline gap-3 text-[15px]">
                         <span className="num text-xs w-5 text-[color:var(--accent)]">{v === true ? "●" : v === false ? "—" : ""}</span>
@@ -164,9 +222,10 @@ export default function ModelTiersSection() {
             </div>
             <div className="col-span-12 md:col-span-8 mt-3 md:mt-0">
               <p className="type-lead text-[color:var(--ink)]">
-                Refresh and Integrate clients get fixes and new agents one job at a time, the way
-                you&apos;d call a plumber. The On-Call retainer rolls fixes, improvements, and
-                unlimited new agents into a flat monthly fee, so you stop counting calls.
+                Refresh clients call us per job, the way you&apos;d call a plumber. The On-Call retainer
+                puts unlimited site fixes and edits on a flat monthly fee. The Integrate retainer rolls in
+                everything On-Call covers plus the AI agent and unlimited new agent builds, so you stop
+                counting calls.
               </p>
             </div>
           </div>

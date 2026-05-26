@@ -33,15 +33,19 @@ The service model is deliberately small-business shaped:
 
 - A modern site that reflects the operation behind it.
 - An AI agent that handles inquiries, captures leads, or covers after-hours intake — embedded directly into the site.
-- A phone number you can actually call when things change. Pay-per-call like a plumber, or roll it into the On-Call retainer.
+- A phone number you can actually call when things change. Pay per call like a plumber, or put it on a flat monthly retainer.
 
 ## The Three Packages
 
-| Package | What it is | Pricing | After-launch |
+Listed by ascending price. Each shows a "from $X" starting anchor; the final number is scoped on a free discovery call.
+
+| Package | What it is | Starting price | After-launch |
 |---|---|---|---|
-| **The Refresh** | Modern website only | Project-based | Per-call support |
-| **The Integrate** | Site + AI agent embedded | Project-based | Per-call support |
-| **The On-Call** | Site + agent + monthly retainer | Project + monthly | Unlimited fixes & new agents |
+| **The Refresh** | Modern website only (no agent) | from $1,000 | Per-call support |
+| **The On-Call** | Site + monthly retainer (no agent) | from $1,500 + $150/mo | Unlimited site fixes & edits |
+| **The Integrate** | Site + AI agent + monthly retainer | from $3,000 + $300/mo | Unlimited fixes, agent upkeep & new agents |
+
+**Launch discount (through Aug 31, 2026):** The Refresh from **$250**, The On-Call build from **$500** (retainer unchanged). The Integrate is not discounted.
 
 The site walks visitors through these packages, demos a live agent, and points to the Discovery Briefing wizard at `/brief`.
 
@@ -129,8 +133,9 @@ The marketing site is split across three pages. Each section component renders o
 
 | Order | Component | Background | Purpose |
 |---:|---|---|---|
-| 1 | `ModelTiersSection` | light | The Refresh / The Integrate / The On-Call comparison |
-| 2 | `PricingSection` | light | Pricing factors + "why no fixed price list" (carries its own CTA) |
+| – | `LaunchCountdown` | light | Launch-discount banner + live countdown (shown while promo active, ends Aug 31, 2026) |
+| 1 | `ModelTiersSection` | light | The Refresh / The On-Call / The Integrate comparison + starting prices |
+| 2 | `PricingSection` | light | Pricing factors + "starting prices, scoped to the work" (carries its own CTA) |
 
 > **No site footer.** Pages don't render `FooterSection` — it exists in `components/` but is unused. Pages end on `NextStep` (Home/Product), `PricingSection` (Pricing), or `ClientsSection` (Clients).
 

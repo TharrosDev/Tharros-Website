@@ -22,7 +22,7 @@ export function Thanks({ state, onReset }: ThanksProps) {
     {
       when: "Within 24 hours",
       what: "Brief reviewed.",
-      desc: "A Tharros representative reviews your brief and replies with a proposed discovery-call time — or a couple of clarifying questions if anything needs unpacking.",
+      desc: "A Tharros representative reviews your brief and replies with a proposed discovery-call time, or a couple of clarifying questions if anything needs unpacking.",
     },
     {
       when: "Week 1",
@@ -32,12 +32,12 @@ export function Thanks({ state, onReset }: ThanksProps) {
     {
       when: buildWhen,
       what: "Build & Integrate.",
-      desc: "We modernize the site — and on Integrate or On-Call, embed the AI agent directly into it. You see progress as we go and sign off at each checkpoint.",
+      desc: "We modernize the site, and on The Integrate we embed the AI agent directly into it. You see progress as we go and sign off at each checkpoint.",
     },
     {
       when: "Launch day",
       what: "Launch & Support.",
-      desc: "We publish, monitor, and stay reachable. Pay-per-call after launch for Refresh and Integrate, or roll into the On-Call retainer for unlimited fixes, improvements, and new agents.",
+      desc: "We publish, monitor, and stay reachable. Pay per call after launch with The Refresh, or roll into a monthly retainer: The On-Call for unlimited fixes and edits, The Integrate for that plus the agent and unlimited new builds.",
     },
   ];
 

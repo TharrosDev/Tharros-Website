@@ -78,7 +78,7 @@ const CASE_STUDIES = [
   {
     name: "The Meridian Society",
     url: "https://meridiansociety.ca",
-    headline: "The Meridian Society — Knowledge Q&A Agent",
+    headline: "The Meridian Society: Knowledge Q&A Agent",
     description:
       "Tharros built and integrated a Knowledge Q&A Agent into the Meridian Society site for 24/7 member insights and forum automation. Live and running, with Tharros on call for tuning and new agents.",
     image: `${SITE_URL}/meridian-logo.webp`,
@@ -87,7 +87,7 @@ const CASE_STUDIES = [
   {
     name: "ADVANTA365",
     url: "https://advanta365.com",
-    headline: "ADVANTA365 — Marketing Site Build",
+    headline: "ADVANTA365: Marketing Site Build",
     description:
       "Tharros built and shipped the marketing site for an enterprise Microsoft 365 adoption and governance practice, with ongoing on-call support.",
     image: `${SITE_URL}/opengraph-image/hero`,
@@ -96,7 +96,7 @@ const CASE_STUDIES = [
   {
     name: "Echo Five Consulting",
     url: "https://echo-five-website.vercel.app",
-    headline: "Echo Five Consulting — Positioning Site Build",
+    headline: "Echo Five Consulting: Positioning Site Build",
     description:
       "Tharros built and shipped the consulting site for a public-sector change-management practice in Ottawa, with ongoing on-call support.",
     image: `${SITE_URL}/echo-five-logo.svg`,
@@ -130,7 +130,7 @@ export default function ClientsPage() {
       url: PAGE_URL,
       name: "Clients — Real-World Impact | Tharros",
       description:
-        "Live Tharros builds for Ottawa businesses. Modernized websites with integrated AI agents — real-world results, with the team on call after launch.",
+        "Live Tharros builds for Ottawa businesses. Modernized websites with integrated AI agents: real-world results, with the team on call after launch.",
       inLanguage: "en-CA",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#localbusiness` },

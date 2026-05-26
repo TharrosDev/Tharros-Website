@@ -67,7 +67,7 @@ export function Wizard({
               <span className="ob-card__chip">Welcome</span>
               <h1>What we&apos;ll <span className="accent">cover.</span></h1>
               <p className="lede">
-                Nine quick sections — the shape of your business, your customers,
+                Nine quick sections: the shape of your business, your customers,
                 the look you want, and a couple of practical bits about timing
                 and contact. No homework, no jargon. If a question doesn&apos;t
                 apply, skip it.

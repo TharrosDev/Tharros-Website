@@ -3,16 +3,22 @@ import SectionSkeleton from "@/components/SectionSkeleton";
 import { Metadata } from "next";
 import Script from "next/script";
 
+import LaunchCountdown from "@/components/LaunchCountdown";
+
 const ModelTiersSection = dynamic(() => import("@/components/ModelTiersSection"), { loading: () => <SectionSkeleton /> });
 const PricingSection = dynamic(() => import("@/components/PricingSection"), { loading: () => <SectionSkeleton /> });
 
 const SITE_URL = "https://tharros.ca";
 const PAGE_URL = `${SITE_URL}/pricing`;
 
+// Launch promotion window — discounted build fees on The Refresh and The On-Call.
+const LAUNCH_END_ISO = "2026-08-31T23:59:59-04:00";
+const launchActive = Date.now() < new Date(LAUNCH_END_ISO).getTime();
+
 export const metadata: Metadata = {
-  title: "Pricing — The Refresh, The Integrate, The On-Call",
+  title: "Pricing — The Refresh, The On-Call, The Integrate",
   description:
-    "Three builds and how they are priced. The Refresh (site only), The Integrate (site + agent), and The On-Call (site + agent + monthly retainer). Pricing is scoped to the work after a free discovery call. Keep it Local, Keep it Canadian.",
+    "Three builds with starting prices. The Refresh (site only, from $1,000), The On-Call (site + monthly retainer, from $1,500), and The Integrate (site + AI agent + retainer, from $3,000). Final scope after a free discovery call. Launch pricing on now. Keep it Local, Keep it Canadian.",
   keywords: [
     "Ottawa Web Development Pricing",
     "AI Agent Integration Cost Ottawa",
@@ -20,9 +26,10 @@ export const metadata: Metadata = {
     "Website Maintenance Retainer Ottawa",
     "Per-Call Web Support Ottawa",
     "Website and AI Agent Package",
+    "Ottawa Website Launch Offer",
     "The Refresh",
-    "The Integrate",
     "The On-Call",
+    "The Integrate",
   ],
   alternates: {
     canonical: PAGE_URL,
@@ -32,9 +39,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Pricing — The Refresh, The Integrate, The On-Call | Tharros",
+    title: "Pricing — The Refresh, The On-Call, The Integrate | Tharros",
     description:
-      "Three builds, scoped to the work. The Refresh, The Integrate, and The On-Call — with per-call support or a flat monthly retainer.",
+      "Three builds with starting prices. The Refresh (site), The On-Call (site + retainer), and The Integrate (site + AI agent + retainer). Launch pricing on now.",
     url: PAGE_URL,
     siteName: "Tharros",
     type: "website",
@@ -44,15 +51,15 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Tharros pricing — The Refresh, The Integrate, The On-Call.",
+        alt: "Tharros pricing — The Refresh, The On-Call, The Integrate.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing — The Refresh, The Integrate, The On-Call | Tharros",
+    title: "Pricing — The Refresh, The On-Call, The Integrate | Tharros",
     description:
-      "Three builds, scoped to the work, with per-call support or a flat monthly retainer. Keep it Local, Keep it Canadian.",
+      "Three builds with starting prices, scoped to the work. Per-call support or a flat monthly retainer. Launch pricing on now. Keep it Local, Keep it Canadian.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -68,9 +75,9 @@ export default function PricingPage() {
       "@type": "WebPage",
       "@id": `${PAGE_URL}#webpage`,
       url: PAGE_URL,
-      name: "Pricing — The Refresh, The Integrate, The On-Call | Tharros",
+      name: "Pricing — The Refresh, The On-Call, The Integrate | Tharros",
       description:
-        "How Tharros prices website and AI agent builds: three packages scoped to the work, with per-call support or a flat monthly On-Call retainer.",
+        "How Tharros prices website and AI agent builds: three packages with starting prices, scoped to the work. The Refresh (site, from $1,000), The On-Call (site + monthly retainer, from $1,500), The Integrate (site + AI agent + retainer, from $3,000). Launch pricing on The Refresh and The On-Call through August 31, 2026.",
       inLanguage: "en-CA",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#service` },
@@ -102,7 +109,9 @@ export default function PricingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main>
-        <ModelTiersSection />
+        <h1 className="sr-only">Tharros pricing: The Refresh, The On-Call, and The Integrate</h1>
+        {launchActive && <LaunchCountdown endIso={LAUNCH_END_ISO} />}
+        <ModelTiersSection isFirstOnPage={!launchActive} />
         <PricingSection />
       </main>
     </>

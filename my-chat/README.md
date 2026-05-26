@@ -8,7 +8,7 @@ A standalone Preact + Vite chat widget that embeds a Relevance AI agent into cli
 
 ## Why this exists
 
-The main Tharros site renders a live demo agent on the homepage via `components/ChatDemoSection.tsx` (React + Next.js). This sub-project (`my-chat/`) is the *production* deliverable — a small, tree-shaken chat widget that gets dropped into client sites as part of The Integrate and The On-Call packages.
+The main Tharros site renders a live demo agent on the homepage via `components/ChatDemoSection.tsx` (React + Next.js). This sub-project (`my-chat/`) is the *production* deliverable — a small, tree-shaken chat widget that gets dropped into client sites as part of The Integrate package (the tier that includes an embedded AI agent).
 
 It's deliberately a separate stack:
 

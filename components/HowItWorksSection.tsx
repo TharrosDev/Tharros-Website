@@ -16,13 +16,13 @@ const steps = [
     num: "02",
     label: "Build & integrate",
     duration: "Days to weeks",
-    body: "We modernize the website and, on Integrate and On-Call packages, embed an AI agent directly into it. You see progress and sign off at each checkpoint.",
+    body: "We modernize the website and, on The Integrate, embed an AI agent directly into it. You see progress and sign off at each checkpoint.",
   },
   {
     num: "03",
     label: "Launch & support",
     duration: "Per call · or monthly",
-    body: "We publish, monitor, and stay reachable. Refresh and Integrate clients call per job. On-Call clients have us on a monthly retainer for fixes, improvements, and unlimited new agents.",
+    body: "We publish, monitor, and stay reachable. Refresh clients call per job. On-Call and Integrate clients have us on a monthly retainer: On-Call for site fixes and edits, Integrate also for the agent and unlimited new agents.",
   },
 ];
 

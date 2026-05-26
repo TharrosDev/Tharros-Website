@@ -19,7 +19,7 @@ These phrases appear verbatim across the site, the metadata, the JSON-LD, and th
 | Phrase | Where it appears |
 |---|---|
 | **Keep it Local, Keep it Canadian.** | Hero chip, footer pill, footer legal strip, Why-section subhead, Pricing-section strip, all OG/Twitter metadata, Organization.slogan, LocalBusiness.slogan |
-| **The Refresh / The Integrate / The On-Call** | Always capitalized exactly this way. "Refresh package" is wrong. "the integrate" is wrong. |
+| **The Refresh / The On-Call / The Integrate** | Always capitalized exactly this way (listed by ascending price). "Refresh package" is wrong. "the integrate" is wrong. The embedded AI agent lives only in The Integrate; The On-Call is site + retainer, no agent. |
 | **Book a Discovery Call** | Every primary CTA. Not "Get a Quote", not "Contact Us", not "Talk to Sales". |
 
 ---
@@ -136,11 +136,12 @@ Rules:
 ### Chat demo
 - **Tone:** Decisive, not corporate. The live agent itself follows the voice rules in [`../THARROS_KNOWLEDGE_BASE.md`](../THARROS_KNOWLEDGE_BASE.md).
 
-### Model tiers (Refresh / Integrate / On-Call)
-- **Title casing:** "The Refresh", "The Integrate", "The On-Call" — capital T, capital noun.
-- **Duration line:** Honest about pricing model. "Project-based" / "Project + Monthly Retainer".
+### Model tiers (Refresh / On-Call / Integrate)
+- **Title casing:** "The Refresh", "The On-Call", "The Integrate" — capital T, capital noun. Listed by ascending price; The Integrate is the flagship.
+- **What each is:** Refresh = site only; On-Call = site + monthly retainer (no agent); Integrate = site + embedded agent + retainer.
+- **Starting prices:** Shown as "from $X" anchors (from $1,000 / from $1,500 / from $3,000), with the monthly retainer on On-Call ($150/mo) and Integrate ($300/mo).
+- **Launch discount:** The Refresh and The On-Call show a struck-through standard price and a cobalt launch price through Aug 31, 2026.
 - **Description:** One sentence on what it includes, one sentence on what after-launch looks like.
-- **Chips:** Short feature tags in `tracking-[0.2em]` uppercase.
 
 ### How it works
 - Three steps. Step name in title case, body in plain prose.
@@ -153,13 +154,13 @@ Rules:
 
 ### Pricing
 - **Three factors:** Build Scope, Integration Depth, After-Launch Model.
-- **Tagline:** "Pricing as tailored as the work."
-- **Why no fixed price list:** explain honestly. Compare two different jobs.
+- **Tagline:** "Starting prices, shaped by the work."
+- **Why starting prices:** explain honestly — the anchors are where each build starts; compare two different jobs; final scope on the discovery call.
 - **CTA:** "Book a Discovery Call"
 
 ### Footer
 - **Headline:** "Ready to modernize your front door?"
-- **Subhead:** Mentions discovery call and pay-per-call vs On-Call retainer.
+- **Subhead:** Mentions discovery call and per-call support vs a monthly retainer.
 - **CTA primary:** "Book a Discovery Call"
 - **CTA secondary:** "Direct_Email" (yes, with underscore — it's an industrial-styled accent)
 - **Legal strip:** copyright + "Ottawa, Canada" + slogan + Canada flag.

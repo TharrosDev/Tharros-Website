@@ -83,7 +83,7 @@ Before requesting review, verify all of these:
 - [ ] Copy changes follow [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md).
 - [ ] No reintroduction of older positioning ("training", "Digital Workforce", "Recovering time. Rescuing revenue.", "Setup Sprint", "Operator Program", "Fractional AI Lead").
 - [ ] Brand slogan "Keep it Local, Keep it Canadian." is preserved.
-- [ ] Package names use exact casing: "The Refresh", "The Integrate", "The On-Call".
+- [ ] Package names use exact casing: "The Refresh", "The On-Call", "The Integrate". (Agent lives only in The Integrate; The On-Call is site + retainer, no agent.)
 - [ ] If JSON-LD changed, validated via [Rich Results Test](https://search.google.com/test/rich-results).
 - [ ] If a new page was added, it's in `app/sitemap.ts`.
 - [ ] If site copy changed, `THARROS_KNOWLEDGE_BASE.md` was updated (if affected).

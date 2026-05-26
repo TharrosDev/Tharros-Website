@@ -242,7 +242,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image/packages",
         width: 1200,
         height: 630,
-        alt: "Tharros — The Refresh, The Integrate, The On-Call: three packages for Ottawa small businesses.",
+        alt: "Tharros — The Refresh, The On-Call, The Integrate: three packages for Ottawa small businesses.",
         type: "image/png",
       },
       {
@@ -432,26 +432,44 @@ export default function RootLayout({
         "@type": "Offer",
         name: "The Refresh",
         description:
-          "Project-based website modernization for Ottawa small businesses. Per-call support after launch.",
+          "Project-based website modernization for Ottawa small businesses, site only. Per-call support after launch. Starting from $1,000 CAD. Launch pricing from $250 through August 31, 2026.",
         priceCurrency: "CAD",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "CAD",
+          minPrice: 1000,
+          description: "Starting price; final scope quoted after a free discovery call.",
+        },
         availability: "https://schema.org/InStock",
         category: "Website Modernization",
       },
       {
         "@type": "Offer",
-        name: "The Integrate",
+        name: "The On-Call",
         description:
-          "Website modernization plus a custom AI agent embedded directly into the site. Per-call support after launch.",
+          "Website modernization plus a flat monthly retainer for unlimited site fixes and edits. No embedded agent. Starting from $1,500 CAD plus $150/month. Launch pricing from $500 through August 31, 2026.",
         priceCurrency: "CAD",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "CAD",
+          minPrice: 1500,
+          description: "Starting build price plus a $150/month retainer; final scope quoted after a free discovery call.",
+        },
         availability: "https://schema.org/InStock",
-        category: "Website + AI Agent",
+        category: "Website + Monthly Retainer",
       },
       {
         "@type": "Offer",
-        name: "The On-Call",
+        name: "The Integrate",
         description:
-          "Website modernization plus AI agent integration plus a monthly On-Call retainer for fixes, improvements, and unlimited new agents.",
+          "Website modernization plus a custom AI agent embedded into the site, plus a monthly retainer covering fixes, agent upkeep, and unlimited new agents. Starting from $3,000 CAD plus $300/month.",
         priceCurrency: "CAD",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "CAD",
+          minPrice: 3000,
+          description: "Starting build price plus a $300/month retainer; final scope quoted after a free discovery call.",
+        },
         availability: "https://schema.org/InStock",
         category: "Website + AI Agent + Retainer",
       },
@@ -485,11 +503,17 @@ export default function RootLayout({
         {
           "@type": "Offer",
           position: 1,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "CAD",
+            minPrice: 1000,
+            description: "Starting price; launch pricing from $250 through August 31, 2026.",
+          },
           itemOffered: {
             "@type": "Service",
             name: "The Refresh",
             description:
-              "Project-based website modernization for Ottawa small businesses. We update the design, copy, and structure so your front door reflects the operation behind it. Fixes and changes after launch are billed per call.",
+              "Project-based website modernization for Ottawa small businesses, site only. We update the design, copy, and structure so your front door reflects the operation behind it. Fixes and changes after launch are billed per call. Starting from $1,000 CAD (launch pricing from $250 through August 31, 2026).",
             serviceType: "Website Modernization",
             provider: { "@id": `${SITE_URL}/#localbusiness` },
           },
@@ -497,23 +521,35 @@ export default function RootLayout({
         {
           "@type": "Offer",
           position: 2,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "CAD",
+            minPrice: 1500,
+            description: "Starting build price plus $150/month retainer; launch pricing from $500 through August 31, 2026.",
+          },
           itemOffered: {
             "@type": "Service",
-            name: "The Integrate",
+            name: "The On-Call",
             description:
-              "Website modernization plus a custom AI agent built and embedded directly into the site. Covers customer inquiry, lead capture, or after-hours intake. Fixes and additional agents after launch are billed per call.",
-            serviceType: "Website Modernization with AI Agent Integration",
+              "Website modernization plus a flat monthly retainer that rolls in unlimited site fixes and edits. No embedded AI agent in this tier. Starting from $1,500 CAD plus $150/month (launch pricing from $500 through August 31, 2026).",
+            serviceType: "Website + Monthly Retainer",
             provider: { "@id": `${SITE_URL}/#localbusiness` },
           },
         },
         {
           "@type": "Offer",
           position: 3,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "CAD",
+            minPrice: 3000,
+            description: "Starting build price plus $300/month retainer.",
+          },
           itemOffered: {
             "@type": "Service",
-            name: "The On-Call",
+            name: "The Integrate",
             description:
-              "Website modernization plus AI agent integration, followed by a monthly On-Call retainer. We stay on call for fixes, site improvements, and unlimited new agent builds while the retainer runs.",
+              "Website modernization plus a custom AI agent built and embedded directly into the site, covering customer inquiry, lead capture, or after-hours intake, followed by a monthly retainer for fixes, agent upkeep, and unlimited new agent builds. Starting from $3,000 CAD plus $300/month.",
             serviceType: "Website + AI Agent + Monthly Retainer",
             provider: { "@id": `${SITE_URL}/#localbusiness` },
           },
@@ -599,15 +635,23 @@ export default function RootLayout({
         name: "How much does a Tharros build cost?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Pricing is custom and scoped to the build. After a free discovery call, we send a firm, no-obligation proposal mapped to the work — a website refresh only, a website plus AI agent integration, or the full On-Call retainer that includes a monthly retainer for fixes and unlimited new agents.",
+          text: "Each build has a starting price: The Refresh (site only) from $1,000, The On-Call (site plus a monthly retainer for fixes and edits) from $1,500 plus $150/month, and The Integrate (site plus an embedded AI agent plus a retainer) from $3,000 plus $300/month. After a free discovery call we send a firm, no-obligation proposal scoped to your business. A launch discount is on now: The Refresh from $250 and The On-Call from $500 through August 31, 2026.",
         },
       },
       {
         "@type": "Question",
-        name: "What's the difference between pay-per-call and the On-Call retainer?",
+        name: "Is there a launch discount right now?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Pay-per-call means fixes and new agents are billed one job at a time, the way you'd call a plumber. The On-Call retainer is a flat monthly fee that rolls fixes, site improvements, and unlimited new agent builds into a single bill.",
+          text: "Yes. For our first three months we're cutting build fees on two packages: The Refresh drops from $1,000 to $250, and The On-Call build drops from $1,500 to $500 (the $150/month retainer is unchanged). The offer runs through August 31, 2026. The Integrate stays at its standard $3,000 plus $300/month.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What's the difference between pay-per-call and a monthly retainer?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "With The Refresh, fixes after launch are billed one job at a time, the way you'd call a plumber. The On-Call and The Integrate put support on a flat monthly retainer instead. The On-Call retainer ($150/month) covers unlimited site fixes and edits; The Integrate retainer ($300/month) adds the embedded AI agent, agent upkeep, and unlimited new agent builds.",
         },
       },
       {
@@ -615,7 +659,7 @@ export default function RootLayout({
         name: "Do you only work with Ottawa businesses?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Tharros focuses on the Ottawa area — Kanata, Nepean, Barrhaven, Orleans, and Stittsville included. The advantage is local context: we know the trades and small business landscape in this city.",
+          text: "Tharros focuses on the Ottawa area: Kanata, Nepean, Barrhaven, Orleans, and Stittsville included. The advantage is local context. We know the trades and small business landscape in this city.",
         },
       },
       {
@@ -639,7 +683,7 @@ export default function RootLayout({
         name: "Do I own my site and AI agent after launch?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. The site, the content, and the agent run on infrastructure you control. The On-Call retainer keeps Tharros on the line for changes; pay-per-call works if you'd rather call us when something needs doing.",
+          text: "Yes. The site, the content, and the agent run on infrastructure you control. A monthly retainer (The On-Call or The Integrate) keeps Tharros on the line for changes; per-call works if you'd rather call us when something needs doing.",
         },
       },
       {
@@ -647,7 +691,7 @@ export default function RootLayout({
         name: "What if I just want a new website, no AI agent?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "That's The Refresh — our project-based website modernization package. No agent required. After launch, fixes are billed per call.",
+          text: "That's The Refresh, our project-based website modernization package, from $1,000 (launch pricing from $250 through August 31, 2026). No agent required. After launch, fixes are billed per call, or step up to The On-Call for a monthly retainer that covers fixes and edits.",
         },
       },
       {
@@ -671,7 +715,7 @@ export default function RootLayout({
         name: "How do I get started?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Book a free discovery call from the homepage or fill out the brief at tharros.ca/brief. We'll listen to your operation, scope the build, and walk you through pay-per-call vs the On-Call retainer with no obligation.",
+          text: "Book a free discovery call from the homepage or fill out the brief at tharros.ca/brief. We'll listen to your operation, scope the build, and walk you through per-call support versus a monthly retainer with no obligation.",
         },
       },
       {
@@ -679,7 +723,7 @@ export default function RootLayout({
         name: "What's the difference between an AI agent and a chatbot?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "A chatbot follows a decision tree and gives canned responses to expected inputs. An AI agent reads your actual business content — your services, pricing, policies, hours — and answers questions the way a knowledgeable employee would. Tharros builds AI agents trained on your operation, not chatbot scripts.",
+          text: "A chatbot follows a decision tree and gives canned responses to expected inputs. An AI agent reads your actual business content (your services, pricing, policies, hours) and answers questions the way a knowledgeable employee would. Tharros builds AI agents trained on your operation, not chatbot scripts.",
         },
       },
       {
@@ -703,7 +747,7 @@ export default function RootLayout({
         name: "What is website modernization?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Website modernization means replacing an outdated, slow, or visually tired site with a fast, mobile-first site that reflects your current business. We don't restyle — we rebuild with modern tooling so the result is fast, accessible, easy to update, and ready to have an AI agent embedded into it when the time comes.",
+          text: "Website modernization means replacing an outdated, slow, or visually tired site with a fast, mobile-first site that reflects your current business. We don't restyle; we rebuild with modern tooling so the result is fast, accessible, easy to update, and ready to have an AI agent embedded into it when the time comes.",
         },
       },
       {
@@ -711,7 +755,7 @@ export default function RootLayout({
         name: "Can I add an AI agent later if I start with The Refresh?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. The packages are designed to be stepped. Start with The Refresh to modernize your site, then move to The Integrate when you're ready to embed an AI agent. Upgrading doesn't require rebuilding from scratch.",
+          text: "Yes. The packages are designed to be stepped. Start with The Refresh to modernize your site, add The On-Call if you want a monthly retainer for fixes, and move to The Integrate when you're ready to embed an AI agent. Upgrading doesn't require rebuilding from scratch.",
         },
       },
       {

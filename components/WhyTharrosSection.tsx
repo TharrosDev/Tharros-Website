@@ -15,7 +15,7 @@ const pillars = [
   {
     num: "03",
     label: "A number you can call",
-    body: "Pick the On-Call retainer and we're on a flat monthly fee for fixes, improvements, and unlimited new agents. Skip the retainer and pay per call. Either way, you reach a person.",
+    body: "Put us on a monthly retainer and we're on a flat fee for fixes and edits, with The Integrate adding the agent and unlimited new builds. Or stick with The Refresh and pay per call. Either way, you reach a person.",
   },
 ];
 

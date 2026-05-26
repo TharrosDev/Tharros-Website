@@ -11,7 +11,7 @@ This document is read by humans writing copy and by the live AI agent that answe
 
 - **Name:** Tharros
 - **Based in:** Ottawa, Ontario, Canada
-- **Service area:** Ottawa and surrounding region — Kanata, Nepean, Barrhaven, Orleans, Stittsville, Manotick, Gatineau
+- **Service area:** Ottawa and surrounding region: Kanata, Nepean, Barrhaven, Orleans, Stittsville, Manotick, Gatineau
 - **Contact:** tharrosdev@gmail.com
 - **Website:** https://tharros.ca
 - **Slogan:** Keep it Local, Keep it Canadian.
@@ -26,7 +26,7 @@ The model is small-business shaped:
 
 - A modern website that reflects the operation behind it.
 - An AI agent embedded directly into the site for inquiry handling, lead capture, or after-hours intake.
-- A point of contact you can reach when things change — pay-per-call like a plumber, or roll it into the On-Call retainer.
+- A point of contact you can reach when things change: pay per call like a plumber, or put it on a flat monthly retainer.
 
 One team owns the site, the agent, and the integrations between them, coordinating a diversified stack of tools chosen to fit the job. No handoffs between a design vendor, a dev vendor, and an AI vendor.
 
@@ -34,25 +34,31 @@ One team owns the site, the agent, and the integrations between them, coordinati
 
 ## 3. The three packages
 
-### The Refresh
-- **What:** Website modernization only.
-- **Pricing:** Project-based.
+Each package has a published starting price. The final number is scoped on a free discovery call, then sent as a firm, no-obligation proposal.
+
+### The Refresh: site only
+- **What:** Website modernization only. No embedded agent.
+- **Price:** From $1,000 (one-time project fee).
 - **After launch:** Fixes and changes billed per call.
 - **For:** Small businesses whose site is outdated and who don't need agent functionality yet.
 
-### The Integrate
-- **What:** Website modernization plus a custom AI agent embedded directly into the site.
-- **Pricing:** Project-based.
-- **After launch:** Fixes and additional agents billed per call.
-- **For:** Operations that want a modern site *and* a working agent without committing to a monthly retainer.
+### The On-Call: site + retainer
+- **What:** Website modernization plus a flat monthly retainer for unlimited site fixes and edits. No embedded agent in this tier.
+- **Price:** From $1,500 (one-time) plus $150/month.
+- **After launch:** Unlimited site fixes and edits while the retainer runs.
+- **For:** Businesses that want a modern site and a standing line for changes, without an AI agent.
 
-### The On-Call
-- **What:** Everything in The Integrate, plus a monthly retainer.
-- **Pricing:** Project + monthly retainer.
-- **After launch:** Unlimited fixes, site improvements, and new agent builds while the retainer runs.
-- **For:** Businesses that want one phone number to call when anything changes and don't want to count invoices.
+### The Integrate: site + agent + retainer
+- **What:** Website modernization plus a custom AI agent embedded directly into the site, plus a monthly retainer covering fixes, agent upkeep, and unlimited new agents. This is the flagship package.
+- **Price:** From $3,000 (one-time) plus $300/month.
+- **After launch:** Unlimited fixes, site improvements, agent upkeep, and unlimited new agent builds while the retainer runs.
+- **For:** Operations that want the site, a working agent, and one number to call for everything.
 
-There is no fixed price list. After a free discovery call, Tharros sends a firm, no-obligation proposal scoped to the work.
+### Launch discount: through August 31, 2026
+For our first three months, build fees are cut on two packages:
+- **The Refresh:** from $1,000, now **$250** during launch.
+- **The On-Call:** build from $1,500, now **$500** during launch (the $150/month retainer is unchanged).
+- **The Integrate** is not discounted. It stays at its standard $3,000 plus $300/month.
 
 ---
 
@@ -85,10 +91,10 @@ Three pillars repeated on the site:
 Tharros knows Kanata trades companies and Centretown law offices. The site and the agent are tuned to local context, local pricing questions, and the real shape of small business in this city.
 
 ### One team, end-to-end
-One team handles the website, the AI agent, and the integrations between them. Tharros works across a diversified stack of tools and software — whatever fits the job — coordinated under a single point of contact. No handoffs, no finger-pointing between vendors.
+One team handles the website, the AI agent, and the integrations between them. Tharros works across a diversified stack of tools and software (whatever fits the job), coordinated under a single point of contact. No handoffs, no finger-pointing between vendors.
 
 ### A number you can call
-Pick the On-Call retainer and Tharros is on a flat monthly fee for fixes, improvements, and unlimited new agents. Skip the retainer and pay per call, the way you'd call a plumber. Either way, you reach a person.
+Put Tharros on a monthly retainer (The On-Call or The Integrate) and it's a flat fee: On-Call covers site fixes and edits, Integrate adds the agent and unlimited new builds. Skip the retainer with The Refresh and pay per call, the way you'd call a plumber. Either way, you reach a person.
 
 ---
 
@@ -97,21 +103,24 @@ Pick the On-Call retainer and Tharros is on a flat monthly fee for fixes, improv
 Three stages from first call to live and supported:
 
 1. **Discovery.** Map the business, the biggest time drains, and where a modern site and an integrated agent have the most impact. Together, scope the build that fits.
-2. **Build & Integrate.** Modernize the website and, on Integrate and On-Call packages, embed an AI agent directly into it. Client sees progress at each checkpoint.
-3. **Launch & Support.** Publish, monitor, and stay reachable. Refresh and Integrate clients call per job. On-Call clients have Tharros on a monthly retainer for fixes, improvements, and unlimited new agents.
+2. **Build & Integrate.** Modernize the website and, on The Integrate, embed an AI agent directly into it. Client sees progress at each checkpoint.
+3. **Launch & Support.** Publish, monitor, and stay reachable. Refresh clients call per job. On-Call and Integrate clients have Tharros on a monthly retainer: On-Call for site fixes and edits, Integrate also for the agent and unlimited new agents.
 
 ---
 
 ## 7. FAQ (mirrors the JSON-LD FAQPage in `app/layout.tsx`)
 
 **How much does a Tharros build cost?**
-Pricing is custom and scoped to the build. After a free discovery call, Tharros sends a firm, no-obligation proposal mapped to the work.
+Each build has a starting price: The Refresh (site only) from $1,000, The On-Call (site + monthly retainer for fixes and edits) from $1,500 plus $150/month, and The Integrate (site + embedded AI agent + retainer) from $3,000 plus $300/month. The final number is scoped on a free discovery call. Launch discount on now: The Refresh from $250 and The On-Call from $500 through August 31, 2026.
 
-**What's the difference between pay-per-call and the On-Call retainer?**
-Pay-per-call means fixes and new agents are billed one job at a time, like calling a plumber. The On-Call retainer is a flat monthly fee that rolls fixes, site improvements, and unlimited new agent builds into a single bill.
+**Is there a launch discount?**
+Yes, for our first three months. The Refresh drops from $1,000 to $250, and The On-Call build drops from $1,500 to $500 (its $150/month retainer is unchanged). Runs through August 31, 2026. The Integrate stays at standard pricing.
+
+**What's the difference between pay-per-call and a monthly retainer?**
+With The Refresh, fixes are billed one job at a time, like calling a plumber. The On-Call and The Integrate put support on a flat monthly retainer instead: On-Call ($150/month) covers unlimited site fixes and edits; Integrate ($300/month) adds the embedded agent, agent upkeep, and unlimited new agent builds.
 
 **Do you only work with Ottawa businesses?**
-Tharros focuses on Ottawa and surrounding region — Kanata, Nepean, Barrhaven, Orleans, Stittsville, and Gatineau. The advantage is local context.
+Tharros focuses on Ottawa and surrounding region: Kanata, Nepean, Barrhaven, Orleans, Stittsville, and Gatineau. The advantage is local context.
 
 **What kinds of AI agents do you build?**
 Three patterns fit most small business operations: Customer Inquiry Agent, Lead Capture Agent, After-Hours Intake Agent. Each is built end-to-end and embedded into the modernized site.
@@ -120,10 +129,10 @@ Three patterns fit most small business operations: Customer Inquiry Agent, Lead 
 Timelines are scoped during the discovery call. Most website refreshes complete in days to a few weeks. Full agent integrations depend on integration depth with CRM, intake, and messaging tools.
 
 **Do I own my site and AI agent after launch?**
-Yes. The site, the content, and the agent run on infrastructure the client controls. The On-Call retainer keeps Tharros on the line for changes; pay-per-call works for clients who'd rather call when something needs doing.
+Yes. The site, the content, and the agent run on infrastructure the client controls. A monthly retainer (The On-Call or The Integrate) keeps Tharros on the line for changes; per-call works for clients who'd rather call when something needs doing.
 
 **What if I just want a new website, no AI agent?**
-That's The Refresh — project-based website modernization. No agent required.
+That's The Refresh, project-based website modernization, from $1,000 (launch pricing from $250 through August 31, 2026). No agent required. If you also want a monthly retainer for fixes and edits without an agent, that's The On-Call.
 
 **Where is Tharros based?**
 Ottawa, Ontario, Canada. Keep it Local, Keep it Canadian.
@@ -132,7 +141,7 @@ Ottawa, Ontario, Canada. Keep it Local, Keep it Canadian.
 Yes. Integration depth is one of the three pricing factors. Agents can connect to your CRM, intake forms, messaging channels, and other tools.
 
 **How do I get started?**
-Book a free discovery call from the homepage or fill out the project brief at /brief. Tharros listens to the operation, scopes the build, and walks through pay-per-call vs the On-Call retainer with no obligation.
+Book a free discovery call from the homepage or fill out the project brief at /brief. Tharros listens to the operation, scopes the build, and walks through per-call support vs a monthly retainer with no obligation.
 
 ---
 
@@ -142,15 +151,15 @@ When acting as the homepage demo agent:
 
 - **Plain and decisive.** Short sentences. No filler. No corporate AI buzzwords.
 - **Locally grounded.** Reference Ottawa, Kanata, Centretown when relevant. Don't fake claims about neighborhoods you don't know.
-- **Honest about scope.** If a visitor asks about pricing, explain the discovery-call-then-firm-proposal model. Don't invent numbers.
-- **One job: get the visitor to a discovery call.** Every conversation should leave the visitor with a clear next step — book a discovery call at /brief, or email tharrosdev@gmail.com.
+- **Honest about scope.** If a visitor asks about pricing, share the published starting prices and the current launch offer, then explain that the final number is scoped on a free discovery call. Don't invent numbers beyond the published starting prices.
+- **One job: get the visitor to a discovery call.** Every conversation should leave the visitor with a clear next step: book a discovery call at /brief, or email tharrosdev@gmail.com.
 - **Three-question session limit** is enforced by the front-end, not by the agent. Be helpful within those three turns.
 
 Things the agent should never say:
 - "As an AI language model…"
 - "I'm not able to provide pricing." (Instead: explain how pricing works.)
 - "Please contact our sales team." (There is no sales team. There's a discovery call at tharrosdev@gmail.com.)
-- "Training", "Coaching", "Digital Workforce", "Operator Program" — outdated positioning.
+- "Training", "Coaching", "Digital Workforce", "Operator Program": outdated positioning.
 
 ---
 
@@ -166,7 +175,8 @@ The site has three marketing pages. If a visitor asks where to find something, p
 | `/product` | `WhatWeBuildsSection.tsx` | The three agent patterns |
 | `/product` | `HowItWorksSection.tsx` | Discovery / Build & Integrate / Launch & Support |
 | `/product` | `WhyTharrosSection.tsx` | Three pillars + founder quote |
-| `/pricing` | `ModelTiersSection.tsx` | The Refresh / The Integrate / The On-Call comparison |
-| `/pricing` | `PricingSection.tsx` | Why no fixed price list |
+| `/pricing` | `ModelTiersSection.tsx` | The Refresh / The On-Call / The Integrate comparison + starting prices |
+| `/pricing` | `LaunchCountdown.tsx` | Launch-discount banner + live countdown (ends Aug 31, 2026) |
+| `/pricing` | `PricingSection.tsx` | Starting prices and how scope is finalized |
 
-If a question on the site contradicts this knowledge base, the site is right and this doc is wrong — update this doc.
+If a question on the site contradicts this knowledge base, the site is right and this doc is wrong; update this doc.

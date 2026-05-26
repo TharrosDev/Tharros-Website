@@ -107,7 +107,7 @@ export function AdminApp({ initialRemote = [] }: AdminAppProps) {
             {submissions.length === 0 ? (
               <div className="admin-list__empty">
                 No submissions cached on this device.<br />
-                Submissions sync from Zapier Tables — this view is a local backup only.
+                Submissions sync from Zapier Tables. This view is a local backup only.
               </div>
             ) : (
               submissions.map((r) => (

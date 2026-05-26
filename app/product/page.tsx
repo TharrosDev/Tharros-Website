@@ -14,7 +14,7 @@ const PAGE_URL = `${SITE_URL}/product`;
 export const metadata: Metadata = {
   title: "Product — Modern Websites & AI Agents We Build",
   description:
-    "What we build for Ottawa businesses: a modern website with an embedded AI agent — Customer Inquiry, Lead Capture, or After-Hours Intake. See our process and why we work as one team. Keep it Local, Keep it Canadian.",
+    "What we build for Ottawa businesses: a modern website with an embedded AI agent, whether Customer Inquiry, Lead Capture, or After-Hours Intake. See our process and why we work as one team. Keep it Local, Keep it Canadian.",
   keywords: [
     "AI Agent Build Ottawa",
     "Customer Inquiry Agent",
@@ -102,6 +102,7 @@ export default function ProductPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main>
+        <h1 className="sr-only">Modern websites and AI agents we build for Ottawa businesses</h1>
         <WhatWeBuildsSection />
         <HowItWorksSection />
         <WhyTharrosSection />

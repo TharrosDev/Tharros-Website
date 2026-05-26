@@ -8,13 +8,15 @@ This file gives an AI coding assistant the context it needs to make safe, on-bra
 
 ## What this repo is
 
-A Next.js 16 marketing site for **Tharros**, an Ottawa team that builds AI-integrated websites for small businesses. The current business model is:
+A Next.js 16 marketing site for **Tharros**, an Ottawa team that builds AI-integrated websites for small businesses. The current business model is three packages, listed by ascending price:
 
-1. **The Refresh** — website modernization only, project-based, per-call support after launch.
-2. **The Integrate** — website + AI agent embedded into the site, project-based, per-call.
-3. **The On-Call** — website + agent + monthly retainer for unlimited fixes and new agents.
+1. **The Refresh** — website modernization only (site, no agent), project-based, per-call support after launch. From **$1,000** (launch from $250).
+2. **The On-Call** — website + a flat monthly retainer for unlimited site fixes and edits, **no embedded agent**. From **$1,500 + $150/mo** (launch from $500).
+3. **The Integrate** — website + embedded AI agent + a monthly retainer for fixes, agent upkeep, and unlimited new agents. **Flagship / recommended tier.** From **$3,000 + $300/mo**.
 
-Do **not** reintroduce older positioning ("training", "coaching", "Digital Workforce", "Setup Sprint", "Operator Program", "Fractional AI Lead", "Recovering time. Rescuing revenue."). The site was pivoted away from those models — anything matching those phrases is a regression.
+Pricing model: the site shows **"from $X" starting anchors**; the final number is scoped on a free discovery call. (Earlier the site showed no prices at all — that "no fixed list" stance is retired.) A **launch discount** runs through **Aug 31, 2026** on The Refresh ($250) and The On-Call ($500); see `components/LaunchCountdown.tsx`.
+
+Do **not** reintroduce older positioning ("training", "coaching", "Digital Workforce", "Setup Sprint", "Operator Program", "Fractional AI Lead", "Recovering time. Rescuing revenue."), and do **not** revert The Integrate to a no-retainer / pay-per-call tier or move the embedded agent into The On-Call — the agent lives only in The Integrate now. Anything matching those is a regression.
 
 ---
 
@@ -26,12 +28,12 @@ The marketing site is split across three primary pages plus the brief/clients ro
 |---|---|---|
 | `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02, ends the page) → `NextStep` |
 | `/product` | `app/product/page.tsx` | `WhatWeBuildsSection` (§01, the 3 agents) → `HowItWorksSection` (§02, process) → `WhyTharrosSection` (§03) → `NextStep` |
-| `/pricing` | `app/pricing/page.tsx` | `ModelTiersSection` (§01, package comparison) → `PricingSection` (§02, pricing factors) |
+| `/pricing` | `app/pricing/page.tsx` | `LaunchCountdown` (launch-discount banner + live countdown, shown while the promo is active) → `ModelTiersSection` (§01, package comparison + starting prices) → `PricingSection` (§02, pricing factors) |
 | `/clients` | `app/clients/page.tsx` | `ClientsSection` |
 | `/brief` | `app/brief/page.tsx` | Onboarding wizard (see below) |
 
 Notes:
-- **First-on-page sections** (`WhatWeBuildsSection`, `ModelTiersSection`) carry `pt-28 md:pt-32 pb-[var(--rhythm-default)]` instead of `rhythm-default` so their content clears the fixed navbar. The `padding-block` shorthand from `.rhythm-default` can't be partially overridden in the same `@layer utilities`, so use explicit `pt`/`pb` utilities here.
+- **First-on-page sections** (`WhatWeBuildsSection`, `ModelTiersSection`) carry `pt-28 md:pt-32 pb-[var(--rhythm-default)]` instead of `rhythm-default` so their content clears the fixed navbar. The `padding-block` shorthand from `.rhythm-default` can't be partially overridden in the same `@layer utilities`, so use explicit `pt`/`pb` utilities here. On `/pricing`, `LaunchCountdown` carries the nav clearance while the promo is active and `ModelTiersSection` takes a `isFirstOnPage={false}` prop to drop to normal top rhythm; the page gates the banner with `Date.now() < LAUNCH_END` (server-side) so when the promo ends, `ModelTiersSection` becomes first-on-page again and regains its own clearance.
 - **No footer.** Pages do not render a site footer (`FooterSection.tsx` exists but is unused). Home and Product end on the `NextStep` CTA; Pricing ends on `PricingSection` (which carries its own "Book a call" CTA); Clients ends on `ClientsSection`.
 - **`NextStep`** (`components/NextStep.tsx`) is the slim dark cross-page CTA strip that ends Home and Product. It is *not* a content section — keep it lightweight.
 - **Nav** (`components/NavBar.tsx`) links to the page routes (`/`, `/product`, `/pricing`, `/clients`) with `usePathname` active-state highlighting — no more in-page anchor scrolling, except the hero's `#demo` "Try the agent" link on Home.
@@ -111,7 +113,7 @@ Read [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) for the full version. Qu
 
 - **Voice:** decisive, plain, locally grounded. Like a competent tradesperson, not an enterprise CIO.
 - **Slogan:** "Keep it Local, Keep it Canadian." — appears in hero chip, footer pill, footer legal strip, why-section subhead, pricing strip, all OG/Twitter metadata, and JSON-LD. Don't remove it.
-- **Always use the package names verbatim**: The Refresh, The Integrate, The On-Call. Not "Refresh package", not "Refresh tier".
+- **Always use the package names verbatim**: The Refresh, The On-Call, The Integrate. Not "Refresh package", not "Refresh tier".
 - **Use "build" not "training" or "deployment".** Use "AI agent" not "chatbot" or "assistant". Use "embed into your site" not "deploy to your site". Use "site" or "website" not "web property".
 - **Avoid:** "move the needle", "high-stakes", "Commercial Model", "Operational Excellence", "Neural Logic", "Inquiries" (use "questions" for end-user copy), "Digital Workforce", "Setup Sprint", "Operator Program", "Tailored Builds for Tailored Businesses" (double-tailored is clunky).
 - **Apostrophes in JSX:** `&apos;` works in JSX text content only. Inside JS string literals (object props rendered via `{obj.prop}`), use a real `'` character. Same rule for `&mdash;` — JSX text only; use real `—` in JS strings.

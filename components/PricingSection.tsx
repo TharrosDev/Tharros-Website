@@ -5,9 +5,9 @@ import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 
 const factors = [
-  { num: "A", title: "Build scope",        body: "From a clean website refresh to a full site with multiple agents wired into your operation." },
+  { num: "A", title: "Build scope",        body: "From a clean website refresh to a full site with an agent wired into your operation." },
   { num: "B", title: "Integration depth",  body: "How deep the agent wires in. Site embed, CRM sync, intake automation, messaging channels." },
-  { num: "C", title: "After-launch model", body: "Pay-per-call for fixes and new agents, or a flat-rate On-Call retainer that rolls everything in." },
+  { num: "C", title: "After-launch model", body: "Call us per job like a plumber, or put fixes and edits on a flat monthly retainer with The On-Call or The Integrate." },
 ];
 
 export default function PricingSection() {
@@ -18,7 +18,7 @@ export default function PricingSection() {
 
         <AnimatedSection className="mb-12 md:mb-16">
           <h2 className="type-display-2 max-w-[18ch]">
-            Pricing is shaped by the work, not a list.
+            Starting prices, shaped by the work.
           </h2>
         </AnimatedSection>
 
@@ -43,13 +43,13 @@ export default function PricingSection() {
           <div className="mt-16 md:mt-20 grid grid-cols-12 gap-x-6 border-t border-[color:var(--rule)] pt-10">
             <div className="col-span-12 md:col-span-4">
               <span className="type-meta">How we price</span>
-              <h3 className="type-display-3 mt-3">Why no fixed list?</h3>
+              <h3 className="type-display-3 mt-3">Why starting prices?</h3>
             </div>
             <div className="col-span-12 md:col-span-8 mt-6 md:mt-0">
               <p className="type-lead">
-                A clean website refresh for a solo lawyer is a different job than a site plus three
-                agents and a monthly retainer for a plumbing team. After a free discovery call we
-                send a firm, no-obligation proposal scoped to your business.
+                The numbers above are where each build starts. A clean refresh for a solo lawyer is a
+                different job than a site plus an agent and a monthly retainer for a plumbing team, so
+                after a free discovery call we send a firm, no-obligation proposal scoped to your business.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <Link href="/brief" className="btn-primary">Book a discovery call</Link>

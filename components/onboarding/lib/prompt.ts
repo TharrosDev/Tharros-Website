@@ -122,7 +122,7 @@ export function buildPrompt(state: FormState): string {
   const scope = arr("assistantScope");
   if (!scope.length || scope.includes("none")) {
     lines.push("- **Status:** Skipped — site only, no embedded agent for v1.");
-    lines.push("- **Suggested Tharros package:** The Refresh.");
+    lines.push("- **Suggested Tharros package:** The Refresh (or The On-Call if they want a monthly retainer for fixes and edits).");
   } else {
     lines.push("- **Patterns requested:**");
     const scopeField = findField("assistantScope");
@@ -133,11 +133,7 @@ export function buildPrompt(state: FormState): string {
     if (str("hoursOfOperation")) lines.push(`- **Hours of operation:** ${str("hoursOfOperation")}`);
     if (get("afterHours")) lines.push(`- **After-hours behaviour:** ${formatField(findField("afterHours"), get("afterHours"))}`);
 
-    if (scope.includes("after-hours") || scope.length >= 2) {
-      lines.push("- **Suggested Tharros package:** The On-Call (site + agent + monthly retainer).");
-    } else {
-      lines.push("- **Suggested Tharros package:** The Integrate.");
-    }
+    lines.push("- **Suggested Tharros package:** The Integrate (site + agent + monthly retainer).");
   }
   lines.push("");
 
@@ -204,7 +200,7 @@ export function buildPrompt(state: FormState): string {
   lines.push("");
   lines.push("## Build guidance");
   lines.push("");
-  lines.push("Generate a Tharros-style website that matches the brief above. Apply the Tharros design language: industrial-executive voice, slate base, single sky-blue accent, sharp corners, decisive copy. Voice should sound like a competent tradesperson who happens to build software — short sentences, plain words, locally grounded.");
+  lines.push("Generate a Tharros-style website that matches the brief above. Apply the Tharros design language (the Field Engineer system): a bone-warm surface, a single committed cobalt accent used sparingly, Geist and Geist Mono typography, hairline rules instead of cards, no shadows, and decisive copy. Voice should sound like a competent tradesperson who happens to build software: short sentences, plain words, locally grounded.");
   lines.push("");
   lines.push("**Hard requirements:**");
   lines.push("- Section layouts: hero → problem/why → services → process → social proof → contact.");

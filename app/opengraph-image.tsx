@@ -23,7 +23,7 @@ export function generateImageMetadata() {
     },
     {
       id: "packages",
-      alt: "Tharros — The Refresh, The Integrate, The On-Call: three packages for Ottawa small businesses",
+      alt: "Tharros — The Refresh, The On-Call, The Integrate: three packages for Ottawa small businesses",
     },
     {
       id: "slogan",
@@ -269,13 +269,13 @@ function renderPackages(fontData: ArrayBuffer) {
     },
     {
       num: "02",
-      name: "The Integrate",
-      desc: "Website + embedded AI agent.",
+      name: "The On-Call",
+      desc: "Website + monthly retainer.",
     },
     {
       num: "03",
-      name: "The On-Call",
-      desc: "Website + agent + monthly retainer.",
+      name: "The Integrate",
+      desc: "Website + AI agent + retainer.",
     },
   ];
 
