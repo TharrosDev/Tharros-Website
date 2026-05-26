@@ -8,22 +8,22 @@ const builds = [
   {
     num: "01",
     name: "Modern & fast",
-    body: "A clean, current rebuild that loads fast. No bloat, no dated templates.",
+    body: "A clean, current rebuild that loads quickly. No bloat, no dated templates.",
   },
   {
     num: "02",
     name: "Mobile in mind",
-    body: "Tuned to look sharp and work smoothly on phones and tablets, not only desktop.",
+    body: "Tuned to look sharp and work smoothly on phones and tablets, not just desktop.",
   },
   {
     num: "03",
     name: "Found on Google",
-    body: "Built search-ready from day one: fast, semantic, and structured for SEO.",
+    body: "Built to show up in search from day one, not buried on page ten.",
   },
   {
     num: "04",
     name: "Fully managed",
-    body: "We host it on fast, reliable infrastructure and keep it secure and up to date. Nothing for you to run.",
+    body: "We host, secure, and keep it updated on reliable infrastructure. Nothing for you to run.",
   },
 ] as const;
 
@@ -40,8 +40,8 @@ export default function WebsiteBuildsSection() {
           </SplitReveal>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-5 lg:self-end lg:pb-2">
             <p className="type-lead">
-              Fast, modern sites built for Ottawa businesses — and the foundation every agent we
-              build plugs into.
+              Custom websites for Ottawa businesses, and the foundation every agent we build plugs
+              into.
             </p>
           </AnimatedSection>
         </div>
