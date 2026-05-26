@@ -26,13 +26,14 @@ The marketing site is split across three primary pages plus the brief/clients ro
 
 | Route | File | Sections (in order) |
 |---|---|---|
-| `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02, ends the page) → `NextStep` |
+| `/` (Home) | `app/page.tsx` | `HeroSection` (§00) → `WorkReel` (full-bleed selected-work reel, no §-numeral) → `ProblemSection` (§01) → `ChatDemoSectionWrapper` (§02) → `NextStep` (§03) |
 | `/product` | `app/product/page.tsx` | `WhatWeBuildsSection` (§01, the 3 agents) → `HowItWorksSection` (§02, process) → `WhyTharrosSection` (§03) → `NextStep` |
 | `/pricing` | `app/pricing/page.tsx` | `LaunchCountdown` (launch-discount banner + live countdown, shown while the promo is active) → `ModelTiersSection` (§01, package comparison + starting prices) → `PricingSection` (§02, pricing factors) |
 | `/clients` | `app/clients/page.tsx` | `ClientsSection` |
 | `/brief` | `app/brief/page.tsx` | Onboarding wizard (see below) |
 
 Notes:
+- **`WorkReel`** (`components/WorkReel.tsx` + `WorkReel.module.css`) is the full-bleed counter-scrolling showcase reel sitting between the hero and `ProblemSection` on Home. It's purely presentational — `aria-hidden`, no `§ 0X` eyebrow — and renders as a server component (pure-CSS marquee). Two rows of browser-mockup "builds" scroll in opposite directions; scroll speed is the `SPEED` constant (higher = faster). It closes on a "Who we build for" client-types legend strip whose CTA links to `/brief`. Edges run full-bleed (no side fade) under `prefers-reduced-motion` it becomes a static horizontally-scrollable row.
 - **First-on-page sections** (`WhatWeBuildsSection`, `ModelTiersSection`) carry `pt-28 md:pt-32 pb-[var(--rhythm-default)]` instead of `rhythm-default` so their content clears the fixed navbar. The `padding-block` shorthand from `.rhythm-default` can't be partially overridden in the same `@layer utilities`, so use explicit `pt`/`pb` utilities here. On `/pricing`, `LaunchCountdown` carries the nav clearance while the promo is active and `ModelTiersSection` takes a `isFirstOnPage={false}` prop to drop to normal top rhythm; the page gates the banner with `Date.now() < LAUNCH_END` (server-side) so when the promo ends, `ModelTiersSection` becomes first-on-page again and regains its own clearance.
 - **No footer.** Pages do not render a site footer (`FooterSection.tsx` exists but is unused). Home and Product end on the `NextStep` CTA; Pricing ends on `PricingSection` (which carries its own "Book a call" CTA); Clients ends on `ClientsSection`.
 - **`NextStep`** (`components/NextStep.tsx`) is the slim dark cross-page CTA strip that ends Home and Product. It is *not* a content section — keep it lightweight.

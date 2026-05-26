@@ -176,6 +176,9 @@ Every section opens with `<SectionEyebrow>`: a 3px red tick + red mono `§ 0X` n
 ### Signature: Marquee (`components/Marquee.tsx`)
 Infinite horizontal scroller, the kinetic backbone of the site. Variants `dark` (black bar, white text, red diamonds), `red` (red-deep bar, white text), `light`. Pauses on hover; static first-copy under reduced motion. Used as the hero's bottom band and available site-wide.
 
+### Signature: Work reel (`components/WorkReel.tsx`)
+The full-bleed showcase reel directly under the Home hero. Two rows of high-fidelity browser mockups counter-scroll (top row left, bottom row right) as a pure-CSS marquee — speed is the `SPEED` constant, items carry a slight per-item `--tilt`, and hovering dims the field while lifting the hovered mock. Runs edge-to-edge with no side fade. It is presentational (`aria-hidden`, no `§ 0X` eyebrow) and closes on a mono legend strip — a red `/`-marked "Who we build for" client-types list and a "Start a project" CTA to `/brief`. Under `prefers-reduced-motion` the tracks stop and each row becomes a horizontally scrollable strip. Styles are scoped in `WorkReel.module.css`.
+
 ### Signature: Oversized numerals + sliding red blocks
 Replaces the old SVG schematics. Problem rows pair a huge outlined-red numeral with a red bar (`.red-block`) that wipes in (`scaleX` 0→1, origin-left) on scroll. Agent cards (WhatWeBuilds) and Why pillars use big-num red numerals. Flow sequences render as bold horizontal label chains joined by 2px red rules, last stage in red.
 

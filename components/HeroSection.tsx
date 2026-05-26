@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Marquee from "./Marquee";
 import Magnetic from "./Magnetic";
-import { gsap, SplitText, useGSAP, EASE_EXPO } from "@/lib/gsap";
+import { gsap, SplitText, useGSAP, EASE_EXPO, unclipMaskDescenders } from "@/lib/gsap";
 
 export default function HeroSection() {
   const root = useRef<HTMLElement>(null);
@@ -23,12 +23,13 @@ export default function HeroSection() {
           q(".v3-meta")[0],
         ];
         const split = SplitText.create(h1, { type: "lines", mask: "lines" });
+        unclipMaskDescenders(split);
 
         gsap.set(items, { autoAlpha: 0, y: 24 });
 
         const tl = gsap.timeline({ defaults: { ease: EASE_EXPO } });
         tl.to(items[0], { autoAlpha: 1, y: 0, duration: 0.5 }, 0.05)
-          .from(split.lines, { yPercent: 120, duration: 1.05, stagger: 0.12 }, 0.16)
+          .from(split.lines, { yPercent: 135, duration: 1.05, stagger: 0.12 }, 0.16)
           .to(items[1], { autoAlpha: 1, y: 0, duration: 0.7 }, 0.5)
           .to(items[2], { autoAlpha: 1, y: 0, duration: 0.6 }, 0.7)
           .to(items[3], { autoAlpha: 1, y: 0, duration: 0.55 }, 0.84);

@@ -19,7 +19,7 @@ Technical reference for the Tharros website. Read this when you need to understa
 │                       Next.js 16 App Router                     │
 │                                                                 │
 │   app/layout.tsx ─── Global JSON-LD graph, metadata, NavBar     │
-│   app/page.tsx ───── Home: Hero · Problem · ChatDemo            │
+│   app/page.tsx ───── Home: Hero · Reel · Problem · ChatDemo     │
 │   app/product/ ───── Product: Agents · Process · Why            │
 │   app/pricing/ ───── Pricing: package table · pricing factors   │
 │   app/brief/ ─────── Discovery Briefing wizard (9-step)         │
@@ -36,9 +36,9 @@ Technical reference for the Tharros website. Read this when you need to understa
 │  Eager (in initial JS)   │         │  Lazy (next/dynamic)     │
 │                          │         │                          │
 │  HeroSection   (Home)    │         │  ProblemSection   (Home) │
-│  NavBar                  │         │  ChatDemoSection  (Home) │
-│  PageTransition          │         │  WhatWeBuilds  (Product) │
-│                          │         │  HowItWorks    (Product) │
+│  WorkReel      (Home)    │         │  ChatDemoSection  (Home) │
+│  NavBar                  │         │  WhatWeBuilds  (Product) │
+│  PageTransition          │         │  HowItWorks    (Product) │
 │                          │         │  WhyTharros    (Product) │
 │                          │         │  ModelTiers    (Pricing) │
 │                          │         │  PricingSection(Pricing) │
@@ -58,7 +58,7 @@ Technical reference for the Tharros website. Read this when you need to understa
 
 - **Server components by default.** Most sections are server components — they emit static markup and ship zero client JS for their contents.
 - **`"use client"` only where needed.** Sections using `motion/react`, refs, effects, or browser APIs are client components. This is currently every section except `WhyTharrosSection` (and even that contains client-side `AnimatedSection` children).
-- **Dynamic imports for below-the-fold sections.** The three page files (`app/page.tsx`, `app/product/page.tsx`, `app/pricing/page.tsx`) use `next/dynamic` with a `SectionSkeleton` fallback for their sections; only `HeroSection` (Home) ships eagerly. The pages render no site footer (`FooterSection` is unused). This keeps the initial JS payload small on mobile, where TTI is most fragile.
+- **Dynamic imports for below-the-fold sections.** The three page files (`app/page.tsx`, `app/product/page.tsx`, `app/pricing/page.tsx`) use `next/dynamic` with a `SectionSkeleton` fallback for their sections; only `HeroSection` and `WorkReel` (Home) ship eagerly. The pages render no site footer (`FooterSection` is unused). This keeps the initial JS payload small on mobile, where TTI is most fragile.
 - **`PageTransition`** wraps `{children}` in the root layout and cross-fades between routes.
 
 ---

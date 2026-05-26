@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import Link from "next/link";
 import { Instrument_Serif } from "next/font/google";
 import styles from "./WorkReel.module.css";
 
@@ -603,15 +604,15 @@ function ReelRow({ projects, size, direction, speed }: { projects: Project[]; si
   );
 }
 
-const SPEED = 2;
+const SPEED = 1;
 
-const CATEGORIES = [
-  { label: "Web", n: 18 },
-  { label: "Brand", n: 11 },
-  { label: "Agents", n: 9 },
-  { label: "Editorial", n: 6 },
-  { label: "Commerce", n: 4 },
-  { label: "Type", n: 3 },
+const CLIENT_TYPES = [
+  "Local services",
+  "Professional services",
+  "Trades & contractors",
+  "Member societies",
+  "Health & wellness",
+  "Retail & hospitality",
 ];
 
 export default function WorkReel() {
@@ -627,20 +628,20 @@ export default function WorkReel() {
 
       <footer className={cx("work-foot")}>
         <div className={cx("work-foot-row")}>
-          <span className={cx("work-foot-label")}>By discipline</span>
+          <span className={cx("work-foot-label")}>Who we build for</span>
           <div className={cx("work-cats")}>
-            {CATEGORIES.map((c) => (
-              <span key={c.label} className={cx("work-cat")}>
-                <span className={cx("cat-n")}>{String(c.n).padStart(2, "0")}</span>
-                <span className={cx("cat-l")}>{c.label}</span>
+            {CLIENT_TYPES.map((label) => (
+              <span key={label} className={cx("work-cat")}>
+                <span className={cx("cat-n")}>/</span>
+                <span className={cx("cat-l")}>{label}</span>
               </span>
             ))}
           </div>
           <span className={cx("work-foot-spacer")} />
-          <a href="#" className={cx("work-foot-link")}>
-            View archive
+          <Link href="/brief" className={cx("work-foot-link")}>
+            Start a project
             <span className={cx("arrow")}>→</span>
-          </a>
+          </Link>
         </div>
       </footer>
     </section>

@@ -38,17 +38,6 @@
   flex-direction: column;
   gap: 36px;
 }
-.reel::before, .reel::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 9%;
-  z-index: 3;
-  pointer-events: none;
-}
-.reel::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-.reel::after { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
 
 .reel-row {
   overflow: hidden;
@@ -75,11 +64,8 @@
   transition: transform .35s cubic-bezier(0.2, 0.7, 0.2, 1), filter .35s;
   will-change: transform;
 }
-/* When the reel is hovered, dim non-hovered items; lift the hovered one */
-.reel:hover .reel-item { filter: saturate(0.85) brightness(0.95); opacity: 0.75; }
-.reel:hover .reel-item:hover {
-  filter: none;
-  opacity: 1;
+/* Lift the hovered item; siblings are left untouched (no dim/fade) */
+.reel-item:hover {
   transform: rotate(0deg) translateY(-6px) scale(1.03);
   z-index: 4;
 }

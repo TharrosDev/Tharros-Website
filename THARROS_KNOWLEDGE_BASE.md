@@ -170,6 +170,7 @@ The site has three marketing pages. If a visitor asks where to find something, p
 | Page | Section | What it covers |
 |---|---|---|
 | `/` (Home) | `HeroSection.tsx` | Top-line value prop, primary CTA |
+| `/` (Home) | `WorkReel.tsx` | Counter-scrolling reel of example builds + "Who we build for" client types (Local services, Professional services, Trades & contractors, Member societies, Health & wellness, Retail & hospitality); CTA → `/brief` |
 | `/` (Home) | `ProblemSection.tsx` | The three pains (missed calls, repeat questions, admin) |
 | `/` (Home) | `ChatDemoSection.tsx` | Live demo of this agent (the page ends here) |
 | `/product` | `WhatWeBuildsSection.tsx` | The three agent patterns |

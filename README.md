@@ -116,8 +116,9 @@ The marketing site is split across three pages. Each section component renders o
 | Order | Component | Background | Purpose |
 |---:|---|---|---|
 | 1 | `HeroSection` | dark | Headline, primary CTA, slogan chip |
-| 2 | `ProblemSection` | light | Three pain points (missed calls, repeat questions, admin) |
-| 3 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo — ends the page |
+| 2 | `WorkReel` | light | Full-bleed counter-scrolling showcase reel of example builds + "Who we build for" client-types legend (CTA → `/brief`) |
+| 3 | `ProblemSection` | light | Three pain points (missed calls, repeat questions, admin) |
+| 4 | `ChatDemoSectionWrapper` → `ChatDemoSection` | dark | Live Relevance AI agent demo — ends the page |
 | – | `NextStep` | dark | Cross-page CTA → Product / Pricing |
 
 **`/product` — Product (`app/product/page.tsx`)**
@@ -194,7 +195,7 @@ Without these vars, the home-page agent will display `Agent not configured` and 
 
 A short list of the choices that matter most when reading the code:
 
-- **Three-page marketing site.** Content is split across `/` (Home), `/product`, and `/pricing` — see the component map above. `HeroSection` ships eagerly on Home; every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback, keeping the initial JS payload tight on mobile. There is no site footer.
+- **Three-page marketing site.** Content is split across `/` (Home), `/product`, and `/pricing` — see the component map above. `HeroSection` and `WorkReel` ship eagerly on Home; every other section is loaded via `next/dynamic` with a `SectionSkeleton` fallback, keeping the initial JS payload tight on mobile. There is no site footer.
 - **The live agent runs client-only.** `ChatDemoSection` is wrapped in `ChatDemoSectionWrapper` and uses the Relevance AI SDK directly in the browser; an `EmbedKey` is generated once per visitor and persisted in `localStorage`. Three free prompts per session, enforced via `localStorage` counter.
 - **Mobile chat path is separate.** `MobileChatConsole` renders a touch-optimized layout when `useIsMobile()` returns true; the desktop console is inlined in `ChatDemoSection`.
 - **Animation primitives, not animation soup.** `AnimatedSection` wraps scroll-triggered fades/scales; `Magnetic` adds cursor-pull to CTAs; `PageTransition` cross-fades between routes. Effects use GPU-accelerated transforms and `will-change: transform`.

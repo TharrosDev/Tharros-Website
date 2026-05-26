@@ -1,7 +1,7 @@
 "use client";
 
 import { createElement, useRef, type ElementType } from "react";
-import { gsap, SplitText, useGSAP, EASE_EXPO } from "@/lib/gsap";
+import { gsap, SplitText, useGSAP, EASE_EXPO, unclipMaskDescenders } from "@/lib/gsap";
 
 interface Props {
   children: React.ReactNode;
@@ -41,10 +41,11 @@ export default function SplitReveal({
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const split = SplitText.create(el, { type, mask: type });
+        unclipMaskDescenders(split);
         const targets = type === "lines" ? split.lines : split.words;
 
         gsap.from(targets, {
-          yPercent: 115,
+          yPercent: 135,
           duration,
           ease: EASE_EXPO,
           stagger,
