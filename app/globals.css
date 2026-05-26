@@ -255,6 +255,7 @@ button:focus-visible,
     font-size: var(--type-body);
     line-height: 1.6;
     color: var(--ink);
+    text-wrap: pretty;
   }
   .type-lead {
     font-size: var(--type-lead);
@@ -262,6 +263,7 @@ button:focus-visible,
     color: var(--ink-muted);
     font-weight: 400;
     max-width: 60ch;
+    text-wrap: pretty;
   }
   .type-display-3 {
     font-size: var(--type-display-3);
@@ -269,6 +271,7 @@ button:focus-visible,
     letter-spacing: -0.03em;
     font-weight: 700;
     color: var(--ink);
+    text-wrap: balance;
   }
   .type-display-2 {
     font-size: var(--type-display-2);
@@ -276,6 +279,7 @@ button:focus-visible,
     letter-spacing: -0.035em;
     font-weight: 700;
     color: var(--ink);
+    text-wrap: balance;
   }
   .type-display-1 {
     font-size: var(--type-display-1);
@@ -283,6 +287,7 @@ button:focus-visible,
     letter-spacing: -0.045em;
     font-weight: 700;
     color: var(--ink);
+    text-wrap: balance;
   }
   .num {
     font-family: var(--font-mono);
@@ -606,6 +611,17 @@ button:focus-visible,
   [class*="surface-dark"] .type-meta,
   [class*="surface-dark"] .eyebrow {
     color: var(--ink-on-dark-muted);
+  }
+
+  /* Light-on-dark perceived-weight compensation: open the tracking and add a
+     touch of leading so reading text holds up on black as well as on white. */
+  [class*="surface-dark"] .type-body {
+    line-height: 1.66;
+    letter-spacing: 0.01em;
+  }
+  [class*="surface-dark"] .type-lead {
+    line-height: 1.46;
+    letter-spacing: 0.01em;
   }
 
   [class*="surface-dark"] .meta-row    { color: var(--ink-on-dark-muted); }
