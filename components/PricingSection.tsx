@@ -52,7 +52,12 @@ export default function PricingSection() {
                 after a free discovery call we send a firm, no-obligation proposal scoped to your business.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                <Link href="/brief" className="btn-primary">Book a discovery call</Link>
+                <Link href="/brief" className="btn-primary">
+                  Book a discovery call
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </Link>
                 <a href="mailto:tharrosdev@gmail.com" className="btn-ghost">tharrosdev@gmail.com</a>
               </div>
             </div>

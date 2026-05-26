@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AnimatedSection from "./AnimatedSection";
 
 type Remaining = { days: number; hours: number; mins: number; secs: number };
 
@@ -24,7 +25,7 @@ function Unit({ value, label }: { value: string; label: string }) {
       <span className="num text-[clamp(1.75rem,5vw,2.75rem)] leading-none text-[color:var(--ink)]" suppressHydrationWarning>
         {value}
       </span>
-      <span className="num text-[10px] tracking-[0.16em] uppercase text-[color:var(--ink-faint)]">{label}</span>
+      <span className="num text-[11px] tracking-[0.16em] uppercase text-[color:var(--ink-faint)]">{label}</span>
     </div>
   );
 }
@@ -61,7 +62,7 @@ export default function LaunchCountdown({ endIso }: { endIso: string }) {
       <div className="page-frame">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8 items-center">
           {/* Offer copy */}
-          <div className="col-span-12 lg:col-span-7">
+          <AnimatedSection className="col-span-12 lg:col-span-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="num text-[11px] tracking-[0.16em] text-[color:var(--accent)]">◆ LAUNCH OFFER</span>
               <span className="h-px flex-1 max-w-[6rem] bg-[color:var(--rule-strong)]" />
@@ -73,20 +74,20 @@ export default function LaunchCountdown({ endIso }: { endIso: string }) {
             <p className="type-body text-[color:var(--ink-muted)] mt-3 max-w-[46ch]">
               For a limited window we&apos;re cutting our build fees. The Refresh drops to{" "}
               <span className="num text-[color:var(--ink)] whitespace-nowrap">
-                <span className="line-through text-[color:var(--ink-faint)]">from&nbsp;$1,000</span>{" "}
+                <span className="line-through text-[color:var(--ink-faint)]">$1,000</span>{" "}
                 <span className="text-[color:var(--accent)] font-semibold">from&nbsp;$250</span>
               </span>
               , and The On-Call to{" "}
               <span className="num text-[color:var(--ink)] whitespace-nowrap">
-                <span className="line-through text-[color:var(--ink-faint)]">from&nbsp;$1,500</span>{" "}
+                <span className="line-through text-[color:var(--ink-faint)]">$1,500</span>{" "}
                 <span className="text-[color:var(--accent)] font-semibold">from&nbsp;$500</span>
               </span>{" "}
               (retainer stays $150/mo).
             </p>
-          </div>
+          </AnimatedSection>
 
           {/* Countdown */}
-          <div className="col-span-12 lg:col-span-5 lg:justify-self-end">
+          <AnimatedSection delay={0.12} className="col-span-12 lg:col-span-5 lg:justify-self-end">
             <span className="type-meta block mb-3 lg:text-right">Offer ends Aug 31, 2026</span>
             <div className="flex items-start gap-2 sm:gap-3" role="timer" aria-label="Time remaining on launch pricing">
               <Unit value={d ? String(d.days) : "--"} label="Days" />
@@ -97,7 +98,7 @@ export default function LaunchCountdown({ endIso }: { endIso: string }) {
               <Sep />
               <Unit value={d ? pad(d.secs) : "--"} label="Sec" />
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

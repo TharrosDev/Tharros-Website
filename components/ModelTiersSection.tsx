@@ -61,21 +61,27 @@ const TIERS: {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function PriceBlock({ price }: { price: Price }) {
+  const accent = !!price.launchFrom;
   return (
-    <div className="mt-3 flex flex-col gap-0.5">
-      <div className="flex items-baseline gap-2 flex-wrap">
-        {price.launchFrom ? (
-          <>
-            <span className="num text-[13px] line-through text-[color:var(--ink-faint)]">from&nbsp;${price.from}</span>
-            <span className="num text-[16px] font-semibold text-[color:var(--accent)]">from&nbsp;${price.launchFrom}</span>
-            <span className="num text-[10px] tracking-[0.14em] text-[color:var(--accent)]">LAUNCH</span>
-          </>
-        ) : (
-          <span className="num text-[16px] font-semibold text-[color:var(--ink)]">from&nbsp;${price.from}</span>
+    <div className="mt-3 flex flex-col gap-1">
+      <div className="flex items-baseline gap-x-2.5 gap-y-1 flex-wrap">
+        {accent && (
+          <span className="num text-[13px] line-through text-[color:var(--ink-faint)]">
+            ${price.from}
+          </span>
+        )}
+        <span className="flex items-baseline gap-1.5">
+          <span className="num text-[12px] uppercase tracking-[0.1em] text-[color:var(--ink-faint)]">from</span>
+          <span className={`num text-[1.375rem] leading-none font-semibold ${accent ? "text-[color:var(--accent)]" : "text-[color:var(--ink)]"}`}>
+            ${accent ? price.launchFrom : price.from}
+          </span>
+        </span>
+        {accent && (
+          <span className="num text-[11px] tracking-[0.16em] text-[color:var(--accent)] self-center">LAUNCH</span>
         )}
       </div>
       {price.monthly && (
-        <span className="num text-[12px] text-[color:var(--ink-muted)]">+&nbsp;${price.monthly}/mo retainer</span>
+        <span className="num text-[13px] text-[color:var(--ink-muted)]">+&nbsp;${price.monthly}/mo&nbsp;retainer</span>
       )}
     </div>
   );
@@ -85,22 +91,32 @@ function Cell({ value, col, row, play, reduce }: { value: string | boolean; col:
   const delay = reduce ? 0 : 0.12 + col * 0.14 + row * 0.05;
   if (value === true)
     return (
-      <motion.span
-        className="num text-[color:var(--accent)] inline-block"
-        initial={reduce ? false : { opacity: 0, scale: 0.4 }}
-        animate={play ? { opacity: 1, scale: 1 } : undefined}
-        transition={{ delay, duration: 0.35, ease: EASE }}
-      >
-        ●
-      </motion.span>
+      <>
+        <motion.span
+          aria-hidden="true"
+          className="num text-[color:var(--accent)] inline-block"
+          initial={reduce ? false : { opacity: 0, scale: 0.4 }}
+          animate={play ? { opacity: 1, scale: 1 } : undefined}
+          transition={{ delay, duration: 0.35, ease: EASE }}
+        >
+          ●
+        </motion.span>
+        <span className="sr-only">Included</span>
+      </>
     );
-  if (value === false) return <span className="num text-[color:var(--ink-faint)]">—</span>;
+  if (value === false)
+    return (
+      <>
+        <span aria-hidden="true" className="num text-[color:var(--ink-faint)]">—</span>
+        <span className="sr-only">Not included</span>
+      </>
+    );
   return (
     <motion.span
-      className="num text-[13px] text-[color:var(--ink)] inline-block"
-      initial={reduce ? false : { opacity: 0 }}
-      animate={play ? { opacity: 1 } : undefined}
-      transition={{ delay, duration: 0.35, ease: EASE }}
+      className="num text-[14px] text-[color:var(--ink)] inline-block"
+      initial={reduce ? false : { y: 6 }}
+      animate={play ? { y: 0 } : undefined}
+      transition={{ delay, duration: 0.4, ease: EASE }}
     >
       {value}
     </motion.span>
@@ -132,13 +148,14 @@ export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnP
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[color:var(--rule)]">
-                  <th className="py-6 pr-6 align-bottom w-[28%]">
+                  <th className="py-6 pr-8 align-bottom w-[26%]">
                     <span className="type-meta">Comparison</span>
                   </th>
                   {TIERS.map((t, i) => (
                     <th
                       key={t.key}
-                      className={`py-6 px-4 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)] border-t-2 border-[color:var(--accent)]" : ""}`}
+                      scope="col"
+                      className={`py-6 px-5 align-bottom ${i === 2 ? "bg-[color:var(--accent-soft)] border-t-2 border-[color:var(--accent)]" : ""}`}
                     >
                       <div className="flex flex-col gap-1">
                         {i === 2 && (
@@ -164,18 +181,18 @@ export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnP
               <tbody>
                 {ROWS.map((row, r) => (
                   <tr key={row.label} className="tier-row border-b border-[color:var(--rule)]">
-                    <td className="py-5 pr-6 type-body text-[color:var(--ink)]">{row.label}</td>
+                    <th scope="row" className="py-5 pr-8 type-body font-normal text-left text-[color:var(--ink)]">{row.label}</th>
                     {TIERS.map((t, c) => (
-                      <td key={t.key} className={`py-5 px-4 ${c === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
+                      <td key={t.key} className={`py-5 px-5 ${c === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
                         <Cell value={row[t.key]} col={c} row={r} play={play} reduce={reduce} />
                       </td>
                     ))}
                   </tr>
                 ))}
                 <tr className="tier-row">
-                  <td className="py-6 pr-6 type-meta align-top">Best for</td>
+                  <th scope="row" className="py-7 pr-8 type-meta text-left align-top">Best for</th>
                   {TIERS.map((t, i) => (
-                    <td key={t.key} className={`py-6 px-4 align-top ${i === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
+                    <td key={t.key} className={`py-7 px-5 align-top ${i === 2 ? "is-accent bg-[color:var(--accent-soft)]" : ""}`}>
                       <p className="text-[15px] text-[color:var(--ink-muted)] max-w-[26ch] leading-snug">{t.note}</p>
                     </td>
                   ))}
@@ -203,9 +220,11 @@ export default function ModelTiersSection({ isFirstOnPage = true }: { isFirstOnP
                     const v = row[t.key];
                     return (
                       <li key={row.label} className="flex items-baseline gap-3 text-[15px]">
-                        <span className="num text-xs w-5 text-[color:var(--accent)]">{v === true ? "●" : v === false ? "—" : ""}</span>
+                        <span aria-hidden="true" className={`num text-xs w-5 ${v === false ? "text-[color:var(--ink-faint)]" : "text-[color:var(--accent)]"}`}>{v === true ? "●" : v === false ? "—" : ""}</span>
                         <span className="text-[color:var(--ink)] flex-1">{row.label}</span>
-                        {typeof v === "string" && <span className="num text-[13px] text-[color:var(--ink-muted)]">{v}</span>}
+                        {v === true && <span className="sr-only">Included</span>}
+                        {v === false && <span className="sr-only">Not included</span>}
+                        {typeof v === "string" && <span className="num text-[14px] text-[color:var(--ink-muted)]">{v}</span>}
                       </li>
                     );
                   })}

@@ -565,9 +565,11 @@ button:focus-visible,
   }
 
   /* Comparison-table row wash on hover */
-  .tier-row td { transition: background-color 0.2s var(--ease-out-quart); }
+  .tier-row td,
+  .tier-row th { transition: background-color 0.2s var(--ease-out-quart); }
   @media (hover: hover) and (pointer: fine) {
-    .tier-row:hover td { background-color: var(--surface-hover); }
+    .tier-row:hover td,
+    .tier-row:hover th { background-color: var(--surface-hover); }
     .tier-row:hover td.is-accent { background-color: var(--accent-soft-strong); }
   }
 }
