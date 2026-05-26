@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import HeroSection from "@/components/HeroSection";
+import WorkReel from "@/components/WorkReel";
 import NextStep from "@/components/NextStep";
 import SectionSkeleton from "@/components/SectionSkeleton";
 
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <main className="bg-[color:var(--surface)]">
       <HeroSection />
+      <WorkReel />
 
       <div className="flex flex-col">
         <ProblemSection />
