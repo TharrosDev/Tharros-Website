@@ -660,7 +660,7 @@ button:focus-visible,
   to   { transform: translateX(-50%); }
 }
 .clients-track { animation: clients-scroll 55s linear infinite; }
-.clients-track:hover { animation-duration: 220s; }
+.clients-track:hover { animation-duration: 110s; }
 @media (prefers-reduced-motion: reduce) {
   .clients-track { animation: none !important; }
 }
