@@ -103,45 +103,64 @@ function ClientsHero() {
 }
 
 type Slide =
-  | { kind: "client"; client: Client; index: number; key: string }
-  | { kind: "placeholder"; stage: string; index: number; key: string };
+  | { kind: "client"; client: Client; index: number; key: string; isDuplicate: boolean }
+  | { kind: "placeholder"; stage: string; index: number; key: string; isDuplicate: boolean };
 
 function ClientsGallery() {
   const prefersReducedMotion = useReducedMotion();
 
   const base: Slide[] = [
-    ...clients.map((c, i) => ({ kind: "client" as const, client: c, index: i, key: c.id })),
+    ...clients.map((c, i) => ({ kind: "client" as const, client: c, index: i, key: c.id, isDuplicate: false })),
     ...placeholders.map((p, i) => ({
       kind: "placeholder" as const,
       stage: p.stage,
       index: clients.length + i,
       key: p.id,
+      isDuplicate: false,
     })),
   ];
 
-  // Duplicate for seamless infinite loop — same trick as WorkReel
+  // Duplicate for seamless infinite loop — same trick as WorkReel.
+  // Second set is aria-hidden + tabIndex -1 so screen readers and keyboard
+  // users only encounter each card once.
   const items: Slide[] = [
-    ...base.map((s) => ({ ...s, key: `a-${s.key}` })),
-    ...base.map((s) => ({ ...s, key: `b-${s.key}` })),
+    ...base.map((s) => ({ ...s, key: `a-${s.key}`, isDuplicate: false })),
+    ...base.map((s) => ({ ...s, key: `b-${s.key}`, isDuplicate: true })),
   ];
 
   return (
-    <section className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32 overflow-hidden">
+    <section
+      aria-label="Live client work"
+      className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32 overflow-hidden"
+    >
       <div
         className="clients-track flex gap-6"
         style={{
           width: "max-content",
           animation: "clients-scroll 55s linear infinite",
           animationPlayState: prefersReducedMotion ? "paused" : "running",
+          willChange: "transform",
         }}
       >
         {items.map((slide) =>
           slide.kind === "client" ? (
-            <div key={slide.key} className="w-[340px] shrink-0">
-              <ClientCard client={slide.client} index={slide.index} />
+            <div
+              key={slide.key}
+              className="w-[340px] shrink-0"
+              aria-hidden={slide.isDuplicate || undefined}
+            >
+              <ClientCard
+                client={slide.client}
+                index={slide.index}
+                tabIndex={slide.isDuplicate ? -1 : undefined}
+              />
             </div>
           ) : (
-            <div key={slide.key} className="w-[340px] shrink-0">
+            <div
+              key={slide.key}
+              className="w-[340px] shrink-0"
+              aria-hidden={slide.isDuplicate || undefined}
+            >
               <PlaceholderCard index={slide.index} stage={slide.stage} />
             </div>
           )
@@ -151,14 +170,15 @@ function ClientsGallery() {
   );
 }
 
-function ClientCard({ client, index }: { client: Client; index: number }) {
+function ClientCard({ client, index, tabIndex }: { client: Client; index: number; tabIndex?: number }) {
   return (
     <a
       href={client.url}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Visit ${client.name}`}
-      className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7 cursor-pointer"
+      tabIndex={tabIndex}
+      className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7"
     >
 
       {/* ── Top bar: index + live status ── */}

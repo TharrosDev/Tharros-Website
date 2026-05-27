@@ -662,6 +662,7 @@ button:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .clients-track { animation: none !important; }
 }
+.clients-track:focus-within { animation-play-state: paused !important; }
 
 /* ── HeroSection: parallax dot field (recolored red) ─────────────── */
 /* Entrance choreography (eyebrow / H1 split / lead / CTA / meta) is driven by
