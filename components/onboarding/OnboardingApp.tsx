@@ -12,7 +12,6 @@ import { Wizard } from "./Wizard";
 import { Review } from "./Review";
 import { Thanks } from "./Thanks";
 import { SavedPill } from "./SavedPill";
-import { IconArrowRight } from "./controls/icons";
 
 import "./onboarding.css";
 
@@ -169,22 +168,6 @@ export function OnboardingApp() {
   return (
     <div className="ob-shell ob-shell--light">
       <div className="ob-shell__bg" aria-hidden="true" />
-
-      {!submitted && (
-        <div className="ob-skip-strip">
-          <p className="ob-skip-strip__text">
-            Rather skip the form? Send us your business name, phone number, and the package
-            you&rsquo;re interested in — we&rsquo;ll reach out to get you booked.
-          </p>
-          <a
-            href="mailto:tharrosdev@gmail.com?subject=Discovery%20Call%20Request&body=Business%20Name%3A%20%0APhone%3A%20%0APackage%20Interest%3A%20"
-            className="ob-skip-strip__cta"
-          >
-            Email us directly
-            <IconArrowRight />
-          </a>
-        </div>
-      )}
 
       <main className="ob-stage">{renderScreen()}</main>
       <SavedPill savedAt={savedAt} />
