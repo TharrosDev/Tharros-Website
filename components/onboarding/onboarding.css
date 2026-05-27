@@ -50,9 +50,7 @@
 
 /* Skip-to-call strip (welcome screen only) --------------- */
 .ob-skip-strip {
-  width: 100%;
-  max-width: 1380px;
-  margin: 0 auto 2.5rem;
+  grid-column: 1 / -1;
   padding: 1.125rem 1.5rem;
   display: flex;
   align-items: center;
