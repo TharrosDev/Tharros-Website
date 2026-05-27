@@ -659,7 +659,7 @@ button:focus-visible,
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.clients-track { animation: clients-scroll 55s linear infinite; }
+.clients-track { animation: clients-scroll 40s linear infinite; }
 @media (prefers-reduced-motion: reduce) {
   .clients-track { animation: none !important; }
 }
