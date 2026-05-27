@@ -273,7 +273,7 @@ function PlaceholderCard({ index, stage }: { index: number; stage: string }) {
 
       {/* ── Body ── */}
       <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
-        New projects are in progress. Each case study is added here at launch.
+        New projects are in progress. Each client is added here when their build ships.
       </p>
 
       {/* ── Footer ── */}
