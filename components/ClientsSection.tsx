@@ -107,8 +107,6 @@ type Slide =
   | { kind: "placeholder"; stage: string; index: number; key: string; isDuplicate: boolean };
 
 function ClientsGallery() {
-  const prefersReducedMotion = useReducedMotion();
-
   const base: Slide[] = [
     ...clients.map((c, i) => ({ kind: "client" as const, client: c, index: i, key: c.id, isDuplicate: false })),
     ...placeholders.map((p, i) => ({
@@ -137,8 +135,6 @@ function ClientsGallery() {
         className="clients-track flex gap-6"
         style={{
           width: "max-content",
-          animation: "clients-scroll 55s linear infinite",
-          animationPlayState: prefersReducedMotion ? "paused" : "running",
           willChange: "transform",
         }}
       >
