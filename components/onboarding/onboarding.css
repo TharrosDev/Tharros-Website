@@ -48,6 +48,52 @@
   }
 }
 
+/* Skip-to-call strip (welcome screen only) --------------- */
+.ob-skip-strip {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto 2.5rem;
+  padding: 1.125rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--rule);
+  background: var(--surface-elevated);
+}
+.ob-skip-strip__text {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.ob-skip-strip__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--accent);
+  transition: background 0.15s, color 0.15s;
+}
+.ob-skip-strip__cta:hover {
+  background: var(--accent);
+  color: var(--ink-on-dark);
+}
+@media (max-width: 760px) {
+  .ob-skip-strip { gap: 1rem; }
+  .ob-skip-strip__cta { width: 100%; justify-content: center; }
+}
+
 /* Sidebar ------------------------------------------------- */
 .ob-side { position: relative; }
 .ob-side__sticky { position: sticky; top: 112px; }
