@@ -153,7 +153,13 @@ function ClientsGallery() {
 
 function ClientCard({ client, index }: { client: Client; index: number }) {
   return (
-    <article className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7">
+    <a
+      href={client.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${client.name}`}
+      className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7 cursor-pointer"
+    >
 
       {/* ── Top bar: index + live status ── */}
       <div className="flex items-center justify-between mb-7">
@@ -167,14 +173,14 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
       </div>
 
       {/* ── Logo / monogram ── */}
-      <div className="mb-5">
+      <div className="mb-6">
         {client.logo ? (
-          <div className="relative w-9 h-9 border border-[color:var(--rule)]">
-            <Image src={client.logo} alt={client.name} fill sizes="36px" className="object-contain p-1.5" />
+          <div className="relative w-16 h-16 border border-[color:var(--rule)]">
+            <Image src={client.logo} alt={client.name} fill sizes="64px" className="object-contain p-2" />
           </div>
         ) : (
-          <div className="w-9 h-9 bg-[color:var(--ink)] flex items-center justify-center">
-            <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
+          <div className="w-16 h-16 bg-[color:var(--ink)] flex items-center justify-center">
+            <span className="num text-[14px] text-[color:var(--ink-on-dark)]">
               {client.monogram ?? client.name.slice(0, 2).toUpperCase()}
             </span>
           </div>
@@ -206,12 +212,9 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
             {client.date.toUpperCase()}
           </p>
         </div>
-        <a
-          href={client.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 shrink-0 hover:underline"
-          aria-label={`Visit ${client.name}`}
+        <span
+          aria-hidden="true"
+          className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 shrink-0"
         >
           Visit
           <svg
@@ -224,10 +227,10 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
           >
             <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
           </svg>
-        </a>
+        </span>
       </div>
 
-    </article>
+    </a>
   );
 }
 
