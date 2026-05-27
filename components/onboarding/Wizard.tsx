@@ -46,7 +46,7 @@ export function Wizard({
 
   if (stepIndex === -1) {
     return (
-      <>
+      <div className="ob-stage__inner">
         <div className="ob-skip-strip">
           <p className="ob-skip-strip__text">
             Rather skip the form? Send us your business name, phone number, and the package
@@ -61,61 +61,58 @@ export function Wizard({
           </a>
         </div>
 
-        <div className="ob-stage__inner">
-          <aside className="ob-side">
-            <div className="ob-side__sticky">
-              <span className="ob-side__eyebrow"><span className="bar" />Project Brief</span>
-              <h2 className="ob-side__title">
-                Tell us about <br/><span className="accent">your operation.</span>
-              </h2>
-              <p className="ob-side__sub">
-                A short brief that lets us scope your site before our discovery call.
-                About five minutes. Save and resume any time.
+        <aside className="ob-side">
+          <div className="ob-side__sticky">
+            <span className="ob-side__eyebrow"><span className="bar" />Project Brief</span>
+            <h2 className="ob-side__title">
+              Tell us about <br/><span className="accent">your operation.</span>
+            </h2>
+            <p className="ob-side__sub">
+              A short brief that lets us scope your site before our discovery call.
+              About five minutes. Save and resume any time.
+            </p>
+          </div>
+        </aside>
+
+        <div className="ob-main ob-step-enter">
+          <div className="ob-card">
+            <div className="ob-welcome">
+              <span className="ob-card__chip">Welcome</span>
+              <h1>What we&apos;ll <span className="accent">cover.</span></h1>
+              <p className="lede">
+                Nine quick sections: the shape of your business, your customers,
+                the look you want, and a couple of practical bits about timing
+                and contact. No homework, no jargon. If a question doesn&apos;t
+                apply, skip it.
               </p>
-            </div>
-          </aside>
 
-          <div className="ob-main ob-step-enter">
-            <div className="ob-card">
-
-              <div className="ob-welcome">
-                <span className="ob-card__chip">Welcome</span>
-                <h1>What we&apos;ll <span className="accent">cover.</span></h1>
-                <p className="lede">
-                  Nine quick sections: the shape of your business, your customers,
-                  the look you want, and a couple of practical bits about timing
-                  and contact. No homework, no jargon. If a question doesn&apos;t
-                  apply, skip it.
-                </p>
-
-                <div className="ob-welcome__meta">
-                  <div className="ob-welcome__meta-item">
-                    <span className="label">Time</span>
-                    <span className="val">About 5 minutes</span>
-                  </div>
-                  <div className="ob-welcome__meta-item">
-                    <span className="label">Resume</span>
-                    <span className="val">Auto-saved as you go</span>
-                  </div>
-                  <div className="ob-welcome__meta-item">
-                    <span className="label">After</span>
-                    <span className="val">We reply in one business day</span>
-                  </div>
+              <div className="ob-welcome__meta">
+                <div className="ob-welcome__meta-item">
+                  <span className="label">Time</span>
+                  <span className="val">About 5 minutes</span>
                 </div>
-
-                <button
-                  type="button"
-                  className="primary-button primary-button--lg ob-primary-action"
-                  onClick={() => goTo(0)}
-                >
-                  <span className="label">Start the brief</span>
-                  <IconArrowRight />
-                </button>
+                <div className="ob-welcome__meta-item">
+                  <span className="label">Resume</span>
+                  <span className="val">Auto-saved as you go</span>
+                </div>
+                <div className="ob-welcome__meta-item">
+                  <span className="label">After</span>
+                  <span className="val">We reply in one business day</span>
+                </div>
               </div>
+
+              <button
+                type="button"
+                className="primary-button primary-button--lg ob-primary-action"
+                onClick={() => goTo(0)}
+              >
+                <span className="label">Start the brief</span>
+                <IconArrowRight />
+              </button>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
