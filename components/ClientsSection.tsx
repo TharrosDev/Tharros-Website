@@ -1,10 +1,7 @@
 "use client";
 
-import { useCallback } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 import SplitReveal from "./SplitReveal";
@@ -105,150 +102,132 @@ function ClientsHero() {
   );
 }
 
+type Slide =
+  | { kind: "client"; client: Client; index: number; key: string }
+  | { kind: "placeholder"; stage: string; index: number; key: string };
+
 function ClientsGallery() {
   const prefersReducedMotion = useReducedMotion();
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    prefersReducedMotion ? [] : [Autoplay({ delay: 4000, stopOnMouseEnter: true, stopOnInteraction: false })]
-  );
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const base: Slide[] = [
+    ...clients.map((c, i) => ({ kind: "client" as const, client: c, index: i, key: c.id })),
+    ...placeholders.map((p, i) => ({
+      kind: "placeholder" as const,
+      stage: p.stage,
+      index: clients.length + i,
+      key: p.id,
+    })),
+  ];
+
+  // Duplicate for seamless infinite loop — same trick as WorkReel
+  const items: Slide[] = [
+    ...base.map((s) => ({ ...s, key: `a-${s.key}` })),
+    ...base.map((s) => ({ ...s, key: `b-${s.key}` })),
+  ];
 
   return (
-    <section className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32">
-      <div className="page-frame">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6">
-            {clients.map((client, i) => (
-              <div key={client.id} className="flex-[0_0_calc(100%-1.5rem)] sm:flex-[0_0_44%] lg:flex-[0_0_30%] min-w-0">
-                <ClientCard client={client} index={i} featured={i === 0} />
-              </div>
-            ))}
-            {placeholders.map((p, i) => (
-              <div key={p.id} className="flex-[0_0_calc(100%-1.5rem)] sm:flex-[0_0_44%] lg:flex-[0_0_30%] min-w-0">
-                <PlaceholderCard index={clients.length + i} stage={p.stage} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <CarouselControls onPrev={scrollPrev} onNext={scrollNext} />
+    <section className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32 overflow-hidden">
+      <div
+        className="clients-track flex gap-6"
+        style={{
+          width: "max-content",
+          animation: "clients-scroll 55s linear infinite",
+          animationPlayState: prefersReducedMotion ? "paused" : "running",
+        }}
+      >
+        {items.map((slide) =>
+          slide.kind === "client" ? (
+            <div key={slide.key} className="w-[340px] shrink-0">
+              <ClientCard client={slide.client} index={slide.index} />
+            </div>
+          ) : (
+            <div key={slide.key} className="w-[340px] shrink-0">
+              <PlaceholderCard index={slide.index} stage={slide.stage} />
+            </div>
+          )
+        )}
       </div>
     </section>
   );
 }
 
-function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) {
+function ClientCard({ client, index }: { client: Client; index: number }) {
   return (
-    <div className="flex items-center gap-4 mt-8 pt-6 border-t border-[color:var(--rule)]">
-      <button
-        onClick={onPrev}
-        className="num text-[11px] uppercase tracking-widest text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors duration-150 flex items-center gap-2"
-        aria-label="Previous client"
-      >
-        ← Prev
-      </button>
-      <span className="w-px h-3 bg-[color:var(--rule-strong)]" />
-      <button
-        onClick={onNext}
-        className="num text-[11px] uppercase tracking-widest text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors duration-150 flex items-center gap-2"
-        aria-label="Next client"
-      >
-        Next →
-      </button>
-    </div>
-  );
-}
+    <article className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7">
 
-function ClientCard({ client, index, featured = false }: { client: Client; index: number; featured?: boolean }) {
-  return (
-    <AnimatedSection delay={index * 0.06} className={`h-full ${featured ? "xl:col-span-2" : ""}`}>
-      <article className="group/card h-full flex flex-col border border-[color:var(--rule)] hover:border-[color:var(--accent)] transition-[border-color,transform] duration-200 ease-out hover:-translate-y-1 p-6 md:p-7">
+      {/* ── Top bar: index + live status ── */}
+      <div className="flex items-center justify-between mb-7">
+        <span className="num text-[11px] text-[color:var(--ink-muted)]">
+          FILE / {String(index + 1).padStart(3, "0")}
+        </span>
+        <span className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
+          LIVE
+        </span>
+      </div>
 
-        {/* ── Top bar: index + live status ── */}
-        <div className="flex items-center justify-between mb-7">
-          <span className="num text-[11px] text-[color:var(--ink-muted)]">
-            FILE / {String(index + 1).padStart(3, "0")}
-          </span>
-          <span className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
-            LIVE
-          </span>
-        </div>
-
-        {/* ── Logo / monogram ── */}
-        <div className="mb-5">
-          {client.logo ? (
-            <div className="relative w-9 h-9 border border-[color:var(--rule)]">
-              <Image src={client.logo} alt={client.name} fill sizes="36px" className="object-contain p-1.5" />
-            </div>
-          ) : (
-            <div className="w-9 h-9 bg-[color:var(--ink)] flex items-center justify-center">
-              <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
-                {client.monogram ?? client.name.slice(0, 2).toUpperCase()}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* ── Name + location ── */}
-        <h2 className="type-display-3 mb-1 break-words hyphens-auto">{client.name}</h2>
-        <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase break-words">
-          {client.location}
-        </p>
-
-        {/* ── Lede (+ fuller description on the featured card) — flex-1 keeps footer flush ── */}
-        <div className="flex-1 mb-6">
-          <p className="type-body text-[color:var(--ink-muted)]">{client.lede}</p>
-          {featured && (
-            <p className="type-body text-[color:var(--ink-muted)] mt-3 max-w-[62ch]">
-              {client.description}
-            </p>
-          )}
-        </div>
-
-        {/* ── Tags ── */}
-        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6">
-          {client.tags.map((t) => (
-            <span key={t} className="num text-[10px] text-[color:var(--ink-muted)] uppercase tracking-widest">
-              {t}
-            </span>
-          ))}
-        </div>
-
-        {/* ── Footer: build meta + visit link ── */}
-        <div className="border-t border-[color:var(--rule)] pt-4 flex items-end justify-between gap-4">
-          <div className="min-w-0">
-            <p className="num text-[11px] text-[color:var(--ink-muted)] uppercase leading-snug break-words">
-              {client.buildType}
-            </p>
-            <p className="num text-[10px] text-[color:var(--ink-muted)] mt-0.5">
-              {client.date.toUpperCase()}
-            </p>
+      {/* ── Logo / monogram ── */}
+      <div className="mb-5">
+        {client.logo ? (
+          <div className="relative w-9 h-9 border border-[color:var(--rule)]">
+            <Image src={client.logo} alt={client.name} fill sizes="36px" className="object-contain p-1.5" />
           </div>
-          <a
-            href={client.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 shrink-0 hover:underline"
-            aria-label={`Visit ${client.name}`}
-          >
-            Visit
-            <svg
-              width="9"
-              height="9"
-              viewBox="0 0 10 10"
-              fill="none"
-              aria-hidden="true"
-              className="transition-transform duration-200 ease-out group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
-            >
-              <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
-            </svg>
-          </a>
-        </div>
+        ) : (
+          <div className="w-9 h-9 bg-[color:var(--ink)] flex items-center justify-center">
+            <span className="num text-[11px] text-[color:var(--ink-on-dark)]">
+              {client.monogram ?? client.name.slice(0, 2).toUpperCase()}
+            </span>
+          </div>
+        )}
+      </div>
 
-      </article>
-    </AnimatedSection>
+      {/* ── Name + location ── */}
+      <h2 className="type-display-3 mb-1 break-words hyphens-auto">{client.name}</h2>
+      <p className="num text-[11px] text-[color:var(--ink-muted)] mb-5 tracking-widest uppercase break-words">
+        {client.location}
+      </p>
+
+      {/* ── Tags — mt-auto pushes footer flush ── */}
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6 mt-auto">
+        {client.tags.map((t) => (
+          <span key={t} className="num text-[10px] text-[color:var(--ink-muted)] uppercase tracking-widest">
+            {t}
+          </span>
+        ))}
+      </div>
+
+      {/* ── Footer: build meta + visit link ── */}
+      <div className="border-t border-[color:var(--rule)] pt-4 flex items-end justify-between gap-4">
+        <div className="min-w-0">
+          <p className="num text-[11px] text-[color:var(--ink-muted)] uppercase leading-snug break-words">
+            {client.buildType}
+          </p>
+          <p className="num text-[10px] text-[color:var(--ink-muted)] mt-0.5">
+            {client.date.toUpperCase()}
+          </p>
+        </div>
+        <a
+          href={client.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="num text-[11px] text-[color:var(--accent)] flex items-center gap-1.5 shrink-0 hover:underline"
+          aria-label={`Visit ${client.name}`}
+        >
+          Visit
+          <svg
+            width="9"
+            height="9"
+            viewBox="0 0 10 10"
+            fill="none"
+            aria-hidden="true"
+            className="transition-transform duration-200 ease-out group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+          >
+            <path d="M2 8L8 2M4 2h4v4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+          </svg>
+        </a>
+      </div>
+
+    </article>
   );
 }
 
@@ -271,38 +250,36 @@ function LoadingDots() {
 
 function PlaceholderCard({ index, stage }: { index: number; stage: string }) {
   return (
-    <AnimatedSection delay={index * 0.06} className="h-full">
-      <article className="h-full flex flex-col border border-dashed border-[color:var(--rule-strong)] p-6 md:p-7">
+    <article className="h-full flex flex-col border border-dashed border-[color:var(--rule-strong)] p-6 md:p-7">
 
-        {/* ── Top bar ── */}
-        <div className="flex items-center justify-between mb-7">
-          <span className="num text-[11px] text-[color:var(--ink-muted)]">
-            FILE / {String(index + 1).padStart(3, "0")}
-          </span>
-          <span className="num text-[11px] text-[color:var(--ink-muted)]">
-            {stage.toUpperCase()}
-          </span>
-        </div>
+      {/* ── Top bar ── */}
+      <div className="flex items-center justify-between mb-7">
+        <span className="num text-[11px] text-[color:var(--ink-muted)]">
+          FILE / {String(index + 1).padStart(3, "0")}
+        </span>
+        <span className="num text-[11px] text-[color:var(--ink-muted)]">
+          {stage.toUpperCase()}
+        </span>
+      </div>
 
-        {/* ── Title ── */}
-        <h2 className="type-display-3 text-[color:var(--ink-muted)]">More in Development</h2>
+      {/* ── Title ── */}
+      <h2 className="type-display-3 text-[color:var(--ink-muted)]">More in Development</h2>
 
-        {/* ── Staggered cobalt pulse dots ── */}
-        <LoadingDots />
+      {/* ── Staggered pulse dots ── */}
+      <LoadingDots />
 
-        {/* ── Body ── */}
-        <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
-          New engagements are underway. Each case study publishes here once the build ships.
+      {/* ── Body ── */}
+      <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
+        New engagements are underway. Each case study publishes here once the build ships.
+      </p>
+
+      {/* ── Footer ── */}
+      <div className="border-t border-dashed border-[color:var(--rule-strong)] pt-4">
+        <p className="num text-[10px] text-[color:var(--ink-muted)] opacity-50 uppercase tracking-widest">
+          In progress
         </p>
+      </div>
 
-        {/* ── Footer ── */}
-        <div className="border-t border-dashed border-[color:var(--rule-strong)] pt-4">
-          <p className="num text-[10px] text-[color:var(--ink-muted)] opacity-50 uppercase tracking-widest">
-            In progress
-          </p>
-        </div>
-
-      </article>
-    </AnimatedSection>
+    </article>
   );
 }

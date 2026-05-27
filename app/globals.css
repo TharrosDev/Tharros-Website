@@ -654,6 +654,15 @@ button:focus-visible,
   }
 }
 
+/* ── Clients marquee scroll ──────────────────────────────────────── */
+@keyframes clients-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clients-track { animation: none !important; }
+}
+
 /* ── HeroSection: parallax dot field (recolored red) ─────────────── */
 /* Entrance choreography (eyebrow / H1 split / lead / CTA / meta) is driven by
    GSAP in HeroSection.tsx; only the parallax + field fade-in live here. */
