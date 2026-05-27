@@ -47,20 +47,6 @@ export function Wizard({
   if (stepIndex === -1) {
     return (
       <div className="ob-stage__inner">
-        <div className="ob-skip-strip">
-          <p className="ob-skip-strip__text">
-            Rather skip the form? Send us your business name, phone number, and the package
-            you&rsquo;re interested in and we&rsquo;ll reach out to get you booked.
-          </p>
-          <a
-            href="mailto:tharrosdev@gmail.com?subject=Discovery%20Call%20Request&body=Business%20Name%3A%20%0APhone%3A%20%0APackage%20Interest%3A%20"
-            className="ob-skip-strip__cta"
-          >
-            Email us directly
-            <IconArrowRight />
-          </a>
-        </div>
-
         <aside className="ob-side">
           <div className="ob-side__sticky">
             <span className="ob-side__eyebrow"><span className="bar" />Project Brief</span>
@@ -76,6 +62,7 @@ export function Wizard({
 
         <div className="ob-main ob-step-enter">
           <div className="ob-card">
+
             <div className="ob-welcome">
               <span className="ob-card__chip">Welcome</span>
               <h1>What we&apos;ll <span className="accent">cover.</span></h1>
