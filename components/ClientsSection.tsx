@@ -1,7 +1,10 @@
 "use client";
 
+import { useCallback } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 import SplitReveal from "./SplitReveal";
@@ -103,20 +106,57 @@ function ClientsHero() {
 }
 
 function ClientsGallery() {
+  const prefersReducedMotion = useReducedMotion();
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    prefersReducedMotion ? [] : [Autoplay({ delay: 4000, stopOnMouseEnter: true, stopOnInteraction: false })]
+  );
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
   return (
     <section className="bg-[color:var(--surface)] pt-12 md:pt-16 pb-20 md:pb-32">
       <div className="page-frame">
-        {/* sm: 2 cols, xl: 3 cols — add lg:grid-cols-3 when 6+ live clients */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          {clients.map((client, i) => (
-            <ClientCard key={client.id} client={client} index={i} featured={i === 0} />
-          ))}
-          {placeholders.map((p, i) => (
-            <PlaceholderCard key={p.id} index={clients.length + i} stage={p.stage} />
-          ))}
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6">
+            {clients.map((client, i) => (
+              <div key={client.id} className="flex-[0_0_calc(100%-1.5rem)] sm:flex-[0_0_44%] lg:flex-[0_0_30%] min-w-0">
+                <ClientCard client={client} index={i} featured={i === 0} />
+              </div>
+            ))}
+            {placeholders.map((p, i) => (
+              <div key={p.id} className="flex-[0_0_calc(100%-1.5rem)] sm:flex-[0_0_44%] lg:flex-[0_0_30%] min-w-0">
+                <PlaceholderCard index={clients.length + i} stage={p.stage} />
+              </div>
+            ))}
+          </div>
         </div>
+        <CarouselControls onPrev={scrollPrev} onNext={scrollNext} />
       </div>
     </section>
+  );
+}
+
+function CarouselControls({ onPrev, onNext }: { onPrev: () => void; onNext: () => void }) {
+  return (
+    <div className="flex items-center gap-4 mt-8 pt-6 border-t border-[color:var(--rule)]">
+      <button
+        onClick={onPrev}
+        className="num text-[11px] uppercase tracking-widest text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors duration-150 flex items-center gap-2"
+        aria-label="Previous client"
+      >
+        ← Prev
+      </button>
+      <span className="w-px h-3 bg-[color:var(--rule-strong)]" />
+      <button
+        onClick={onNext}
+        className="num text-[11px] uppercase tracking-widest text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] transition-colors duration-150 flex items-center gap-2"
+        aria-label="Next client"
+      >
+        Next →
+      </button>
+    </div>
   );
 }
 
