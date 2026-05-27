@@ -234,52 +234,46 @@ function ClientCard({ client, index }: { client: Client; index: number }) {
   );
 }
 
-function LoadingDots() {
+function PlaceholderCard({ index, stage }: { index: number; stage: string }) {
   const reduce = useReducedMotion();
   return (
-    <div className="flex items-center gap-2 my-5" aria-hidden="true">
-      {([0, 0.22, 0.44] as number[]).map((delay, i) => (
-        <motion.span
-          key={i}
-          className="w-1 h-1 bg-[color:var(--accent)]"
-          initial={{ opacity: 0.2 }}
-          animate={reduce ? undefined : { opacity: [0.2, 1, 0.2] }}
-          transition={{ duration: 1.6, delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function PlaceholderCard({ index, stage }: { index: number; stage: string }) {
-  return (
-    <article className="h-full flex flex-col border border-dashed border-[color:var(--rule-strong)] p-6 md:p-7">
+    <article className="h-full flex flex-col bg-[color:var(--surface-dark)] p-6 md:p-7">
 
       {/* ── Top bar ── */}
-      <div className="flex items-center justify-between mb-7">
-        <span className="num text-[11px] text-[color:var(--ink-muted)]">
+      <div className="flex items-center justify-between mb-5">
+        <span className="num text-[11px] text-[color:var(--ink-on-dark-muted)]">
           FILE / {String(index + 1).padStart(3, "0")}
         </span>
-        <span className="num text-[11px] text-[color:var(--ink-muted)]">
+        <span className="num text-[11px] text-[color:var(--accent-on-dark)] flex items-center gap-1.5">
+          <motion.span
+            className="w-1.5 h-1.5 rounded-full bg-[color:var(--accent-on-dark)]"
+            animate={reduce ? undefined : { opacity: [1, 0.2, 1] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          />
           {stage.toUpperCase()}
         </span>
       </div>
 
-      {/* ── Title ── */}
-      <h2 className="type-display-3 text-[color:var(--ink-muted)]">More in Development</h2>
+      {/* ── Red structural rule ── */}
+      <div className="h-[3px] bg-[color:var(--red-bright)] mb-6" />
 
-      {/* ── Staggered pulse dots ── */}
-      <LoadingDots />
-
-      {/* ── Body ── */}
-      <p className="type-body text-[color:var(--ink-muted)] opacity-60 flex-1 mb-6">
-        New projects are in progress. Each client is added here when their build ships.
+      {/* ── Heading + sub-line ── */}
+      <h2 className="type-display-3 text-[color:var(--ink-on-dark)] mb-2">
+        In the pipeline.
+      </h2>
+      <p className="num text-[11px] text-[color:var(--ink-on-dark-muted)] uppercase tracking-widest">
+        New projects in build
       </p>
 
+      <div className="flex-1" />
+
       {/* ── Footer ── */}
-      <div className="border-t border-dashed border-[color:var(--rule-strong)] pt-4">
-        <p className="num text-[10px] text-[color:var(--ink-muted)] opacity-50 uppercase tracking-widest">
-          In progress
+      <div className="border-t border-[color:var(--rule-on-dark)] pt-4 flex items-center justify-between">
+        <p className="num text-[10px] text-[color:var(--ink-on-dark-faint)] uppercase tracking-widest">
+          Ottawa, ON
+        </p>
+        <p className="num text-[10px] text-[color:var(--ink-on-dark-faint)] uppercase tracking-widest">
+          2026
         </p>
       </div>
 
