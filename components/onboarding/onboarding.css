@@ -798,6 +798,18 @@
   font-weight: 500;
   font-size: 0.9375rem;
 }
+.ob-welcome__skip {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+.ob-welcome__skip a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ob-welcome__skip a:hover { text-decoration: none; }
 
 /* Review ------------------------------------------------ */
 .ob-review { display: flex; flex-direction: column; gap: 0; }

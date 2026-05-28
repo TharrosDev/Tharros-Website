@@ -96,6 +96,14 @@ export function Wizard({
                 <span className="label">Start the brief</span>
                 <IconArrowRight />
               </button>
+
+              <p className="ob-welcome__skip">
+                Want to skip the form?{" "}
+                <a href="mailto:tharrosdev@gmail.com?subject=Project%20inquiry">
+                  Just email us directly
+                </a>
+                .
+              </p>
             </div>
           </div>
         </div>
