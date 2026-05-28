@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useRef, type ElementType } from "react";
+import { useRef, type ElementType } from "react";
 import { gsap, SplitText, useGSAP, EASE_EXPO, unclipMaskDescenders } from "@/lib/gsap";
 
 interface Props {
@@ -61,5 +61,9 @@ export default function SplitReveal({
     { scope: ref },
   );
 
-  return createElement(Tag, { ref, className }, children);
+  return (
+    <Tag ref={ref} className={className}>
+      {children}
+    </Tag>
+  );
 }
