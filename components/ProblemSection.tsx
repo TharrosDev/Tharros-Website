@@ -79,7 +79,7 @@ export default function ProblemSection() {
           </motion.p>
         </div>
 
-        <ol className="border-t-2 border-[color:var(--ink)]">
+        <ol className="grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-12 border-t-2 border-[color:var(--ink)] pt-10 md:pt-14">
           {pains.map((pain, i) => (
             <motion.li
               key={pain.num}
@@ -87,13 +87,13 @@ export default function ProblemSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.65, delay: i * 0.08, ease }}
-              className="group relative grid grid-cols-1 md:grid-cols-[minmax(0,7.5rem)_1fr] gap-x-8 gap-y-3 py-8 md:py-11 border-b border-[color:var(--rule-strong)]"
+              className="group relative flex flex-col"
             >
               <span className="problem-num big-num big-num--outline-red text-[4.5rem] md:text-[6.5rem] leading-[0.8] transition-[color,-webkit-text-stroke-color] duration-300 group-hover:[color:var(--red)] group-hover:[-webkit-text-stroke-color:var(--red)]">
                 {pain.num}
               </span>
 
-              <div className="md:pt-2">
+              <div className="mt-4">
                 <span className="type-meta block text-[color:var(--ink-faint)] mb-3">
                   {pain.when}
                 </span>
