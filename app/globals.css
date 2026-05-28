@@ -316,7 +316,7 @@ button:focus-visible,
   .page-frame {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 10px;
+    padding-inline: 25px;
   }
   @media (max-width: 768px) {
     .page-frame {
