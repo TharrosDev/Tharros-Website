@@ -1,27 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 
 /**
- * A highly performant hook to detect mobile viewports.
- * Uses matchMedia for zero-JS-overhead tracking of the breakpoint.
+ * Detect mobile viewports via matchMedia, subscribed through
+ * useSyncExternalStore so there's no setState-in-effect cascade and the
+ * server snapshot is always desktop (false) to keep hydration stable.
  */
 export function useIsMobile(breakpoint: number = 768) {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const query = `(max-width: ${breakpoint}px)`;
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    
-    // Initial check
-    setIsMobile(mediaQuery.matches);
+  const subscribe = (onChange: () => void) => {
+    const mediaQuery = window.matchMedia(query);
+    mediaQuery.addEventListener("change", onChange);
+    return () => mediaQuery.removeEventListener("change", onChange);
+  };
 
-    const handler = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
-    };
+  const getSnapshot = () => window.matchMedia(query).matches;
+  const getServerSnapshot = () => false;
 
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, [breakpoint]);
-
-  return isMobile;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

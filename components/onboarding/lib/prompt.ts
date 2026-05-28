@@ -2,7 +2,7 @@
 // EDIT THIS FILE to change how the prompt reads (section headers, build
 // guidance footer, package recommendation logic, etc).
 
-import { OB_STEPS, findField } from "./schema";
+import { findField } from "./schema";
 import type { FieldDef, FieldValue, FormState } from "./types";
 
 /* Format one field value into its Markdown inline representation. */

@@ -76,6 +76,7 @@ export default function NavBar() {
 
     const node = menuRef.current;
     if (!node) return;
+    const trigger = triggerRef.current;
 
     const focusables = () =>
       Array.from(
@@ -109,7 +110,7 @@ export default function NavBar() {
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
-      triggerRef.current?.focus();
+      trigger?.focus();
     };
   }, [mobileOpen]);
 

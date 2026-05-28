@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import { OB_STEPS } from "./lib/schema";
 import { deleteSubmission, loadSubmissions } from "./lib/storage";
 import { isEmpty, renderValue, ReviewRow } from "./lib/render";
@@ -95,7 +96,7 @@ export function AdminApp({ initialRemote = [] }: AdminAppProps) {
           <span className="admin-bar__sub">
             {submissions.length} submission{submissions.length === 1 ? "" : "s"} cached locally
           </span>
-          <a href="/" className="admin-bar__exit">← Exit</a>
+          <Link href="/" className="admin-bar__exit">← Exit</Link>
         </div>
 
         <div className="admin-grid">

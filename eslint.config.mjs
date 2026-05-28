@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone Vite embed project with its own Biome lint config.
+    "my-chat/**",
   ]),
 ]);
 

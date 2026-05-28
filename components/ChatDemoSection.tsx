@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Client, Key, Agent, type Task } from "@relevanceai/sdk";
+import { Client, Key, Agent, type Task, type Region } from "@relevanceai/sdk";
 import AnimatedSection from "./AnimatedSection";
 import SectionEyebrow from "./SectionEyebrow";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -35,7 +35,7 @@ type LocalMessage = {
 interface AgentResource {
   config?: { recommended_questions?: string[]; suggested_queries?: string[] };
   metadata?: { recommended_questions?: string[] };
-  sendMessage: (text: string, task: Task<any, any> | null) => Promise<Task<any, any>>;
+  sendMessage: (text: string, task: Task<Agent> | null) => Promise<Task<Agent>>;
 }
 
 export default function ChatDemoSection() {
@@ -44,7 +44,7 @@ export default function ChatDemoSection() {
   const [isTyping, setIsTyping] = useState(false);
   const [recommendedQuestions, setRecommendedQuestions] = useState<string[]>([]);
   const [agentInstance, setAgentInstance] = useState<AgentResource | null>(null);
-  const [currentTask, setCurrentTask] = useState<Task<any, any> | null>(null);
+  const [currentTask, setCurrentTask] = useState<Task<Agent> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [initError, setInitError] = useState<string | null>(null);
 
@@ -96,14 +96,14 @@ export default function ChatDemoSection() {
         if (typeof window !== "undefined" && stored?.embedKey && stored?.conversationPrefix) {
           keyInstance = new Key({
             key: stored.embedKey,
-            region: REGION as any,
+            region: REGION as Region,
             project: PROJECT,
             agentId: AGENT_ID,
             taskPrefix: stored.conversationPrefix,
           });
         } else {
           keyInstance = await Key.generateEmbedKey({
-            region: REGION as any,
+            region: REGION as Region,
             project: PROJECT,
             agentId: AGENT_ID,
           });
@@ -115,10 +115,11 @@ export default function ChatDemoSection() {
 
         const client = new Client(keyInstance);
         const agent = await Agent.get(AGENT_ID, client);
-        setAgentInstance(agent as unknown as AgentResource);
+        const resource = agent as unknown as AgentResource;
+        setAgentInstance(resource);
 
-        const config = (agent as any).config || {};
-        const metadata = (agent as any).metadata || {};
+        const config = resource.config || {};
+        const metadata = resource.metadata || {};
         const initialQuestions =
           config.recommended_questions ||
           metadata.recommended_questions ||
@@ -138,9 +139,9 @@ export default function ChatDemoSection() {
           },
         ]);
         setIsLoading(false);
-      } catch (err: any) {
+      } catch (err) {
         console.error("Failed to initialize Relevance AI:", err);
-        setInitError(err.message || "System error.");
+        setInitError(err instanceof Error ? err.message : "System error.");
         setIsLoading(false);
       }
     }
@@ -405,7 +406,7 @@ function DesktopConsole({
               className="flex items-center justify-between gap-4 px-5 md:px-7 py-4 bg-[color:var(--red-soft)] border-b border-[color:var(--rule-strong)]"
             >
               <div className="flex items-baseline gap-3 min-w-0">
-                <span className="num text-[11px] text-[color:var(--red-deep)] font-semibold tracking-[0.16em]">// LIMIT</span>
+                <span className="num text-[11px] text-[color:var(--red-deep)] font-semibold tracking-[0.16em]">{"// LIMIT"}</span>
                 <span className="type-body text-[color:var(--ink)] truncate">
                   Want one trained on your business? Let&apos;s talk.
                 </span>

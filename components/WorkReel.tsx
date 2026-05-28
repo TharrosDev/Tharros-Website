@@ -140,8 +140,8 @@ function MockDocs({ title, accent, ink, bg }: MockProps) {
         <div className={cx("m-dx-h")} style={{ color: ink }}>Defining an <em style={{ color: accent }}>operator</em>.</div>
         <div className={cx("m-dx-code")} style={{ background: `${ink}`, color: bg, border: `1px solid ${accent}33` }}>
           <div><span style={{ color: accent }}>const</span> agent = defineAgent(&#123;</div>
-          <div>{"  "}name: <span style={{ color: accent }}>"router"</span>,</div>
-          <div>{"  "}on: <span style={{ color: accent }}>"lead.qualified"</span>,</div>
+          <div>{"  "}name: <span style={{ color: accent }}>{'"router"'}</span>,</div>
+          <div>{"  "}on: <span style={{ color: accent }}>{'"lead.qualified"'}</span>,</div>
           <div>{"  "}run: routeToHuman,</div>
           <div>&#125;);</div>
         </div>
