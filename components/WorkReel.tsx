@@ -50,12 +50,12 @@ const PROJECTS: Project[] = [
   { title: "Margins",        url: "margins.letter",    kind: "newsletter", year: "2024", sector: "Independent",    scope: "Newsletter · Brand",           palette: ["#faf7ee", "#1a1a1a", "#e23a2e"] },
   { title: "Pivot",          url: "pivot.cal",         kind: "calendar",   year: "2023", sector: "Productivity",   scope: "Web · App · Agents",           palette: ["#f3f1ea", "#1f2a44", "#e8b34a"] },
   { title: "Quarry",         url: "quarry.studio",     kind: "case-study", year: "2023", sector: "Architecture",   scope: "Case study · Brand · Web",     palette: ["#2a2825", "#d6c8a8", "#e23a2e"] },
-  { title: "Bella Cucina",   url: "bellacucina.ca",    kind: "menu",       year: "2025", sector: "Restaurant",     scope: "Web · Menu · Reservations",    palette: ["#1a1410", "#e07a3e", "#f4e8d6"] },
-  { title: "Rideau Dental",  url: "rideaudental.ca",   kind: "booking",    year: "2025", sector: "Dental clinic",  scope: "Web · Online booking · Agent", palette: ["#f2f7f8", "#1f8a8a", "#0e1518"] },
-  { title: "Maple Ridge",    url: "mapleridge.build",  kind: "trades",     year: "2024", sector: "Contractor",     scope: "Web · Quote form · Gallery",   palette: ["#16181c", "#f0a32e", "#f1efe9"] },
-  { title: "Glebe Yoga",     url: "glebeyoga.ca",      kind: "fitness",    year: "2025", sector: "Wellness studio", scope: "Web · Schedule · Memberships", palette: ["#eef1ea", "#6b8f5e", "#1c241a"] },
-  { title: "Carleton Law",   url: "carletonlaw.ca",    kind: "legal",      year: "2024", sector: "Law firm",       scope: "Web · Intake · Agent",         palette: ["#0f1622", "#b89a5e", "#eef0f4"] },
-  { title: "Bloom Salon",    url: "bloomsalon.ca",     kind: "salon",      year: "2025", sector: "Hair & beauty",  scope: "Web · Services · Booking",     palette: ["#faf0f2", "#c2557a", "#1f1418"] },
+  { title: "Restaurant",     url: "restaurant.ca",     kind: "menu",       year: "2025", sector: "Restaurant",     scope: "Web · Menu · Reservations",    palette: ["#1a1410", "#e07a3e", "#f4e8d6"] },
+  { title: "Dental",         url: "dental.ca",         kind: "booking",    year: "2025", sector: "Dental clinic",  scope: "Web · Online booking · Agent", palette: ["#f2f7f8", "#1f8a8a", "#0e1518"] },
+  { title: "Contractor",     url: "contractor.ca",     kind: "trades",     year: "2024", sector: "Contractor",     scope: "Web · Quote form · Gallery",   palette: ["#16181c", "#f0a32e", "#f1efe9"] },
+  { title: "Yoga Studio",    url: "yogastudio.ca",     kind: "fitness",    year: "2025", sector: "Wellness studio", scope: "Web · Schedule · Memberships", palette: ["#eef1ea", "#6b8f5e", "#1c241a"] },
+  { title: "Law",            url: "law.ca",            kind: "legal",      year: "2024", sector: "Law firm",       scope: "Web · Intake · Agent",         palette: ["#0f1622", "#b89a5e", "#eef0f4"] },
+  { title: "Salon",          url: "salon.ca",          kind: "salon",      year: "2025", sector: "Hair & beauty",  scope: "Web · Services · Booking",     palette: ["#faf0f2", "#c2557a", "#1f1418"] },
 ];
 
 type MockProps = { title: string; bg: string; accent: string; ink: string };
