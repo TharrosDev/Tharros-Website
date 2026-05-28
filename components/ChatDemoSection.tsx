@@ -32,6 +32,14 @@ type LocalMessage = {
   time: string;
 };
 
+interface AgentMessagePayload {
+  type?: string;
+  id: string;
+  text?: string;
+  details?: { recommended_questions?: string[] };
+  recommended_questions?: string[];
+}
+
 interface AgentResource {
   config?: { recommended_questions?: string[]; suggested_queries?: string[] };
   metadata?: { recommended_questions?: string[] };
@@ -67,6 +75,7 @@ export default function ChatDemoSection() {
       const stored = localStorage.getItem(`pc-${AGENT_ID}`);
       if (stored) {
         const count = parseInt(stored, 10);
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- restore prompt count from localStorage after mount
         setUserMessageCount(count);
         countRef.current = count;
       }
@@ -152,7 +161,7 @@ export default function ChatDemoSection() {
   useEffect(() => {
     if (!currentTask) return;
 
-    const handleMessage = ({ detail }: any) => {
+    const handleMessage = ({ detail }: { detail: { message: AgentMessagePayload } }) => {
       const { message } = detail;
       if (message.type === "agent-message") {
         setMessages((prev) => {

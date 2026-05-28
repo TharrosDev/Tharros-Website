@@ -142,7 +142,7 @@ Read [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) for the full version. Qu
 - **Data store:** Supabase project `xbqlfjhriqycqhuiueug` (TharrosDev's ORG). Tables `brief_drafts` (in-progress, upserted on every autosave) + `brief_submissions` (final). Private storage bucket `brief-uploads` holds asset files; admin links use 7-day signed URLs. Service-role key is server-only (`lib/supabase/server.ts`, lazy `supabaseAdmin()`); never import it from a client file.
 - **Field schema** supports an optional `visibleWhen: (state) => boolean` predicate on `FieldDef` (in `lib/types.ts`). Hidden fields are treated as satisfied in `stepComplete` and filtered out of the `<Fields>` renderer — see the assistant step's `hoursOfOperation`/`afterHours` for the canonical example. Step-level filtering is **not** implemented; the wizard always walks every `OB_STEPS` entry.
 - **Anti-spam:** `/api/brief` checks a `company_name_alt` honeypot input rendered by `Wizard.tsx` (must stay in the DOM but visually hidden). That's the only spam guard on the endpoint; no rate-limit is wired.
-- **Admin view** at `/admin/briefs` is gated by HTTP Basic auth in `middleware.ts` (username `magnus`, password from `ADMIN_PASSWORD`). Page is `force-dynamic` and reads from Supabase on every request; AdminApp falls back to the localStorage cache for legacy briefs.
+- **Admin view** at `/admin/briefs` is gated by HTTP Basic auth in `proxy.ts` (Next.js 16's renamed middleware convention; username `magnus`, password from `ADMIN_PASSWORD`). Page is `force-dynamic` and reads from Supabase on every request; AdminApp falls back to the localStorage cache for legacy briefs.
 
 ---
 

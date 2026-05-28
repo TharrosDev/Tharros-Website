@@ -23,7 +23,7 @@ function safeEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (!expected) {
     return new NextResponse("Admin not configured", { status: 503 });
   }

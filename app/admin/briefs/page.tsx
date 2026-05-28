@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Route is gated by middleware.ts (HTTP Basic auth on /admin/*).
+// Route is gated by proxy.ts (HTTP Basic auth on /admin/*).
 // Force dynamic so each request re-reads brief_submissions; we never want a
 // stale build-time snapshot served to the admin.
 export const dynamic = "force-dynamic";

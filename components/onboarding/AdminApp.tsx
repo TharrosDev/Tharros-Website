@@ -34,6 +34,7 @@ export function AdminApp({ initialRemote = [] }: AdminAppProps) {
     const local = loadSubmissions();
     const seen = new Set(initialRemote.map((r) => r.id));
     const merged = [...initialRemote, ...local.filter((r) => !seen.has(r.id))];
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- merge localStorage cache after mount
     setSubmissions(merged);
     setCurrentId((cur) => cur ?? merged[0]?.id ?? null);
   }, [initialRemote]);

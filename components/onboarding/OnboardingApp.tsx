@@ -24,9 +24,11 @@ export function OnboardingApp() {
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const saveTimer = useRef<number | null>(null);
 
-  // localStorage isn't available during SSR — hydrate after mount.
+  // localStorage isn't available during SSR — hydrating after mount is the
+  // intended escape hatch, so the synchronous setState here is deliberate.
   useEffect(() => {
     const loaded = loadDraft();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- post-mount localStorage hydration
     if (loaded) setState(loaded);
     const meta = loadDraftMeta();
     if (meta) {
@@ -35,8 +37,11 @@ export function OnboardingApp() {
     }
   }, []);
 
+  // Record each step the user lands on (driven by stepIndex, which also moves
+  // on hydration from saved meta) so completion can be scoped to seen steps.
   useEffect(() => {
     if (stepIndex >= 0 && stepIndex < OB_STEPS.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- accumulate visited steps as navigation occurs
       setVisited((prev) => {
         if (prev.has(stepIndex)) return prev;
         const next = new Set(prev);

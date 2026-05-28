@@ -166,7 +166,7 @@ See [`SEO.md`](./SEO.md) for the full reference. Summary:
 
 `/brief` is a 9-step wizard rendered by `components/onboarding/OnboardingApp.tsx` (client component). Schema, prompt builder, and storage helpers live in `components/onboarding/lib/`. Draft state persists to `localStorage` between steps; on submit, the client POSTs to `/api/brief/route.ts` which forwards to Zapier via the server-side `THARROS_WEBHOOK_URL` env var (kept off the client bundle).
 
-`/admin/briefs` is a local-backup admin view of submissions cached in the operator's browser. It's gated by HTTP Basic auth via `middleware.ts` (username `magnus`, password from `ADMIN_PASSWORD`).
+`/admin/briefs` is a local-backup admin view of submissions cached in the operator's browser. It's gated by HTTP Basic auth via `proxy.ts` (username `magnus`, password from `ADMIN_PASSWORD`).
 
 ---
 
