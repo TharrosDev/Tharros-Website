@@ -136,52 +136,6 @@
 }
 .reel-row-sm .bw-body { padding: 14px; }
 
-/* ── MOCK: editorial ───────────────────────────────────────────────────────── */
-.m-ed { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-ed-nav { display: flex; align-items: baseline; justify-content: space-between; }
-.m-ed-h { font-family: var(--serif); font-size: 38px; line-height: 0.95; letter-spacing: -0.02em; margin-top: 6px; }
-.m-ed-h em { font-style: italic; }
-.m-ed-deck { font-size: 11px; line-height: 1.4; max-width: 80%; }
-.m-ed-rule { height: 1px; margin-top: auto; }
-.m-ed-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 6px; height: 38px; }
-.m-ed-grid span { border-radius: 4px; display: block; height: 100%; }
-
-/* ── MOCK: product ─────────────────────────────────────────────────────────── */
-.m-pd { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-pd-top { display: flex; justify-content: space-between; align-items: center; }
-.m-pd-logo { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; }
-.m-pd-pill { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 999px; text-transform: uppercase; }
-.m-pd-h { font-family: var(--serif); font-size: 30px; line-height: 1; letter-spacing: -0.02em; margin-top: 6px; }
-.m-pd-h em { font-style: italic; }
-.m-pd-sub { font-size: 11px; line-height: 1.4; max-width: 75%; }
-.m-pd-cta { display: flex; gap: 8px; margin-top: 4px; }
-.m-pd-cta span { font-size: 10px; padding: 7px 12px; border-radius: 999px; font-weight: 500; }
-.m-pd-logos { display: flex; gap: 12px; margin-top: auto; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; }
-
-/* ── MOCK: gallery ─────────────────────────────────────────────────────────── */
-.m-gl { display: flex; flex-direction: column; gap: 8px; height: 100%; }
-.m-gl-head { display: flex; align-items: baseline; justify-content: space-between; }
-.m-gl-grid { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-.m-gl-cell { border-radius: 4px; display: grid; place-items: center; font-size: 24px; line-height: 1; }
-.m-gl-foot { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; }
-
-/* ── MOCK: docs ────────────────────────────────────────────────────────────── */
-.m-dx { display: grid; grid-template-columns: 100px 1fr; gap: 14px; height: 100%; font-size: 10px; }
-.m-dx-side { display: flex; flex-direction: column; gap: 5px; font-family: var(--mono); }
-.m-dx-main { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.m-dx-crumb { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; }
-.m-dx-h { font-family: var(--serif); font-size: 26px; line-height: 1; letter-spacing: -0.02em; }
-.m-dx-h em { font-style: italic; }
-.m-dx-code { padding: 10px 12px; border-radius: 6px; font-family: var(--mono); font-size: 9.5px; line-height: 1.5; display: flex; flex-direction: column; margin-top: 4px; white-space: pre-wrap; }
-
-/* ── MOCK: agent ───────────────────────────────────────────────────────────── */
-.m-ag { display: flex; flex-direction: column; gap: 8px; height: 100%; }
-.m-ag-head { display: flex; align-items: baseline; justify-content: space-between; }
-.m-ag-live { font-family: var(--mono); font-size: 8.5px; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; }
-.m-ag-sub { font-size: 10.5px; }
-.m-ag-rows { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; font-family: var(--mono); font-size: 10.5px; }
-.m-ag-row { display: flex; gap: 10px; padding: 6px 8px 6px 10px; border-radius: 4px; align-items: center; }
-
 /* ── MOCK: video ───────────────────────────────────────────────────────────── */
 .m-vd { display: flex; flex-direction: column; gap: 8px; height: 100%; }
 .m-vd-poster { flex: 1; border-radius: 8px; position: relative; overflow: hidden; }
@@ -201,48 +155,6 @@
 .m-br-swatches { display: flex; gap: 6px; margin-top: auto; }
 .m-br-swatches span { width: 32px; height: 32px; border-radius: 6px; display: grid; place-items: center; }
 
-/* ── MOCK: analytics ───────────────────────────────────────────────────────── */
-.m-an { display: flex; flex-direction: column; gap: 4px; height: 100%; }
-.m-an-head { display: flex; justify-content: space-between; align-items: baseline; }
-.m-an-stat { font-family: var(--serif); font-size: 56px; line-height: 1; letter-spacing: -0.03em; margin-top: 2px; }
-.m-an-delta { letter-spacing: 0.04em; }
-.m-an-bars { display: flex; align-items: flex-end; gap: 6px; height: 50px; margin-top: auto; }
-.m-an-bars span { flex: 1; border-radius: 2px; }
-
-/* ── MOCK: archive ─────────────────────────────────────────────────────────── */
-.m-ar { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-ar-head { display: flex; justify-content: space-between; align-items: baseline; }
-.m-ar-rows { display: flex; flex-direction: column; }
-.m-ar-row { display: flex; gap: 12px; padding: 7px 0; align-items: baseline; border-bottom: 1px solid currentColor; font-size: 11px; }
-.m-ar-row:last-child { border-bottom: 0; }
-
-/* ── MOCK: manifesto ───────────────────────────────────────────────────────── */
-.m-mf { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-.m-mf-meta, .m-mf-foot { display: flex; justify-content: space-between; letter-spacing: 0.08em; text-transform: uppercase; }
-.m-mf-body { font-family: var(--serif); font-size: 38px; line-height: 0.98; letter-spacing: -0.02em; }
-.m-mf-body em { font-style: italic; }
-
-/* ── MOCK: podcast ─────────────────────────────────────────────────────────── */
-.m-pc { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-pc-head { display: flex; justify-content: space-between; align-items: baseline; }
-.m-pc-ep { font-family: var(--serif); font-size: 26px; line-height: 1.02; letter-spacing: -0.02em; }
-.m-pc-ep em { font-style: italic; }
-.m-pc-wave { display: flex; align-items: center; gap: 3px; height: 52px; margin-top: 4px; }
-.m-pc-wave span { flex: 1; border-radius: 99px; min-height: 6%; }
-.m-pc-ctrl { display: flex; align-items: center; gap: 12px; margin-top: auto; }
-.m-pc-play { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; padding-left: 2px; }
-
-/* ── MOCK: status ──────────────────────────────────────────────────────────── */
-.m-st { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-st-head { display: flex; justify-content: space-between; align-items: center; }
-.m-st-pill { font-family: var(--mono); font-size: 8.5px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.08em; text-transform: uppercase; }
-.m-st-rows { display: flex; flex-direction: column; gap: 7px; font-family: var(--mono); font-size: 10px; }
-.m-st-row { display: grid; grid-template-columns: 90px 1fr 50px; gap: 10px; align-items: center; }
-.m-st-name { letter-spacing: 0.02em; }
-.m-st-grid { display: grid; grid-template-columns: repeat(30, 1fr); gap: 2px; height: 14px; }
-.m-st-grid span { border-radius: 1px; height: 100%; }
-.m-st-pct { font-size: 9.5px; text-align: right; }
-
 /* ── MOCK: commerce ────────────────────────────────────────────────────────── */
 .m-cm { display: grid; grid-template-columns: 5fr 4fr; gap: 14px; height: 100%; }
 .m-cm-img { border-radius: 8px; position: relative; overflow: hidden; }
@@ -253,14 +165,6 @@
 .m-cm-vars span { width: 18px; height: 18px; border-radius: 50%; }
 .m-cm-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
 .reel-row-sm .m-cm { grid-template-columns: 4fr 5fr; gap: 10px; }
-
-/* ── MOCK: terminal ────────────────────────────────────────────────────────── */
-.m-tm { margin: -18px; padding: 16px 18px; height: calc(100% + 36px); font-family: var(--mono); font-size: 10px; line-height: 1.55; display: flex; flex-direction: column; gap: 1px; letter-spacing: 0.01em; }
-.reel-row-sm .m-tm { margin: -14px; padding: 14px; }
-.m-tm-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 9.5px; border-bottom: 1px solid currentColor; padding-bottom: 6px; opacity: 0.85; }
-.m-tm-lines { display: flex; flex-direction: column; gap: 2px; }
-.m-tm-caret { animation: tm-blink 1s steps(2) infinite; }
-@keyframes tm-blink { 50% { opacity: 0; } }
 
 /* ── MOCK: map ─────────────────────────────────────────────────────────────── */
 .m-mp { margin: -18px; padding: 0; height: calc(100% + 36px); position: relative; overflow: hidden; }
@@ -321,16 +225,33 @@
 .m-cl-cells span:last-child { border-bottom: 1px solid; }
 .m-cl-slot { position: absolute; padding: 4px 6px; border-radius: 3px; font-family: var(--mono); font-size: 8.5px; line-height: 1.3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
-/* ── MOCK: case study ──────────────────────────────────────────────────────── */
-.m-cs { margin: -18px; height: calc(100% + 36px); overflow: hidden; position: relative; }
-.reel-row-sm .m-cs { margin: -14px; }
-.m-cs-img { height: 100%; padding: 18px; display: flex; flex-direction: column; position: relative; }
-.m-cs-meta { display: flex; justify-content: space-between; letter-spacing: 0.08em; text-transform: uppercase; }
-.m-cs-h { font-family: var(--serif); font-size: 36px; line-height: 0.98; letter-spacing: -0.02em; margin-top: 10px; }
-.m-cs-h em { font-style: italic; }
-.m-cs-tags { display: flex; gap: 6px; margin-top: auto; }
-.m-cs-tags span { font-family: var(--mono); font-size: 9px; padding: 3px 8px; border: 1px solid; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; }
-.m-cs-link { position: absolute; bottom: 16px; right: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; }
+/* ── MOCK: real estate (listing) ───────────────────────────────────────────── */
+.m-re { margin: -18px; height: calc(100% + 36px); display: flex; flex-direction: column; }
+.reel-row-sm .m-re { margin: -14px; }
+.m-re-photo { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; position: relative; }
+.m-re-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.m-re-tag { font-family: var(--mono); font-size: 8px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.06em; font-weight: 600; }
+.m-re-price { font-family: var(--serif); font-size: 30px; line-height: 1; letter-spacing: -0.02em; margin-top: auto; }
+.m-re-info { display: flex; flex-direction: column; gap: 5px; padding: 12px 16px; }
+.m-re-cta { margin-top: 4px; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── MOCK: cafe ────────────────────────────────────────────────────────────── */
+.m-cf { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+.m-cf-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-cf-h { font-family: var(--serif); font-size: 32px; line-height: 1; letter-spacing: -0.02em; margin-top: 4px; }
+.m-cf-h em { font-style: italic; }
+.m-cf-stamps { display: flex; gap: 7px; margin-top: auto; }
+.m-cf-stamps span { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid; display: grid; place-items: center; font-size: 9px; }
+.m-cf-cta { padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── MOCK: auto (repair) ───────────────────────────────────────────────────── */
+.m-au { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+.m-au-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-au-quote { display: flex; align-items: baseline; gap: 8px; margin: 2px 0; }
+.m-au-num { font-family: var(--serif); font-size: 48px; line-height: 1; letter-spacing: -0.03em; }
+.m-au-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.m-au-chips span { font-size: 9.5px; padding: 4px 9px; border: 1px solid; border-radius: 999px; }
+.m-au-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
 
 /* ── MOCK: menu (restaurant) ───────────────────────────────────────────────── */
 .m-mn { display: flex; flex-direction: column; gap: 10px; height: 100%; }
