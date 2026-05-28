@@ -55,9 +55,16 @@ export default function Marquee({
     { scope: root },
   );
 
+  // Each track repeats the items enough times that one track alone overflows
+  // even an ultra-wide viewport — otherwise the -100% loop leaves a visible
+  // empty stretch on large screens before the items scroll back in. Duration
+  // scales with the copy count so the perceived speed stays constant.
+  const COPIES = 4;
+  const repeated = Array.from({ length: COPIES }, () => items).flat();
+
   const Track = (
     <ul aria-hidden="true" className="marquee__track py-3.5 list-none">
-      {items.map((item, i) => (
+      {repeated.map((item, i) => (
         <li key={i} className="flex items-center gap-[var(--marquee-gap,2.5rem)]">
           <span className="num text-[12px] md:text-[13px] tracking-[0.18em] uppercase font-semibold whitespace-nowrap">
             {item}
@@ -75,7 +82,7 @@ export default function Marquee({
       ref={root}
       className={`marquee ${surface[variant]} ${className}`}
       data-reverse={reverse ? "true" : "false"}
-      style={{ ["--marquee-dur" as string]: `${durationSec}s` }}
+      style={{ ["--marquee-dur" as string]: `${durationSec * COPIES}s` }}
       role="presentation"
     >
       {Track}
