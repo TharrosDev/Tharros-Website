@@ -27,7 +27,7 @@ interface MobileChatConsoleProps {
   maxPrompts: number;
   isLoading?: boolean;
   height?: string;
-  debugInfo?: any;
+  debugInfo?: { error?: string | null } | null;
 }
 
 const MobileChatConsole = memo(
@@ -129,7 +129,7 @@ const MobileChatConsole = memo(
               >
                 <div className="min-w-0">
                   <span className="num text-[10px] text-[color:var(--red-deep)] font-semibold tracking-[0.16em] block">
-                    // LIMIT
+                    {"// LIMIT"}
                   </span>
                   <span className="type-body text-[color:var(--ink)] text-[14px] truncate block">
                     Let&apos;s build yours.
@@ -227,7 +227,7 @@ const MobileTranscriptRow = memo(({ msg }: { msg: LocalMessage }) => {
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as any }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         className="flex flex-col items-start max-w-[90%] self-start"
       >
         <div className="flex items-center gap-2 mb-1.5">
@@ -245,7 +245,7 @@ const MobileTranscriptRow = memo(({ msg }: { msg: LocalMessage }) => {
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as any }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
       className="flex flex-col items-end max-w-[85%] self-end"
     >
       <div className="flex items-center gap-2 mb-1.5">
