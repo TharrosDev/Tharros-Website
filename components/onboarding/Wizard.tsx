@@ -195,11 +195,10 @@ export function Wizard({
           <div className="ob-actions">
             <button
               type="button"
-              className={`ob-back ${stepIndex === 0 ? "is-disabled" : ""}`}
-              onClick={() => stepIndex > 0 && goTo(stepIndex - 1)}
-              disabled={stepIndex === 0}
+              className="ob-back"
+              onClick={() => goTo(stepIndex - 1)}
             >
-              <span className="rule" />Back
+              <span className="rule" />{stepIndex === 0 ? "Intro" : "Back"}
             </button>
             <div className="ob-actions__spacer" />
             <button
