@@ -313,7 +313,7 @@ button:focus-visible,
   /* Container — left-set with breathing right margin */
   .page-frame {
     width: 100%;
-    max-width: 1480px;
+    max-width: clamp(1480px, 90vw, 2000px);
     margin-inline: auto;
     padding-inline: clamp(1.25rem, 4vw, 4.5rem);
   }
