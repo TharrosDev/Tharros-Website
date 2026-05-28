@@ -46,6 +46,9 @@ const PROJECTS: Project[] = [
   { title: "Clinic",       url: "clinic.ca",       kind: "calendar",   year: "2024", sector: "Wellness clinic",scope: "Web · Scheduling · Agent",     palette: ["#f3f1ea", "#1f2a44", "#e8b34a"] },
   { title: "Photography",  url: "photography.ca",  kind: "video",      year: "2024", sector: "Photography",    scope: "Web · Portfolio · Booking",    palette: ["#0c0c0e", "#ff8a4a", "#f4ede3"] },
   { title: "Community",    url: "community.ca",    kind: "newsletter", year: "2024", sector: "Member society", scope: "Web · Members · Newsletter",   palette: ["#faf7ee", "#1a1a1a", "#e23a2e"] },
+  { title: "Brewery",      url: "brewery.ca",      kind: "taproom",    year: "2025", sector: "Brewery & taproom",scope: "Web · Tap list · Events",      palette: ["#161009", "#e0a52e", "#f3e6c8"] },
+  { title: "Cleaning",     url: "cleaning.ca",     kind: "cleaning",   year: "2025", sector: "Cleaning service", scope: "Web · Instant quote · Booking",palette: ["#eef4f7", "#2e86c2", "#0e1a22"] },
+  { title: "Pet Care",     url: "petcare.ca",      kind: "pet",        year: "2025", sector: "Pet grooming",    scope: "Web · Booking · Profiles",     palette: ["#f6efe6", "#d2693f", "#241a14"] },
 ];
 
 type MockProps = { title: string; bg: string; accent: string; ink: string };
@@ -479,6 +482,92 @@ function MockCalendar({ title, accent, ink, bg }: MockProps) {
   );
 }
 
+function MockTaproom({ title, accent, ink, bg }: MockProps) {
+  const taps = [
+    { t: "Hazy IPA",  s: "6.4%", level: 82 },
+    { t: "Amber Ale", s: "5.1%", level: 58 },
+    { t: "Dry Stout", s: "5.8%", level: 34 },
+    { t: "Pilsner",   s: "4.7%", level: 90 },
+  ];
+  return (
+    <div className={cx("m-tp")}>
+      <div className={cx("m-tp-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".1em" }}>● ON TAP · 6</span>
+      </div>
+      <div className={cx("m-tp-list")}>
+        {taps.map((t) => (
+          <div key={t.t} className={cx("m-tp-row")}>
+            <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 13, flex: 1 }}>{t.t}</span>
+            <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 10 }}>{t.s}</span>
+            <span className={cx("m-tp-bar")} style={{ background: `${ink}18` }}>
+              <span style={{ background: accent, width: `${t.level}%` }} />
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className={cx("m-tp-cta")} style={{ background: accent, color: bg }}>See the taproom →</div>
+    </div>
+  );
+}
+
+function MockCleaning({ title, accent, ink, bg }: MockProps) {
+  const rooms = [
+    { t: "Kitchen",      on: true },
+    { t: "2 Bathrooms",  on: true },
+    { t: "3 Bedrooms",   on: true },
+    { t: "Windows",      on: false },
+  ];
+  return (
+    <div className={cx("m-cn")}>
+      <div className={cx("m-cn-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span className={cx("m-cn-pill")} style={{ background: accent, color: bg }}>INSTANT QUOTE</span>
+      </div>
+      <div className={cx("m-cn-list")}>
+        {rooms.map((r) => (
+          <div key={r.t} className={cx("m-cn-row")} style={{ color: ink }}>
+            <span className={cx("m-cn-box")} style={{ background: r.on ? accent : "transparent", borderColor: r.on ? accent : `${ink}33`, color: bg }}>
+              {r.on ? "✓" : ""}
+            </span>
+            <span style={{ fontSize: 12, opacity: r.on ? 1 : .55 }}>{r.t}</span>
+          </div>
+        ))}
+      </div>
+      <div className={cx("m-cn-total")}>
+        <span className={cx("m-cn-num")} style={{ color: ink }}>$180</span>
+        <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 10 }}>biweekly · from</span>
+      </div>
+      <div className={cx("m-cn-cta")} style={{ background: accent, color: bg }}>Get my quote →</div>
+    </div>
+  );
+}
+
+function MockPet({ title, accent, ink, bg }: MockProps) {
+  const chips = ["Bath & tidy", "Full groom", "Nail trim"];
+  return (
+    <div className={cx("m-pt")}>
+      <div className={cx("m-pt-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".08em" }}>● NEW PETS OK</span>
+      </div>
+      <div className={cx("m-pt-profile")}>
+        <span className={cx("m-pt-avatar")} style={{ background: accent, color: bg }}>🐾</span>
+        <div className={cx("m-pt-id")}>
+          <span style={{ color: ink, fontFamily: "var(--serif)", fontSize: 18 }}>Biscuit</span>
+          <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9.5 }}>Goldendoodle · 24kg</span>
+        </div>
+      </div>
+      <div className={cx("m-pt-chips")}>
+        {chips.map((c) => (
+          <span key={c} style={{ borderColor: `${ink}22`, color: ink }}>{c}</span>
+        ))}
+      </div>
+      <div className={cx("m-pt-cta")} style={{ background: accent, color: bg }}>Book grooming →</div>
+    </div>
+  );
+}
+
 const MOCKS: Record<string, (p: MockProps) => ReactElement> = {
   menu: MockMenu,
   booking: MockBooking,
@@ -495,6 +584,9 @@ const MOCKS: Record<string, (p: MockProps) => ReactElement> = {
   map: MockMap,
   newsletter: MockNewsletter,
   calendar: MockCalendar,
+  taproom: MockTaproom,
+  cleaning: MockCleaning,
+  pet: MockPet,
 };
 
 function BrowserMock({ url, title, kind, palette }: Project) {
@@ -542,8 +634,8 @@ const CLIENT_TYPES = [
 ];
 
 export default function WorkReel() {
-  const top = [PROJECTS[0], PROJECTS[2], PROJECTS[4], PROJECTS[6], PROJECTS[8], PROJECTS[10], PROJECTS[12], PROJECTS[14]];
-  const bot = [PROJECTS[1], PROJECTS[3], PROJECTS[5], PROJECTS[7], PROJECTS[9], PROJECTS[11], PROJECTS[13]];
+  const top = [PROJECTS[0], PROJECTS[2], PROJECTS[4], PROJECTS[6], PROJECTS[8], PROJECTS[10], PROJECTS[12], PROJECTS[14], PROJECTS[16]];
+  const bot = [PROJECTS[1], PROJECTS[3], PROJECTS[5], PROJECTS[7], PROJECTS[9], PROJECTS[11], PROJECTS[13], PROJECTS[15], PROJECTS[17]];
 
   return (
     <section className={`${styles.work} ${instrumentSerif.variable}`} aria-label="Selected work">
