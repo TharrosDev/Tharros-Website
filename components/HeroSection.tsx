@@ -15,6 +15,7 @@ export default function HeroSection() {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        root.current?.classList.add("hero-ready");
         const h1 = q(".v3-h1")[0];
         const items = [
           q(".v3-eyebrow")[0],

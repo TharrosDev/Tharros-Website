@@ -689,6 +689,26 @@ button:focus-visible,
 
 #hero .v3-content { position: relative; z-index: 1; }
 
+/* The hero reveal is GSAP-driven (HeroSection.tsx) and loads as a deferred
+   chunk. Pre-hide the reveal targets so the first paint matches GSAP's initial
+   state instead of flashing the fully-rendered hero, then blanking it once the
+   chunk hydrates. GSAP adds `.hero-ready` and takes over; if the chunk never
+   loads, the fallback keyframe reveals everything so content is never stuck. */
+@media (prefers-reduced-motion: no-preference) {
+  #hero:not(.hero-ready) .v3-eyebrow,
+  #hero:not(.hero-ready) .v3-h1,
+  #hero:not(.hero-ready) .v3-lead,
+  #hero:not(.hero-ready) .v3-cta,
+  #hero:not(.hero-ready) .v3-meta {
+    opacity: 0;
+    animation: hero-reveal-fallback 0.5s ease 1.6s forwards;
+  }
+}
+
+@keyframes hero-reveal-fallback {
+  to { opacity: 1; }
+}
+
 #hero .v3-back {
   transform: translate(
     calc((var(--mx, 0.5) - 0.5) * -14px),
