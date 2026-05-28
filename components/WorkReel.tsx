@@ -621,15 +621,15 @@ export default function WorkReel() {
 
   return (
     <section className={`${styles.work} ${instrumentSerif.variable}`} aria-label="Selected work">
-      <header className={cx("work-head")}>
-        <div className={cx("work-head-eyebrow")}>
-          <span className={cx("work-head-tick")} aria-hidden="true" />
-          <span className={cx("work-head-label")}>Selected work</span>
+      <header className={`${cx("work-head")} mb-10 md:mb-12`}>
+        <div className="flex items-center gap-3 mb-6 md:mb-7">
+          <span className="h-[3px] w-7 bg-[color:var(--red)]" aria-hidden="true" />
+          <span className="type-meta-strong">Selected work</span>
         </div>
-        <h2 className={cx("work-head-title")}>
-          Sites and agents, built to <em>fit</em>.
+        <h2 className="type-display-2">
+          Sites and agents, built to <span className="accent-text">fit.</span>
         </h2>
-        <p className={cx("work-head-sub")}>
+        <p className="type-lead mt-5 md:mt-6">
           A moving sample of the range we build — editorial sites, storefronts,
           and live agent consoles.
         </p>
