@@ -36,7 +36,7 @@ export default function WebsiteBuildsSection() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-8 pb-12 md:pb-16">
           <SplitReveal as="h2" className="type-display-2 max-w-[16ch] col-span-12 lg:col-span-7" start="top 85%">
             Your website,<br />
-            <span className="accent-text">rebuilt right.</span>
+            <span className="accent-text">Built right.</span>
           </SplitReveal>
           <AnimatedSection delay={0.1} className="col-span-12 lg:col-span-5 lg:self-end lg:pb-2">
             <p className="type-lead">
