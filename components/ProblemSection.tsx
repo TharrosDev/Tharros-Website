@@ -100,14 +100,7 @@ export default function ProblemSection() {
                 <h3 className="type-display-3 max-w-[20ch]">{pain.headline}</h3>
 
                 <div className="relative h-[3px] mt-5 mb-5 max-w-[22rem] bg-[color:var(--rule)] overflow-hidden">
-                  <motion.span
-                    initial={reduce ? false : { scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.7, delay: 0.15 + i * 0.08, ease }}
-                    style={{ originX: 0 }}
-                    className="absolute inset-0 red-block"
-                  />
+                  <span className="absolute inset-0 red-block origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 motion-reduce:transition-none" />
                 </div>
 
                 <p className="type-body text-[color:var(--ink-muted)] max-w-[46ch]">{pain.body}</p>
