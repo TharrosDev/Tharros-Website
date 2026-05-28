@@ -590,7 +590,7 @@ function BrowserMock({ url, title, kind, palette }: Project) {
 
 function ReelRow({ projects, size, direction, speed }: { projects: Project[]; size: "lg" | "sm"; direction: "left" | "right"; speed: number }) {
   const items = [...projects, ...projects];
-  const duration = (size === "lg" ? 80 : 64) / speed;
+  const duration = (size === "lg" ? 66 : 54) / speed;
   return (
     <div className={cx("reel-row", `reel-row-${size}`)}>
       <div className={cx("reel-track", direction === "right" && "reel-track-rev")} style={{ ["--dur" as string]: `${duration}s` }}>
@@ -621,6 +621,20 @@ export default function WorkReel() {
 
   return (
     <section className={`${styles.work} ${instrumentSerif.variable}`} aria-label="Selected work">
+      <header className={cx("work-head")}>
+        <div className={cx("work-head-eyebrow")}>
+          <span className={cx("work-head-tick")} aria-hidden="true" />
+          <span className={cx("work-head-label")}>Selected work</span>
+        </div>
+        <h2 className={cx("work-head-title")}>
+          Sites and agents, built to <em>fit</em>.
+        </h2>
+        <p className={cx("work-head-sub")}>
+          A moving sample of the range we build — editorial sites, storefronts,
+          and live agent consoles.
+        </p>
+      </header>
+
       <div className={cx("reel")} role="presentation" aria-hidden="true">
         <ReelRow projects={top} size="lg" direction="left" speed={SPEED} />
         <ReelRow projects={bot} size="sm" direction="right" speed={SPEED * 1.2} />

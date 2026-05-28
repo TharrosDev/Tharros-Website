@@ -22,7 +22,7 @@
   position: relative;
   border-top: 1px solid var(--line);
   background: linear-gradient(to bottom, color-mix(in oklab, var(--bg) 70%, var(--bg-2) 30%), var(--bg));
-  padding: 36px 0 56px;
+  padding: 44px 0 40px;
   overflow: hidden;
   font-family: var(--sans);
   color: var(--fg);
@@ -33,10 +33,10 @@
 /* ── REEL ROWS ─────────────────────────────────────────────────────────────── */
 .reel {
   position: relative;
-  padding: 24px 0 8px;
+  padding: 16px 0 4px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 22px;
 }
 
 .reel-row {
@@ -44,9 +44,9 @@
 }
 .reel-track {
   display: flex;
-  gap: 28px;
+  gap: 22px;
   width: max-content;
-  padding: 12px 24px;
+  padding: 10px 24px;
   animation: reel-scroll var(--dur, 80s) linear infinite;
 }
 /* Counter-scroll: this row runs the mirrored keyframe forward, so it travels
@@ -70,8 +70,8 @@
   z-index: 4;
 }
 
-.reel-row-lg .reel-item { width: 460px; }
-.reel-row-sm .reel-item { width: 320px; }
+.reel-row-lg .reel-item { width: 380px; }
+.reel-row-sm .reel-item { width: 270px; }
 
 /* ── BROWSER FRAME ─────────────────────────────────────────────────────────── */
 .bw {
@@ -332,6 +332,52 @@
 .m-cs-tags span { font-family: var(--mono); font-size: 9px; padding: 3px 8px; border: 1px solid; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; }
 .m-cs-link { position: absolute; bottom: 16px; right: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; }
 
+/* ── INTRO HEADER ──────────────────────────────────────────────────────────── */
+.work-head {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.work-head-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.work-head-tick {
+  width: 28px;
+  height: 3px;
+  background: var(--accent);
+}
+.work-head-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.work-head-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4.2vw, 46px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  max-width: 18ch;
+}
+.work-head-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.work-head-sub {
+  margin-top: 12px;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg-dim);
+  max-width: 48ch;
+}
+
 /* ── LEGEND STRIP ──────────────────────────────────────────────────────────── */
 .work-foot {
   max-width: 1320px;
@@ -369,8 +415,8 @@
 .work-foot-link:hover .arrow { transform: translateX(3px); }
 
 @media (max-width: 880px) {
-  .reel-row-lg .reel-item { width: 360px; }
-  .reel-row-sm .reel-item { width: 260px; }
+  .reel-row-lg .reel-item { width: 300px; }
+  .reel-row-sm .reel-item { width: 220px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
