@@ -333,48 +333,12 @@
 .m-cs-link { position: absolute; bottom: 16px; right: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; }
 
 /* ── INTRO HEADER ──────────────────────────────────────────────────────────── */
+/* Full-bleed; the heading/eyebrow themselves use the site's global type
+   utilities (type-display-2 / type-meta-strong) so they match every other
+   section title. This wrapper only owns the bleed + mobile gutter. */
 .work-head {
   margin: 0;
   padding: 0;
-}
-.work-head-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.work-head-tick {
-  width: 28px;
-  height: 3px;
-  background: var(--accent);
-}
-.work-head-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
-}
-.work-head-title {
-  font-family: var(--serif);
-  font-size: clamp(28px, 4.2vw, 46px);
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-  max-width: 18ch;
-}
-.work-head-title em {
-  font-style: italic;
-  color: var(--accent);
-}
-.work-head-sub {
-  margin-top: 12px;
-  font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--fg-dim);
-  max-width: 48ch;
 }
 
 /* ── LEGEND STRIP ──────────────────────────────────────────────────────────── */
