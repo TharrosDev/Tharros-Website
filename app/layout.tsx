@@ -45,7 +45,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   interactiveWidget: "resizes-content",
-  colorScheme: "light dark",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
