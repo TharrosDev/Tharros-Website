@@ -203,13 +203,13 @@
 /* ── MOCK: newsletter ──────────────────────────────────────────────────────── */
 .m-nl { display: flex; flex-direction: column; gap: 10px; height: 100%; }
 .m-nl-meta { display: flex; justify-content: space-between; align-items: baseline; }
-.m-nl-h { font-family: var(--serif); font-size: 32px; line-height: 1; letter-spacing: -0.02em; }
+.m-nl-h { font-family: var(--serif); font-size: 30px; line-height: 1; letter-spacing: -0.02em; }
 .m-nl-h em { font-style: italic; }
 .m-nl-form { display: flex; gap: 6px; margin-top: 2px; }
 .m-nl-input { flex: 1; padding: 8px 12px; border-radius: 6px; border: 1px solid; font-size: 11px; }
 .m-nl-btn { padding: 8px 14px; border-radius: 6px; font-size: 11px; font-weight: 500; }
 .m-nl-list { display: flex; flex-direction: column; margin-top: auto; }
-.m-nl-row { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px solid; font-size: 11px; }
+.m-nl-row { display: flex; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px solid; font-size: 11px; }
 .m-nl-row:last-child { border-bottom: 0; }
 
 /* ── MOCK: calendar ────────────────────────────────────────────────────────── */
@@ -255,7 +255,7 @@
 
 /* ── MOCK: taproom (brewery) ───────────────────────────────────────────────── */
 .m-tp { display: flex; flex-direction: column; gap: 9px; height: 100%; }
-.m-tp-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-tp-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid; }
 .m-tp-list { display: flex; flex-direction: column; flex: 1; justify-content: center; gap: 9px; }
 .m-tp-row { display: flex; align-items: center; gap: 10px; }
 .m-tp-bar { width: 70px; height: 5px; border-radius: 99px; overflow: hidden; }
@@ -264,13 +264,13 @@
 
 /* ── MOCK: cleaning (service) ──────────────────────────────────────────────── */
 .m-cn { display: flex; flex-direction: column; gap: 8px; height: 100%; }
-.m-cn-head { display: flex; justify-content: space-between; align-items: center; }
+.m-cn-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid; }
 .m-cn-pill { font-family: var(--mono); font-size: 8px; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.08em; }
 .m-cn-list { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
 .m-cn-row { display: flex; align-items: center; gap: 9px; }
 .m-cn-box { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid; display: grid; place-items: center; font-size: 10px; flex: 0 0 auto; }
 .m-cn-total { display: flex; align-items: baseline; gap: 8px; margin-top: auto; }
-.m-cn-num { font-family: var(--serif); font-size: 36px; line-height: 1; letter-spacing: -0.03em; }
+.m-cn-num { font-family: var(--serif); font-size: 33px; line-height: 1; letter-spacing: -0.03em; }
 .m-cn-cta { padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
 
 /* ── MOCK: pet (grooming) ──────────────────────────────────────────────────── */
@@ -285,7 +285,7 @@
 
 /* ── MOCK: menu (restaurant) ───────────────────────────────────────────────── */
 .m-mn { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-mn-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-mn-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid; }
 .m-mn-list { display: flex; flex-direction: column; flex: 1; justify-content: center; }
 .m-mn-row { display: flex; align-items: baseline; gap: 8px; padding: 7px 0; border-bottom: 1px solid; }
 .m-mn-row:last-child { border-bottom: 0; }
@@ -294,7 +294,7 @@
 
 /* ── MOCK: booking (clinic) ────────────────────────────────────────────────── */
 .m-bk { display: flex; flex-direction: column; gap: 8px; height: 100%; }
-.m-bk-head { display: flex; justify-content: space-between; align-items: center; }
+.m-bk-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid; }
 .m-bk-pill { font-family: var(--mono); font-size: 8px; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.08em; }
 .m-bk-sub { font-size: 11px; }
 .m-bk-days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 2px; }
@@ -317,7 +317,7 @@
 
 /* ── MOCK: fitness (studio) ────────────────────────────────────────────────── */
 .m-ft { display: flex; flex-direction: column; gap: 8px; height: 100%; }
-.m-ft-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-ft-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid; }
 .m-ft-list { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
 .m-ft-row { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; }
 .m-ft-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
@@ -336,13 +336,30 @@
 
 /* ── MOCK: salon (beauty) ──────────────────────────────────────────────────── */
 .m-sl { display: flex; flex-direction: column; gap: 10px; height: 100%; }
-.m-sl-head { display: flex; justify-content: space-between; align-items: baseline; }
-.m-sl-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; height: 38px; }
+.m-sl-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid; }
+.m-sl-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; height: 34px; }
 .m-sl-strip span { border-radius: 6px; }
 .m-sl-list { display: flex; flex-direction: column; }
 .m-sl-row { display: flex; align-items: baseline; gap: 8px; padding: 6px 0; border-bottom: 1px solid; }
 .m-sl-row:last-child { border-bottom: 0; }
 .m-sl-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── SM-ROW FIT ────────────────────────────────────────────────────────────── */
+/* The short (sm) row gives each card ~140px of body height, so the cards that
+   ride it scale their oversized serif headings, marks, and avatars down to
+   stay inside the frame. */
+.reel-row-sm .m-tr-h { font-size: 22px; }
+.reel-row-sm .m-cf { gap: 8px; }
+.reel-row-sm .m-cf-h { font-size: 24px; }
+.reel-row-sm .m-cf-stamps span { width: 22px; height: 22px; }
+.reel-row-sm .m-br { gap: 9px; }
+.reel-row-sm .m-br-mark { width: 46px; height: 46px; font-size: 30px; border-radius: 10px; }
+.reel-row-sm .m-br-name { font-size: 26px; }
+.reel-row-sm .m-br-tag { font-size: 14px; }
+.reel-row-sm .m-br-swatches span { width: 26px; height: 26px; }
+.reel-row-sm .m-pt { gap: 8px; }
+.reel-row-sm .m-pt-avatar { width: 40px; height: 40px; font-size: 18px; }
+.reel-row-sm .m-au-num { font-size: 38px; }
 
 /* ── INTRO HEADER ──────────────────────────────────────────────────────────── */
 /* Full-bleed; the heading/eyebrow themselves use the site's global type

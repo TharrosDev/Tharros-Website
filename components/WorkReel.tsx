@@ -62,8 +62,8 @@ function MockMenu({ title, accent, ink, bg }: MockProps) {
   ];
   return (
     <div className={cx("m-mn")}>
-      <div className={cx("m-mn-head")}>
-        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+      <div className={cx("m-mn-head")} style={{ borderColor: `${ink}1a` }}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.12em" }}>{title}</span>
         <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9 }}>DINNER · 5–10PM</span>
       </div>
       <div className={cx("m-mn-list")}>
@@ -85,7 +85,7 @@ function MockBooking({ title, accent, ink, bg }: MockProps) {
   const days = [{ d: "MON", n: "12" }, { d: "TUE", n: "13" }, { d: "WED", n: "14" }, { d: "THU", n: "15" }];
   return (
     <div className={cx("m-bk")}>
-      <div className={cx("m-bk-head")}>
+      <div className={cx("m-bk-head")} style={{ borderColor: `${ink}1a` }}>
         <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
         <span className={cx("m-bk-pill")} style={{ background: accent, color: bg }}>NEW PATIENTS</span>
       </div>
@@ -122,7 +122,7 @@ function MockTrades({ title, accent, ink, bg }: MockProps) {
       <div className={cx("m-tr-poster")} style={{ background: `linear-gradient(150deg, ${ink} 0%, ${ink} 45%, ${accent}66 140%)` }}>
         <div className={cx("m-tr-top")}>
           <span style={{ color: bg, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
-          <span className={cx("m-tr-badge")} style={{ background: accent, color: ink }}>● LICENSED & INSURED</span>
+          <span className={cx("m-tr-badge")} style={{ background: accent, color: ink }}>● INSURED</span>
         </div>
         <div className={cx("m-tr-h")} style={{ color: bg }}>
           Decks, fences &amp;<br /><em style={{ color: accent }}>additions</em> — done right.
@@ -148,7 +148,7 @@ function MockFitness({ title, accent, ink, bg }: MockProps) {
   ];
   return (
     <div className={cx("m-ft")}>
-      <div className={cx("m-ft-head")}>
+      <div className={cx("m-ft-head")} style={{ borderColor: `${ink}1a` }}>
         <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
         <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9 }}>TODAY · THU</span>
       </div>
@@ -200,7 +200,7 @@ function MockSalon({ title, accent, ink, bg }: MockProps) {
   ];
   return (
     <div className={cx("m-sl")}>
-      <div className={cx("m-sl-head")}>
+      <div className={cx("m-sl-head")} style={{ borderColor: `${ink}1a` }}>
         <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.1em" }}>{title}</span>
         <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".1em" }}>● OPEN TODAY</span>
       </div>
@@ -269,7 +269,7 @@ function MockCafe({ title, accent, ink, bg }: MockProps) {
 }
 
 function MockAuto({ title, accent, ink, bg }: MockProps) {
-  const chips = ["Brake check", "Tire swap", "Diagnostics", "Alignment"];
+  const chips = ["Brake check", "Tire swap", "Diagnostics"];
   return (
     <div className={cx("m-au")}>
       <div className={cx("m-au-head")}>
@@ -491,7 +491,7 @@ function MockTaproom({ title, accent, ink, bg }: MockProps) {
   ];
   return (
     <div className={cx("m-tp")}>
-      <div className={cx("m-tp-head")}>
+      <div className={cx("m-tp-head")} style={{ borderColor: `${ink}1a` }}>
         <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
         <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".1em" }}>● ON TAP · 6</span>
       </div>
@@ -520,7 +520,7 @@ function MockCleaning({ title, accent, ink, bg }: MockProps) {
   ];
   return (
     <div className={cx("m-cn")}>
-      <div className={cx("m-cn-head")}>
+      <div className={cx("m-cn-head")} style={{ borderColor: `${ink}1a` }}>
         <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
         <span className={cx("m-cn-pill")} style={{ background: accent, color: bg }}>INSTANT QUOTE</span>
       </div>
@@ -634,8 +634,11 @@ const CLIENT_TYPES = [
 ];
 
 export default function WorkReel() {
-  const top = [PROJECTS[0], PROJECTS[2], PROJECTS[4], PROJECTS[6], PROJECTS[8], PROJECTS[10], PROJECTS[12], PROJECTS[14], PROJECTS[16]];
-  const bot = [PROJECTS[1], PROJECTS[3], PROJECTS[5], PROJECTS[7], PROJECTS[9], PROJECTS[11], PROJECTS[13], PROJECTS[15], PROJECTS[17]];
+  // Tall (lg) row carries the content-heavy list/menu/schedule cards that need
+  // vertical room; the short (sm) row carries poster/photo/grid cards that fill
+  // whatever space they're given.
+  const top = [PROJECTS[0], PROJECTS[4], PROJECTS[6], PROJECTS[8], PROJECTS[3], PROJECTS[15], PROJECTS[16], PROJECTS[14], PROJECTS[12]];
+  const bot = [PROJECTS[1], PROJECTS[2], PROJECTS[5], PROJECTS[7], PROJECTS[10], PROJECTS[11], PROJECTS[13], PROJECTS[17], PROJECTS[9]];
 
   return (
     <section className={`${styles.work} ${instrumentSerif.variable}`} aria-label="Selected work">
