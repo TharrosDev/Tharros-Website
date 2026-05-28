@@ -50,6 +50,12 @@ const PROJECTS: Project[] = [
   { title: "Margins",        url: "margins.letter",    kind: "newsletter", year: "2024", sector: "Independent",    scope: "Newsletter · Brand",           palette: ["#faf7ee", "#1a1a1a", "#e23a2e"] },
   { title: "Pivot",          url: "pivot.cal",         kind: "calendar",   year: "2023", sector: "Productivity",   scope: "Web · App · Agents",           palette: ["#f3f1ea", "#1f2a44", "#e8b34a"] },
   { title: "Quarry",         url: "quarry.studio",     kind: "case-study", year: "2023", sector: "Architecture",   scope: "Case study · Brand · Web",     palette: ["#2a2825", "#d6c8a8", "#e23a2e"] },
+  { title: "Bella Cucina",   url: "bellacucina.ca",    kind: "menu",       year: "2025", sector: "Restaurant",     scope: "Web · Menu · Reservations",    palette: ["#1a1410", "#e07a3e", "#f4e8d6"] },
+  { title: "Rideau Dental",  url: "rideaudental.ca",   kind: "booking",    year: "2025", sector: "Dental clinic",  scope: "Web · Online booking · Agent", palette: ["#f2f7f8", "#1f8a8a", "#0e1518"] },
+  { title: "Maple Ridge",    url: "mapleridge.build",  kind: "trades",     year: "2024", sector: "Contractor",     scope: "Web · Quote form · Gallery",   palette: ["#16181c", "#f0a32e", "#f1efe9"] },
+  { title: "Glebe Yoga",     url: "glebeyoga.ca",      kind: "fitness",    year: "2025", sector: "Wellness studio", scope: "Web · Schedule · Memberships", palette: ["#eef1ea", "#6b8f5e", "#1c241a"] },
+  { title: "Carleton Law",   url: "carletonlaw.ca",    kind: "legal",      year: "2024", sector: "Law firm",       scope: "Web · Intake · Agent",         palette: ["#0f1622", "#b89a5e", "#eef0f4"] },
+  { title: "Bloom Salon",    url: "bloomsalon.ca",     kind: "salon",      year: "2025", sector: "Hair & beauty",  scope: "Web · Services · Booking",     palette: ["#faf0f2", "#c2557a", "#1f1418"] },
 ];
 
 type MockProps = { title: string; bg: string; accent: string; ink: string };
@@ -550,6 +556,175 @@ function MockCaseStudy({ title, accent, ink, bg }: MockProps) {
   );
 }
 
+function MockMenu({ title, accent, ink, bg }: MockProps) {
+  const dishes = [
+    { t: "Wood-fired margherita", p: "18" },
+    { t: "Cacio e pepe",          p: "22" },
+    { t: "Branzino, lemon",       p: "31" },
+    { t: "Tiramisù",              p: "12" },
+  ];
+  return (
+    <div className={cx("m-mn")}>
+      <div className={cx("m-mn-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9 }}>DINNER · 5–10PM</span>
+      </div>
+      <div className={cx("m-mn-list")}>
+        {dishes.map((d) => (
+          <div key={d.t} className={cx("m-mn-row")} style={{ color: ink, borderColor: `${ink}1e` }}>
+            <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: 13 }}>{d.t}</span>
+            <span className={cx("m-mn-dots")} style={{ borderColor: `${ink}30` }} />
+            <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 11 }}>{d.p}</span>
+          </div>
+        ))}
+      </div>
+      <div className={cx("m-mn-cta")} style={{ background: accent, color: bg }}>Reserve a table →</div>
+    </div>
+  );
+}
+
+function MockBooking({ title, accent, ink, bg }: MockProps) {
+  const slots = ["9:00", "10:30", "1:00", "2:30", "4:00", "5:30"];
+  const days = [{ d: "MON", n: "12" }, { d: "TUE", n: "13" }, { d: "WED", n: "14" }, { d: "THU", n: "15" }];
+  return (
+    <div className={cx("m-bk")}>
+      <div className={cx("m-bk-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span className={cx("m-bk-pill")} style={{ background: accent, color: bg }}>NEW PATIENTS</span>
+      </div>
+      <div className={cx("m-bk-sub")} style={{ color: ink, opacity: .6 }}>Book a cleaning in under a minute.</div>
+      <div className={cx("m-bk-days")}>
+        {days.map((d, i) => (
+          <span key={d.d} className={cx("m-bk-day")} style={{
+            background: i === 1 ? accent : `${ink}08`,
+            color: i === 1 ? bg : ink,
+            borderColor: `${ink}14`,
+          }}>
+            <span style={{ fontSize: 8, opacity: .7 }}>{d.d}</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 13 }}>{d.n}</span>
+          </span>
+        ))}
+      </div>
+      <div className={cx("m-bk-slots")}>
+        {slots.map((s, i) => (
+          <span key={s} className={cx("m-bk-slot")} style={{
+            color: i === 3 ? bg : ink,
+            background: i === 3 ? ink : "transparent",
+            borderColor: i === 3 ? ink : `${ink}22`,
+          }}>{s}</span>
+        ))}
+      </div>
+      <div className={cx("m-bk-cta")} style={{ background: accent, color: bg }}>Confirm — Tue 2:30</div>
+    </div>
+  );
+}
+
+function MockTrades({ title, accent, ink, bg }: MockProps) {
+  return (
+    <div className={cx("m-tr")} style={{ background: bg, color: ink }}>
+      <div className={cx("m-tr-poster")} style={{ background: `linear-gradient(150deg, ${ink} 0%, ${ink} 45%, ${accent}66 140%)` }}>
+        <div className={cx("m-tr-top")}>
+          <span style={{ color: bg, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+          <span className={cx("m-tr-badge")} style={{ background: accent, color: ink }}>● LICENSED & INSURED</span>
+        </div>
+        <div className={cx("m-tr-h")} style={{ color: bg }}>
+          Decks, fences &amp;<br /><em style={{ color: accent }}>additions</em> — done right.
+        </div>
+        <div className={cx("m-tr-meta")} style={{ color: bg, opacity: .75 }}>
+          <span>OTTAWA · SINCE 2009</span><span>★ 4.9 · 210 jobs</span>
+        </div>
+      </div>
+      <div className={cx("m-tr-bar")}>
+        <span className={cx("m-tr-cta")} style={{ background: accent, color: ink }}>Get a free quote</span>
+        <span style={{ color: ink, fontFamily: "var(--mono)", fontSize: 11 }}>(613) 555-0142</span>
+      </div>
+    </div>
+  );
+}
+
+function MockFitness({ title, accent, ink, bg }: MockProps) {
+  const classes = [
+    { t: "Vinyasa Flow",  time: "6:00",  full: false },
+    { t: "Power Yoga",    time: "7:30",  full: true },
+    { t: "Restorative",   time: "9:00",  full: false },
+    { t: "Mat Pilates",   time: "12:00", full: false },
+  ];
+  return (
+    <div className={cx("m-ft")}>
+      <div className={cx("m-ft-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.05em" }}>{title}</span>
+        <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9 }}>TODAY · THU</span>
+      </div>
+      <div className={cx("m-ft-list")}>
+        {classes.map((c) => (
+          <div key={c.t} className={cx("m-ft-row")} style={{ color: ink, background: `${ink}06`, borderLeft: `2px solid ${c.full ? `${ink}30` : accent}` }}>
+            <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 11 }}>{c.time}</span>
+            <span style={{ flex: 1, fontSize: 12 }}>{c.t}</span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 8.5, opacity: c.full ? .5 : 1, color: c.full ? ink : accent }}>
+              {c.full ? "WAITLIST" : "BOOK"}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className={cx("m-ft-cta")} style={{ background: accent, color: bg }}>Join — 8 classes / mo</div>
+    </div>
+  );
+}
+
+function MockLegal({ title, accent, ink, bg }: MockProps) {
+  const areas = ["Real estate", "Wills & estates", "Small business", "Family"];
+  return (
+    <div className={cx("m-lg")} style={{ background: bg, color: ink }}>
+      <div className={cx("m-lg-top")}>
+        <span className={cx("m-lg-mark")} style={{ color: accent }}>{title.split(" ")[0].toUpperCase()}</span>
+        <span style={{ color: ink, opacity: .5, fontFamily: "var(--mono)", fontSize: 9 }}>EST. 1998</span>
+      </div>
+      <div className={cx("m-lg-h")} style={{ color: ink }}>
+        Counsel you can<br /><em style={{ color: accent }}>actually</em> reach.
+      </div>
+      <div className={cx("m-lg-areas")}>
+        {areas.map((a) => (
+          <span key={a} className={cx("m-lg-area")} style={{ borderColor: `${ink}26`, color: ink }}>{a}</span>
+        ))}
+      </div>
+      <div className={cx("m-lg-cta")}>
+        <span style={{ background: accent, color: bg }}>Book a consultation</span>
+        <span style={{ color: ink, opacity: .55, fontFamily: "var(--mono)", fontSize: 9 }}>free · 20 min</span>
+      </div>
+    </div>
+  );
+}
+
+function MockSalon({ title, accent, ink, bg }: MockProps) {
+  const services = [
+    { t: "Cut & style",   p: "65" },
+    { t: "Balayage",      p: "180" },
+    { t: "Gloss treat",   p: "45" },
+  ];
+  return (
+    <div className={cx("m-sl")}>
+      <div className={cx("m-sl-head")}>
+        <span style={{ color: ink, fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.1em" }}>{title}</span>
+        <span style={{ color: accent, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: ".1em" }}>● OPEN TODAY</span>
+      </div>
+      <div className={cx("m-sl-strip")}>
+        {[0, 1, 2].map((i) => (
+          <span key={i} style={{ background: i === 1 ? accent : `${accent}33`, outline: i === 1 ? `1.5px solid ${ink}` : "none", outlineOffset: 1 }} />
+        ))}
+      </div>
+      <div className={cx("m-sl-list")}>
+        {services.map((s) => (
+          <div key={s.t} className={cx("m-sl-row")} style={{ color: ink, borderColor: `${ink}14` }}>
+            <span style={{ fontSize: 12 }}>{s.t}</span>
+            <span style={{ marginLeft: "auto", color: ink, opacity: .6, fontFamily: "var(--mono)", fontSize: 11 }}>${s.p}</span>
+          </div>
+        ))}
+      </div>
+      <div className={cx("m-sl-cta")} style={{ background: accent, color: bg }}>Book online →</div>
+    </div>
+  );
+}
+
 const MOCKS: Record<string, (p: MockProps) => ReactElement> = {
   editorial: MockEditorial,
   product: MockProduct,
@@ -569,6 +744,12 @@ const MOCKS: Record<string, (p: MockProps) => ReactElement> = {
   newsletter: MockNewsletter,
   calendar: MockCalendar,
   "case-study": MockCaseStudy,
+  menu: MockMenu,
+  booking: MockBooking,
+  trades: MockTrades,
+  fitness: MockFitness,
+  legal: MockLegal,
+  salon: MockSalon,
 };
 
 function BrowserMock({ url, title, kind, palette }: Project) {
@@ -616,8 +797,8 @@ const CLIENT_TYPES = [
 ];
 
 export default function WorkReel() {
-  const top = [PROJECTS[0], PROJECTS[10], PROJECTS[2], PROJECTS[17], PROJECTS[3], PROJECTS[12], PROJECTS[14], PROJECTS[1], PROJECTS[8]];
-  const bot = [PROJECTS[5], PROJECTS[13], PROJECTS[7], PROJECTS[15], PROJECTS[6], PROJECTS[11], PROJECTS[16], PROJECTS[4], PROJECTS[9]];
+  const top = [PROJECTS[18], PROJECTS[0], PROJECTS[20], PROJECTS[10], PROJECTS[2], PROJECTS[22], PROJECTS[17], PROJECTS[3], PROJECTS[12], PROJECTS[14], PROJECTS[1], PROJECTS[8]];
+  const bot = [PROJECTS[19], PROJECTS[5], PROJECTS[21], PROJECTS[13], PROJECTS[7], PROJECTS[23], PROJECTS[15], PROJECTS[6], PROJECTS[11], PROJECTS[16], PROJECTS[4], PROJECTS[9]];
 
   return (
     <section className={`${styles.work} ${instrumentSerif.variable}`} aria-label="Selected work">

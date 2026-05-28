@@ -332,6 +332,67 @@
 .m-cs-tags span { font-family: var(--mono); font-size: 9px; padding: 3px 8px; border: 1px solid; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; }
 .m-cs-link { position: absolute; bottom: 16px; right: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; }
 
+/* ── MOCK: menu (restaurant) ───────────────────────────────────────────────── */
+.m-mn { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+.m-mn-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-mn-list { display: flex; flex-direction: column; flex: 1; justify-content: center; }
+.m-mn-row { display: flex; align-items: baseline; gap: 8px; padding: 7px 0; border-bottom: 1px solid; }
+.m-mn-row:last-child { border-bottom: 0; }
+.m-mn-dots { flex: 1; border-bottom: 1px dotted; transform: translateY(-3px); }
+.m-mn-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── MOCK: booking (clinic) ────────────────────────────────────────────────── */
+.m-bk { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+.m-bk-head { display: flex; justify-content: space-between; align-items: center; }
+.m-bk-pill { font-family: var(--mono); font-size: 8px; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.08em; }
+.m-bk-sub { font-size: 11px; }
+.m-bk-days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 2px; }
+.m-bk-day { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 6px 0; border-radius: 6px; border: 1px solid; }
+.m-bk-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.m-bk-slot { padding: 6px 0; border-radius: 5px; border: 1px solid; text-align: center; font-family: var(--mono); font-size: 10px; }
+.m-bk-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── MOCK: trades (contractor) ─────────────────────────────────────────────── */
+.m-tr { margin: -18px; height: calc(100% + 36px); display: flex; flex-direction: column; }
+.reel-row-sm .m-tr { margin: -14px; }
+.m-tr-poster { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; position: relative; }
+.m-tr-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.m-tr-badge { font-family: var(--mono); font-size: 8px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0.06em; font-weight: 600; }
+.m-tr-h { font-family: var(--serif); font-size: 30px; line-height: 1.02; letter-spacing: -0.02em; margin-top: auto; }
+.m-tr-h em { font-style: italic; }
+.m-tr-meta { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; }
+.m-tr-bar { display: flex; align-items: center; gap: 12px; padding: 11px 18px; }
+.m-tr-cta { padding: 8px 14px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+
+/* ── MOCK: fitness (studio) ────────────────────────────────────────────────── */
+.m-ft { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+.m-ft-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-ft-list { display: flex; flex-direction: column; gap: 4px; margin-top: 2px; }
+.m-ft-row { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; }
+.m-ft-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
+/* ── MOCK: legal (law firm) ────────────────────────────────────────────────── */
+.m-lg { margin: -18px; padding: 18px; height: calc(100% + 36px); display: flex; flex-direction: column; gap: 10px; }
+.reel-row-sm .m-lg { margin: -14px; padding: 14px; }
+.m-lg-top { display: flex; justify-content: space-between; align-items: baseline; }
+.m-lg-mark { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; font-weight: 600; }
+.m-lg-h { font-family: var(--serif); font-size: 28px; line-height: 1.02; letter-spacing: -0.02em; }
+.m-lg-h em { font-style: italic; }
+.m-lg-areas { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.m-lg-area { font-size: 9.5px; padding: 4px 9px; border: 1px solid; border-radius: 999px; }
+.m-lg-cta { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.m-lg-cta span:first-child { padding: 8px 14px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+
+/* ── MOCK: salon (beauty) ──────────────────────────────────────────────────── */
+.m-sl { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+.m-sl-head { display: flex; justify-content: space-between; align-items: baseline; }
+.m-sl-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; height: 38px; }
+.m-sl-strip span { border-radius: 6px; }
+.m-sl-list { display: flex; flex-direction: column; }
+.m-sl-row { display: flex; align-items: baseline; gap: 8px; padding: 6px 0; border-bottom: 1px solid; }
+.m-sl-row:last-child { border-bottom: 0; }
+.m-sl-cta { margin-top: auto; padding: 9px 12px; border-radius: 6px; font-size: 11px; text-align: center; font-weight: 500; }
+
 /* ── INTRO HEADER ──────────────────────────────────────────────────────────── */
 /* Full-bleed; the heading/eyebrow themselves use the site's global type
    utilities (type-display-2 / type-meta-strong) so they match every other
