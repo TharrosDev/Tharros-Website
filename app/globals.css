@@ -310,12 +310,18 @@ button:focus-visible,
   .rhythm-default { padding-block: var(--rhythm-default); }
   .rhythm-breath  { padding-block: var(--rhythm-breath); }
 
-  /* Container — left-set with breathing right margin */
+  /* Container — full-bleed: content fills the viewport on every screen,
+     with a horizontal gutter kept only on mobile so text never touches the
+     edge on small devices. No max-width cap and no large-screen side padding. */
   .page-frame {
     width: 100%;
-    max-width: clamp(1480px, 90vw, 2000px);
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 4vw, 4.5rem);
+    padding-inline: 0;
+  }
+  @media (max-width: 768px) {
+    .page-frame {
+      padding-inline: 1.25rem;
+    }
   }
 
   /* Hairline + bold rules */
@@ -509,7 +515,6 @@ button:focus-visible,
     align-items: center;
     gap: var(--marquee-gap, 2.5rem);
     padding-right: var(--marquee-gap, 2.5rem);
-    min-width: 100%;
     animation: marquee var(--marquee-dur, 32s) linear infinite;
   }
   .marquee[data-reverse="true"] .marquee__track { animation-direction: reverse; }

@@ -334,9 +334,8 @@
 
 /* ── INTRO HEADER ──────────────────────────────────────────────────────────── */
 .work-head {
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: 0 32px;
+  margin: 0;
+  padding: 0;
 }
 .work-head-eyebrow {
   display: flex;
@@ -380,9 +379,8 @@
 
 /* ── LEGEND STRIP ──────────────────────────────────────────────────────────── */
 .work-foot {
-  max-width: 1320px;
-  margin: 22px auto 0;
-  padding: 32px 32px 0;
+  margin: 22px 0 0;
+  padding: 32px 0 0;
   border-top: 1px solid var(--line);
 }
 .work-foot-row {
@@ -417,6 +415,16 @@
 @media (max-width: 880px) {
   .reel-row-lg .reel-item { width: 300px; }
   .reel-row-sm .reel-item { width: 220px; }
+}
+
+/* Full-bleed everywhere; keep a gutter only on mobile so the framing copy
+   doesn't touch the screen edge. */
+@media (max-width: 768px) {
+  .work-head,
+  .work-foot {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
