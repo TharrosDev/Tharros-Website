@@ -338,13 +338,13 @@
    section title. This wrapper only owns the bleed + mobile gutter. */
 .work-head {
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
 }
 
 /* ── LEGEND STRIP ──────────────────────────────────────────────────────────── */
 .work-foot {
   margin: 22px 0 0;
-  padding: 32px 0 0;
+  padding: 32px 10px 0;
   border-top: 1px solid var(--line);
 }
 .work-foot-row {
