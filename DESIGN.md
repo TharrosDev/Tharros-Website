@@ -33,20 +33,18 @@ One neutral ramp. The clothing supplies the colour; the interface does not.
 |---|---|---|
 | `--black` | `oklch(8% 0 0)` | Dark sections, footer, 404 |
 | `--near-black` | `oklch(13% 0 0)` | Primary ink, button fill, heavy rules |
-| `--charcoal` | `oklch(24% 0 0)` | Reserved |
-| `--graphite` | `oklch(38% 0 0)` | Reserved |
 | `--steel` | `oklch(52% 0 0)` | Body text on paper (AA) |
-| `--concrete` | `oklch(62% 0 0)` | Faint metadata; decorative only |
+| `--concrete` | `oklch(55% 0 0)` | Faint metadata — AA at 11px on paper |
 | `--ash` | `oklch(82% 0 0)` | Empty-slot frame lines |
 | `--bone` | `oklch(90.5% 0.002 90)` | Empty image slots |
-| `--off-white` | `oklch(94.5% 0.002 90)` | Sunk sections |
 | `--paper` | `oklch(98% 0.003 90)` | Page background, ink on dark |
 
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
 what components actually reference. Recolour through the aliases, never the ramp.
 
-`--concrete` is the one shade that is *not* AA for small body text. It is for large type
-and decorative labels only.
+Every text tone in the system passes WCAG AA against the surface it is used on, verified
+by painting the computed colour to a canvas and reading the pixel back — Chromium
+serialises `oklch()` as `lab()`, so string parsing silently produces nonsense.
 
 ---
 
@@ -56,7 +54,7 @@ Three families, no more.
 
 | Role | Family | Where |
 |---|---|---|
-| Display | **Archivo** 600/700/800 | Headings, hero, wordmark, buttons' scale partner |
+| Display | **Archivo** 700/800 | Headings, hero, wordmark, buttons' scale partner |
 | Body / UI | **Inter** | Paragraphs, product names, form fields |
 | Technical | **JetBrains Mono** | Prices, sizes, SKUs, section indices, captions, eyebrows, badges |
 
@@ -78,7 +76,7 @@ Defined as `@utility` classes in `globals.css`, so responsive variants work
 | `type-display-4` | 1.375rem → 2rem | Sub-headings, editorial cards |
 | `type-lead` | 1.125rem → 1.5rem | Intro paragraphs |
 | `type-body` / `type-body-sm` | fluid / 14px | Copy |
-| `type-meta` / `type-meta-lg` | 11px / 13px | The mono layer |
+| `type-meta` | 11px | The mono layer |
 
 Display sizes are uppercase with tight negative tracking; the mono layer is uppercase with
 wide positive tracking. That contrast is the type system.
@@ -156,7 +154,10 @@ universe. No smiling stock photography.
 
 Non-negotiable, and cheaper to keep than to retrofit:
 
-- Semantic landmarks, one `<h1>` per page, skip link as the first tab stop.
+- Semantic landmarks, one `<h1>` per page, no skipped heading levels (product grids and
+  accordion groups carry a visually hidden `<h2>` so card titles are not orphan `h3`s),
+  skip link as the first tab stop.
+- Interactive targets clear 24×24 CSS px; primary chrome controls are 44×44.
 - Every overlay: `role="dialog"`, `aria-modal`, focus trap, ESC, scroll lock, focus
   restored to the opener.
 - Visible focus ring defined once globally (`:focus-visible`), inverted on dark.

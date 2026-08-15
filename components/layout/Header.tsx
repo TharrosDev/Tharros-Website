@@ -39,7 +39,7 @@ export default function Header() {
       <header
         className={`fixed inset-x-0 top-0 z-60 transition-colors duration-300 ${
           floating
-            ? "on-dark bg-transparent text-paper"
+            ? "on-dark bg-transparent text-paper before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-32 before:bg-gradient-to-b before:from-black/55 before:to-transparent"
             : "border-b border-rule bg-surface/95 text-ink backdrop-blur-sm"
         }`}
       >
@@ -51,7 +51,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setNavOpen(true)}
-              className="-ml-1 p-1 transition-opacity hover:opacity-60 lg:hidden"
+              className="-ml-3 inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60 lg:hidden"
               aria-expanded={navOpen}
             >
               <MenuIcon />
@@ -79,7 +79,7 @@ export default function Header() {
             </nav>
           </div>
 
-          <Link href="/" className="shrink-0" aria-label="THARROS — home">
+          <Link href="/" className="inline-flex h-11 shrink-0 items-center" aria-label="THARROS — home">
             <Wordmark className="text-lg md:text-xl" label={false} />
           </Link>
 
@@ -87,18 +87,18 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="p-2 transition-opacity hover:opacity-60"
+              className="inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
             >
               <SearchIcon />
               <span className="visually-hidden">Search</span>
             </button>
 
-            <Link href="/account" className="hidden p-2 transition-opacity hover:opacity-60 md:block">
+            <Link href="/account" className="hidden h-11 w-11 items-center justify-center transition-opacity hover:opacity-60 md:inline-flex">
               <AccountIcon />
               <span className="visually-hidden">Account</span>
             </Link>
 
-            <Link href="/wishlist" className="relative hidden p-2 transition-opacity hover:opacity-60 md:block">
+            <Link href="/wishlist" className="relative hidden h-11 w-11 items-center justify-center transition-opacity hover:opacity-60 md:inline-flex">
               <HeartIcon filled={savedCount > 0} />
               <span className="visually-hidden">
                 Saved items{savedCount > 0 ? ` (${savedCount})` : ""}
@@ -108,7 +108,7 @@ export default function Header() {
             <button
               type="button"
               onClick={openBag}
-              className="flex items-center gap-2 p-2 transition-opacity hover:opacity-60"
+              className="-mr-2 inline-flex h-11 items-center gap-2 px-2 transition-opacity hover:opacity-60"
             >
               <BagIcon />
               {/* Keyed on the count so the nudge animation restarts on every

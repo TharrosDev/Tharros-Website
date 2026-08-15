@@ -7,6 +7,7 @@ import { getCollection } from "@/lib/catalog/collections";
 import { isSortKey, listProducts, searchProducts } from "@/lib/catalog/queries";
 import { SITE_URL } from "@/lib/site";
 import type { CategoryId } from "@/lib/catalog/types";
+import { jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -70,7 +71,7 @@ export default async function ShopPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbs) }}
       />
 
       <div
@@ -114,7 +115,12 @@ export default async function ShopPage({
             </Link>
           </div>
         ) : (
-          <ProductGrid products={products} columns={3} priorityCount={3} />
+          <ProductGrid
+            products={products}
+            heading={`${heading} — ${products.length} pieces`}
+            columns={3}
+            priorityCount={3}
+          />
         )}
       </div>
     </>

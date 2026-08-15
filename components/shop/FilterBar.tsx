@@ -69,7 +69,7 @@ export default function FilterBar({ category, sort, collection, newOnly, count }
                 <li key={filter.id}>
                   <Link
                     href={filter.href}
-                    aria-current={activeId === filter.id ? "true" : undefined}
+                    aria-current={activeId === filter.id ? "page" : undefined}
                     className={`type-meta transition-opacity hover:opacity-60 ${
                       activeId === filter.id ? "text-ink" : "text-ink-faint"
                     }`}
@@ -84,7 +84,7 @@ export default function FilterBar({ category, sort, collection, newOnly, count }
           <button
             type="button"
             onClick={() => setSheetOpen(true)}
-            className="type-meta lg:hidden"
+            className="type-meta -my-2 py-4 lg:hidden"
             aria-expanded={sheetOpen}
           >
             Filter &amp; sort
@@ -157,7 +157,7 @@ export default function FilterBar({ category, sort, collection, newOnly, count }
                     <Link
                       href={filter.href}
                       onClick={() => setSheetOpen(false)}
-                      aria-current={activeId === filter.id ? "true" : undefined}
+                      aria-current={activeId === filter.id ? "page" : undefined}
                       className={`type-display-4 block py-2 ${
                         activeId === filter.id ? "text-ink" : "text-ink-faint"
                       }`}

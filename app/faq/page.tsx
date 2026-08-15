@@ -3,6 +3,7 @@ import Link from "next/link";
 import PageIntro from "@/components/layout/PageIntro";
 import Accordion from "@/components/ui/Accordion";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -44,7 +45,7 @@ const FAQS = [
 ];
 
 export default function FaqPage() {
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${SITE_URL}/faq#faq`,
@@ -59,7 +60,7 @@ export default function FaqPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
 
       <PageIntro index="01" label="Information" title="FAQ" />
@@ -67,7 +68,7 @@ export default function FaqPage() {
       <div className="page-frame rhythm-tight">
         <div className="max-w-3xl">
           {FAQS.map((faq) => (
-            <Accordion key={faq.question} title={faq.question}>
+            <Accordion key={faq.question} title={faq.question} level={2}>
               <p className="type-body text-ink-muted">{faq.answer}</p>
             </Accordion>
           ))}

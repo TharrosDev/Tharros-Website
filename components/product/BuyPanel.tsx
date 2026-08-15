@@ -67,13 +67,16 @@ export default function BuyPanel({ product }: { product: Product }) {
     <div>
       {product.variants.length > 1 ? (
         <fieldset className="border-t border-ink pt-6">
+          <legend className="visually-hidden">Select a size</legend>
           <div className="flex items-baseline justify-between gap-4">
-            <legend className="type-meta float-left">Size</legend>
+            <p className="type-meta" aria-hidden="true">
+              Size
+            </p>
             {sizingKey ? (
               <button
                 type="button"
                 onClick={() => setGuideOpen(true)}
-                className="type-meta text-ink-faint transition-opacity hover:opacity-60"
+                className="-my-2 py-2 type-meta text-ink-faint transition-opacity hover:opacity-60"
               >
                 Size guide
               </button>

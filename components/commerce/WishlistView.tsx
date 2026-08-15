@@ -33,7 +33,7 @@ export default function WishlistView() {
         <span className="num">{products.length}</span>
         <span className="ml-2">saved</span>
       </p>
-      <ProductGrid products={products} columns={3} />
+      <ProductGrid products={products} heading="Saved pieces" columns={3} />
     </>
   );
 }

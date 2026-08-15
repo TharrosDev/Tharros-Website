@@ -7,15 +7,23 @@ type Props = {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  /** Depth in the page outline. 3 assumes a section heading above it. */
+  level?: 2 | 3;
 };
 
-export default function Accordion({ title, children, defaultOpen = false }: Props) {
+export default function Accordion({
+  title,
+  children,
+  defaultOpen = false,
+  level = 3,
+}: Props) {
   const [open, setOpen] = useState(defaultOpen);
   const panelId = useId();
+  const Heading = level === 2 ? "h2" : "h3";
 
   return (
     <div className="border-b border-rule">
-      <h3>
+      <Heading>
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
@@ -26,7 +34,7 @@ export default function Accordion({ title, children, defaultOpen = false }: Prop
           <span>{title}</span>
           {open ? <MinusIcon /> : <PlusIcon />}
         </button>
-      </h3>
+      </Heading>
       <div id={panelId} hidden={!open} className="pb-6">
         {children}
       </div>

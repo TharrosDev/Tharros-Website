@@ -5,6 +5,7 @@ import ImageSlot from "@/components/media/ImageSlot";
 import { JOURNAL, getJournalEntry, listJournal } from "@/lib/catalog/journal";
 import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
+import { jsonLd } from "@/lib/jsonld";
 
 type Params = Promise<{ slug: string }>;
 
@@ -41,7 +42,7 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
     .filter((item) => item.id !== entry.id)
     .slice(0, 2);
 
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -73,7 +74,7 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
 
       <article>

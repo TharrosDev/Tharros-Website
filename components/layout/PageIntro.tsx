@@ -40,7 +40,7 @@ export default function PageIntro({
           <ol className="type-meta flex flex-wrap items-center gap-2 text-ink-faint">
             {crumbs.map((crumb) => (
               <li key={crumb.href} className="flex items-center gap-2">
-                <Link href={crumb.href} className="transition-opacity hover:opacity-60">
+                <Link href={crumb.href} className="-my-2 inline-block py-2 transition-opacity hover:opacity-60">
                   {crumb.name}
                 </Link>
                 <span aria-hidden="true">/</span>

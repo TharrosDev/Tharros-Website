@@ -1,7 +1,6 @@
 import { PRODUCTS } from "./products";
 import type {
   Availability,
-  CategoryId,
   Product,
   ProductQuery,
   SortKey,
@@ -170,8 +169,4 @@ export function searchProducts(term: string, limit = 8): Product[] {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map((entry) => entry.product);
-}
-
-export function categoriesInUse(): CategoryId[] {
-  return [...new Set(PRODUCTS.map((product) => product.category))];
 }
