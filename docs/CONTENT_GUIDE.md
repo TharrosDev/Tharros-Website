@@ -1,174 +1,82 @@
-# Content & Voice Guide
+# THARROS — Content Guide
 
-How to write copy for the Tharros site so it sounds like Tharros.
+## Voice
 
-> Companion to [`../README.md`](../README.md) and [`../CLAUDE.md`](../CLAUDE.md).
+Confident without shouting. Plain, specific, slightly cold. THARROS states things and
+moves on; it does not sell, plead, or explain itself twice.
 
----
+Write like the label knows exactly what it made and assumes you can tell.
 
-## The brand voice in one paragraph
-
-Tharros sounds like a competent tradesperson who happens to build software. Decisive, plain, locally grounded. We tell a small business owner what we'll do, in language they'd use themselves, with a phone number they can call when something breaks. We don't speak in enterprise jargon, AI buzzwords, or growth-hacker slogans. We don't promise transformation. We promise a working site, a working agent, and someone who picks up the phone.
-
----
-
-## Slogans and fixed phrases
-
-These phrases appear verbatim across the site, the metadata, the JSON-LD, and the live agent. Don't paraphrase them.
-
-| Phrase | Where it appears |
-|---|---|
-| **Keep it Local, Keep it Canadian.** | Hero chip, footer pill, footer legal strip, Why-section subhead, Pricing-section strip, all OG/Twitter metadata, Organization.slogan, LocalBusiness.slogan |
-| **The Refresh / The On-Call / The Integrate** | Always capitalized exactly this way (listed by ascending price). "Refresh package" is wrong. "the integrate" is wrong. The embedded AI agent lives only in The Integrate; The On-Call is site + retainer, no agent. |
-| **Book a Discovery Call** | Every primary CTA. Not "Get a Quote", not "Contact Us", not "Talk to Sales". |
+**Is:** bold, minimal, raw, cultured, modern, unapologetic.
+**Is not:** cheesy, motivational, corporate, luxurious-by-adjective, hype, "influencer
+merch".
 
 ---
 
-## Words we use
+## The name
 
-| Use | Not |
-|---|---|
-| Build | Deploy, ship, roll out, stand up |
-| Integrate / embed | Plug in, install, hook up |
-| Agent (AI agent) | Bot, chatbot, assistant |
-| Site / website | Web property, web presence, digital storefront |
-| Discovery call | Sales call, consultation, intro meeting |
-| Per-call / pay-per-call | Ad-hoc, one-off, project basis (when discussing post-launch support) |
-| On-Call retainer | Subscription, monthly plan, service contract |
-| Questions | Inquiries (in customer-facing copy) |
-| One team, end-to-end | Full-service, one-stop |
-| Small business | SMB, SME |
-| Trades | Trades & services, blue-collar |
-| Operation | Business operations, BAU |
+**THARROS** — always uppercase in body copy and headings. Never "Tharros Clothing",
+"Tharros Apparel", or "the Tharros brand". Sentence-case "Tharros" is acceptable only
+inside a longer running sentence where full caps would shout.
 
----
+The line is: **Built for those who don't blend in.**
 
-## Words and phrases we avoid
-
-These are old positioning that the site was deliberately pivoted away from:
-
-- "Training", "Coaching", "Curriculum", "Workshop"
-- "Setup Sprint", "Operator Program", "Fractional AI Lead"
-- "Digital Workforce", "Industrial Workforce Models"
-- "Recovering time. Rescuing revenue."
-- "Tailored Builds for Tailored Businesses." (double-tailored)
-- "Commercial Model", "Commercial Demo"
-- "Operational Excellence", "Live Operational"
-- "Neural Logic", "Core Reasoning", "Adaptive Reasoning"
-- "High-stakes automation", "High-impact businesses"
-- "Inquiries" (in end-user-facing copy — use "questions")
-- "Brand Safe", "Brand Identity" (as section headers)
-
-Avoid generic startup language:
-
-- "Move the needle"
-- "Game-changer", "disruptor", "revolutionary"
-- "AI-powered" (use "AI agent" or just describe what it does)
-- "Synergy", "leverage" (as a verb), "ideate"
-- "Best-in-class", "world-class", "enterprise-grade"
-- "Built for every stage of growth" (generic startup copy)
-
----
-
-## Sentence shape
-
-- **Short sentences.** Two clauses max. Periods earn their keep.
-- **Active voice.** "We build the site." Not "The site is built by us."
-- **Specific over generic.** "Kanata trades companies and Centretown law offices" beats "local businesses we work with."
-- **Concrete examples.** When introducing a concept, give an example in the next breath. The site does this in `ProblemSection` ("8pm and gets voicemail calls your competitor at 8:01pm") and `WhatWeBuildsSection` (Plumbers, HVAC, Cleaning).
-- **No "we believe…" preambles.** State the claim.
-
----
-
-## Heading shape
-
-Headlines on this site follow a pattern: a setup line, a line break, a payoff line in `text-accent-3`.
-
-```jsx
-<h2>
-  Ottawa businesses are <br />
-  <span className="text-slate-400">bleeding time.</span>
-</h2>
-
-<h2>
-  Three builds. <br />
-  <span className="text-slate-400">Pick yours.</span>
-</h2>
-
-<h2>
-  Ready to modernize <br />
-  <span className="text-accent-3">your front door?</span>
-</h2>
-```
-
-Rules:
-- Two-line headlines, mobile-collapsed via `<br className="hidden md:block">`.
-- Payoff phrase in `text-accent-3` for the most important headings, `text-slate-400` or `text-slate-500` for atmospheric ones.
-- Period at the end of declarative headings, question mark for the rare interrogative.
+Recurring editorial phrases, used sparingly: *Noise / Silence*, *Collection 01*,
+*The world doesn't need another brand. Make your own.*
 
 ---
 
 ## Microcopy
 
-| Slot | Pattern |
-|---|---|
-| Section eyebrow | `font-black uppercase tracking-[0.3em] text-[10px]` — e.g. "After Launch", "Strategic Overview", "Trusted Partnerships" |
-| Pill chip | Same treatment, plus border + bg-white/[0.04] on dark, bg-slate-100 on light |
-| CTA button | "Book a Discovery Call" — verb + object |
-| Secondary CTA | "See a Live Agent", "Direct Email" — short, no period |
-| Empty / loading | "Starting Up", "Thinking", "Online" — single word or two |
+Use:
+
+> SHOP THE COLLECTION · SHOP THE DROP · VIEW COLLECTION · DISCOVER THE STORY ·
+> ADD TO BAG · NEW · LOW STOCK · SOLD OUT · COMING SOON · JOIN
+
+Never:
+
+> "OMG" · "You need this!" · "Best seller!!!" · "Buy now before it's too late" ·
+> "Subscribe to our newsletter!" · exclamation marks · emoji · ALL-CAPS enthusiasm
+
+Product copy is descriptive, not adjectival. Say what the cut does, not how amazing it is:
+*"Cut wide through the chest and shoulder with a shortened body, it holds its shape
+instead of draping."*
 
 ---
 
-## Copy by section
+## Honesty rules
 
-### Hero
-- **Headline:** Three short statements, last clause in accent. The pattern: declarative / declarative / declarative. Currently: "Modern websites. / Integrated AI agents. / One team, on call."
-- **Subhead:** What we do + who it's for. ~2 sentences.
-- **CTA primary:** "Book a Discovery Call"
-- **CTA secondary:** "See a Live Agent" (anchors to demo)
-- **Bottom chip:** "Keep it Local, Keep it Canadian"
+These are content rules, not just engineering ones. Breaking them is a defect.
 
-### Problem
-- **Pattern:** Three pains, each with a concrete example that makes the cost real.
-- **Tone:** Honest about what small business owners actually deal with. Don't sugar-coat.
+**Never write:**
 
-### Chat demo
-- **Tone:** Decisive, not corporate. The live agent itself follows the voice rules in [`../THARROS_KNOWLEDGE_BASE.md`](../THARROS_KNOWLEDGE_BASE.md).
+- reviews, testimonials, ratings, or customer counts that do not exist
+- press mentions, awards, stockists or collaborations that have not happened
+- founding history, locations, factories, or sustainability claims that were not supplied
+- model measurements or fit notes that were not measured
+- scarcity language the inventory does not support
+- "X people are viewing this" or any manufactured urgency
 
-### Model tiers (Refresh / On-Call / Integrate)
-- **Title casing:** "The Refresh", "The On-Call", "The Integrate" — capital T, capital noun. Listed by ascending price; The Integrate is the flagship.
-- **What each is:** Refresh = site only; On-Call = site + monthly retainer (no agent); Integrate = site + embedded agent + retainer.
-- **Starting prices:** Shown as "from $X" anchors (from $1,000 / from $1,500 / from $3,000), with the monthly retainer on On-Call ($150/mo) and Integrate ($300/mo).
-- **Launch discount:** The Refresh and The On-Call show a struck-through standard price and a cobalt launch price through Aug 31, 2026.
-- **Description:** One sentence on what it includes, one sentence on what after-launch looks like.
-
-### How it works
-- Three steps. Step name in title case, body in plain prose.
-- **Discovery → Build & Integrate → Launch & Support.** Don't rename these.
-
-### Why Tharros
-- Three pillars: **Ottawa-local**, **One team, end-to-end**, **A number you can call**.
-- Each pillar opens with the headline, then a paragraph that justifies it concretely.
-- Founder quote at the bottom, in `text-accent-3` for the payoff phrase.
-
-### Pricing
-- **Three factors:** Build Scope, Integration Depth, After-Launch Model.
-- **Tagline:** "Starting prices, shaped by the work."
-- **Why starting prices:** explain honestly — the anchors are where each build starts; compare two different jobs; final scope on the discovery call.
-- **CTA:** "Book a Discovery Call"
-
-### Footer
-- **Headline:** "Ready to modernize your front door?"
-- **Subhead:** Mentions discovery call and per-call support vs a monthly retainer.
-- **CTA primary:** "Book a Discovery Call"
-- **CTA secondary:** "Direct_Email" (yes, with underscore — it's an industrial-styled accent)
-- **Legal strip:** copyright + "Ottawa, Canada" + slogan + Canada flag.
+**When something is not ready, say so in one plain line and stop.** The site already does
+this at the payment step, on `/account`, in the newsletter form, on the size guide, and on
+the legal drafts. Match that tone: state the fact, give the alternative, do not apologise
+twice.
 
 ---
 
-## When in doubt
+## Structure
 
-Read the existing section's copy out loud. Would a plumber, a contractor, or a small-firm lawyer in Ottawa understand and trust it? If not, simplify it.
+- Headings: short, declarative, often two or three words. Periods are allowed and used —
+  *"Available now." "This is Tharros." "Nothing found."*
+- Section eyebrows are a mono index plus a two-word label: `01 THE NEW DROP`.
+- Empty states get a display-size statement, one line of body, and one action.
+- Body paragraphs: two to four sentences. If it needs five, it needs cutting.
 
-When you're stuck on a heading, write five candidates. Pick the shortest one that's still specific. Then look at it tomorrow.
+---
+
+## Typography details
+
+- Apostrophes in JSX text use `&apos;`; inside JS string literals use a real `'`.
+- Em dashes: real `—` in JS strings, `&mdash;` only in JSX text.
+- Prices always render through `formatPrice()` — never typed by hand into copy.
+- Sizes, quantities, dates and codes are mono (`.num` / `type-meta`).

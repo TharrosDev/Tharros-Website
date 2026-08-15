@@ -1,99 +1,54 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { PRODUCTS } from "@/lib/catalog/products";
+import { JOURNAL } from "@/lib/catalog/journal";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_URL = "https://tharros.ca";
-
-// Pin lastModified to deploys, not build-time `new Date()`. Crawlers should not
-// see "lastmod changed today" on every build when nothing actually moved.
-const LAST_MODIFIED = "2026-05-23";
-
+/**
+ * Generated from the catalog, so a new product or journal entry appears here
+ * without anyone remembering to update a list.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
+  const staticRoutes: {
+    path: string;
+    priority: number;
+    changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  }[] = [
+    { path: "", priority: 1, changeFrequency: "weekly" },
+    { path: "/shop", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/new", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/lookbook", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/about", priority: 0.7, changeFrequency: "yearly" },
+    { path: "/journal", priority: 0.7, changeFrequency: "weekly" },
+    { path: "/size-guide", priority: 0.5, changeFrequency: "yearly" },
+    { path: "/shipping", priority: 0.4, changeFrequency: "yearly" },
+    { path: "/returns", priority: 0.4, changeFrequency: "yearly" },
+    { path: "/faq", priority: 0.5, changeFrequency: "monthly" },
+    { path: "/contact", priority: 0.4, changeFrequency: "yearly" },
+    { path: "/legal/privacy", priority: 0.2, changeFrequency: "yearly" },
+    { path: "/legal/terms", priority: 0.2, changeFrequency: "yearly" },
+    { path: "/legal/refund-policy", priority: 0.2, changeFrequency: "yearly" },
+  ];
+
+  const now = new Date();
+
   return [
-    {
-      url: SITE_URL,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "weekly",
-      priority: 1.0,
-      images: [
-        `${SITE_URL}/opengraph-image/hero`,
-        `${SITE_URL}/opengraph-image/packages`,
-        `${SITE_URL}/opengraph-image/slogan`,
-        `${SITE_URL}/tharros-logo.svg`,
-        `${SITE_URL}/icon-512.png`,
-      ],
-      alternates: {
-        languages: {
-          "en-CA": SITE_URL,
-          "x-default": SITE_URL,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/product`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly",
-      priority: 0.9,
-      images: [`${SITE_URL}/og-image.jpg`],
-      alternates: {
-        languages: {
-          "en-CA": `${SITE_URL}/product`,
-          "x-default": `${SITE_URL}/product`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/pricing`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly",
-      priority: 0.9,
-      images: [`${SITE_URL}/og-image.jpg`],
-      alternates: {
-        languages: {
-          "en-CA": `${SITE_URL}/pricing`,
-          "x-default": `${SITE_URL}/pricing`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/clients`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly",
-      priority: 0.85,
-      images: [
-        `${SITE_URL}/opengraph-image/hero`,
-        `${SITE_URL}/meridian-logo.webp`,
-        `${SITE_URL}/echo-five-logo.svg`,
-      ],
-      alternates: {
-        languages: {
-          "en-CA": `${SITE_URL}/clients`,
-          "x-default": `${SITE_URL}/clients`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/brief`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "monthly",
+    ...staticRoutes.map((route) => ({
+      url: `${SITE_URL}${route.path}`,
+      lastModified: now,
+      changeFrequency: route.changeFrequency,
+      priority: route.priority,
+    })),
+    ...PRODUCTS.map((product) => ({
+      url: `${SITE_URL}/shop/${product.slug}`,
+      lastModified: new Date(product.releasedAt),
+      changeFrequency: "weekly" as const,
       priority: 0.8,
-      images: [`${SITE_URL}/opengraph-image/hero`],
-      alternates: {
-        languages: {
-          "en-CA": `${SITE_URL}/brief`,
-          "x-default": `${SITE_URL}/brief`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/privacy`,
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "yearly",
-      priority: 0.3,
-      alternates: {
-        languages: {
-          "en-CA": `${SITE_URL}/privacy`,
-          "x-default": `${SITE_URL}/privacy`,
-        },
-      },
-    },
+    })),
+    ...JOURNAL.map((entry) => ({
+      url: `${SITE_URL}/journal/${entry.slug}`,
+      lastModified: new Date(entry.publishedAt),
+      changeFrequency: "yearly" as const,
+      priority: 0.5,
+    })),
   ];
 }

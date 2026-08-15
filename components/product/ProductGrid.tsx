@@ -1,0 +1,43 @@
+import ProductCard from "./ProductCard";
+import type { Product } from "@/lib/catalog/types";
+
+type Props = {
+  products: Product[];
+  /** Columns at the large breakpoint. Two reads more editorial, four reads catalog. */
+  columns?: 2 | 3 | 4;
+  priorityCount?: number;
+};
+
+const COLUMN_CLASS: Record<2 | 3 | 4, string> = {
+  2: "grid-cols-2",
+  3: "grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-2 lg:grid-cols-4",
+};
+
+const SIZES: Record<2 | 3 | 4, string> = {
+  2: "(min-width: 640px) 50vw, 100vw",
+  3: "(min-width: 1024px) 33vw, 50vw",
+  4: "(min-width: 1024px) 25vw, 50vw",
+};
+
+export default function ProductGrid({
+  products,
+  columns = 3,
+  priorityCount = 0,
+}: Props) {
+  return (
+    <ul
+      className={`grid gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-16 ${COLUMN_CLASS[columns]}`}
+    >
+      {products.map((product, index) => (
+        <li key={product.id}>
+          <ProductCard
+            product={product}
+            sizes={SIZES[columns]}
+            priority={index < priorityCount}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
