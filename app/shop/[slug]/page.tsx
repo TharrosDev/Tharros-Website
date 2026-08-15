@@ -17,6 +17,7 @@ import {
 import { CURRENCY, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { SHIPPING_OPTIONS, FREE_SHIPPING_THRESHOLD } from "@/lib/commerce/shipping";
+import { getDrop } from "@/lib/catalog/drops";
 import { jsonLd } from "@/lib/jsonld";
 
 type Params = Promise<{ slug: string }>;
@@ -52,6 +53,7 @@ export default async function ProductPage({ params }: { params: Params }) {
 
   const related = getRelated(product, 4);
   const availability = resolveAvailability(product);
+  const drop = getDrop(product.drop);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -153,6 +155,16 @@ export default async function ProductPage({ params }: { params: Params }) {
                 {product.variants[0]?.sku.replace(/-[^-]+$/, "")}
               </dd>
             </div>
+            {drop ? (
+              <div className="flex gap-2">
+                <dt className="type-meta text-ink-faint">Drop</dt>
+                <dd className="type-meta">
+                  <Link href={`/shop?drop=${drop.slug}`} className="link-rule link-rule-reveal">
+                    {drop.name}
+                  </Link>
+                </dd>
+              </div>
+            ) : null}
           </dl>
 
           <div className="mt-8">
@@ -161,11 +173,28 @@ export default async function ProductPage({ params }: { params: Params }) {
 
           <div className="mt-10">
             <h2 className="visually-hidden">Product information</h2>
-            <Accordion title="Description" defaultOpen>
+            <Accordion title="The piece" defaultOpen>
               <p className="type-body text-ink-muted">{product.story}</p>
             </Accordion>
 
-            <Accordion title="Materials">
+            <Accordion title="The run">
+              <ul className="type-body space-y-1.5 text-ink-muted">
+                <li>
+                  <span className="num">{product.runSize}</span> made in total.
+                </li>
+                {drop ? <li>Released as part of {drop.name}.</li> : null}
+                <li>
+                  {product.restock === "none"
+                    ? "This run will not be remade."
+                    : "If it returns it will be in a later drop, and it may not be identical."}
+                </li>
+              </ul>
+              <p className="type-meta mt-5 text-ink-faint">
+                Runs are small because production is small, not as a sales tactic.
+              </p>
+            </Accordion>
+
+            <Accordion title="Material">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 {product.materials.map((material) => (
                   <li key={material}>{material}</li>
@@ -176,7 +205,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               </p>
             </Accordion>
 
-            <Accordion title="Fit &amp; sizing">
+            <Accordion title="Fit">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 {product.fit.map((note) => (
                   <li key={note}>{note}</li>

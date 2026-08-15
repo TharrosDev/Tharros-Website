@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
     // Product and campaign photography is served from this origin. Add a
     // remotePatterns entry here if assets ever move to a CDN or DAM.
   },
+  async redirects() {
+    return [
+      // The drop page moved from /new when the site shifted to a drop model.
+      { source: "/new", destination: "/drop", permanent: true },
+    ];
+  },
+
   async headers() {
     // Nothing on this site loads cross-origin except Vercel Analytics, so the
     // resource directives stay tight. Inline script/style are allowed because

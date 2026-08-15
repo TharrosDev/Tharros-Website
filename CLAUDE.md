@@ -6,11 +6,19 @@ Read this before generating code. It is the fastest route to a change that fits.
 
 ## What this repo is
 
-The ecommerce site for **THARROS**, a contemporary streetwear label. Next.js 16 (App
-Router, Turbopack), React 19, TypeScript strict, Tailwind 4.
+The ecommerce site for **THARROS**, a small independent streetwear label. Next.js 16
+(App Router, Turbopack), React 19, TypeScript strict, Tailwind 4.
 
 The brand name is always written **THARROS** in copy — never "Tharros Clothing" or
-"Tharros Apparel". The line is *"Built for those who don't blend in."*
+"Tharros Apparel". The line is *"Small runs. Original ideas."*
+
+**Positioning (read this before writing any copy).** THARROS is deliberately small: an
+independent label that designs, patterns and samples in-house and releases in numbered
+**drops** of a few pieces, made in short runs. It is not a department store and must
+never be written as one. The premium presentation is the point — small production,
+serious execution — so do not "simplify" the design to match the scale. Do not write
+copy implying large inventory, teams, global production, press, collaborations or
+history that does not exist.
 
 **History:** until August 2026 this repo held a completely different site — a marketing
 site for an Ottawa AI agency (packages, pricing tiers, a Relevance AI chat demo, a
@@ -32,7 +40,7 @@ The site is honest about its own state, deliberately. Do not paper over these:
 | Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
 | Product photography | **Does not exist.** Every image slot renders an empty frame. |
-| Product data, prices, copy | **Placeholder**, marked as such in the data files. |
+| Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
 
 Rules that follow from this, and that must not be quietly broken:
@@ -42,7 +50,11 @@ Rules that follow from this, and that must not be quietly broken:
 - **Never fabricate** reviews, testimonials, press, collaborations, customer counts,
   sustainability or manufacturing claims, founding history, or model measurements.
 - **Never fake scarcity.** Availability is derived from inventory in
-  `resolveAvailability()` — never hand-set on a product.
+  `resolveAvailability()`, and the run numbers a product page prints come from
+  `runStatus()`: `runSize` is how many were actually made, `remaining` is real variant
+  inventory. No countdowns, no "x people viewing", no invented low-stock warnings.
+- **Only claim a restock policy the data states.** "Will not be remade" renders solely
+  when `restock: "none"`.
 
 ---
 
@@ -53,7 +65,7 @@ Rules that follow from this, and that must not be quietly broken:
 | `/` | `app/page.tsx` | Hero → New Drop → Statement → Featured → Campaign → Collection → Lookbook → Social |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
-| `/new` | `app/new/page.tsx` | New arrivals + coming soon |
+| `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
 | `/lookbook` | `app/lookbook/page.tsx` | Editorial spreads, four layout modes |
 | `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
 | `/journal`, `/journal/[slug]` | `app/journal/**` | Structured blocks, no MDX |
@@ -84,7 +96,7 @@ lib/catalog/
   types.ts        Product, Variant, ImageSlotData, Collection, LookbookSpread, JournalEntry
   products.ts     the catalog (placeholder)
   categories.ts   category list + sizing-table mapping
-  collections.ts  Collection 01 / 02
+  drops.ts        Drop 001 (released) / Drop 002 (in development)
   lookbook.ts     spreads
   journal.ts      entries
   sizing.ts       size tables — measurements are null until real ones are taken
@@ -102,6 +114,10 @@ Key invariants:
 
 - **Prices are minor units (cents).** Format with `formatPrice()` from `lib/format.ts`.
 - **Availability is derived**, never authored (`resolveAvailability`).
+- **A drop is the unit of release.** `Product.drop` points at `lib/catalog/drops.ts`;
+  the shop filters on `?drop=`. Keep the catalogue small — a nine-piece line should look
+  curated, not empty, and the filter bar only offers categories that hold a piece
+  (`categoriesInUse()`).
 - **A cart line stores only `productId + size + quantity`.** Name, price and imagery are
   re-read from the catalog on every render (`resolveLines`), so a stale bag can never
   check out a renamed, repriced or sold-out piece.
@@ -189,6 +205,8 @@ React Compiler rules that the build does not.
 
 ## Voice
 
-See [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md). Short version: confident, plain,
+See [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md). Short version: quiet confidence
+— a small label that knows what it made, not a corporation. "Small run" not "global
+collection"; "the next drop" not "our latest seasonal assortment". Confident, plain,
 never shouting. "SHOP THE DROP", not "BUY NOW BEFORE IT'S TOO LATE!!!". No exclamation
 marks, no emoji, no hype. When something is not ready, say so plainly.

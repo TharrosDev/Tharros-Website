@@ -1,9 +1,9 @@
 import Hero from "@/components/home/Hero";
 import CurrentDrop from "@/components/home/CurrentDrop";
 import Statement from "@/components/home/Statement";
-import FeaturedEdit from "@/components/home/FeaturedEdit";
+import ProcessSection from "@/components/home/ProcessSection";
 import CampaignBlock from "@/components/home/CampaignBlock";
-import CollectionStory from "@/components/home/CollectionStory";
+import DropStory from "@/components/home/DropStory";
 import LookbookTeaser from "@/components/home/LookbookTeaser";
 import SocialGrid from "@/components/home/SocialGrid";
 
@@ -13,9 +13,9 @@ export default function HomePage() {
       <Hero />
       <CurrentDrop />
       <Statement />
-      <FeaturedEdit />
+      <ProcessSection />
       <CampaignBlock />
-      <CollectionStory />
+      <DropStory />
       <LookbookTeaser />
       <SocialGrid />
     </>

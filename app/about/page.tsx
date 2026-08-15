@@ -2,46 +2,54 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
-import { BRAND_LINE } from "@/lib/site";
+import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "THARROS is a contemporary streetwear label built on courage, identity and refusing to blend in. Read the philosophy behind the clothing.",
+    "THARROS is an independent streetwear label built from the ground up — designed, patterned and sampled in-house, released in small runs.",
   alternates: { canonical: "/about" },
 };
 
 const CHAPTERS = [
   {
     index: "02",
-    title: "The philosophy",
+    title: "What this is",
     body: [
-      "Tharros — θάρρος — is a Greek word for courage. Not the loud kind. The kind it takes to make a decision in public and stand behind it.",
-      "Clothing is the most public decision most people make in a day. Wearing something with intent means accepting you will be read, and choosing what you are read as.",
+      "THARROS is an independent clothing label. Not a studio with a factory behind it — a small operation where the designing, patterning and sampling happen in one room, and a run of twenty is a real number rather than a marketing device.",
+      "The name is Greek: θάρρος, courage. It is on the label because putting something you made in front of people is the part that takes nerve.",
     ],
   },
   {
     index: "03",
-    title: "The culture",
+    title: "How it is made",
     body: [
-      "The label sits where music, art and street culture overlap — the places where personal style is built rather than bought.",
-      "THARROS is not trying to speak for a scene. It is trying to make clothing good enough that people already building something choose to wear it.",
+      "Each piece starts as a shape worth arguing about, becomes a pattern, then a sample that gets worn until its faults show. Most of the work is in the second and third attempt: the shoulder that sat wrong, the hem two centimetres too long, the fabric that looked right and moved badly.",
+      "What survives that gets made in a short run. What does not gets cut up and used to make the next pattern.",
     ],
   },
   {
     index: "04",
-    title: "The clothing",
+    title: "Learning in public",
     body: [
-      "Heavy fabrics, square cuts, one palette. Graphics are set at scale or left off entirely — there is no middle register.",
-      "Pieces are designed to be worn together and worn hard. Nothing in the collection is decorative for the sake of it.",
+      "The craft is being built alongside the label. Sewing, construction, grading, fit — these are being learned properly rather than outsourced and forgotten, and each drop is measurably better made than the one before it.",
+      "That is not a disclaimer. It is the most interesting thing about a young label: you can watch it get good.",
     ],
   },
   {
     index: "05",
-    title: "The future",
+    title: "Why the runs are small",
     body: [
-      "Collections release in numbered drops. Each one is designed as a complete set rather than a catalogue refresh.",
-      "What comes next is announced to the mailing list first.",
+      "Because that is genuinely how much can be made well right now. Not to manufacture urgency, and not to imply exclusivity that has not been earned.",
+      "Every product page prints how many were made and how many are left. When a size is gone it is gone, and the site says so plainly instead of dressing it up.",
+    ],
+  },
+  {
+    index: "06",
+    title: "Where it goes",
+    body: [
+      "Drops get bigger as the making gets better. More pieces, more ambitious construction, fabric chosen rather than settled for.",
+      "The ambition is not small. The current operation is. Both of those things are true at once, and the site is not going to pretend otherwise.",
     ],
   },
 ];
@@ -56,16 +64,15 @@ export default function AboutPage() {
         <div className="border-t border-ink pt-4">
           <p className="eyebrow">
             <span className="num">01</span>
-            <span>Why Tharros exists</span>
+            <span>The label</span>
           </p>
         </div>
 
-        <h1 className="type-display-1 mt-10 max-w-[12ch]">
-          Refuse to blend in.
-        </h1>
+        <h1 className="type-display-1 mt-10 max-w-[13ch]">Built from the ground up.</h1>
 
         <p className="type-lead mt-8 max-w-2xl">
-          THARROS exists for people who refuse to disappear into the crowd. {BRAND_LINE}
+          An independent streetwear label making small runs of original pieces — designed,
+          patterned and sampled in-house, then made in numbers small enough to count.
         </p>
       </div>
 
@@ -73,8 +80,8 @@ export default function AboutPage() {
         <ImageSlot
           image={{
             code: "ABT-01",
-            alt: "THARROS campaign image — Collection 01 shot on location",
-            kind: "lifestyle",
+            alt: "Work table with patterns, a part-sewn sample and fabric",
+            kind: "detail",
             ratio: "wide",
           }}
           sizes="100vw"
@@ -84,10 +91,7 @@ export default function AboutPage() {
       <div className="page-frame rhythm-default">
         <div className="grid gap-x-12 gap-y-20 lg:grid-cols-12">
           {CHAPTERS.map((chapter) => (
-            <Reveal
-              key={chapter.index}
-              className="lg:col-span-8 lg:col-start-4 lg:even:col-start-2 lg:even:col-span-8"
-            >
+            <Reveal key={chapter.index} className="lg:col-span-8 lg:col-start-4">
               <div className="border-t border-ink pt-4">
                 <p className="eyebrow">
                   <span className="num">{chapter.index}</span>
@@ -108,14 +112,14 @@ export default function AboutPage() {
 
       <section className="on-dark rhythm-breath">
         <div className="page-frame">
-          <p className="type-display-2 max-w-[16ch]">Noise / Silence.</p>
+          <p className="type-display-2 max-w-[18ch]">Designed, tested, refined.</p>
           <p className="type-body mt-8 max-w-lg text-ink-on-dark-muted">
-            Two halves of the same idea: say something, or say nothing — but mean it
-            either way.
+            {CURRENT_DROP.name} is where it starts. Everything it taught is already going
+            into the next one.
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
-            <Link href="/shop" className="btn btn-inverse">
-              Shop the collection
+            <Link href="/drop" className="btn btn-inverse">
+              See the current drop
             </Link>
             <Link href="/journal" className="btn btn-outline-on-dark">
               Read the journal

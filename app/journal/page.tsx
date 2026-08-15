@@ -9,7 +9,7 @@ import { formatDate } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Journal",
   description:
-    "The THARROS journal — collection notes, styling, culture and the thinking behind the clothing.",
+    "The THARROS journal — how the pieces get made, what failed, and what changes for the next drop.",
   alternates: { canonical: "/journal" },
 };
 
@@ -22,7 +22,7 @@ export default function JournalPage() {
         index="01"
         label="Journal"
         title="Journal"
-        lead="Collection notes, styling, and the thinking behind the clothing."
+        lead="How the pieces get made, what failed, and what changes next."
       />
 
       {lead ? (

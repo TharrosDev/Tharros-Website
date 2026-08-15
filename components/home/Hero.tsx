@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import { BRAND_LINE } from "@/lib/site";
-import { CURRENT_COLLECTION } from "@/lib/catalog/collections";
+import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 /**
  * The hero owns the first screen: one image, one line, one action. Everything
@@ -30,9 +30,9 @@ export default function Hero() {
 
       <div className="page-frame relative z-10 pb-14 md:pb-20">
         <p className="type-meta text-ink-on-dark">
-          <span className="num">01</span>
+          <span className="num">{CURRENT_DROP.index}</span>
           <span className="ml-4">
-            {CURRENT_COLLECTION.name} — {CURRENT_COLLECTION.season}
+            {CURRENT_DROP.name} — out now
           </span>
         </p>
 
@@ -41,7 +41,7 @@ export default function Hero() {
         <div className="mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <p className="type-display-4 max-w-[18ch] text-ink-on-dark">{BRAND_LINE}</p>
           <Link href="/shop" className="btn btn-inverse w-full md:w-auto">
-            Shop the collection
+            Shop the drop
           </Link>
         </div>
       </div>

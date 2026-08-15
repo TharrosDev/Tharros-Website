@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CATEGORIES } from "@/lib/catalog/categories";
 import { SORT_OPTIONS } from "@/lib/catalog/queries";
+import type { CategoryId } from "@/lib/catalog/types";
 import { CloseIcon } from "@/components/ui/icons";
 import { useEscape, useLockBodyScroll } from "@/lib/hooks";
 import type { SortKey } from "@/lib/catalog/types";
@@ -11,9 +12,11 @@ import type { SortKey } from "@/lib/catalog/types";
 type Props = {
   category: string;
   sort: SortKey;
-  collection?: string;
+  drop?: string;
   newOnly?: boolean;
   count: number;
+  /** Only categories that currently hold a piece are offered. */
+  available: CategoryId[];
 };
 
 /**
@@ -24,35 +27,30 @@ type Props = {
 function buildHref(params: {
   category?: string;
   sort?: string;
-  collection?: string;
+  drop?: string;
   newOnly?: boolean;
 }): string {
   const search = new URLSearchParams();
   if (params.category && params.category !== "all") search.set("category", params.category);
   if (params.sort && params.sort !== "featured") search.set("sort", params.sort);
-  if (params.collection) search.set("collection", params.collection);
+  if (params.drop) search.set("drop", params.drop);
   if (params.newOnly) search.set("new", "1");
   const query = search.toString();
   return query ? `/shop?${query}` : "/shop";
 }
 
-export default function FilterBar({ category, sort, collection, newOnly, count }: Props) {
+export default function FilterBar({ category, sort, drop, newOnly, count, available }: Props) {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   useLockBodyScroll(sheetOpen);
   useEscape(sheetOpen, () => setSheetOpen(false));
 
   const filters = [
-    { id: "all", name: "All", href: buildHref({ sort, collection }) },
-    {
-      id: "new",
-      name: "New Arrivals",
-      href: buildHref({ sort, collection, newOnly: true }),
-    },
-    ...CATEGORIES.map((entry) => ({
+    { id: "all", name: "All", href: buildHref({ sort, drop }) },
+    ...CATEGORIES.filter((entry) => available.includes(entry.id)).map((entry) => ({
       id: entry.id,
       name: entry.name,
-      href: buildHref({ category: entry.id, sort, collection }),
+      href: buildHref({ category: entry.id, sort, drop }),
     })),
   ];
 
@@ -104,7 +102,7 @@ export default function FilterBar({ category, sort, collection, newOnly, count }
                       href={buildHref({
                         category,
                         sort: option.key,
-                        collection,
+                        drop,
                         newOnly,
                       })}
                       aria-current={sort === option.key ? "true" : undefined}
@@ -173,7 +171,7 @@ export default function FilterBar({ category, sort, collection, newOnly, count }
                 {SORT_OPTIONS.map((option) => (
                   <li key={option.key}>
                     <Link
-                      href={buildHref({ category, sort: option.key, collection, newOnly })}
+                      href={buildHref({ category, sort: option.key, drop, newOnly })}
                       onClick={() => setSheetOpen(false)}
                       aria-current={sort === option.key ? "true" : undefined}
                       className={`type-body block py-2 ${

@@ -45,14 +45,14 @@ export const metadata: Metadata = {
     template: `%s | ${BRAND}`,
   },
   description:
-    "THARROS is a contemporary streetwear label. Heavyweight cuts, monochrome palette, built for those who don't blend in. Shop Collection 01.",
+    "THARROS is an independent streetwear label making small runs of original pieces. Designed, patterned and sampled in-house. Shop Drop 001.",
   keywords: [
     "THARROS",
-    "streetwear",
-    "contemporary streetwear",
+    "independent streetwear",
+    "small batch clothing",
+    "limited run streetwear",
     "heavyweight hoodie",
     "oversized tee",
-    "monochrome clothing",
   ],
   alternates: { canonical: "/" },
   openGraph: {

@@ -19,10 +19,17 @@ merch".
 "Tharros Apparel", or "the Tharros brand". Sentence-case "Tharros" is acceptable only
 inside a longer running sentence where full caps would shout.
 
-The line is: **Built for those who don't blend in.**
+The line is: **Small runs. Original ideas.**
 
-Recurring editorial phrases, used sparingly: *Noise / Silence*, *Collection 01*,
-*The world doesn't need another brand. Make your own.*
+Recurring editorial phrases, used sparingly: *Made small. Made with intent.*, *Built
+from the ground up.*, *Designed, tested, refined.*, *Drop 001*. Pick one per page — a
+label that repeats its own slogans sounds like merchandise.
+
+**Scale.** Write like a small independent label, because that is what this is. Say
+"small run", not "global collection". Say "the next drop", not "our latest seasonal
+assortment". Never imply a team, a factory, a warehouse, press coverage or a history
+that does not exist. The founder's learning is part of the story, but THARROS is the
+subject — this is not a personal blog, and the word "I" does not appear in site copy.
 
 ---
 
@@ -30,8 +37,8 @@ Recurring editorial phrases, used sparingly: *Noise / Silence*, *Collection 01*,
 
 Use:
 
-> SHOP THE COLLECTION · SHOP THE DROP · VIEW COLLECTION · DISCOVER THE STORY ·
-> ADD TO BAG · NEW · LOW STOCK · SOLD OUT · COMING SOON · JOIN
+> SHOP THE DROP · VIEW THE DROP · READ THE STORY · ADD TO BAG · SAVE IT ·
+> SOLD OUT · IN DEVELOPMENT · 12 MADE · WILL NOT BE REMADE · JOIN
 
 Never:
 
@@ -54,7 +61,10 @@ These are content rules, not just engineering ones. Breaking them is a defect.
 - press mentions, awards, stockists or collaborations that have not happened
 - founding history, locations, factories, or sustainability claims that were not supplied
 - model measurements or fit notes that were not measured
-- scarcity language the inventory does not support
+- scarcity language the inventory does not support — run sizes and remaining counts
+  come from the catalogue and are printed verbatim
+- restock promises: only `restock: "none"` may say a piece will not be remade
+- a waitlist, notification or early access that is not actually wired up
 - "X people are viewing this" or any manufactured urgency
 
 **When something is not ready, say so in one plain line and stop.** The site already does

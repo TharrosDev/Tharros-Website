@@ -1,9 +1,9 @@
 import ImageSlot from "@/components/media/ImageSlot";
 import { SOCIAL } from "@/lib/site";
 
-const TILES = Array.from({ length: 6 }, (_, index) => ({
+const TILES = Array.from({ length: 3 }, (_, index) => ({
   code: `SOC-${String(index + 1).padStart(2, "0")}`,
-  alt: `THARROS social post ${index + 1}`,
+  alt: `THARROS workroom image ${index + 1}`,
   kind: "lifestyle" as const,
   ratio: "square" as const,
 }));
@@ -18,7 +18,7 @@ export default function SocialGrid() {
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="eyebrow">
             <span className="num">07</span>
-            <span>Community</span>
+            <span>From the workroom</span>
           </p>
           <a
             href={instagram.href}
@@ -26,14 +26,14 @@ export default function SocialGrid() {
             rel="noreferrer noopener"
             className="link-rule link-rule-reveal"
           >
-            Follow Tharros
+            Follow the build
           </a>
         </div>
 
-        <ul className="mt-8 grid grid-cols-3 gap-2 md:grid-cols-6">
+        <ul className="mt-8 grid grid-cols-3 gap-2">
           {TILES.map((tile) => (
             <li key={tile.code}>
-              <ImageSlot image={tile} sizes="(min-width: 768px) 16vw, 33vw" />
+              <ImageSlot image={tile} sizes="33vw" />
             </li>
           ))}
         </ul>
