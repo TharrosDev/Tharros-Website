@@ -16,7 +16,7 @@ export default function LookbookTeaser() {
         <SectionHeading
           index="06"
           label="Lookbook"
-          title="Collection 01, in full."
+          title="Drop 001, in full."
           action={{ href: "/lookbook", label: "Open lookbook" }}
         />
       </div>

@@ -42,9 +42,10 @@ export default function Footer() {
       <div className="page-frame">
         <div className="grid gap-12 border-b border-rule-on-dark py-16 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-24">
           <div>
-            <p className="type-display-3 uppercase">Stay in the know.</p>
+            <p className="type-display-3 uppercase">Get the next drop.</p>
             <p className="type-body mt-4 max-w-md text-ink-on-dark-muted">
-              New drops, campaigns, and everything THARROS.
+              Runs are small and they go quickly. The list hears first when something
+              is finished.
             </p>
           </div>
           <Newsletter onDark />

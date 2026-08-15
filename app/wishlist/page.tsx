@@ -4,7 +4,7 @@ import WishlistView from "@/components/commerce/WishlistView";
 
 export const metadata: Metadata = {
   title: "Saved",
-  description: "Pieces you have saved from the THARROS collection.",
+  description: "Pieces you have saved from the current THARROS drop.",
   alternates: { canonical: "/wishlist" },
   robots: { index: false, follow: true },
 };

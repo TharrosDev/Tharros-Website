@@ -2,31 +2,41 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/layout/PageIntro";
 import Accordion from "@/components/ui/Accordion";
-import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+import { SITE_URL } from "@/lib/site";
 import { jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers to common questions about THARROS sizing, shipping, returns, drops and stock.",
+    "Answers about THARROS drops, run sizes, restocks, sizing, shipping and returns.",
   alternates: { canonical: "/faq" },
 };
 
 const FAQS = [
   {
-    question: "How do THARROS pieces fit?",
+    question: "Why are there so few pieces?",
     answer:
-      "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists its fit notes, and garment measurements are published in the size guide.",
+      "THARROS releases in drops rather than keeping a permanent catalogue. Each drop is a small number of pieces made in short runs — that is the actual production capacity, not a marketing tactic.",
+  },
+  {
+    question: "How many of each piece are made?",
+    answer:
+      "It varies by piece and it is printed on every product page, along with how many are still available. When a size is gone, it is gone.",
+  },
+  {
+    question: "Will sold-out pieces come back?",
+    answer:
+      "Sometimes, and never automatically. Some runs are marked as final on the product page and will not be remade. Others may return in a later drop, usually changed rather than reprinted.",
   },
   {
     question: "When is the next drop?",
     answer:
-      "Drops are announced to the mailing list first. Release dates are not published in advance on the site.",
+      "There is no published date. A drop goes out when the fit is right; pieces far enough along to show appear on the current drop page while they are still in development.",
   },
   {
-    question: "Do sold-out pieces come back?",
+    question: "How do THARROS pieces fit?",
     answer:
-      "Not on a schedule. Pieces are made in limited runs, and any restock is announced to the mailing list rather than quietly added to the store.",
+      "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists its fit notes, and garment measurements are published in the size guide.",
   },
   {
     question: "How long does shipping take?",
@@ -37,10 +47,6 @@ const FAQS = [
     question: "What is the returns policy?",
     answer:
       "Unworn pieces with tags attached can be returned within 30 days of delivery. Return shipping is paid by the customer unless the piece arrived faulty or incorrect.",
-  },
-  {
-    question: "How do I contact THARROS?",
-    answer: `Email ${CONTACT_EMAIL}. Messages are answered within two business days.`,
   },
 ];
 

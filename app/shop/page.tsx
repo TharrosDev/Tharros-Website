@@ -3,8 +3,13 @@ import Link from "next/link";
 import FilterBar from "@/components/shop/FilterBar";
 import ProductGrid from "@/components/product/ProductGrid";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
-import { getCollection } from "@/lib/catalog/collections";
-import { isSortKey, listProducts, searchProducts } from "@/lib/catalog/queries";
+import { getDrop } from "@/lib/catalog/drops";
+import {
+  categoriesInUse,
+  isSortKey,
+  listProducts,
+  searchProducts,
+} from "@/lib/catalog/queries";
 import { SITE_URL } from "@/lib/site";
 import type { CategoryId } from "@/lib/catalog/types";
 import { jsonLd } from "@/lib/jsonld";
@@ -37,8 +42,9 @@ export default async function ShopPage({
   const sortParam = first(params.sort);
   const sort = isSortKey(sortParam) ? sortParam : "featured";
 
-  const collectionParam = first(params.collection);
-  const collection = collectionParam && getCollection(collectionParam) ? collectionParam : undefined;
+  const dropParam = first(params.drop);
+  const dropSlug = dropParam && getDrop(dropParam) ? dropParam : undefined;
+  const drop = dropSlug ? getDrop(dropSlug) : undefined;
 
   const newOnly = first(params.new) === "1";
 
@@ -48,15 +54,17 @@ export default async function ShopPage({
 
   const products = query
     ? searchProducts(query, 100)
-    : listProducts({ category, sort, collection, isNew: newOnly || undefined });
+    : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
 
   const heading = query
     ? `“${query}”`
     : newOnly
-      ? "New Arrivals"
-      : category !== "all"
-        ? categoryName(category)
-        : "Shop Tharros";
+      ? "In development"
+      : drop
+        ? drop.name
+        : category !== "all"
+          ? categoryName(category)
+          : "Every piece";
 
   const breadcrumbs = {
     "@context": "https://schema.org",
@@ -82,11 +90,7 @@ export default async function ShopPage({
           <p className="eyebrow">
             <span className="num">01</span>
             <span>
-              {query
-                ? "Search"
-                : collection
-                  ? getCollection(collection)?.name
-                  : "Catalogue"}
+              {query ? "Search" : drop ? "Drop" : "Everything made so far"}
             </span>
           </p>
         </div>
@@ -96,9 +100,10 @@ export default async function ShopPage({
       <FilterBar
         category={category}
         sort={sort}
-        collection={collection}
+        drop={dropSlug}
         newOnly={newOnly}
         count={products.length}
+        available={categoriesInUse()}
       />
 
       <div className="page-frame rhythm-tight">
@@ -108,7 +113,7 @@ export default async function ShopPage({
             <p className="type-body mt-4 text-ink-muted">
               {query
                 ? "No pieces match that search."
-                : "No pieces match that filter yet."}
+                : "Nothing in that category right now — the line is small on purpose."}
             </p>
             <Link href="/shop" className="btn btn-solid mt-10">
               View everything

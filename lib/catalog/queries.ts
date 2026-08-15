@@ -1,6 +1,7 @@
 import { PRODUCTS } from "./products";
 import type {
   Availability,
+  CategoryId,
   Product,
   ProductQuery,
   SortKey,
@@ -81,11 +82,11 @@ export function isSortKey(value: string | undefined): value is SortKey {
 }
 
 export function listProducts(query: ProductQuery = {}): Product[] {
-  const { category = "all", collection, isNew, sort = "featured" } = query;
+  const { category = "all", drop, isNew, sort = "featured" } = query;
 
   const filtered = PRODUCTS.filter((product) => {
     if (category !== "all" && product.category !== category) return false;
-    if (collection && !product.collections.includes(collection)) return false;
+    if (drop && product.drop !== drop) return false;
     if (isNew && !product.isNew) return false;
     return true;
   });
@@ -125,7 +126,7 @@ export function getRelated(product: Product, limit = 4): Product[] {
     (candidate) => {
       let score = 0;
       if (candidate.category === product.category) score += 3;
-      if (candidate.collections.some((c) => product.collections.includes(c))) score += 2;
+      if (candidate.drop === product.drop) score += 2;
       if (candidate.featured) score += 1;
       if (!isPurchasable(candidate)) score -= 4;
       return { candidate, score };
@@ -136,6 +137,29 @@ export function getRelated(product: Product, limit = 4): Product[] {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map((entry) => entry.candidate);
+}
+
+/**
+ * What is left of the run. Both numbers are real: `runSize` is how many were
+ * made, and `remaining` counts actual variant inventory. A piece can never
+ * claim to be scarcer than it is.
+ */
+export function runStatus(product: Product): {
+  made: number;
+  remaining: number;
+  neverRestocked: boolean;
+} {
+  return {
+    made: product.runSize,
+    remaining: totalInventory(product),
+    neverRestocked: product.restock === "none",
+  };
+}
+
+/** Only the categories that currently hold a piece — a small line does not
+ *  need a filter bar full of empty rails. */
+export function categoriesInUse(): CategoryId[] {
+  return [...new Set(PRODUCTS.map((product) => product.category))];
 }
 
 export function searchProducts(term: string, limit = 8): Product[] {
@@ -150,7 +174,7 @@ export function searchProducts(term: string, limit = 8): Product[] {
       product.category,
       product.colorway,
       product.description,
-      ...product.collections,
+      product.drop,
     ]
       .join(" ")
       .toLowerCase();

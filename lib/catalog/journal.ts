@@ -1,100 +1,108 @@
-/** PLACEHOLDER CONTENT — journal entries stand in for real editorial. */
+/**
+ * PLACEHOLDER CONTENT — these entries stand in for real editorial.
+ *
+ * The journal is where a small label shows its working: what was made, what
+ * failed, what changed for the next drop. Structure it so real posts drop
+ * straight in; do not invent process details that did not happen.
+ */
 import type { JournalEntry } from "./types";
 
 export const JOURNAL: JournalEntry[] = [
   {
-    id: "collection-01-notes",
-    title: "Notes On Collection 01",
-    slug: "notes-on-collection-01",
-    category: "Collection",
+    id: "making-drop-001",
+    title: "The Making Of Drop 001",
+    slug: "the-making-of-drop-001",
+    category: "Process",
     excerpt:
-      "Fifteen pieces, one palette, and a rule we kept coming back to: if it isn't doing work, take it off.",
-    publishedAt: "2026-07-18",
+      "Seven pieces, several more that did not make it, and the patterns that had to be cut three times.",
+    publishedAt: "2026-05-02",
     readingMinutes: 4,
     cover: {
       code: "JRN-01-COVER",
-      alt: "Collection 01 pieces laid out on a concrete floor",
-      kind: "lifestyle",
-      ratio: "campaign",
-    },
-    blocks: [
-      {
-        type: "paragraph",
-        text: "Collection 01 started as a pile of rejected samples. Everything that survived did so because it answered a question the rest of the pile couldn't: what does this piece do that nothing else in the drop already does?",
-      },
-      { type: "heading", text: "Weight First" },
-      {
-        type: "paragraph",
-        text: "The decision that shaped the rest was fabric weight. Once the fleece went heavy, the patterns had to change — a heavier cloth holds a squarer shoulder, so the cuts got boxier and the hems got longer to balance them.",
-      },
-      {
-        type: "quote",
-        text: "If the fabric can stand up on its own, the pattern has to earn its shape.",
-      },
-      {
-        type: "paragraph",
-        text: "The graphics came last, not first. Most of them didn't survive. What remains is set at scale or left off entirely — there is no middle register in this collection.",
-      },
-    ],
-  },
-  {
-    id: "how-to-wear-heavy",
-    title: "Wearing Heavy",
-    slug: "wearing-heavy",
-    category: "Styling",
-    excerpt:
-      "Layering heavyweight pieces without ending up shapeless. Three rules and one exception.",
-    publishedAt: "2026-06-30",
-    readingMinutes: 3,
-    cover: {
-      code: "JRN-02-COVER",
-      alt: "Layered heavyweight pieces photographed against a plain wall",
-      kind: "lifestyle",
-      ratio: "campaign",
-    },
-    blocks: [
-      {
-        type: "paragraph",
-        text: "Heavyweight garments carry volume. Stack three of them without thinking and the silhouette disappears. The fix is proportion, not restraint.",
-      },
-      { type: "heading", text: "One Volume At A Time" },
-      {
-        type: "paragraph",
-        text: "If the top is oversized, the bottom holds its line. The Utility Cargo Pant is wide enough to balance a shell, but not underneath one — the Stacked Sweatpant does that job better.",
-      },
-      { type: "heading", text: "Let The Hem Do The Work" },
-      {
-        type: "paragraph",
-        text: "Length is the quietest tool in the collection. The Field Zip Hoodie runs long on purpose so it reads as a layer, not a top.",
-      },
-    ],
-  },
-  {
-    id: "the-name",
-    title: "On The Name",
-    slug: "on-the-name",
-    category: "Brand",
-    excerpt: "Tharros is a Greek word for courage. Here is why it is on the label.",
-    publishedAt: "2026-05-02",
-    readingMinutes: 2,
-    cover: {
-      code: "JRN-03-COVER",
-      alt: "The THARROS wordmark embroidered on a garment label",
+      alt: "Patterns and part-sewn samples laid out on a work table",
       kind: "detail",
       ratio: "campaign",
     },
     blocks: [
       {
         type: "paragraph",
-        text: "Tharros — θάρρος — is a Greek word for courage: the nerve to act, and to be seen acting.",
+        text: "Drop 001 started with more pieces than it ended with. The ones that survived did so because they answered a question the rest could not: what does this do that nothing else in the drop already does?",
       },
+      { type: "heading", text: "The tee took three patterns" },
       {
         type: "paragraph",
-        text: "Clothing is the most public decision most people make in a day. Wearing something with intent means accepting you will be read. That is the whole idea behind the label.",
+        text: "The first was too long and read as a nightshirt. The second fixed the length and lost the shoulder. The third shortened the body and kept the width, which is the one that went out.",
       },
       {
         type: "quote",
-        text: "The world doesn't need another brand. Make your own.",
+        text: "Most of the work is the second attempt. The first one only tells you what is wrong.",
+      },
+      { type: "heading", text: "What the run size means" },
+      {
+        type: "paragraph",
+        text: "Twelve Work Jackets were made because twelve was what could be made properly. They are gone, and the pattern is being reworked rather than repeated — the shoulder needs another pass before it deserves a second run.",
+      },
+    ],
+  },
+  {
+    id: "learning-to-sew",
+    title: "Learning To Sew Properly",
+    slug: "learning-to-sew-properly",
+    category: "Craft",
+    excerpt:
+      "Why the construction is being learned first-hand instead of handed to someone else.",
+    publishedAt: "2026-06-30",
+    readingMinutes: 3,
+    cover: {
+      code: "JRN-02-COVER",
+      alt: "Close detail of a seam being sewn",
+      kind: "detail",
+      ratio: "campaign",
+    },
+    blocks: [
+      {
+        type: "paragraph",
+        text: "It would be faster to send a sketch to a factory and wait. It would also mean never knowing why a sample comes back wrong.",
+      },
+      {
+        type: "paragraph",
+        text: "Sewing the samples means the fix is obvious: the seam that puckers, the rib that stretches out, the pocket placed where it drags the whole front out of line. Those are things you feel through the machine rather than read in an email.",
+      },
+      { type: "heading", text: "It shows in the drop" },
+      {
+        type: "paragraph",
+        text: "The difference between the first sample of the Arc Hoodie and the one that shipped is not visible in a photograph. It is in how the hood sits when it is down, which took four attempts.",
+      },
+    ],
+  },
+  {
+    id: "next-drop",
+    title: "What Changes For Drop 002",
+    slug: "what-changes-for-drop-002",
+    category: "Next",
+    excerpt:
+      "The cargo pattern gets reworked, the shell gets a second sample, and nothing gets a release date until it is ready.",
+    publishedAt: "2026-07-18",
+    readingMinutes: 2,
+    cover: {
+      code: "JRN-03-COVER",
+      alt: "A pattern piece pinned to fabric, marked up in pencil",
+      kind: "detail",
+      ratio: "campaign",
+    },
+    blocks: [
+      {
+        type: "paragraph",
+        text: "Drop 002 is on the table now. The Shell Jacket is on its second sample and the beanie is approved, which is why both are visible on the site while the rest is not.",
+      },
+      { type: "heading", text: "The cargo comes back" },
+      {
+        type: "paragraph",
+        text: "The Utility Cargo Pant was the hardest pattern in the first drop and the one most worth redoing. The leg is right; the rise is not.",
+      },
+      {
+        type: "quote",
+        text: "It goes out when the fit is right, not when the calendar says so.",
       },
     ],
   },

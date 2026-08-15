@@ -51,7 +51,7 @@ export default function Newsletter({ onDark = false }: { onDark?: boolean }) {
       >
         {state === "invalid" ? "Enter a valid email address." : null}
         {state === "not-connected"
-          ? "Signup is not connected yet — nothing was sent. Check back at the next drop."
+          ? "The list is not open yet — nothing was sent. Drop 002 will be announced here first."
           : null}
       </p>
     </form>

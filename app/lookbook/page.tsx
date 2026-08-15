@@ -3,14 +3,14 @@ import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
 import { LOOKBOOK } from "@/lib/catalog/lookbook";
-import { CURRENT_COLLECTION } from "@/lib/catalog/collections";
+import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { getProduct } from "@/lib/catalog/queries";
 import type { LookbookSpread } from "@/lib/catalog/types";
 
 export const metadata: Metadata = {
   title: "Lookbook",
   description:
-    "THARROS Collection 01 lookbook — Summer 2026. Campaign imagery and the pieces worn in it.",
+    "The Drop 001 lookbook — a small set of frames showing the pieces and how they sit together.",
   alternates: { canonical: "/lookbook" },
 };
 
@@ -51,19 +51,19 @@ export default function LookbookPage() {
     <>
       {/* Opens full-bleed under the transparent header, like the home hero. */}
       <section className="on-dark relative flex min-h-[85svh] flex-col justify-end overflow-hidden">
-        <ImageSlot image={CURRENT_COLLECTION.cover} fill priority sizes="100vw" />
+        <ImageSlot image={CURRENT_DROP.cover} fill priority sizes="100vw" />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/45"
         />
         <div className="page-frame relative z-10 pb-14">
           <p className="type-meta text-ink-on-dark">
-            <span className="num">01</span>
+            <span className="num">{CURRENT_DROP.index}</span>
             <span className="ml-4">Lookbook</span>
           </p>
-          <h1 className="type-display-1 mt-6">{CURRENT_COLLECTION.name}</h1>
+          <h1 className="type-display-1 mt-6">{CURRENT_DROP.name}</h1>
           <p className="type-meta mt-5 text-ink-on-dark-muted">
-            Tharros / {CURRENT_COLLECTION.season}
+            Four frames. Every piece in the drop.
           </p>
         </div>
       </section>
@@ -133,8 +133,8 @@ export default function LookbookPage() {
 
       <section className="rhythm-tight border-t border-rule">
         <div className="page-frame flex flex-wrap items-center justify-between gap-6">
-          <p className="type-display-3 uppercase">Shop the collection.</p>
-          <Link href="/shop?collection=collection-01" className="btn btn-solid">
+          <p className="type-display-3 uppercase">Shop the drop.</p>
+          <Link href={`/shop?drop=${CURRENT_DROP.slug}`} className="btn btn-solid">
             View all pieces
           </Link>
         </div>

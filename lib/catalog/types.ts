@@ -57,6 +57,12 @@ export type Variant = {
   inventory: number;
 };
 
+/**
+ * How a run is treated once it sells through. Drives the only restock claim
+ * the storefront is allowed to make.
+ */
+export type RestockPolicy = "none" | "possible";
+
 export type Product = {
   id: string;
   name: string;
@@ -69,7 +75,14 @@ export type Product = {
   price: number;
   compareAtPrice?: number;
   category: CategoryId;
-  collections: string[];
+  /** The drop this piece was released in. */
+  drop: string;
+  /**
+   * How many were made. Real number, not a marketing figure — the storefront
+   * shows it verbatim and derives "x left" from it.
+   */
+  runSize: number;
+  restock: RestockPolicy;
   colorway: string;
   images: ImageSlotData[];
   variants: Variant[];
@@ -83,18 +96,28 @@ export type Product = {
   releasedAt: string;
 };
 
-export type Collection = {
+/**
+ * A drop is the unit THARROS releases in: a small, numbered, dated batch of
+ * pieces. Everything the storefront calls a "collection" is one of these.
+ */
+export type Drop = {
   id: string;
+  /** Zero-padded, shown in the mono layer: 001, 002. */
+  index: string;
   name: string;
   slug: string;
-  season: string;
   statement: string;
   body: string[];
+  /** ISO date, or null while a drop is still in development. */
+  releasedAt: string | null;
+  status: "released" | "in-development";
   cover: ImageSlotData;
 };
 
 export type LookbookSpread = {
   id: string;
+  /** The drop this spread documents. */
+  drop: string;
   /** Layout the spread claims on the page. */
   layout: "full" | "pair" | "offset" | "stack";
   caption: string;
@@ -126,7 +149,7 @@ export type SortKey = "featured" | "newest" | "price-asc" | "price-desc";
 
 export type ProductQuery = {
   category?: CategoryId | "all";
-  collection?: string;
+  drop?: string;
   isNew?: boolean;
   sort?: SortKey;
 };

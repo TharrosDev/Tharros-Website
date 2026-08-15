@@ -22,12 +22,13 @@ export default function CampaignBlock() {
       <div className="absolute inset-0 flex items-end">
         <div className="page-frame w-full pb-12 md:pb-16">
           <Reveal>
-            <h2 className="type-display-2">This is Tharros.</h2>
+            <h2 className="type-display-2">An independent label, in progress.</h2>
             <p className="type-body mt-6 max-w-md text-ink-on-dark-muted">
-              THARROS exists for people who refuse to disappear into the crowd.
+              Seven pieces in the first drop. The next one is on the table now — cut,
+              sewn, worn, and cut again until it earns a run.
             </p>
             <Link href="/about" className="btn btn-inverse mt-10">
-              Discover the story
+              Read the story
             </Link>
           </Reveal>
         </div>

@@ -6,12 +6,13 @@ import SaveButton from "./SaveButton";
 import SizeGuideModal from "./SizeGuideModal";
 import QuantityStepper from "@/components/commerce/QuantityStepper";
 import {
-  AVAILABILITY_LABEL,
   isPurchasable,
   isSizeAvailable,
   resolveAvailability,
+  runStatus,
   variantFor,
 } from "@/lib/catalog/queries";
+import { getDrop } from "@/lib/catalog/drops";
 import { getCategory } from "@/lib/catalog/categories";
 import { MAX_LINE_QUANTITY } from "@/lib/commerce/cart";
 import type { Product, Size } from "@/lib/catalog/types";
@@ -42,22 +43,43 @@ export default function BuyPanel({ product }: { product: Product }) {
     add(product.id, size, quantity);
   };
 
+  const run = runStatus(product);
+  const drop = getDrop(product.drop);
+
   if (!buyable) {
+    const soldOut = availability === "sold-out";
     return (
       <div className="border-t border-ink pt-6">
-        <p className="type-meta">{AVAILABILITY_LABEL[availability]}</p>
-        <p className="type-body mt-3 text-ink-muted">
-          {availability === "sold-out"
-            ? "This piece has sold out. Restocks are announced to the mailing list first."
-            : "Not released yet. Release dates go out to the mailing list first."}
+        <p className="type-display-3 uppercase">
+          {soldOut ? "Sold out" : "Not out yet"}
         </p>
-        <div className="mt-6 flex items-center gap-3">
+        <p className="type-meta mt-3 text-ink-faint">
+          {drop?.name}
+          {soldOut && run.made > 0 ? (
+            <>
+              <span className="mx-3" aria-hidden="true">
+                /
+              </span>
+              <span className="num">{run.made}</span> made
+            </>
+          ) : null}
+        </p>
+
+        <p className="type-body mt-5 text-ink-muted">
+          {soldOut
+            ? run.neverRestocked
+              ? "That run is finished and this piece will not be remade. Thank you — it went faster than expected."
+              : "That run is finished. If it comes back it will be in a later drop, and it may not be identical."
+            : "This piece is still being sampled. It goes on sale when the fit is right, not on a schedule."}
+        </p>
+
+        <div className="mt-8 flex items-center gap-3">
           <SaveButton
             productId={product.id}
             productName={product.name}
             className="border border-rule-strong"
           />
-          <span className="type-meta text-ink-faint">Save for later</span>
+          <span className="type-meta text-ink-faint">Save it</span>
         </div>
       </div>
     );
@@ -141,9 +163,23 @@ export default function BuyPanel({ product }: { product: Product }) {
         {error}
       </p>
 
-      {availability === "low-stock" ? (
-        <p className="type-meta mt-2 text-ink-muted">Low stock</p>
-      ) : null}
+      {/* Both numbers are real: what was made, and what is genuinely left. */}
+      <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border-t border-rule pt-5">
+        <div className="flex gap-2">
+          <dt className="type-meta text-ink-faint">Run</dt>
+          <dd className="type-meta num">{run.made} made</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="type-meta text-ink-faint">Left</dt>
+          <dd className="type-meta num">{run.remaining}</dd>
+        </div>
+        {run.neverRestocked ? (
+          <div className="flex gap-2">
+            <dt className="visually-hidden">Restock</dt>
+            <dd className="type-meta">Will not be remade</dd>
+          </div>
+        ) : null}
+      </dl>
 
       {sizingKey ? (
         <SizeGuideModal
