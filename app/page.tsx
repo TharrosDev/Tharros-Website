@@ -1,31 +1,23 @@
-import dynamic from "next/dynamic";
-import HeroSection from "@/components/HeroSection";
-import WorkReel from "@/components/WorkReel";
-import NextStep from "@/components/NextStep";
-import SectionSkeleton from "@/components/SectionSkeleton";
+import Hero from "@/components/home/Hero";
+import CurrentDrop from "@/components/home/CurrentDrop";
+import Statement from "@/components/home/Statement";
+import FeaturedEdit from "@/components/home/FeaturedEdit";
+import CampaignBlock from "@/components/home/CampaignBlock";
+import CollectionStory from "@/components/home/CollectionStory";
+import LookbookTeaser from "@/components/home/LookbookTeaser";
+import SocialGrid from "@/components/home/SocialGrid";
 
-const ProblemSection = dynamic(() => import("@/components/ProblemSection"), { loading: () => <SectionSkeleton /> });
-const ChatDemoSectionWrapper = dynamic(() => import("@/components/ChatDemoSectionWrapper"), { loading: () => <SectionSkeleton /> });
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="bg-[color:var(--surface)]">
-      <HeroSection />
-      <WorkReel />
-
-      <div className="flex flex-col">
-        <ProblemSection />
-        <ChatDemoSectionWrapper />
-        <NextStep
-          numeral="§ 03"
-          eyebrow="Keep going"
-          heading="See what we build, and what it costs."
-          links={[
-            { label: "Explore the product", href: "/product", primary: true },
-            { label: "View pricing", href: "/pricing" },
-          ]}
-        />
-      </div>
-    </main>
+    <>
+      <Hero />
+      <CurrentDrop />
+      <Statement />
+      <FeaturedEdit />
+      <CampaignBlock />
+      <CollectionStory />
+      <LookbookTeaser />
+      <SocialGrid />
+    </>
   );
 }
