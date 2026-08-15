@@ -32,7 +32,12 @@ export default function NewDropPage() {
 
       <div className="page-frame rhythm-tight">
         {released.length > 0 ? (
-          <ProductGrid products={released} columns={3} priorityCount={3} />
+          <ProductGrid
+            products={released}
+            heading="New arrivals"
+            columns={3}
+            priorityCount={3}
+          />
         ) : (
           <div className="border-t border-rule py-16">
             <p className="type-display-3 uppercase">Between drops.</p>

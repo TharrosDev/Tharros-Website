@@ -17,6 +17,7 @@ import {
 import { CURRENCY, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { SHIPPING_OPTIONS, FREE_SHIPPING_THRESHOLD } from "@/lib/commerce/shipping";
+import { jsonLd } from "@/lib/jsonld";
 
 type Params = Promise<{ slug: string }>;
 
@@ -52,7 +53,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const related = getRelated(product, 4);
   const availability = resolveAvailability(product);
 
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -92,7 +93,7 @@ export default async function ProductPage({ params }: { params: Params }) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
 
       <div
@@ -102,7 +103,7 @@ export default async function ProductPage({ params }: { params: Params }) {
         <nav aria-label="Breadcrumb">
           <ol className="type-meta flex flex-wrap items-center gap-2 text-ink-faint">
             <li className="flex items-center gap-2">
-              <Link href="/shop" className="transition-opacity hover:opacity-60">
+              <Link href="/shop" className="-my-2 inline-block py-2 transition-opacity hover:opacity-60">
                 Shop
               </Link>
               <span aria-hidden="true">/</span>
@@ -110,7 +111,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             <li className="flex items-center gap-2">
               <Link
                 href={`/shop?category=${product.category}`}
-                className="transition-opacity hover:opacity-60"
+                className="-my-2 inline-block py-2 transition-opacity hover:opacity-60"
               >
                 {categoryName(product.category)}
               </Link>
@@ -126,7 +127,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           <ProductGallery images={product.images} productName={product.name} />
         </div>
 
-        <div className="lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:self-start">
+        <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
           <h1 className="type-display-3">{product.name}</h1>
 
           <div className="mt-4 flex items-baseline gap-4">
@@ -159,6 +160,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           </div>
 
           <div className="mt-10">
+            <h2 className="visually-hidden">Product information</h2>
             <Accordion title="Description" defaultOpen>
               <p className="type-body text-ink-muted">{product.story}</p>
             </Accordion>
@@ -229,7 +231,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           <div className="page-frame">
             <SectionHeading index="02" label="You may also like" />
             <div className="mt-12">
-              <ProductGrid products={related} columns={4} />
+              <ProductGrid products={related} heading="You may also like" columns={4} />
             </div>
           </div>
         </section>

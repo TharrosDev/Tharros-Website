@@ -369,7 +369,7 @@ export default function CheckoutFlow() {
         ) : null}
       </div>
 
-      <div className="lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:self-start">
+      <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
         <OrderSummary shippingOptionId={shippingOption} />
       </div>
     </div>

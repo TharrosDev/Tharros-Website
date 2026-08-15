@@ -63,6 +63,8 @@ Rules that follow from this, and that must not be quietly broken:
 | `/size-guide`, `/shipping`, `/returns`, `/faq`, `/contact` | | Information |
 | `/legal/privacy`, `/legal/terms`, `/legal/refund-policy` | | Drafts |
 | 404 | `app/not-found.tsx` | Branded, full-screen |
+| Errors | `app/error.tsx`, `app/global-error.tsx` | Branded boundaries — never Next's default page |
+| Loading | `app/shop/loading.tsx` | Skeleton matching the real grid, so nothing shifts |
 
 `Header` floats transparent over the hero on the routes in `TRANSPARENT_ROUTES`
 (`/` and `/lookbook`). Every other page opens with `PageIntro`, which carries the fixed
@@ -130,6 +132,9 @@ Shared hooks live in `lib/hooks.ts`: `useFocusTrap`, `useEscape`, `useLockBodySc
 Monochrome — black, near-black, steel, concrete, ash, bone, paper. **No colour is to be
 introduced.** The clothing supplies the colour.
 
+`--concrete` (`text-ink-faint`) is the faintest text tone allowed and is tuned to pass AA
+at 11px on paper. Do not lighten it — it carries the entire mono metadata layer.
+
 - Type: `Archivo` display, `Inter` body, `JetBrains Mono` for the technical layer
   (prices, sizes, product codes, captions, section indices).
 - The type ladder is `@utility` classes in `globals.css` — `type-colossal` through
@@ -171,6 +176,14 @@ React Compiler rules that the build does not.
   `role="dialog"`, `aria-modal`, a focus trap, ESC-to-close, and scroll lock. Use the
   hooks; do not re-implement.
 - Tailwind class order: layout → sizing → spacing → color → typography → effects → state.
+- **Structured data goes through `jsonLd()`** (`lib/jsonld.ts`), never raw
+  `JSON.stringify` — it escapes `<` and the U+2028/U+2029 line separators that would
+  otherwise break out of the inline `<script>` once catalog content is CMS-driven.
+- **Interactive controls carry a real box**, not an expanded invisible overlay: header
+  icons are `h-11 w-11` flex boxes, small mono links get `-my-2 py-2`. An absolutely
+  positioned hit area steals clicks from its neighbours.
+- Every sticky column is bounded (`max-h` + `overflow-y-auto`); an unbounded sticky
+  element taller than the viewport hides its own bottom on short screens.
 
 ---
 

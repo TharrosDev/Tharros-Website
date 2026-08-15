@@ -3,6 +3,11 @@ import type { Product } from "@/lib/catalog/types";
 
 type Props = {
   products: Product[];
+  /**
+   * Names the grid in the page outline. Rendered visually hidden — without it,
+   * product titles become h3s with no h2 above them.
+   */
+  heading?: string;
   /** Columns at the large breakpoint. Two reads more editorial, four reads catalog. */
   columns?: 2 | 3 | 4;
   priorityCount?: number;
@@ -22,22 +27,26 @@ const SIZES: Record<2 | 3 | 4, string> = {
 
 export default function ProductGrid({
   products,
+  heading,
   columns = 3,
   priorityCount = 0,
 }: Props) {
   return (
-    <ul
-      className={`grid gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-16 ${COLUMN_CLASS[columns]}`}
-    >
-      {products.map((product, index) => (
-        <li key={product.id}>
-          <ProductCard
-            product={product}
-            sizes={SIZES[columns]}
-            priority={index < priorityCount}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      {heading ? <h2 className="visually-hidden">{heading}</h2> : null}
+      <ul
+        className={`grid gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-16 ${COLUMN_CLASS[columns]}`}
+      >
+        {products.map((product, index) => (
+          <li key={product.id}>
+            <ProductCard
+              product={product}
+              sizes={SIZES[columns]}
+              priority={index < priorityCount}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

@@ -40,7 +40,7 @@ export default function ContactPage() {
       <div className="page-frame rhythm-tight">
         <a
           href={`mailto:${CONTACT_EMAIL}`}
-          className="type-display-3 md:type-display-2 link-rule-reveal inline-block break-words"
+          className="type-display-3 lg:type-display-2 link-rule-reveal inline-block break-all"
         >
           {CONTACT_EMAIL}
         </a>

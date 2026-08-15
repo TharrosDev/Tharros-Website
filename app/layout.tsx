@@ -7,11 +7,12 @@ import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 import CartDrawer from "@/components/commerce/CartDrawer";
 import { BRAND, BRAND_LINE, SITE_URL, SOCIAL } from "@/lib/site";
+import { jsonLd } from "@/lib/jsonld";
 
 const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  weight: ["600", "700", "800"],
+  weight: ["700", "800"],
   variable: "--font-archivo",
 });
 
@@ -121,7 +122,7 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(graph) }}
         />
         <Providers>
           <Header />

@@ -55,13 +55,13 @@ export default function ImageSlot({
         {/* Labels only where they fit — thumbnails would just collide. */}
         <span
           aria-hidden="true"
-          className="type-meta absolute bottom-4 left-4 hidden text-ink-faint @[16rem]:block"
+          className="type-meta absolute bottom-4 left-4 hidden text-ink @[16rem]:block"
         >
           {image.code}
         </span>
         <span
           aria-hidden="true"
-          className="type-meta absolute right-4 bottom-4 hidden text-ink-faint/70 @[24rem]:block"
+          className="type-meta absolute right-4 bottom-4 hidden text-ink @[24rem]:block"
         >
           {image.kind}
         </span>

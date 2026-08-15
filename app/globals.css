@@ -11,7 +11,7 @@
   --black:      oklch(8% 0 0);
   --near-black: oklch(13% 0 0);
   --steel:      oklch(52% 0 0);   /* AA body text on paper */
-  --concrete:   oklch(62% 0 0);   /* decorative / large type only */
+  --concrete:   oklch(55% 0 0);   /* faint metadata — still AA at 11px */
   --ash:        oklch(82% 0 0);
   --bone:       oklch(90.5% 0.002 90);
   --paper:      oklch(98% 0.003 90);
@@ -483,6 +483,10 @@
     text-transform: uppercase;
     color: var(--ink-muted);
     margin-bottom: 0.5rem;
+  }
+
+  .on-dark .field-label {
+    color: var(--ink-on-dark-muted);
   }
 
   .field-error {
