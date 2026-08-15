@@ -10,22 +10,16 @@
   /* — Neutral ramp —————————————————————————————— */
   --black:      oklch(8% 0 0);
   --near-black: oklch(13% 0 0);
-  --charcoal:   oklch(24% 0 0);
-  --graphite:   oklch(38% 0 0);
   --steel:      oklch(52% 0 0);   /* AA body text on paper */
   --concrete:   oklch(62% 0 0);   /* decorative / large type only */
   --ash:        oklch(82% 0 0);
   --bone:       oklch(90.5% 0.002 90);
-  --off-white:  oklch(94.5% 0.002 90);
   --paper:      oklch(98% 0.003 90);
-  --white:      oklch(100% 0 0);
 
   /* — Semantic surfaces ————————————————————————— */
   --surface:       var(--paper);
-  --surface-sunk:  var(--off-white);
   --surface-frame: var(--bone);   /* empty image slots */
   --surface-dark:  var(--black);
-  --surface-dark-raised: var(--near-black);
 
   /* — Semantic ink —————————————————————————————— */
   --ink:        var(--near-black);
@@ -38,7 +32,6 @@
   /* — Rules ————————————————————————————————————— */
   --rule:          oklch(88% 0.002 90);
   --rule-strong:   oklch(78% 0.002 90);
-  --rule-heavy:    var(--near-black);
   --rule-on-dark:        oklch(26% 0 0);
   --rule-on-dark-strong: oklch(36% 0 0);
 
@@ -83,20 +76,15 @@
 @theme inline {
   --color-black: var(--black);
   --color-near-black: var(--near-black);
-  --color-charcoal: var(--charcoal);
-  --color-graphite: var(--graphite);
   --color-steel: var(--steel);
   --color-concrete: var(--concrete);
   --color-ash: var(--ash);
   --color-bone: var(--bone);
-  --color-off-white: var(--off-white);
   --color-paper: var(--paper);
 
   --color-surface: var(--surface);
-  --color-surface-sunk: var(--surface-sunk);
   --color-surface-frame: var(--surface-frame);
   --color-surface-dark: var(--surface-dark);
-  --color-surface-dark-raised: var(--surface-dark-raised);
 
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
@@ -107,7 +95,6 @@
 
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
-  --color-rule-heavy: var(--rule-heavy);
   --color-rule-on-dark: var(--rule-on-dark);
   --color-rule-on-dark-strong: var(--rule-on-dark-strong);
 
@@ -279,14 +266,6 @@
   line-height: 1.4;
 }
 
-@utility type-meta-lg {
-  font-family: var(--font-mono);
-  font-size: var(--type-meta-lg);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  line-height: 1.5;
-}
-
 @utility num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -302,11 +281,6 @@
     width: 100%;
     max-width: var(--frame-max);
     margin-inline: auto;
-    padding-inline: var(--gutter);
-  }
-
-  .bleed {
-    width: 100%;
     padding-inline: var(--gutter);
   }
 
@@ -603,13 +577,6 @@
     position: fixed;
   }
 
-  .rule-top {
-    border-top: 1px solid var(--rule);
-  }
-
-  .rule-heavy-top {
-    border-top: 1px solid var(--near-black);
-  }
 }
 
 /* ============================================================
@@ -712,24 +679,4 @@
     }
   }
 
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marquee var(--marquee-duration, 40s) linear infinite;
-  }
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-      animation: none;
-    }
-  }
 }

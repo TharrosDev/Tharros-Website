@@ -33,13 +33,10 @@ One neutral ramp. The clothing supplies the colour; the interface does not.
 |---|---|---|
 | `--black` | `oklch(8% 0 0)` | Dark sections, footer, 404 |
 | `--near-black` | `oklch(13% 0 0)` | Primary ink, button fill, heavy rules |
-| `--charcoal` | `oklch(24% 0 0)` | Reserved |
-| `--graphite` | `oklch(38% 0 0)` | Reserved |
 | `--steel` | `oklch(52% 0 0)` | Body text on paper (AA) |
 | `--concrete` | `oklch(62% 0 0)` | Faint metadata; decorative only |
 | `--ash` | `oklch(82% 0 0)` | Empty-slot frame lines |
 | `--bone` | `oklch(90.5% 0.002 90)` | Empty image slots |
-| `--off-white` | `oklch(94.5% 0.002 90)` | Sunk sections |
 | `--paper` | `oklch(98% 0.003 90)` | Page background, ink on dark |
 
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
@@ -78,7 +75,7 @@ Defined as `@utility` classes in `globals.css`, so responsive variants work
 | `type-display-4` | 1.375rem → 2rem | Sub-headings, editorial cards |
 | `type-lead` | 1.125rem → 1.5rem | Intro paragraphs |
 | `type-body` / `type-body-sm` | fluid / 14px | Copy |
-| `type-meta` / `type-meta-lg` | 11px / 13px | The mono layer |
+| `type-meta` | 11px | The mono layer |
 
 Display sizes are uppercase with tight negative tracking; the mono layer is uppercase with
 wide positive tracking. That contrast is the type system.

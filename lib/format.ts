@@ -21,11 +21,3 @@ export function formatDate(iso: string): string {
     timeZone: "UTC",
   }).format(new Date(iso));
 }
-
-export function formatDateShort(iso: string): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    year: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  }).format(new Date(iso));
-}

@@ -63,22 +63,6 @@ export function MenuIcon({ className = "" }: IconProps) {
   );
 }
 
-export function ArrowIcon({ className = "" }: IconProps) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>
-      <path d="M3 10h14M11.5 4.5 17 10l-5.5 5.5" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-export function ChevronIcon({ className = "" }: IconProps) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>
-      <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
 export function PlusIcon({ className = "" }: IconProps) {
   return (
     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>

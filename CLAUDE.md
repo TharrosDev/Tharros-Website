@@ -127,9 +127,8 @@ Shared hooks live in `lib/hooks.ts`: `useFocusTrap`, `useEscape`, `useLockBodySc
 
 **Read [`DESIGN.md`](./DESIGN.md).** Summary:
 
-Monochrome — black, near-black, charcoal, steel, concrete, bone, off-white, paper. One
-muted steel accent, used barely. **No colour is to be introduced.** The clothing supplies
-the colour.
+Monochrome — black, near-black, steel, concrete, ash, bone, paper. **No colour is to be
+introduced.** The clothing supplies the colour.
 
 - Type: `Archivo` display, `Inter` body, `JetBrains Mono` for the technical layer
   (prices, sizes, product codes, captions, section indices).
