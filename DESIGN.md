@@ -56,8 +56,14 @@ never through `--oxide` directly.
 
 Oxide red is the colour of a printed production stamp, not a fashion colour. It has exactly
 three jobs — **the current drop, a closed run, something in development** — and three rules:
-never inside a button, never decorative, never more than once in a viewport. If a fourth use
-appears, the answer is that the thing is not actually a state.
+never inside a button, never decorative, and **at most one accented element in the page
+content at a time**. If a fourth use appears, the answer is that the thing is not actually a
+state.
+
+The persistent drop stamp in the header is deliberately outside that count. It is chrome, not
+content: it marks the current drop everywhere, so a product page showing a closed run in oxide
+will legitimately carry two marks — one saying which drop you are in, one saying this piece is
+finished. They never mean the same thing, so they never compete.
 
 `--danger` is unrelated and stays reserved for form errors.
 
