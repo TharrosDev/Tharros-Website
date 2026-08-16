@@ -39,7 +39,7 @@ The site is honest about its own state, deliberately. Do not paper over these:
 | Payment | **Not connected.** The payment step says so and the Pay button is disabled. |
 | Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
-| Product photography | **Does not exist.** Every image slot renders an empty frame. |
+| Product photography | **Does not exist.** Every image slot renders a drawn monochrome stand-in, marked FILLER and carrying its asset code (`components/media/FillerImage.tsx`). Set `NEXT_PUBLIC_FILLER_IMAGES=off` for the bare frames. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
 
@@ -164,8 +164,9 @@ at 11px on paper. Do not lighten it — it carries the entire mono metadata laye
 - No shadows, no gradients (except image scrims), no glass, no rounded cards.
 
 **`components/media/ImageSlot.tsx` is the only way images render.** Without a `src` it
-draws a ratio-correct empty frame carrying the asset code and an accessible label.
-Dropping in real photography is a one-line data change and moves no layout.
+draws a ratio-correct stand-in — by default the illustration in `FillerImage.tsx`, or a
+bare frame carrying the asset code when filler is switched off. Either way the slot holds
+its ratio, so dropping in real photography is a one-line data change and moves no layout.
 
 ---
 
