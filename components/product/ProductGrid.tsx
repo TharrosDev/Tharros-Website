@@ -11,18 +11,23 @@ type Props = {
   /** Columns at the large breakpoint. Two reads more editorial, four reads catalog. */
   columns?: 2 | 3 | 4;
   priorityCount?: number;
+  /** Print each piece's code and run figures under the frame. */
+  specimen?: boolean;
 };
 
+/* One column on the narrowest phones so a single piece reads at full width,
+   then a middle step at md — the grid used to jump straight from two to four
+   at lg, which made the change abrupt and left cards tiny on small tablets. */
 const COLUMN_CLASS: Record<2 | 3 | 4, string> = {
-  2: "grid-cols-2",
-  3: "grid-cols-2 lg:grid-cols-3",
-  4: "grid-cols-2 lg:grid-cols-4",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
 };
 
 const SIZES: Record<2 | 3 | 4, string> = {
   2: "(min-width: 640px) 50vw, 100vw",
-  3: "(min-width: 1024px) 33vw, 50vw",
-  4: "(min-width: 1024px) 25vw, 50vw",
+  3: "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
+  4: "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw",
 };
 
 export default function ProductGrid({
@@ -30,6 +35,7 @@ export default function ProductGrid({
   heading,
   columns = 3,
   priorityCount = 0,
+  specimen = false,
 }: Props) {
   return (
     <>
@@ -43,6 +49,7 @@ export default function ProductGrid({
               product={product}
               sizes={SIZES[columns]}
               priority={index < priorityCount}
+              specimen={specimen}
             />
           </li>
         ))}

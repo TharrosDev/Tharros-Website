@@ -813,17 +813,21 @@
     transform-origin: left center;
   }
 
-  [data-js] .rule-draw::before {
+  /* Only a rule that Reveal drives is hidden to begin with. A bare .rule-draw
+     is simply a drawn rule — otherwise every use outside a Reveal would sit at
+     scaleX(0) forever, which is a silent disappearance rather than a missing
+     animation. */
+  [data-js] .reveal.rule-draw::before {
     transform: scaleX(0);
     transition: transform var(--dur-reveal) var(--ease-ledger);
   }
 
-  [data-js] .rule-draw.reveal-in::before {
+  [data-js] .reveal.rule-draw.reveal-in::before {
     transform: scaleX(1);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-js] .rule-draw::before {
+    [data-js] .reveal.rule-draw::before {
       transform: scaleX(1);
       transition: none;
     }
