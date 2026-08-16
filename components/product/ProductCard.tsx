@@ -139,11 +139,12 @@ export default function ProductCard({
           </div>
           <div className="flex items-baseline gap-2">
             <dt className="type-meta text-ink-faint">Left</dt>
-            <dd
-              className={`num text-[0.6875rem] ${run.remaining === 0 ? "text-signal" : ""}`}
-            >
-              {run.remaining}
-            </dd>
+            {/* Deliberately not accented. A red zero on one card among nine
+                puts a second mark in the same viewport as the drop numeral and
+                dilutes it; the sold-out badge on the frame already says this.
+                The accent for a closed run belongs on the product page, where
+                it is about the piece being looked at. */}
+            <dd className="num text-[0.6875rem]">{run.remaining}</dd>
           </div>
         </dl>
       ) : null}
