@@ -9,10 +9,11 @@ import CartDrawer from "@/components/commerce/CartDrawer";
 import { BRAND, BRAND_LINE, SITE_URL, socialProfiles } from "@/lib/site";
 import { jsonLd } from "@/lib/jsonld";
 
+/** Loaded as a variable font rather than pinned to 700/800, so weight is an
+ *  available axis for hierarchy instead of a two-step choice. */
 const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  weight: ["700", "800"],
   variable: "--font-archivo",
 });
 
