@@ -201,6 +201,8 @@ export type LookbookSpread = {
   images: ImageSlotData[];
   /** Product slugs worn in the spread, linked quietly beneath the caption. */
   wearing: string[];
+  /** Model ids, resolved against `lib/catalog/models.ts`. Empty until a shoot happens. */
+  models?: string[];
 };
 
 export type JournalBlock =

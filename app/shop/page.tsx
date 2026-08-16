@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import FilterBar from "@/components/shop/FilterBar";
+import ShopFeature from "@/components/shop/ShopFeature";
 import ProductGrid from "@/components/product/ProductGrid";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { getDrop } from "@/lib/catalog/drops";
@@ -66,6 +67,11 @@ export default async function ShopPage({
           ? categoryName(category)
           : "Every piece";
 
+  // "Everything, as it comes" — no search, no category, no drop, no new filter,
+  // and the default sort. Anything else is a narrowed view.
+  const unfiltered =
+    !query && category === "all" && !drop && !newOnly && sort === "featured";
+
   const breadcrumbs = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -100,6 +106,10 @@ export default async function ShopPage({
             to show the clothes. */}
         <h1 className="type-display-2 mt-8">{heading}</h1>
       </div>
+
+      {/* Only on the unfiltered view — see ShopFeature. Someone who has already
+          narrowed the list wants the list. */}
+      {unfiltered ? <ShopFeature /> : null}
 
       <FilterBar
         category={category}

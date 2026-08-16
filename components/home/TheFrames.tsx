@@ -1,7 +1,21 @@
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
+import WornList from "@/components/campaign/WornList";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { LOOKBOOK } from "@/lib/catalog/lookbook";
+import type { LookbookSpread } from "@/lib/catalog/types";
+
+/**
+ * The frame that best represents a spread: someone in the clothes if the spread
+ * has one, otherwise whatever it leads with. Same rule as the product ladder,
+ * applied to a spread's own images.
+ */
+function leadFrame(spread: LookbookSpread) {
+  const worn = spread.images.find(
+    (image) => image.kind === "model" || image.kind === "lifestyle",
+  );
+  return worn ?? spread.images[0];
+}
 
 /**
  * The one image-led moment on the page.
@@ -34,7 +48,7 @@ export default function TheFrames() {
           >
             <Link href="/lookbook" className="hover-zoom block overflow-hidden">
               <ImageSlot
-                image={spread.images[0]}
+                image={leadFrame(spread)}
                 ratio="editorial"
                 sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 78vw"
               />
@@ -43,6 +57,15 @@ export default function TheFrames() {
               <span className="num">{spread.index}</span>
               <span className="ml-3 normal-case tracking-normal">{spread.caption}</span>
             </p>
+            {/* The rail is a way into the shop, not just a teaser for the
+                lookbook: each frame says what is in it. */}
+            <div className="mt-4">
+              <WornList
+                slugs={spread.wearing}
+                frameId={`frames-${spread.id}`}
+                variant="stack"
+              />
+            </div>
           </li>
         ))}
       </ul>

@@ -353,6 +353,37 @@
   font-feature-settings: "tnum";
 }
 
+/* ============================================================
+   RATIOS
+   The shapes an image slot is allowed to hold.
+
+   Declared with @utility rather than inside @layer utilities so they take
+   responsive variants — `ratio-editorial md:ratio-campaign` is how one slot is
+   a tall frame on a phone and a wide one on a desktop. As plain classes in a
+   layer, `md:ratio-campaign` silently generated nothing and every frame that
+   asked for it stayed portrait.
+   ============================================================ */
+
+@utility ratio-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+@utility ratio-editorial {
+  aspect-ratio: 4 / 5;
+}
+
+@utility ratio-campaign {
+  aspect-ratio: 16 / 9;
+}
+
+@utility ratio-wide {
+  aspect-ratio: 21 / 9;
+}
+
+@utility ratio-square {
+  aspect-ratio: 1 / 1;
+}
+
 @layer components {
   /* ============================================================
      LAYOUT
@@ -711,26 +742,6 @@
    ============================================================ */
 
 @layer utilities {
-  .ratio-portrait {
-    aspect-ratio: 3 / 4;
-  }
-
-  .ratio-editorial {
-    aspect-ratio: 4 / 5;
-  }
-
-  .ratio-campaign {
-    aspect-ratio: 16 / 9;
-  }
-
-  .ratio-wide {
-    aspect-ratio: 21 / 9;
-  }
-
-  .ratio-square {
-    aspect-ratio: 1 / 1;
-  }
-
   .no-scrollbar {
     scrollbar-width: none;
   }

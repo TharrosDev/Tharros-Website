@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/layout/PageIntro";
+import CampaignSequence from "@/components/campaign/CampaignSequence";
 import ProductGrid from "@/components/product/ProductGrid";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
@@ -62,7 +63,22 @@ export default function DropPage() {
         </div>
       </div>
 
+      {/* The drop as a story: the statement and its figures, the writing, then
+          the people, then the pieces. Someone meets the run on a body before
+          they meet it as a grid. Renders nothing without campaign data, in
+          which case this page is what it was before. */}
+      <CampaignSequence
+        dropId={CURRENT_DROP.id}
+        index="02"
+        label="The people"
+        title="The drop, worn."
+      />
+
       <div className="page-frame rhythm-tight">
+        <div className="eyebrow mb-10 border-t border-ink pt-4">
+          <span className="num">03</span>
+          <span>The pieces</span>
+        </div>
         <ProductGrid
           products={pieces}
           heading={`${CURRENT_DROP.name} pieces`}
