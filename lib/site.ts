@@ -27,14 +27,15 @@ export function socialProfiles(): string[] {
   }).map((social) => social.href);
 }
 
-export const NAV_PRIMARY = [
+/** One navigation surface at every breakpoint — the index overlay. There is no
+ *  separate desktop bar and mobile drawer to keep in step any more. */
+export const NAV_INDEX = [
   { name: "Shop", href: "/shop" },
   { name: "Current Drop", href: "/drop" },
   { name: "Lookbook", href: "/lookbook" },
   { name: "About", href: "/about" },
+  { name: "Journal", href: "/journal" },
 ];
-
-export const NAV_MOBILE = [...NAV_PRIMARY, { name: "Journal", href: "/journal" }];
 
 /** Restrained on purpose: a nine-piece line does not need a category directory
  *  in the footer. The shop page's filter bar covers categories. */
