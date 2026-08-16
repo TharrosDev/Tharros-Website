@@ -118,8 +118,16 @@ const graph = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // `suppressHydrationWarning`: the head script below sets `data-js` on this
+  // element before React hydrates, so the client tree carries an attribute the
+  // server HTML cannot have. The suppression covers only this element's own
+  // attributes — children still report mismatches normally.
   return (
-    <html lang="en" className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Marks the document as scripted before first paint, so the entrance
             styles in globals.css only ever hide content that JS can bring
