@@ -86,6 +86,17 @@ export type Variant = {
  */
 export type RestockPolicy = "none" | "possible";
 
+/**
+ * Who is wearing the piece in the on-body frames, and the size they actually
+ * wore. Absent until a fitting has happened — see `lib/catalog/models.ts`.
+ */
+export type OnBodyCredit = {
+  modelId: string;
+  size: Size;
+  /** Ties the credit to one frame, for when more than one person is shot in a piece. */
+  imageCode?: string;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -108,6 +119,8 @@ export type Product = {
   restock: RestockPolicy;
   colorway: string;
   images: ImageSlotData[];
+  /** Fitting credits for the on-body frames. Absent until someone has been photographed in it. */
+  onBody?: OnBodyCredit[];
   variants: Variant[];
   materials: string[];
   fit: string[];

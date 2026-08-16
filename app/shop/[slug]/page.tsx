@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/product/ProductGallery";
 import BuyPanel from "@/components/product/BuyPanel";
+import OnBody from "@/components/product/OnBody";
+import FitStory from "@/components/product/FitStory";
 import ProductGrid from "@/components/product/ProductGrid";
 import Accordion from "@/components/ui/Accordion";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -271,10 +273,21 @@ export default async function ProductPage({ params }: { params: Params }) {
         </div>
       </div>
 
+      {/* Past the buying decision the page turns back into an editorial: the
+          piece on people, then how it is meant to sit. Both render nothing
+          until there is something real behind them. */}
+      <OnBody product={product} />
+
+      <section className="rhythm-tight">
+        <div className="page-frame">
+          <FitStory product={product} />
+        </div>
+      </section>
+
       {related.length > 0 ? (
         <section className="rhythm-default">
           <div className="page-frame">
-            <SectionHeading index="02" label="You may also like" />
+            <SectionHeading index="04" label="You may also like" />
             <div className="mt-12">
               <ProductGrid products={related} heading="You may also like" columns={4} />
             </div>

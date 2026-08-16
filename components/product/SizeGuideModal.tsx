@@ -12,9 +12,15 @@ type Props = {
   open: boolean;
   onClose: () => void;
   tableKey: "top" | "bottom";
+  /**
+   * The fit line for the piece being looked at, from its own fitting. Falls
+   * back to `MODEL_FIT_NOTE`, which is the product-free note for `/size-guide`
+   * where there is no piece in context. Both are null today.
+   */
+  fitNote?: string | null;
 };
 
-export default function SizeGuideModal({ open, onClose, tableKey }: Props) {
+export default function SizeGuideModal({ open, onClose, tableKey, fitNote }: Props) {
   const table = SIZE_TABLES[tableKey];
 
   return (
@@ -59,7 +65,8 @@ export default function SizeGuideModal({ open, onClose, tableKey }: Props) {
       </div>
 
       <p className="type-body-sm mt-6 text-ink-muted">
-        {MODEL_FIT_NOTE ??
+        {fitNote ??
+          MODEL_FIT_NOTE ??
           "Measurements are being taken from the production samples and will be published here before the next drop."}
       </p>
     </Modal>

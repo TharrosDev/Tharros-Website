@@ -13,14 +13,24 @@ export {
   detailImages,
   thumbnailImage,
 } from "./images";
+import { getModel, type ModelProfile } from "./models";
 import type {
   Availability,
   CategoryId,
+  ImageSlotData,
   Product,
   ProductQuery,
+  Size,
   SortKey,
   Variant,
 } from "./types";
+
+/** A fitting credit with its model resolved. Never produced without both halves. */
+export type ResolvedCredit = {
+  model: ModelProfile;
+  size: Size;
+  image?: ImageSlotData;
+};
 
 /** At or below this unit count a product reads LOW STOCK. */
 export const LOW_STOCK_THRESHOLD = 6;
@@ -163,6 +173,44 @@ export function runStatus(product: Product): {
     remaining: totalInventory(product),
     neverRestocked: product.restock === "none",
   };
+}
+
+/**
+ * The people photographed in a piece, resolved against the model register.
+ *
+ * Returns `[]` whenever either side is missing, which is every product today.
+ * A credit naming a model who is not in the register is dropped rather than
+ * rendered with a blank name — a half-resolved credit is a claim about a person
+ * that nobody made.
+ */
+export function onBodyCredits(product: Product): ResolvedCredit[] {
+  if (!product.onBody?.length) return [];
+
+  return product.onBody.flatMap((credit) => {
+    const model = getModel(credit.modelId);
+    if (!model) return [];
+    const image = credit.imageCode
+      ? product.images.find((slot) => slot.code === credit.imageCode)
+      : undefined;
+    return [{ model, size: credit.size, image }];
+  });
+}
+
+/**
+ * The fit line — "Jae is 183 cm and wears a size M."
+ *
+ * Composed only from values that exist. An unmeasured height is omitted, never
+ * guessed and never replaced with a typical figure, so the sentence gets
+ * shorter rather than less true.
+ */
+export function fitNote(product: Product): string | null {
+  const credit = onBodyCredits(product)[0];
+  if (!credit) return null;
+
+  const { model, size } = credit;
+  return model.heightCm === null
+    ? `${model.name} wears a size ${size}.`
+    : `${model.name} is ${model.heightCm} cm and wears a size ${size}.`;
 }
 
 /** Only the categories that currently hold a piece — a small line does not

@@ -6,6 +6,7 @@ import SaveButton from "./SaveButton";
 import SizeGuideModal from "./SizeGuideModal";
 import QuantityStepper from "@/components/commerce/QuantityStepper";
 import {
+  fitNote,
   isPurchasable,
   isSizeAvailable,
   resolveAvailability,
@@ -174,6 +175,7 @@ export default function BuyPanel({ product }: { product: Product }) {
           open={guideOpen}
           onClose={() => setGuideOpen(false)}
           tableKey={sizingKey}
+          fitNote={fitNote(product)}
         />
       ) : null}
     </div>

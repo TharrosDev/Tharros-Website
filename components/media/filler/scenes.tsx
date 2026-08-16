@@ -194,12 +194,13 @@ export function Campaign({ w, h, palette, garment, seed, crop, family }: ScenePr
  * that happens to be zoomed in.
  */
 export function Portrait({ w, h, palette, garment, seed }: SceneProps) {
-  // Head, shoulders and chest — local y roughly -20 to 150 — scaled to fill the
-  // frame. The outer svg does the cropping, so this is a genuine close frame of
-  // the same drawing rather than a second, zoomed illustration.
-  const scale = Math.max(w / 168, h / 158);
+  // Collar, shoulder and chest. The frame sits low enough that the head is
+  // cropped by the top edge rather than centred in it — a featureless circle
+  // filling a third of the picture is a mannequin, and the point of a close
+  // frame is the cloth, not the person's outline.
+  const scale = Math.max(w / 152, h / 148);
   const x = (w - 200 * scale) / 2 + ((seed % 3) - 1) * w * 0.06;
-  const y = h * 0.04;
+  const y = -h * 0.12;
   const backdrop = h * (0.52 + (seed % 3) * 0.08);
 
   return (
