@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FillerImage, { FILLER_IMAGES } from "@/components/media/FillerImage";
 import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
 
 const RATIO_CLASS: Record<Ratio, string> = {
@@ -40,6 +41,15 @@ export default function ImageSlot({
   const shape = fill
     ? "absolute inset-0 h-full w-full"
     : `relative w-full ${RATIO_CLASS[ratio ?? image.ratio]}`;
+
+  // Stand-in artwork while photography is pending — see FillerImage.
+  if (!image.src && FILLER_IMAGES) {
+    return (
+      <div className={`${shape} overflow-hidden bg-surface-frame ${className}`}>
+        <FillerImage image={image} ratio={ratio} />
+      </div>
+    );
+  }
 
   if (!image.src) {
     return (

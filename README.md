@@ -42,8 +42,10 @@ Placeholder, and marked as such in the source: **all product data** (`lib/catalo
 **shipping rates** (`lib/commerce/shipping.ts`), **size measurements**
 (`lib/catalog/sizing.ts`), and **legal pages**.
 
-There is no photography yet. Every image renders as a ratio-correct empty frame with its
-asset code — see below.
+There is no photography yet. Every image renders as a ratio-correct drawn stand-in — a
+flat-lay, a figure, an environment or a fabric study, each marked FILLER and carrying its
+asset code — so pages can be judged before the shoot. Run with
+`NEXT_PUBLIC_FILLER_IMAGES=off` to see the bare frames instead.
 
 ## Adding real content
 
