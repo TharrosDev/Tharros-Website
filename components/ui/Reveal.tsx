@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { observeOnce } from "@/lib/reveal-observer";
 
 type Props = {
   children: React.ReactNode;
@@ -30,25 +31,18 @@ export default function Reveal({
     const node = ref.current;
     if (!node) return;
 
+    // Every entrance on the page shares one observer rather than constructing
+    // its own — six or seven of them were doing identical work.
+    const stop = observeOnce(node, () => setShown(true));
+
     // No observer available: show it immediately, via the DOM rather than
     // state, so nothing is ever left hidden behind a missing API.
-    if (typeof IntersectionObserver === "undefined") {
+    if (!stop) {
       node.classList.add("reveal-in");
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShown(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    return stop;
   }, []);
 
   return (

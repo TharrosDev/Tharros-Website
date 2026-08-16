@@ -35,14 +35,24 @@ export default function DropRecord() {
     // no photograph behind it, a single bottom-aligned block leaves the upper
     // half of the first screen as dead black.
     <section className="on-dark relative flex min-h-[100svh] flex-col justify-between overflow-hidden">
-      <div className="page-frame flex w-full flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-28 md:pt-32">
-        <p className="type-meta text-ink-on-dark-faint">
-          {CURRENT_DROP.releasedAt
-            ? `Released ${formatDate(CURRENT_DROP.releasedAt)}`
-            : "In development"}
-        </p>
-        <p className="type-meta text-ink-on-dark-faint">
-          {CURRENT_DROP.status === "released" ? "Out now" : "In development"}
+      <div className="page-frame w-full pt-28 md:pt-32">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-rule-on-dark pt-4">
+          <p className="type-meta text-ink-on-dark-faint">
+            {CURRENT_DROP.releasedAt
+              ? `Released ${formatDate(CURRENT_DROP.releasedAt)}`
+              : "In development"}
+          </p>
+          <p className="type-meta text-ink-on-dark-faint">
+            {CURRENT_DROP.status === "released" ? "Out now" : "In development"}
+          </p>
+        </div>
+
+        {/* The statement anchors the upper half. Left at the foot of the screen
+            with everything else, the first view was a rule at the top and a
+            block at the bottom with a third of the screen empty between them —
+            which reads as unfinished rather than as restraint. */}
+        <p className="type-display-4 mt-10 max-w-[20ch] text-balance md:mt-14">
+          {CURRENT_DROP.statement}
         </p>
       </div>
 
@@ -56,11 +66,7 @@ export default function DropRecord() {
           <span className="type-mono-1 text-signal-on-dark">{CURRENT_DROP.index}</span>
         </h1>
 
-        <p className="type-lead mt-6 max-w-[26ch] text-ink-on-dark-muted">
-          {CURRENT_DROP.statement}
-        </p>
-
-        <div className="mt-14 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mt-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <dl className="grid max-w-lg grid-cols-3 gap-6">
             {figures.map((figure) => (
               <div key={figure.label} className="border-t border-rule-on-dark-strong pt-4">

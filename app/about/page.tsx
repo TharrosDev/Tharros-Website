@@ -89,21 +89,39 @@ export default function AboutPage() {
       </Reveal>
 
       <div className="page-frame rhythm-default">
+        {/* The chapters used to sit at an identical indent, which turned the
+            page into one long ladder of the same shape repeated five times.
+            The label sits in its own column beside the prose instead, so the
+            mono index and the text form a spread rather than a stack — and the
+            first chapter runs wider than the rest, giving the sequence a
+            beginning instead of five equal steps. */}
         <div className="grid gap-x-12 gap-y-20 lg:grid-cols-12">
-          {CHAPTERS.map((chapter) => (
-            <Reveal key={chapter.index} className="lg:col-span-8 lg:col-start-4">
-              <div className="border-t border-ink pt-4">
-                <p className="eyebrow">
-                  <span className="num">{chapter.index}</span>
-                  <span>{chapter.title}</span>
-                </p>
-              </div>
-              <div className="mt-8 space-y-5">
-                {chapter.body.map((paragraph) => (
-                  <p key={paragraph} className="type-lead text-ink">
-                    {paragraph}
+          {CHAPTERS.map((chapter, index) => (
+            <Reveal
+              key={chapter.index}
+              className={
+                index === 0
+                  ? "lg:col-span-11 lg:col-start-2"
+                  : "lg:col-span-9 lg:col-start-4"
+              }
+            >
+              <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
+                <div className="rule-draw pt-4 md:col-span-3">
+                  <p className="eyebrow">
+                    <span className="num">{chapter.index}</span>
+                    <span>{chapter.title}</span>
                   </p>
-                ))}
+                </div>
+                <div className="space-y-5 md:col-span-9">
+                  {chapter.body.map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className={index === 0 ? "type-lead text-ink" : "type-body text-ink-muted"}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
             </Reveal>
           ))}

@@ -46,7 +46,10 @@ export default function ImageSlot({
       <div
         role="img"
         aria-label={`${image.alt} — image pending`}
-        className={`@container ${shape} overflow-hidden bg-surface-frame ${className}`}
+        // `on-light` because the frame carries its own bone surface: inside a
+        // dark section the labels sit on the frame, not on the black, so they
+        // must not follow the section's inverted ink.
+        className={`on-light @container ${shape} overflow-hidden bg-surface-frame ${className}`}
       >
         <span
           aria-hidden="true"

@@ -42,6 +42,23 @@ One neutral ramp. The clothing supplies the colour; the interface does not.
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
 what components actually reference. Recolour through the aliases, never the ramp.
 
+### Surfaces rebind the aliases
+
+`.on-dark` and `.on-light` do not merely set a background — they **rebind the aliases** for
+everything inside them. Because `@theme inline` keeps the theme values as live `var()`
+references, `text-ink-muted`, `border-rule` and `text-signal` resolve through the surface
+they are sitting on and become correct automatically.
+
+| Class | Use |
+|---|---|
+| `.on-dark` | A section on the black surface |
+| `.on-light` | An element carrying its own pale surface *inside* a dark one — the empty image frame |
+
+This is the point of the alias layer, and it is not optional politeness: before the aliases
+were rebound, a product card reused on a dark section rendered its price at 3.78:1 and the
+header's drop stamp sat at 2.96:1 over the hero. **Write components against the aliases and
+they work on either surface. Reach past them to the ramp and they will be wrong on one.**
+
 ### The accent
 
 One chromatic value, and it is a state marker rather than a colour scheme.
