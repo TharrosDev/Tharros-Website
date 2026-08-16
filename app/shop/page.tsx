@@ -94,7 +94,11 @@ export default async function ShopPage({
             </span>
           </p>
         </div>
-        <h1 className="type-display-1 mt-8">{heading}</h1>
+        {/* Deliberately a step below the editorial pages. At display-1 the shop
+            title outsized the brand's own opening headline and pushed the first
+            row of product most of a screen down — on the one page whose job is
+            to show the clothes. */}
+        <h1 className="type-display-2 mt-8">{heading}</h1>
       </div>
 
       <FilterBar
