@@ -733,6 +733,63 @@
     }
   }
 
+  /* OVERLAY ENTRANCES
+     Drawers, sheets, menus and the search surface. Done in CSS rather than
+     with an animation library: presence animation is the only thing such a
+     library would have been carrying here, and it measured 40kB gzipped
+     against four transitions.
+
+     visibility rather than display, so no @starting-style is needed and the
+     behaviour is the same everywhere. Hidden overlays leave the tab order and
+     the accessibility tree exactly as `display: none` would; the visibility
+     transition is delayed by the full duration on the way out so the panel is
+     still painted while it travels, and runs at 0s on the way in so it is
+     interactive immediately.
+
+     The overlay stays mounted and toggles [data-open], which is what allows an
+     exit animation at all — React unmounting the subtree is what made the
+     previous implementation snap shut. */
+  .overlay-root {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity var(--dur-base) var(--ease-out-expo),
+      visibility 0s linear var(--dur-base);
+  }
+
+  .overlay-root[data-open="true"] {
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity var(--dur-base) var(--ease-out-expo),
+      visibility 0s;
+  }
+
+  /* Panels travel; the layer they sit on only fades. */
+  .overlay-panel {
+    transition: transform var(--dur-base) var(--ease-out-expo);
+  }
+
+  .overlay-from-right {
+    transform: translateX(100%);
+  }
+
+  .overlay-from-below {
+    transform: translateY(1.5rem);
+  }
+
+  .overlay-root[data-open="true"] .overlay-panel {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay-panel,
+    .overlay-from-right,
+    .overlay-from-below {
+      transform: none;
+    }
+  }
+
   /* THE LEDGER RULE
      The site's entrance gesture: a hairline that draws itself across the top
      of a section, the way a rule is ruled rather than faded in. Applied to the
@@ -752,7 +809,7 @@
     top: 0;
     height: 1px;
     background: currentColor;
-    opacity: 0.28;
+    opacity: 0.18;  /* matches the border-current/15 it replaces */
     transform-origin: left center;
   }
 

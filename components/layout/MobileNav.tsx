@@ -28,15 +28,14 @@ export default function MobileNav({ open, onClose, onSearch }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (!open) return null;
-
   return (
     <div
       ref={panelRef}
+      data-open={open}
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
-      className="on-dark fixed inset-0 z-80 flex flex-col"
+      className="overlay-root on-dark fixed inset-0 z-80 flex flex-col"
     >
       <div
         className="page-frame flex shrink-0 items-center justify-between"
