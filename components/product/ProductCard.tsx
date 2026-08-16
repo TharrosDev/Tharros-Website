@@ -6,6 +6,7 @@ import ProductBadge from "./ProductBadge";
 import SaveButton from "./SaveButton";
 import { useCart } from "@/components/commerce/CartProvider";
 import {
+  cardImages,
   isPurchasable,
   isSizeAvailable,
   resolveAvailability,
@@ -34,8 +35,10 @@ export default function ProductCard({
 }: Props) {
   const { add } = useCart();
 
-  const front = product.images[0];
-  const back = product.images[1] ?? front;
+  // The card leads with the piece on a person and swaps to the garment itself.
+  // Which frames those are is the catalogue's decision, not the card's — see
+  // lib/catalog/images.ts.
+  const { primary, secondary } = cardImages(product);
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
   const run = runStatus(product);
@@ -52,14 +55,16 @@ export default function ProductCard({
       <div className="relative overflow-hidden">
         <Link href={`/shop/${product.slug}`} className="block">
           <div className="hover-zoom">
-            <ImageSlot image={front} sizes={sizes} priority={priority} />
+            <ImageSlot image={primary} sizes={sizes} priority={priority} />
           </div>
-          {/* Second shot sits on top and fades in — the standard fashion swap. */}
+          {/* Second shot sits on top and fades in — the standard fashion swap,
+              and here it is the whole editorial-to-commerce move in one gesture:
+              the picture you were looking at becomes the thing you can buy. */}
           <div
             aria-hidden="true"
             className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           >
-            <ImageSlot image={back} sizes={sizes} />
+            <ImageSlot image={secondary} sizes={sizes} />
           </div>
           {soldOut ? (
             <span className="absolute inset-0 bg-paper/35" aria-hidden="true" />

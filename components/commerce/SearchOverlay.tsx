@@ -16,7 +16,7 @@ import {
   useFocusTrap,
   useLockBodyScroll,
 } from "@/lib/hooks";
-import { getFeatured, searchProducts } from "@/lib/catalog/queries";
+import { getFeatured, searchProducts, thumbnailImage } from "@/lib/catalog/queries";
 import { CATEGORIES } from "@/lib/catalog/categories";
 import { formatPrice } from "@/lib/format";
 
@@ -203,7 +203,7 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
                       >
                         <div className="hover-zoom overflow-hidden">
                           <ImageSlot
-                            image={product.images[0]}
+                            image={thumbnailImage(product)}
                             sizes="(min-width: 1024px) 20vw, 45vw"
                           />
                         </div>

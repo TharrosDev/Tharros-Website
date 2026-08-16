@@ -1,4 +1,18 @@
 import { PRODUCTS } from "./products";
+/**
+ * Which frame of a piece to show is a catalogue question, so it is answered
+ * behind the same seam as everything else a component is allowed to read.
+ */
+export {
+  orderedImages,
+  heroImage,
+  cardImages,
+  galleryImages,
+  onBodyImages,
+  inSituImages,
+  detailImages,
+  thumbnailImage,
+} from "./images";
 import type {
   Availability,
   CategoryId,

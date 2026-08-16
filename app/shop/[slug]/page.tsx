@@ -10,6 +10,7 @@ import { categoryName } from "@/lib/catalog/categories";
 import {
   allProductSlugs,
   AVAILABILITY_SCHEMA,
+  galleryImages,
   getProduct,
   getRelated,
   resolveAvailability,
@@ -130,7 +131,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           yet, four empty frames should not own two thirds of the page. */}
       <div className="page-frame mt-6 grid gap-x-12 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-6">
-          <ProductGallery images={product.images} productName={product.name} />
+          <ProductGallery images={galleryImages(product)} productName={product.name} />
         </div>
 
         <div className="no-scrollbar lg:col-span-5 lg:col-start-8 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">

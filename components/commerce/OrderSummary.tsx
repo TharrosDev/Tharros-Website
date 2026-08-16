@@ -3,6 +3,7 @@
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import { useCart } from "./CartProvider";
+import { thumbnailImage } from "@/lib/catalog/queries";
 import { formatPrice } from "@/lib/format";
 import { shippingCost } from "@/lib/commerce/shipping";
 import { TAX_PENDING_LABEL } from "@/lib/commerce/tax";
@@ -19,7 +20,7 @@ export default function OrderSummary({ shippingOptionId }: { shippingOptionId: s
         {lines.map((line) => (
           <li key={line.key} className="flex gap-4">
             <Link href={`/shop/${line.product.slug}`} className="w-16 shrink-0">
-              <ImageSlot image={line.product.images[0]} sizes="64px" />
+              <ImageSlot image={thumbnailImage(line.product)} sizes="64px" />
             </Link>
             <div className="flex min-w-0 flex-1 justify-between gap-3">
               <div className="min-w-0">

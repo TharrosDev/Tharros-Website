@@ -1,0 +1,121 @@
+import type { Crop, ImageKind, ImageSlotData, Product } from "./types";
+
+/**
+ * Which picture of a piece to show, and in what order.
+ *
+ * Until now every consumer reached into `product.images` by position — the card
+ * took `[0]` and `[1]`, the gallery walked the array in authored order. That
+ * worked only because every product happens to carry the same four slots in the
+ * same sequence, and it made "lead with the shot of someone wearing it" a
+ * change to every component rather than a change to one rule.
+ *
+ * So the order is decided here, once, from what a slot *is*. A piece with one
+ * photograph and a piece with eight both come out right, and no component needs
+ * to know how many exist — which is the whole point, because the shoot will not
+ * produce the same set for every garment.
+ */
+
+/**
+ * The discovery ladder. Lower sorts first: a person wearing the piece beats a
+ * picture of the piece on its own, every time.
+ */
+const KIND_RANK: Record<ImageKind, number> = {
+  model: 0,
+  lifestyle: 1,
+  campaign: 2,
+  detail: 3,
+  back: 4,
+  front: 5,
+};
+
+/** Within a kind, a frame that shows the whole silhouette wins — that is what a fit shot is for. */
+const CROP_BONUS: Record<Crop, number> = {
+  full: -0.3,
+  "three-quarter": -0.2,
+  walking: -0.1,
+  close: 0,
+};
+
+function score(image: ImageSlotData): number {
+  if (image.rank !== undefined) return image.rank;
+  return KIND_RANK[image.kind] + (image.crop ? CROP_BONUS[image.crop] : 0);
+}
+
+/**
+ * A piece with no slots at all should still hold its frame rather than crash a
+ * grid. The catalogue never produces this today; it exists so the resolvers can
+ * promise a slot instead of an optional one.
+ */
+function pendingSlot(product: Product): ImageSlotData {
+  return {
+    code: product.variants[0]?.sku.replace(/-[^-]+$/, "") ?? product.id.toUpperCase(),
+    alt: `${product.name} — photography pending`,
+    kind: "front",
+    ratio: "portrait",
+  };
+}
+
+/**
+ * Every slot, best first. `sort` is stable, so slots of equal rank keep the
+ * order they were authored in — which keeps the stand-in artwork deterministic.
+ */
+export function orderedImages(product: Product): ImageSlotData[] {
+  return [...product.images].sort((a, b) => score(a) - score(b));
+}
+
+/** The single frame that represents the piece. */
+export function heroImage(product: Product): ImageSlotData {
+  return orderedImages(product)[0] ?? pendingSlot(product);
+}
+
+/**
+ * The grid card: the piece on a person, swapping to the garment itself on
+ * hover. The second frame is deliberately of a *different* kind — two views of
+ * one object is the point, and two near-identical model shots is not a swap.
+ */
+export function cardImages(product: Product): {
+  primary: ImageSlotData;
+  secondary: ImageSlotData;
+} {
+  const ordered = orderedImages(product);
+  const primary = ordered[0] ?? pendingSlot(product);
+  const secondary = ordered.find((image) => image.kind !== primary.kind) ?? primary;
+  return { primary, secondary };
+}
+
+/** The product page gallery: worn, then in the world, then detail, then flat. */
+export function galleryImages(product: Product): ImageSlotData[] {
+  const ordered = orderedImages(product);
+  return ordered.length > 0 ? ordered : [pendingSlot(product)];
+}
+
+/** Frames of a person wearing it. May be empty — the ON BODY section renders nothing then. */
+export function onBodyImages(product: Product): ImageSlotData[] {
+  return orderedImages(product).filter(
+    (image) => image.kind === "model" || image.kind === "lifestyle",
+  );
+}
+
+/** Frames of the piece somewhere, rather than on a plain ground. May be empty. */
+export function inSituImages(product: Product): ImageSlotData[] {
+  return orderedImages(product).filter(
+    (image) => image.kind === "lifestyle" || image.kind === "campaign",
+  );
+}
+
+/** Close studies of cloth and construction. May be empty. */
+export function detailImages(product: Product): ImageSlotData[] {
+  return orderedImages(product).filter((image) => image.kind === "detail");
+}
+
+/**
+ * The bag, the search results, the order summary.
+ *
+ * These deliberately invert the ladder: at 64px a full-body frame is a smudge,
+ * and someone checking their bag is identifying an item, not being sold one. A
+ * flat shot of the garment is the legible choice, so it wins here and only here.
+ */
+export function thumbnailImage(product: Product): ImageSlotData {
+  const flat = product.images.find((image) => image.kind === "front");
+  return flat ?? product.images.find((image) => image.kind === "back") ?? heroImage(product);
+}
