@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import ProductBadge from "./ProductBadge";
 import SaveButton from "./SaveButton";
@@ -34,7 +33,6 @@ export default function ProductCard({
   specimen = false,
 }: Props) {
   const { add } = useCart();
-  const [hovered, setHovered] = useState(false);
 
   const front = product.images[0];
   const back = product.images[1] ?? front;
@@ -46,11 +44,11 @@ export default function ProductCard({
   const code = product.variants[0]?.sku.replace(/-[^-]+$/, "");
 
   return (
-    <article
-      className="group"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    // Hover is expressed in CSS rather than React state. It used to be a
+    // useState pair, which re-rendered the whole card — and every card in the
+    // grid it belongs to — on each pointer entry and exit, for an effect the
+    // browser can do on its own.
+    <article className="group">
       <div className="relative overflow-hidden">
         <Link href={`/shop/${product.slug}`} className="block">
           <div className="hover-zoom">
@@ -59,9 +57,7 @@ export default function ProductCard({
           {/* Second shot sits on top and fades in — the standard fashion swap. */}
           <div
             aria-hidden="true"
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
+            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           >
             <ImageSlot image={back} sizes={sizes} />
           </div>
@@ -78,13 +74,19 @@ export default function ProductCard({
           <SaveButton productId={product.id} productName={product.name} />
         </div>
 
-        {/* Quick add. Hover-only by design: on touch the product page does this
-            job properly, and a permanent size row would clutter the grid. */}
+        {/* Quick add. Pointer-and-keyboard, desktop only: on touch the product
+            page does this job properly, and a permanent size row would clutter
+            the grid.
+
+            `group-focus-within` matters as much as `group-hover`. The strip is
+            translated out of sight but still in the tab order, so on /shop a
+            keyboard user previously walked through 26 invisible size buttons.
+            Revealing it on focus is the fix — the buttons are real
+            functionality, so hiding them from the tab order would have been
+            the wrong trade. */}
         {buyable ? (
           <div
-            className={`pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-full bg-surface/95 px-3 py-3 transition-transform duration-300 md:block ${
-              hovered ? "pointer-events-auto translate-y-0" : ""
-            }`}
+            className="pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-full bg-surface/95 px-3 py-3 transition-transform duration-300 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-hover:pointer-events-auto group-hover:translate-y-0 md:block"
           >
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="type-meta mr-1 text-ink-faint">Add</span>

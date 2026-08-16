@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import QuantityStepper from "./QuantityStepper";
 import { useCart } from "./CartProvider";
@@ -26,8 +26,13 @@ export default function CartDrawer() {
 
   const shipping = shippingCost(subtotal, DEFAULT_SHIPPING_OPTION.id);
   const remaining = amountToFreeShipping(subtotal);
-  const recommendations =
-    lines.length > 0 ? getRelated(lines[0].product, 3) : getFeatured(3);
+  // The drawer is mounted on every page now, so this ran on every render of
+  // every route. It only depends on the first line.
+  const firstLine = lines[0]?.product;
+  const recommendations = useMemo(
+    () => (firstLine ? getRelated(firstLine, 3) : getFeatured(3)),
+    [firstLine],
+  );
 
   return (
     <div data-open={isOpen} className="overlay-root fixed inset-0 z-80">
