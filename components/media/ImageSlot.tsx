@@ -10,10 +10,32 @@ const RATIO_CLASS: Record<Ratio, string> = {
   square: "ratio-square",
 };
 
+/**
+ * The same ratios, applied from `md` up. Paired with `ratioSm` this lets one
+ * slot be a tall frame on a phone and a wide one on a desktop — a 21:9 campaign
+ * frame is 167px tall on a 390px screen, which is a band, not a photograph.
+ *
+ * Written as a second lookup rather than a template string because Tailwind
+ * only sees class names it can find whole in the source.
+ */
+const RATIO_CLASS_MD: Record<Ratio, string> = {
+  portrait: "md:ratio-portrait",
+  editorial: "md:ratio-editorial",
+  campaign: "md:ratio-campaign",
+  wide: "md:ratio-wide",
+  square: "md:ratio-square",
+};
+
 type Props = {
   image: ImageSlotData;
   /** Override the ratio the data declares — e.g. a portrait shot run wide. */
   ratio?: Ratio;
+  /**
+   * Ratio below the `md` breakpoint. The slot still renders one element and
+   * downloads one file — unlike a hidden/visible pair of slots, which would
+   * fetch both once there is real photography.
+   */
+  ratioSm?: Ratio;
   sizes?: string;
   priority?: boolean;
   className?: string;
@@ -31,16 +53,24 @@ type Props = {
 export default function ImageSlot({
   image,
   ratio,
+  ratioSm,
   sizes = "100vw",
   priority = false,
   className = "",
   fill = false,
 }: Props) {
+  const wide = ratio ?? image.ratio;
+  // With `ratioSm` the small ratio is the base and the declared one takes over
+  // at `md`; without it, one ratio holds at every width.
+  const ratioClass = ratioSm
+    ? `${RATIO_CLASS[ratioSm]} ${RATIO_CLASS_MD[wide]}`
+    : RATIO_CLASS[wide];
+
   // `fill` positions the slot against the nearest positioned ancestor, so it
   // must not also be `relative` — that would collapse it to zero height.
   const shape = fill
     ? "absolute inset-0 h-full w-full"
-    : `relative w-full ${RATIO_CLASS[ratio ?? image.ratio]}`;
+    : `relative w-full ${ratioClass}`;
 
   // Stand-in artwork while photography is pending — see FillerImage.
   if (!image.src && FILLER_IMAGES) {
