@@ -449,8 +449,16 @@
     border-bottom-color: var(--near-black);
   }
 
+  /* Pointer focus keeps the quiet underline shift above; keyboard focus gets
+     the same ring as every other control. A 1px border-colour change is not a
+     sufficient focus indicator on its own. */
   .field:focus-visible {
-    outline: none;
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .on-dark .field:focus-visible {
+    outline-color: var(--ink-on-dark);
   }
 
   .field-boxed {
@@ -628,9 +636,12 @@
     border: 0;
   }
 
-  /* Slow, flat entrances. Transform-only so SSR content is never
-     invisible when JS is slow or blocked. */
-  .reveal {
+  /* Slow, flat entrances.
+     Gated on [data-js], which the head script sets before first paint. If
+     scripting is off, blocked, or the bundle fails, the hidden state is never
+     applied and server-rendered content stays visible — the entrance is an
+     enhancement, never a prerequisite for reading the page. */
+  [data-js] .reveal {
     opacity: 0;
     transform: translateY(1.75rem);
     transition:
@@ -638,13 +649,13 @@
       transform var(--dur-reveal) var(--ease-out-expo);
   }
 
-  .reveal-in {
+  [data-js] .reveal-in {
     opacity: 1;
     transform: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    [data-js] .reveal {
       opacity: 1;
       transform: none;
     }

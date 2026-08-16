@@ -5,11 +5,27 @@ export const BRAND = "THARROS";
 export const BRAND_LINE = "Small runs. Original ideas.";
 export const CONTACT_EMAIL = "hello@tharros.com";
 
+/** Placeholder until the accounts exist. These point at the platforms, not at
+ *  THARROS profiles, so they are deliberately excluded from the structured-data
+ *  `sameAs` by `socialProfiles()` — claiming them would assert ownership of a
+ *  profile the label does not have. Replace the hrefs with real profile URLs
+ *  and they start being published with no further change. */
 export const SOCIAL = [
   { name: "Instagram", href: "https://instagram.com" },
   { name: "TikTok", href: "https://tiktok.com" },
   { name: "YouTube", href: "https://youtube.com" },
 ];
+
+/** Only entries that name an actual profile — a bare platform URL has no path. */
+export function socialProfiles(): string[] {
+  return SOCIAL.filter((social) => {
+    try {
+      return new URL(social.href).pathname.replace(/\/+$/, "") !== "";
+    } catch {
+      return false;
+    }
+  }).map((social) => social.href);
+}
 
 export const NAV_PRIMARY = [
   { name: "Shop", href: "/shop" },

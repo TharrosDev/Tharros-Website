@@ -130,8 +130,10 @@ Slow, flat, intentional. Nothing bounces or overshoots.
 - Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-slow` 620ms (zoom),
   `--dur-reveal` 900ms (scroll entrance).
 - Easing: `--ease-out-quart`, `--ease-out-expo`.
-- `Reveal` adds a class on intersection rather than removing one, so server-rendered
-  content is visible if JS never runs.
+- `Reveal` adds a class on intersection rather than removing one, and its hidden state is
+  scoped to `[data-js]` — an attribute the root layout sets before first paint. If scripting
+  is blocked or the bundle fails, content is never hidden to begin with. Both halves are
+  required: the class-adding alone would still strand `opacity: 0` in the SSR HTML.
 - Everything is disabled under `prefers-reduced-motion`.
 
 ---

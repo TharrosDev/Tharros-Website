@@ -17,7 +17,7 @@ import { jsonLd } from "@/lib/jsonld";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Shop THARROS — heavyweight tees, hoodies, sweatshirts, pants, outerwear and accessories from Collection 01.",
+    "Shop THARROS — heavyweight tees, hoodies, sweatshirts, pants, outerwear and accessories from Drop 001.",
   alternates: { canonical: "/shop" },
 };
 

@@ -13,7 +13,7 @@ export default function Hero() {
       <ImageSlot
         image={{
           code: "HERO-01",
-          alt: "THARROS Collection 01 campaign image",
+          alt: "THARROS Drop 001 campaign image",
           kind: "lifestyle",
           ratio: "campaign",
         }}

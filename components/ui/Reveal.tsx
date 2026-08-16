@@ -11,9 +11,10 @@ type Props = {
 };
 
 /**
- * Scroll-triggered entrance. Transform + opacity only, and the class is added
- * rather than removed — server-rendered content is styled visible if this
- * never runs.
+ * Scroll-triggered entrance. The hidden state lives behind [data-js] (set by
+ * the head script in the root layout), so the entrance is purely additive:
+ * with scripting unavailable the section is simply never hidden in the first
+ * place. `reveal-in` is added, never removed, for the same reason.
  */
 export default function Reveal({
   children,

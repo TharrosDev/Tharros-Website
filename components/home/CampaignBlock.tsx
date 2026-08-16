@@ -9,7 +9,7 @@ export default function CampaignBlock() {
       <ImageSlot
         image={{
           code: "CMP-01",
-          alt: "THARROS campaign frame — model in Collection 01 against concrete",
+          alt: "THARROS campaign frame — model in Drop 001 against concrete",
           kind: "lifestyle",
           ratio: "wide",
         }}
@@ -22,7 +22,11 @@ export default function CampaignBlock() {
       <div className="absolute inset-0 flex items-end">
         <div className="page-frame w-full pb-12 md:pb-16">
           <Reveal>
-            <h2 className="type-display-2">An independent label, in progress.</h2>
+            <p className="eyebrow">
+              <span className="num">04</span>
+              <span>The Label</span>
+            </p>
+            <h2 className="type-display-2 mt-8">An independent label, in progress.</h2>
             <p className="type-body mt-6 max-w-md text-ink-on-dark-muted">
               Seven pieces in the first drop. The next one is on the table now — cut,
               sewn, worn, and cut again until it earns a run.

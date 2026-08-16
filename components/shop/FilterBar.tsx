@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CATEGORIES } from "@/lib/catalog/categories";
 import { SORT_OPTIONS } from "@/lib/catalog/queries";
 import type { CategoryId } from "@/lib/catalog/types";
 import { CloseIcon } from "@/components/ui/icons";
-import { useEscape, useLockBodyScroll } from "@/lib/hooks";
+import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import type { SortKey } from "@/lib/catalog/types";
 
 type Props = {
@@ -41,9 +41,11 @@ function buildHref(params: {
 
 export default function FilterBar({ category, sort, drop, newOnly, count, available }: Props) {
   const [sheetOpen, setSheetOpen] = useState(false);
+  const sheetRef = useRef<HTMLDivElement>(null);
 
   useLockBodyScroll(sheetOpen);
   useEscape(sheetOpen, () => setSheetOpen(false));
+  useFocusTrap(sheetOpen, sheetRef);
 
   const filters = [
     { id: "all", name: "All", href: buildHref({ sort, drop }) },
@@ -130,6 +132,7 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
             className="absolute inset-0 h-full w-full cursor-default bg-black/40"
           />
           <div
+            ref={sheetRef}
             role="dialog"
             aria-modal="true"
             aria-label="Filter and sort"
