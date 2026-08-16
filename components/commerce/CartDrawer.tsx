@@ -24,19 +24,18 @@ export default function CartDrawer() {
   useEscape(isOpen, closeBag);
   useFocusTrap(isOpen, panelRef);
 
-  if (!isOpen) return null;
-
   const shipping = shippingCost(subtotal, DEFAULT_SHIPPING_OPTION.id);
   const remaining = amountToFreeShipping(subtotal);
   const recommendations =
     lines.length > 0 ? getRelated(lines[0].product, 3) : getFeatured(3);
 
   return (
-    <div className="fixed inset-0 z-80">
+    <div data-open={isOpen} className="overlay-root fixed inset-0 z-80">
       <button
         type="button"
         aria-label="Close bag"
         onClick={closeBag}
+        tabIndex={isOpen ? undefined : -1}
         className="absolute inset-0 h-full w-full cursor-default bg-black/40"
       />
 
@@ -45,7 +44,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Shopping bag"
-        className="absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-surface"
+        className="overlay-panel overlay-from-right absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-surface"
       >
         <div className="flex shrink-0 items-center justify-between border-b border-rule px-6 py-5">
           <p className="type-meta">

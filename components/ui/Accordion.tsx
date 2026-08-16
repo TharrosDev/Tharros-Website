@@ -35,8 +35,19 @@ export default function Accordion({
           {open ? <MinusIcon /> : <PlusIcon />}
         </button>
       </Heading>
-      <div id={panelId} hidden={!open} className="pb-6">
-        {children}
+      {/* Animating rather than toggling `hidden`, via a 0fr→1fr grid row so
+          the panel travels to its own natural height with nothing measured in
+          JS. `inert` does the job `hidden` used to: a closed panel stays out
+          of the tab order and the accessibility tree. The global
+          prefers-reduced-motion rule flattens the transition. */}
+      <div
+        id={panelId}
+        className="grid transition-[grid-template-rows] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+      >
+        <div className="overflow-hidden" inert={!open}>
+          <div className="pb-6">{children}</div>
+        </div>
       </div>
     </div>
   );

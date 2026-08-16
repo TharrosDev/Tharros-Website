@@ -163,23 +163,11 @@ export default function BuyPanel({ product }: { product: Product }) {
         {error}
       </p>
 
-      {/* Both numbers are real: what was made, and what is genuinely left. */}
-      <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border-t border-rule pt-5">
-        <div className="flex gap-2">
-          <dt className="type-meta text-ink-faint">Run</dt>
-          <dd className="type-meta num">{run.made} made</dd>
-        </div>
-        <div className="flex gap-2">
-          <dt className="type-meta text-ink-faint">Left</dt>
-          <dd className="type-meta num">{run.remaining}</dd>
-        </div>
-        {run.neverRestocked ? (
-          <div className="flex gap-2">
-            <dt className="visually-hidden">Restock</dt>
-            <dd className="type-meta">Will not be remade</dd>
-          </div>
-        ) : null}
-      </dl>
+      {/* The run figures are stated once, above this panel. Only the restock
+          claim lives here, and only when the data actually says so. */}
+      {run.neverRestocked ? (
+        <p className="type-meta mt-6 border-t border-rule pt-5">Will not be remade</p>
+      ) : null}
 
       {sizingKey ? (
         <SizeGuideModal

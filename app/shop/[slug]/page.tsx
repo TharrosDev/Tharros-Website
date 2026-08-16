@@ -13,6 +13,7 @@ import {
   getProduct,
   getRelated,
   resolveAvailability,
+  runStatus,
 } from "@/lib/catalog/queries";
 import { CURRENCY, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
@@ -54,6 +55,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const related = getRelated(product, 4);
   const availability = resolveAvailability(product);
   const drop = getDrop(product.drop);
+  const run = runStatus(product);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -124,12 +126,14 @@ export default async function ProductPage({ params }: { params: Params }) {
         </nav>
       </div>
 
+      {/* Gallery gives up a column to the record beside it. With no photography
+          yet, four empty frames should not own two thirds of the page. */}
       <div className="page-frame mt-6 grid gap-x-12 gap-y-10 lg:grid-cols-12">
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-6">
           <ProductGallery images={product.images} productName={product.name} />
         </div>
 
-        <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
+        <div className="no-scrollbar lg:col-span-5 lg:col-start-8 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
           <h1 className="type-display-3">{product.name}</h1>
 
           <div className="mt-4 flex items-baseline gap-4">
@@ -141,30 +145,61 @@ export default async function ProductPage({ params }: { params: Params }) {
             ) : null}
           </div>
 
-          <p className="type-body mt-5 text-ink-muted">{product.description}</p>
+          {/* The run, stated before anything has to be opened. These are the
+              figures that make a small label credible, and they were previously
+              collapsed inside an accordion. Real inventory only — the accent
+              appears solely when the run is actually finished. */}
+          <p className="mt-8 flex items-baseline gap-3 border-t border-ink pt-4">
+            <span
+              className={`type-mono-2 ${run.remaining === 0 ? "text-signal" : ""}`}
+            >
+              {run.remaining}
+            </span>
+            <span className="type-meta text-ink-faint">
+              {run.remaining === 0 ? "None left" : "left"} of{" "}
+              <span className="num">{run.made}</span> made
+            </span>
+          </p>
 
-          <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
-            <div className="flex gap-2">
-              <dt className="type-meta text-ink-faint">Colour</dt>
-              <dd className="type-meta">{product.colorway}</dd>
+          <p className="type-body mt-6 text-ink-muted">{product.description}</p>
+
+          {/* The specimen table. Material and fit used to be two collapsed
+              accordions; they are the two things that build confidence in a
+              garment nobody can touch, so they are open by default now. */}
+          <dl className="mt-8 divide-y divide-rule border-y border-rule">
+            <div className="flex gap-6 py-3">
+              <dt className="type-meta w-24 shrink-0 text-ink-faint">Colour</dt>
+              <dd className="type-body-sm">{product.colorway}</dd>
             </div>
-            <div className="flex gap-2">
-              <dt className="type-meta text-ink-faint">Code</dt>
+            <div className="flex gap-6 py-3">
+              <dt className="type-meta w-24 shrink-0 text-ink-faint">Code</dt>
               {/* Style code without the size suffix. */}
-              <dd className="type-meta num">
+              <dd className="num text-[0.8125rem]">
                 {product.variants[0]?.sku.replace(/-[^-]+$/, "")}
               </dd>
             </div>
             {drop ? (
-              <div className="flex gap-2">
-                <dt className="type-meta text-ink-faint">Drop</dt>
-                <dd className="type-meta">
+              <div className="flex gap-6 py-3">
+                <dt className="type-meta w-24 shrink-0 text-ink-faint">Drop</dt>
+                <dd className="type-body-sm">
                   <Link href={`/shop?drop=${drop.slug}`} className="link-rule link-rule-reveal">
                     {drop.name}
                   </Link>
                 </dd>
               </div>
             ) : null}
+            <div className="flex gap-6 py-3">
+              <dt className="type-meta w-24 shrink-0 text-ink-faint">Material</dt>
+              <dd className="type-body-sm text-ink-muted">
+                {product.materials.join(" · ")}
+              </dd>
+            </div>
+            <div className="flex gap-6 py-3">
+              <dt className="type-meta w-24 shrink-0 text-ink-faint">Fit</dt>
+              <dd className="type-body-sm text-ink-muted">
+                {product.fit.join(" · ")}
+              </dd>
+            </div>
           </dl>
 
           <div className="mt-8">
@@ -180,7 +215,8 @@ export default async function ProductPage({ params }: { params: Params }) {
             <Accordion title="The run">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 <li>
-                  <span className="num">{product.runSize}</span> made in total.
+                  <span className="num">{run.made}</span> made in total,{" "}
+                  <span className="num">{run.remaining}</span> still available.
                 </li>
                 {drop ? <li>Released as part of {drop.name}.</li> : null}
                 <li>
@@ -189,39 +225,29 @@ export default async function ProductPage({ params }: { params: Params }) {
                     : "If it returns it will be in a later drop, and it may not be identical."}
                 </li>
               </ul>
-              <p className="type-meta mt-5 text-ink-faint">
-                Runs are small because production is small, not as a sales tactic.
-              </p>
-            </Accordion>
-
-            <Accordion title="Material">
-              <ul className="type-body space-y-1.5 text-ink-muted">
-                {product.materials.map((material) => (
-                  <li key={material}>{material}</li>
-                ))}
-              </ul>
-              <p className="type-meta mt-5 text-ink-faint">
-                Full specification is confirmed on the production sample before launch.
-              </p>
-            </Accordion>
-
-            <Accordion title="Fit">
-              <ul className="type-body space-y-1.5 text-ink-muted">
-                {product.fit.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
               <p className="type-body mt-4 text-ink-muted">
                 Garment measurements are published in the{" "}
                 <Link href="/size-guide" className="link-rule">
                   size guide
                 </Link>
-                .
+                . Full material specification is confirmed on the production sample
+                before launch.
+              </p>
+              <p className="type-meta mt-5 text-ink-faint">
+                Runs are small because production is small, not as a sales tactic.
               </p>
             </Accordion>
 
-            <Accordion title="Shipping">
+            {/* Shipping, returns and care were three separate accordions. They
+                are all "what happens after you buy it" and nobody opens them
+                one at a time. */}
+            <Accordion title="Care & logistics">
               <ul className="type-body space-y-1.5 text-ink-muted">
+                {product.care.map((instruction) => (
+                  <li key={instruction}>{instruction}</li>
+                ))}
+              </ul>
+              <ul className="type-body mt-5 space-y-1.5 text-ink-muted">
                 {SHIPPING_OPTIONS.map((option) => (
                   <li key={option.id}>
                     {option.name} — {option.detail}, {formatPrice(option.price)}
@@ -231,10 +257,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                   Free standard shipping over {formatPrice(FREE_SHIPPING_THRESHOLD)}.
                 </li>
               </ul>
-            </Accordion>
-
-            <Accordion title="Returns">
-              <p className="type-body text-ink-muted">
+              <p className="type-body mt-5 text-ink-muted">
                 Unworn pieces can be returned within 30 days of delivery. Full terms are
                 on the{" "}
                 <Link href="/returns" className="link-rule">
@@ -242,14 +265,6 @@ export default async function ProductPage({ params }: { params: Params }) {
                 </Link>
                 .
               </p>
-            </Accordion>
-
-            <Accordion title="Care">
-              <ul className="type-body space-y-1.5 text-ink-muted">
-                {product.care.map((instruction) => (
-                  <li key={instruction}>{instruction}</li>
-                ))}
-              </ul>
             </Accordion>
           </div>
         </div>

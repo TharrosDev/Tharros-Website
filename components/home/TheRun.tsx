@@ -1,11 +1,16 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProductGrid from "@/components/product/ProductGrid";
-import Reveal from "@/components/ui/Reveal";
 import { listProducts } from "@/lib/catalog/queries";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 
-export default function CurrentDrop() {
-  // The whole drop, not a curated slice — it is small enough to show.
+/**
+ * The whole drop, not a curated slice — it is small enough to show, and
+ * showing all of it is the honest move.
+ *
+ * `specimen` puts each piece's code and run figures under the frame, so the
+ * grid reads as a record of what was made rather than as a row of products.
+ */
+export default function TheRun() {
   const products = listProducts({ drop: CURRENT_DROP.id });
 
   return (
@@ -13,18 +18,19 @@ export default function CurrentDrop() {
       <div className="page-frame">
         <SectionHeading
           index="01"
-          label={`${CURRENT_DROP.name} — out now`}
-          title="A small run of original pieces."
-          action={{ href: "/drop", label: "About this drop" }}
+          label="The run"
+          title="Every piece in the drop."
+          action={{ href: "/shop", label: "Shop all" }}
         />
-        <Reveal className="mt-14">
+        <div className="mt-14">
           <ProductGrid
             products={products}
             heading={`${CURRENT_DROP.name} pieces`}
             columns={3}
             priorityCount={3}
+            specimen
           />
-        </Reveal>
+        </div>
       </div>
     </section>
   );

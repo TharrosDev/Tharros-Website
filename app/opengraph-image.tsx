@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { BRAND_LINE } from "@/lib/site";
+import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -29,7 +30,7 @@ export default function OpengraphImage() {
             color: "#9a9a9a",
           }}
         >
-          Collection 01
+          {CURRENT_DROP.name}
         </div>
         <div
           style={{

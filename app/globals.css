@@ -35,6 +35,21 @@
   --rule-on-dark:        oklch(26% 0 0);
   --rule-on-dark-strong: oklch(36% 0 0);
 
+  /* — Accent ———————————————————————————————————
+     The one chromatic value in the interface. Oxide red, the colour of a
+     printed production stamp rather than a fashion colour. It has exactly
+     three jobs: marking the current drop, marking a closed run, and marking
+     something still in development. Never in a button, never decorative,
+     never more than once in a viewport.
+     Verified by canvas pixel readback (Chromium serialises oklch() as lab(),
+     so parsing the computed string lies): 6.61:1 on paper, 5.27:1 on bone,
+     5.32:1 on black. All AA for text. */
+  --oxide:         oklch(48% 0.14 30);
+  --oxide-on-dark: oklch(62% 0.15 30);
+
+  --signal:         var(--oxide);
+  --signal-on-dark: var(--oxide-on-dark);
+
   /* — State ————————————————————————————————————— */
   --danger: oklch(52% 0.16 27);
 
@@ -42,8 +57,10 @@
      Slow and flat. Nothing overshoots, nothing bounces. */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ledger:    cubic-bezier(0.22, 1, 0.36, 1);  /* the rule draw */
   --dur-fast:   180ms;
   --dur-base:   320ms;
+  --dur-page:   480ms;
   --dur-slow:   620ms;
   --dur-reveal: 900ms;
 
@@ -73,6 +90,13 @@
   --type-display-2: clamp(2.125rem, 0.85rem + 6.4vw, 6rem);
   --type-display-1: clamp(3.25rem, 1.35rem + 9.4vw, 12rem);
   --type-colossal:  clamp(5rem, 0.5rem + 19vw, 22rem);
+
+  /* The mono layer at display scale. Deliberately steep at the low end: on a
+     phone the drop numeral should be the largest thing on the screen, not a
+     shrunken desktop figure. */
+  --type-mono-1: clamp(3.25rem, 1.4rem + 7.6vw, 7rem);
+  --type-mono-2: clamp(1.5rem, 1rem + 2.2vw, 3rem);
+  --type-mono-3: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
 }
 
 @theme inline {
@@ -99,6 +123,9 @@
   --color-rule-strong: var(--rule-strong);
   --color-rule-on-dark: var(--rule-on-dark);
   --color-rule-on-dark-strong: var(--rule-on-dark-strong);
+
+  --color-signal: var(--signal);
+  --color-signal-on-dark: var(--signal-on-dark);
 
   --color-danger: var(--danger);
 
@@ -271,6 +298,51 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.4;
+}
+
+@utility type-meta-lg {
+  font-family: var(--font-mono);
+  font-size: var(--type-meta-lg);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* The mono layer promoted to display scale — drop numerals, run counts, the
+   figures a specimen record is actually about. Where the display ladder runs
+   uppercase with tight negative tracking, this runs at the technical layer's
+   scale-up: tracking relaxes toward zero as the size grows, because mono
+   letterforms are already wide. Tabular by default so a settling number never
+   shifts the layout it sits in. */
+@utility type-mono-1 {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-1);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@utility type-mono-2 {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-2);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@utility type-mono-3 {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-3);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 @utility num {
@@ -456,8 +528,16 @@
     border-bottom-color: var(--near-black);
   }
 
+  /* Pointer focus keeps the quiet underline shift above; keyboard focus gets
+     the same ring as every other control. A 1px border-colour change is not a
+     sufficient focus indicator on its own. */
   .field:focus-visible {
-    outline: none;
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .on-dark .field:focus-visible {
+    outline-color: var(--ink-on-dark);
   }
 
   .field-boxed {
@@ -635,9 +715,12 @@
     border: 0;
   }
 
-  /* Slow, flat entrances. Transform-only so SSR content is never
-     invisible when JS is slow or blocked. */
-  .reveal {
+  /* Slow, flat entrances.
+     Gated on [data-js], which the head script sets before first paint. If
+     scripting is off, blocked, or the bundle fails, the hidden state is never
+     applied and server-rendered content stays visible — the entrance is an
+     enhancement, never a prerequisite for reading the page. */
+  [data-js] .reveal {
     opacity: 0;
     transform: translateY(1.75rem);
     transition:
@@ -645,15 +728,115 @@
       transform var(--dur-reveal) var(--ease-out-expo);
   }
 
-  .reveal-in {
+  [data-js] .reveal-in {
     opacity: 1;
     transform: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    [data-js] .reveal {
       opacity: 1;
       transform: none;
+    }
+  }
+
+  /* OVERLAY ENTRANCES
+     Drawers, sheets, menus and the search surface. Done in CSS rather than
+     with an animation library: presence animation is the only thing such a
+     library would have been carrying here, and it measured 40kB gzipped
+     against four transitions.
+
+     visibility rather than display, so no @starting-style is needed and the
+     behaviour is the same everywhere. Hidden overlays leave the tab order and
+     the accessibility tree exactly as `display: none` would; the visibility
+     transition is delayed by the full duration on the way out so the panel is
+     still painted while it travels, and runs at 0s on the way in so it is
+     interactive immediately.
+
+     The overlay stays mounted and toggles [data-open], which is what allows an
+     exit animation at all — React unmounting the subtree is what made the
+     previous implementation snap shut. */
+  .overlay-root {
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity var(--dur-base) var(--ease-out-expo),
+      visibility 0s linear var(--dur-base);
+  }
+
+  .overlay-root[data-open="true"] {
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity var(--dur-base) var(--ease-out-expo),
+      visibility 0s;
+  }
+
+  /* Panels travel; the layer they sit on only fades. */
+  .overlay-panel {
+    transition: transform var(--dur-base) var(--ease-out-expo);
+  }
+
+  .overlay-from-right {
+    transform: translateX(100%);
+  }
+
+  .overlay-from-below {
+    transform: translateY(1.5rem);
+  }
+
+  .overlay-root[data-open="true"] .overlay-panel {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overlay-panel,
+    .overlay-from-right,
+    .overlay-from-below {
+      transform: none;
+    }
+  }
+
+  /* THE LEDGER RULE
+     The site's entrance gesture: a hairline that draws itself across the top
+     of a section, the way a rule is ruled rather than faded in. Applied to the
+     element carrying the border, so the rule and whatever sits on it (a mono
+     index, a count) arrive together.
+
+     Same [data-js] gate as .reveal — with scripting unavailable the rule is
+     simply already drawn. */
+  .rule-draw {
+    position: relative;
+  }
+
+  .rule-draw::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.18;  /* matches the border-current/15 it replaces */
+    transform-origin: left center;
+  }
+
+  /* Only a rule that Reveal drives is hidden to begin with. A bare .rule-draw
+     is simply a drawn rule — otherwise every use outside a Reveal would sit at
+     scaleX(0) forever, which is a silent disappearance rather than a missing
+     animation. */
+  [data-js] .reveal.rule-draw::before {
+    transform: scaleX(0);
+    transition: transform var(--dur-reveal) var(--ease-ledger);
+  }
+
+  [data-js] .reveal.rule-draw.reveal-in::before {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js] .reveal.rule-draw::before {
+      transform: scaleX(1);
+      transition: none;
     }
   }
 

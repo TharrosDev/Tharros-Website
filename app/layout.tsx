@@ -6,13 +6,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 import CartDrawer from "@/components/commerce/CartDrawer";
-import { BRAND, BRAND_LINE, SITE_URL, SOCIAL } from "@/lib/site";
+import { BRAND, BRAND_LINE, SITE_URL, socialProfiles } from "@/lib/site";
 import { jsonLd } from "@/lib/jsonld";
 
+/** Loaded as a variable font rather than pinned to 700/800, so weight is an
+ *  available axis for hierarchy instead of a two-step choice. */
 const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  weight: ["700", "800"],
   variable: "--font-archivo",
 });
 
@@ -93,7 +94,7 @@ const graph = {
       name: BRAND,
       url: SITE_URL,
       slogan: BRAND_LINE,
-      sameAs: SOCIAL.map((social) => social.href),
+      ...(socialProfiles().length > 0 ? { sameAs: socialProfiles() } : {}),
     },
     {
       "@type": "WebSite",
@@ -119,6 +120,17 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${archivo.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <head>
+        {/* Marks the document as scripted before first paint, so the entrance
+            styles in globals.css only ever hide content that JS can bring
+            back. Without this the .reveal opacity would strand sections
+            invisible whenever the bundle is blocked or fails. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.dataset.js="1"`,
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"

@@ -6,7 +6,12 @@ import ImageSlot from "@/components/media/ImageSlot";
 import ProductBadge from "./ProductBadge";
 import SaveButton from "./SaveButton";
 import { useCart } from "@/components/commerce/CartProvider";
-import { isPurchasable, isSizeAvailable, resolveAvailability } from "@/lib/catalog/queries";
+import {
+  isPurchasable,
+  isSizeAvailable,
+  resolveAvailability,
+  runStatus,
+} from "@/lib/catalog/queries";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/catalog/types";
 
@@ -17,6 +22,8 @@ type Props = {
   priority?: boolean;
   /** Larger title, for the editorial slots on the home page. */
   emphasis?: boolean;
+  /** Print the piece's code and run figures under the frame. */
+  specimen?: boolean;
 };
 
 export default function ProductCard({
@@ -24,6 +31,7 @@ export default function ProductCard({
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   priority = false,
   emphasis = false,
+  specimen = false,
 }: Props) {
   const { add } = useCart();
   const [hovered, setHovered] = useState(false);
@@ -32,6 +40,10 @@ export default function ProductCard({
   const back = product.images[1] ?? front;
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
+  const run = runStatus(product);
+  // The style code without its size suffix — the same figure the product page
+  // prints, so the two cannot disagree.
+  const code = product.variants[0]?.sku.replace(/-[^-]+$/, "");
 
   return (
     <article
@@ -111,6 +123,31 @@ export default function ProductCard({
         </div>
         <p className="num shrink-0 text-ink-muted">{formatPrice(product.price)}</p>
       </div>
+
+      {/* The specimen line. Real figures only: `made` is how many exist,
+          `remaining` is live variant inventory. A closed run is the one thing
+          here allowed to carry the accent. */}
+      {specimen ? (
+        <dl className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
+          <div className="flex items-baseline gap-2">
+            <dt className="visually-hidden">Code</dt>
+            <dd className="type-meta text-ink-faint">{code}</dd>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <dt className="type-meta text-ink-faint">Made</dt>
+            <dd className="num text-[0.6875rem]">{run.made}</dd>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <dt className="type-meta text-ink-faint">Left</dt>
+            {/* Deliberately not accented. A red zero on one card among nine
+                puts a second mark in the same viewport as the drop numeral and
+                dilutes it; the sold-out badge on the frame already says this.
+                The accent for a closed run belongs on the product page, where
+                it is about the piece being looked at. */}
+            <dd className="num text-[0.6875rem]">{run.remaining}</dd>
+          </div>
+        </dl>
+      ) : null}
     </article>
   );
 }

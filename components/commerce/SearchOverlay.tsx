@@ -50,17 +50,16 @@ export default function SearchOverlay({ open, onClose }: Props) {
     );
   };
 
-  if (!open) return null;
-
   const searching = debounced.trim().length >= 2;
 
   return (
     <div
       ref={panelRef}
+      data-open={open}
       role="dialog"
       aria-modal="true"
       aria-label="Search"
-      className="fixed inset-0 z-80 overflow-y-auto bg-surface"
+      className="overlay-root fixed inset-0 z-80 overflow-y-auto bg-surface"
     >
       <div className="page-frame">
         <div

@@ -111,11 +111,6 @@ export function getFeatured(limit = 4): Product[] {
   return listProducts({ sort: "featured" }).slice(0, limit);
 }
 
-export function getNewArrivals(limit?: number): Product[] {
-  const items = listProducts({ isNew: true, sort: "newest" });
-  return typeof limit === "number" ? items.slice(0, limit) : items;
-}
-
 /**
  * Same category first, then anything sharing a collection. Never returns the
  * product itself, and never pads the list with sold-out pieces if buyable ones

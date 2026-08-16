@@ -42,6 +42,31 @@ One neutral ramp. The clothing supplies the colour; the interface does not.
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
 what components actually reference. Recolour through the aliases, never the ramp.
 
+### The accent
+
+One chromatic value, and it is a state marker rather than a colour scheme.
+
+| Token | Value | Contrast |
+|---|---|---|
+| `--oxide` | `oklch(48% 0.14 30)` | 6.61:1 on paper, 5.27:1 on bone |
+| `--oxide-on-dark` | `oklch(62% 0.15 30)` | 5.32:1 on black |
+
+Referenced through `--signal` / `--signal-on-dark` (`text-signal`, `text-signal-on-dark`),
+never through `--oxide` directly.
+
+Oxide red is the colour of a printed production stamp, not a fashion colour. It has exactly
+three jobs — **the current drop, a closed run, something in development** — and three rules:
+never inside a button, never decorative, and **at most one accented element in the page
+content at a time**. If a fourth use appears, the answer is that the thing is not actually a
+state.
+
+The persistent drop stamp in the header is deliberately outside that count. It is chrome, not
+content: it marks the current drop everywhere, so a product page showing a closed run in oxide
+will legitimately carry two marks — one saying which drop you are in, one saying this piece is
+finished. They never mean the same thing, so they never compete.
+
+`--danger` is unrelated and stays reserved for form errors.
+
 Every text tone in the system passes WCAG AA against the surface it is used on, verified
 by painting the computed colour to a canvas and reading the pixel back — Chromium
 serialises `oklch()` as `lab()`, so string parsing silently produces nonsense.
@@ -76,10 +101,28 @@ Defined as `@utility` classes in `globals.css`, so responsive variants work
 | `type-display-4` | 1.375rem → 2rem | Sub-headings, editorial cards |
 | `type-lead` | 1.125rem → 1.5rem | Intro paragraphs |
 | `type-body` / `type-body-sm` | fluid / 14px | Copy |
-| `type-meta` | 11px | The mono layer |
+| `type-meta` / `type-meta-lg` | 11px / 13px | The mono layer |
 
 Display sizes are uppercase with tight negative tracking; the mono layer is uppercase with
 wide positive tracking. That contrast is the type system.
+
+### The mono ladder
+
+The technical layer promoted to display scale — drop numerals, run counts, the figures a
+specimen record is actually about.
+
+| Class | Size (fluid) | Use |
+|---|---|---|
+| `type-mono-1` | 3.25rem → 7rem | Drop numerals; the largest figure on a screen |
+| `type-mono-2` | 1.5rem → 3rem | Run counts, remaining counts |
+| `type-mono-3` | 1rem → 1.25rem | Specimen rows, promoted metadata |
+
+Tracking relaxes toward zero as the size grows — mono letterforms are already wide, so the
+`+0.14em` of `type-meta` would fall apart at display size. All three are tabular by default,
+so a number that changes never shifts the layout around it.
+
+The low end of `type-mono-1` is deliberately steep: on a phone the drop numeral should be the
+largest thing on the screen, not a shrunken desktop figure.
 
 **Never hand-roll per-breakpoint font sizes.**
 
@@ -127,11 +170,17 @@ right, name and price sit below the frame in a single row.
 
 Slow, flat, intentional. Nothing bounces or overshoots.
 
-- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-slow` 620ms (zoom),
-  `--dur-reveal` 900ms (scroll entrance).
-- Easing: `--ease-out-quart`, `--ease-out-expo`.
-- `Reveal` adds a class on intersection rather than removing one, so server-rendered
-  content is visible if JS never runs.
+- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-page` 480ms (route
+  change), `--dur-slow` 620ms (zoom), `--dur-reveal` 900ms (scroll entrance).
+- Easing: `--ease-out-quart`, `--ease-out-expo`, `--ease-ledger` (the rule draw).
+- **The ledger rule** (`.rule-draw`) is the site's entrance gesture: a hairline that draws
+  itself left to right across the top of a section, so the rule and whatever sits on it — a
+  mono index, a count — arrive together. Combined with `Reveal`, which supplies the
+  `reveal-in` class. A section fades; a rule is ruled.
+- `Reveal` adds a class on intersection rather than removing one, and its hidden state is
+  scoped to `[data-js]` — an attribute the root layout sets before first paint. If scripting
+  is blocked or the bundle fails, content is never hidden to begin with. Both halves are
+  required: the class-adding alone would still strand `opacity: 0` in the SSR HTML.
 - Everything is disabled under `prefers-reduced-motion`.
 
 ---

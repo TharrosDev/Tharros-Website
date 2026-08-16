@@ -5,20 +5,37 @@ export const BRAND = "THARROS";
 export const BRAND_LINE = "Small runs. Original ideas.";
 export const CONTACT_EMAIL = "hello@tharros.com";
 
+/** Placeholder until the accounts exist. These point at the platforms, not at
+ *  THARROS profiles, so they are deliberately excluded from the structured-data
+ *  `sameAs` by `socialProfiles()` — claiming them would assert ownership of a
+ *  profile the label does not have. Replace the hrefs with real profile URLs
+ *  and they start being published with no further change. */
 export const SOCIAL = [
   { name: "Instagram", href: "https://instagram.com" },
   { name: "TikTok", href: "https://tiktok.com" },
   { name: "YouTube", href: "https://youtube.com" },
 ];
 
-export const NAV_PRIMARY = [
+/** Only entries that name an actual profile — a bare platform URL has no path. */
+export function socialProfiles(): string[] {
+  return SOCIAL.filter((social) => {
+    try {
+      return new URL(social.href).pathname.replace(/\/+$/, "") !== "";
+    } catch {
+      return false;
+    }
+  }).map((social) => social.href);
+}
+
+/** One navigation surface at every breakpoint — the index overlay. There is no
+ *  separate desktop bar and mobile drawer to keep in step any more. */
+export const NAV_INDEX = [
   { name: "Shop", href: "/shop" },
   { name: "Current Drop", href: "/drop" },
   { name: "Lookbook", href: "/lookbook" },
   { name: "About", href: "/about" },
+  { name: "Journal", href: "/journal" },
 ];
-
-export const NAV_MOBILE = [...NAV_PRIMARY, { name: "Journal", href: "/journal" }];
 
 /** Restrained on purpose: a nine-piece line does not need a category directory
  *  in the footer. The shop page's filter bar covers categories. */
