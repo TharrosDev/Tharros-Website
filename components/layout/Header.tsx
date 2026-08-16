@@ -17,7 +17,7 @@ const TRANSPARENT_ROUTES = new Set(["/", "/lookbook"]);
 
 export default function Header() {
   const pathname = usePathname();
-  const { count, openBag, ready } = useCart();
+  const { count, openBag, ready, isOpen: bagOpen } = useCart();
   const { ids, ready: wishlistReady } = useWishlist();
 
   const [indexOpen, setIndexOpen] = useState(false);
@@ -27,11 +27,15 @@ export default function Header() {
   const floating = TRANSPARENT_ROUTES.has(pathname) && !scrolled;
   const savedCount = wishlistReady ? ids.length : 0;
 
-  // Search is no longer a permanent icon, so it gets a shortcut. Ignored while
-  // the visitor is typing, and while an overlay already owns the keyboard.
+  // Search is no longer a permanent icon, so it gets a shortcut. It stands down
+  // while the visitor is typing, and while the bag already owns the screen —
+  // opening search over an open drawer left two modal dialogs live at once,
+  // with competing focus traps and a nested scroll lock. The index is the one
+  // surface it may replace, because index → search is a deliberate path.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (bagOpen) return;
       const target = event.target as HTMLElement | null;
       if (
         target?.isContentEditable ||
@@ -45,7 +49,7 @@ export default function Header() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [bagOpen]);
 
   return (
     <>

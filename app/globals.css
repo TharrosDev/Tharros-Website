@@ -30,8 +30,10 @@
   --ink-on-dark-faint: oklch(58% 0 0);
 
   /* — Rules ————————————————————————————————————— */
-  --rule:          oklch(88% 0.002 90);
-  --rule-strong:   oklch(78% 0.002 90);
+  --rule-light:        oklch(88% 0.002 90);
+  --rule-light-strong: oklch(78% 0.002 90);
+  --rule:          var(--rule-light);
+  --rule-strong:   var(--rule-light-strong);
   --rule-on-dark:        oklch(26% 0 0);
   --rule-on-dark-strong: oklch(36% 0 0);
 
@@ -619,9 +621,43 @@
      SURFACES
      ============================================================ */
 
+  /* A dark section rebinds the semantic aliases rather than restating colours
+     for each element. Because `@theme inline` keeps the theme values as live
+     var() references, `text-ink-muted`, `border-rule` and `text-signal` all
+     resolve through these and become correct automatically — which is what
+     "recolour through the aliases, never the ramp" is supposed to buy.
+
+     Without this, any component authored for a light surface is silently
+     wrong when reused on black: the product cards on /drop rendered their
+     price at 3.78:1 and their colourway at 4.25:1, and the header's drop
+     stamp sat at 2.96:1 while floating over the hero. */
   .on-dark {
+    --ink:         var(--ink-on-dark);
+    --ink-muted:   var(--ink-on-dark-muted);
+    --ink-faint:   var(--ink-on-dark-faint);
+    --rule:        var(--rule-on-dark);
+    --rule-strong: var(--rule-on-dark-strong);
+    --signal:      var(--signal-on-dark);
+    --surface:     var(--surface-dark);
+
     background: var(--surface-dark);
     color: var(--ink-on-dark);
+  }
+
+  /* The inverse: an element that carries its own light surface regardless of
+     the section around it. The empty image frame is always bone, so inside a
+     dark section its labels must not follow the section's ink — they sit on
+     the frame, not on the black. */
+  .on-light {
+    --ink:         var(--near-black);
+    --ink-muted:   var(--steel);
+    --ink-faint:   var(--concrete);
+    --rule:        var(--rule-light);
+    --rule-strong: var(--rule-light-strong);
+    --signal:      var(--oxide);
+    --surface:     var(--paper);
+
+    color: var(--near-black);
   }
 
   .on-dark h1,
@@ -759,6 +795,11 @@
   .overlay-root {
     visibility: hidden;
     opacity: 0;
+    /* A panel parked off-canvas at translateX(100%) still contributes to the
+       document's scroll width, which put a horizontal scrollbar on every page
+       once these became permanently mounted. Clipping on the x axis contains
+       it; y stays free because the search surface scrolls its own content. */
+    overflow-x: clip;
     transition:
       opacity var(--dur-base) var(--ease-out-expo),
       visibility 0s linear var(--dur-base);
