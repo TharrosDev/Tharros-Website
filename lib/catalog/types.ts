@@ -33,7 +33,23 @@ export type Availability =
 /** Release posture, set in data. Inventory decides the rest. */
 export type ReleaseState = "released" | "coming-soon" | "preorder";
 
-export type ImageKind = "front" | "back" | "detail" | "lifestyle" | "model";
+/**
+ * What a slot holds. `campaign` is an environment frame that leads a page — it
+ * is not a product shot and never appears in a product gallery.
+ */
+export type ImageKind =
+  | "front"
+  | "back"
+  | "detail"
+  | "lifestyle"
+  | "model"
+  | "campaign";
+
+/**
+ * How a person shot is framed. Only meaningful on `model`, `lifestyle` and
+ * `campaign` slots — a flat lay has no crop.
+ */
+export type Crop = "full" | "three-quarter" | "close" | "walking";
 
 export type Ratio = "portrait" | "editorial" | "campaign" | "wide" | "square";
 
@@ -48,6 +64,13 @@ export type ImageSlotData = {
   kind: ImageKind;
   ratio: Ratio;
   src?: string;
+  crop?: Crop;
+  /**
+   * Manual override of the discovery ladder in `lib/catalog/images.ts`. Lower
+   * sorts first. Set it when one particular frame is the best picture of a
+   * piece regardless of what kind it is.
+   */
+  rank?: number;
 };
 
 export type Variant = {
