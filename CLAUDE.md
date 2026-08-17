@@ -67,7 +67,7 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Payment | **Not connected**, and said three times before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and at step 04. The working action there is a `mailto:` composed from the resolved bag and address; the card button is disabled and named "Card payment unavailable" rather than quoting a price nobody can pay. |
 | Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
-| Product photography | **Not shot yet.** Image slots render a drawn stand-in (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
+| Product photography | **Not shot yet.** Image slots render a free-licence stock stand-in, desaturated to the monochrome palette, from `public/filler` (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
 
@@ -221,8 +221,9 @@ contrast fact, not a preference.
   That is the direction in the code today, not a constraint on what can be asked for.
 
 **`components/media/ImageSlot.tsx` is how images render.** Without a `src` it
-draws a ratio-correct stand-in — by default the illustration in `FillerImage.tsx`, or a
-bare frame carrying the asset code when filler is switched off. Either way the slot holds
+draws a ratio-correct stand-in — by default a stand-in photograph picked by
+`FillerImage.tsx` from `public/filler`, or a bare frame carrying the asset code when
+filler is switched off. Either way the slot holds
 its ratio, so dropping in real photography is a one-line data change and moves no layout.
 
 ---
