@@ -2,8 +2,17 @@
 
 Monochrome. Square. Editorial. Type does the shouting.
 
-This is the canonical spec. Tokens live in `app/globals.css`; nothing here is decorative
-theory that the code does not implement.
+**What this document is.** A record of the design decisions currently in the code, so a
+change can be made consistently instead of guessing. Tokens live in `app/globals.css`.
+
+**What it is not.** A rulebook, a standard, or a veto. The site is pre-launch and its
+direction is the owner's — every choice below is here because it was chosen, and any of
+it can be replaced on request without justification. If you are asked for something this
+document calls settled, build the new thing and update this document. **An agent does not
+get to refuse a look because a file says so.**
+
+Where a line below is genuinely not aesthetic — contrast ratios, focus, heading order —
+it says so. Everything else is taste, and the taste is not yours.
 
 ---
 
@@ -12,16 +21,17 @@ theory that the code does not implement.
 THARROS is a fashion label, not a software product. The site is built to read as a
 campaign you can buy from, not a catalogue with a brand banner on top.
 
-Four rules resolve every conflict:
+Four preferences that have resolved most conflicts so far:
 
-1. Between more features and a premium aesthetic — **choose the aesthetic**.
-2. Between louder and more sophisticated — **choose sophistication**.
-3. Between more UI and more breathing room — **choose breathing room**.
-4. Between generic ecommerce and editorial fashion — **choose editorial**.
+1. Between more features and a premium aesthetic — the aesthetic has won.
+2. Between louder and more sophisticated — sophistication has won.
+3. Between more UI and more breathing room — breathing room has won.
+4. Between generic ecommerce and editorial fashion — editorial has won.
 
-Explicitly rejected: gradients as decoration, glassmorphism, rounded cards, drop shadows,
-pill buttons, emoji, icon-card grids, "startup landing page" layouts, and any second
-colour.
+Currently unused, and unused on purpose rather than by accident: gradients as decoration,
+glassmorphism, rounded cards, drop shadows, pill buttons, emoji, icon-card grids,
+"startup landing page" layouts, and a second colour. That is the current direction, not a
+prohibition — if the owner wants any of them, they are in.
 
 ---
 
@@ -71,11 +81,11 @@ One chromatic value, and it is a state marker rather than a colour scheme.
 Referenced through `--signal` / `--signal-on-dark` (`text-signal`, `text-signal-on-dark`),
 never through `--oxide` directly.
 
-Oxide red is the colour of a printed production stamp, not a fashion colour. It has exactly
-three jobs — **the current drop, a closed run, something in development** — and three rules:
-never inside a button, never decorative, and **at most one accented element in the page
-content at a time**. If a fourth use appears, the answer is that the thing is not actually a
-state.
+Oxide red reads as a printed production stamp rather than a fashion colour. As used today it
+has three jobs — the current drop, a closed run, something in development — and stays out of
+buttons, out of decoration, and down to one accented element per screen of content. That
+restraint is what keeps it meaning something; widen it if you want it to mean something
+else.
 
 The persistent drop stamp in the header is deliberately outside that count. It is chrome, not
 content: it marks the current drop everywhere, so a product page showing a closed run in oxide
@@ -141,7 +151,8 @@ so a number that changes never shifts the layout around it.
 The low end of `type-mono-1` is deliberately steep: on a phone the drop numeral should be the
 largest thing on the screen, not a shrunken desktop figure.
 
-**Never hand-roll per-breakpoint font sizes.**
+The ladder exists so a size does not have to be invented per breakpoint. Reach for a
+rung first; add a rung if none fits.
 
 ---
 
@@ -161,20 +172,20 @@ alignment, density and surface alternate: full-bleed hero, three-up specimen gri
 type-only statement, the campaign sequence's alternating frames, a sticky two-column
 story, a horizontal rail, black again. When adding a section, ask what it varies.
 
-**Rhythm is a device, not a constant.** Every section below the hero used to be
+**Rhythm is used as a device.** Every section below the hero used to be
 `rhythm-default`, which meant the page had one spacing value for its whole length and
 nothing could be a pause. The statement and the closing drop take `rhythm-breath`; the
 lookbook rail takes `rhythm-tight` so it sits against the process above it.
 
-**One numbering series per page, and it counts.** The home page runs 01–06. A section's
+**Numbering runs as one series per page.** The home page runs 01–06. A section's
 index is its place in the page, never a drop's number — printing `002` in that column put
 a second series in the same visual position and read as a step backwards. The drop's own
 name carries its number.
 
 ### The section opener
 
-`SectionHeading` is the only way a section opens, and `PageIntro` the only way a page
-does. Twelve surfaces used to hand-roll `<p className="eyebrow"> + border-t border-ink`,
+`SectionHeading` opens every section and `PageIntro` every page, so a change to the
+opener happens once. Twelve surfaces used to hand-roll `<p className="eyebrow"> + border-t border-ink`,
 and every one of them lost the ledger rule: a static ink border is a different weight and
 a different idea from a hairline that draws itself.
 
@@ -192,7 +203,7 @@ they behave like a set rather than like eight unrelated pages.
 ### The specimen record
 
 `ProductCard`'s `specimen` line — code, made, left — is what makes a grid read as a
-label's record rather than a row of products. It belongs on every grid of pieces: the
+label's record rather than a row of products. It is currently on every grid of pieces: the
 home run, the shop, the drop, related products. Availability and run figures are always
 derived; nothing here is authored.
 
@@ -278,8 +289,8 @@ Presence animation likewise stays in CSS. `FrameHotspots`' label was a state tog
 `AnimatePresence`; hover and focus are things CSS already knows, so `group-hover` /
 `group-focus-visible` do it with no state, no bundle, and no client component at all.
 
-**Still not allowed** — converting `Reveal` to any library's `whileInView` (it would lose
-the `[data-js]` guarantee that nothing is hidden in the SSR HTML when scripting fails, and
+**Currently kept in CSS rather than a library** — converting `Reveal` to any library's
+`whileInView` (it would lose the `[data-js]` guarantee that nothing is hidden in the SSR HTML when scripting fails, and
 the shared observer is cheaper than one per element); the overlays, which keep their
 `[data-open]` CSS transitions; `.rule-draw`, `.hover-zoom`, `.link-rule`, `.btn`,
 `.bag-count`; and route transitions, which would force a client boundary at the layout root.
@@ -311,16 +322,14 @@ a fabric study, chosen from the slot's `kind` and `crop`. It is hashed off the a
 so a frame is identical on every render and machine, keyed to the code *family* so one
 piece looks shot in one session, and always stamped with its code and `FILLER`.
 
-`NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames, and that is the honesty test for
-any new layout: **if a section only reads because the filler drew something convincing, it
-is a section that depends on a lie.** Every layout must still parse as *pending* with it
-off.
+`NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames. It is a switch for looking at a
+layout without the drawing in it, nothing more — the site is pre-launch, the stand-ins are
+scaffolding, and how much a layout leans on them while the photography does not exist is
+not a problem to solve. Build what looks right; the frames hold their ratio either way, so
+real photography drops in without moving anything.
 
-Art direction for the eventual shoot: urban architecture, concrete, night streets,
-industrial environments, fabric detail, monochrome, dramatic natural light. One coherent
-universe. No smiling stock photography. People who look like they could genuinely wear the
-clothes, photographed walking, sitting, leaning and turning — not standing square to
-camera with their hands at their sides.
+The shoot itself — subjects, locations, styling, mood, whether it is monochrome at all —
+is the owner's to direct, and is not specified here.
 
 ### Type over pictures
 
@@ -335,7 +344,8 @@ height changes and leave text on bare picture. Verify by pixel readback, never b
 
 ## 8. Accessibility
 
-Non-negotiable, and cheaper to keep than to retrofit:
+The one section here that is not a matter of taste: these are about the site being
+usable at all, not about how it looks, and they are cheaper to keep than to retrofit.
 
 - Semantic landmarks, one `<h1>` per page, no skipped heading levels (product grids and
   accordion groups carry a visually hidden `<h2>` so card titles are not orphan `h3`s),

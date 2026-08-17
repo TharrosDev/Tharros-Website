@@ -1,5 +1,10 @@
 # THARROS — Content Guide
 
+The voice the copy currently uses, written down so a new line sounds like the ones next to
+it. The site is pre-launch and the voice is the owner's — change it and change this file.
+The only part of this document that is not a preference is the factual section at the
+bottom, and it says so.
+
 ## Voice
 
 Confident without shouting. Plain, specific, slightly cold. THARROS states things and
@@ -53,9 +58,10 @@ instead of draping."*
 
 ## Honesty rules
 
-These are content rules, not just engineering ones. Breaking them is a defect.
+The one part of this guide that is not about taste: these are claims that would be untrue,
+not sentences that would be off-voice.
 
-**Never write:**
+**Do not write:**
 
 - reviews, testimonials, ratings, or customer counts that do not exist
 - press mentions, awards, stockists or collaborations that have not happened
