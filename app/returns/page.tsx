@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import PageIntro from "@/components/layout/PageIntro";
 import InfoSections from "@/components/layout/InfoSections";
+import InfoFooter from "@/components/layout/InfoFooter";
+import { informationIndex } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -12,7 +14,13 @@ export const metadata: Metadata = {
 export default function ReturnsPage() {
   return (
     <>
-      <PageIntro index="01" label="Information" title="Returns" />
+      <PageIntro
+        index={informationIndex("/returns")}
+        label="Information"
+        title="Returns"
+        lead="Thirty days, unworn, tags on. The rest is detail."
+        crumbs={[{ name: "Home", href: "/" }]}
+      />
       <InfoSections
         sections={[
           {
@@ -47,6 +55,8 @@ export default function ReturnsPage() {
           },
         ]}
       />
+
+      <InfoFooter current="/returns" />
     </>
   );
 }

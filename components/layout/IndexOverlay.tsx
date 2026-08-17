@@ -46,13 +46,13 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
       role="dialog"
       aria-modal="true"
       aria-label="Index"
-      className="overlay-root on-dark fixed inset-0 z-80 flex flex-col overflow-y-auto"
+      className="overlay-root on-dark fixed inset-0 z-[var(--z-overlay)] flex flex-col overflow-y-auto"
     >
       <div
         className="page-frame flex shrink-0 items-center justify-between"
         style={{ height: "var(--header-h)" }}
       >
-        <Wordmark className="text-lg" label={false} />
+        <Wordmark className="type-wordmark" label={false} />
         <button
           type="button"
           onClick={onClose}
@@ -91,7 +91,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
                     // rule below it rather than to its own row.
                     className="group flex items-center gap-6 py-4 md:py-5"
                   >
-                    <span className="num text-[0.6875rem] text-ink-on-dark-faint">
+                    <span className="num type-meta text-ink-on-dark-faint">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="type-display-3 uppercase transition-opacity group-hover:opacity-60 md:type-display-2">

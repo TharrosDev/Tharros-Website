@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import FilterBar from "@/components/shop/FilterBar";
 import ShopFeature from "@/components/shop/ShopFeature";
 import ProductGrid from "@/components/product/ProductGrid";
+import EmptyState from "@/components/ui/EmptyState";
+import PageIntro from "@/components/layout/PageIntro";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { getDrop } from "@/lib/catalog/drops";
 import {
   categoriesInUse,
+  filterProducts,
   isSortKey,
   listProducts,
   searchProducts,
@@ -61,11 +63,10 @@ export default async function ShopPage({
   // only thing allowed to override what the search decided was most relevant.
   const products = query
     ? (() => {
-        const matches = searchProducts(query, 100).filter((product) => {
-          if (category !== "all" && product.category !== category) return false;
-          if (drop && product.drop !== drop.id) return false;
-          if (newOnly && !product.isNew) return false;
-          return true;
+        const matches = filterProducts(searchProducts(query, 100), {
+          category,
+          drop: drop?.id,
+          isNew: newOnly || undefined,
         });
         return sort === "featured" ? matches : sortProducts(matches, sort);
       })()
@@ -102,24 +103,13 @@ export default async function ShopPage({
         dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbs) }}
       />
 
-      <div
-        className="page-frame"
-        style={{ paddingTop: "calc(var(--header-h) + 3.5rem)", paddingBottom: "2.5rem" }}
-      >
-        <div className="border-t border-ink pt-4">
-          <p className="eyebrow">
-            <span className="num">01</span>
-            <span>
-              {query ? "Search" : drop ? "Drop" : "Everything made so far"}
-            </span>
-          </p>
-        </div>
-        {/* Deliberately a step below the editorial pages. At display-1 the shop
-            title outsized the brand's own opening headline and pushed the first
-            row of product most of a screen down — on the one page whose job is
-            to show the clothes. */}
-        <h1 className="type-display-2 mt-8">{heading}</h1>
-      </div>
+      <PageIntro
+        index="01"
+        label={query ? "Search" : drop ? "Drop" : "Everything made so far"}
+        title={heading}
+        titleClass="type-display-2"
+        crumbs={[{ name: "Home", href: "/" }]}
+      />
 
       {/* Only on the unfiltered view — see ShopFeature. Someone who has already
           narrowed the list wants the list. */}
@@ -129,31 +119,31 @@ export default async function ShopPage({
         category={category}
         sort={sort}
         drop={dropSlug}
+        dropName={drop?.name}
         newOnly={newOnly}
-        count={products.length}
         query={query}
+        count={products.length}
         available={categoriesInUse()}
       />
 
       <div className="page-frame rhythm-tight">
         {products.length === 0 ? (
-          <div className="py-20">
-            <p className="type-display-3 uppercase">Nothing found.</p>
-            <p className="type-body mt-4 text-ink-muted">
-              {query
+          <EmptyState
+            title="Nothing found."
+            body={
+              query
                 ? "No pieces match that search."
-                : "Nothing in that category right now — the line is small on purpose."}
-            </p>
-            <Link href="/shop" className="btn btn-solid mt-10">
-              View everything
-            </Link>
-          </div>
+                : "Nothing in that category right now — the line is small on purpose."
+            }
+            action={{ href: "/shop", label: "View everything" }}
+          />
         ) : (
           <ProductGrid
             products={products}
             heading={`${heading} — ${products.length} pieces`}
             columns={3}
             priorityCount={3}
+            specimen
           />
         )}
       </div>

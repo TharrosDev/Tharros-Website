@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "@/components/commerce/CartProvider";
+import { useScrolledPast } from "@/lib/hooks";
+import { formatPrice } from "@/lib/format";
 import SaveButton from "./SaveButton";
 import SizeGuideModal from "./SizeGuideModal";
 import QuantityStepper from "@/components/commerce/QuantityStepper";
@@ -26,6 +28,12 @@ export default function BuyPanel({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [guideOpen, setGuideOpen] = useState(false);
+  const sizesRef = useRef<HTMLFieldSetElement>(null);
+  // The bar appears once the buy panel itself has left the screen. It lives in
+  // this component rather than beside it because it is the same purchase — the
+  // same selected size, the same quantity, the same add — and a second copy of
+  // that state is a second thing to keep in sync.
+  const scrolledPastFold = useScrolledPast(420);
 
   const availability = resolveAvailability(product);
   const buyable = isPurchasable(product);
@@ -38,6 +46,9 @@ export default function BuyPanel({ product }: { product: Product }) {
   const onAdd = () => {
     if (!size) {
       setError("Select a size.");
+      // From the sticky bar the size selector is usually off screen, so saying
+      // "select a size" without taking them to the sizes is a dead end.
+      sizesRef.current?.scrollIntoView({ block: "center" });
       return;
     }
     setError(null);
@@ -89,7 +100,7 @@ export default function BuyPanel({ product }: { product: Product }) {
   return (
     <div>
       {product.variants.length > 1 ? (
-        <fieldset className="border-t border-ink pt-6">
+        <fieldset ref={sizesRef} className="border-t border-ink pt-6">
           <legend className="visually-hidden">Select a size</legend>
           <div className="flex items-baseline justify-between gap-4">
             <p className="type-meta" aria-hidden="true">
@@ -106,36 +117,52 @@ export default function BuyPanel({ product }: { product: Product }) {
             ) : null}
           </div>
 
+          {/* Native radios inside the fieldset, not `aria-pressed` toggle
+              buttons. This is a single-select group, and the platform already
+              gives a radio group arrow-key navigation, roving focus and the
+              right announcement — all of which the button version would have
+              had to reimplement, and did not.
+
+              Disabled sizes are struck through and set in the faint tone. They
+              used to be struck through *and* faint *and* at 45% opacity, which
+              made the one thing the spec says must not be "merely faded" the
+              most faded thing on the site. */}
           <div className="mt-4 flex flex-wrap gap-2">
             {product.variants.map((variant) => {
               const available = isSizeAvailable(product, variant.size);
               const selected = size === variant.size;
               return (
-                <button
+                <label
                   key={variant.sku}
-                  type="button"
-                  disabled={!available}
-                  aria-pressed={selected}
-                  onClick={() => {
-                    setSize(variant.size);
-                    setQuantity(1);
-                    setError(null);
-                  }}
-                  className={`type-meta h-12 min-w-14 border px-3 transition-colors ${
+                  className={`type-meta relative inline-flex h-12 min-w-14 items-center justify-center border px-3 transition-colors ${
                     selected
                       ? "border-ink bg-ink text-paper"
-                      : "border-rule-strong hover:border-ink"
+                      : "border-rule-strong"
                   } ${
                     available
-                      ? ""
-                      : "cursor-not-allowed border-rule text-ink-faint line-through opacity-45 hover:border-rule"
+                      ? "cursor-pointer hover:border-ink"
+                      : "cursor-not-allowed border-rule text-ink-faint line-through"
                   }`}
                 >
+                  <input
+                    type="radio"
+                    name={`size-${product.id}`}
+                    value={variant.size}
+                    disabled={!available}
+                    checked={selected}
+                    onChange={() => {
+                      setSize(variant.size);
+                      setQuantity(1);
+                      setError(null);
+                    }}
+                    className="visually-hidden peer"
+                  />
+                  <span className="pointer-events-none absolute inset-0 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-ink" />
                   {variant.size}
                   {!available ? (
                     <span className="visually-hidden"> — unavailable</span>
                   ) : null}
-                </button>
+                </label>
               );
             })}
           </div>
@@ -179,6 +206,40 @@ export default function BuyPanel({ product }: { product: Product }) {
           fitNote={fitNote(product)}
         />
       ) : null}
+
+      {/* THE STICKY RECORD.
+          On a phone the order was gallery, title, price, run, description, a
+          five-row specimen table, and only then this panel — so choosing a size
+          and adding to the bag sat roughly two screens below the fold, on a
+          page whose entire job is that decision. Quick-add is desktop-only and
+          explicitly defers to the product page, which meant nothing was doing
+          this job anywhere on touch.
+
+          `inert` rather than a conditional render: the bar stays mounted so it
+          can travel, and stays out of the tab order until it has arrived. */}
+      <div
+        inert={!scrolledPastFold}
+        className={`fixed inset-x-0 bottom-0 z-[var(--z-sticky)] border-t border-rule bg-surface/95 backdrop-blur-sm [transition:transform_var(--dur-base)_var(--ease-out-expo)] lg:hidden ${
+          scrolledPastFold ? "translate-y-0" : "translate-y-full"
+        }`}
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="page-frame flex items-center justify-between gap-4 py-3">
+          <div className="min-w-0">
+            <p className="num type-mono-3">{formatPrice(product.price)}</p>
+            <p className="type-meta mt-0.5 text-ink-faint">
+              {size ? `Size ${size}` : "Select a size"}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onAdd}
+            className="btn btn-solid shrink-0"
+          >
+            Add to bag
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

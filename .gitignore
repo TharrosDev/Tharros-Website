@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local tool state
+.impeccable/
+.mcp.json
+desktop.ini

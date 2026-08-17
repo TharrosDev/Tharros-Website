@@ -1,4 +1,5 @@
 import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
 import ImageSlot from "@/components/media/ImageSlot";
 
 const STEPS = [
@@ -31,51 +32,58 @@ const STEPS = [
 
 /**
  * The process is the differentiator, so it gets a section rather than a line
- * in the About page. Type-led on purpose — this is a statement, not a tutorial.
+ * in the About page.
+ *
+ * It is built as a sticky two-column story: the frame holds while the five
+ * steps travel past it. That is the difference between this and the campaign
+ * section immediately above — before, both were a picture beside a column, two
+ * sections running, which is the one thing the rhythm rule asks you not to do.
+ *
+ * The order flips below `lg`. Stacked, a full-width 4:5 frame ahead of the list
+ * spent a whole screen on the illustration before the content it illustrates,
+ * so on a phone the steps come first and the frame closes the section.
  */
 export default function ProcessSection() {
   return (
     <section className="rhythm-default">
       <div className="page-frame">
-        <div className="flex items-baseline justify-between gap-6 border-t border-ink pt-4">
-          <p className="eyebrow">
-            <span className="num">03</span>
-            <span>The Process</span>
-          </p>
-          <p className="type-meta hidden text-ink-faint md:block">
-            Designed, tested, refined
-          </p>
-        </div>
-
-        <h2 className="type-display-3 mt-8 max-w-[24ch]">
-          Every piece gets made twice before it gets made properly.
-        </h2>
+        <SectionHeading
+          index="04"
+          label="The process"
+          title="Every piece gets made twice before it gets made properly."
+          aside="Designed, tested, refined"
+        />
 
         <div className="mt-16 grid gap-x-6 gap-y-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
+          {/* Bounded, per the sticky rule: on a short screen it scrolls its own
+              overflow rather than hiding its own bottom off the viewport. */}
+          <Reveal className="order-2 lg:order-1 lg:col-span-5 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
             <ImageSlot
               image={{
                 code: "PRC-01",
                 alt: "A pattern piece and a part-sewn sample on a work table",
                 kind: "detail",
-                ratio: "editorial",
+                ratio: "square",
               }}
+              ratioSm="editorial"
               sizes="(min-width: 1024px) 40vw, 100vw"
             />
           </Reveal>
 
-          <ol className="lg:col-span-6 lg:col-start-7 lg:self-center">
-            {STEPS.map((step) => (
-              <li
+          <ol className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">
+            {STEPS.map((step, i) => (
+              <Reveal
+                as="li"
                 key={step.index}
-                className="grid grid-cols-[3rem_1fr] gap-x-4 border-b border-rule py-5 last:border-b-0"
+                delay={i * 70}
+                className="grid grid-cols-[3rem_1fr] gap-x-4 border-b border-rule py-6 last:border-b-0"
               >
                 <span className="num type-meta pt-1 text-ink-faint">{step.index}</span>
                 <div>
                   <h3 className="type-display-4">{step.name}</h3>
                   <p className="type-body-sm mt-2 text-ink-muted">{step.body}</p>
                 </div>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>

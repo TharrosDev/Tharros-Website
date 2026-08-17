@@ -10,6 +10,7 @@ import {
 } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import { CloseIcon, SearchIcon } from "@/components/ui/icons";
+import EmptyState from "@/components/ui/EmptyState";
 import { createPersistentStore } from "@/lib/persistent-store";
 import {
   useDebounced,
@@ -17,12 +18,19 @@ import {
   useFocusTrap,
   useLockBodyScroll,
 } from "@/lib/hooks";
-import { getFeatured, searchProducts, thumbnailImage } from "@/lib/catalog/queries";
+import {
+  categoriesInUse,
+  getFeatured,
+  searchProducts,
+  thumbnailImage,
+} from "@/lib/catalog/queries";
 import { CATEGORIES } from "@/lib/catalog/categories";
 import { formatPrice } from "@/lib/format";
 
 const RECENT_KEY = "tharros:recent-searches:v1";
 const MAX_RECENT = 5;
+/** Matches `searchProducts`' own default, so the overlay knows when it is capped. */
+const RESULT_LIMIT = 8;
 
 type Props = {
   open: boolean;
@@ -61,7 +69,7 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
   // render of every route — the search scan on each keystroke of the
   // undebounced value, and the suggestions constantly for no reason.
   const results = useMemo(
-    () => (debounced.trim().length >= 2 ? searchProducts(debounced) : []),
+    () => (debounced.trim().length >= 2 ? searchProducts(debounced, RESULT_LIMIT) : []),
     [debounced],
   );
   const suggestions = useMemo(() => getFeatured(4), []);
@@ -90,19 +98,21 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
       data-open={open}
       role="dialog"
       aria-modal="true"
-      aria-label="Search"
-      className="overlay-root fixed inset-0 z-80 overflow-y-auto bg-surface"
+      aria-labelledby="search-title"
+      className="overlay-root fixed inset-0 z-[var(--z-overlay)] overflow-y-auto bg-surface"
     >
       <div className="page-frame">
         <div
           className="flex items-center justify-between"
           style={{ height: "var(--header-h)" }}
         >
-          <p className="type-meta text-ink-faint">Search</p>
+          <h2 id="search-title" className="type-meta text-ink-faint">
+            Search
+          </h2>
           <button
             type="button"
             onClick={onClose}
-            className="-mr-1 p-1 transition-opacity hover:opacity-60"
+            className="-mr-3 flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
           >
             <CloseIcon />
             <span className="visually-hidden">Close search</span>
@@ -115,6 +125,10 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
             route to it from inside the site at all. */}
         <form
           role="search"
+          // Enter used to record the term and stop. The shop has taken `?q=`
+          // the whole time — it is what backs the WebSite SearchAction in the
+          // JSON-LD graph — so submitting the search form did nothing while a
+          // search engine's deep link worked.
           onSubmit={(event) => {
             event.preventDefault();
             const trimmed = term.trim();
@@ -165,8 +179,12 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
 
               <div>
                 <p className="type-meta mb-4 text-ink-faint">Categories</p>
+                {/* Only categories that hold a piece. The overlay offered all
+                    of them, linking into rails the shop deliberately hides. */}
                 <ul className="space-y-2">
-                  {CATEGORIES.map((category) => (
+                  {CATEGORIES.filter((category) =>
+                    categoriesInUse().includes(category.id),
+                  ).map((category) => (
                     <li key={category.id}>
                       <Link
                         href={`/shop?category=${category.id}`}
@@ -182,23 +200,35 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
             </div>
 
             <div>
-              <p className="type-meta mb-6 text-ink-faint" aria-live="polite">
-                {searching
-                  ? `${results.length} result${results.length === 1 ? "" : "s"}`
-                  : "Suggested"}
-              </p>
+              <div className="mb-6 flex items-baseline justify-between gap-4">
+                <p className="type-meta text-ink-faint" aria-live="polite">
+                  {searching
+                    ? `${results.length} result${results.length === 1 ? "" : "s"}`
+                    : "Suggested"}
+                </p>
+                {/* `searchProducts` caps at eight by default, and the overlay
+                    gave no way past that cap. */}
+                {searching && results.length >= RESULT_LIMIT ? (
+                  <Link
+                    href={`/shop?q=${encodeURIComponent(debounced.trim())}`}
+                    onClick={onClose}
+                    className="link-rule link-rule-reveal"
+                  >
+                    See all results
+                  </Link>
+                ) : null}
+              </div>
 
               {searching && results.length === 0 ? (
-                <div className="border-t border-rule pt-10">
-                  <p className="type-display-3 uppercase">Nothing found.</p>
-                  <p className="type-body mt-4 text-ink-muted">
-                    Try another search, or{" "}
-                    <Link href="/shop" onClick={onClose} className="link-rule">
-                      browse everything
-                    </Link>
-                    .
-                  </p>
-                </div>
+                <EmptyState
+                  title="Nothing found."
+                  body="Nothing in the run matches that."
+                  secondary={{
+                    href: "/shop",
+                    label: "Browse everything",
+                    onClick: onClose,
+                  }}
+                />
               ) : (
                 <ul className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
                   {(searching ? results : suggestions).map((product) => (

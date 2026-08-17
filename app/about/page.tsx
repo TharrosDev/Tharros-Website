@@ -3,13 +3,41 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
+import PageIntro from "@/components/layout/PageIntro";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
+import { SITE_URL } from "@/lib/site";
+import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "THARROS is an independent streetwear label built from the ground up — designed, patterned and sampled in-house, released in small runs.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    type: "article",
+    title: "About THARROS",
+    description:
+      "An independent streetwear label built from the ground up — designed, patterned and sampled in-house, released in small runs.",
+    url: `${SITE_URL}/about`,
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${SITE_URL}/about#page`,
+      url: `${SITE_URL}/about`,
+      name: "About THARROS",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#organization` },
+    },
+    breadcrumbList(SITE_URL, [
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about" },
+    ]),
+  ],
 };
 
 const CHAPTERS = [
@@ -58,27 +86,18 @@ const CHAPTERS = [
 export default function AboutPage() {
   return (
     <>
-      <div
-        className="page-frame"
-        style={{ paddingTop: "calc(var(--header-h) + 3.5rem)" }}
-      >
-        <div className="border-t border-ink pt-4">
-          <p className="eyebrow">
-            <span className="num">01</span>
-            <span>The label</span>
-          </p>
-        </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
+      />
 
-        <h1 className="type-display-1 mt-10 max-w-[13ch]">
-          Built from the ground up.
-        </h1>
-
-        <p className="type-lead mt-8 max-w-2xl">
-          An independent streetwear label making small runs of original pieces —
-          designed, patterned and sampled in-house, then made in numbers small
-          enough to count.
-        </p>
-      </div>
+      <PageIntro
+        index="01"
+        label="The label"
+        title="Built from the ground up."
+        lead="An independent streetwear label making small runs of original pieces — designed, patterned and sampled in-house, then made in numbers small enough to count."
+        crumbs={[{ name: "Home", href: "/" }]}
+      />
 
       <Reveal className="mt-16">
         <ImageSlot
@@ -121,7 +140,12 @@ export default function AboutPage() {
                 </Reveal>
               ) : null}
 
-              <Reveal
+              {/* The chapter title is a real h2. Five numbered chapters used to
+                  carry their titles inside a mono eyebrow, so the label's own
+                  page had one heading in it. And the rule is drawn by the
+                  element that reveals — on a child it is static, which is what
+                  it was. */}
+              <section
                 className={
                   index === 0
                     ? "lg:col-span-11 lg:col-start-2"
@@ -129,13 +153,13 @@ export default function AboutPage() {
                 }
               >
                 <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
-                  <div className="rule-draw pt-4 md:col-span-3">
+                  <Reveal className="rule-draw pt-4 md:col-span-3">
                     <p className="eyebrow">
                       <span className="num">{chapter.index}</span>
-                      <span>{chapter.title}</span>
                     </p>
-                  </div>
-                  <div className="space-y-5 md:col-span-9">
+                    <h2 className="type-display-4 mt-4">{chapter.title}</h2>
+                  </Reveal>
+                  <Reveal className="space-y-5 md:col-span-9" delay={90}>
                     {chapter.body.map((paragraph) => (
                       <p
                         key={paragraph}
@@ -148,9 +172,9 @@ export default function AboutPage() {
                         {paragraph}
                       </p>
                     ))}
-                  </div>
+                  </Reveal>
                 </div>
-              </Reveal>
+              </section>
             </Fragment>
           ))}
         </div>
@@ -158,9 +182,9 @@ export default function AboutPage() {
 
       <section className="on-dark rhythm-breath">
         <div className="page-frame">
-          <p className="type-display-2 max-w-[18ch]">
+          <h2 className="type-display-2 max-w-[18ch]">
             Designed, tested, refined.
-          </p>
+          </h2>
           <p className="type-body mt-8 max-w-lg text-ink-on-dark-muted">
             {CURRENT_DROP.name} is where it starts. Everything it taught is
             already going into the next one.

@@ -111,31 +111,29 @@ export function isSortKey(value: string | undefined): value is SortKey {
  * `listProducts` sorts what it filters, but search results come out of
  * `searchProducts` in relevance order and had no way to be re-sorted — so the
  * sort links on a search page changed the URL and nothing else. Sold-out pieces
- * still sink to the bottom, exactly as they do in the grid.
+ * still sink to the bottom, exactly as they do in the grid: hiding them loses
+ * the sense that the line is bigger than what is in stock.
  */
-export function sortProducts(products: Product[], sort: SortKey): Product[] {
+export function sortProducts(products: Product[], sort: SortKey = "featured"): Product[] {
   return [...products].sort((a, b) => {
     const buyable = Number(isPurchasable(b)) - Number(isPurchasable(a));
     return buyable || SORTERS[sort](a, b);
   });
 }
 
-export function listProducts(query: ProductQuery = {}): Product[] {
-  const { category = "all", drop, isNew, sort = "featured" } = query;
-
-  const filtered = PRODUCTS.filter((product) => {
+/** The other half of the same seam: narrowing a list the caller already holds. */
+export function filterProducts(products: Product[], query: ProductQuery = {}): Product[] {
+  const { category = "all", drop, isNew } = query;
+  return products.filter((product) => {
     if (category !== "all" && product.category !== category) return false;
     if (drop && product.drop !== drop) return false;
     if (isNew && !product.isNew) return false;
     return true;
   });
+}
 
-  // Sold-out and unreleased pieces stay in the grid but sink to the bottom;
-  // hiding them loses the sense that the line is bigger than what is in stock.
-  return filtered.sort((a, b) => {
-    const buyable = Number(isPurchasable(b)) - Number(isPurchasable(a));
-    return buyable || SORTERS[sort](a, b);
-  });
+export function listProducts(query: ProductQuery = {}): Product[] {
+  return sortProducts(filterProducts(PRODUCTS, query), query.sort ?? "featured");
 }
 
 export function getProduct(slug: string): Product | undefined {

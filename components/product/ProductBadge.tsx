@@ -20,10 +20,12 @@ export default function ProductBadge({
     ) : null;
   }
 
-  const tone = availability === "sold-out" ? "badge-quiet" : "badge-solid";
-
+  // Every unavailable state is solid. Sold out used to be the quietest badge in
+  // the system while "New" was the loudest, which inverted the two states'
+  // actual weight: one is a nice-to-know, the other is the whole answer to
+  // "can I buy this".
   return (
-    <span className={`badge ${tone} ${className}`}>
+    <span className={`badge badge-solid ${className}`}>
       {AVAILABILITY_LABEL[availability]}
     </span>
   );

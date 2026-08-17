@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import { CloseIcon } from "./icons";
 
@@ -13,6 +13,7 @@ type Props = {
 
 export default function Modal({ open, onClose, title, children }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
 
   useLockBodyScroll(open);
   useEscape(open, onClose);
@@ -25,7 +26,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
     // panel's own transform.
     <div
       data-open={open}
-      className="overlay-root fixed inset-0 z-70 flex items-end justify-center md:items-center"
+      className="overlay-root fixed inset-0 z-[var(--z-overlay)] flex items-end justify-center md:items-center"
     >
       <button
         type="button"
@@ -34,19 +35,24 @@ export default function Modal({ open, onClose, title, children }: Props) {
         tabIndex={open ? undefined : -1}
         className="absolute inset-0 h-full w-full cursor-default bg-black/45"
       />
+      {/* Labelled by a real heading rather than by an `aria-label` over a
+          `<p>`. The title was invisible to the document outline, so a dialog
+          that clearly had one contributed nothing to it. */}
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={title}
-        className="overlay-panel overlay-from-below relative max-h-[88vh] w-full overflow-y-auto bg-surface md:max-h-[80vh] md:w-[min(46rem,92vw)]"
+        aria-labelledby={titleId}
+        className="overlay-panel overlay-from-below relative max-h-[88svh] w-full overflow-y-auto bg-surface md:max-h-[80svh] md:w-[min(46rem,92vw)]"
       >
-        <div className="flex items-center justify-between border-b border-rule px-6 py-5 md:px-8">
-          <p className="type-meta">{title}</p>
+        <div className="flex items-center justify-between border-b border-rule px-6 py-4 md:px-8">
+          <h2 id={titleId} className="type-meta">
+            {title}
+          </h2>
           <button
             type="button"
             onClick={onClose}
-            className="p-1 transition-opacity hover:opacity-60"
+            className="-mr-3 flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
           >
             <CloseIcon />
             <span className="visually-hidden">Close</span>

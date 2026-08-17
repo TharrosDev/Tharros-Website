@@ -29,7 +29,7 @@ export default function OrderSummary({ shippingOptionId }: { shippingOptionId: s
                   {line.size} — <span className="num">{line.quantity}</span>
                 </p>
               </div>
-              <p className="num shrink-0 text-[0.8125rem]">{formatPrice(line.lineTotal)}</p>
+              <p className="num type-mono-3 shrink-0">{formatPrice(line.lineTotal)}</p>
             </div>
           </li>
         ))}
@@ -38,11 +38,11 @@ export default function OrderSummary({ shippingOptionId }: { shippingOptionId: s
       <dl className="mt-8 space-y-2 border-t border-rule pt-5">
         <div className="flex justify-between">
           <dt className="type-body-sm text-ink-muted">Subtotal</dt>
-          <dd className="num text-[0.8125rem]">{formatPrice(subtotal)}</dd>
+          <dd className="num type-mono-3">{formatPrice(subtotal)}</dd>
         </div>
         <div className="flex justify-between">
           <dt className="type-body-sm text-ink-muted">Shipping</dt>
-          <dd className="num text-[0.8125rem]">
+          <dd className="num type-mono-3">
             {shipping === 0 ? "Free" : formatPrice(shipping)}
           </dd>
         </div>

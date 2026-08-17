@@ -1,4 +1,5 @@
 import ImageSlot from "@/components/media/ImageSlot";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { onBodyCredits, onBodyImages } from "@/lib/catalog/queries";
 import type { Product } from "@/lib/catalog/types";
 
@@ -24,16 +25,15 @@ export default function OnBody({ product }: { product: Product }) {
   return (
     <section aria-labelledby="on-body" className="rhythm-tight">
       <div className="page-frame">
-        <div className="eyebrow border-t border-ink pt-4">
-          <span className="num">02</span>
-          <span>On body</span>
-        </div>
+        <SectionHeading
+          index="02"
+          label="On body"
+          title="Worn."
+          titleClass="type-display-3"
+          titleId="on-body"
+        />
 
         <div className="mt-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-          <h2 id="on-body" className="type-display-3 max-w-[14ch] text-balance">
-            Worn.
-          </h2>
-
           {credits.length > 0 ? (
             <dl className="flex flex-wrap gap-x-8 gap-y-2">
               {credits.map((credit) => (

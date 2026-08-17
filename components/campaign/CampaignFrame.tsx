@@ -93,6 +93,14 @@ export default function CampaignFrame({
 
   const imageFirst = align === "left";
 
+  // The alternation has to exist on a phone too. Left, full and right lived
+  // entirely in `md:col-start-*` / `md:order-*`, so below `md` all three frames
+  // rendered identically — image, then caption — and the sequence became the
+  // gallery it says it is not. A right-aligned frame is inset from the leading
+  // edge on small screens; a left-aligned one runs the full measure. Same idea,
+  // expressed in the one axis a narrow screen still has.
+  const mobileInset = imageFirst ? "" : "ms-8 sm:ms-14 md:ms-0";
+
   return (
     // One column on a phone, twelve from `md`. A 12-column track with a 2rem
     // column gap needs 11 × 32px = 352px for the gaps alone, which is more than
@@ -100,7 +108,9 @@ export default function CampaignFrame({
     // the whole document wider than the viewport before a single child was
     // measured. The children stack anyway at this width; the columns were only
     // ever for the desktop composition.
-    <figure className="grid grid-cols-1 items-start gap-y-8 md:grid-cols-12 md:gap-x-8">
+    <figure
+      className={`grid grid-cols-1 items-start gap-y-8 md:grid-cols-12 md:gap-x-8 ${mobileInset}`}
+    >
       <div
         className={
           imageFirst

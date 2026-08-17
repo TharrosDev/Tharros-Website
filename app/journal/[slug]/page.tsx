@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ImageSlot from "@/components/media/ImageSlot";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { JOURNAL, getJournalEntry, listJournal } from "@/lib/catalog/journal";
 import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
@@ -78,15 +80,14 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
       />
 
       <article>
-        <div
-          className="page-frame"
-          style={{ paddingTop: "calc(var(--header-h) + 3rem)" }}
-        >
-          <nav aria-label="Breadcrumb" className="mb-10">
-            <Link href="/journal" className="type-meta text-ink-faint transition-opacity hover:opacity-60">
-              Journal /
-            </Link>
-          </nav>
+        <div className="page-frame page-top">
+          <Breadcrumbs
+            trail={[
+              { name: "Home", href: "/" },
+              { name: "Journal", href: "/journal" },
+            ]}
+            className="mb-10"
+          />
 
           <p className="type-meta text-ink-faint">
             {entry.category} — {formatDate(entry.publishedAt)} —{" "}
@@ -141,11 +142,13 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
 
       {more.length > 0 ? (
         <section className="page-frame rhythm-default border-t border-rule">
-          <p className="eyebrow">
-            <span className="num">02</span>
-            <span>More from the journal</span>
-          </p>
-          <ul className="mt-10 grid gap-x-6 gap-y-12 md:grid-cols-2">
+          <SectionHeading
+            index="02"
+            label="More from the journal"
+            title="Keep reading."
+            titleClass="type-display-3"
+          />
+          <ul className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-2">
             {more.map((item) => (
               <li key={item.id}>
                 <Link href={`/journal/${item.slug}`} className="group block">

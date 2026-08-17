@@ -6,6 +6,7 @@ import ImageSlot from "@/components/media/ImageSlot";
 import QuantityStepper from "./QuantityStepper";
 import { useCart } from "./CartProvider";
 import { CloseIcon } from "@/components/ui/icons";
+import EmptyState from "@/components/ui/EmptyState";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import { getRelated, getFeatured, thumbnailImage } from "@/lib/catalog/queries";
 import { formatPrice } from "@/lib/format";
@@ -17,7 +18,8 @@ import {
 import { TAX_PENDING_LABEL } from "@/lib/commerce/tax";
 
 export default function CartDrawer() {
-  const { isOpen, closeBag, lines, subtotal, count, setQuantity, remove } = useCart();
+  const { isOpen, closeBag, lines, subtotal, count, setQuantity, remove, adjusted } =
+    useCart();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useLockBodyScroll(isOpen);
@@ -35,7 +37,7 @@ export default function CartDrawer() {
   );
 
   return (
-    <div data-open={isOpen} className="overlay-root fixed inset-0 z-80">
+    <div data-open={isOpen} className="overlay-root fixed inset-0 z-[var(--z-overlay)]">
       <button
         type="button"
         aria-label="Close bag"
@@ -48,26 +50,42 @@ export default function CartDrawer() {
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping bag"
+        aria-labelledby="bag-title"
         className="overlay-panel overlay-from-right absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-surface"
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-rule px-6 py-5">
-          <p className="type-meta">
+        <div className="flex shrink-0 items-center justify-between border-b border-rule px-6 py-4">
+          <h2 id="bag-title" className="type-meta">
             Bag <span className="num ml-2">{count}</span>
-          </p>
-          <button type="button" onClick={closeBag} className="-mr-1 p-1 transition-opacity hover:opacity-60">
+          </h2>
+          <button
+            type="button"
+            onClick={closeBag}
+            className="-mr-3 flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
+          >
             <CloseIcon />
             <span className="visually-hidden">Close bag</span>
           </button>
         </div>
 
+        {/* The bag re-reads stock on every render, so a piece that sold out
+            since it was added is dropped and an over-large quantity is clamped.
+            Both used to happen in silence. */}
+        {adjusted ? (
+          <p
+            role="status"
+            className="type-meta shrink-0 border-b border-rule bg-surface-frame px-6 py-3 text-ink"
+          >
+            Your bag was updated — something in it is no longer available.
+          </p>
+        ) : null}
+
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col justify-center px-6 py-16">
-            <p className="type-display-3 uppercase">Your bag is empty.</p>
-            <p className="type-body mt-4 text-ink-muted">Nothing here yet.</p>
-            <Link href="/shop" onClick={closeBag} className="btn btn-solid mt-10">
-              Shop the collection
-            </Link>
+            <EmptyState
+              title="Your bag is empty."
+              body="Everything made so far is in the shop."
+              action={{ href: "/shop", label: "Shop the drop", onClick: closeBag }}
+            />
           </div>
         ) : (
           <>
@@ -95,7 +113,7 @@ export default function CartDrawer() {
                             {line.product.colorway} / {line.size}
                           </p>
                         </div>
-                        <p className="num shrink-0 text-[0.8125rem]">
+                        <p className="num type-mono-3 shrink-0">
                           {formatPrice(line.lineTotal)}
                         </p>
                       </div>
@@ -128,7 +146,7 @@ export default function CartDrawer() {
 
               {recommendations.length > 0 ? (
                 <div className="border-t border-rule py-8">
-                  <p className="type-meta mb-5 text-ink-faint">You may also like</p>
+                  <h3 className="type-meta mb-5 text-ink-faint">You may also like</h3>
                   <ul className="grid grid-cols-3 gap-3">
                     {recommendations.map((product) => (
                       <li key={product.id}>
@@ -151,20 +169,32 @@ export default function CartDrawer() {
             </div>
 
             <div className="shrink-0 border-t border-rule px-6 py-6">
+              {/* A hairline is the one mark this site has for progress, and
+                  this is the one place in the bag with progress to show. */}
               {remaining > 0 ? (
-                <p className="type-meta mb-4 text-ink-faint">
-                  {formatPrice(remaining)} from free standard shipping
-                </p>
+                <div className="mb-5">
+                  <p className="type-meta text-ink-faint">
+                    {formatPrice(remaining)} from free standard shipping
+                  </p>
+                  <div className="mt-2 h-px w-full bg-rule">
+                    <div
+                      className="h-px bg-ink [transition:width_var(--dur-base)_var(--ease-out-quart)]"
+                      style={{
+                        width: `${Math.min(100, Math.round((subtotal / (subtotal + remaining)) * 100))}%`,
+                      }}
+                    />
+                  </div>
+                </div>
               ) : null}
 
               <dl className="space-y-2">
                 <div className="flex justify-between">
                   <dt className="type-body-sm text-ink-muted">Subtotal</dt>
-                  <dd className="num text-[0.8125rem]">{formatPrice(subtotal)}</dd>
+                  <dd className="num type-mono-3">{formatPrice(subtotal)}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt className="type-body-sm text-ink-muted">Shipping estimate</dt>
-                  <dd className="num text-[0.8125rem]">
+                  <dd className="num type-mono-3">
                     {shipping === 0 ? "Free" : formatPrice(shipping)}
                   </dd>
                 </div>

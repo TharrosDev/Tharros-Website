@@ -1,4 +1,5 @@
 import ModelCredit from "./ModelCredit";
+import SectionHeading from "@/components/ui/SectionHeading";
 import type { Product } from "@/lib/catalog/types";
 
 /**
@@ -19,14 +20,13 @@ export default function FitStory({ product }: { product: Product }) {
 
   return (
     <section aria-labelledby="fit-story">
-      <div className="eyebrow border-t border-ink pt-4">
-        <span className="num">03</span>
-        <span>How it fits</span>
-      </div>
-
-      <h2 id="fit-story" className="type-display-4 mt-6 max-w-[16ch] text-balance">
-        Cut to sit like this.
-      </h2>
+      <SectionHeading
+        index="03"
+        label="How it fits"
+        title="Cut to sit like this."
+        titleClass="type-display-3"
+        titleId="fit-story"
+      />
 
       <ul className="mt-8 grid gap-px border-t border-rule sm:grid-cols-3">
         {product.fit.map((line) => (

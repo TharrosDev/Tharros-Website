@@ -20,9 +20,9 @@ import { useEffect, useRef } from "react";
  * routes, for this one gesture. This is the same gesture for nothing.
  *
  * It stays honest about when not to run: no transform is ever written under
- * reduced motion, on a coarse pointer, or before the element has been seen, and
- * the served HTML carries none either way. The observer means the scroll handler
- * only does work while the numeral is actually on screen.
+ * reduced motion or before the element has been seen, and the served HTML
+ * carries none either way. The observer means the scroll handler only does work
+ * while the numeral is actually on screen.
  */
 export default function ParallaxNumeral({
   children,
@@ -40,14 +40,13 @@ export default function ParallaxNumeral({
     const node = ref.current;
     if (!node || typeof IntersectionObserver === "undefined") return;
 
-    // Touch has no hover and a much shorter scroll runway, so a drifting numeral
-    // there is motion for its own sake.
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      window.matchMedia("(pointer: coarse)").matches
-    ) {
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Touch has a much shorter scroll runway, so the travel that reads as a
+    // drift on a desktop reads as a jump on a phone. It used to be switched off
+    // there entirely, which left the site with no motion at all on the device
+    // most people meet it on. It travels half as far instead of not at all.
+    const travel = window.matchMedia("(pointer: coarse)").matches ? range / 2 : range;
 
     let frame = 0;
     let onScreen = false;
@@ -58,7 +57,7 @@ export default function ParallaxNumeral({
       // 0 as the element enters at the bottom, 1 as it leaves at the top.
       const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
       const clamped = Math.min(1, Math.max(0, progress));
-      node.style.transform = `translateY(${(0.5 - clamped) * range}px)`;
+      node.style.transform = `translateY(${(0.5 - clamped) * travel}px)`;
     };
 
     const schedule = () => {
