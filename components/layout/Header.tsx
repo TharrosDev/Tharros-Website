@@ -66,13 +66,28 @@ export default function Header() {
         Skip to content
       </a>
 
+      {/* The floating → solid change is a cross-fade between two grounds that
+          are both always present, rather than a swap of the whole class string.
+          Before this the scrim was a `before:` gradient that only existed while
+          floating, so it vanished the instant the page passed 24px — the colour
+          transitioned and the picture behind the header did not. */}
       <header
-        className={`fixed inset-x-0 top-0 z-[var(--z-header)] transition-colors duration-300 ${
-          floating
-            ? "on-dark bg-transparent text-paper before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-32 before:bg-gradient-to-b before:from-black/55 before:to-transparent"
-            : "border-b border-rule bg-surface/95 text-ink backdrop-blur-sm"
+        className={`fixed inset-x-0 top-0 z-[var(--z-header)] [transition:color_var(--dur-base)_var(--ease-out-quart)] ${
+          floating ? "on-dark text-paper" : "text-ink"
         }`}
       >
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black/55 to-transparent [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
+            floating ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 -z-10 border-b border-rule bg-surface/95 backdrop-blur-sm [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
+            floating ? "opacity-0" : "opacity-100"
+          }`}
+        />
         <div
           className="page-frame flex items-center justify-between gap-4"
           style={{ height: "var(--header-h)" }}
@@ -83,10 +98,12 @@ export default function Header() {
             </Link>
 
             {/* The drop stamp. The one persistent mark of what the label is
-                currently releasing, and the only accent in the chrome. */}
+                currently releasing, and the only accent in the chrome — so
+                hiding it below `sm` left the site with no accent at all on the
+                device most people meet it on. It is three characters. */}
             <Link
               href="/drop"
-              className="type-meta -my-2 hidden py-2 text-signal transition-opacity hover:opacity-60 sm:inline-block"
+              className="type-meta -my-2 inline-block py-2 text-signal transition-opacity hover:opacity-60"
             >
               <span className="num">{CURRENT_DROP.index}</span>
               <span className="visually-hidden"> — {CURRENT_DROP.name}</span>

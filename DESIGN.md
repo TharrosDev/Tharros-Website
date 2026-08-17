@@ -157,9 +157,44 @@ largest thing on the screen, not a shrunken desktop figure.
 ### Visual rhythm
 
 The home page deliberately avoids a repeating image → heading → cards loop. Scale,
-alignment, density and surface alternate: full-bleed hero, three-up grid, black type-only
-statement, asymmetric offset pair, full-bleed campaign, sticky two-column story,
-horizontal rail, quiet social strip. When adding a section, ask what it varies.
+alignment, density and surface alternate: full-bleed hero, three-up specimen grid, black
+type-only statement, the campaign sequence's alternating frames, a sticky two-column
+story, a horizontal rail, black again. When adding a section, ask what it varies.
+
+**Rhythm is a device, not a constant.** Every section below the hero used to be
+`rhythm-default`, which meant the page had one spacing value for its whole length and
+nothing could be a pause. The statement and the closing drop take `rhythm-breath`; the
+lookbook rail takes `rhythm-tight` so it sits against the process above it.
+
+**One numbering series per page, and it counts.** The home page runs 01–06. A section's
+index is its place in the page, never a drop's number — printing `002` in that column put
+a second series in the same visual position and read as a step backwards. The drop's own
+name carries its number.
+
+### The section opener
+
+`SectionHeading` is the only way a section opens, and `PageIntro` the only way a page
+does. Twelve surfaces used to hand-roll `<p className="eyebrow"> + border-t border-ink`,
+and every one of them lost the ledger rule: a static ink border is a different weight and
+a different idea from a hairline that draws itself.
+
+`.rule-draw` only animates on the element that `Reveal` drives — the selector is
+`.reveal.rule-draw::before`. On a child it is a correct but static rule, which is the bug
+it will keep reintroducing. Put them on the same element.
+
+### The information set
+
+`/size-guide`, `/shipping`, `/returns`, `/faq`, `/contact` and the three legal drafts are
+one sequence, numbered as one in `lib/site.ts` (`INFORMATION`), and every one of them ends
+on `InfoFooter` — the rest of the set as a ledger. They are the site's support layer and
+they behave like a set rather than like eight unrelated pages.
+
+### The specimen record
+
+`ProductCard`'s `specimen` line — code, made, left — is what makes a grid read as a
+label's record rather than a row of products. It belongs on every grid of pieces: the
+home run, the shop, the drop, related products. Availability and run figures are always
+derived; nothing here is authored.
 
 ---
 
@@ -200,7 +235,18 @@ Slow, flat, intentional. Nothing bounces or overshoots.
   required: the class-adding alone would still strand `opacity: 0` in the SSR HTML.
 - **The travelling numeral** (`ParallaxNumeral`) is the second gesture: a frame's mono
   index drifts about 40px against the picture it labels as the frame crosses the viewport.
-  Typographic, monochrome, and the only motion allowed on top of imagery.
+  Typographic, monochrome, and the only motion allowed on top of imagery. On a coarse
+  pointer it travels half as far rather than not at all — switching it off there left the
+  site with no motion whatsoever on the device most people meet it on.
+- **The staggered ledger** is the third: `Reveal`'s `delay` cascades a grid or a rail so it
+  arrives as a sequence of rules rather than as one slab. Capped at about five steps —
+  past that the delay stops reading as sequence and starts reading as lag. The delay is
+  published as `--reveal-delay` as well as an inline `transition-delay`, because a
+  pseudo-element cannot see the inline one and the rule would otherwise arrive early.
+- **Cross-fade, never swap.** The header's floating → solid change is two grounds that are
+  both always present, one fading out as the other fades in. Swapping the whole class
+  string means the gradient simply ceases to exist at the threshold, which is what it used
+  to do: the colour transitioned and the picture behind the header did not.
 - Everything is disabled under `prefers-reduced-motion`.
 
 ### What the motion library may do
