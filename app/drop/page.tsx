@@ -158,7 +158,7 @@ export default function DropPage() {
             </div>
 
             {upcoming.length > 0 ? (
-              <div className="mt-16">
+              <div className="section-lead">
                 <Reveal className="rule-draw pt-4">
                   <p className="eyebrow">Far enough along to show</p>
                 </Reveal>

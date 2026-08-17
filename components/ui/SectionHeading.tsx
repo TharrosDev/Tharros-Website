@@ -69,8 +69,11 @@ export default function SectionHeading({
           </p>
         ) : null}
       </Reveal>
+      {/* More space above the title than below it: the rule and its index
+          belong to the section, and a heading that sits as close to its own
+          label as to the work underneath it groups with the wrong thing. */}
       {title ? (
-        <Heading id={titleId} className={`${titleClass} mt-8 max-w-[16ch]`}>
+        <Heading id={titleId} className={`${titleClass} mt-10 max-w-[16ch] md:mt-12`}>
           {title}
         </Heading>
       ) : null}

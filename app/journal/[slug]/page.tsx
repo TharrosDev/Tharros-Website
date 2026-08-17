@@ -148,7 +148,7 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
             title="Keep reading."
             titleClass="type-display-3"
           />
-          <ul className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-2">
+          <ul className="section-lead grid gap-x-10 gap-y-16 md:grid-cols-2">
             {more.map((item) => (
               <li key={item.id}>
                 <Link href={`/journal/${item.slug}`} className="group block">

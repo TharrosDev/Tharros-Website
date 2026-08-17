@@ -30,9 +30,13 @@ export default function NextDrop() {
           <p className="type-meta text-signal-on-dark">In development</p>
         </Reveal>
 
-        <h2 className="type-display-2 mt-10 max-w-[16ch]">{NEXT_DROP.statement}</h2>
+        {/* Same interval as SectionHeading's title, hand-rolled because this
+            opener carries a state mark rather than a link. */}
+        <h2 className="type-display-2 mt-10 max-w-[16ch] md:mt-12">
+          {NEXT_DROP.statement}
+        </h2>
 
-        <div className="mt-10 grid gap-x-12 gap-y-6 lg:grid-cols-12">
+        <div className="section-lead grid gap-x-12 gap-y-8 lg:grid-cols-12">
           <div className="space-y-5 lg:col-span-6">
             {NEXT_DROP.body.map((paragraph) => (
               <p key={paragraph} className="type-body text-ink-on-dark-muted">

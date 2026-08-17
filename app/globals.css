@@ -76,14 +76,27 @@
   --dur-slow:   620ms;
   --dur-reveal: 900ms;
 
-  /* — Vertical rhythm ——————————————————————————— */
-  --rhythm-tight:   clamp(3rem, 5vw, 5rem);
-  --rhythm-default: clamp(5rem, 9vw, 9rem);
-  --rhythm-breath:  clamp(7rem, 14vw, 15rem);
+  /* — Vertical rhythm ———————————————————————————
+     Three intervals and no fourth. `tight` groups two things that belong to
+     each other, `default` separates sections, `breath` is the held pause
+     either side of a black band. They were pitched a step closer together and
+     the page read as one continuous column at one density — the intervals now
+     sit far enough apart that a pause is legible as a pause. */
+  --rhythm-tight:   clamp(3.5rem, 6vw, 6rem);
+  --rhythm-default: clamp(6rem, 11vw, 11rem);
+  --rhythm-breath:  clamp(9rem, 18vw, 19rem);
+
+  /* The interval between a section's opener and the work it opens. One value,
+     used everywhere, so the page has a spacing scale rather than a per-section
+     opinion — it was mt-10, mt-12, mt-14 and mt-16 across six sections. */
+  --lead-gap: clamp(3rem, 5vw, 5.5rem);
 
   /* — Frame ————————————————————————————————————— */
   --frame-max: 1600px;
-  --gutter: clamp(1.25rem, 4vw, 4rem);
+  /* The margin is part of the composition, not leftover space: at 1440 the
+     old ceiling put content 64px from the edge, which is a document, not a
+     hang. Grows with the viewport so a wide screen reads as a wall. */
+  --gutter: clamp(1.5rem, 5.5vw, 7rem);
 
   /* — Chrome ———————————————————————————————————— */
   --header-h: 4.5rem;
@@ -444,6 +457,23 @@
 
   .page-top-tight {
     padding-top: calc(var(--header-h) + 2rem);
+  }
+
+  /* The gap between a section opener and its content. See --lead-gap. */
+  .section-lead {
+    margin-block-start: var(--lead-gap);
+  }
+
+  /* THE HANG — the grid drops its middle column half a step.
+     A three-up grid on a fashion page lines seven pieces into rigid rows and
+     reads as a catalogue page; offsetting one column turns the same grid into
+     a hang, where the eye travels rather than scans. Applied from `lg` only:
+     at one and two columns an offset is a broken row, not a composition, and
+     `:nth-child` counts the row differently at every column count. */
+  @media (min-width: 64rem) {
+    .grid-hang > :nth-child(3n + 2) {
+      margin-block-start: clamp(2.5rem, 4vw, 5rem);
+    }
   }
 
   .rhythm-tight {

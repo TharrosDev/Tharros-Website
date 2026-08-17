@@ -25,7 +25,10 @@ export default function Statement() {
           titleClass="type-display-1"
         />
 
-        <Reveal delay={120} className="mt-16 grid gap-x-12 lg:grid-cols-12">
+        <Reveal
+          delay={120}
+          className="section-lead grid gap-x-12 lg:grid-cols-12"
+        >
           <div className="space-y-5 lg:col-span-5 lg:col-start-8">
             <p className="type-body text-ink-on-dark-muted">
               THARROS is an independent label run at a small scale on purpose. Pieces

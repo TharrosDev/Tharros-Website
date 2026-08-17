@@ -106,7 +106,13 @@ export default function ProductCard({
             the wrong trade. */}
         {buyable ? (
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-full bg-surface/95 px-3 py-3 transition-transform duration-300 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-hover:pointer-events-auto group-hover:translate-y-0 md:block"
+            /* Hidden by opacity, not by a full translate. The frame does not
+               clip — deliberately, so focus rings survive — so a strip
+               translated 100% down was not out of sight at all: it sat on top
+               of the name and the price on every unhovered card in the grid.
+               Fading it in over the foot of the photograph keeps the frame's
+               focus rings and gives the row back its own space. */
+            className="pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-1 bg-surface/95 px-3 py-3 opacity-0 transition duration-300 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 md:block"
           >
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="type-meta mr-1 text-ink-faint">
@@ -163,7 +169,7 @@ export default function ProductCard({
         ) : null}
       </div>
 
-      <div className="flex items-start justify-between gap-4 pt-4">
+      <div className="flex items-start justify-between gap-4 pt-5">
         <div className="min-w-0">
           <h3 className="type-body font-medium">
             <Link href={`/shop/${product.slug}`} className="link-rule-reveal">
