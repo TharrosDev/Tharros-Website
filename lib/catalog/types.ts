@@ -33,7 +33,23 @@ export type Availability =
 /** Release posture, set in data. Inventory decides the rest. */
 export type ReleaseState = "released" | "coming-soon" | "preorder";
 
-export type ImageKind = "front" | "back" | "detail" | "lifestyle" | "model";
+/**
+ * What a slot holds. `campaign` is an environment frame that leads a page — it
+ * is not a product shot and never appears in a product gallery.
+ */
+export type ImageKind =
+  | "front"
+  | "back"
+  | "detail"
+  | "lifestyle"
+  | "model"
+  | "campaign";
+
+/**
+ * How a person shot is framed. Only meaningful on `model`, `lifestyle` and
+ * `campaign` slots — a flat lay has no crop.
+ */
+export type Crop = "full" | "three-quarter" | "close" | "walking";
 
 export type Ratio = "portrait" | "editorial" | "campaign" | "wide" | "square";
 
@@ -48,6 +64,13 @@ export type ImageSlotData = {
   kind: ImageKind;
   ratio: Ratio;
   src?: string;
+  crop?: Crop;
+  /**
+   * Manual override of the discovery ladder in `lib/catalog/images.ts`. Lower
+   * sorts first. Set it when one particular frame is the best picture of a
+   * piece regardless of what kind it is.
+   */
+  rank?: number;
 };
 
 export type Variant = {
@@ -62,6 +85,17 @@ export type Variant = {
  * the storefront is allowed to make.
  */
 export type RestockPolicy = "none" | "possible";
+
+/**
+ * Who is wearing the piece in the on-body frames, and the size they actually
+ * wore. Absent until a fitting has happened — see `lib/catalog/models.ts`.
+ */
+export type OnBodyCredit = {
+  modelId: string;
+  size: Size;
+  /** Ties the credit to one frame, for when more than one person is shot in a piece. */
+  imageCode?: string;
+};
 
 export type Product = {
   id: string;
@@ -85,6 +119,8 @@ export type Product = {
   restock: RestockPolicy;
   colorway: string;
   images: ImageSlotData[];
+  /** Fitting credits for the on-body frames. Absent until someone has been photographed in it. */
+  onBody?: OnBodyCredit[];
   variants: Variant[];
   materials: string[];
   fit: string[];
@@ -114,6 +150,46 @@ export type Drop = {
   cover: ImageSlotData;
 };
 
+/**
+ * A point on a campaign frame that identifies a garment in it, as a percentage
+ * of the frame from the top left. Only meaningful against a real photograph —
+ * see `components/campaign/FrameHotspots.tsx`, which refuses to render without
+ * one.
+ */
+export type Hotspot = {
+  productSlug: string;
+  x: number;
+  y: number;
+};
+
+/**
+ * One frame of a campaign: a picture of people in the clothes, and the pieces
+ * they are wearing. The `wearing` list is what turns an editorial image into a
+ * way into the shop.
+ */
+export type CampaignFrame = {
+  id: string;
+  /** Shown in the mono layer beside the frame. */
+  index: string;
+  image: ImageSlotData;
+  /** A line set with the frame. Most frames carry none. */
+  line?: string;
+  caption?: string;
+  /** Product slugs worn in the frame. */
+  wearing: string[];
+  /** Model ids, resolved against `lib/catalog/models.ts`. Empty until a shoot happens. */
+  models?: string[];
+  hotspots?: Hotspot[];
+};
+
+export type Campaign = {
+  /** The drop this campaign documents. */
+  drop: string;
+  hero: CampaignFrame;
+  /** The editorial sequence — "the people". */
+  sequence: CampaignFrame[];
+};
+
 export type LookbookSpread = {
   id: string;
   /** The drop this spread documents. */
@@ -125,6 +201,8 @@ export type LookbookSpread = {
   images: ImageSlotData[];
   /** Product slugs worn in the spread, linked quietly beneath the caption. */
   wearing: string[];
+  /** Model ids, resolved against `lib/catalog/models.ts`. Empty until a shoot happens. */
+  models?: string[];
 };
 
 export type JournalBlock =

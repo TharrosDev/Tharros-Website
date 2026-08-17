@@ -27,12 +27,24 @@ function sized(code: string, stock: Partial<Record<Size, number>>): Variant[] {
   }));
 }
 
+/**
+ * The shot list every piece is planned to have.
+ *
+ * These are declared, not taken — like the four before them, they name frames
+ * the shoot is meant to produce so the layouts can be built against a real set
+ * rather than a guess. Order here is authoring order only: what the site
+ * actually shows is decided by the ladder in `lib/catalog/images.ts`, so a
+ * piece that ends up with three of these frames instead of six still renders
+ * correctly.
+ */
 function shots(code: string, name: string): Product["images"] {
   return [
     { code: `${code}-01`, alt: `${name}, front view, laid flat`, kind: "front", ratio: "portrait" },
     { code: `${code}-02`, alt: `${name}, back view, laid flat`, kind: "back", ratio: "portrait" },
-    { code: `${code}-03`, alt: `${name}, close detail of fabric and construction`, kind: "detail", ratio: "portrait" },
-    { code: `${code}-04`, alt: `Model wearing the ${name}`, kind: "model", ratio: "portrait" },
+    { code: `${code}-03`, alt: `${name}, close detail of fabric and construction`, kind: "detail", ratio: "editorial" },
+    { code: `${code}-04`, alt: `Model wearing the ${name}, full length`, kind: "model", ratio: "portrait", crop: "full" },
+    { code: `${code}-05`, alt: `Model wearing the ${name}, walking`, kind: "lifestyle", ratio: "editorial", crop: "walking" },
+    { code: `${code}-06`, alt: `Model wearing the ${name}, close`, kind: "model", ratio: "portrait", crop: "close" },
   ];
 }
 

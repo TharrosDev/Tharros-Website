@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
+import EditorialPair from "@/components/media/EditorialPair";
+import ModelCredit from "@/components/campaign/ModelCredit";
+import ParallaxNumeral from "@/components/motion/ParallaxNumeral";
 import Reveal from "@/components/ui/Reveal";
 import { LOOKBOOK } from "@/lib/catalog/lookbook";
+import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { getProduct } from "@/lib/catalog/queries";
 import type { LookbookSpread } from "@/lib/catalog/types";
@@ -38,9 +42,12 @@ function Caption({ spread }: { spread: LookbookSpread }) {
   return (
     <div className="page-frame mt-5">
       <div className="flex flex-wrap items-baseline gap-4">
-        <span className="num type-meta text-ink-faint">{spread.index}</span>
+        <ParallaxNumeral className="num type-meta text-ink-faint">
+          {spread.index}
+        </ParallaxNumeral>
         <p className="type-body-sm max-w-prose text-ink-muted">{spread.caption}</p>
       </div>
+      <ModelCredit modelIds={spread.models} />
       <Wearing slugs={spread.wearing} />
     </div>
   );
@@ -51,7 +58,15 @@ export default function LookbookPage() {
     <>
       {/* Opens full-bleed under the transparent header, like the home hero. */}
       <section className="on-dark relative flex min-h-[85svh] flex-col justify-end overflow-hidden">
-        <ImageSlot image={CURRENT_DROP.cover} fill priority sizes="100vw" />
+        {/* The campaign's own hero when there is one — the lookbook and the
+            home page should open on the same picture, because they are the
+            same drop seen from two places. */}
+        <ImageSlot
+          image={campaignFor(CURRENT_DROP.id)?.hero.image ?? CURRENT_DROP.cover}
+          fill
+          priority
+          sizes="100vw"
+        />
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/45"
@@ -73,7 +88,11 @@ export default function LookbookPage() {
           if (spread.layout === "full") {
             return (
               <Reveal key={spread.id} as="section">
-                <ImageSlot image={spread.images[0]} sizes="100vw" />
+                <ImageSlot
+                  image={spread.images[0]}
+                  ratioSm="editorial"
+                  sizes="100vw"
+                />
                 <Caption spread={spread} />
               </Reveal>
             );
@@ -96,22 +115,16 @@ export default function LookbookPage() {
             );
           }
 
+          // The offset spread is the site's specimen-crop signature, so it is
+          // the shared component rather than a second hand-built version of it.
           if (spread.layout === "offset") {
             return (
               <Reveal key={spread.id} as="section">
-                <div className="page-frame grid gap-6 md:grid-cols-12">
-                  <div className="md:col-span-5">
-                    <ImageSlot
-                      image={spread.images[0]}
-                      sizes="(min-width: 768px) 40vw, 100vw"
-                    />
-                  </div>
-                  <div className="md:col-span-6 md:col-start-7 md:pt-24">
-                    <ImageSlot
-                      image={spread.images[1] ?? spread.images[0]}
-                      sizes="(min-width: 768px) 48vw, 100vw"
-                    />
-                  </div>
+                <div className="page-frame">
+                  <EditorialPair
+                    wide={spread.images[0]}
+                    crop={spread.images[1] ?? spread.images[0]}
+                  />
                 </div>
                 <Caption spread={spread} />
               </Reveal>

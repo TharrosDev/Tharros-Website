@@ -353,6 +353,37 @@
   font-feature-settings: "tnum";
 }
 
+/* ============================================================
+   RATIOS
+   The shapes an image slot is allowed to hold.
+
+   Declared with @utility rather than inside @layer utilities so they take
+   responsive variants — `ratio-editorial md:ratio-campaign` is how one slot is
+   a tall frame on a phone and a wide one on a desktop. As plain classes in a
+   layer, `md:ratio-campaign` silently generated nothing and every frame that
+   asked for it stayed portrait.
+   ============================================================ */
+
+@utility ratio-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+@utility ratio-editorial {
+  aspect-ratio: 4 / 5;
+}
+
+@utility ratio-campaign {
+  aspect-ratio: 16 / 9;
+}
+
+@utility ratio-wide {
+  aspect-ratio: 21 / 9;
+}
+
+@utility ratio-square {
+  aspect-ratio: 1 / 1;
+}
+
 @layer components {
   /* ============================================================
      LAYOUT
@@ -711,26 +742,6 @@
    ============================================================ */
 
 @layer utilities {
-  .ratio-portrait {
-    aspect-ratio: 3 / 4;
-  }
-
-  .ratio-editorial {
-    aspect-ratio: 4 / 5;
-  }
-
-  .ratio-campaign {
-    aspect-ratio: 16 / 9;
-  }
-
-  .ratio-wide {
-    aspect-ratio: 21 / 9;
-  }
-
-  .ratio-square {
-    aspect-ratio: 1 / 1;
-  }
-
   .no-scrollbar {
     scrollbar-width: none;
   }
@@ -781,6 +792,13 @@
      with an animation library: presence animation is the only thing such a
      library would have been carrying here, and it measured 40kB gzipped
      against four transitions.
+
+     `motion` is now a dependency, and this reasoning still stands for these
+     four. It was added for scroll-linked position — the travelling numeral on
+     campaign frames — which CSS cannot do portably while scroll-timeline has a
+     Safari gap, and which hand-rolled is a scroll listener driving setState.
+     The overlays, the reveals and the ledger rule stay exactly where they are.
+     See DESIGN.md section 6 for what the library is and is not allowed to do.
 
      visibility rather than display, so no @starting-style is needed and the
      behaviour is the same everywhere. Hidden overlays leave the tab order and

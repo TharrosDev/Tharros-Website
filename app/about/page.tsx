@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
@@ -68,11 +69,14 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <h1 className="type-display-1 mt-10 max-w-[13ch]">Built from the ground up.</h1>
+        <h1 className="type-display-1 mt-10 max-w-[13ch]">
+          Built from the ground up.
+        </h1>
 
         <p className="type-lead mt-8 max-w-2xl">
-          An independent streetwear label making small runs of original pieces — designed,
-          patterned and sampled in-house, then made in numbers small enough to count.
+          An independent streetwear label making small runs of original pieces —
+          designed, patterned and sampled in-house, then made in numbers small
+          enough to count.
         </p>
       </div>
 
@@ -84,6 +88,7 @@ export default function AboutPage() {
             kind: "detail",
             ratio: "wide",
           }}
+          ratioSm="editorial"
           sizes="100vw"
         />
       </Reveal>
@@ -97,43 +102,68 @@ export default function AboutPage() {
             beginning instead of five equal steps. */}
         <div className="grid gap-x-12 gap-y-20 lg:grid-cols-12">
           {CHAPTERS.map((chapter, index) => (
-            <Reveal
-              key={chapter.index}
-              className={
-                index === 0
-                  ? "lg:col-span-11 lg:col-start-2"
-                  : "lg:col-span-9 lg:col-start-4"
-              }
-            >
-              <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
-                <div className="rule-draw pt-4 md:col-span-3">
-                  <p className="eyebrow">
-                    <span className="num">{chapter.index}</span>
-                    <span>{chapter.title}</span>
-                  </p>
-                </div>
-                <div className="space-y-5 md:col-span-9">
-                  {chapter.body.map((paragraph) => (
-                    <p
-                      key={paragraph}
-                      className={index === 0 ? "type-lead text-ink" : "type-body text-ink-muted"}
-                    >
-                      {paragraph}
+            <Fragment key={chapter.index}>
+              {/* One picture partway down, so a page of five prose chapters has
+                  somewhere to breathe — and so the label's own page shows the
+                  people it keeps talking about. */}
+              {index === 3 ? (
+                <Reveal className="lg:col-span-10 lg:col-start-2">
+                  <ImageSlot
+                    image={{
+                      code: "ABT-02",
+                      alt: "Two figures in Drop 001 on the street the label works from",
+                      kind: "campaign",
+                      ratio: "campaign",
+                    }}
+                    ratioSm="editorial"
+                    sizes="(min-width: 1024px) 80vw, 100vw"
+                  />
+                </Reveal>
+              ) : null}
+
+              <Reveal
+                className={
+                  index === 0
+                    ? "lg:col-span-11 lg:col-start-2"
+                    : "lg:col-span-9 lg:col-start-4"
+                }
+              >
+                <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
+                  <div className="rule-draw pt-4 md:col-span-3">
+                    <p className="eyebrow">
+                      <span className="num">{chapter.index}</span>
+                      <span>{chapter.title}</span>
                     </p>
-                  ))}
+                  </div>
+                  <div className="space-y-5 md:col-span-9">
+                    {chapter.body.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className={
+                          index === 0
+                            ? "type-lead text-ink"
+                            : "type-body text-ink-muted"
+                        }
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </Fragment>
           ))}
         </div>
       </div>
 
       <section className="on-dark rhythm-breath">
         <div className="page-frame">
-          <p className="type-display-2 max-w-[18ch]">Designed, tested, refined.</p>
+          <p className="type-display-2 max-w-[18ch]">
+            Designed, tested, refined.
+          </p>
           <p className="type-body mt-8 max-w-lg text-ink-on-dark-muted">
-            {CURRENT_DROP.name} is where it starts. Everything it taught is already going
-            into the next one.
+            {CURRENT_DROP.name} is where it starts. Everything it taught is
+            already going into the next one.
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
             <Link href="/drop" className="btn btn-inverse">

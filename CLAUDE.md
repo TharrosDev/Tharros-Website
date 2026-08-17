@@ -62,7 +62,7 @@ Rules that follow from this, and that must not be quietly broken:
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → New Drop → Statement → Featured → Campaign → Collection → Lookbook → Social |
+| `/` | `app/page.tsx` | Drop opening → The run → Statement → The people → Process → Frames → Next drop |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
@@ -97,9 +97,12 @@ lib/catalog/
   products.ts     the catalog (placeholder)
   categories.ts   category list + sizing-table mapping
   drops.ts        Drop 001 (released) / Drop 002 (in development)
+  campaign.ts     campaign frames — the hero and "the people" sequence per drop
   lookbook.ts     spreads
   journal.ts      entries
+  models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
+  images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER
   queries.ts      THE ONLY WAY TO READ PRODUCTS
 lib/commerce/
   cart.ts         CartLine, resolveLines, totals
@@ -121,6 +124,14 @@ Key invariants:
 - **A cart line stores only `productId + size + quantity`.** Name, price and imagery are
   re-read from the catalog on every render (`resolveLines`), so a stale bag can never
   check out a renamed, repriced or sold-out piece.
+- **Never index `product.images` by position.** Which frame appears where is decided by
+  `lib/catalog/images.ts` — `heroImage`, `cardImages`, `galleryImages`, `onBodyImages`,
+  `thumbnailImage` — re-exported through `queries.ts`. The ladder leads with the piece on a
+  person and degrades correctly for a garment with three photographs instead of six.
+- **The people are real or absent.** `models.ts` ships empty and `Product.onBody` is unset
+  everywhere. `OnBody` and `ModelCredit` return `null` rather than rendering a pending state,
+  and `fitNote()` omits an unmeasured height instead of guessing one. Do not populate either
+  from anything but an actual fitting.
 
 ---
 

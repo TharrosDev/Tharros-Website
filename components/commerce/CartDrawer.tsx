@@ -7,7 +7,7 @@ import QuantityStepper from "./QuantityStepper";
 import { useCart } from "./CartProvider";
 import { CloseIcon } from "@/components/ui/icons";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
-import { getRelated, getFeatured } from "@/lib/catalog/queries";
+import { getRelated, getFeatured, thumbnailImage } from "@/lib/catalog/queries";
 import { formatPrice } from "@/lib/format";
 import {
   amountToFreeShipping,
@@ -80,7 +80,7 @@ export default function CartDrawer() {
                       onClick={closeBag}
                       className="w-24 shrink-0"
                     >
-                      <ImageSlot image={line.product.images[0]} sizes="96px" />
+                      <ImageSlot image={thumbnailImage(line.product)} sizes="96px" />
                     </Link>
 
                     <div className="flex min-w-0 flex-1 flex-col">
@@ -137,7 +137,7 @@ export default function CartDrawer() {
                           onClick={closeBag}
                           className="block"
                         >
-                          <ImageSlot image={product.images[0]} sizes="120px" />
+                          <ImageSlot image={thumbnailImage(product)} sizes="120px" />
                           <p className="type-body-sm mt-2 leading-tight">{product.name}</p>
                           <p className="num type-body-sm text-ink-muted">
                             {formatPrice(product.price)}
