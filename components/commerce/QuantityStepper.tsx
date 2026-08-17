@@ -27,7 +27,7 @@ export default function QuantityStepper({
         <MinusIcon />
         <span className="visually-hidden">Decrease quantity of {label}</span>
       </button>
-      <span className="num w-8 text-center text-[0.8125rem]" aria-live="polite">
+      <span className="num type-mono-3 w-8 text-center" aria-live="polite">
         {value}
       </span>
       <button

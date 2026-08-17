@@ -142,7 +142,7 @@ export default function ProductCard({
           </div>
           <div className="flex items-baseline gap-2">
             <dt className="type-meta text-ink-faint">Made</dt>
-            <dd className="num text-[0.6875rem]">{run.made}</dd>
+            <dd className="num type-meta">{run.made}</dd>
           </div>
           <div className="flex items-baseline gap-2">
             <dt className="type-meta text-ink-faint">Left</dt>
@@ -151,7 +151,7 @@ export default function ProductCard({
                 dilutes it; the sold-out badge on the frame already says this.
                 The accent for a closed run belongs on the product page, where
                 it is about the piece being looked at. */}
-            <dd className="num text-[0.6875rem]">{run.remaining}</dd>
+            <dd className="num type-meta">{run.remaining}</dd>
           </div>
         </dl>
       ) : null}

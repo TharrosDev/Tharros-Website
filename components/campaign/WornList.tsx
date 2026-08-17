@@ -77,7 +77,7 @@ export default function WornList({
                 >
                   {product.name}
                 </span>
-                <span className={`num mt-1 block text-[0.6875rem] ${muted}`}>
+                <span className={`num type-meta mt-1 block ${muted}`}>
                   {formatPrice(product.price)}
                 </span>
               </span>

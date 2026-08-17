@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-type Crumb = { name: string; href: string };
+import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 
 type Props = {
   index: string;
@@ -11,6 +9,13 @@ type Props = {
   children?: React.ReactNode;
   /** Tightens the block on dense pages like checkout. */
   compact?: boolean;
+  /**
+   * Overrides the title step. The shop deliberately opens a rung below the
+   * editorial pages: at display-1 its title outsized the brand's own opening
+   * headline and pushed the first row of product most of a screen down, on the
+   * one page whose job is to show the clothes.
+   */
+  titleClass?: string;
 };
 
 /**
@@ -26,28 +31,14 @@ export default function PageIntro({
   crumbs,
   children,
   compact = false,
+  titleClass,
 }: Props) {
   return (
     <div
-      className="page-frame"
-      style={{
-        paddingTop: `calc(var(--header-h) + ${compact ? "2rem" : "3.5rem"})`,
-        paddingBottom: compact ? "2rem" : "3.5rem",
-      }}
+      className={`page-frame ${compact ? "page-top-tight pb-8" : "page-top pb-14"}`}
     >
       {crumbs && crumbs.length > 0 ? (
-        <nav aria-label="Breadcrumb" className="mb-8">
-          <ol className="type-meta flex flex-wrap items-center gap-2 text-ink-faint">
-            {crumbs.map((crumb) => (
-              <li key={crumb.href} className="flex items-center gap-2">
-                <Link href={crumb.href} className="-my-2 inline-block py-2 transition-opacity hover:opacity-60">
-                  {crumb.name}
-                </Link>
-                <span aria-hidden="true">/</span>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <Breadcrumbs trail={crumbs} current={title} className="mb-8" />
       ) : null}
 
       <div className="flex items-baseline gap-4 border-t border-ink pt-4">
@@ -57,7 +48,11 @@ export default function PageIntro({
         </p>
       </div>
 
-      <h1 className={`${compact ? "type-display-3" : "type-display-1"} mt-8`}>{title}</h1>
+      <h1
+        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-8 max-w-[14ch]`}
+      >
+        {title}
+      </h1>
 
       {lead ? <p className="type-lead mt-6 max-w-2xl">{lead}</p> : null}
 

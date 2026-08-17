@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ImageSlot from "@/components/media/ImageSlot";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { JOURNAL, getJournalEntry, listJournal } from "@/lib/catalog/journal";
 import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
@@ -78,15 +79,14 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
       />
 
       <article>
-        <div
-          className="page-frame"
-          style={{ paddingTop: "calc(var(--header-h) + 3rem)" }}
-        >
-          <nav aria-label="Breadcrumb" className="mb-10">
-            <Link href="/journal" className="type-meta text-ink-faint transition-opacity hover:opacity-60">
-              Journal /
-            </Link>
-          </nav>
+        <div className="page-frame page-top">
+          <Breadcrumbs
+            trail={[
+              { name: "Home", href: "/" },
+              { name: "Journal", href: "/journal" },
+            ]}
+            className="mb-10"
+          />
 
           <p className="type-meta text-ink-faint">
             {entry.category} — {formatDate(entry.publishedAt)} —{" "}

@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
+import PageIntro from "@/components/layout/PageIntro";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 export const metadata: Metadata = {
@@ -58,27 +59,13 @@ const CHAPTERS = [
 export default function AboutPage() {
   return (
     <>
-      <div
-        className="page-frame"
-        style={{ paddingTop: "calc(var(--header-h) + 3.5rem)" }}
-      >
-        <div className="border-t border-ink pt-4">
-          <p className="eyebrow">
-            <span className="num">01</span>
-            <span>The label</span>
-          </p>
-        </div>
-
-        <h1 className="type-display-1 mt-10 max-w-[13ch]">
-          Built from the ground up.
-        </h1>
-
-        <p className="type-lead mt-8 max-w-2xl">
-          An independent streetwear label making small runs of original pieces —
-          designed, patterned and sampled in-house, then made in numbers small
-          enough to count.
-        </p>
-      </div>
+      <PageIntro
+        index="01"
+        label="The label"
+        title="Built from the ground up."
+        lead="An independent streetwear label making small runs of original pieces — designed, patterned and sampled in-house, then made in numbers small enough to count."
+        crumbs={[{ name: "Home", href: "/" }]}
+      />
 
       <Reveal className="mt-16">
         <ImageSlot

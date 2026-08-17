@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "./CartProvider";
 import OrderSummary from "./OrderSummary";
+import EmptyState from "@/components/ui/EmptyState";
 import { formatPrice } from "@/lib/format";
 import { DEFAULT_SHIPPING_OPTION, SHIPPING_OPTIONS, shippingCost } from "@/lib/commerce/shipping";
 
@@ -116,15 +116,12 @@ export default function CheckoutFlow() {
 
   if (lines.length === 0) {
     return (
-      <div className="border-t border-rule pt-16 pb-24">
-        <p className="type-display-3 uppercase">Your bag is empty.</p>
-        <p className="type-body mt-4 text-ink-muted">
-          There is nothing to check out yet.
-        </p>
-        <Link href="/shop" className="btn btn-solid mt-10">
-          Shop the collection
-        </Link>
-      </div>
+      <EmptyState
+        className="pb-24"
+        title="Your bag is empty."
+        body="There is nothing to check out yet."
+        action={{ href: "/shop", label: "Shop the drop" }}
+      />
     );
   }
 
@@ -306,7 +303,7 @@ export default function CheckoutFlow() {
                           </span>
                         </span>
                       </span>
-                      <span className="num text-[0.8125rem]">
+                      <span className="num type-mono-3">
                         {cost === 0 ? "Free" : formatPrice(cost)}
                       </span>
                     </label>

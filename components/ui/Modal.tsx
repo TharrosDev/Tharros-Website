@@ -25,7 +25,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
     // panel's own transform.
     <div
       data-open={open}
-      className="overlay-root fixed inset-0 z-70 flex items-end justify-center md:items-center"
+      className="overlay-root fixed inset-0 z-[var(--z-overlay)] flex items-end justify-center md:items-center"
     >
       <button
         type="button"

@@ -78,6 +78,16 @@
   /* — Chrome ———————————————————————————————————— */
   --header-h: 4.5rem;
 
+  /* — Stacking ——————————————————————————————————
+     One ordered scale. Before this the chrome used 40 / 60 / 80 / 100 picked
+     independently, which is a scale nobody can reason about from any single
+     file. Sticky page furniture sits under the header; the header sits under
+     anything that takes over the screen; the skip link outranks all of it. */
+  --z-sticky:  40;
+  --z-header:  60;
+  --z-overlay: 80;
+  --z-skip:    100;
+
   /* — Type scale ————————————————————————————————
      Fluid clamps. Never hand-roll a per-breakpoint size. */
   --type-meta:      0.6875rem;                                     /* 11px mono */
@@ -99,6 +109,12 @@
   --type-mono-1: clamp(3.25rem, 1.4rem + 7.6vw, 7rem);
   --type-mono-2: clamp(1.5rem, 1rem + 2.2vw, 3rem);
   --type-mono-3: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
+
+  /* The wordmark is the one piece of display type whose size is set by the
+     chrome it sits in rather than by the ladder. It had been `text-lg
+     md:text-xl` — a hand-rolled per-breakpoint size, which the system forbids
+     outright — so it becomes a token with one owner instead. */
+  --type-wordmark: clamp(1.125rem, 0.95rem + 0.55vw, 1.5rem);
 }
 
 @theme inline {
@@ -151,6 +167,10 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* The header is fixed, so an in-page anchor — or keyboard focus moved by
+       one — lands underneath it without this. Set on the scroll container
+       rather than as scroll-margin on every possible target. */
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
   }
 
   body {
@@ -347,6 +367,15 @@
   font-feature-settings: "tnum";
 }
 
+@utility type-wordmark {
+  font-family: var(--font-display);
+  font-size: var(--type-wordmark);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 @utility num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -394,6 +423,19 @@
     max-width: var(--frame-max);
     margin-inline: auto;
     padding-inline: var(--gutter);
+  }
+
+  /* Clearance for the fixed header. Five surfaces carried their own
+     `calc(var(--header-h) + …)` inline, which is five places to forget when
+     the header height changes. PageIntro owns this for pages that open on a
+     title; these are for the two that open on something else — the product
+     record and a journal entry. */
+  .page-top {
+    padding-top: calc(var(--header-h) + 3.5rem);
+  }
+
+  .page-top-tight {
+    padding-top: calc(var(--header-h) + 2rem);
   }
 
   .rhythm-tight {
@@ -489,15 +531,33 @@
     cursor: not-allowed;
   }
 
+  /* A disabled control must not react to the pointer. Each variant restates
+     its own resting state rather than inheriting one, because the generic
+     "hold the solid fill" version silently inverted the two outline variants —
+     a disabled outline button filled itself in on hover. */
   .btn:disabled:hover,
   .btn[aria-disabled="true"]:hover {
     background: var(--near-black);
     color: var(--paper);
   }
 
-  .btn-inverse:disabled:hover {
+  .btn-inverse:disabled:hover,
+  .btn-inverse[aria-disabled="true"]:hover {
     background: var(--paper);
     color: var(--near-black);
+  }
+
+  .btn-outline:disabled:hover,
+  .btn-outline[aria-disabled="true"]:hover {
+    background: transparent;
+    color: var(--near-black);
+  }
+
+  .btn-outline-on-dark:disabled:hover,
+  .btn-outline-on-dark[aria-disabled="true"]:hover {
+    background: transparent;
+    color: var(--paper);
+    border-color: var(--rule-on-dark-strong);
   }
 
   /* A text link that reveals its own rule. */
@@ -723,7 +783,7 @@
     position: absolute;
     left: -9999px;
     top: 0;
-    z-index: 100;
+    z-index: var(--z-skip);
     background: var(--near-black);
     color: var(--paper);
     padding: 0.85rem 1.25rem;
@@ -883,9 +943,14 @@
      is simply a drawn rule — otherwise every use outside a Reveal would sit at
      scaleX(0) forever, which is a silent disappearance rather than a missing
      animation. */
+  /* The rule shares the element's stagger. Reveal's `delay` sets an inline
+     transition-delay, which the element's own opacity/transform honour but a
+     pseudo-element cannot see — so the delay is also published as a custom
+     property and read here. Without it a staggered section faded in late with
+     its rule already drawn. */
   [data-js] .reveal.rule-draw::before {
     transform: scaleX(0);
-    transition: transform var(--dur-reveal) var(--ease-ledger);
+    transition: transform var(--dur-reveal) var(--ease-ledger) var(--reveal-delay, 0ms);
   }
 
   [data-js] .reveal.rule-draw.reveal-in::before {

@@ -47,13 +47,13 @@ export default function SizeGuideModal({ open, onClose, tableKey, fitNote }: Pro
           <tbody>
             {table.rows.map((row) => (
               <tr key={row.size} className="border-b border-rule">
-                <th scope="row" className="num py-3 pr-4 text-[0.8125rem] font-medium">
+                <th scope="row" className="num type-mono-3 py-3 pr-4 font-medium">
                   {row.size}
                 </th>
                 {row.values.map((value, index) => (
                   <td
                     key={`${row.size}-${table.columns[index]}`}
-                    className="num py-3 pr-4 text-[0.8125rem] text-ink-muted"
+                    className="num type-mono-3 py-3 pr-4 text-ink-muted"
                   >
                     {formatMeasurement(value)}
                   </td>

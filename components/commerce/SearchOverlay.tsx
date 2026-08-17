@@ -9,6 +9,7 @@ import {
 } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import { CloseIcon, SearchIcon } from "@/components/ui/icons";
+import EmptyState from "@/components/ui/EmptyState";
 import { createPersistentStore } from "@/lib/persistent-store";
 import {
   useDebounced,
@@ -89,7 +90,7 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
       role="dialog"
       aria-modal="true"
       aria-label="Search"
-      className="overlay-root fixed inset-0 z-80 overflow-y-auto bg-surface"
+      className="overlay-root fixed inset-0 z-[var(--z-overlay)] overflow-y-auto bg-surface"
     >
       <div className="page-frame">
         <div
@@ -179,16 +180,15 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
               </p>
 
               {searching && results.length === 0 ? (
-                <div className="border-t border-rule pt-10">
-                  <p className="type-display-3 uppercase">Nothing found.</p>
-                  <p className="type-body mt-4 text-ink-muted">
-                    Try another search, or{" "}
-                    <Link href="/shop" onClick={onClose} className="link-rule">
-                      browse everything
-                    </Link>
-                    .
-                  </p>
-                </div>
+                <EmptyState
+                  title="Nothing found."
+                  body="Nothing in the run matches that."
+                  secondary={{
+                    href: "/shop",
+                    label: "Browse everything",
+                    onClick: onClose,
+                  }}
+                />
               ) : (
                 <ul className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
                   {(searching ? results : suggestions).map((product) => (

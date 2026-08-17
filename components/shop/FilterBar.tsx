@@ -60,7 +60,7 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
 
   return (
     <>
-      <div className="sticky top-[var(--header-h)] z-40 border-y border-rule bg-surface/95 backdrop-blur-sm">
+      <div className="sticky top-[var(--header-h)] z-[var(--z-sticky)] border-y border-rule bg-surface/95 backdrop-blur-sm">
         <div className="page-frame flex items-center justify-between gap-6 py-3">
           {/* Desktop: everything visible. */}
           <nav aria-label="Filter products" className="hidden lg:block">
@@ -124,7 +124,7 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
 
       {/* Mobile: a bottom sheet, not a cramped dropdown. */}
       {sheetOpen ? (
-        <div className="fixed inset-0 z-70 lg:hidden">
+        <div className="fixed inset-0 z-[var(--z-overlay)] lg:hidden">
           <button
             type="button"
             aria-label="Close filters"

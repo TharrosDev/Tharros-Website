@@ -67,7 +67,7 @@ export default function Header() {
       </a>
 
       <header
-        className={`fixed inset-x-0 top-0 z-60 transition-colors duration-300 ${
+        className={`fixed inset-x-0 top-0 z-[var(--z-header)] transition-colors duration-300 ${
           floating
             ? "on-dark bg-transparent text-paper before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-32 before:bg-gradient-to-b before:from-black/55 before:to-transparent"
             : "border-b border-rule bg-surface/95 text-ink backdrop-blur-sm"
@@ -79,7 +79,7 @@ export default function Header() {
         >
           <div className="flex items-center gap-5">
             <Link href="/" className="inline-flex h-11 shrink-0 items-center" aria-label="THARROS — home">
-              <Wordmark className="text-lg md:text-xl" label={false} />
+              <Wordmark className="type-wordmark" label={false} />
             </Link>
 
             {/* The drop stamp. The one persistent mark of what the label is
@@ -102,7 +102,7 @@ export default function Header() {
             >
               Index
               {savedCount > 0 ? (
-                <span className="num text-[0.6875rem] opacity-60">{savedCount}</span>
+                <span className="num type-meta opacity-60">{savedCount}</span>
               ) : null}
               <span className="visually-hidden">
                 — open site index{savedCount > 0 ? `, ${savedCount} saved` : ""}
@@ -119,7 +119,7 @@ export default function Header() {
                   add — no timer, no state. */}
               <span
                 key={count}
-                className="num bag-count text-[0.8125rem]"
+                className="num type-mono-3 bag-count"
                 aria-hidden="true"
               >
                 {ready ? count : 0}

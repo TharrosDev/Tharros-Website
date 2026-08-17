@@ -8,6 +8,7 @@ import FitStory from "@/components/product/FitStory";
 import ProductGrid from "@/components/product/ProductGrid";
 import Accordion from "@/components/ui/Accordion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { categoryName } from "@/lib/catalog/categories";
 import {
   allProductSlugs,
@@ -103,30 +104,17 @@ export default async function ProductPage({ params }: { params: Params }) {
         dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
 
-      <div
-        className="page-frame"
-        style={{ paddingTop: "calc(var(--header-h) + 2rem)" }}
-      >
-        <nav aria-label="Breadcrumb">
-          <ol className="type-meta flex flex-wrap items-center gap-2 text-ink-faint">
-            <li className="flex items-center gap-2">
-              <Link href="/shop" className="-my-2 inline-block py-2 transition-opacity hover:opacity-60">
-                Shop
-              </Link>
-              <span aria-hidden="true">/</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Link
-                href={`/shop?category=${product.category}`}
-                className="-my-2 inline-block py-2 transition-opacity hover:opacity-60"
-              >
-                {categoryName(product.category)}
-              </Link>
-              <span aria-hidden="true">/</span>
-            </li>
-            <li className="text-ink">{product.name}</li>
-          </ol>
-        </nav>
+      <div className="page-frame page-top-tight">
+        <Breadcrumbs
+          trail={[
+            { name: "Shop", href: "/shop" },
+            {
+              name: categoryName(product.category),
+              href: `/shop?category=${product.category}`,
+            },
+          ]}
+          current={product.name}
+        />
       </div>
 
       {/* Gallery gives up a column to the record beside it. With no photography
@@ -140,7 +128,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           <h1 className="type-display-3">{product.name}</h1>
 
           <div className="mt-4 flex items-baseline gap-4">
-            <p className="num text-lg">{formatPrice(product.price)}</p>
+            <p className="num type-mono-3">{formatPrice(product.price)}</p>
             {product.compareAtPrice ? (
               <p className="num text-ink-faint line-through">
                 {formatPrice(product.compareAtPrice)}
@@ -177,7 +165,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             <div className="flex gap-6 py-3">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Code</dt>
               {/* Style code without the size suffix. */}
-              <dd className="num text-[0.8125rem]">
+              <dd className="num type-mono-3">
                 {product.variants[0]?.sku.replace(/-[^-]+$/, "")}
               </dd>
             </div>

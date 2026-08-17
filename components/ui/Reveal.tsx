@@ -49,7 +49,17 @@ export default function Reveal({
     <Tag
       ref={ref}
       className={`reveal ${shown ? "reveal-in" : ""} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={
+        delay
+          ? ({
+              transitionDelay: `${delay}ms`,
+              // Also published as a property so `.rule-draw`'s pseudo-element
+              // can share the stagger; an inline transition-delay never
+              // reaches ::before.
+              "--reveal-delay": `${delay}ms`,
+            } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
     </Tag>

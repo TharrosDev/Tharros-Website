@@ -6,6 +6,7 @@ import ImageSlot from "@/components/media/ImageSlot";
 import QuantityStepper from "./QuantityStepper";
 import { useCart } from "./CartProvider";
 import { CloseIcon } from "@/components/ui/icons";
+import EmptyState from "@/components/ui/EmptyState";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import { getRelated, getFeatured, thumbnailImage } from "@/lib/catalog/queries";
 import { formatPrice } from "@/lib/format";
@@ -35,7 +36,7 @@ export default function CartDrawer() {
   );
 
   return (
-    <div data-open={isOpen} className="overlay-root fixed inset-0 z-80">
+    <div data-open={isOpen} className="overlay-root fixed inset-0 z-[var(--z-overlay)]">
       <button
         type="button"
         aria-label="Close bag"
@@ -63,11 +64,11 @@ export default function CartDrawer() {
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col justify-center px-6 py-16">
-            <p className="type-display-3 uppercase">Your bag is empty.</p>
-            <p className="type-body mt-4 text-ink-muted">Nothing here yet.</p>
-            <Link href="/shop" onClick={closeBag} className="btn btn-solid mt-10">
-              Shop the collection
-            </Link>
+            <EmptyState
+              title="Your bag is empty."
+              body="Everything made so far is in the shop."
+              action={{ href: "/shop", label: "Shop the drop", onClick: closeBag }}
+            />
           </div>
         ) : (
           <>
@@ -95,7 +96,7 @@ export default function CartDrawer() {
                             {line.product.colorway} / {line.size}
                           </p>
                         </div>
-                        <p className="num shrink-0 text-[0.8125rem]">
+                        <p className="num type-mono-3 shrink-0">
                           {formatPrice(line.lineTotal)}
                         </p>
                       </div>
@@ -160,11 +161,11 @@ export default function CartDrawer() {
               <dl className="space-y-2">
                 <div className="flex justify-between">
                   <dt className="type-body-sm text-ink-muted">Subtotal</dt>
-                  <dd className="num text-[0.8125rem]">{formatPrice(subtotal)}</dd>
+                  <dd className="num type-mono-3">{formatPrice(subtotal)}</dd>
                 </div>
                 <div className="flex justify-between">
                   <dt className="type-body-sm text-ink-muted">Shipping estimate</dt>
-                  <dd className="num text-[0.8125rem]">
+                  <dd className="num type-mono-3">
                     {shipping === 0 ? "Free" : formatPrice(shipping)}
                   </dd>
                 </div>
