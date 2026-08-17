@@ -19,8 +19,14 @@ export default function PendingNotice({
   title: string;
   children?: React.ReactNode;
 }) {
+  // A ruled block on the page surface, not a filled bone panel. Bone is the
+  // right idea — it is what a pending image slot is made of — but it is only
+  // safe under `--ink`: `--ink-muted` reads 4.15:1 on it and `--ink-faint`
+  // 3.66:1, both under AA, and a notice is mostly secondary text. Verified by
+  // converting the oklch values to linear sRGB and computing the ratio, because
+  // Chromium serialises oklch() as lab() and parsing the computed string lies.
   return (
-    <Reveal className="border border-ash bg-surface-frame p-8 md:p-10">
+    <Reveal className="border border-ink p-8 md:p-10">
       <p className="type-meta text-ink-faint">{label}</p>
       <p className="type-display-4 mt-4 max-w-[26ch]">{title}</p>
       {children ? <div className="mt-5 space-y-4">{children}</div> : null}
