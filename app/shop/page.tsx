@@ -10,6 +10,7 @@ import {
   isSortKey,
   listProducts,
   searchProducts,
+  sortProducts,
 } from "@/lib/catalog/queries";
 import { SITE_URL } from "@/lib/site";
 import type { CategoryId } from "@/lib/catalog/types";
@@ -53,8 +54,21 @@ export default async function ShopPage({
   // engine's deep link lands on real results rather than the whole catalogue.
   const query = first(params.q)?.trim();
 
+  // A search is still a view of the shop, so the same filters apply to it. It
+  // previously ignored all of them: the bar rendered above a search showed a
+  // category and a sort that changed nothing, and every one of its links threw
+  // the search away. Relevance stays the default order — an explicit sort is the
+  // only thing allowed to override what the search decided was most relevant.
   const products = query
-    ? searchProducts(query, 100)
+    ? (() => {
+        const matches = searchProducts(query, 100).filter((product) => {
+          if (category !== "all" && product.category !== category) return false;
+          if (drop && product.drop !== drop.id) return false;
+          if (newOnly && !product.isNew) return false;
+          return true;
+        });
+        return sort === "featured" ? matches : sortProducts(matches, sort);
+      })()
     : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
 
   const heading = query
@@ -117,6 +131,7 @@ export default async function ShopPage({
         drop={dropSlug}
         newOnly={newOnly}
         count={products.length}
+        query={query}
         available={categoriesInUse()}
       />
 

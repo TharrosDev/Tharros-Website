@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
-import { getProduct } from "@/lib/catalog/queries";
+import { getProductById } from "@/lib/catalog/queries";
 import { createPersistentStore } from "@/lib/persistent-store";
 import { useHydrated } from "@/lib/hooks";
 import type { Product } from "@/lib/catalog/types";
@@ -41,9 +41,13 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     savedStore.set((current) => current.filter((id) => id !== productId));
   }, []);
 
-  // Ids that no longer resolve to a product are dropped silently.
+  // Ids that no longer resolve to a product are dropped silently. Looked up by
+  // id, not slug — a saved list is storage, and storage holds ids.
   const products = useMemo(
-    () => ids.map((id) => getProduct(id)).filter((product): product is Product => Boolean(product)),
+    () =>
+      ids
+        .map((id) => getProductById(id))
+        .filter((product): product is Product => product !== undefined),
     [ids],
   );
 

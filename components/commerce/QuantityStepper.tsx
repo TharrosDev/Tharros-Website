@@ -7,6 +7,13 @@ type Props = {
   max: number;
   onChange: (next: number) => void;
   label: string;
+  /**
+   * Lowest value the control may reach. The bag passes 0, where stepping below
+   * one removes the line; the product page passes 1, where it must not — it was
+   * clamping the result instead, which left a button that looked live and did
+   * nothing.
+   */
+  min?: number;
   className?: string;
 };
 
@@ -15,6 +22,7 @@ export default function QuantityStepper({
   max,
   onChange,
   label,
+  min = 0,
   className = "",
 }: Props) {
   return (
@@ -22,7 +30,8 @@ export default function QuantityStepper({
       <button
         type="button"
         onClick={() => onChange(value - 1)}
-        className="flex h-10 w-10 items-center justify-center transition-opacity hover:opacity-60"
+        disabled={value - 1 < min}
+        className="flex h-10 w-10 items-center justify-center transition-opacity hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-30"
       >
         <MinusIcon />
         <span className="visually-hidden">Decrease quantity of {label}</span>

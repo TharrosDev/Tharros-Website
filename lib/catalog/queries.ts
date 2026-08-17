@@ -105,6 +105,21 @@ export function isSortKey(value: string | undefined): value is SortKey {
   return value === "featured" || value === "newest" || value === "price-asc" || value === "price-desc";
 }
 
+/**
+ * Apply a sort to a list that has already been assembled.
+ *
+ * `listProducts` sorts what it filters, but search results come out of
+ * `searchProducts` in relevance order and had no way to be re-sorted — so the
+ * sort links on a search page changed the URL and nothing else. Sold-out pieces
+ * still sink to the bottom, exactly as they do in the grid.
+ */
+export function sortProducts(products: Product[], sort: SortKey): Product[] {
+  return [...products].sort((a, b) => {
+    const buyable = Number(isPurchasable(b)) - Number(isPurchasable(a));
+    return buyable || SORTERS[sort](a, b);
+  });
+}
+
 export function listProducts(query: ProductQuery = {}): Product[] {
   const { category = "all", drop, isNew, sort = "featured" } = query;
 
@@ -125,6 +140,20 @@ export function listProducts(query: ProductQuery = {}): Product[] {
 
 export function getProduct(slug: string): Product | undefined {
   return PRODUCTS.find((product) => product.slug === slug);
+}
+
+/**
+ * Look a piece up by its id rather than its route.
+ *
+ * The bag and the wishlist both store `product.id`, and both used to resolve it
+ * through `getProduct`, which matches on `slug`. That works only because every
+ * product currently declares the same string for both — an undocumented
+ * coupling with nothing enforcing it. One new piece whose slug differed from its
+ * id would silently empty somebody's saved list and drop their bag lines, with
+ * no error anywhere. Storage lookups go through here instead.
+ */
+export function getProductById(id: string): Product | undefined {
+  return PRODUCTS.find((product) => product.id === id);
 }
 
 export function allProductSlugs(): string[] {

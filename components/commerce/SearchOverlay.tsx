@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useMemo,
   useRef,
@@ -43,6 +44,7 @@ const recentStore = createPersistentStore<string[]>(RECENT_KEY, [], (raw) =>
 );
 
 export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
+  const router = useRouter();
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [term, setTerm] = useState("");
@@ -107,11 +109,19 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
           </button>
         </div>
 
+        {/* Enter goes to the full results page. It used to only record the term
+            and stay put, which made the key look broken and left `/shop?q=` —
+            the URL the WebSite SearchAction in the JSON-LD points at — with no
+            route to it from inside the site at all. */}
         <form
           role="search"
           onSubmit={(event) => {
             event.preventDefault();
-            remember(term);
+            const trimmed = term.trim();
+            if (trimmed.length < 2) return;
+            remember(trimmed);
+            onClose();
+            router.push(`/shop?q=${encodeURIComponent(trimmed)}`);
           }}
           className="flex items-center gap-4 border-b border-ink pb-4"
         >

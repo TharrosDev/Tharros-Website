@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "./CartProvider";
 import OrderSummary from "./OrderSummary";
 import { formatPrice } from "@/lib/format";
-import { DEFAULT_SHIPPING_OPTION, SHIPPING_OPTIONS, shippingCost } from "@/lib/commerce/shipping";
+import {
+  DEFAULT_SHIPPING_OPTION,
+  SHIPPING_OPTIONS,
+  shippingCost,
+} from "@/lib/commerce/shipping";
 
 type StepId = "contact" | "address" | "delivery" | "payment";
 
@@ -89,7 +93,26 @@ export default function CheckoutFlow() {
   const [step, setStep] = useState<StepId>("contact");
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
-  const [shippingOption, setShippingOption] = useState(DEFAULT_SHIPPING_OPTION.id);
+  const [shippingOption, setShippingOption] = useState(
+    DEFAULT_SHIPPING_OPTION.id,
+  );
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  /**
+   * Move to a step and put focus on its heading.
+   *
+   * Each step replaces the last, so the button that was just pressed is
+   * unmounted and focus falls back to `<body>`. For anyone on a keyboard or a
+   * screen reader that means the form silently restarts from the top of the
+   * document on every step — the change is announced to nobody. Focusing the new
+   * heading is what makes the flow followable without a mouse.
+   */
+  const goTo = (next: StepId) => {
+    setStep(next);
+    // The heading belongs to the step being rendered, so it only exists after
+    // this commit.
+    requestAnimationFrame(() => headingRef.current?.focus());
+  };
 
   const set = (key: keyof Form) => (value: string) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -154,7 +177,13 @@ export default function CheckoutFlow() {
 
         {step === "contact" ? (
           <section className="pt-10">
-            <h2 className="type-display-4">Contact</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Contact
+            </h2>
             <p className="type-body-sm mt-3 text-ink-muted">
               Order confirmation and shipping updates go here.
             </p>
@@ -171,7 +200,7 @@ export default function CheckoutFlow() {
             </div>
             <button
               type="button"
-              onClick={() => validate(["email"]) && setStep("address")}
+              onClick={() => validate(["email"]) && goTo("address")}
               className="btn btn-solid mt-8"
             >
               Continue to shipping
@@ -181,7 +210,13 @@ export default function CheckoutFlow() {
 
         {step === "address" ? (
           <section className="pt-10">
-            <h2 className="type-display-4">Shipping address</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Shipping address
+            </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <Field
                 id="firstName"
@@ -262,13 +297,17 @@ export default function CheckoutFlow() {
                     "region",
                     "postal",
                     "country",
-                  ]) && setStep("delivery")
+                  ]) && goTo("delivery")
                 }
                 className="btn btn-solid"
               >
                 Continue to delivery
               </button>
-              <button type="button" onClick={() => setStep("contact")} className="btn btn-outline">
+              <button
+                type="button"
+                onClick={() => goTo("contact")}
+                className="btn btn-outline"
+              >
                 Back
               </button>
             </div>
@@ -277,7 +316,13 @@ export default function CheckoutFlow() {
 
         {step === "delivery" ? (
           <section className="pt-10">
-            <h2 className="type-display-4">Delivery</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Delivery
+            </h2>
             <fieldset className="mt-8">
               <legend className="visually-hidden">Delivery method</legend>
               <div className="space-y-3">
@@ -287,7 +332,9 @@ export default function CheckoutFlow() {
                     <label
                       key={option.id}
                       className={`flex cursor-pointer items-center justify-between gap-4 border p-5 transition-colors ${
-                        shippingOption === option.id ? "border-ink" : "border-rule-strong"
+                        shippingOption === option.id
+                          ? "border-ink"
+                          : "border-rule-strong"
                       }`}
                     >
                       <span className="flex items-center gap-4">
@@ -300,7 +347,9 @@ export default function CheckoutFlow() {
                           className="h-4 w-4 accent-black"
                         />
                         <span>
-                          <span className="type-body-sm block font-medium">{option.name}</span>
+                          <span className="type-body-sm block font-medium">
+                            {option.name}
+                          </span>
                           <span className="type-meta mt-1 block text-ink-faint">
                             {option.detail}
                           </span>
@@ -316,10 +365,18 @@ export default function CheckoutFlow() {
             </fieldset>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button type="button" onClick={() => setStep("payment")} className="btn btn-solid">
+              <button
+                type="button"
+                onClick={() => goTo("payment")}
+                className="btn btn-solid"
+              >
                 Continue to payment
               </button>
-              <button type="button" onClick={() => setStep("address")} className="btn btn-outline">
+              <button
+                type="button"
+                onClick={() => goTo("address")}
+                className="btn btn-outline"
+              >
                 Back
               </button>
             </div>
@@ -328,16 +385,23 @@ export default function CheckoutFlow() {
 
         {step === "payment" ? (
           <section className="pt-10">
-            <h2 className="type-display-4">Payment</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Payment
+            </h2>
 
             {/* No payment provider is connected. Rather than mock a card form
                 that appears to work, the step says what is actually true. */}
             <div className="mt-8 border border-ink p-8">
               <p className="type-meta">Payment provider not connected</p>
               <p className="type-body mt-4 text-ink-muted">
-                This storefront is not yet wired to a payment processor, so no card can be
-                taken and no order can be placed. Everything up to this point — your bag,
-                address and delivery method — is real and working.
+                This storefront is not yet wired to a payment processor, so no
+                card can be taken and no order can be placed. Everything up to
+                this point — your bag, address and delivery method — is real and
+                working.
               </p>
               <p className="type-body mt-4 text-ink-muted">
                 To finish an order today, email{" "}
@@ -354,7 +418,12 @@ export default function CheckoutFlow() {
                 </div>
               </dl>
 
-              <button type="button" disabled aria-disabled="true" className="btn btn-solid btn-full mt-8">
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="btn btn-solid btn-full mt-8"
+              >
                 Pay {formatPrice(total)}
               </button>
               <p className="type-meta mt-3 text-ink-faint">
@@ -362,7 +431,11 @@ export default function CheckoutFlow() {
               </p>
             </div>
 
-            <button type="button" onClick={() => setStep("delivery")} className="btn btn-outline mt-8">
+            <button
+              type="button"
+              onClick={() => goTo("delivery")}
+              className="btn btn-outline mt-8"
+            >
               Back
             </button>
           </section>
