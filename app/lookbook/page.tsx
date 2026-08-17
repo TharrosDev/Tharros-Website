@@ -19,7 +19,13 @@ export const metadata: Metadata = {
 };
 
 function Wearing({ slugs }: { slugs: string[] }) {
-  const products = slugs.map((slug) => getProduct(slug)).filter(Boolean);
+  // `.filter(Boolean)` does not narrow the type, which is why this used to reach
+  // for `!` on every access. A real predicate removes the assertions, so a slug
+  // that stops resolving is dropped rather than trusted.
+  const products = slugs
+    .map((slug) => getProduct(slug))
+    .filter((product) => product !== undefined);
+
   if (products.length === 0) return null;
 
   return (
@@ -27,11 +33,11 @@ function Wearing({ slugs }: { slugs: string[] }) {
       <span>Wearing</span>
       {products.map((product) => (
         <Link
-          key={product!.id}
-          href={`/shop/${product!.slug}`}
+          key={product.id}
+          href={`/shop/${product.slug}`}
           className="link-rule link-rule-reveal"
         >
-          {product!.name}
+          {product.name}
         </Link>
       ))}
     </p>

@@ -15,6 +15,8 @@ type Props = {
   drop?: string;
   newOnly?: boolean;
   count: number;
+  /** The active search term, so narrowing a search does not discard it. */
+  query?: string;
   /** Only categories that currently hold a piece are offered. */
   available: CategoryId[];
 };
@@ -23,23 +25,38 @@ type Props = {
  * Filters are links, not state. The URL is the source of truth, so a filtered
  * view is shareable, back-navigable and server-rendered — and the bar keeps
  * working if JS never loads.
+ *
+ * Every link carries the whole view, `q` included. It previously did not, so on
+ * a search page each category and sort link quietly threw the search away and
+ * returned the visitor to the full catalogue — the one thing a filter bar must
+ * never do.
  */
 function buildHref(params: {
   category?: string;
   sort?: string;
   drop?: string;
   newOnly?: boolean;
+  query?: string;
 }): string {
-  const search = new URLSearchParams();
-  if (params.category && params.category !== "all") search.set("category", params.category);
-  if (params.sort && params.sort !== "featured") search.set("sort", params.sort);
-  if (params.drop) search.set("drop", params.drop);
-  if (params.newOnly) search.set("new", "1");
-  const query = search.toString();
-  return query ? `/shop?${query}` : "/shop";
+  const params_ = new URLSearchParams();
+  if (params.query) params_.set("q", params.query);
+  if (params.category && params.category !== "all") params_.set("category", params.category);
+  if (params.sort && params.sort !== "featured") params_.set("sort", params.sort);
+  if (params.drop) params_.set("drop", params.drop);
+  if (params.newOnly) params_.set("new", "1");
+  const search = params_.toString();
+  return search ? `/shop?${search}` : "/shop";
 }
 
-export default function FilterBar({ category, sort, drop, newOnly, count, available }: Props) {
+export default function FilterBar({
+  category,
+  sort,
+  drop,
+  newOnly,
+  count,
+  query,
+  available,
+}: Props) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
 
@@ -48,11 +65,11 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
   useFocusTrap(sheetOpen, sheetRef);
 
   const filters = [
-    { id: "all", name: "All", href: buildHref({ sort, drop }) },
+    { id: "all", name: "All", href: buildHref({ sort, drop, query }) },
     ...CATEGORIES.filter((entry) => available.includes(entry.id)).map((entry) => ({
       id: entry.id,
       name: entry.name,
-      href: buildHref({ category: entry.id, sort, drop }),
+      href: buildHref({ category: entry.id, sort, drop, query }),
     })),
   ];
 
@@ -106,6 +123,7 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
                         sort: option.key,
                         drop,
                         newOnly,
+                        query,
                       })}
                       aria-current={sort === option.key ? "true" : undefined}
                       className={`type-meta transition-opacity hover:opacity-60 ${
@@ -174,7 +192,7 @@ export default function FilterBar({ category, sort, drop, newOnly, count, availa
                 {SORT_OPTIONS.map((option) => (
                   <li key={option.key}>
                     <Link
-                      href={buildHref({ category, sort: option.key, drop, newOnly })}
+                      href={buildHref({ category, sort: option.key, drop, newOnly, query })}
                       onClick={() => setSheetOpen(false)}
                       aria-current={sort === option.key ? "true" : undefined}
                       className={`type-body block py-2 ${

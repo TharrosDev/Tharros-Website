@@ -1,4 +1,4 @@
-import { getProduct, variantFor } from "@/lib/catalog/queries";
+import { getProductById, variantFor } from "@/lib/catalog/queries";
 import type { Product, Size, Variant } from "@/lib/catalog/types";
 
 /**
@@ -36,7 +36,7 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
   const resolved: ResolvedLine[] = [];
 
   for (const line of lines) {
-    const product = getProduct(productSlugFromId(line.productId) ?? "");
+    const product = getProductById(line.productId);
     if (!product) continue;
 
     const variant = variantFor(product, line.size);
@@ -57,12 +57,6 @@ export function resolveLines(lines: CartLine[]): ResolvedLine[] {
   }
 
   return resolved;
-}
-
-/** Product ids and slugs are kept identical in the catalog; this is the seam
- *  if that ever stops being true. */
-function productSlugFromId(id: string): string | undefined {
-  return id;
 }
 
 export function subtotalOf(lines: ResolvedLine[]): number {

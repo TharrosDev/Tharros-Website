@@ -124,6 +124,11 @@ Key invariants:
 - **A cart line stores only `productId + size + quantity`.** Name, price and imagery are
   re-read from the catalog on every render (`resolveLines`), so a stale bag can never
   check out a renamed, repriced or sold-out piece.
+- **Anything read back out of storage is looked up with `getProductById`,** never
+  `getProduct` (which matches on `slug`). The bag and the wishlist both persist ids; they
+  resolved through the slug lookup and worked only because every product currently
+  declares the same string for both. One piece whose slug differed would have silently
+  emptied a saved list with no error anywhere.
 - **Never index `product.images` by position.** Which frame appears where is decided by
   `lib/catalog/images.ts` — `heroImage`, `cardImages`, `galleryImages`, `onBodyImages`,
   `thumbnailImage` — re-exported through `queries.ts`. The ladder leads with the piece on a
