@@ -1,4 +1,5 @@
 import ProductCard from "./ProductCard";
+import Reveal from "@/components/ui/Reveal";
 import type { Product } from "@/lib/catalog/types";
 
 type Props = {
@@ -43,15 +44,19 @@ export default function ProductGrid({
       <ul
         className={`grid gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-16 ${COLUMN_CLASS[columns]}`}
       >
+        {/* The grid arrives as a cascade rather than as one slab. The stagger
+            is capped at the first row and a bit: past that the delay stops
+            reading as sequence and starts reading as lag, and a nine-piece
+            grid would have its last card waiting half a second. */}
         {products.map((product, index) => (
-          <li key={product.id}>
+          <Reveal as="li" key={product.id} delay={Math.min(index, 4) * 70}>
             <ProductCard
               product={product}
               sizes={SIZES[columns]}
               priority={index < priorityCount}
               specimen={specimen}
             />
-          </li>
+          </Reveal>
         ))}
       </ul>
     </>

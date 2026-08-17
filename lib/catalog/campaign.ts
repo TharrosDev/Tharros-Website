@@ -24,7 +24,9 @@ export const CAMPAIGNS: Campaign[] = [
     hero: {
       id: "cmp-001-hero",
       index: "001",
-      line: "Nine pieces, made small.",
+      // No `line` here. It read "Nine pieces, made small." against a drop of
+      // seven, nothing rendered it, and a hand-typed count is exactly the figure
+      // that drifts. Every piece count on the site is derived from the catalogue.
       wearing: ["arc-hoodie", "utility-cargo-pant"],
       image: {
         code: "CMP-001-HERO",

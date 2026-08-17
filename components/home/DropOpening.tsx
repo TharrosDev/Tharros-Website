@@ -98,15 +98,22 @@ export default function DropOpening() {
             system is built on. The numeral is the drop's identity, so it is set
             once here rather than repeated as a separate figure and again in the
             name. It stays the section's only accent. */}
+          {/* The heaviest step on the ladder, and it belongs here. Before this
+              the largest type on the landing page was display-2, which meant a
+              shipping-information page opened louder than the brand did. */}
           <h1 className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-            <span className="type-display-2">Drop</span>
+            <span className="type-display-1">Drop</span>
             <span className="type-mono-1 text-signal-on-dark">
               {CURRENT_DROP.index}
             </span>
           </h1>
 
           <div className="mt-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-            <dl className="grid max-w-lg grid-cols-3 gap-6">
+            {/* Three columns at every width put "Remaining" — 11px mono at
+                0.14em — into roughly 74px on a 320px screen, which wraps or
+                overflows every time. It earns the third column when there is
+                room for it. */}
+            <dl className="grid max-w-lg grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 sm:gap-y-6">
               {figures.map((figure) => (
                 <div
                   key={figure.label}

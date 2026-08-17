@@ -77,8 +77,16 @@ export default function LookbookPage() {
             <span className="ml-4">Lookbook</span>
           </p>
           <h1 className="type-display-1 mt-6">{CURRENT_DROP.name}</h1>
+          {/* Derived. It used to assert "Four frames. Every piece in the drop."
+              — a count that a fifth spread would have falsified, and a coverage
+              claim nothing in the data supports. */}
           <p className="type-meta mt-5 text-ink-on-dark-muted">
-            Four frames. Every piece in the drop.
+            <span className="num">
+              {String(LOOKBOOK.length).padStart(2, "0")}
+            </span>
+            <span className="ml-3">
+              {LOOKBOOK.length === 1 ? "Frame" : "Frames"} from the drop
+            </span>
           </p>
         </div>
       </section>

@@ -37,18 +37,20 @@ export default function ParallaxNumeral({
   const reduced = useReducedMotion();
   const hydrated = useHydrated();
 
+  // Touch has a much shorter scroll runway, so the same travel that reads as a
+  // drift on a desktop reads as a jump on a phone. It used to be switched off
+  // entirely there, which left the site with no motion at all on the device
+  // most people meet it on. It travels less instead of not at all.
+  const coarse = hydrated && window.matchMedia("(pointer: coarse)").matches;
+  const travel = coarse ? range / 2 : range;
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [range / 2, -range / 2]);
+  const y = useTransform(scrollYProgress, [0, 1], [travel / 2, -travel / 2]);
 
-  // Touch has no hover and a much shorter scroll runway, so a drifting numeral
-  // there is motion for its own sake.
-  const coarse =
-    hydrated && window.matchMedia("(pointer: coarse)").matches;
-
-  const moving = hydrated && !reduced && !coarse;
+  const moving = hydrated && !reduced;
 
   return (
     <motion.span

@@ -15,14 +15,19 @@ export default function NextDrop() {
   if (!NEXT_DROP) return null;
 
   return (
-    <section className="on-dark rhythm-default">
+    <section className="on-dark rhythm-breath">
       <div className="page-frame">
+        {/* The index in this row is the section's place on the page, not the
+            drop's number — printing "002" here put a second numbering series in
+            the same column as 01…05 and read as a step backwards. The drop's own
+            name carries its number, and the accent moves to the state it marks:
+            oxide means in development, which is what this section is. */}
         <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-4">
           <p className="eyebrow">
-            <span className="num text-signal-on-dark">{NEXT_DROP.index}</span>
+            <span className="num">06</span>
             <span>{NEXT_DROP.name}</span>
           </p>
-          <p className="type-meta text-ink-on-dark-faint">In development</p>
+          <p className="type-meta text-signal-on-dark">In development</p>
         </Reveal>
 
         <h2 className="type-display-2 mt-10 max-w-[16ch]">{NEXT_DROP.statement}</h2>
