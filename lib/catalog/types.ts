@@ -97,6 +97,26 @@ export type OnBodyCredit = {
   imageCode?: string;
 };
 
+/**
+ * A piece's own garment measurements — the numbers someone who cannot touch
+ * the clothes buys on.
+ *
+ * `table` names which set of columns the values line up with (`SIZE_TABLES` in
+ * `lib/catalog/sizing.ts`), so a row is a plain array in that table's order and
+ * nothing has to repeat the column names per product. A `null` is a
+ * measurement nobody has taken yet, and renders as an em dash exactly like the
+ * category table does — a piece may ship a chest and a length before its
+ * sleeve has been measured.
+ *
+ * Absent entirely means no fitting has happened, which the product page states
+ * rather than hides.
+ */
+export type PieceMeasurements = {
+  table: "top" | "bottom";
+  /** Size → one value per column of the named table, in inches. */
+  rows: Partial<Record<Size, (number | null)[]>>;
+};
+
 export type Product = {
   id: string;
   name: string;
@@ -121,6 +141,8 @@ export type Product = {
   images: ImageSlotData[];
   /** Fitting credits for the on-body frames. Absent until someone has been photographed in it. */
   onBody?: OnBodyCredit[];
+  /** This piece's own measured garment dimensions. Absent until it is measured. */
+  measurements?: PieceMeasurements;
   variants: Variant[];
   materials: string[];
   fit: string[];

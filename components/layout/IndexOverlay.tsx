@@ -45,7 +45,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
       data-open={open}
       role="dialog"
       aria-modal="true"
-      aria-label="Index"
+      aria-label="Site navigation"
       className="overlay-root on-dark fixed inset-0 z-[var(--z-overlay)] flex flex-col overflow-y-auto"
     >
       <div
@@ -60,7 +60,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
           className="-mr-3 inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
         >
           <CloseIcon />
-          <span className="visually-hidden">Close index</span>
+          <span className="visually-hidden">Close menu</span>
         </button>
       </div>
 
@@ -74,7 +74,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
           </span>
         </div>
 
-        <nav aria-label="Index" className="mt-10">
+        <nav aria-label="Site navigation" className="mt-10">
           <ul>
             {NAV_INDEX.map((item, index) => {
               const active =

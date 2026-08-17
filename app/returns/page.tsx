@@ -4,6 +4,7 @@ import InfoSections from "@/components/layout/InfoSections";
 import InfoFooter from "@/components/layout/InfoFooter";
 import { informationIndex } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { RETURN_WINDOW } from "@/lib/commerce/returns";
 
 export const metadata: Metadata = {
   title: "Returns",
@@ -27,7 +28,7 @@ export default function ReturnsPage() {
             index: "01",
             title: "Window",
             body: [
-              "Unworn, unwashed pieces with tags attached can be returned within 30 days of delivery.",
+              `Unworn, unwashed pieces with tags attached can be returned within ${RETURN_WINDOW} of delivery.`,
             ],
           },
           {

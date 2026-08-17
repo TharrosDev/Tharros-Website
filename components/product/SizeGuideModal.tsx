@@ -6,6 +6,7 @@ import {
   MEASUREMENT_UNIT,
   MODEL_FIT_NOTE,
   SIZE_TABLES,
+  type SizeTable,
 } from "@/lib/catalog/sizing";
 
 type Props = {
@@ -18,16 +19,34 @@ type Props = {
    * where there is no piece in context. Both are null today.
    */
   fitNote?: string | null;
+  /** This piece's own measured table, when it has been measured. */
+  piece?: SizeTable | null;
 };
 
-export default function SizeGuideModal({ open, onClose, tableKey, fitNote }: Props) {
-  const table = SIZE_TABLES[tableKey];
+export default function SizeGuideModal({
+  open,
+  onClose,
+  tableKey,
+  fitNote,
+  piece,
+}: Props) {
+  /**
+   * The piece being looked at outranks its category.
+   *
+   * Someone opens this from a size row, mid-decision, about one garment — and
+   * the modal answered with the category's table, which is the average of
+   * every top THARROS has cut. When the piece has its own measurements they are
+   * the answer; the category table stays reachable on `/size-guide`, where the
+   * question really is about the label rather than about this hoodie.
+   */
+  const table = piece ?? SIZE_TABLES[tableKey];
 
   return (
     <Modal open={open} onClose={onClose} title="Size guide">
       <h2 className="type-display-4">{table.title}</h2>
       <p className="type-meta mt-3 text-ink-faint">
-        Garment measurements, {MEASUREMENT_UNIT}
+        {piece ? "This piece, measured flat" : "Garment measurements"},{" "}
+        {MEASUREMENT_UNIT}
       </p>
 
       <div className="mt-6 overflow-x-auto">

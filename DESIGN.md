@@ -231,6 +231,26 @@ one sequence, numbered as one in `lib/site.ts` (`INFORMATION`), and every one of
 on `InfoFooter` — the rest of the set as a ledger. They are the site's support layer and
 they behave like a set rather than like eight unrelated pages.
 
+### Browsing is by release
+
+`/shop` is cut by drop first and by category second, and the category rail only renders
+once there are at least four categories in use and enough pieces for a cut to cut anything
+(`FilterBar`). Both guards are derived, so the bar grows back on its own as the catalogue
+does. A single-release label offering a choice of one release is furniture describing
+itself, so the rail hides itself there too, and the release the view is showing is named
+in the page's own opener instead.
+
+Four sort orders over seven pieces was three decisions nobody had to make — two of them
+the same list reversed, one of them meaningless inside a single drop. The URL still honours
+all four keys; the bar offers run order and price.
+
+### The numbering is derived
+
+A page's mono index counts the sections that actually rendered. Three sections of the
+product page are conditional on data that does not exist yet, and with hard-coded indexes
+the page printed 01 followed by 04 — which turns a position in a sequence into decoration.
+See `sectionIndex()` in `app/shop/[slug]/page.tsx`.
+
 ### The specimen record
 
 `ProductCard`'s `specimen` line — code, made, left — is what makes a grid read as a

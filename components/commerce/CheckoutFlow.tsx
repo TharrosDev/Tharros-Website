@@ -17,13 +17,25 @@ import {
 } from "@/lib/commerce/regions";
 import { CONTACT_EMAIL } from "@/lib/site";
 
-type StepId = "contact" | "address" | "delivery" | "payment";
+/**
+ * Two steps, because there are two things to collect.
+ *
+ * It was four — contact, shipping, delivery, payment — which is the shape of a
+ * checkout that takes a card. This one cannot: the last step was a review and a
+ * disabled button, and the three before it walked a customer through a
+ * card-shaped flow to reach an email. Contact is one field and a name; delivery
+ * is a choice of two; neither earns a screen of its own, and a shorter walk to
+ * the same email is a smaller thing to abandon.
+ *
+ * A stored step id from the old four survives it: the progress store falls back
+ * to the first step rather than throwing, and clamps `furthest` to the steps
+ * that exist.
+ */
+type StepId = "details" | "delivery";
 
 const STEPS: { id: StepId; index: string; name: string }[] = [
-  { id: "contact", index: "01", name: "Contact" },
-  { id: "address", index: "02", name: "Shipping" },
-  { id: "delivery", index: "03", name: "Delivery" },
-  { id: "payment", index: "04", name: "Payment" },
+  { id: "details", index: "01", name: "Your details" },
+  { id: "delivery", index: "02", name: "Delivery" },
 ];
 
 type Form = {
@@ -50,9 +62,11 @@ const EMPTY: Form = {
   country: DEFAULT_COUNTRY.code,
 };
 
+/** Step 01: who this is going to and where the reply goes. */
+const DETAIL_FIELDS: (keyof Form)[] = ["firstName", "lastName", "email"];
+
+/** Step 02: where it ships. The name moved up with the rest of the person. */
 const ADDRESS_FIELDS: (keyof Form)[] = [
-  "firstName",
-  "lastName",
   "address1",
   "city",
   "region",
@@ -116,7 +130,7 @@ const formStore = createPersistentStore<Form>("tharros:checkout:v1", EMPTY, (raw
 type Progress = { step: StepId; shippingOption: string; furthest: number };
 
 const EMPTY_PROGRESS: Progress = {
-  step: "contact",
+  step: "details",
   shippingOption: DEFAULT_SHIPPING_OPTION.id,
   furthest: 0,
 };
@@ -321,6 +335,7 @@ export default function CheckoutFlow() {
         title="Your bag is empty."
         body="There is nothing to check out yet."
         action={{ href: "/shop", label: "Shop the drop" }}
+        secondary={{ href: "/drop", label: "What is coming" }}
       />
     );
   }
@@ -349,7 +364,9 @@ export default function CheckoutFlow() {
       `${form.firstName} ${form.lastName}`.trim(),
       form.address1,
       form.address2,
-      [form.city, form.region, form.postal].filter(Boolean).join(", "),
+      [form.city, regionName(form.country, form.region), form.postal]
+        .filter(Boolean)
+        .join(", "),
       countryName,
     ].filter(Boolean);
     const body = [
@@ -423,13 +440,13 @@ export default function CheckoutFlow() {
 
         {/* Real forms. Every Continue was `type="button"`, so pressing Enter in
             the email field did nothing at all. */}
-        {step === "contact" ? (
+        {step === "details" ? (
           <form
             className="pt-10"
             noValidate
             onSubmit={(event) => {
               event.preventDefault();
-              if (validate(["email"])) goTo("address");
+              if (validate(DETAIL_FIELDS)) goTo("delivery");
             }}
           >
             <h2
@@ -437,47 +454,12 @@ export default function CheckoutFlow() {
               tabIndex={-1}
               className="type-display-4 outline-none"
             >
-              Contact
+              Your details
             </h2>
             <p className="type-body-sm mt-3 text-ink-muted">
-              Order confirmation and shipping updates go here.
+              Three fields. The reply about this order goes to the email
+              address.
             </p>
-            <div className="mt-8">
-              <Field
-                id="email"
-                label={LABELS.email}
-                type="email"
-                required
-                inputMode="email"
-                enterKeyHint="next"
-                autoComplete="email"
-                value={form.email}
-                onChange={set("email")}
-                error={errors.email}
-              />
-            </div>
-            <button type="submit" className="btn btn-solid mt-8">
-              Continue to shipping
-            </button>
-          </form>
-        ) : null}
-
-        {step === "address" ? (
-          <form
-            className="pt-10"
-            noValidate
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (validate(ADDRESS_FIELDS)) goTo("delivery");
-            }}
-          >
-            <h2
-              ref={headingRef}
-              tabIndex={-1}
-              className="type-display-4 outline-none"
-            >
-              Shipping address
-            </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <Field
                 id="firstName"
@@ -499,6 +481,44 @@ export default function CheckoutFlow() {
                 onChange={set("lastName")}
                 error={errors.lastName}
               />
+              <Field
+                id="email"
+                label={LABELS.email}
+                type="email"
+                required
+                inputMode="email"
+                enterKeyHint="next"
+                autoComplete="email"
+                value={form.email}
+                onChange={set("email")}
+                error={errors.email}
+                className="sm:col-span-2"
+              />
+            </div>
+            <button type="submit" className="btn btn-solid mt-8">
+              Continue to delivery
+            </button>
+          </form>
+        ) : null}
+
+        {step === "delivery" ? (
+          <form
+            className="pt-10"
+            noValidate
+            onSubmit={(event) => {
+              event.preventDefault();
+              validate(ADDRESS_FIELDS);
+            }}
+          >
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Where it goes
+            </h2>
+            <p className="type-meta mt-8 text-ink-faint">Shipping address</p>
+            <div className="mt-5 grid gap-6 sm:grid-cols-2">
               <Field
                 id="address1"
                 label={LABELS.address1}
@@ -598,39 +618,12 @@ export default function CheckoutFlow() {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <button type="submit" className="btn btn-solid">
-                Continue to delivery
-              </button>
-              <button
-                type="button"
-                onClick={() => goTo("contact")}
-                className="btn btn-outline"
-              >
-                Back
-              </button>
-            </div>
-          </form>
-        ) : null}
-
-        {step === "delivery" ? (
-          <form
-            className="pt-10"
-            onSubmit={(event) => {
-              event.preventDefault();
-              goTo("payment");
-            }}
-          >
-            <h2
-              ref={headingRef}
-              tabIndex={-1}
-              className="type-display-4 outline-none"
-            >
-              Delivery
-            </h2>
-            <fieldset className="mt-8">
-              <legend className="visually-hidden">Delivery method</legend>
-              <div className="space-y-3">
+            {/* The legend was visually hidden, so two bordered boxes appeared
+                under the address with nothing naming what they were a choice
+                between. */}
+            <fieldset className="mt-12">
+              <legend className="type-meta text-ink-faint">Delivery method</legend>
+              <div className="mt-5 space-y-3">
                 {SHIPPING_OPTIONS.map((option) => {
                   const cost = shippingCost(subtotal, option.id);
                   return (
@@ -667,73 +660,29 @@ export default function CheckoutFlow() {
               </div>
             </fieldset>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <button type="submit" className="btn btn-solid">
-                Continue to payment
-              </button>
-              <button
-                type="button"
-                onClick={() => goTo("address")}
-                className="btn btn-outline"
-              >
-                Back
-              </button>
-            </div>
-          </form>
-        ) : null}
-
-        {step === "payment" ? (
-          <section className="pt-10">
-            <h2
-              ref={headingRef}
-              tabIndex={-1}
-              className="type-display-4 outline-none"
-            >
-              Payment
-            </h2>
-
-            {/* The review. Nothing on this step used to show the email, the
-                address or the delivery method that had been entered, so the
-                last screen before the final action was the one screen where
-                none of your own answers were visible. */}
-            <dl className="mt-8 divide-y divide-rule border-y border-rule">
+            {/* The review sits under the fields it reviews. It used to be a
+                fourth step, which meant reading back an address on a screen
+                that could not change it; here the same values are three
+                keystrokes from where they are shown, so only the one entered on
+                the step before carries an Edit. */}
+            <dl className="mt-12 divide-y divide-rule border-y border-rule">
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4">
-                <dt className="type-meta w-24 shrink-0 text-ink-faint">Email</dt>
-                <dd className="type-body-sm min-w-0 flex-1 break-words">{form.email}</dd>
-                <button
-                  type="button"
-                  onClick={() => goTo("contact")}
-                  className="link-rule link-rule-reveal shrink-0"
-                >
-                  Edit
-                </button>
+                <dt className="type-meta w-24 shrink-0 text-ink-faint">Order</dt>
+                <dd className="type-body-sm min-w-0 flex-1">
+                  <span className="num">{lines.length}</span>{" "}
+                  {lines.length === 1 ? "piece" : "pieces"} ·{" "}
+                  <span className="num">{formatPrice(total)}</span> including{" "}
+                  {deliveryName.toLowerCase()}
+                </dd>
               </div>
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4">
-                <dt className="type-meta w-24 shrink-0 text-ink-faint">Ship to</dt>
-                <dd className="type-body-sm min-w-0 flex-1">
-                  {form.firstName} {form.lastName}
-                  <br />
-                  {form.address1}
-                  {form.address2 ? `, ${form.address2}` : ""}
-                  <br />
-                  {form.city}, {regionName(form.country, form.region)} {form.postal}
-                  <br />
-                  {countryName}
+                <dt className="type-meta w-24 shrink-0 text-ink-faint">Reply to</dt>
+                <dd className="type-body-sm min-w-0 flex-1 break-words">
+                  {form.firstName} {form.lastName} · {form.email}
                 </dd>
                 <button
                   type="button"
-                  onClick={() => goTo("address")}
-                  className="link-rule link-rule-reveal shrink-0"
-                >
-                  Edit
-                </button>
-              </div>
-              <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4">
-                <dt className="type-meta w-24 shrink-0 text-ink-faint">Delivery</dt>
-                <dd className="type-body-sm min-w-0 flex-1">{deliveryName}</dd>
-                <button
-                  type="button"
-                  onClick={() => goTo("delivery")}
+                  onClick={() => goTo("details")}
                   className="link-rule link-rule-reveal shrink-0"
                 >
                   Edit
@@ -742,58 +691,49 @@ export default function CheckoutFlow() {
             </dl>
 
             {/* No payment provider is connected. Rather than mock a card form
-                that appears to work, the step says what is actually true. */}
+                that appears to work, the flow says what is actually true and
+                then does the thing that does work. */}
             <div className="mt-10 border border-ink p-8">
-              <p className="type-meta">Payment provider not connected</p>
+              {/* The page opens on the full disclosure, so this states the
+                  mechanics of the button under it and not the situation again:
+                  two panels a scroll apart saying the same paragraph read as a
+                  site apologising twice. */}
+              <p className="type-meta">Placing this order</p>
               <p className="type-body mt-4 text-ink-muted">
-                This storefront is not yet wired to a payment processor, so no card can be
-                taken and no order can be placed. Everything up to this point — your bag,
-                address and delivery method — is real and working.
-              </p>
-              <p className="type-body mt-4 text-ink-muted">
-                To finish an order today, send it to {CONTACT_EMAIL}. The email opens
-                with your bag, delivery method and address already in it — nothing
-                sends until you press send.
+                This opens a message to {CONTACT_EMAIL} with the pieces, sizes,
+                delivery method, address and total already written into it.
+                Nothing is sent until you send it, and nothing is charged.
               </p>
 
               <dl className="mt-8 border-t border-rule pt-5">
                 <div className="flex justify-between">
-                  <dt className="type-meta">Amount due</dt>
+                  <dt className="type-meta">Total</dt>
                   <dd className="num type-mono-3">{formatPrice(total)}</dd>
                 </div>
               </dl>
 
-              <a href={orderMail} className="btn btn-solid btn-full mt-8">
-                Email this order
-              </a>
-
-              {/* The disabled control used to read "Pay $284.00" — an exact,
-                  precise, entirely unpayable amount, which is the cruellest
-                  available label for a dead button. It names its own state
-                  instead, and the working action above it is the one that is
-                  styled as the primary. */}
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                aria-describedby="pay-disabled"
-                className="btn btn-outline btn-full mt-4"
+              {/* Submitting the form validates the address; the mail link is
+                  the action itself. Both are here because an address typed and
+                  never checked would otherwise ride into the email unvalidated. */}
+              <a
+                href={orderMail}
+                onClick={(event) => {
+                  if (!validate(ADDRESS_FIELDS)) event.preventDefault();
+                }}
+                className="btn btn-solid btn-full mt-8"
               >
-                Card payment unavailable
-              </button>
-              <p id="pay-disabled" className="type-meta mt-3 text-ink-faint">
-                Disabled until a payment provider is connected.
-              </p>
+                Write this order
+              </a>
             </div>
 
             <button
               type="button"
-              onClick={() => goTo("delivery")}
+              onClick={() => goTo("details")}
               className="btn btn-outline mt-8"
             >
               Back
             </button>
-          </section>
+          </form>
         ) : null}
       </div>
 

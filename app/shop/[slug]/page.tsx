@@ -5,6 +5,8 @@ import ProductGallery from "@/components/product/ProductGallery";
 import BuyPanel from "@/components/product/BuyPanel";
 import OnBody from "@/components/product/OnBody";
 import FitStory from "@/components/product/FitStory";
+import InFrames from "@/components/product/InFrames";
+import Measurements from "@/components/product/Measurements";
 import ProductGrid from "@/components/product/ProductGrid";
 import Accordion from "@/components/ui/Accordion";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -13,15 +15,18 @@ import { categoryName } from "@/lib/catalog/categories";
 import {
   allProductSlugs,
   AVAILABILITY_SCHEMA,
+  framesFeaturing,
   galleryImages,
   getProduct,
   getRelated,
+  onBodyImages,
   resolveAvailability,
   runStatus,
 } from "@/lib/catalog/queries";
 import { CURRENCY, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { SHIPPING_OPTIONS, FREE_SHIPPING_THRESHOLD } from "@/lib/commerce/shipping";
+import { RETURN_WINDOW } from "@/lib/commerce/returns";
 import { getDrop } from "@/lib/catalog/drops";
 import { jsonLd } from "@/lib/jsonld";
 
@@ -60,6 +65,26 @@ export default async function ProductPage({ params }: { params: Params }) {
   const availability = resolveAvailability(product);
   const drop = getDrop(product.drop);
   const run = runStatus(product);
+  const frames = framesFeaturing(product.slug);
+
+  /**
+   * The page's numbering series, derived rather than typed.
+   *
+   * Every section carried a hard-coded index while three of them render only
+   * when their data exists, so a piece with no fitting printed 01 followed by
+   * 04 — which turns the mono numeral from a position in a sequence into
+   * decoration. The sequence is now whatever is actually on the page.
+   */
+  const sections = [
+    "record",
+    onBodyImages(product).length > 0 ? "on-body" : null,
+    product.fit.length > 0 ? "fit" : null,
+    frames.length > 0 ? "frames" : null,
+    related.length > 0 ? "related" : null,
+  ].filter((id): id is string => id !== null);
+
+  const sectionIndex = (id: string) =>
+    String(sections.indexOf(id) + 1).padStart(2, "0");
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -133,7 +158,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               02. The code moves up here out of the specimen table: it is the
               piece's identifier, not one of its attributes. */}
           <p className="eyebrow border-t border-ink pt-4">
-            <span className="num">01</span>
+            <span className="num">{sectionIndex("record")}</span>
             <span>{product.variants[0]?.sku.replace(/-[^-]+$/, "")}</span>
           </p>
 
@@ -212,6 +237,12 @@ export default async function ProductPage({ params }: { params: Params }) {
               <p className="type-body text-ink-muted">{product.story}</p>
             </Accordion>
 
+            {/* Ahead of the run figures and the logistics: this is the last
+                question between wanting the piece and picking a size. */}
+            <Accordion title="Measurements">
+              <Measurements product={product} />
+            </Accordion>
+
             <Accordion title="The run">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 <li>
@@ -258,7 +289,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                 </li>
               </ul>
               <p className="type-body mt-5 text-ink-muted">
-                Unworn pieces can be returned within 30 days of delivery. Full terms are
+                Unworn pieces can be returned within {RETURN_WINDOW} of delivery. Full terms are
                 on the{" "}
                 <Link href="/returns" className="link-rule">
                   returns page
@@ -273,13 +304,20 @@ export default async function ProductPage({ params }: { params: Params }) {
       {/* Past the buying decision the page turns back into an editorial: the
           piece on people, then how it is meant to sit. Both render nothing
           until there is something real behind them. */}
-      <OnBody product={product} />
+      <OnBody product={product} index={sectionIndex("on-body")} />
 
-      <section className="rhythm-tight">
+      {/* A plain wrapper: `FitStory` is itself the labelled section, and this
+          carried a second one around it — two nested landmarks announcing the
+          same heading. */}
+      <div className="rhythm-tight">
         <div className="page-frame">
-          <FitStory product={product} />
+          <FitStory product={product} index={sectionIndex("fit")} />
         </div>
-      </section>
+      </div>
+
+      {/* The way out of a product page is the drop it belongs to, not another
+          product card. */}
+      <InFrames frames={frames} index={sectionIndex("frames")} />
 
       {related.length > 0 ? (
         <section className="rhythm-default">
@@ -288,7 +326,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                 ProductGrid then supplied a visually hidden one saying the same
                 words. One real heading instead of an invisible duplicate. */}
             <SectionHeading
-              index="04"
+              index={sectionIndex("related")}
               label="Related"
               title="You may also like."
               titleClass="type-display-3"

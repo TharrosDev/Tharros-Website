@@ -16,7 +16,14 @@ import type { Product } from "@/lib/catalog/types";
  * a fitting, independently — so a shoot that happened before the paperwork
  * still shows its pictures, and never invents the people in them.
  */
-export default function OnBody({ product }: { product: Product }) {
+export default function OnBody({
+  product,
+  index = "02",
+}: {
+  product: Product;
+  /** The page owns the numbering — three sections here are conditional. */
+  index?: string;
+}) {
   const frames = onBodyImages(product);
   if (frames.length === 0) return null;
 
@@ -26,7 +33,7 @@ export default function OnBody({ product }: { product: Product }) {
     <section aria-labelledby="on-body" className="rhythm-tight">
       <div className="page-frame">
         <SectionHeading
-          index="02"
+          index={index}
           label="On body"
           title="Worn."
           titleClass="type-display-3"

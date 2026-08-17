@@ -5,6 +5,7 @@ import InfoFooter from "@/components/layout/InfoFooter";
 import PendingNotice from "@/components/ui/PendingNotice";
 import { informationIndex } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { RETURN_WINDOW } from "@/lib/commerce/returns";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
@@ -41,7 +42,7 @@ export default function RefundPolicyPage() {
             index: "01",
             title: "Eligibility",
             body: [
-              "Pieces returned unworn, unwashed and with tags attached within 30 days of delivery are eligible for a refund.",
+              `Pieces returned unworn, unwashed and with tags attached within ${RETURN_WINDOW} of delivery are eligible for a refund.`,
               "Final-sale pieces, where marked as such at the time of purchase, are not eligible.",
             ],
           },

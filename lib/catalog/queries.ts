@@ -14,9 +14,13 @@ export {
   thumbnailImage,
 } from "./images";
 import { getModel, type ModelProfile } from "./models";
+import { getDrop } from "./drops";
+import { CAMPAIGNS } from "./campaign";
+import { LOOKBOOK } from "./lookbook";
 import type {
   Availability,
   CategoryId,
+  Drop,
   ImageSlotData,
   Product,
   ProductQuery,
@@ -24,6 +28,15 @@ import type {
   SortKey,
   Variant,
 } from "./types";
+
+/** One editorial frame a piece appears in, flattened out of campaigns and spreads. */
+export type FeaturedFrame = {
+  id: string;
+  index: string;
+  image: ImageSlotData;
+  caption?: string;
+  href: string;
+};
 
 /** A fitting credit with its model resolved. Never produced without both halves. */
 export type ResolvedCredit = {
@@ -244,6 +257,71 @@ export function fitNote(product: Product): string | null {
  *  need a filter bar full of empty rails. */
 export function categoriesInUse(): CategoryId[] {
   return [...new Set(PRODUCTS.map((product) => product.category))];
+}
+
+/**
+ * The drops that actually hold a piece, newest first, with the count each one
+ * released.
+ *
+ * The shop browses by release rather than by facet, so this is the axis the
+ * filter bar is built on. Derived from the catalogue rather than from
+ * `DROPS`, so a drop announced but not yet stocked cannot appear as an empty
+ * view — the same reasoning as `categoriesInUse()`.
+ */
+export function dropsInUse(): { drop: Drop; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const product of PRODUCTS) {
+    counts.set(product.drop, (counts.get(product.drop) ?? 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([id, count]) => ({ drop: getDrop(id), count }))
+    .filter(
+      (entry): entry is { drop: Drop; count: number } => entry.drop !== undefined,
+    )
+    .sort((a, b) => b.drop.index.localeCompare(a.drop.index));
+}
+
+/**
+ * Every editorial frame a piece appears in — the campaign sequence and the
+ * lookbook, in the order the site shows them.
+ *
+ * The link ran one way before this: a frame lists what is worn in it, and
+ * nothing on a product page said the piece had been photographed at all.
+ * Someone landing on a piece from search met a gallery and a spec table while
+ * the campaign it was shot for sat two clicks away, unmentioned.
+ */
+export function framesFeaturing(slug: string): FeaturedFrame[] {
+  const frames: FeaturedFrame[] = [];
+
+  for (const campaign of CAMPAIGNS) {
+    for (const frame of [campaign.hero, ...campaign.sequence]) {
+      if (frame.wearing.includes(slug)) {
+        frames.push({
+          id: frame.id,
+          index: frame.index,
+          image: frame.image,
+          caption: frame.caption,
+          href: "/lookbook",
+        });
+      }
+    }
+  }
+
+  for (const spread of LOOKBOOK) {
+    if (!spread.wearing.includes(slug)) continue;
+    const image = spread.images[0];
+    if (!image) continue;
+    frames.push({
+      id: spread.id,
+      index: spread.index,
+      image,
+      caption: spread.caption,
+      href: "/lookbook",
+    });
+  }
+
+  return frames;
 }
 
 export function searchProducts(term: string, limit = 8): Product[] {

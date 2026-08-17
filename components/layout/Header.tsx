@@ -9,7 +9,7 @@ import IndexOverlay from "./IndexOverlay";
 import SearchOverlay from "@/components/commerce/SearchOverlay";
 import { useCart } from "@/components/commerce/CartProvider";
 import { useWishlist } from "@/components/commerce/WishlistProvider";
-import { BagIcon, SearchIcon } from "@/components/ui/icons";
+import { BagIcon, HeartIcon, SearchIcon } from "@/components/ui/icons";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { NAV_PRIMARY } from "@/lib/site";
 
@@ -150,19 +150,36 @@ export default function Header() {
               <span className="visually-hidden">Search</span>
             </button>
 
+            {/* Saved is per-visitor state, so it belongs beside the bag rather
+                than counted on the navigation button — a number on "Menu" is a
+                number about something the menu is not. It appears only once
+                something is in it: a permanent zero is chrome displaying a
+                nothing, the same reason the bag count is absent at zero. */}
+            {savedCount > 0 ? (
+              <Link
+                href="/wishlist"
+                className="inline-flex h-11 items-center gap-2 px-2 transition-opacity hover:opacity-60"
+              >
+                <HeartIcon />
+                <span className="num type-mono-3" aria-hidden="true">
+                  {savedCount}
+                </span>
+                <span className="visually-hidden">
+                  Saved — {savedCount} piece{savedCount === 1 ? "" : "s"}
+                </span>
+              </Link>
+            ) : null}
+
+            {/* "Index" is a designer's word for a list of pages. Every customer
+                who has ever looked for navigation was looking for a menu. */}
             <button
               type="button"
               onClick={() => setIndexOpen(true)}
               aria-expanded={indexOpen}
               className="type-meta -my-2 inline-flex h-11 items-center gap-2 px-2 transition-opacity hover:opacity-60"
             >
-              Index
-              {savedCount > 0 ? (
-                <span className="num type-meta opacity-60">{savedCount}</span>
-              ) : null}
-              <span className="visually-hidden">
-                — open site index{savedCount > 0 ? `, ${savedCount} saved` : ""}
-              </span>
+              Menu
+              <span className="visually-hidden">— open site navigation</span>
             </button>
 
             <button

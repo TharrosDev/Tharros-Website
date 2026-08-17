@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Accordion from "@/components/ui/Accordion";
 import { informationIndex, SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
+import { RETURN_WINDOW } from "@/lib/commerce/returns";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -95,7 +96,7 @@ const GROUPS: FaqGroup[] = [
       {
         question: "What is the returns policy?",
         answer:
-          "Unworn pieces with tags attached can be returned within 30 days of delivery. Return shipping is paid by the customer unless the piece arrived faulty or incorrect.",
+          `Unworn pieces with tags attached can be returned within ${RETURN_WINDOW} of delivery. Return shipping is paid by the customer unless the piece arrived faulty or incorrect.`,
         more: { href: "/returns", label: "How to return something" },
       },
     ],

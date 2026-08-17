@@ -63,11 +63,12 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Area | State |
 |---|---|
 | Catalog, cart, sizes, inventory, wishlist, search, filtering, sorting | **Real and working** |
-| Checkout up to payment | **Real** — contact, address, delivery, live totals |
-| Payment | **Not connected**, and said three times before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and at step 04. The working action there is a `mailto:` composed from the resolved bag and address; the card button is disabled and named "Card payment unavailable" rather than quoting a price nobody can pay. |
-| Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
+| Checkout up to payment | **Real** — details, address, delivery, live totals |
+| Payment | **Not connected**, and said before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and beside the action itself. The flow is two steps rather than four, because a card-shaped walk to an email is three screens of theatre — the working action composes a `mailto:` from the resolved bag, the address and the delivery choice. There is no disabled pay button: a permanently dead primary control is chrome, and the panel above it states the situation in words. |
+| Accounts / sign-in | **Not connected.** `/account` states that once, then spends the page on what works without one — saved pieces and the email order. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
 | Product photography | **Not shot yet.** Image slots render a free-licence stock stand-in, desaturated to the monochrome palette, from `public/filler` (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
+| Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere; `pieceTable()` returns null and the product page says the piece has not been measured. Filling them in is a data change — see `lib/catalog/sizing.ts`. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
 
@@ -102,16 +103,16 @@ decision, and it is the owner's.
 | `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
 | `/journal`, `/journal/[slug]` | `app/journal/**` | Structured blocks, no MDX |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
-| `/checkout` | `app/checkout/page.tsx` | Four steps, stops at payment |
+| `/checkout` | `app/checkout/page.tsx` | Two steps — details, then where it goes — ending in a composed email |
 | `/account` | `app/account/page.tsx` | Shell |
 | `/size-guide`, `/shipping`, `/returns`, `/faq`, `/contact` | | Information |
 | `/legal/privacy`, `/legal/terms`, `/legal/refund-policy` | | Drafts |
 | 404 | `app/not-found.tsx` | Branded, full-screen |
 | Errors | `app/error.tsx`, `app/global-error.tsx` | Branded boundaries — never Next's default page |
-| Loading | `app/shop/loading.tsx` | Skeleton matching the real grid, so nothing shifts |
+| Loading | — | **There is no route-level loading state, deliberately.** `app/shop/loading.tsx` put the whole `/shop` segment — every product page included — behind a Suspense boundary that only resolves once JavaScript runs, so without it the shop served a permanent skeleton (`main` held 40 characters). Pending feedback lives on the filter links instead, via `useLinkStatus` in `FilterBar`. Do not reintroduce a `loading.tsx` in a segment that must render without scripting. |
 
 The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
-Shop / Drop / Lookbook) plus a search control, and keeps `IndexOverlay` as the full
+Shop / Drop / Lookbook) plus a search control, a saved count when there is one, and keeps `IndexOverlay` as the full
 navigation surface. They are real links, so navigation survives scripting being
 unavailable; before this the only nav trigger was a `<button>` and the footer was the
 site's entire navigation with JS off.
