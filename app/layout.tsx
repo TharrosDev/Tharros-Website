@@ -6,7 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 import CartDrawer from "@/components/commerce/CartDrawer";
-import { BRAND, BRAND_LINE, SITE_URL, socialProfiles } from "@/lib/site";
+import { BRAND, BRAND_LINE, CONTACT_EMAIL, SITE_URL, socialProfiles } from "@/lib/site";
 import { jsonLd } from "@/lib/jsonld";
 
 /** Loaded as a variable font rather than pinned to 700/800, so weight is an
@@ -94,6 +94,16 @@ const graph = {
       name: BRAND,
       url: SITE_URL,
       slogan: BRAND_LINE,
+      // The generated app icon. Without a logo the node is not eligible for a
+      // knowledge panel at all, and this is a real image endpoint rather than
+      // a promise of an asset that does not exist yet.
+      logo: `${SITE_URL}/icon`,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: CONTACT_EMAIL,
+        availableLanguage: "English",
+      },
       ...(socialProfiles().length > 0 ? { sameAs: socialProfiles() } : {}),
     },
     {

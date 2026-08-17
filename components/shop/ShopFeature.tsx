@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import WornList from "@/components/campaign/WornList";
+import Reveal from "@/components/ui/Reveal";
 import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { listProducts } from "@/lib/catalog/queries";
@@ -45,10 +46,12 @@ export default function ShopFeature() {
         </div>
 
         <div className="flex min-w-0 flex-col md:col-span-4 md:col-start-9">
-          <div className="eyebrow border-t border-ink pt-4">
-            <span className="num">{CURRENT_DROP.index}</span>
-            <span>{CURRENT_DROP.name}</span>
-          </div>
+          <Reveal className="rule-draw pt-4">
+            <p className="eyebrow">
+              <span className="num">{CURRENT_DROP.index}</span>
+              <span>{CURRENT_DROP.name}</span>
+            </p>
+          </Reveal>
           <h2 className="type-display-4 mt-6 text-balance">
             {CURRENT_DROP.statement}
           </h2>

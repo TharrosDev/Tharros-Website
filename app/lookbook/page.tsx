@@ -10,12 +10,38 @@ import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { getProduct } from "@/lib/catalog/queries";
 import type { LookbookSpread } from "@/lib/catalog/types";
+import { SITE_URL } from "@/lib/site";
+import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Lookbook",
   description:
     "The Drop 001 lookbook — a small set of frames showing the pieces and how they sit together.",
   alternates: { canonical: "/lookbook" },
+  openGraph: {
+    type: "website",
+    title: `${CURRENT_DROP.name} lookbook`,
+    description:
+      "A small set of frames showing the pieces and how they sit together.",
+    url: `${SITE_URL}/lookbook`,
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/lookbook#page`,
+      url: `${SITE_URL}/lookbook`,
+      name: `${CURRENT_DROP.name} lookbook`,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+    },
+    breadcrumbList(SITE_URL, [
+      { name: "Home", path: "/" },
+      { name: "Lookbook", path: "/lookbook" },
+    ]),
+  ],
 };
 
 function Wearing({ slugs }: { slugs: string[] }) {
@@ -56,6 +82,11 @@ function Caption({ spread }: { spread: LookbookSpread }) {
 export default function LookbookPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
+      />
+
       {/* Opens full-bleed under the transparent header, like the home hero. */}
       <section className="on-dark relative flex min-h-[85svh] flex-col justify-end overflow-hidden">
         {/* The campaign's own hero when there is one — the lookbook and the
@@ -67,11 +98,15 @@ export default function LookbookPage() {
           priority
           sizes="100vw"
         />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/45"
-        />
+        {/* Anchored to the block it protects, not to a fraction of the
+            viewport. A band across a `min-h-[85svh]` section drifts as the
+            screen height changes and leaves the type on bare picture — which
+            is exactly the failure the home hero was rebuilt to avoid. */}
         <div className="page-frame relative z-10 pb-14">
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 -top-40 -bottom-14 -z-10 bg-gradient-to-t from-black/90 via-black/80 to-transparent"
+          />
           <p className="type-meta text-ink-on-dark">
             <span className="num">{CURRENT_DROP.index}</span>
             <span className="ml-4">Lookbook</span>

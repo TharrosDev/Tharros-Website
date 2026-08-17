@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ImageSlot from "@/components/media/ImageSlot";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { JOURNAL, getJournalEntry, listJournal } from "@/lib/catalog/journal";
 import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
@@ -141,11 +142,13 @@ export default async function JournalEntryPage({ params }: { params: Params }) {
 
       {more.length > 0 ? (
         <section className="page-frame rhythm-default border-t border-rule">
-          <p className="eyebrow">
-            <span className="num">02</span>
-            <span>More from the journal</span>
-          </p>
-          <ul className="mt-10 grid gap-x-6 gap-y-12 md:grid-cols-2">
+          <SectionHeading
+            index="02"
+            label="More from the journal"
+            title="Keep reading."
+            titleClass="type-display-3"
+          />
+          <ul className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-2">
             {more.map((item) => (
               <li key={item.id}>
                 <Link href={`/journal/${item.slug}`} className="group block">

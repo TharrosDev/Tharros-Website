@@ -12,6 +12,32 @@
  */
 const LINE_SEPARATORS = new RegExp("[\\u2028\\u2029]", "g");
 
+/**
+ * A BreadcrumbList from a trail of `[name, path]` pairs.
+ *
+ * Only `/shop/[slug]` and `/journal/[slug]` used to publish one, each with its
+ * own hand-built `itemListElement` array — so every other route was invisible
+ * to breadcrumb rendering in results, and the two that were not could drift
+ * apart. Paths are site-relative; the site URL is applied here.
+ *
+ * No `@context` — this is always a node inside a page's own graph, and a
+ * nested context is not what the caller means.
+ */
+export function breadcrumbList(
+  siteUrl: string,
+  trail: { name: string; path: string }[],
+): Record<string, unknown> {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: entry.name,
+      item: `${siteUrl}${entry.path === "/" ? "" : entry.path}`,
+    })),
+  };
+}
+
 export function jsonLd(data: unknown): string {
   return JSON.stringify(data)
     .replace(/</g, "\\u003c")

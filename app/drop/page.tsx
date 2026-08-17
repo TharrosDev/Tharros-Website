@@ -5,15 +5,42 @@ import CampaignSequence from "@/components/campaign/CampaignSequence";
 import ProductGrid from "@/components/product/ProductGrid";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { CURRENT_DROP, NEXT_DROP } from "@/lib/catalog/drops";
 import { listProducts, runStatus } from "@/lib/catalog/queries";
 import { formatDate } from "@/lib/format";
+import { SITE_URL } from "@/lib/site";
+import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Current Drop",
   description:
     "Drop 001 — a small run of original pieces from THARROS. Made in limited numbers, not restocked on a schedule.",
   alternates: { canonical: "/drop" },
+  openGraph: {
+    type: "website",
+    title: `${CURRENT_DROP.name} — ${CURRENT_DROP.statement}`,
+    description:
+      "A small run of original pieces. Made in limited numbers, not restocked on a schedule.",
+    url: `${SITE_URL}/drop`,
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/drop#page`,
+      url: `${SITE_URL}/drop`,
+      name: CURRENT_DROP.name,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+    },
+    breadcrumbList(SITE_URL, [
+      { name: "Home", path: "/" },
+      { name: CURRENT_DROP.name, path: "/drop" },
+    ]),
+  ],
 };
 
 export default function DropPage() {
@@ -25,6 +52,11 @@ export default function DropPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
+      />
+
       <PageIntro
         index={CURRENT_DROP.index}
         label={
@@ -75,30 +107,34 @@ export default function DropPage() {
       />
 
       <div className="page-frame rhythm-tight">
-        <div className="eyebrow mb-10 border-t border-ink pt-4">
-          <span className="num">03</span>
-          <span>The pieces</span>
-        </div>
+        <SectionHeading
+          index="03"
+          label="The pieces"
+          title="Everything in the run."
+          titleClass="type-display-3"
+          className="mb-12"
+        />
         <ProductGrid
           products={pieces}
-          heading={`${CURRENT_DROP.name} pieces`}
           columns={3}
           priorityCount={3}
+          specimen
         />
       </div>
 
       {NEXT_DROP ? (
         <section className="on-dark rhythm-default">
           <div className="page-frame">
-            <div className="flex items-baseline justify-between gap-6 border-t border-rule-on-dark pt-4">
+            <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-4">
               <p className="eyebrow">
-                <span className="num">{NEXT_DROP.index}</span>
+                <span className="num">04</span>
                 <span>{NEXT_DROP.name}</span>
               </p>
-              <p className="type-meta text-ink-on-dark-faint">In development</p>
-            </div>
+              {/* Oxide marks the state, not the numeral. */}
+              <p className="type-meta text-signal-on-dark">In development</p>
+            </Reveal>
 
-            <h2 className="type-display-2 mt-8 max-w-[16ch]">{NEXT_DROP.statement}</h2>
+            <h2 className="type-display-2 mt-10 max-w-[16ch]">{NEXT_DROP.statement}</h2>
 
             <div className="mt-8 grid gap-x-6 gap-y-10 lg:grid-cols-12">
               <div className="space-y-5 lg:col-span-5">
@@ -123,9 +159,9 @@ export default function DropPage() {
 
             {upcoming.length > 0 ? (
               <div className="mt-16">
-                <p className="eyebrow border-t border-rule-on-dark pt-4">
-                  <span>Far enough along to show</span>
-                </p>
+                <Reveal className="rule-draw pt-4">
+                  <p className="eyebrow">Far enough along to show</p>
+                </Reveal>
                 <div className="mt-10">
                   <ProductGrid
                     products={upcoming}
