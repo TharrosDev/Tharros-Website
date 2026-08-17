@@ -16,6 +16,7 @@ import {
   type CartLine,
   type ResolvedLine,
 } from "@/lib/commerce/cart";
+import { getProductById, variantFor } from "@/lib/catalog/queries";
 import { createPersistentStore } from "@/lib/persistent-store";
 import { useHydrated } from "@/lib/hooks";
 import type { Size } from "@/lib/catalog/types";
@@ -92,13 +93,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     options?: { open?: boolean },
   ) => {
     bagStore.set((current) => {
+      // Clamp to what is actually on the shelf, not just to the per-line cap.
+      // `resolveLines` already clamps what is *displayed*, so an over-count was
+      // invisible — but it was still written to storage, and it would have come
+      // back the moment stock was replenished.
+      const product = getProductById(productId);
+      if (!product) return current;
+      const stock = variantFor(product, size)?.inventory ?? 0;
+      const ceiling = Math.min(stock, MAX_LINE_QUANTITY);
+      if (ceiling <= 0) return current;
+
       const existing = current.find(
         (line) => line.productId === productId && line.size === size,
       );
-      if (!existing) return [...current, { productId, size, quantity }];
+      if (!existing) {
+        return [...current, { productId, size, quantity: Math.min(quantity, ceiling) }];
+      }
       return current.map((line) =>
         line === existing
-          ? { ...line, quantity: Math.min(line.quantity + quantity, MAX_LINE_QUANTITY) }
+          ? { ...line, quantity: Math.min(line.quantity + quantity, ceiling) }
           : line,
       );
     });

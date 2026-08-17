@@ -119,6 +119,10 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
           </button>
         </div>
 
+        {/* Enter goes to the full results page. It used to only record the term
+            and stay put, which made the key look broken and left `/shop?q=` —
+            the URL the WebSite SearchAction in the JSON-LD points at — with no
+            route to it from inside the site at all. */}
         <form
           role="search"
           // Enter used to record the term and stop. The shop has taken `?q=`

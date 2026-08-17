@@ -56,18 +56,20 @@ export default async function ShopPage({
   // engine's deep link lands on real results rather than the whole catalogue.
   const query = first(params.q)?.trim();
 
-  // A search now composes with the filter bar instead of replacing it. Before
-  // this, every category and sort control stayed live on a search results page
-  // and did nothing — and following one silently dropped the `?q=`.
+  // A search is still a view of the shop, so the same filters apply to it. It
+  // previously ignored all of them: the bar rendered above a search showed a
+  // category and a sort that changed nothing, and every one of its links threw
+  // the search away. Relevance stays the default order — an explicit sort is the
+  // only thing allowed to override what the search decided was most relevant.
   const products = query
-    ? sortProducts(
-        filterProducts(searchProducts(query, 100), {
+    ? (() => {
+        const matches = filterProducts(searchProducts(query, 100), {
           category,
           drop: drop?.id,
           isNew: newOnly || undefined,
-        }),
-        sort,
-      )
+        });
+        return sort === "featured" ? matches : sortProducts(matches, sort);
+      })()
     : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
 
   const heading = query

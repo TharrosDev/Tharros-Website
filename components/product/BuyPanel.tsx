@@ -174,7 +174,8 @@ export default function BuyPanel({ product }: { product: Product }) {
           value={quantity}
           max={maxQuantity}
           label={product.name}
-          onChange={(next) => setQuantity(Math.max(1, next))}
+          min={1}
+          onChange={setQuantity}
         />
         <SaveButton
           productId={product.id}

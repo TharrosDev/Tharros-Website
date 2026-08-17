@@ -163,6 +163,7 @@ export default function CheckoutFlow() {
   const [shippingOption, setShippingOption] = useState(DEFAULT_SHIPPING_OPTION.id);
   const [furthest, setFurthest] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   const set = (key: keyof Form) => (value: string) => {
     formStore.set((current) => ({ ...current, [key]: value }));
@@ -197,12 +198,24 @@ export default function CheckoutFlow() {
     return true;
   };
 
+  /**
+   * Move to a step, and put focus on its heading.
+   *
+   * Each step replaces the last, so the button that was just pressed is
+   * unmounted and focus falls back to `<body>`. For anyone on a keyboard or a
+   * screen reader that means the form silently restarts from the top of the
+   * document on every step — the change is announced to nobody. Focusing the
+   * new heading is what makes the flow followable without a mouse.
+   */
   const goTo = (id: StepId) => {
     setStep(id);
     setFurthest((current) =>
       Math.max(current, STEPS.findIndex((entry) => entry.id === id)),
     );
     panelRef.current?.scrollIntoView({ block: "start" });
+    // The heading belongs to the step being rendered, so it only exists after
+    // this commit.
+    requestAnimationFrame(() => headingRef.current?.focus());
   };
 
   if (!ready) {
@@ -292,7 +305,13 @@ export default function CheckoutFlow() {
               if (validate(["email"])) goTo("address");
             }}
           >
-            <h2 className="type-display-4">Contact</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Contact
+            </h2>
             <p className="type-body-sm mt-3 text-ink-muted">
               Order confirmation and shipping updates go here.
             </p>
@@ -325,7 +344,13 @@ export default function CheckoutFlow() {
               if (validate(ADDRESS_FIELDS)) goTo("delivery");
             }}
           >
-            <h2 className="type-display-4">Shipping address</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Shipping address
+            </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <Field
                 id="firstName"
@@ -442,7 +467,13 @@ export default function CheckoutFlow() {
               goTo("payment");
             }}
           >
-            <h2 className="type-display-4">Delivery</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Delivery
+            </h2>
             <fieldset className="mt-8">
               <legend className="visually-hidden">Delivery method</legend>
               <div className="space-y-3">
@@ -499,7 +530,13 @@ export default function CheckoutFlow() {
 
         {step === "payment" ? (
           <section className="pt-10">
-            <h2 className="type-display-4">Payment</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="type-display-4 outline-none"
+            >
+              Payment
+            </h2>
 
             {/* The review. Nothing on this step used to show the email, the
                 address or the delivery method that had been entered, so the

@@ -106,14 +106,13 @@ export function isSortKey(value: string | undefined): value is SortKey {
 }
 
 /**
- * The shop's ordering, applied to any list.
+ * Apply a sort to a list that has already been assembled.
  *
- * Sold-out and unreleased pieces stay in the grid but sink to the bottom;
- * hiding them loses the sense that the line is bigger than what is in stock.
- *
- * Exported because search results need the same ordering. Filtering and sorting
- * used to be reachable only through `listProducts`, so `/shop?q=` ignored the
- * category and sort controls entirely — they stayed on screen and did nothing.
+ * `listProducts` sorts what it filters, but search results come out of
+ * `searchProducts` in relevance order and had no way to be re-sorted — so the
+ * sort links on a search page changed the URL and nothing else. Sold-out pieces
+ * still sink to the bottom, exactly as they do in the grid: hiding them loses
+ * the sense that the line is bigger than what is in stock.
  */
 export function sortProducts(products: Product[], sort: SortKey = "featured"): Product[] {
   return [...products].sort((a, b) => {
@@ -122,6 +121,7 @@ export function sortProducts(products: Product[], sort: SortKey = "featured"): P
   });
 }
 
+/** The other half of the same seam: narrowing a list the caller already holds. */
 export function filterProducts(products: Product[], query: ProductQuery = {}): Product[] {
   const { category = "all", drop, isNew } = query;
   return products.filter((product) => {
@@ -138,6 +138,20 @@ export function listProducts(query: ProductQuery = {}): Product[] {
 
 export function getProduct(slug: string): Product | undefined {
   return PRODUCTS.find((product) => product.slug === slug);
+}
+
+/**
+ * Look a piece up by its id rather than its route.
+ *
+ * The bag and the wishlist both store `product.id`, and both used to resolve it
+ * through `getProduct`, which matches on `slug`. That works only because every
+ * product currently declares the same string for both — an undocumented
+ * coupling with nothing enforcing it. One new piece whose slug differed from its
+ * id would silently empty somebody's saved list and drop their bag lines, with
+ * no error anywhere. Storage lookups go through here instead.
+ */
+export function getProductById(id: string): Product | undefined {
+  return PRODUCTS.find((product) => product.id === id);
 }
 
 export function allProductSlugs(): string[] {

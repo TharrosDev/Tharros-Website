@@ -249,26 +249,40 @@ Slow, flat, intentional. Nothing bounces or overshoots.
   to do: the colour transitioned and the picture behind the header did not.
 - Everything is disabled under `prefers-reduced-motion`.
 
-### What the motion library may do
+### No animation library
 
-`motion` is a dependency. It is scoped deliberately, because the CSS system above is
-cheaper and degrades better, and a library that creeps outward ends up re-implementing it.
+There is no animation dependency, and adding one needs to clear a bar this project has
+already tested. `motion` was added for the travelling numeral and removed again: scoped as
+tightly as it goes — `LazyMotion` with `domAnimation` and `m` rather than `motion` — it
+still measured **38kB gzipped**, loaded on `/`, `/drop` and `/lookbook`, for a 40px drift.
 
-**Allowed** — scroll-linked position (`ParallaxNumeral`), and presence animation for a
-node that is genuinely conditionally rendered (`FrameHotspots`' label). These are the
-cases CSS cannot do portably: scroll-timeline still has a Safari gap, and the hand-rolled
-version is a scroll listener driving `setState`, which is both a render cascade and a
-React Compiler violation.
+The argument for it was that scroll-linked position is the one thing CSS cannot do
+portably while `scroll-timeline` has a Safari gap, and that hand-rolling it means a scroll
+listener driving `setState` — a render cascade the React Compiler rejects. The first half
+is true; the second was not. `ParallaxNumeral` writes the transform **straight to the
+node**, so React never re-renders and there is no state to cascade. An `IntersectionObserver`
+keeps the scroll handler idle while the element is off screen, and a single
+`requestAnimationFrame` coalesces the work.
 
-**Not allowed** — converting `Reveal` to `whileInView` (it would lose the `[data-js]`
-guarantee that nothing is hidden in the SSR HTML when scripting fails, and the shared
-observer is cheaper than one per element); the overlays, which keep their `[data-open]`
-CSS transitions; `.rule-draw`, `.hover-zoom`, `.link-rule`, `.btn`, `.bag-count`; and
-route transitions, which would force a client boundary at the layout root.
+The pattern, for any future scroll-linked effect:
 
-Every motion component is a `"use client"` leaf that calls `useReducedMotion()` and
-returns the plain element — no transform registered at all — rather than animating to
-zero. Transforms attach only after hydration, so the served HTML never carries one.
+- A `"use client"` leaf, `useRef` + `useEffect`, no state.
+- Bail before attaching anything under `prefers-reduced-motion`, so no transform is ever
+  *written* rather than written and zeroed. A coarse pointer halves the travel rather than
+  bailing: switching motion off there left the site with none at all on the device most
+  people meet it on.
+- Clean up the listener, the observer, the pending frame **and the inline transform**.
+- Nothing in the served HTML: the effect runs after hydration, so SSR output is untouched.
+
+Presence animation likewise stays in CSS. `FrameHotspots`' label was a state toggle inside
+`AnimatePresence`; hover and focus are things CSS already knows, so `group-hover` /
+`group-focus-visible` do it with no state, no bundle, and no client component at all.
+
+**Still not allowed** — converting `Reveal` to any library's `whileInView` (it would lose
+the `[data-js]` guarantee that nothing is hidden in the SSR HTML when scripting fails, and
+the shared observer is cheaper than one per element); the overlays, which keep their
+`[data-open]` CSS transitions; `.rule-draw`, `.hover-zoom`, `.link-rule`, `.btn`,
+`.bag-count`; and route transitions, which would force a client boundary at the layout root.
 
 ---
 
