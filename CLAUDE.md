@@ -109,7 +109,7 @@ decision, and it is the owner's.
 | `/legal/privacy`, `/legal/terms`, `/legal/refund-policy` | | Drafts |
 | 404 | `app/not-found.tsx` | Branded, full-screen |
 | Errors | `app/error.tsx`, `app/global-error.tsx` | Branded boundaries — never Next's default page |
-| Loading | `app/shop/loading.tsx` | Skeleton matching the real grid, so nothing shifts |
+| Loading | — | **There is no route-level loading state, deliberately.** `app/shop/loading.tsx` put the whole `/shop` segment — every product page included — behind a Suspense boundary that only resolves once JavaScript runs, so without it the shop served a permanent skeleton (`main` held 40 characters). Pending feedback lives on the filter links instead, via `useLinkStatus` in `FilterBar`. Do not reintroduce a `loading.tsx` in a segment that must render without scripting. |
 
 The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
 Shop / Drop / Lookbook) plus a search control, a saved count when there is one, and keeps `IndexOverlay` as the full

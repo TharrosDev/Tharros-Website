@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { useRef, useState } from "react";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { SORT_OPTIONS } from "@/lib/catalog/queries";
@@ -81,6 +81,36 @@ function buildHref(params: {
   if (params.newOnly) search.set("new", "1");
   const q = search.toString();
   return q ? `/shop?${q}` : "/shop";
+}
+
+/**
+ * The mark that says a filter was pressed and the server is answering.
+ *
+ * Every link in this bar is a real server navigation, and the bar had no
+ * pending state at all: you pressed a category and the page sat there. The
+ * feedback used to come from `app/shop/loading.tsx`, a full skeleton for the
+ * whole `/shop` segment — which also put every product page behind a Suspense
+ * boundary that only ever resolves with JavaScript, so a visitor without it
+ * got a permanent skeleton instead of the shop. The route-level loading state
+ * is gone; the feedback lives here, on the control that was pressed.
+ *
+ * The slot is always in the layout and only its opacity changes, so a pending
+ * filter cannot shift the row it sits in.
+ */
+function LinkPending() {
+  const { pending } = useLinkStatus();
+
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className={`inline-block h-1 w-1 shrink-0 bg-current [transition:opacity_var(--dur-fast)_var(--ease-out-quart)] ${
+          pending ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      {pending ? <span className="visually-hidden">Loading</span> : null}
+    </>
+  );
 }
 
 export default function FilterBar({
@@ -239,6 +269,7 @@ export default function FilterBar({
                       {entry.count !== undefined ? (
                         <span className="num opacity-60">{entry.count}</span>
                       ) : null}
+                      <LinkPending />
                     </Link>
                   </li>
                 );
@@ -325,11 +356,12 @@ export default function FilterBar({
                       href={filter.href}
                       scroll={false}
                       aria-current={activeId === filter.id ? "page" : undefined}
-                      className={`type-meta transition-opacity hover:opacity-60 ${
+                      className={`type-meta inline-flex items-center gap-2 transition-opacity hover:opacity-60 ${
                         activeId === filter.id ? "text-ink" : "text-ink-faint"
                       }`}
                     >
                       {filter.name}
+                      <LinkPending />
                     </Link>
                   </li>
                 ))}
@@ -346,12 +378,19 @@ export default function FilterBar({
               <li className="type-meta text-ink-faint">Filtered</li>
               {chips.map((chip) => (
                 <li key={chip.key}>
+                  {/* The label is bounded because one of these chips can hold
+                      a search term, and a search term is as long as someone
+                      typed. A 400-character query pushed the document to
+                      3386px wide — the chip is `inline-flex`, so an unbroken
+                      token could not wrap and took the whole page sideways
+                      with it, on a phone as well as a desktop. */}
                   <Link
                     href={chip.href}
                     scroll={false}
-                    className="type-meta inline-flex items-center gap-2 border border-rule-strong px-2 py-1 transition-colors hover:border-ink"
+                    title={chip.label}
+                    className="type-meta inline-flex max-w-[14rem] items-center gap-2 border border-rule-strong px-2 py-1 transition-colors hover:border-ink"
                   >
-                    {chip.label}
+                    <span className="min-w-0 truncate">{chip.label}</span>
                     <span aria-hidden="true">×</span>
                     <span className="visually-hidden">— remove this filter</span>
                   </Link>

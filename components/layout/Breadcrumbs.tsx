@@ -35,7 +35,16 @@ export default function Breadcrumbs({ trail, current, className = "" }: Props) {
             <span aria-hidden="true">/</span>
           </li>
         ))}
-        {current ? <li className="text-ink">{current}</li> : null}
+        {/* Bounded, because on `/shop` the current crumb is the visitor's own
+            search term. An unbroken 400-character query took the document to
+            3296px wide at every viewport — the page scrolled sideways on a
+            phone, and the trail is the one element here whose content nobody
+            on this side gets to choose the length of. */}
+        {current ? (
+          <li title={current} className="max-w-[22ch] truncate text-ink">
+            {current}
+          </li>
+        ) : null}
       </ol>
     </nav>
   );

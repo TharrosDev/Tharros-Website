@@ -156,7 +156,15 @@ export default function RootLayout({
         />
         <Providers>
           <Header />
-          <main id="main">{children}</main>
+          {/* `tabIndex={-1}` so the skip link actually moves focus rather than
+              only scrolling. A plain `#main` anchor sets Chrome's sequential
+              navigation point and nothing else: `document.activeElement` stays
+              on `<body>`, and in Safari the next Tab returns to the top of the
+              page — which makes the site's first tab stop a control that
+              appears to do nothing. */}
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
           <Footer />
           <CartDrawer />
         </Providers>

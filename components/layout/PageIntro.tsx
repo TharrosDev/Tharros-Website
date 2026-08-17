@@ -53,7 +53,10 @@ export default function PageIntro({
           hits every time — its title is a quoted query, and a query is as long
           as someone typed. */}
       <h1
-        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-10 md:mt-12 ${
+        // `break-words` because one page title is a customer's own search
+        // term. Display type at 6rem with an unbroken 400-character token
+        // paints straight out of its column otherwise.
+        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-10 break-words md:mt-12 ${
           titleClass || compact ? "max-w-[22ch]" : "max-w-[14ch]"
         }`}
       >
