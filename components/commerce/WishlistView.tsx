@@ -18,8 +18,9 @@ export default function WishlistView() {
       <EmptyState
         className="min-h-[40vh]"
         title="Nothing saved."
-        body="Tap the heart on any piece to keep it here."
+        body="Tap the heart on any piece to keep it here. Saved pieces stay on this device — there is no account to sync them to yet."
         action={{ href: "/shop", label: "Shop the drop" }}
+        secondary={{ href: "/lookbook", label: "See the frames" }}
       />
     );
   }

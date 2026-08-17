@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/commerce/CartProvider";
 import { useOutOfView } from "@/lib/hooks";
@@ -15,7 +16,8 @@ import {
   runStatus,
   variantFor,
 } from "@/lib/catalog/queries";
-import { getDrop } from "@/lib/catalog/drops";
+import { getDrop, NEXT_DROP } from "@/lib/catalog/drops";
+import { pieceTable } from "@/lib/catalog/sizing";
 import { getCategory } from "@/lib/catalog/categories";
 import { MAX_LINE_QUANTITY } from "@/lib/commerce/cart";
 import type { Product, Size } from "@/lib/catalog/types";
@@ -93,6 +95,24 @@ export default function BuyPanel({ product }: { product: Product }) {
             className="border border-rule-strong"
           />
           <span className="type-meta text-ink-faint">Save it</span>
+        </div>
+
+        {/* A finished run is the most common dead end on the site, and it used
+            to end on a heart. The way on is the rest of the run it came from
+            and — only when one actually exists in the data — the drop being
+            built. Neither promises this piece back. */}
+        <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule pt-5">
+          <Link
+            href={`/shop?drop=${drop?.slug ?? ""}`}
+            className="link-rule link-rule-reveal"
+          >
+            The rest of {drop?.name ?? "the drop"}
+          </Link>
+          {NEXT_DROP ? (
+            <Link href="/drop" className="link-rule link-rule-reveal">
+              {NEXT_DROP.name}, in development
+            </Link>
+          ) : null}
         </div>
       </div>
     );
@@ -210,6 +230,7 @@ export default function BuyPanel({ product }: { product: Product }) {
           onClose={() => setGuideOpen(false)}
           tableKey={sizingKey}
           fitNote={fitNote(product)}
+          piece={pieceTable(product)}
         />
       ) : null}
 

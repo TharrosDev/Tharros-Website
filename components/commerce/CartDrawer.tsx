@@ -15,6 +15,7 @@ import {
   DEFAULT_SHIPPING_OPTION,
   shippingCost,
 } from "@/lib/commerce/shipping";
+import { RETURN_WINDOW } from "@/lib/commerce/returns";
 import { TAX_PENDING_LABEL } from "@/lib/commerce/tax";
 
 export default function CartDrawer() {
@@ -135,6 +136,7 @@ export default function CartDrawer() {
               title="Your bag is empty."
               body="Everything made so far is in the shop."
               action={{ href: "/shop", label: "Shop the drop", onClick: close }}
+              secondary={{ href: "/drop", label: "What is coming", onClick: close }}
             />
           </div>
         ) : (
@@ -266,7 +268,24 @@ export default function CartDrawer() {
                 </div>
               </dl>
 
-              <Link href="/checkout" onClick={close} className="btn btn-solid btn-full mt-6">
+              {/* The two questions asked at this exact moment, answered here
+                  rather than in the footer's information directory: how long it
+                  takes and what happens if it does not fit. Both come from the
+                  data the checkout quotes from, so neither can drift. */}
+              <p className="type-meta mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-ink-faint">
+                <span>
+                  {DEFAULT_SHIPPING_OPTION.name}, {DEFAULT_SHIPPING_OPTION.detail}
+                </span>
+                <Link
+                  href="/returns"
+                  onClick={close}
+                  className="link-rule link-rule-reveal"
+                >
+                  {RETURN_WINDOW} to return
+                </Link>
+              </p>
+
+              <Link href="/checkout" onClick={close} className="btn btn-solid btn-full mt-5">
                 Checkout
               </Link>
               {/* Said here rather than only at step four. The limitation was

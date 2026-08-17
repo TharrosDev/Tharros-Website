@@ -15,13 +15,20 @@ import type { Product } from "@/lib/catalog/types";
  * a person rather than by copy, and it disappears cleanly when there is no
  * fitting.
  */
-export default function FitStory({ product }: { product: Product }) {
+export default function FitStory({
+  product,
+  index = "03",
+}: {
+  product: Product;
+  /** The page owns the numbering — three sections here are conditional. */
+  index?: string;
+}) {
   if (product.fit.length === 0) return null;
 
   return (
     <section aria-labelledby="fit-story">
       <SectionHeading
-        index="03"
+        index={index}
         label="How it fits"
         title="Cut to sit like this."
         titleClass="type-display-3"

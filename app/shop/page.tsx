@@ -8,12 +8,14 @@ import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { getDrop } from "@/lib/catalog/drops";
 import {
   categoriesInUse,
+  dropsInUse,
   filterProducts,
   isSortKey,
   listProducts,
   searchProducts,
   sortProducts,
 } from "@/lib/catalog/queries";
+import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import type { CategoryId } from "@/lib/catalog/types";
 import { jsonLd } from "@/lib/jsonld";
@@ -72,6 +74,13 @@ export default async function ShopPage({
       })()
     : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
 
+  // What the shop is browsed by is the release, so the unfiltered view names
+  // the release it is actually showing. While one drop is the whole catalogue,
+  // "Every piece" and "Drop 001" are the same list under two names — and the
+  // less specific one was the one on the page.
+  const releases = dropsInUse();
+  const soleDrop = releases.length === 1 ? releases[0]?.drop : undefined;
+
   const heading = query
     ? `“${query}”`
     : newOnly
@@ -80,7 +89,7 @@ export default async function ShopPage({
         ? drop.name
         : category !== "all"
           ? categoryName(category)
-          : "Every piece";
+          : (soleDrop?.name ?? "Everything made so far");
 
   // "Everything, as it comes" — no search, no category, no drop, no new filter,
   // and the default sort. Anything else is a narrowed view.
@@ -105,11 +114,42 @@ export default async function ShopPage({
 
       <PageIntro
         index="01"
-        label={query ? "Search" : drop ? "Drop" : "Everything made so far"}
+        label={
+          query
+            ? "Search"
+            : newOnly
+              ? "Next drop"
+              : (drop ?? soleDrop)
+                ? "The run"
+                : // Not "Everything made so far": that is the title, and an
+                  // eyebrow repeating its own heading is a label describing
+                  // nothing.
+                  "The catalogue"
+        }
         title={heading}
         titleClass="type-display-2"
         crumbs={[{ name: "Home", href: "/" }]}
-      />
+      >
+        {/* The release line: what this view is, dated, from the drop record.
+            Only where a single release is being shown — across drops there is
+            no one date to state. */}
+        {!query && (drop ?? soleDrop) ? (
+          <p className="type-meta mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-ink-faint">
+            <span>
+              <span className="num">{(drop ?? soleDrop)!.index}</span>
+              <span className="ml-3">{(drop ?? soleDrop)!.name}</span>
+            </span>
+            {(drop ?? soleDrop)!.releasedAt ? (
+              <span>
+                Released{" "}
+                <time dateTime={(drop ?? soleDrop)!.releasedAt!}>
+                  {formatDate((drop ?? soleDrop)!.releasedAt!)}
+                </time>
+              </span>
+            ) : null}
+          </p>
+        ) : null}
+      </PageIntro>
 
       {/* Only on the unfiltered view — see ShopFeature. Someone who has already
           narrowed the list wants the list. */}
@@ -124,6 +164,11 @@ export default async function ShopPage({
         query={query}
         count={products.length}
         available={categoriesInUse()}
+        drops={releases.map((entry) => ({
+          slug: entry.drop.slug,
+          name: entry.drop.name,
+          count: entry.count,
+        }))}
       />
 
       <div className="page-frame rhythm-tight">
