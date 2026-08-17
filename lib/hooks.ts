@@ -114,6 +114,37 @@ export function useScrolledPast(threshold: number): boolean {
   );
 }
 
+/**
+ * True while the referenced element is off screen.
+ *
+ * The product page's sticky buy bar used to appear at a hand-picked 420px of
+ * scroll, which is a guess about one phone: on a taller screen the real panel
+ * and the bar were both visible at once, and on a shorter one the first screen
+ * carried a gallery with no price and no way to buy, which is the wrong screen
+ * to be missing on the page whose entire job is that decision. Asking the
+ * element itself removes the number and is right on every device.
+ *
+ * Starts `true` so the bar is present on first paint, before the observer has
+ * reported — the panel is below the fold on a phone either way, and a control
+ * that arrives late is worse than one that retracts.
+ */
+export function useOutOfView(ref: RefObject<HTMLElement | null>): boolean {
+  const [outOfView, setOutOfView] = useState(true);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(([entry]) =>
+      setOutOfView(!entry.isIntersecting),
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [ref]);
+
+  return outOfView;
+}
+
 export function useDebounced<T>(value: T, delay = 180): T {
   const [debounced, setDebounced] = useState(value);
 

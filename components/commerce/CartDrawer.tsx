@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import QuantityStepper from "./QuantityStepper";
 import { useCart } from "./CartProvider";
@@ -18,12 +18,41 @@ import {
 import { TAX_PENDING_LABEL } from "@/lib/commerce/tax";
 
 export default function CartDrawer() {
-  const { isOpen, closeBag, lines, subtotal, count, setQuantity, remove, adjusted } =
-    useCart();
+  const {
+    isOpen,
+    closeBag,
+    lines,
+    subtotal,
+    count,
+    setQuantity,
+    remove,
+    add,
+    adjusted,
+  } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Removing a line was instant and irreversible, in a panel that updates live,
+   * with no confirmation and nothing to press afterwards. Undo is cheaper than a
+   * confirmation dialog and costs the customer nothing when they meant it.
+   *
+   * Cleared by closing rather than by a timer: a countdown that expires while
+   * someone is reading is a worse promise than one that waits.
+   */
+  const [undo, setUndo] = useState<{
+    productId: string;
+    size: (typeof lines)[number]["size"];
+    quantity: number;
+    name: string;
+  } | null>(null);
+
+  const close = () => {
+    setUndo(null);
+    closeBag();
+  };
+
   useLockBodyScroll(isOpen);
-  useEscape(isOpen, closeBag);
+  useEscape(isOpen, close);
   useFocusTrap(isOpen, panelRef);
 
   const shipping = shippingCost(subtotal, DEFAULT_SHIPPING_OPTION.id);
@@ -41,7 +70,7 @@ export default function CartDrawer() {
       <button
         type="button"
         aria-label="Close bag"
-        onClick={closeBag}
+        onClick={close}
         tabIndex={isOpen ? undefined : -1}
         className="absolute inset-0 h-full w-full cursor-default bg-black/40"
       />
@@ -59,7 +88,7 @@ export default function CartDrawer() {
           </h2>
           <button
             type="button"
-            onClick={closeBag}
+            onClick={close}
             className="-mr-3 flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
           >
             <CloseIcon />
@@ -79,12 +108,33 @@ export default function CartDrawer() {
           </p>
         ) : null}
 
+        {undo ? (
+          <div
+            role="status"
+            className="flex shrink-0 items-center justify-between gap-4 border-b border-rule px-6 py-3"
+          >
+            <p className="type-meta min-w-0 truncate text-ink-muted">
+              Removed {undo.name}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                add(undo.productId, undo.size, undo.quantity, { open: false });
+                setUndo(null);
+              }}
+              className="link-rule link-rule-reveal shrink-0"
+            >
+              Undo
+            </button>
+          </div>
+        ) : null}
+
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col justify-center px-6 py-16">
             <EmptyState
               title="Your bag is empty."
               body="Everything made so far is in the shop."
-              action={{ href: "/shop", label: "Shop the drop", onClick: closeBag }}
+              action={{ href: "/shop", label: "Shop the drop", onClick: close }}
             />
           </div>
         ) : (
@@ -95,7 +145,7 @@ export default function CartDrawer() {
                   <li key={line.key} className="flex gap-4 py-6">
                     <Link
                       href={`/shop/${line.product.slug}`}
-                      onClick={closeBag}
+                      onClick={close}
                       className="w-24 shrink-0"
                     >
                       <ImageSlot image={thumbnailImage(line.product)} sizes="96px" />
@@ -105,7 +155,7 @@ export default function CartDrawer() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <p className="type-body-sm font-medium">
-                            <Link href={`/shop/${line.product.slug}`} onClick={closeBag}>
+                            <Link href={`/shop/${line.product.slug}`} onClick={close}>
                               {line.product.name}
                             </Link>
                           </p>
@@ -129,7 +179,15 @@ export default function CartDrawer() {
                         />
                         <button
                           type="button"
-                          onClick={() => remove(line.productId, line.size)}
+                          onClick={() => {
+                            setUndo({
+                              productId: line.productId,
+                              size: line.size,
+                              quantity: line.quantity,
+                              name: line.product.name,
+                            });
+                            remove(line.productId, line.size);
+                          }}
                           className="type-meta text-ink-faint transition-opacity hover:opacity-60"
                         >
                           Remove
@@ -152,7 +210,7 @@ export default function CartDrawer() {
                       <li key={product.id}>
                         <Link
                           href={`/shop/${product.slug}`}
-                          onClick={closeBag}
+                          onClick={close}
                           className="block"
                         >
                           <ImageSlot image={thumbnailImage(product)} sizes="120px" />
@@ -208,9 +266,16 @@ export default function CartDrawer() {
                 </div>
               </dl>
 
-              <Link href="/checkout" onClick={closeBag} className="btn btn-solid btn-full mt-6">
+              <Link href="/checkout" onClick={close} className="btn btn-solid btn-full mt-6">
                 Checkout
               </Link>
+              {/* Said here rather than only at step four. The limitation was
+                  disclosed honestly and late: after eight fields, which turns a
+                  defensible pre-launch state into a felt bait-and-switch for
+                  anyone who filled the form in. */}
+              <p className="type-meta mt-3 text-center text-ink-faint">
+                Card payment is not connected yet
+              </p>
             </div>
           </>
         )}

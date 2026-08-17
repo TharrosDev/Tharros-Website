@@ -21,8 +21,6 @@ type Props = {
   /** Grid slot width, for correct image sizing. */
   sizes?: string;
   priority?: boolean;
-  /** Larger title, for the editorial slots on the home page. */
-  emphasis?: boolean;
   /** Print the piece's code and run figures under the frame. */
   specimen?: boolean;
 };
@@ -31,7 +29,6 @@ export default function ProductCard({
   product,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   priority = false,
-  emphasis = false,
   specimen = false,
 }: Props) {
   const { add, openBag } = useCart();
@@ -50,6 +47,9 @@ export default function ProductCard({
   // The style code without its size suffix — the same figure the product page
   // prints, so the two cannot disagree.
   const code = product.variants[0]?.sku.replace(/-[^-]+$/, "");
+  const sellable = product.variants.filter((variant) =>
+    isSizeAvailable(product, variant.size),
+  );
 
   return (
     // Hover is expressed in CSS rather than React state. It used to be a
@@ -112,28 +112,29 @@ export default function ProductCard({
               <span className="type-meta mr-1 text-ink-faint">
                 {added ? "Added" : "Add"}
               </span>
-              {product.variants.map((variant) => {
-                const available = isSizeAvailable(product, variant.size);
-                return (
-                  <button
-                    key={variant.sku}
-                    type="button"
-                    disabled={!available}
-                    onClick={() => {
-                      add(product.id, variant.size, 1, { open: false });
-                      setAdded(variant.size);
-                    }}
-                    className="type-meta h-8 min-w-8 border border-rule-strong px-2 transition-colors hover:border-ink hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:border-rule disabled:opacity-40 disabled:hover:border-rule disabled:hover:bg-transparent disabled:hover:text-ink"
-                  >
-                    {variant.size}
-                    <span className="visually-hidden">
-                      {available
-                        ? ` — add ${product.name} in size ${variant.size} to bag`
-                        : ` — size ${variant.size} unavailable`}
-                    </span>
-                  </button>
-                );
-              })}
+              {/* Only what can actually be bought. The strip used to print every
+                  size and disable the gone ones, which put up to eleven targets
+                  on one hovered card and nine of those cards in a grid — a
+                  size someone cannot pick is not a shortcut, it is a decision
+                  they have to make and discard. Which sizes exist and which are
+                  finished is stated properly on the product page, in the place
+                  that is about this piece. */}
+              {sellable.map((variant) => (
+                <button
+                  key={variant.sku}
+                  type="button"
+                  onClick={() => {
+                    add(product.id, variant.size, 1, { open: false });
+                    setAdded(variant.size);
+                  }}
+                  className="type-meta h-8 min-w-8 border border-rule-strong px-2 transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                >
+                  {variant.size}
+                  <span className="visually-hidden">
+                    {` — add ${product.name} in size ${variant.size} to bag`}
+                  </span>
+                </button>
+              ))}
             </div>
 
             {/* The confirmation. A polite live region rather than a toast: the
@@ -164,7 +165,7 @@ export default function ProductCard({
 
       <div className="flex items-start justify-between gap-4 pt-4">
         <div className="min-w-0">
-          <h3 className={emphasis ? "type-display-4" : "type-body font-medium"}>
+          <h3 className="type-body font-medium">
             <Link href={`/shop/${product.slug}`} className="link-rule-reveal">
               {product.name}
             </Link>

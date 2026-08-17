@@ -92,7 +92,18 @@ content: it marks the current drop everywhere, so a product page showing a close
 will legitimately carry two marks — one saying which drop you are in, one saying this piece is
 finished. They never mean the same thing, so they never compete.
 
-`--danger` is unrelated and stays reserved for form errors.
+**There is no second red.** `--danger` existed at `oklch(52% 0.16 27)` — four degrees of
+hue and two points of chroma from `--oxide` — and it has been removed. Oxide is
+load-bearing across three meanings, and a visitor who has learned that this red marks
+state should not then meet the same red marking their own mistake, on a form, at the most
+anxious point in the flow. Errors are marked the way everything else in this system is
+marked: `.field[aria-invalid="true"]` doubles its own rule with an inset ring, and
+`.field-error` sets the message in full-strength `--ink` on the mono face. The ring rather
+than a border-width change because border-width does not interpolate and a 1px growth
+reflows every field beside it.
+
+On the home page's opening screen the single accented element is the **run ledger**, not
+the drop numeral. See §5.
 
 Every text tone in the system passes WCAG AA against the surface it is used on, verified
 by painting the computed colour to a canvas and reading the pixel back — Chromium
@@ -222,6 +233,25 @@ derived; nothing here is authored.
 | `.badge`, `.badge-solid`, `.badge-quiet` | Inventory and release state |
 | `.eyebrow` | Mono index + label opening every section |
 | `.on-dark` | Flips a section to the black surface |
+| `.run-ledger` | The release as a proportion — see below |
+
+### The run ledger
+
+The home page's opening screen states the release as the proportion it describes rather
+than as a statistics row. A 2px track is the whole run; the oxide segment is the part of
+it that is gone; `40 MADE` and `24 LEFT` sit in mono at either end. `--run-taken` is a
+unitless ratio the component computes from `runSize` and `runStatus().remaining`, so the
+bar cannot disagree with the product pages and cannot manufacture urgency — it can only
+draw what the inventory already says. It is `aria-hidden`: the two figures beside it are
+the content, and a screen reader gets all of it.
+
+It draws itself on `--ease-ledger` and shares `Reveal`'s stagger through `--reveal-delay`,
+exactly as `.rule-draw` does — a pseudo-element cannot see the inline `transition-delay`
+that `Reveal` sets on the element itself.
+
+What it replaced was Pieces / Made / Remaining in a three-cell `dl` with hairline tops:
+structurally the same object as "10k users / 99.9% uptime / 24/7 support", wearing the
+most distinctive content on the site.
 
 Product cards: image swaps to the second shot on hover, image zooms 3.5%, quick-add size
 row slides up (desktop only — on touch the product page does that job), heart sits top
@@ -233,8 +263,11 @@ right, name and price sit below the frame in a single row.
 
 Slow, flat, intentional. Nothing bounces or overshoots.
 
-- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-page` 480ms (route
-  change), `--dur-slow` 620ms (zoom), `--dur-reveal` 900ms (scroll entrance).
+- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-slow` 620ms (zoom),
+  `--dur-reveal` 900ms (scroll entrance). There was a `--dur-page` 480ms for route
+  changes; nothing referenced it and there is no route-change indicator, so a token that
+  described a transition the site does not have has been removed rather than kept as a
+  promise.
 - Easing: `--ease-out-quart`, `--ease-out-expo`, `--ease-ledger` (the rule draw).
 - **The ledger rule** (`.rule-draw`) is the site's entrance gesture: a hairline that draws
   itself left to right across the top of a section, so the rule and whatever sits on it — a
@@ -339,6 +372,12 @@ hierarchy through the mono face and scale instead. Scrims are anchored to the bl
 protect, not to a fraction of the viewport — viewport-fraction bands drift as the screen
 height changes and leave text on bare picture. Verify by pixel readback, never by parsing
 `getComputedStyle().color`: Chromium returns these as `lab()`.
+
+**Anchored bands, and nothing on top of them.** The home hero carried `bg-black/45` across
+the whole frame *in addition* to its two anchored bands and the header's own gradient —
+four dimming layers, on a site whose thesis is that the clothing supplies the colour. The
+only part of the picture ever seen undimmed was the middle third, which is the part with
+nothing in it. The flat wash is gone. The bands stay, and they are the only ones.
 
 ---
 

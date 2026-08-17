@@ -47,7 +47,10 @@ export default function Newsletter({ onDark = false }: { onDark?: boolean }) {
       <p
         id="newsletter-status"
         role="status"
-        className={`type-meta mt-4 ${onDark ? "text-ink-on-dark-muted" : "text-ink-muted"}`}
+        // Reserves its line while empty. Without a min-height the footer jumped
+        // by the height of a sentence the first time anyone pressed Join —
+        // BuyPanel's error already holds its space for exactly this reason.
+        className={`type-meta mt-4 block min-h-5 ${onDark ? "text-ink-on-dark-muted" : "text-ink-muted"}`}
       >
         {state === "invalid" ? "Enter a valid email address." : null}
         {state === "not-connected"

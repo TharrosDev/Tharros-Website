@@ -59,6 +59,10 @@ export default function FilterBar({
 }: Props) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const sortRef = useRef<HTMLDetailsElement>(null);
+
+  const sortLabel =
+    SORT_OPTIONS.find((option) => option.key === sort)?.label ?? sort;
 
   useLockBodyScroll(sheetOpen);
   useEscape(sheetOpen, () => setSheetOpen(false));
@@ -156,30 +160,52 @@ export default function FilterBar({
                 whether a filter did anything was invisible on a phone. */}
             {pieces}
 
-            <nav aria-label="Sort products" className="hidden lg:block">
-              <ul className="flex items-center gap-5">
-                {SORT_OPTIONS.map((option) => (
-                  <li key={option.key}>
-                    <Link
-                      href={buildHref({
-                        category,
-                        sort: option.key,
-                        drop,
-                        newOnly,
-                        query,
-                      })}
-                      scroll={false}
-                      aria-current={sort === option.key ? "true" : undefined}
-                      className={`type-meta transition-opacity hover:opacity-60 ${
-                        sort === option.key ? "text-ink" : "text-ink-faint"
-                      }`}
-                    >
-                      {option.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            {/* One control that names the current order, rather than four
+                persistent links. The bar could put seventeen simultaneous
+                controls around a nine-piece run, and three of them were the
+                sort orders nobody had chosen — the chip row already reports
+                which one is on.
+
+                `<details>` rather than state: it is a real disclosure with
+                keyboard behaviour, an accessible name and an open/closed state
+                the browser owns, and like every other control in this bar it
+                still works with no JavaScript. */}
+            <details ref={sortRef} className="relative hidden lg:block">
+              <summary className="type-meta -my-2 flex cursor-pointer list-none items-center gap-2 py-2 transition-opacity hover:opacity-60 [&::-webkit-details-marker]:hidden">
+                <span className="text-ink-faint">Sort</span>
+                <span className="text-ink">{sortLabel}</span>
+              </summary>
+              <nav
+                aria-label="Sort products"
+                className="absolute top-full right-0 mt-3 min-w-56 border border-ink bg-surface p-2"
+              >
+                <ul>
+                  {SORT_OPTIONS.map((option) => (
+                    <li key={option.key}>
+                      <Link
+                        href={buildHref({
+                          category,
+                          sort: option.key,
+                          drop,
+                          newOnly,
+                          query,
+                        })}
+                        scroll={false}
+                        onClick={() => {
+                          if (sortRef.current) sortRef.current.open = false;
+                        }}
+                        aria-current={sort === option.key ? "true" : undefined}
+                        className={`type-meta block px-3 py-2.5 transition-colors hover:bg-ink hover:text-paper ${
+                          sort === option.key ? "text-ink" : "text-ink-faint"
+                        }`}
+                      >
+                        {option.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
           </div>
         </div>
 

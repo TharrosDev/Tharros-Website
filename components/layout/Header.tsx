@@ -9,8 +9,9 @@ import IndexOverlay from "./IndexOverlay";
 import SearchOverlay from "@/components/commerce/SearchOverlay";
 import { useCart } from "@/components/commerce/CartProvider";
 import { useWishlist } from "@/components/commerce/WishlistProvider";
-import { BagIcon } from "@/components/ui/icons";
+import { BagIcon, SearchIcon } from "@/components/ui/icons";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
+import { NAV_PRIMARY } from "@/lib/site";
 
 /** Routes that open on a full-bleed image the header floats over. */
 const TRANSPARENT_ROUTES = new Set(["/", "/lookbook"]);
@@ -108,9 +109,47 @@ export default function Header() {
               <span className="num">{CURRENT_DROP.index}</span>
               <span className="visually-hidden"> — {CURRENT_DROP.name}</span>
             </Link>
+
+            {/* Real links, so they survive scripting being unavailable and the
+                site is never left with the footer as its only navigation. The
+                overlay keeps everything else. */}
+            <nav aria-label="Primary" className="hidden md:block">
+              <ul className="flex items-center gap-1">
+                {NAV_PRIMARY.map((item) => {
+                  const active =
+                    pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className={`type-meta inline-flex h-11 items-center px-3 transition-opacity hover:opacity-60 ${
+                          active ? "opacity-100" : "opacity-70"
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
           </div>
 
           <div className="flex items-center gap-1 md:gap-3">
+            {/* Search had no visible affordance at all — it was reachable from
+                inside the index overlay, or from a `/` shortcut documented
+                nowhere. That is a shortcut standing in for a control. */}
+            <button
+              type="button"
+              onClick={openSearch}
+              aria-expanded={searchOpen}
+              className="inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
+            >
+              <SearchIcon />
+              <span className="visually-hidden">Search</span>
+            </button>
+
             <button
               type="button"
               onClick={() => setIndexOpen(true)}
@@ -133,14 +172,18 @@ export default function Header() {
             >
               <BagIcon />
               {/* Keyed on the count so the nudge animation restarts on every
-                  add — no timer, no state. */}
-              <span
-                key={count}
-                className="num type-mono-3 bag-count"
-                aria-hidden="true"
-              >
-                {ready ? count : 0}
-              </span>
+                  add — no timer, no state. Absent rather than zero: a badge
+                  reading "0" is chrome permanently displaying a nothing, and
+                  the icon already says what it is. */}
+              {ready && count > 0 ? (
+                <span
+                  key={count}
+                  className="num type-mono-3 bag-count"
+                  aria-hidden="true"
+                >
+                  {count}
+                </span>
+              ) : null}
               <span className="visually-hidden">
                 Open bag — {ready ? count : 0} item{count === 1 ? "" : "s"}
               </span>
