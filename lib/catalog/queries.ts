@@ -105,22 +105,35 @@ export function isSortKey(value: string | undefined): value is SortKey {
   return value === "featured" || value === "newest" || value === "price-asc" || value === "price-desc";
 }
 
-export function listProducts(query: ProductQuery = {}): Product[] {
-  const { category = "all", drop, isNew, sort = "featured" } = query;
+/**
+ * The shop's ordering, applied to any list.
+ *
+ * Sold-out and unreleased pieces stay in the grid but sink to the bottom;
+ * hiding them loses the sense that the line is bigger than what is in stock.
+ *
+ * Exported because search results need the same ordering. Filtering and sorting
+ * used to be reachable only through `listProducts`, so `/shop?q=` ignored the
+ * category and sort controls entirely — they stayed on screen and did nothing.
+ */
+export function sortProducts(products: Product[], sort: SortKey = "featured"): Product[] {
+  return [...products].sort((a, b) => {
+    const buyable = Number(isPurchasable(b)) - Number(isPurchasable(a));
+    return buyable || SORTERS[sort](a, b);
+  });
+}
 
-  const filtered = PRODUCTS.filter((product) => {
+export function filterProducts(products: Product[], query: ProductQuery = {}): Product[] {
+  const { category = "all", drop, isNew } = query;
+  return products.filter((product) => {
     if (category !== "all" && product.category !== category) return false;
     if (drop && product.drop !== drop) return false;
     if (isNew && !product.isNew) return false;
     return true;
   });
+}
 
-  // Sold-out and unreleased pieces stay in the grid but sink to the bottom;
-  // hiding them loses the sense that the line is bigger than what is in stock.
-  return filtered.sort((a, b) => {
-    const buyable = Number(isPurchasable(b)) - Number(isPurchasable(a));
-    return buyable || SORTERS[sort](a, b);
-  });
+export function listProducts(query: ProductQuery = {}): Product[] {
+  return sortProducts(filterProducts(PRODUCTS, query), query.sort ?? "featured");
 }
 
 export function getProduct(slug: string): Product | undefined {

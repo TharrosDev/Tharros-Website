@@ -38,10 +38,24 @@ type CartContextValue = {
   subtotal: number;
   /** False until hydration, so nothing renders a count it cannot know yet. */
   ready: boolean;
+  /**
+   * True when the stored bag no longer matches what can actually be bought —
+   * `resolveLines` drops a line whose variant went to zero and clamps a
+   * quantity above remaining inventory. Both used to happen in silence, so a
+   * returning visitor could lose a piece from their bag with no notice, on a
+   * site whose whole position is that it tells you the truth about stock.
+   */
+  adjusted: boolean;
   isOpen: boolean;
   openBag: () => void;
   closeBag: () => void;
-  add: (productId: string, size: Size, quantity?: number) => void;
+  /** `open: false` adds without seizing the screen — see the grid quick-add. */
+  add: (
+    productId: string,
+    size: Size,
+    quantity?: number,
+    options?: { open?: boolean },
+  ) => void;
   setQuantity: (productId: string, size: Size, quantity: number) => void;
   remove: (productId: string, size: Size) => void;
   clear: () => void;
@@ -65,7 +79,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const count = useMemo(() => countOf(lines), [lines]);
   const subtotal = useMemo(() => subtotalOf(lines), [lines]);
 
-  const add = useCallback((productId: string, size: Size, quantity = 1) => {
+  const adjusted = useMemo(() => {
+    const requested = rawLines.reduce((sum, line) => sum + line.quantity, 0);
+    const resolved = lines.reduce((sum, line) => sum + line.quantity, 0);
+    return rawLines.length !== lines.length || requested !== resolved;
+  }, [rawLines, lines]);
+
+  const add = useCallback((
+    productId: string,
+    size: Size,
+    quantity = 1,
+    options?: { open?: boolean },
+  ) => {
     bagStore.set((current) => {
       const existing = current.find(
         (line) => line.productId === productId && line.size === size,
@@ -77,7 +102,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           : line,
       );
     });
-    setIsOpen(true);
+    if (options?.open !== false) setIsOpen(true);
   }, []);
 
   const setQuantity = useCallback((productId: string, size: Size, quantity: number) => {
@@ -107,6 +132,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       count,
       subtotal,
       ready,
+      adjusted,
       isOpen,
       openBag: () => setIsOpen(true),
       closeBag: () => setIsOpen(false),
@@ -115,7 +141,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       remove,
       clear,
     }),
-    [lines, count, subtotal, ready, isOpen, add, setQuantity, remove, clear],
+    [lines, count, subtotal, ready, adjusted, isOpen, add, setQuantity, remove, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

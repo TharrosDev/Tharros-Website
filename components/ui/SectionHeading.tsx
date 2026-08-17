@@ -12,6 +12,8 @@ type Props = {
   titleClass?: string;
   /** Sub-sections inside a page that already owns an h2. */
   level?: 2 | 3;
+  /** So a labelled `<section>` can point `aria-labelledby` at this heading. */
+  titleId?: string;
   /** Stagger, in ms, shared with the rule draw. */
   delay?: number;
   className?: string;
@@ -38,6 +40,7 @@ export default function SectionHeading({
   aside,
   titleClass = "type-display-2",
   level = 2,
+  titleId,
   delay = 0,
   className = "",
 }: Props) {
@@ -67,7 +70,9 @@ export default function SectionHeading({
         ) : null}
       </Reveal>
       {title ? (
-        <Heading className={`${titleClass} mt-8 max-w-[16ch]`}>{title}</Heading>
+        <Heading id={titleId} className={`${titleClass} mt-8 max-w-[16ch]`}>
+          {title}
+        </Heading>
       ) : null}
     </div>
   );

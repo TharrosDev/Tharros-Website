@@ -125,7 +125,16 @@ export default async function ProductPage({ params }: { params: Params }) {
         </div>
 
         <div className="no-scrollbar lg:col-span-5 lg:col-start-8 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
-          <h1 className="type-display-3">{product.name}</h1>
+          {/* The record opens on an index like every other block on the site.
+              It had none, which is why the page's section numbering started at
+              02. The code moves up here out of the specimen table: it is the
+              piece's identifier, not one of its attributes. */}
+          <p className="eyebrow border-t border-ink pt-4">
+            <span className="num">01</span>
+            <span>{product.variants[0]?.sku.replace(/-[^-]+$/, "")}</span>
+          </p>
+
+          <h1 className="type-display-3 mt-6 max-w-[16ch]">{product.name}</h1>
 
           <div className="mt-4 flex items-baseline gap-4">
             <p className="num type-mono-3">{formatPrice(product.price)}</p>
@@ -140,9 +149,13 @@ export default async function ProductPage({ params }: { params: Params }) {
               figures that make a small label credible, and they were previously
               collapsed inside an accordion. Real inventory only — the accent
               appears solely when the run is actually finished. */}
+          {/* `type-mono-2` here made the stock count the heaviest figure in a
+              column whose subject is the garment. The promoted mono steps are
+              for full-width contexts — the hero numeral, the drop record — not
+              for a 460px column beside a title. */}
           <p className="mt-8 flex items-baseline gap-3 border-t border-ink pt-4">
             <span
-              className={`type-mono-2 ${run.remaining === 0 ? "text-signal" : ""}`}
+              className={`type-mono-3 ${run.remaining === 0 ? "text-signal" : ""}`}
             >
               {run.remaining}
             </span>
@@ -161,13 +174,6 @@ export default async function ProductPage({ params }: { params: Params }) {
             <div className="flex gap-6 py-3">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Colour</dt>
               <dd className="type-body-sm">{product.colorway}</dd>
-            </div>
-            <div className="flex gap-6 py-3">
-              <dt className="type-meta w-24 shrink-0 text-ink-faint">Code</dt>
-              {/* Style code without the size suffix. */}
-              <dd className="num type-mono-3">
-                {product.variants[0]?.sku.replace(/-[^-]+$/, "")}
-              </dd>
             </div>
             {drop ? (
               <div className="flex gap-6 py-3">
@@ -275,9 +281,17 @@ export default async function ProductPage({ params }: { params: Params }) {
       {related.length > 0 ? (
         <section className="rhythm-default">
           <div className="page-frame">
-            <SectionHeading index="04" label="You may also like" />
+            {/* The heading was index-and-label only, so it emitted no h2 — and
+                ProductGrid then supplied a visually hidden one saying the same
+                words. One real heading instead of an invisible duplicate. */}
+            <SectionHeading
+              index="04"
+              label="Related"
+              title="You may also like."
+              titleClass="type-display-3"
+            />
             <div className="mt-12">
-              <ProductGrid products={related} heading="You may also like" columns={4} />
+              <ProductGrid products={related} columns={4} specimen />
             </div>
           </div>
         </section>

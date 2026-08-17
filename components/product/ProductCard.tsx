@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import ProductBadge from "./ProductBadge";
 import SaveButton from "./SaveButton";
@@ -33,7 +34,11 @@ export default function ProductCard({
   emphasis = false,
   specimen = false,
 }: Props) {
-  const { add } = useCart();
+  const { add, openBag } = useCart();
+  // Quick-add used to force the bag drawer open over the grid, which threw the
+  // browsing visitor out of the thing they were browsing. The card confirms in
+  // place instead and offers the drawer rather than imposing it.
+  const [added, setAdded] = useState<string | null>(null);
 
   // The card leads with the piece on a person and swaps to the garment itself.
   // Which frames those are is the catalogue's decision, not the card's — see
@@ -52,8 +57,12 @@ export default function ProductCard({
     // grid it belongs to — on each pointer entry and exit, for an effect the
     // browser can do on its own.
     <article className="group">
-      <div className="relative overflow-hidden">
-        <Link href={`/shop/${product.slug}`} className="block">
+      {/* `overflow-hidden` belongs to the frame, not to the card. On the card it
+          also clipped the 3px focus ring of everything positioned inside it —
+          the heart and every quick-add size button — so keyboard focus went
+          invisible on the one surface with the most focusable controls. */}
+      <div className="relative">
+        <Link href={`/shop/${product.slug}`} className="block overflow-hidden">
           <div className="hover-zoom">
             <ImageSlot image={primary} sizes={sizes} priority={priority} />
           </div>
@@ -66,8 +75,14 @@ export default function ProductCard({
           >
             <ImageSlot image={secondary} sizes={sizes} />
           </div>
+          {/* A sold-out frame is marked, not merely washed out. The wash alone
+              read as a rendering artefact next to the solid "New" badge — the
+              strongest state carrying the weakest mark. */}
           {soldOut ? (
-            <span className="absolute inset-0 bg-paper/35" aria-hidden="true" />
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 border border-ink bg-paper/45"
+            />
           ) : null}
         </Link>
 
@@ -94,7 +109,9 @@ export default function ProductCard({
             className="pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-full bg-surface/95 px-3 py-3 transition-transform duration-300 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-hover:pointer-events-auto group-hover:translate-y-0 md:block"
           >
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="type-meta mr-1 text-ink-faint">Add</span>
+              <span className="type-meta mr-1 text-ink-faint">
+                {added ? "Added" : "Add"}
+              </span>
               {product.variants.map((variant) => {
                 const available = isSizeAvailable(product, variant.size);
                 return (
@@ -102,7 +119,10 @@ export default function ProductCard({
                     key={variant.sku}
                     type="button"
                     disabled={!available}
-                    onClick={() => add(product.id, variant.size)}
+                    onClick={() => {
+                      add(product.id, variant.size, 1, { open: false });
+                      setAdded(variant.size);
+                    }}
                     className="type-meta h-8 min-w-8 border border-rule-strong px-2 transition-colors hover:border-ink hover:bg-ink hover:text-paper disabled:cursor-not-allowed disabled:border-rule disabled:opacity-40 disabled:hover:border-rule disabled:hover:bg-transparent disabled:hover:text-ink"
                   >
                     {variant.size}
@@ -115,6 +135,29 @@ export default function ProductCard({
                 );
               })}
             </div>
+
+            {/* The confirmation. A polite live region rather than a toast: the
+                strip is already where the visitor is looking, and the bag is
+                offered rather than opened over the grid they are reading. */}
+            <p
+              role="status"
+              className="type-meta mt-2 flex min-h-6 items-center gap-3"
+            >
+              {added ? (
+                <>
+                  <span className="text-ink-faint">
+                    Size {added} in bag
+                  </span>
+                  <button
+                    type="button"
+                    onClick={openBag}
+                    className="link-rule link-rule-reveal"
+                  >
+                    View bag
+                  </button>
+                </>
+              ) : null}
+            </p>
           </div>
         ) : null}
       </div>
@@ -128,7 +171,11 @@ export default function ProductCard({
           </h3>
           <p className="type-meta mt-2 text-ink-faint">{product.colorway}</p>
         </div>
-        <p className="num shrink-0 text-ink-muted">{formatPrice(product.price)}</p>
+        {/* Promoted onto the mono ladder. The price is a figure the card is
+            partly about; it was set smaller than the name it sits beside. */}
+        <p className="num type-mono-3 shrink-0 text-ink-muted">
+          {formatPrice(product.price)}
+        </p>
       </div>
 
       {/* The specimen line. Real figures only: `made` is how many exist,

@@ -8,9 +8,11 @@ import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { getDrop } from "@/lib/catalog/drops";
 import {
   categoriesInUse,
+  filterProducts,
   isSortKey,
   listProducts,
   searchProducts,
+  sortProducts,
 } from "@/lib/catalog/queries";
 import { SITE_URL } from "@/lib/site";
 import type { CategoryId } from "@/lib/catalog/types";
@@ -54,8 +56,18 @@ export default async function ShopPage({
   // engine's deep link lands on real results rather than the whole catalogue.
   const query = first(params.q)?.trim();
 
+  // A search now composes with the filter bar instead of replacing it. Before
+  // this, every category and sort control stayed live on a search results page
+  // and did nothing — and following one silently dropped the `?q=`.
   const products = query
-    ? searchProducts(query, 100)
+    ? sortProducts(
+        filterProducts(searchProducts(query, 100), {
+          category,
+          drop: drop?.id,
+          isNew: newOnly || undefined,
+        }),
+        sort,
+      )
     : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
 
   const heading = query
@@ -105,7 +117,9 @@ export default async function ShopPage({
         category={category}
         sort={sort}
         drop={dropSlug}
+        dropName={drop?.name}
         newOnly={newOnly}
+        query={query}
         count={products.length}
         available={categoriesInUse()}
       />
@@ -127,6 +141,7 @@ export default async function ShopPage({
             heading={`${heading} — ${products.length} pieces`}
             columns={3}
             priorityCount={3}
+            specimen
           />
         )}
       </div>

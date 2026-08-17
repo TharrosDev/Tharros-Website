@@ -13,6 +13,12 @@ type Props = {
 export default function ProductGallery({ images, productName }: Props) {
   const [active, setActive] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  // The swipe rail had no position indicator at all — no dots, no counter, just
+  // a static "Swipe — 4 images". Derived from scroll position in the handler
+  // rather than from an effect, so no render cascade.
+  const [swiped, setSwiped] = useState(0);
+
+  const total = String(images.length).padStart(2, "0");
 
   const current = images[active] ?? images[0];
 
@@ -20,15 +26,32 @@ export default function ProductGallery({ images, productName }: Props) {
     <>
       {/* Mobile: swipe. One image per screen, snapped. */}
       <div className="md:hidden">
-        <ul className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto">
+        <ul
+          className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto"
+          onScroll={(event) => {
+            const rail = event.currentTarget;
+            setSwiped(Math.round(rail.scrollLeft / rail.clientWidth));
+          }}
+        >
           {images.map((image) => (
             <li key={image.code} className="w-full shrink-0 snap-center">
               <ImageSlot image={image} sizes="100vw" priority={image === images[0]} />
             </li>
           ))}
         </ul>
-        <p className="type-meta mt-3 text-ink-faint">
-          Swipe — <span className="num">{images.length}</span> images
+        <p className="type-meta mt-3 flex items-center gap-3 text-ink-faint">
+          <span aria-live="polite">
+            <span className="num text-ink">
+              {String(Math.min(swiped + 1, images.length)).padStart(2, "0")}
+            </span>
+            <span className="num" aria-hidden="true">
+              {" / "}
+              {total}
+            </span>
+            <span className="visually-hidden"> of {total} images</span>
+          </span>
+          <span className="h-px flex-1 bg-rule" aria-hidden="true" />
+          <span>Swipe</span>
         </p>
       </div>
 
@@ -41,8 +64,13 @@ export default function ProductGallery({ images, productName }: Props) {
                 type="button"
                 onClick={() => setActive(index)}
                 aria-current={index === active ? "true" : undefined}
-                className={`block w-full transition-opacity ${
-                  index === active ? "opacity-100" : "opacity-45 hover:opacity-80"
+                // The active frame is marked with a rule, not with opacity. On
+                // a site whose entire language is hairlines, signalling state
+                // by fading everything else was the one place that forgot it.
+                className={`block w-full border p-0.5 transition-colors ${
+                  index === active
+                    ? "border-ink"
+                    : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
                 <ImageSlot image={image} sizes="80px" />
