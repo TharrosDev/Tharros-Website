@@ -4,6 +4,12 @@ The ecommerce site for THARROS — a contemporary streetwear label.
 
 Built for those who don't blend in.
 
+**Status: in development. Not live, and not launching soon.** Everything here is subject to
+change at the owner's discretion — look, structure, copy and scope included. `CLAUDE.md`,
+`DESIGN.md` and `docs/CONTENT_GUIDE.md` describe the decisions made so far so new work can
+match them; none of the three is a standard to be enforced against the person whose site
+it is.
+
 ---
 
 ## Stack
@@ -44,8 +50,10 @@ Placeholder, and marked as such in the source: **all product data** (`lib/catalo
 
 There is no photography yet. Every image renders as a ratio-correct drawn stand-in — a
 flat-lay, a figure, an environment or a fabric study, each marked FILLER and carrying its
-asset code — so pages can be judged before the shoot. Run with
-`NEXT_PUBLIC_FILLER_IMAGES=off` to see the bare frames instead.
+asset code — so pages can be built and judged before the shoot. Run with
+`NEXT_PUBLIC_FILLER_IMAGES=off` to see the bare frames instead. The stand-ins are
+scaffolding for a site that is not live; they hold each slot's ratio, so real photography
+drops in without moving a layout.
 
 ## Adding real content
 

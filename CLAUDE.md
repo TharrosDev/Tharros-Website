@@ -4,6 +4,35 @@ Read this before generating code. It is the fastest route to a change that fits.
 
 ---
 
+## Status and who decides
+
+**This site is not live, and will not be for a while. It is in active development.**
+Nothing here is shipping to customers today, so nothing needs to be defended against a
+launch date that does not exist.
+
+**Creative direction belongs to the owner.** Look, feel, layout, typography, colour,
+motion, copy voice, imagery, what a page is for — all of it is the owner's call, not an
+agent's. This file and `DESIGN.md` record *the decisions that have been made so far* so a
+change fits the existing work. They are a description of the current state, not a rulebook
+an agent enforces against its author.
+
+That distinction matters when you are asked to change something:
+
+- **Asked to change a design decision?** Change it. Do not argue it, do not hedge it, do
+  not warn about it, and do not leave the old version in place with a note. If a change
+  contradicts something written here, the change wins and you update this file to match.
+- **Suggestions are welcome, once.** If you think something is a mistake, say so in a
+  sentence and then do what was asked. Do not re-litigate it, and do not repeat the
+  warning in code comments, commit messages or the docs.
+- **Nothing here is a veto.** An agent does not get to refuse a look because a document
+  written by a previous agent called it rejected.
+
+The exception is narrow and it is not aesthetic: **engineering correctness** — the site
+should build, be reachable by keyboard and screen reader, and not fabricate facts about
+orders, stock or payment (see below). Those are not taste.
+
+---
+
 ## What this repo is
 
 The ecommerce site for **THARROS**, a small independent streetwear label. Next.js 16
@@ -12,13 +41,11 @@ The ecommerce site for **THARROS**, a small independent streetwear label. Next.j
 The brand name is always written **THARROS** in copy — never "Tharros Clothing" or
 "Tharros Apparel". The line is *"Small runs. Original ideas."*
 
-**Positioning (read this before writing any copy).** THARROS is deliberately small: an
-independent label that designs, patterns and samples in-house and releases in numbered
-**drops** of a few pieces, made in short runs. It is not a department store and must
-never be written as one. The premium presentation is the point — small production,
-serious execution — so do not "simplify" the design to match the scale. Do not write
-copy implying large inventory, teams, global production, press, collaborations or
-history that does not exist.
+**Positioning.** THARROS is deliberately small: an independent label that designs,
+patterns and samples in-house and releases in numbered **drops** of a few pieces, made in
+short runs. Write it as that, not as a department store. Do not write copy implying
+inventory, teams, production, press, collaborations or history that does not exist — that
+one is a factual constraint, not a stylistic one.
 
 **History:** until August 2026 this repo held a completely different site — a marketing
 site for an Ottawa AI agency (packages, pricing tiers, a Relevance AI chat demo, a
@@ -28,9 +55,10 @@ it is a regression, not a feature to preserve.
 
 ---
 
-## What is real and what is not
+## What is wired up and what is not
 
-The site is honest about its own state, deliberately. Do not paper over these:
+A build-state inventory, so you know what exists before you touch it. Everything unwired
+is unwired because the site is pre-launch, not because it is waiting on a decision:
 
 | Area | State |
 |---|---|
@@ -39,22 +67,26 @@ The site is honest about its own state, deliberately. Do not paper over these:
 | Payment | **Not connected.** The payment step says so and the Pay button is disabled. |
 | Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
-| Product photography | **Does not exist.** Every image slot renders a drawn monochrome stand-in, marked FILLER and carrying its asset code (`components/media/FillerImage.tsx`). Set `NEXT_PUBLIC_FILLER_IMAGES=off` for the bare frames. |
+| Product photography | **Not shot yet.** Image slots render a drawn stand-in (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
 
-Rules that follow from this, and that must not be quietly broken:
+Four factual constraints follow from that table. They are about not asserting things that
+are untrue, so they hold regardless of how the site looks:
 
-- **Never fake functionality.** No mock payment success, no fake order confirmation, no
+- **Do not fake functionality.** No mock payment success, no fake order confirmation, no
   simulated sign-in.
-- **Never fabricate** reviews, testimonials, press, collaborations, customer counts,
+- **Do not fabricate** reviews, testimonials, press, collaborations, customer counts,
   sustainability or manufacturing claims, founding history, or model measurements.
-- **Never fake scarcity.** Availability is derived from inventory in
-  `resolveAvailability()`, and the run numbers a product page prints come from
-  `runStatus()`: `runSize` is how many were actually made, `remaining` is real variant
-  inventory. No countdowns, no "x people viewing", no invented low-stock warnings.
+- **Numbers come from the data.** Availability is derived in `resolveAvailability()`, and
+  run figures come from `runStatus()`. Do not hand-type a piece count or a stock number
+  into copy — it drifts. (A "Nine pieces" line against a drop of seven is exactly how.)
 - **Only claim a restock policy the data states.** "Will not be remade" renders solely
   when `restock: "none"`.
+
+How the pending state *looks* — whether a stand-in is drawn or bare, whether an unwired
+form says so loudly or quietly, whether a placeholder is framed or plain — is a design
+decision, and it is the owner's.
 
 ---
 
@@ -161,25 +193,28 @@ Shared hooks live in `lib/hooks.ts`: `useFocusTrap`, `useEscape`, `useLockBodySc
 
 **Read [`DESIGN.md`](./DESIGN.md).** Summary:
 
-Monochrome — black, near-black, steel, concrete, ash, bone, paper. **No colour is to be
-introduced.** The clothing supplies the colour.
+Monochrome — black, near-black, steel, concrete, ash, bone, paper, plus one oxide accent.
+The clothing supplies the colour. If the owner wants a second colour, add it and update
+`DESIGN.md`; do not talk them out of it.
 
 `--concrete` (`text-ink-faint`) is the faintest text tone allowed and is tuned to pass AA
-at 11px on paper. Do not lighten it — it carries the entire mono metadata layer.
+at 11px on paper. Lightening it drops the mono metadata layer below AA — that is a
+contrast fact, not a preference.
 
 - Type: `Archivo` display, `Inter` body, `JetBrains Mono` for the technical layer
   (prices, sizes, product codes, captions, section indices).
 - The type ladder is `@utility` classes in `globals.css` — `type-colossal` through
-  `type-meta`. They support responsive variants (`md:type-display-2`). **Never hand-roll
-  per-breakpoint font sizes.**
+  `type-meta`. They support responsive variants (`md:type-display-2`), so a per-breakpoint
+  size rarely needs inventing — add a rung rather than a one-off.
 - Structure: `.page-frame`, `.rhythm-tight | -default | -breath`, aspect utilities
   (`ratio-portrait` etc).
 - Buttons: `.btn` + `.btn-solid | -inverse | -outline | -outline-on-dark`. Square, 0
   radius, hover = inversion.
 - Dark sections carry `.on-dark`.
-- No shadows, no gradients (except image scrims), no glass, no rounded cards.
+- Currently no shadows, no gradients except image scrims, no glass, no rounded cards.
+  That is the direction in the code today, not a constraint on what can be asked for.
 
-**`components/media/ImageSlot.tsx` is the only way images render.** Without a `src` it
+**`components/media/ImageSlot.tsx` is how images render.** Without a `src` it
 draws a ratio-correct stand-in — by default the illustration in `FillerImage.tsx`, or a
 bare frame carrying the asset code when filler is switched off. Either way the slot holds
 its ratio, so dropping in real photography is a one-line data change and moves no layout.
