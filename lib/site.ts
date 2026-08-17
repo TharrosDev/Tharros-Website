@@ -55,6 +55,30 @@ export const FOOTER_INFORMATION = [
   { name: "Contact", href: "/contact" },
 ];
 
+/**
+ * The information set, in one order.
+ *
+ * Eight routes each opened on the index "01", which makes the mono numeral
+ * decorative — it is supposed to place a section in a sequence. They are one
+ * sequence, so they are numbered as one, and each page can point at the rest of
+ * it. A customer answering a shipping question used to have to go back to the
+ * footer to reach the returns page that answers the next one.
+ */
+export const INFORMATION = [
+  { index: "01", name: "Size guide", href: "/size-guide" },
+  { index: "02", name: "Shipping", href: "/shipping" },
+  { index: "03", name: "Returns", href: "/returns" },
+  { index: "04", name: "FAQ", href: "/faq" },
+  { index: "05", name: "Contact", href: "/contact" },
+  { index: "06", name: "Privacy", href: "/legal/privacy" },
+  { index: "07", name: "Terms", href: "/legal/terms" },
+  { index: "08", name: "Refund policy", href: "/legal/refund-policy" },
+];
+
+export function informationIndex(href: string): string {
+  return INFORMATION.find((entry) => entry.href === href)?.index ?? "01";
+}
+
 export const FOOTER_LEGAL = [
   { name: "Privacy Policy", href: "/legal/privacy" },
   { name: "Terms", href: "/legal/terms" },

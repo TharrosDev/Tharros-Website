@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import PageIntro from "@/components/layout/PageIntro";
 import InfoSections from "@/components/layout/InfoSections";
+import InfoFooter from "@/components/layout/InfoFooter";
+import { informationIndex } from "@/lib/site";
 import { formatPrice } from "@/lib/format";
 import { FREE_SHIPPING_THRESHOLD, SHIPPING_OPTIONS } from "@/lib/commerce/shipping";
 
@@ -17,7 +19,13 @@ export default function ShippingPage() {
 
   return (
     <>
-      <PageIntro index="01" label="Information" title="Shipping" />
+      <PageIntro
+        index={informationIndex("/shipping")}
+        label="Information"
+        title="Shipping"
+        lead="Where it goes, what it costs, and how long it takes."
+        crumbs={[{ name: "Home", href: "/" }]}
+      />
       <InfoSections
         sections={[
           {
@@ -52,6 +60,8 @@ export default function ShippingPage() {
           },
         ]}
       />
+
+      <InfoFooter current="/shipping" />
     </>
   );
 }

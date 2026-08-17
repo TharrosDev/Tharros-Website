@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/layout/PageIntro";
-import { CONTACT_EMAIL, SOCIAL } from "@/lib/site";
+import InfoFooter from "@/components/layout/InfoFooter";
+import { CONTACT_EMAIL, informationIndex, SITE_URL, SOCIAL } from "@/lib/site";
+import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -27,23 +29,58 @@ const LINES = [
   },
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/contact#page`,
+      url: `${SITE_URL}/contact`,
+      name: "Contact THARROS",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      mainEntity: { "@id": `${SITE_URL}/#organization` },
+    },
+    breadcrumbList(SITE_URL, [
+      { name: "Home", path: "/" },
+      { name: "Contact", path: "/contact" },
+    ]),
+  ],
+};
+
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
+      />
+
       <PageIntro
-        index="01"
+        index={informationIndex("/contact")}
         label="Information"
         title="Contact"
         lead="One inbox, answered within two business days."
+        crumbs={[{ name: "Home", href: "/" }]}
       />
 
       <div className="page-frame rhythm-tight">
+        {/* `break-all` broke the address mid-word rather than at the @. An email
+            is one token to a reader; the wrap point that makes sense is the one
+            the address already has. */}
         <a
           href={`mailto:${CONTACT_EMAIL}`}
-          className="type-display-3 lg:type-display-2 link-rule-reveal inline-block break-all"
+          className="type-display-3 lg:type-display-2 link-rule-reveal inline-block [overflow-wrap:anywhere]"
         >
           {CONTACT_EMAIL}
         </a>
+
+        <p className="type-meta mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-ink-faint">
+          <span>Replies within two business days</span>
+          <span aria-hidden="true">/</span>
+          <span>Monday to Friday</span>
+          <span aria-hidden="true">/</span>
+          <span>There is no phone line</span>
+        </p>
 
         <ul className="mt-16 grid gap-x-8 gap-y-10 border-t border-ink pt-10 md:grid-cols-3">
           {LINES.map((line) => (
@@ -74,6 +111,8 @@ export default function ContactPage() {
           </Link>
         </div>
       </div>
+
+      <InfoFooter current="/contact" />
     </>
   );
 }

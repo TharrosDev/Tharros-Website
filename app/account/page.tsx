@@ -37,11 +37,13 @@ const SECTIONS = [
 export default function AccountPage() {
   return (
     <>
+      {/* The eyebrow read "01 Account" over an h1 reading "Account". */}
       <PageIntro
         index="01"
-        label="Account"
+        label="Your things"
         title="Account"
         lead="Sign-in is not connected yet. Saved pieces work today and are kept on this device."
+        crumbs={[{ name: "Home", href: "/" }]}
       />
 
       <div className="page-frame rhythm-tight">
@@ -56,10 +58,16 @@ export default function AccountPage() {
                 is where you will sign in — and orders, addresses and settings below will
                 fill in from your account.
               </p>
-              <button type="button" disabled aria-disabled="true" className="btn btn-solid btn-full mt-8">
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                aria-describedby="signin-disabled"
+                className="btn btn-solid btn-full mt-8"
+              >
                 Sign in
               </button>
-              <p className="type-meta mt-3 text-ink-faint">
+              <p id="signin-disabled" className="type-meta mt-3 text-ink-faint">
                 Disabled until a provider is connected.
               </p>
             </div>

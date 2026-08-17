@@ -24,9 +24,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/returns", priority: 0.4, changeFrequency: "yearly" },
     { path: "/faq", priority: 0.5, changeFrequency: "monthly" },
     { path: "/contact", priority: 0.4, changeFrequency: "yearly" },
-    { path: "/legal/privacy", priority: 0.2, changeFrequency: "yearly" },
-    { path: "/legal/terms", priority: 0.2, changeFrequency: "yearly" },
-    { path: "/legal/refund-policy", priority: 0.2, changeFrequency: "yearly" },
+    // The three legal routes are not here. They are admitted working drafts and
+    // now carry `robots: { index: false }`, so listing them was the sitemap
+    // asking for exactly what the pages ask not to happen. They go back in with
+    // the reviewed wording.
   ];
 
   const now = new Date();

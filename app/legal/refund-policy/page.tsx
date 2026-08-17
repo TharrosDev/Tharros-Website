@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import PageIntro from "@/components/layout/PageIntro";
 import InfoSections from "@/components/layout/InfoSections";
+import InfoFooter from "@/components/layout/InfoFooter";
+import PendingNotice from "@/components/ui/PendingNotice";
+import { informationIndex } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
   description: "THARROS refund terms, timelines and exceptions.",
+  robots: { index: false, follow: true },
   alternates: { canonical: "/legal/refund-policy" },
 };
 
@@ -13,11 +17,24 @@ export default function RefundPolicyPage() {
   return (
     <>
       <PageIntro
-        index="01"
+        index={informationIndex("/legal/refund-policy")}
         label="Legal"
         title="Refund policy"
-        lead="Working draft — pending legal review before the store opens."
-      />
+      >
+        <div className="mt-10">
+          <PendingNotice
+            label="Working draft"
+            title="This has not been through legal review yet."
+          >
+            <p className="type-body max-w-prose text-ink-muted">
+              It states what THARROS actually intends to do, and it is here so
+              nothing about the store is hidden. It is not the final wording, it
+              is deliberately left out of search results, and it will be replaced
+              before the store opens.
+            </p>
+          </PendingNotice>
+        </div>
+      </PageIntro>
       <InfoSections
         sections={[
           {
@@ -44,6 +61,8 @@ export default function RefundPolicyPage() {
           },
         ]}
       />
+
+      <InfoFooter current="/legal/refund-policy" />
     </>
   );
 }
