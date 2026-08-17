@@ -99,7 +99,7 @@ export default function AboutPage() {
         crumbs={[{ name: "Home", href: "/" }]}
       />
 
-      <Reveal className="mt-16">
+      <Reveal className="section-lead">
         <ImageSlot
           image={{
             code: "ABT-01",

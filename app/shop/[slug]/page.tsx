@@ -117,14 +117,17 @@ export default async function ProductPage({ params }: { params: Params }) {
         />
       </div>
 
-      {/* Gallery gives up a column to the record beside it. With no photography
-          yet, four empty frames should not own two thirds of the page. */}
-      <div className="page-frame mt-6 grid gap-x-12 gap-y-10 lg:grid-cols-12">
-        <div className="lg:col-span-6">
+      {/* The garment leads and the record supports it: seven columns of
+          photograph against four of type. The split was 6/5 from a time when
+          the frames were empty and giving them two thirds of the page would
+          have been giving it to nothing; now that a frame carries a picture,
+          the picture is what the page is for. */}
+      <div className="page-frame mt-8 grid gap-x-16 gap-y-12 lg:grid-cols-12">
+        <div className="lg:col-span-7">
           <ProductGallery images={galleryImages(product)} productName={product.name} />
         </div>
 
-        <div className="no-scrollbar lg:col-span-5 lg:col-start-8 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
+        <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
           {/* The record opens on an index like every other block on the site.
               It had none, which is why the page's section numbering started at
               02. The code moves up here out of the specimen table: it is the
@@ -171,12 +174,12 @@ export default async function ProductPage({ params }: { params: Params }) {
               accordions; they are the two things that build confidence in a
               garment nobody can touch, so they are open by default now. */}
           <dl className="mt-8 divide-y divide-rule border-y border-rule">
-            <div className="flex gap-6 py-3">
+            <div className="flex gap-6 py-4">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Colour</dt>
               <dd className="type-body-sm">{product.colorway}</dd>
             </div>
             {drop ? (
-              <div className="flex gap-6 py-3">
+              <div className="flex gap-6 py-4">
                 <dt className="type-meta w-24 shrink-0 text-ink-faint">Drop</dt>
                 <dd className="type-body-sm">
                   <Link href={`/shop?drop=${drop.slug}`} className="link-rule link-rule-reveal">
@@ -185,13 +188,13 @@ export default async function ProductPage({ params }: { params: Params }) {
                 </dd>
               </div>
             ) : null}
-            <div className="flex gap-6 py-3">
+            <div className="flex gap-6 py-4">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Material</dt>
               <dd className="type-body-sm text-ink-muted">
                 {product.materials.join(" · ")}
               </dd>
             </div>
-            <div className="flex gap-6 py-3">
+            <div className="flex gap-6 py-4">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Fit</dt>
               <dd className="type-body-sm text-ink-muted">
                 {product.fit.join(" · ")}
@@ -290,7 +293,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               title="You may also like."
               titleClass="type-display-3"
             />
-            <div className="mt-12">
+            <div className="section-lead">
               <ProductGrid products={related} columns={4} specimen />
             </div>
           </div>

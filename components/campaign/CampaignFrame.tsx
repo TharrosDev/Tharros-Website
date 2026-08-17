@@ -130,11 +130,17 @@ export default function CampaignFrame({
         </div>
       </div>
 
+      {/* Hung to the foot of the frame, not to its head. Aligned to the top,
+          the caption started level with the picture and then ran out, leaving
+          a column of empty page under it and its own rule floating a third of
+          the way up a tall frame. Bottom-aligned, the caption's rule and the
+          frame's lower edge land together and the space collects above them,
+          where it reads as air rather than as a gap. */}
       <figcaption
         className={
           imageFirst
-            ? "min-w-0 md:col-span-3 md:col-start-10 md:pt-10"
-            : "min-w-0 md:col-span-3 md:col-start-1 md:row-start-1 md:pt-10"
+            ? "min-w-0 md:col-span-3 md:col-start-10 md:self-end"
+            : "min-w-0 md:col-span-3 md:col-start-1 md:row-start-1 md:self-end"
         }
       >
         {meta}

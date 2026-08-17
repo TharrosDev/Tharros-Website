@@ -36,7 +36,7 @@ export default function EditorialPair({
   return (
     // Same reasoning as CampaignFrame: twelve columns and their gaps do not fit
     // a phone, and the two frames stack there regardless.
-    <figure className="grid grid-cols-1 gap-4 md:grid-cols-12">
+    <figure className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-10">
       <div className="min-w-0 md:col-span-7">
         <ImageSlot
           image={wide}

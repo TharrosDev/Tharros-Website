@@ -35,7 +35,7 @@ export default function PageIntro({
 }: Props) {
   return (
     <div
-      className={`page-frame ${compact ? "page-top-tight pb-8" : "page-top pb-14"}`}
+      className={`page-frame ${compact ? "page-top-tight pb-10" : "page-top pb-16 md:pb-20"}`}
     >
       {crumbs && crumbs.length > 0 ? (
         <Breadcrumbs trail={crumbs} current={title} className="mb-8" />
@@ -53,14 +53,14 @@ export default function PageIntro({
           hits every time — its title is a quoted query, and a query is as long
           as someone typed. */}
       <h1
-        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-8 ${
+        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-10 md:mt-12 ${
           titleClass || compact ? "max-w-[22ch]" : "max-w-[14ch]"
         }`}
       >
         {title}
       </h1>
 
-      {lead ? <p className="type-lead mt-6 max-w-2xl">{lead}</p> : null}
+      {lead ? <p className="type-lead mt-8 max-w-2xl">{lead}</p> : null}
 
       {children}
     </div>

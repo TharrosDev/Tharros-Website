@@ -72,7 +72,7 @@ function Wearing({ slugs }: { slugs: string[] }) {
 
 function Caption({ spread }: { spread: LookbookSpread }) {
   return (
-    <div className="page-frame mt-5">
+    <div className="page-frame mt-6">
       <div className="flex flex-wrap items-baseline gap-4">
         <ParallaxNumeral className="num type-meta text-ink-faint">
           {spread.index}
@@ -132,7 +132,10 @@ export default function LookbookPage() {
         </div>
       </section>
 
-      <div className="rhythm-default space-y-24 md:space-y-32">
+      {/* Spreads are separated the way the campaign sequence separates frames:
+          far enough apart that each one is arrived at rather than scrolled
+          past. Two spreads a screen is a contact sheet. */}
+      <div className="rhythm-default space-y-32 md:space-y-48">
         {LOOKBOOK.map((spread) => {
           if (spread.layout === "full") {
             return (
@@ -150,7 +153,7 @@ export default function LookbookPage() {
           if (spread.layout === "pair") {
             return (
               <Reveal key={spread.id} as="section">
-                <div className="page-frame grid gap-4 md:grid-cols-2">
+                <div className="page-frame grid gap-6 md:grid-cols-2 md:gap-10">
                   {spread.images.map((image) => (
                     <ImageSlot
                       key={image.code}
@@ -182,7 +185,7 @@ export default function LookbookPage() {
 
           return (
             <Reveal key={spread.id} as="section">
-              <div className="page-frame grid grid-cols-3 gap-3">
+              <div className="page-frame grid grid-cols-3 gap-4 md:gap-6">
                 {spread.images.map((image) => (
                   <ImageSlot key={image.code} image={image} sizes="31vw" />
                 ))}

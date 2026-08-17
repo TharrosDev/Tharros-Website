@@ -54,7 +54,7 @@ export default function TheFrames() {
         </p>
       </div>
 
-      <ul className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-gutter pb-2">
+      <ul className="no-scrollbar section-lead flex snap-x snap-mandatory gap-8 overflow-x-auto px-gutter pb-2 md:gap-12">
         {spreads.map((spread, i) => (
           <Reveal
             as="li"

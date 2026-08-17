@@ -22,13 +22,14 @@ export default function TheRun() {
           title="Every piece in the drop."
           action={{ href: "/shop", label: "Shop all" }}
         />
-        <div className="mt-14">
+        <div className="section-lead">
           <ProductGrid
             products={products}
             heading={`${CURRENT_DROP.name} pieces`}
             columns={3}
             priorityCount={3}
             specimen
+            hang
           />
         </div>
       </div>

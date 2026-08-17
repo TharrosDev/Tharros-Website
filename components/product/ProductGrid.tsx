@@ -14,6 +14,12 @@ type Props = {
   priorityCount?: number;
   /** Print each piece's code and run figures under the frame. */
   specimen?: boolean;
+  /**
+   * Drop the middle column half a step at `lg`, so a three-up grid reads as a
+   * hang rather than as rows of a catalogue. For the editorial grids — the home
+   * run, the drop — not for `/shop`, where a scannable row is the point.
+   */
+  hang?: boolean;
 };
 
 /* One column on the narrowest phones so a single piece reads at full width,
@@ -37,12 +43,17 @@ export default function ProductGrid({
   columns = 3,
   priorityCount = 0,
   specimen = false,
+  hang = false,
 }: Props) {
   return (
     <>
       {heading ? <h2 className="visually-hidden">{heading}</h2> : null}
+      {/* The gutters are the grid's manners: a piece needs more room from the
+          piece beside it than its own record needs from its frame, and at
+          gap-x-4 the two were the same distance. Vertical is the larger of the
+          two so a row reads as a row. */}
       <ul
-        className={`grid gap-x-4 gap-y-12 md:gap-x-6 md:gap-y-16 ${COLUMN_CLASS[columns]}`}
+        className={`grid gap-x-6 gap-y-16 md:gap-x-10 md:gap-y-24 lg:gap-x-14 ${COLUMN_CLASS[columns]} ${hang ? "grid-hang" : ""}`}
       >
         {/* The grid arrives as a cascade rather than as one slab. The stagger
             is capped at the first row and a bit: past that the delay stops

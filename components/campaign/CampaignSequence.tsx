@@ -36,7 +36,9 @@ export default function CampaignSequence({
         <SectionHeading index={index} label={label} title={title} />
       </div>
 
-      <div className="mt-14 flex flex-col gap-20 md:gap-28">
+      {/* Frames are separated by more than sections are: each one is a picture
+          to stop at, and at gap-20 the sequence scrolled as a strip. */}
+      <div className="section-lead flex flex-col gap-28 md:gap-40">
         {campaign.sequence.map((frame, i) => {
           const align = ALIGNMENTS[i % ALIGNMENTS.length];
           // Full-width frames break the page frame; the others sit inside it.

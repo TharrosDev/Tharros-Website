@@ -169,8 +169,20 @@ rung first; add a rung if none fits.
 
 ## 4. Structure
 
-- `.page-frame` — max-width 1600px, fluid gutters (`clamp(1.25rem, 4vw, 4rem)`).
-- Rhythm: `.rhythm-tight | .rhythm-default | .rhythm-breath`, fluid via `clamp()`.
+- `.page-frame` — max-width 1600px, fluid gutters (`clamp(1.5rem, 5.5vw, 7rem)`). The
+  margin is composition, not leftover space: at a 4rem ceiling a 1440px screen put the
+  work 64px from the edge, which reads as a document rather than as a wall.
+- Rhythm: `.rhythm-tight | .rhythm-default | .rhythm-breath`, fluid via `clamp()`. Three
+  intervals and no fourth, pitched far enough apart that a pause reads as a pause —
+  `tight` groups two things that belong together, `default` separates sections, `breath`
+  is the held beat either side of a black band.
+- `.section-lead` (`--lead-gap`) is the one interval between a section's opener and the
+  work it opens. Six sections previously carried their own `mt-10 / mt-12 / mt-14 /
+  mt-16`, which is four values for one relationship. Reach for it rather than a margin.
+- `.grid-hang` drops a three-up grid's middle column half a step from `lg`. Rigid rows of
+  a garment grid read as a catalogue page; one offset column turns the same grid into a
+  hang the eye travels rather than scans. Editorial grids only — `/shop` stays square,
+  because there scanning is the job.
 - Header height is `--header-h` (4.5rem). The header is fixed; `PageIntro` carries the
   clearance so pages never add their own top padding.
 - Image ratios: `ratio-portrait` (3:4, product), `ratio-editorial` (4:5),
@@ -182,6 +194,14 @@ The home page deliberately avoids a repeating image → heading → cards loop. 
 alignment, density and surface alternate: full-bleed hero, three-up specimen grid, black
 type-only statement, the campaign sequence's alternating frames, a sticky two-column
 story, a horizontal rail, black again. When adding a section, ask what it varies.
+
+**Captions hang to the foot of their frame.** A campaign frame's caption column is
+bottom-aligned (`md:self-end`), not top-aligned. Level with the top of a tall picture it
+ran out after two lines and left a column of empty page under it, with its own rule
+floating a third of the way up the frame. Hung at the foot, the caption's rule and the
+picture's lower edge land together and the space collects above them, where it reads as
+air. The same instinct governs the frame gutters: a piece needs more room from the piece
+beside it than its own record needs from its frame.
 
 **Rhythm is used as a device.** Every section below the hero used to be
 `rhythm-default`, which meant the page had one spacing value for its whole length and
@@ -349,14 +369,17 @@ photographs instead of six. Small thumbnails (bag, search, order summary) invert
 
 ### The stand-in artwork
 
-Until photography exists, a slot without `src` draws a deterministic monochrome
-illustration (`components/media/filler/`) — a flat lay, a figure in a place, a street, or
-a fabric study, chosen from the slot's `kind` and `crop`. It is hashed off the asset code
-so a frame is identical on every render and machine, keyed to the code *family* so one
-piece looks shot in one session, and always stamped with its code and `FILLER`.
+Until photography exists, a slot without `src` shows a stand-in photograph from
+`public/filler` — a flat lay, a figure in a place, a street, or a fabric study, chosen
+from the slot's `kind` and `crop` and held steady by its asset code, so a frame is
+identical on every render and machine. They are free-licence stock (Openverse:
+StockSnap / rawpixel), desaturated to the monochrome palette so the pages read as one
+system. They were drawn illustrations until August 2026; a drawing let the layout be
+checked but not judged — a page of diagrams does not tell you whether the composition
+holds a photograph.
 
 `NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames. It is a switch for looking at a
-layout without the drawing in it, nothing more — the site is pre-launch, the stand-ins are
+layout without the stand-ins in it, nothing more — the site is pre-launch, the stand-ins are
 scaffolding, and how much a layout leans on them while the photography does not exist is
 not a problem to solve. Build what looks right; the frames hold their ratio either way, so
 real photography drops in without moving anything.
