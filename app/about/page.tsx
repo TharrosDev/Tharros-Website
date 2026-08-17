@@ -88,6 +88,7 @@ export default function AboutPage() {
             kind: "detail",
             ratio: "wide",
           }}
+          ratioSm="editorial"
           sizes="100vw"
         />
       </Reveal>

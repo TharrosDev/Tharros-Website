@@ -793,6 +793,13 @@
      library would have been carrying here, and it measured 40kB gzipped
      against four transitions.
 
+     `motion` is now a dependency, and this reasoning still stands for these
+     four. It was added for scroll-linked position — the travelling numeral on
+     campaign frames — which CSS cannot do portably while scroll-timeline has a
+     Safari gap, and which hand-rolled is a scroll listener driving setState.
+     The overlays, the reveals and the ledger rule stay exactly where they are.
+     See DESIGN.md section 6 for what the library is and is not allowed to do.
+
      visibility rather than display, so no @starting-style is needed and the
      behaviour is the same everywhere. Hidden overlays leave the tab order and
      the accessibility tree exactly as `display: none` would; the visibility

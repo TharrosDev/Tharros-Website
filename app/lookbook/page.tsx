@@ -88,7 +88,11 @@ export default function LookbookPage() {
           if (spread.layout === "full") {
             return (
               <Reveal key={spread.id} as="section">
-                <ImageSlot image={spread.images[0]} sizes="100vw" />
+                <ImageSlot
+                  image={spread.images[0]}
+                  ratioSm="editorial"
+                  sizes="100vw"
+                />
                 <Caption spread={spread} />
               </Reveal>
             );

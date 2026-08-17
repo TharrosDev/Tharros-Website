@@ -1,5 +1,6 @@
 import ImageSlot from "@/components/media/ImageSlot";
 import ParallaxNumeral from "@/components/motion/ParallaxNumeral";
+import FrameHotspots from "./FrameHotspots";
 import ModelCredit from "./ModelCredit";
 import WornList from "./WornList";
 import type { CampaignFrame as Frame, Ratio } from "@/lib/catalog/types";
@@ -37,9 +38,13 @@ export default function CampaignFrame({
   const meta = (
     <div className="flex flex-col gap-6">
       <div className={`flex items-baseline gap-4 border-t ${rule} pt-3`}>
-        <ParallaxNumeral className={`type-mono-3 ${muted}`}>{frame.index}</ParallaxNumeral>
+        <ParallaxNumeral className={`type-mono-3 ${muted}`}>
+          {frame.index}
+        </ParallaxNumeral>
         {frame.caption ? (
-          <p className={`type-body-sm ${onDark ? "text-ink-on-dark" : "text-ink"}`}>
+          <p
+            className={`type-body-sm ${onDark ? "text-ink-on-dark" : "text-ink"}`}
+          >
             {frame.caption}
           </p>
         ) : null}
@@ -54,6 +59,14 @@ export default function CampaignFrame({
     </div>
   );
 
+  // Markers are gated on a real photograph existing. A coordinate pointing at a
+  // garment in a drawing that has no garment at that coordinate is a fabricated
+  // interaction, so today this is always false and the rail is the whole story.
+  const markers =
+    frame.hotspots && frame.image.src ? (
+      <FrameHotspots hotspots={frame.hotspots} frameId={frame.id} />
+    ) : null;
+
   if (align === "full") {
     return (
       <figure>
@@ -61,13 +74,16 @@ export default function CampaignFrame({
             portrait run edge to edge on a desktop is nearly two screens tall,
             and the reader loses the picture scrolling through it. On a phone it
             goes back to a tall frame, where full width is only 390px. */}
-        <ImageSlot
-          image={frame.image}
-          ratio={ratio ?? "campaign"}
-          ratioSm={ratioSm ?? "editorial"}
-          sizes="100vw"
-          priority={priority}
-        />
+        <div className="relative">
+          <ImageSlot
+            image={frame.image}
+            ratio={ratio ?? "campaign"}
+            ratioSm={ratioSm ?? "editorial"}
+            sizes="100vw"
+            priority={priority}
+          />
+          {markers}
+        </div>
         <figcaption className="page-frame mt-6">
           <div className="max-w-3xl">{meta}</div>
         </figcaption>
@@ -78,28 +94,37 @@ export default function CampaignFrame({
   const imageFirst = align === "left";
 
   return (
-    <figure className="grid grid-cols-12 items-start gap-x-8 gap-y-8">
+    // One column on a phone, twelve from `md`. A 12-column track with a 2rem
+    // column gap needs 11 × 32px = 352px for the gaps alone, which is more than
+    // the 280px a 320px screen has inside the page frame — so the grid pushed
+    // the whole document wider than the viewport before a single child was
+    // measured. The children stack anyway at this width; the columns were only
+    // ever for the desktop composition.
+    <figure className="grid grid-cols-1 items-start gap-y-8 md:grid-cols-12 md:gap-x-8">
       <div
         className={
           imageFirst
-            ? "col-span-12 md:col-span-8"
-            : "col-span-12 md:col-span-8 md:col-start-5 md:order-2"
+            ? "min-w-0 md:col-span-8"
+            : "min-w-0 md:col-span-8 md:col-start-5 md:order-2"
         }
       >
-        <ImageSlot
-          image={frame.image}
-          ratio={ratio}
-          ratioSm={ratioSm}
-          sizes="(min-width: 768px) 66vw, 100vw"
-          priority={priority}
-        />
+        <div className="relative">
+          <ImageSlot
+            image={frame.image}
+            ratio={ratio}
+            ratioSm={ratioSm}
+            sizes="(min-width: 768px) 66vw, 100vw"
+            priority={priority}
+          />
+          {markers}
+        </div>
       </div>
 
       <figcaption
         className={
           imageFirst
-            ? "col-span-12 md:col-span-3 md:col-start-10 md:pt-10"
-            : "col-span-12 md:col-span-3 md:col-start-1 md:row-start-1 md:pt-10"
+            ? "min-w-0 md:col-span-3 md:col-start-10 md:pt-10"
+            : "min-w-0 md:col-span-3 md:col-start-1 md:row-start-1 md:pt-10"
         }
       >
         {meta}

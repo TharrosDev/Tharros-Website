@@ -198,7 +198,31 @@ Slow, flat, intentional. Nothing bounces or overshoots.
   scoped to `[data-js]` — an attribute the root layout sets before first paint. If scripting
   is blocked or the bundle fails, content is never hidden to begin with. Both halves are
   required: the class-adding alone would still strand `opacity: 0` in the SSR HTML.
+- **The travelling numeral** (`ParallaxNumeral`) is the second gesture: a frame's mono
+  index drifts about 40px against the picture it labels as the frame crosses the viewport.
+  Typographic, monochrome, and the only motion allowed on top of imagery.
 - Everything is disabled under `prefers-reduced-motion`.
+
+### What the motion library may do
+
+`motion` is a dependency. It is scoped deliberately, because the CSS system above is
+cheaper and degrades better, and a library that creeps outward ends up re-implementing it.
+
+**Allowed** — scroll-linked position (`ParallaxNumeral`), and presence animation for a
+node that is genuinely conditionally rendered (`FrameHotspots`' label). These are the
+cases CSS cannot do portably: scroll-timeline still has a Safari gap, and the hand-rolled
+version is a scroll listener driving `setState`, which is both a render cascade and a
+React Compiler violation.
+
+**Not allowed** — converting `Reveal` to `whileInView` (it would lose the `[data-js]`
+guarantee that nothing is hidden in the SSR HTML when scripting fails, and the shared
+observer is cheaper than one per element); the overlays, which keep their `[data-open]`
+CSS transitions; `.rule-draw`, `.hover-zoom`, `.link-rule`, `.btn`, `.bag-count`; and
+route transitions, which would force a client boundary at the layout root.
+
+Every motion component is a `"use client"` leaf that calls `useReducedMotion()` and
+returns the plain element — no transform registered at all — rather than animating to
+zero. Transforms attach only after hydration, so the served HTML never carries one.
 
 ---
 
@@ -208,11 +232,44 @@ Slow, flat, intentional. Nothing bounces or overshoots.
 frame with a dashed inset rule and the asset code in mono — legible as *pending*, not as
 *broken*. Labels hide themselves via container queries when the slot is too small.
 
-When photography arrives, add `src` to the slot's data entry. Nothing else changes.
+`ratioSm` gives a slot a second shape below `md`, so a 21:9 campaign frame is a tall frame
+on a phone rather than a 167px band — one element, one download. The ratio classes are
+`@utility` declarations for exactly this reason: as plain classes in `@layer utilities`
+they take no responsive variants, and `md:ratio-campaign` silently does nothing.
+
+Which frame of a piece appears where is decided in `lib/catalog/images.ts`, not by
+position in the array. The ladder runs worn → in the world → detail → back → flat, so the
+site leads with the garment on a person and degrades correctly for a piece with three
+photographs instead of six. Small thumbnails (bag, search, order summary) invert it: at
+64px a full-body frame is a smudge.
+
+### The stand-in artwork
+
+Until photography exists, a slot without `src` draws a deterministic monochrome
+illustration (`components/media/filler/`) — a flat lay, a figure in a place, a street, or
+a fabric study, chosen from the slot's `kind` and `crop`. It is hashed off the asset code
+so a frame is identical on every render and machine, keyed to the code *family* so one
+piece looks shot in one session, and always stamped with its code and `FILLER`.
+
+`NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames, and that is the honesty test for
+any new layout: **if a section only reads because the filler drew something convincing, it
+is a section that depends on a lie.** Every layout must still parse as *pending* with it
+off.
 
 Art direction for the eventual shoot: urban architecture, concrete, night streets,
 industrial environments, fabric detail, monochrome, dramatic natural light. One coherent
-universe. No smiling stock photography.
+universe. No smiling stock photography. People who look like they could genuinely wear the
+clothes, photographed walking, sitting, leaning and turning — not standing square to
+camera with their hands at their sides.
+
+### Type over pictures
+
+`--ink-on-dark-faint` only just clears AA on pure black, so it has **no headroom over a
+photograph**. Metadata set over imagery uses `--ink-on-dark-muted` and carries its
+hierarchy through the mono face and scale instead. Scrims are anchored to the block they
+protect, not to a fraction of the viewport — viewport-fraction bands drift as the screen
+height changes and leave text on bare picture. Verify by pixel readback, never by parsing
+`getComputedStyle().color`: Chromium returns these as `lab()`.
 
 ---
 

@@ -31,7 +31,11 @@ export default function ShopFeature() {
     // less than half that, and it still opens the page with a person.
     <section className="page-frame rhythm-tight">
       <div className="grid gap-x-8 gap-y-8 md:grid-cols-12">
-        <div className="md:col-span-7">
+        {/* `min-w-0` on both columns: a grid child's automatic minimum size is
+            its content, so the horizontally scrolling rail below sized the track
+            to its own max-content and pushed the page 6px wider than the phone.
+            The rail is meant to scroll, not to set the layout. */}
+        <div className="min-w-0 md:col-span-7">
           <ImageSlot
             image={frame.image}
             ratio="campaign"
@@ -40,7 +44,7 @@ export default function ShopFeature() {
           />
         </div>
 
-        <div className="flex flex-col md:col-span-4 md:col-start-9">
+        <div className="flex min-w-0 flex-col md:col-span-4 md:col-start-9">
           <div className="eyebrow border-t border-ink pt-4">
             <span className="num">{CURRENT_DROP.index}</span>
             <span>{CURRENT_DROP.name}</span>

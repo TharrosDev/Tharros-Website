@@ -46,18 +46,26 @@ export default function WornList({
     <div>
       <p className={`type-meta ${muted} ${rule} border-t pt-3`}>In this frame</p>
 
+      {/* A stack beside a frame on a desktop is a column of two or three names.
+          On a phone that column pushes the next frame off the screen, so below
+          `md` every variant is the snap rail — the same gesture the lookbook
+          rail and the product gallery already use. */}
       <ul
         className={
           variant === "rail"
-            ? "no-scrollbar mt-4 flex gap-6 overflow-x-auto pb-1"
-            : "mt-4 flex flex-col gap-5"
+            ? "no-scrollbar mt-4 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-1"
+            : "no-scrollbar mt-4 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-1 md:flex-col md:gap-5 md:overflow-visible"
         }
       >
         {products.map((product) => (
           <li
             key={product.id}
             id={`worn-${frameId}-${product.slug}`}
-            className={variant === "rail" ? "w-44 shrink-0" : ""}
+            className={
+              variant === "rail"
+                ? "w-44 shrink-0 snap-start"
+                : "w-44 shrink-0 snap-start md:w-auto md:shrink"
+            }
           >
             <Link href={`/shop/${product.slug}`} className="group flex items-center gap-3">
               <span className="w-12 shrink-0">

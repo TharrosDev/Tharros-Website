@@ -34,8 +34,10 @@ export default function EditorialPair({
   const muted = onDark ? "text-ink-on-dark-faint" : "text-ink-faint";
 
   return (
-    <figure className="grid grid-cols-12 gap-4">
-      <div className="col-span-12 md:col-span-7">
+    // Same reasoning as CampaignFrame: twelve columns and their gaps do not fit
+    // a phone, and the two frames stack there regardless.
+    <figure className="grid grid-cols-1 gap-4 md:grid-cols-12">
+      <div className="min-w-0 md:col-span-7">
         <ImageSlot
           image={wide}
           sizes="(min-width: 768px) 58vw, 100vw"
@@ -46,15 +48,21 @@ export default function EditorialPair({
       {/* The crop drops below the full frame's baseline — the offset is the
           composition. On a phone the two simply stack, because a 40%-width
           crop beside a 58%-width frame is two thumbnails. */}
-      <div className="col-span-12 md:col-span-4 md:col-start-9 md:pt-20">
-        <ImageSlot image={crop} ratio="square" sizes="(min-width: 768px) 33vw, 100vw" />
+      <div className="min-w-0 md:col-span-4 md:col-start-9 md:pt-20">
+        <ImageSlot
+          image={crop}
+          ratio="square"
+          sizes="(min-width: 768px) 33vw, 100vw"
+        />
       </div>
 
       <figcaption
-        className={`col-span-12 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t ${rule} pt-3`}
+        className={`flex flex-wrap md:col-span-12 items-baseline justify-between gap-x-8 gap-y-2 border-t ${rule} pt-3`}
       >
         {caption ? (
-          <span className={`type-body-sm ${onDark ? "text-ink-on-dark" : "text-ink"}`}>
+          <span
+            className={`type-body-sm ${onDark ? "text-ink-on-dark" : "text-ink"}`}
+          >
             {caption}
           </span>
         ) : (
