@@ -64,7 +64,7 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 |---|---|
 | Catalog, cart, sizes, inventory, wishlist, search, filtering, sorting | **Real and working** |
 | Checkout up to payment | **Real** — contact, address, delivery, live totals |
-| Payment | **Not connected.** The payment step says so and the Pay button is disabled. |
+| Payment | **Not connected**, and said three times before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and at step 04. The working action there is a `mailto:` composed from the resolved bag and address; the card button is disabled and named "Card payment unavailable" rather than quoting a price nobody can pay. |
 | Accounts / sign-in | **Not connected.** `/account` is a shell with an explicit notice. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
 | Product photography | **Not shot yet.** Image slots render a drawn stand-in (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
@@ -109,6 +109,12 @@ decision, and it is the owner's.
 | 404 | `app/not-found.tsx` | Branded, full-screen |
 | Errors | `app/error.tsx`, `app/global-error.tsx` | Branded boundaries — never Next's default page |
 | Loading | `app/shop/loading.tsx` | Skeleton matching the real grid, so nothing shifts |
+
+The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
+Shop / Drop / Lookbook) plus a search control, and keeps `IndexOverlay` as the full
+navigation surface. They are real links, so navigation survives scripting being
+unavailable; before this the only nav trigger was a `<button>` and the footer was the
+site's entire navigation with JS off.
 
 `Header` floats transparent over the hero on the routes in `TRANSPARENT_ROUTES`
 (`/` and `/lookbook`). Every other page opens with `PageIntro`, which carries the fixed

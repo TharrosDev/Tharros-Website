@@ -52,8 +52,19 @@
   --signal:         var(--oxide);
   --signal-on-dark: var(--oxide-on-dark);
 
-  /* — State ————————————————————————————————————— */
-  --danger: oklch(52% 0.16 27);
+  /* — State ————————————————————————————————————
+     There is no error colour. There was: `--danger` at oklch(52% 0.16 27),
+     four degrees of hue and two points of chroma from `--oxide`. Oxide is
+     load-bearing across three meanings — the current drop, a closed run,
+     something in development — and a visitor who has learned that this red
+     marks state then met the same red marking their own mistake, on a form, at
+     the most anxious point in the flow. The accent's whole argument is that
+     restraint keeps it meaning something.
+
+     Errors are marked the way this system marks everything else: with the
+     weight of a rule and the mono face. See `.field[aria-invalid]` and
+     `.field-error` below. Colour was never the only indicator anyway —
+     `aria-invalid`, `role="alert"` and a focus move all already fire. */
 
   /* — Motion ———————————————————————————————————
      Slow and flat. Nothing overshoots, nothing bounces. */
@@ -62,7 +73,6 @@
   --ease-ledger:    cubic-bezier(0.22, 1, 0.36, 1);  /* the rule draw */
   --dur-fast:   180ms;
   --dur-base:   320ms;
-  --dur-page:   480ms;
   --dur-slow:   620ms;
   --dur-reveal: 900ms;
 
@@ -144,8 +154,6 @@
 
   --color-signal: var(--signal);
   --color-signal-on-dark: var(--signal-on-dark);
-
-  --color-danger: var(--danger);
 
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -669,13 +677,29 @@
     color: var(--ink-on-dark-muted);
   }
 
+  /* An invalid field doubles its own rule rather than recolouring it. Done with
+     an inset ring instead of a border-width change: border-width does not
+     interpolate and a 1px growth reflows every field beside it, so the whole
+     row of a two-column address grid jumped when one of them failed. */
+  .field[aria-invalid="true"],
+  .field[aria-invalid="true"]:focus {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+
+  /* Underlined fields only carry a bottom rule, so the ring would draw three
+     sides that are not there. */
+  .field[aria-invalid="true"]:not(.field-boxed) {
+    box-shadow: inset 0 -1px 0 0 var(--ink);
+  }
+
   .field-error {
     display: block;
     font-family: var(--font-mono);
     font-size: var(--type-meta);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--danger);
+    color: var(--ink);
     margin-top: 0.5rem;
   }
 
@@ -959,6 +983,50 @@
   @media (prefers-reduced-motion: reduce) {
     [data-js] .reveal.rule-draw::before {
       transform: scaleX(1);
+      transition: none;
+    }
+  }
+
+  /* THE RUN LEDGER
+     The release stated as a proportion rather than as a statistic. The track is
+     the whole run; the oxide segment is the part of it that is gone. Both
+     figures are derived from variant inventory, so the bar cannot disagree with
+     the product pages, and it carries no meaning the mono labels beside it do
+     not already state in words — it is the shape of the sentence, not a
+     substitute for it. That is also why it is `aria-hidden`: a screen reader
+     gets "40 made / 24 left", which is the whole content.
+
+     `--run-taken` is a unitless ratio set by the component. It draws itself on
+     the ledger easing and shares Reveal's stagger through `--reveal-delay`, the
+     same way `.rule-draw` does — a pseudo-element cannot see the inline
+     transition-delay Reveal sets on the element itself. */
+  .run-ledger {
+    position: relative;
+    height: 2px;
+    background: var(--rule-strong);
+  }
+
+  .run-ledger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--signal);
+    transform: scaleX(var(--run-taken, 0));
+    transform-origin: left center;
+  }
+
+  [data-js] .reveal .run-ledger::after {
+    transform: scaleX(0);
+    transition: transform var(--dur-reveal) var(--ease-ledger) var(--reveal-delay, 0ms);
+  }
+
+  [data-js] .reveal.reveal-in .run-ledger::after {
+    transform: scaleX(var(--run-taken, 0));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js] .reveal .run-ledger::after {
+      transform: scaleX(var(--run-taken, 0));
       transition: none;
     }
   }

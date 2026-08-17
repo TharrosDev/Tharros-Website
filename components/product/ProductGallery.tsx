@@ -39,8 +39,13 @@ export default function ProductGallery({ images, productName }: Props) {
             </li>
           ))}
         </ul>
+        {/* No live region. The counter is driven by `onScroll`, so announcing it
+            meant one swipe produced a burst of announcements — a screen reader
+            reading "01 of 06, 02 of 06, 03 of 06" through a single gesture is
+            noise, not status. Each slide carries its own alt text, which is the
+            content; this is the visual affordance for it. */}
         <p className="type-meta mt-3 flex items-center gap-3 text-ink-faint">
-          <span aria-live="polite">
+          <span>
             <span className="num text-ink">
               {String(Math.min(swiped + 1, images.length)).padStart(2, "0")}
             </span>

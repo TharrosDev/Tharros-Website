@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useCart } from "@/components/commerce/CartProvider";
-import { useScrolledPast } from "@/lib/hooks";
+import { useOutOfView } from "@/lib/hooks";
 import { formatPrice } from "@/lib/format";
 import SaveButton from "./SaveButton";
 import SizeGuideModal from "./SizeGuideModal";
@@ -29,11 +29,12 @@ export default function BuyPanel({ product }: { product: Product }) {
   const [error, setError] = useState<string | null>(null);
   const [guideOpen, setGuideOpen] = useState(false);
   const sizesRef = useRef<HTMLFieldSetElement>(null);
-  // The bar appears once the buy panel itself has left the screen. It lives in
+  const addRef = useRef<HTMLButtonElement>(null);
+  // The bar is present exactly while the real Add button is not. It lives in
   // this component rather than beside it because it is the same purchase — the
   // same selected size, the same quantity, the same add — and a second copy of
   // that state is a second thing to keep in sync.
-  const scrolledPastFold = useScrolledPast(420);
+  const addOffScreen = useOutOfView(addRef);
 
   const availability = resolveAvailability(product);
   const buyable = isPurchasable(product);
@@ -184,7 +185,12 @@ export default function BuyPanel({ product }: { product: Product }) {
         />
       </div>
 
-      <button type="button" onClick={onAdd} className="btn btn-solid btn-full mt-6">
+      <button
+        ref={addRef}
+        type="button"
+        onClick={onAdd}
+        className="btn btn-solid btn-full mt-6"
+      >
         Add to bag
       </button>
 
@@ -218,9 +224,9 @@ export default function BuyPanel({ product }: { product: Product }) {
           `inert` rather than a conditional render: the bar stays mounted so it
           can travel, and stays out of the tab order until it has arrived. */}
       <div
-        inert={!scrolledPastFold}
+        inert={!addOffScreen}
         className={`fixed inset-x-0 bottom-0 z-[var(--z-sticky)] border-t border-rule bg-surface/95 backdrop-blur-sm [transition:transform_var(--dur-base)_var(--ease-out-expo)] lg:hidden ${
-          scrolledPastFold ? "translate-y-0" : "translate-y-full"
+          addOffScreen ? "translate-y-0" : "translate-y-full"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >

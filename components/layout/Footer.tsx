@@ -51,7 +51,11 @@ export default function Footer() {
           <Newsletter onDark />
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-4">
+        {/* Three columns, not four. Legal is not a destination anyone came for
+            — it belongs on the bottom rule with the copyright, which is where
+            every reader already looks for it. The footer was offering
+            seventeen links and a form for a nine-piece run. */}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-3">
           <Column title="Shop" links={FOOTER_SHOP} />
           <Column title="Information" links={FOOTER_INFORMATION} />
           <div>
@@ -79,7 +83,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <Column title="Legal" links={FOOTER_LEGAL} />
         </div>
       </div>
 
@@ -87,9 +90,23 @@ export default function Footer() {
       <div className="overflow-hidden border-t border-rule-on-dark">
         <div className="page-frame py-10">
           <WordmarkFit />
-          <div className="mt-8 flex flex-col justify-between gap-3 md:flex-row">
+          <div className="mt-8 flex flex-col justify-between gap-x-8 gap-y-4 md:flex-row md:items-baseline">
             <p className="type-meta text-ink-on-dark-faint">{BRAND_LINE}</p>
-            <p className="type-meta text-ink-on-dark-faint">© 2026 THARROS</p>
+            <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+              {FOOTER_LEGAL.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  // Muted rather than faint, and carrying a real box. These are
+                  // the only interactive things on this rule, and the faint tone
+                  // has no headroom left on black.
+                  className="type-meta -my-2 inline-block py-2 text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <p className="type-meta text-ink-on-dark-faint">© 2026 THARROS</p>
+            </div>
           </div>
         </div>
       </div>

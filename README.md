@@ -15,7 +15,7 @@ it is.
 ## Stack
 
 Next.js 16 (App Router, Turbopack) · React 19 · TypeScript (strict) · Tailwind 4 ·
-`motion` for transitions · Vercel Analytics. No CSS framework config file — the design
+Vercel Analytics. Transitions are CSS. No CSS framework config file — the design
 system lives in `app/globals.css` via `@theme inline` and `@utility`.
 
 ## Getting started

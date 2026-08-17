@@ -8,6 +8,14 @@ import Accordion from "@/components/ui/Accordion";
 import { createPersistentStore } from "@/lib/persistent-store";
 import { formatPrice } from "@/lib/format";
 import { DEFAULT_SHIPPING_OPTION, SHIPPING_OPTIONS, shippingCost } from "@/lib/commerce/shipping";
+import {
+  COUNTRIES,
+  DEFAULT_COUNTRY,
+  getCountry,
+  isValidPostal,
+  regionName,
+} from "@/lib/commerce/regions";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 type StepId = "contact" | "address" | "delivery" | "payment";
 
@@ -39,17 +47,8 @@ const EMPTY: Form = {
   city: "",
   region: "",
   postal: "",
-  country: "CA",
+  country: DEFAULT_COUNTRY.code,
 };
-
-/**
- * Where the label ships. A free-text country box on a form whose shipping rates
- * are quoted in one currency invited an address the rates do not cover.
- */
-const COUNTRIES = [
-  { code: "CA", name: "Canada" },
-  { code: "US", name: "United States" },
-];
 
 const ADDRESS_FIELDS: (keyof Form)[] = [
   "firstName",
@@ -73,6 +72,19 @@ const LABELS: Record<keyof Form, string> = {
   country: "Country",
 };
 
+/** Reads after "Enter your …". `region` is country-specific and set inline. */
+const MISSING: Record<keyof Form, string> = {
+  email: "email address",
+  firstName: "first name",
+  lastName: "last name",
+  address1: "street address",
+  address2: "apartment or suite",
+  city: "city",
+  region: "province or state",
+  postal: "postal code",
+  country: "country",
+};
+
 /**
  * An address is eight fields. Losing it to a refresh, a back-navigation or a
  * stray tab close is the single most expensive thing this form could do, and it
@@ -91,6 +103,47 @@ const formStore = createPersistentStore<Form>("tharros:checkout:v1", EMPTY, (raw
   }
   return next;
 });
+
+/**
+ * Where in the flow the customer had got to, and what they had chosen.
+ *
+ * All nine address fields survived a refresh and none of the progress did:
+ * `step`, `shippingOption` and `furthest` were plain component state. Refreshing
+ * on Payment dropped you back on Contact with every field still filled and the
+ * step rail collapsed to a single reachable entry — the persistence was ninety
+ * per cent right, and the missing ten per cent is what made it read as broken.
+ */
+type Progress = { step: StepId; shippingOption: string; furthest: number };
+
+const EMPTY_PROGRESS: Progress = {
+  step: "contact",
+  shippingOption: DEFAULT_SHIPPING_OPTION.id,
+  furthest: 0,
+};
+
+const progressStore = createPersistentStore<Progress>(
+  "tharros:checkout:progress:v1",
+  EMPTY_PROGRESS,
+  (raw) => {
+    if (typeof raw !== "object" || raw === null) return null;
+    const value = raw as Partial<Record<keyof Progress, unknown>>;
+    // Anything unrecognised falls back rather than throwing — a stored step id
+    // or shipping option can outlive the constant that named it.
+    const step = STEPS.some((entry) => entry.id === value.step)
+      ? (value.step as StepId)
+      : EMPTY_PROGRESS.step;
+    const shippingOption = SHIPPING_OPTIONS.some(
+      (option) => option.id === value.shippingOption,
+    )
+      ? (value.shippingOption as string)
+      : EMPTY_PROGRESS.shippingOption;
+    const furthest =
+      typeof value.furthest === "number" && Number.isFinite(value.furthest)
+        ? Math.min(Math.max(0, Math.trunc(value.furthest)), STEPS.length - 1)
+        : EMPTY_PROGRESS.furthest;
+    return { step, shippingOption, furthest };
+  },
+);
 
 function Field({
   id,
@@ -153,33 +206,58 @@ function Field({
 
 export default function CheckoutFlow() {
   const { lines, subtotal, ready } = useCart();
-  const [step, setStep] = useState<StepId>("contact");
   const form = useSyncExternalStore(
     formStore.subscribe,
     formStore.get,
     formStore.getServer,
   );
+  const { step, shippingOption, furthest } = useSyncExternalStore(
+    progressStore.subscribe,
+    progressStore.get,
+    progressStore.getServer,
+  );
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
-  const [shippingOption, setShippingOption] = useState(DEFAULT_SHIPPING_OPTION.id);
-  const [furthest, setFurthest] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
+  const country = getCountry(form.country);
+
   const set = (key: keyof Form) => (value: string) => {
-    formStore.set((current) => ({ ...current, [key]: value }));
+    formStore.set((current) => {
+      const next = { ...current, [key]: value };
+      // A subdivision code only means something inside its own country, and
+      // "ON" is a province in one list and nothing at all in the other. Changing
+      // the country clears it rather than carrying a code that no longer exists.
+      if (key === "country" && value !== current.country) next.region = "";
+      return next;
+    });
     setErrors((current) => ({ ...current, [key]: undefined }));
+  };
+
+  const setShippingOption = (id: string) => {
+    progressStore.set((current) => ({ ...current, shippingOption: id }));
   };
 
   const validate = (fields: (keyof Form)[]): boolean => {
     const next: Partial<Record<keyof Form, string>> = {};
 
+    // "Required." on eight identical fields tells someone which field but never
+    // what would satisfy it. Each message names the thing that is missing.
     for (const field of fields) {
-      if (!form[field].trim()) next[field] = "Required.";
+      if (!form[field].trim()) {
+        next[field] =
+          field === "region"
+            ? `Select your ${country.regionLabel.toLowerCase()}.`
+            : `Enter your ${MISSING[field]}.`;
+      }
     }
     if (fields.includes("email") && form.email.trim()) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) {
         next.email = "Enter a valid email address.";
       }
+    }
+    if (fields.includes("postal") && !isValidPostal(form.country, form.postal)) {
+      next.postal = country.postalHint;
     }
 
     setErrors(next);
@@ -208,14 +286,24 @@ export default function CheckoutFlow() {
    * new heading is what makes the flow followable without a mouse.
    */
   const goTo = (id: StepId) => {
-    setStep(id);
-    setFurthest((current) =>
-      Math.max(current, STEPS.findIndex((entry) => entry.id === id)),
-    );
-    panelRef.current?.scrollIntoView({ block: "start" });
+    progressStore.set((current) => ({
+      ...current,
+      step: id,
+      furthest: Math.max(
+        current.furthest,
+        STEPS.findIndex((entry) => entry.id === id),
+      ),
+    }));
+    // Two scrolls used to race here. `html` carries `scroll-behavior: smooth`
+    // globally, so this call animated; then the focus below scrolled again on
+    // its own, landing mid-travel and jumping a second time. The move is
+    // instant and the focus is told not to scroll at all.
+    panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
     // The heading belongs to the step being rendered, so it only exists after
     // this commit.
-    requestAnimationFrame(() => headingRef.current?.focus());
+    requestAnimationFrame(() =>
+      headingRef.current?.focus({ preventScroll: true }),
+    );
   };
 
   if (!ready) {
@@ -241,8 +329,47 @@ export default function CheckoutFlow() {
   const currentIndex = STEPS.findIndex((entry) => entry.id === step);
   const deliveryName =
     SHIPPING_OPTIONS.find((option) => option.id === shippingOption)?.name ?? "";
-  const countryName =
-    COUNTRIES.find((entry) => entry.code === form.country)?.name ?? form.country;
+  const countryName = country.name;
+
+  /**
+   * The escape hatch, pre-filled.
+   *
+   * It used to ask the customer to email "with the pieces and sizes you want" —
+   * asking them to transcribe, by hand, the exact bag and address this component
+   * is already holding. The subject and body are composed from `lines` and
+   * `form`, so what arrives is confirmed rather than retyped, and the mail
+   * client still shows every word before anything is sent.
+   */
+  const orderMail = (() => {
+    const items = lines.map(
+      (line) =>
+        `- ${line.product.name} / size ${line.size} x${line.quantity} — ${formatPrice(line.lineTotal)}`,
+    );
+    const address = [
+      `${form.firstName} ${form.lastName}`.trim(),
+      form.address1,
+      form.address2,
+      [form.city, form.region, form.postal].filter(Boolean).join(", "),
+      countryName,
+    ].filter(Boolean);
+    const body = [
+      "I would like to order the following:",
+      "",
+      ...items,
+      "",
+      `Delivery: ${deliveryName}`,
+      `Total: ${formatPrice(total)}`,
+      "",
+      "Ship to:",
+      ...address,
+      form.email ? `Email: ${form.email}` : null,
+    ]
+      .filter((row) => row !== null)
+      .join("\n");
+    return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      "Order enquiry",
+    )}&body=${encodeURIComponent(body)}`;
+  })();
 
   const summary = <OrderSummary shippingOptionId={shippingOption} />;
 
@@ -402,19 +529,40 @@ export default function CheckoutFlow() {
                 onChange={set("city")}
                 error={errors.city}
               />
-              <Field
-                id="region"
-                label={LABELS.region}
-                required
-                enterKeyHint="next"
-                autoComplete="address-level1"
-                value={form.region}
-                onChange={set("region")}
-                error={errors.region}
-              />
+              {/* A closed list rather than a text box. Free text accepted "zz"
+                  as a province, and nothing downstream would ever have caught
+                  it — there is no downstream. A select cannot be wrong. */}
+              <div>
+                <label htmlFor="region" className="field-label">
+                  {country.regionLabel}
+                </label>
+                <select
+                  id="region"
+                  name="region"
+                  required
+                  autoComplete="address-level1"
+                  value={form.region}
+                  onChange={(event) => set("region")(event.target.value)}
+                  aria-invalid={errors.region ? true : undefined}
+                  aria-describedby={errors.region ? "region-error" : undefined}
+                  className="field field-boxed"
+                >
+                  <option value="">Select a {country.regionLabel.toLowerCase()}</option>
+                  {country.regions.map((entry) => (
+                    <option key={entry.code} value={entry.code}>
+                      {entry.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.region ? (
+                  <span id="region-error" role="alert" className="field-error">
+                    {errors.region}
+                  </span>
+                ) : null}
+              </div>
               <Field
                 id="postal"
-                label={LABELS.postal}
+                label={country.postalLabel}
                 required
                 enterKeyHint="next"
                 autoComplete="postal-code"
@@ -441,6 +589,12 @@ export default function CheckoutFlow() {
                     </option>
                   ))}
                 </select>
+                {/* The list is two entries long and the reason is a shipping
+                    one. Someone outside it used to discover the limit by
+                    opening a select and finding their country missing. */}
+                <p className="type-meta mt-2 text-ink-faint">
+                  THARROS ships to Canada and the United States.
+                </p>
               </div>
             </div>
 
@@ -562,7 +716,7 @@ export default function CheckoutFlow() {
                   {form.address1}
                   {form.address2 ? `, ${form.address2}` : ""}
                   <br />
-                  {form.city}, {form.region} {form.postal}
+                  {form.city}, {regionName(form.country, form.region)} {form.postal}
                   <br />
                   {countryName}
                 </dd>
@@ -597,11 +751,9 @@ export default function CheckoutFlow() {
                 address and delivery method — is real and working.
               </p>
               <p className="type-body mt-4 text-ink-muted">
-                To finish an order today, email{" "}
-                <a href="mailto:hello@tharros.com" className="link-rule">
-                  hello@tharros.com
-                </a>{" "}
-                with the pieces and sizes you want.
+                To finish an order today, send it to {CONTACT_EMAIL}. The email opens
+                with your bag, delivery method and address already in it — nothing
+                sends until you press send.
               </p>
 
               <dl className="mt-8 border-t border-rule pt-5">
@@ -611,17 +763,26 @@ export default function CheckoutFlow() {
                 </div>
               </dl>
 
+              <a href={orderMail} className="btn btn-solid btn-full mt-8">
+                Email this order
+              </a>
+
+              {/* The disabled control used to read "Pay $284.00" — an exact,
+                  precise, entirely unpayable amount, which is the cruellest
+                  available label for a dead button. It names its own state
+                  instead, and the working action above it is the one that is
+                  styled as the primary. */}
               <button
                 type="button"
                 disabled
                 aria-disabled="true"
                 aria-describedby="pay-disabled"
-                className="btn btn-solid btn-full mt-8"
+                className="btn btn-outline btn-full mt-4"
               >
-                Pay {formatPrice(total)}
+                Card payment unavailable
               </button>
               <p id="pay-disabled" className="type-meta mt-3 text-ink-faint">
-                Disabled until a provider is connected.
+                Disabled until a payment provider is connected.
               </p>
             </div>
 

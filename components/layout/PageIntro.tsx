@@ -48,8 +48,14 @@ export default function PageIntro({
         </p>
       </div>
 
+      {/* The measure follows the step. 14ch is a display-1 line; at display-2 or
+          display-3 the same value is a hard wrap, which the shop's search view
+          hits every time — its title is a quoted query, and a query is as long
+          as someone typed. */}
       <h1
-        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-8 max-w-[14ch]`}
+        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-8 ${
+          titleClass || compact ? "max-w-[22ch]" : "max-w-[14ch]"
+        }`}
       >
         {title}
       </h1>

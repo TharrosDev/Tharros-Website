@@ -20,15 +20,6 @@ export function BagIcon({ className = "" }: IconProps) {
   );
 }
 
-export function AccountIcon({ className = "" }: IconProps) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>
-      <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M3.75 17c0-3.2 2.8-5.25 6.25-5.25S16.25 13.8 16.25 17" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
 export function HeartIcon({ className = "", filled = false }: IconProps & { filled?: boolean }) {
   return (
     <svg
@@ -51,14 +42,6 @@ export function CloseIcon({ className = "" }: IconProps) {
   return (
     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>
       <path d="M4.5 4.5l11 11M15.5 4.5l-11 11" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-export function MenuIcon({ className = "" }: IconProps) {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={`${base} ${className}`}>
-      <path d="M2.5 6h15M2.5 14h15" stroke="currentColor" strokeWidth="1.4" />
     </svg>
   );
 }

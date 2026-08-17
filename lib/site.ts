@@ -27,8 +27,28 @@ export function socialProfiles(): string[] {
   }).map((social) => social.href);
 }
 
-/** One navigation surface at every breakpoint — the index overlay. There is no
- *  separate desktop bar and mobile drawer to keep in step any more. */
+/**
+ * The three destinations the header states out loud, from `md` up.
+ *
+ * The index overlay used to be the only navigation surface at any width, which
+ * meant the visible chrome on every route was a wordmark, a three-character
+ * stamp, the word "Index" and a bag — nothing naming a place to go. A first
+ * visit could not discover that a lookbook, a journal or an about page existed
+ * without opening a dialog and then remembering what was in it, and with
+ * scripting unavailable the dialog's trigger is a `<button>` that does nothing,
+ * so the footer was the site's entire navigation.
+ *
+ * These are a subset of `NAV_INDEX`, not a second list: the overlay stays the
+ * full surface and still carries About, Journal, Saved, Account and Search.
+ * Three is the count that fits beside the wordmark at `md` without wrapping.
+ */
+export const NAV_PRIMARY = [
+  { name: "Shop", href: "/shop" },
+  { name: "Drop", href: "/drop" },
+  { name: "Lookbook", href: "/lookbook" },
+];
+
+/** The full navigation surface — the index overlay. */
 export const NAV_INDEX = [
   { name: "Shop", href: "/shop" },
   { name: "Current Drop", href: "/drop" },

@@ -1,7 +1,5 @@
 type Props = {
   className?: string;
-  /** Tracking is size-dependent: wide at 12px, near-normal at display scale. */
-  tracking?: string;
   /** Rendered as the accessible name; set false when a parent already labels it. */
   label?: boolean;
 };
@@ -10,16 +8,17 @@ type Props = {
  * The THARROS wordmark. Typographic on purpose — set in the display face so it
  * works at 12px in the header and at 20vw in the footer. Replace with an SVG
  * lockup when the final logo asset lands; nothing else needs to change.
+ *
+ * Letter-spacing belongs to `type-wordmark`, not to this component. It used to
+ * take a `tracking` prop defaulting to `0.14em` and write it as an inline
+ * style, which outranks any class — so `--type-wordmark`'s `-0.01em` was dead
+ * at both of the two call sites, which are the only call sites. A token nothing
+ * can reach is worse than no token.
  */
-export default function Wordmark({
-  className = "",
-  tracking = "0.14em",
-  label = true,
-}: Props) {
+export default function Wordmark({ className = "", label = true }: Props) {
   return (
     <span
       className={`font-display font-extrabold uppercase ${className}`}
-      style={{ letterSpacing: tracking }}
       aria-hidden={label ? undefined : "true"}
     >
       Tharros
