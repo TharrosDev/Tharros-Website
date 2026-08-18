@@ -30,9 +30,13 @@ export const CAMPAIGNS: Campaign[] = [
       wearing: ["arc-hoodie", "utility-cargo-pant"],
       image: {
         code: "CMP-001-HERO",
-        alt: "Two figures in Drop 001 on a concrete stair, late afternoon",
+        alt: "A figure in Drop 001 against a plain wall, daylight",
         kind: "campaign",
-        ratio: "campaign",
+        // Declared tall because the home page renders it tall: the opening
+        // screen gives it the right-hand half of the viewport, not a band
+        // across the top. A frame's ratio is what shape it is actually shown
+        // at, and `sceneFor` reads it to pick a picture of that shape.
+        ratio: "editorial",
       },
     },
     sequence: [

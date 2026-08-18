@@ -51,7 +51,16 @@ function sceneFor(image: ImageSlotData): Scene {
   if (image.kind === "detail") return "detail";
   if (image.crop === "close") return "portrait";
   if (image.crop === "walking") return "street";
-  if (image.kind === "campaign") return "campaign";
+  // Shape beats kind when the shape is explicit. A campaign frame is normally
+  // wide, and the wide pool is shot wide — but the home page's opening frame is
+  // a campaign frame rendered as a tall half-screen panel, and centre-cropping
+  // a landscape picture into it cuts the figure out of the shot entirely. A
+  // campaign frame that declares itself tall gets a picture that is tall.
+  if (image.kind === "campaign") {
+    return image.ratio === "portrait" || image.ratio === "editorial"
+      ? "scene"
+      : "campaign";
+  }
   if (image.kind === "lifestyle") return "scene";
   if (image.kind === "model") return "worn";
   if (image.ratio === "campaign" || image.ratio === "wide") return "campaign";
