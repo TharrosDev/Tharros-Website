@@ -144,6 +144,7 @@ export type Product = {
   /** This piece's own measured garment dimensions. Absent until it is measured. */
   measurements?: PieceMeasurements;
   variants: Variant[];
+  /** The swing-tag line. Always present — the shortest true thing about the cloth. */
   materials: string[];
   fit: string[];
   care: string[];
@@ -210,39 +211,6 @@ export type Campaign = {
   hero: CampaignFrame;
   /** The editorial sequence — "the people". */
   sequence: CampaignFrame[];
-};
-
-export type LookbookSpread = {
-  id: string;
-  /** The drop this spread documents. */
-  drop: string;
-  /** Layout the spread claims on the page. */
-  layout: "full" | "pair" | "offset" | "stack";
-  caption: string;
-  index: string;
-  images: ImageSlotData[];
-  /** Product slugs worn in the spread, linked quietly beneath the caption. */
-  wearing: string[];
-  /** Model ids, resolved against `lib/catalog/models.ts`. Empty until a shoot happens. */
-  models?: string[];
-};
-
-export type JournalBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; text: string }
-  | { type: "quote"; text: string; attribution?: string }
-  | { type: "image"; image: ImageSlotData };
-
-export type JournalEntry = {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  excerpt: string;
-  publishedAt: string;
-  readingMinutes: number;
-  cover: ImageSlotData;
-  blocks: JournalBlock[];
 };
 
 export type SortKey = "featured" | "newest" | "price-asc" | "price-desc";

@@ -16,7 +16,7 @@ import Reveal from "@/components/ui/Reveal";
  */
 export default function Statement() {
   return (
-    <section className="on-dark rhythm-breath">
+    <section className="on-pale rhythm-breath">
       <div className="page-frame">
         <SectionHeading
           index="02"
@@ -30,12 +30,12 @@ export default function Statement() {
           className="section-lead grid gap-x-12 lg:grid-cols-12"
         >
           <div className="space-y-5 lg:col-span-5 lg:col-start-8">
-            <p className="type-body text-ink-on-dark-muted">
+            <p className="type-body text-ink-muted">
               THARROS is an independent label run at a small scale on purpose. Pieces
               are designed, patterned and sampled here, then made in short runs — few
               enough that every one is accounted for.
             </p>
-            <p className="type-body text-ink-on-dark-muted">
+            <p className="type-body text-ink-muted">
               Every product page prints how many were made and how many are left. When
               a size is gone, it is gone.
             </p>

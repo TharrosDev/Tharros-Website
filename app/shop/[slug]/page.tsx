@@ -28,6 +28,7 @@ import { SITE_URL } from "@/lib/site";
 import { SHIPPING_OPTIONS, FREE_SHIPPING_THRESHOLD } from "@/lib/commerce/shipping";
 import { RETURN_WINDOW } from "@/lib/commerce/returns";
 import { getDrop } from "@/lib/catalog/drops";
+import { garmentId } from "@/lib/catalog/archive";
 import { jsonLd } from "@/lib/jsonld";
 
 type Params = Promise<{ slug: string }>;
@@ -155,11 +156,18 @@ export default async function ProductPage({ params }: { params: Params }) {
         <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
           {/* The record opens on an index like every other block on the site.
               It had none, which is why the page's section numbering started at
-              02. The code moves up here out of the specimen table: it is the
-              piece's identifier, not one of its attributes. */}
+              02. The garment number moves up here out of the specimen table: it
+              is the piece's identifier, not one of its attributes — and it is
+              a link, because the number is the one thing on this page that
+              exists on both sides of the run closing. */}
           <p className="eyebrow border-t border-ink pt-4">
             <span className="num">{sectionIndex("record")}</span>
-            <span>{product.variants[0]?.sku.replace(/-[^-]+$/, "")}</span>
+            <Link
+              href={`/archive/${garmentId(product).toLowerCase()}`}
+              className="num -my-2 py-2 underline-offset-4 hover:underline"
+            >
+              {garmentId(product)}
+            </Link>
           </p>
 
           <h1 className="type-display-3 mt-6 max-w-[16ch]">{product.name}</h1>
@@ -303,7 +311,13 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       {/* Past the buying decision the page turns back into an editorial: the
           piece on people, then how it is meant to sit. Both render nothing
-          until there is something real behind them. */}
+          until there is something real behind them.
+
+          What the cloth is stays in the record above, beside the price, where
+          it is one line of fact. It had a section of its own here — swatches,
+          weights, a fabric study — and a whole movement spent restating one
+          row of a spec table is the performance of care rather than the thing
+          itself. Same for a development ledger that had no development in it. */}
       <OnBody product={product} index={sectionIndex("on-body")} />
 
       {/* A plain wrapper: `FitStory` is itself the labelled section, and this

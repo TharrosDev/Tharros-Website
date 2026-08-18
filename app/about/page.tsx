@@ -180,21 +180,21 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <section className="on-dark rhythm-breath">
+      <section className="on-pale rhythm-breath">
         <div className="page-frame">
           <h2 className="type-display-2 max-w-[18ch]">
             Designed, tested, refined.
           </h2>
-          <p className="type-body mt-8 max-w-lg text-ink-on-dark-muted">
+          <p className="type-body mt-8 max-w-lg text-ink-muted">
             {CURRENT_DROP.name} is where it starts. Everything it taught is
             already going into the next one.
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
-            <Link href="/drop" className="btn btn-inverse">
+            <Link href="/drop" className="btn btn-solid">
               See the current drop
             </Link>
-            <Link href="/journal" className="btn btn-outline-on-dark">
-              Read the journal
+            <Link href="/archive" className="btn btn-outline">
+              Open the archive
             </Link>
           </div>
         </div>

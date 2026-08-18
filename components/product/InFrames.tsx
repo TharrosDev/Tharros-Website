@@ -34,7 +34,7 @@ export default function InFrames({
           title="Photographed in the drop."
           titleClass="type-display-3"
           titleId="in-frames"
-          action={{ href: "/lookbook", label: "Open lookbook" }}
+          action={{ href: "/drop", label: "See the drop" }}
         />
       </div>
 

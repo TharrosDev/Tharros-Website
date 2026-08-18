@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/catalog/products";
-import { JOURNAL } from "@/lib/catalog/journal";
+import { archiveEntries } from "@/lib/catalog/archive";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -16,9 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1, changeFrequency: "weekly" },
     { path: "/shop", priority: 0.9, changeFrequency: "weekly" },
     { path: "/drop", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/lookbook", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/archive", priority: 0.8, changeFrequency: "weekly" },
     { path: "/about", priority: 0.7, changeFrequency: "yearly" },
-    { path: "/journal", priority: 0.7, changeFrequency: "weekly" },
     { path: "/size-guide", priority: 0.5, changeFrequency: "yearly" },
     { path: "/shipping", priority: 0.4, changeFrequency: "yearly" },
     { path: "/returns", priority: 0.4, changeFrequency: "yearly" },
@@ -45,11 +44,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
-    ...JOURNAL.map((entry) => ({
-      url: `${SITE_URL}/journal/${entry.slug}`,
-      lastModified: new Date(entry.publishedAt),
-      changeFrequency: "yearly" as const,
-      priority: 0.5,
+    // Archive records are permanent by definition — a run does not reopen —
+    // so they change less often than the product page for the same garment.
+    ...archiveEntries().map((entry) => ({
+      url: `${SITE_URL}/archive/${entry.ref}`,
+      lastModified: new Date(entry.product.releasedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

@@ -16,7 +16,6 @@ export {
 import { getModel, type ModelProfile } from "./models";
 import { getDrop } from "./drops";
 import { CAMPAIGNS } from "./campaign";
-import { LOOKBOOK } from "./lookbook";
 import type {
   Availability,
   CategoryId,
@@ -29,7 +28,7 @@ import type {
   Variant,
 } from "./types";
 
-/** One editorial frame a piece appears in, flattened out of campaigns and spreads. */
+/** One editorial frame a piece appears in, flattened out of the campaigns. */
 export type FeaturedFrame = {
   id: string;
   index: string;
@@ -81,10 +80,24 @@ export function isSizeAvailable(product: Product, size: string): boolean {
   return (variantFor(product, size)?.inventory ?? 0) > 0;
 }
 
+/**
+ * A finished run is labelled `Archived`, not `Sold out`.
+ *
+ * They describe the same stock level and they do not mean the same thing.
+ * "Sold out" is a shopping fact told from the visitor's side — you came too
+ * late, and the piece is now an absence. "Archived" is a production fact told
+ * from the label's side — that run closed at the number it closed at, and the
+ * piece has entered the record. The garment is the same either way; only one
+ * of the two words makes it worth looking at afterwards.
+ *
+ * The internal state stays `sold-out` because that is what the inventory
+ * literally is, and because `AVAILABILITY_SCHEMA` below has to keep telling
+ * Google `SoldOut` — a search engine wants the shopping fact.
+ */
 export const AVAILABILITY_LABEL: Record<Availability, string> = {
   available: "Available",
   "low-stock": "Low stock",
-  "sold-out": "Sold out",
+  "sold-out": "Archived",
   "coming-soon": "Coming soon",
   preorder: "Preorder",
 };
@@ -283,8 +296,11 @@ export function dropsInUse(): { drop: Drop; count: number }[] {
 }
 
 /**
- * Every editorial frame a piece appears in — the campaign sequence and the
- * lookbook, in the order the site shows them.
+ * Every editorial frame a piece appears in, in the order the site shows them.
+ *
+ * Campaign frames only. It also flattened the lookbook spreads until the
+ * lookbook page was removed — a second set of photographs of the same drop,
+ * on its own route.
  *
  * The link ran one way before this: a frame lists what is worn in it, and
  * nothing on a product page said the piece had been photographed at all.
@@ -302,23 +318,10 @@ export function framesFeaturing(slug: string): FeaturedFrame[] {
           index: frame.index,
           image: frame.image,
           caption: frame.caption,
-          href: "/lookbook",
+          href: "/drop",
         });
       }
     }
-  }
-
-  for (const spread of LOOKBOOK) {
-    if (!spread.wearing.includes(slug)) continue;
-    const image = spread.images[0];
-    if (!image) continue;
-    frames.push({
-      id: spread.id,
-      index: spread.index,
-      image,
-      caption: spread.caption,
-      href: "/lookbook",
-    });
   }
 
   return frames;

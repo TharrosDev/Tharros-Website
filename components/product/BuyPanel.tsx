@@ -65,8 +65,12 @@ export default function BuyPanel({ product }: { product: Product }) {
     const soldOut = availability === "sold-out";
     return (
       <div className="border-t border-ink pt-6">
+        {/* "Archived", not "Sold out" — the run closed, and the piece is now
+            part of the record rather than a gap where a purchase was. The
+            copy below already had the right tone; only the headline was still
+            framing a finished run as the visitor's loss. */}
         <p className="type-display-3 uppercase">
-          {soldOut ? "Sold out" : "Not out yet"}
+          {soldOut ? "Archived" : "Not out yet"}
         </p>
         <p className="type-meta mt-3 text-ink-faint">
           {drop?.name}

@@ -33,28 +33,41 @@ export function socialProfiles(): string[] {
  * The index overlay used to be the only navigation surface at any width, which
  * meant the visible chrome on every route was a wordmark, a three-character
  * stamp, the word "Index" and a bag — nothing naming a place to go. A first
- * visit could not discover that a lookbook, a journal or an about page existed
- * without opening a dialog and then remembering what was in it, and with
+ * visit could not discover that an archive or an about page existed without
+ * opening a dialog and then remembering what was in it, and with
  * scripting unavailable the dialog's trigger is a `<button>` that does nothing,
  * so the footer was the site's entire navigation.
  *
  * These are a subset of `NAV_INDEX`, not a second list: the overlay stays the
- * full surface and still carries About, Journal, Saved, Account and Search.
- * Three is the count that fits beside the wordmark at `md` without wrapping.
+ * full surface and still carries About, Saved, Account and Search. Three is the
+ * count that fits beside the wordmark at `md` without wrapping.
+ *
+ * SHOP, DROP, ARCHIVE — and that is now the whole site. What you can buy, what
+ * is out, what has been made.
+ *
+ * `Shop` is kept rather than promoted to "Collection" or "Objects" for the same
+ * reason the overlay's trigger says `Menu` and not `Index`: it is the one word
+ * in the set that belongs to the customer rather than to the designer.
+ *
+ * The site used to also carry a lookbook, a journal and a studio page. They
+ * were removed because they were four different presentations of the same
+ * drop — campaign photography, writing about the making, and a process
+ * sequence, each with its own route and its own navigation slot. What survived
+ * of them lives on the pages that were already going to be visited: the
+ * campaign on the home page and the drop, the process as a home page section.
  */
 export const NAV_PRIMARY = [
   { name: "Shop", href: "/shop" },
   { name: "Drop", href: "/drop" },
-  { name: "Lookbook", href: "/lookbook" },
+  { name: "Archive", href: "/archive" },
 ];
 
 /** The full navigation surface — the index overlay. */
 export const NAV_INDEX = [
   { name: "Shop", href: "/shop" },
   { name: "Current Drop", href: "/drop" },
-  { name: "Lookbook", href: "/lookbook" },
+  { name: "Archive", href: "/archive" },
   { name: "About", href: "/about" },
-  { name: "Journal", href: "/journal" },
 ];
 
 /** Restrained on purpose: a nine-piece line does not need a category directory
@@ -62,12 +75,12 @@ export const NAV_INDEX = [
 export const FOOTER_SHOP = [
   { name: "Current Drop", href: "/drop" },
   { name: "All Pieces", href: "/shop" },
+  { name: "Archive", href: "/archive" },
   { name: "Saved", href: "/wishlist" },
 ];
 
 export const FOOTER_INFORMATION = [
   { name: "About", href: "/about" },
-  { name: "Journal", href: "/journal" },
   { name: "Size Guide", href: "/size-guide" },
   { name: "Shipping", href: "/shipping" },
   { name: "Returns", href: "/returns" },

@@ -8,16 +8,33 @@ import { listProducts, runStatus } from "@/lib/catalog/queries";
 import { formatDate } from "@/lib/format";
 
 /**
- * The opening screen: a person in the clothes, and the record of the release.
+ * The opening screen: the sentence on the left, a person on the right, and no
+ * edge between them.
+ *
+ * It used to be one full-bleed photograph with the type laid over it under two
+ * anchored scrims. That works when the picture is dark and the type is white,
+ * and it stops working the moment the site's ground is light: dimming a
+ * photograph so ink can sit on it is a tax the whole composition pays, and the
+ * only part of the picture that survives undimmed is the part with nothing in
+ * it.
+ *
+ * So the two stop competing for the same rectangle. The type sits on the page,
+ * at full contrast, needing no scrim at all. The picture keeps its own half and
+ * bleeds off the right edge.
+ *
+ * THERE IS NO SEAM. The picture is not in a column with an edge — it is masked
+ * with a gradient, so it dissolves into the paper rather than stopping against
+ * it. A hard vertical join between an image and a background is the thing that
+ * makes a split hero read as two panels bolted together; a dissolve makes it
+ * one surface that happens to have a photograph in part of it. The mask runs
+ * right-to-left on desktop and top-to-bottom on a phone, where the picture
+ * takes the upper part of the screen and fades down into the opening line.
  *
  * The composition is led by the sentence rather than by the category. It used
  * to set the word "Drop" at display-1 with the numeral beside it, which made
  * the largest type on the landing page a noun that belongs to every label that
  * releases this way, and left `statement` — the one line that belongs to this
- * one — at display-4 in a paragraph above it. Reading order made it worse: the
- * heaviest type was the last thing on the screen. The statement is the h1 now
- * and the drop's name is a mono caption, which is the ordering the rest of the
- * site already uses when a page has both a title and a record.
+ * one — at display-4 above it.
  *
  * THE RUN LEDGER is what replaced the figures. Pieces / Made / Remaining were
  * set as a three-cell table with hairline tops — structurally the same object
@@ -27,16 +44,7 @@ import { formatDate } from "@/lib/format";
  * either end. Both figures stay derived (`runSize`, `runStatus().remaining`),
  * so this cannot drift from the product pages and cannot manufacture urgency —
  * it can only draw what the inventory already says. It survives the photography
- * being absent, which the picture-led version of this screen does not.
- *
- * What the picture no longer does is carry a flat wash. `bg-black/45` sat over
- * the whole frame *in addition* to the two anchored bands, so the only part of
- * the image ever seen undimmed was the middle third, which is the part with
- * nothing in it. The bands remain — they are anchored to the block they protect
- * rather than to a fraction of the viewport, because viewport-fraction bands
- * drift as the screen height changes and leave type on bare picture. The
- * metadata over them stays `--ink-on-dark-muted`: the faint tone only just
- * clears AA on pure black, so it has no headroom left over a photograph.
+ * being absent, which the picture-led version of this screen did not.
  *
  * One primary action. "Shop the drop" and "About this drop" were two buttons of
  * the same height and face, starting with the same two words, giving a
@@ -63,56 +71,76 @@ export default function DropOpening() {
   const frame = hero?.image ?? CURRENT_DROP.cover;
 
   return (
-    <section className="on-dark relative flex min-h-[100svh] flex-col justify-between overflow-hidden">
-      <div aria-hidden="true" className="absolute inset-0">
-        <ImageSlot image={frame} fill priority sizes="100vw" />
+    <section className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-14 md:pb-20">
+      {/* The picture. Absolutely placed so it bleeds past `page-frame` to the
+          screen edge, and masked so it has no edge of its own on the side that
+          meets the type. `pointer-events-none` because it is scenery — every
+          way into the shop from this screen is a real link below. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[52svh] [mask-image:linear-gradient(to_bottom,black_45%,transparent)] md:inset-y-0 md:left-auto md:right-0 md:h-auto md:w-[54%] md:[mask-image:linear-gradient(to_right,transparent,black_46%)] lg:w-[50%]"
+      >
+        <ImageSlot
+          image={frame}
+          fill
+          priority
+          sizes="(min-width: 768px) 54vw, 100vw"
+        />
       </div>
 
-      {/* Each block carries its own scrim, anchored to the block rather than to
-          a fraction of the viewport. Viewport-fraction bands drift: the same
-          gradient that covered the figures at one screen height left them on
-          bare picture at another, and the readback caught it. */}
-      <div className="relative w-full pt-28 md:pt-32">
-        <span
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 -bottom-24 bg-gradient-to-b from-black/85 via-black/65 to-transparent"
-        />
-        {/* The record of the release, stated once. This row used to run
-            "Released 2 May 2026" against "Out now" at the same size in the same
-            tone — two ways of saying a date has passed, in the two most
-            valuable slots on the screen. The piece count is derived and takes
-            the slot the second one was wasting. */}
-        <div className="page-frame relative flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-rule-on-dark pt-4">
-          <p className="type-meta text-ink-on-dark-muted">
-            {CURRENT_DROP.name}
-            <span aria-hidden="true"> · </span>
-            <span className="num">{pieces.length}</span>{" "}
-            {pieces.length === 1 ? "piece" : "pieces"}
-          </p>
-          <p className="type-meta text-ink-on-dark-muted">{released}</p>
-        </div>
-      </div>
+      {/* The content column. It clears the picture on a phone by starting below
+          it, and holds the left half from `md` — never wider than the point
+          where the mask begins, so a line of type never lands on the picture. */}
+      <div className="page-frame relative pt-[calc(52svh+2.5rem)] md:pt-[calc(var(--header-h)+4rem)]">
+        <div className="md:max-w-[56%] lg:max-w-[52%]">
+          {/* The record of the release, stated once. This row used to run
+              "Released 2 May 2026" against "Out now" at the same size in the
+              same tone — two ways of saying a date has passed, in the two most
+              valuable slots on the screen. The piece count is derived and takes
+              the slot the second one was wasting. */}
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-rule pt-4">
+            <p className="type-meta text-ink-muted">
+              {CURRENT_DROP.name}
+              <span aria-hidden="true"> · </span>
+              <span className="num">{pieces.length}</span>{" "}
+              {pieces.length === 1 ? "piece" : "pieces"}
+            </p>
+            <p className="type-meta flex items-center gap-5 text-ink-muted">
+              {released}
+              {/* The trim mark. One, on the opening screen only — the site's
+                  single admission that it is laid out as printed matter rather
+                  than as a page. It says nothing, which is why there is exactly
+                  one of it: repeated down the site it would stop being a mark
+                  and become a motif. */}
+              <span className="mark-registration" aria-hidden="true" />
+            </p>
+          </div>
 
-      <div className="relative w-full pb-14 md:pb-20">
-        <span
-          aria-hidden="true"
-          className="absolute inset-x-0 -top-40 bottom-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent"
-        />
-        <div className="page-frame relative">
-          {/* Not wrapped in Reveal. This is the LCP element on the site's most
+          {/* Not wrapped in Reveal. This is the LCP text on the site's most
               visited route, and an entrance that starts at opacity 0 is an
               entrance that delays it — the ledger below carries the gesture
               instead, where nothing is waiting on it. */}
-          <h1 className="type-display-1 max-w-[13ch] text-balance">
+          {/* THE RUNG IS CHOSEN FOR THE COLUMN, NOT THE VIEWPORT.
+              The ladder's clamps are viewport-relative, which is correct for
+              type that spans the frame and wrong for type in a half-width
+              column: at 1440 display-1 resolves to ~157px, and "STARTS." needs
+              ~660px of it against a 560px column. The ladder sets
+              `overflow-wrap: break-word` as a guard against horizontal
+              overflow, so instead of spilling, the word split — which is how a
+              sizing mistake shows up as a typography bug.
+
+              Full width below `md`, where display-1 fits; a rung down from
+              `md`, where the picture takes half the screen. */}
+          <h1 className="type-display-1 mt-10 max-w-[13ch] text-balance md:mt-12 md:type-display-2">
             {CURRENT_DROP.statement}
           </h1>
 
           <Reveal className="mt-10 max-w-xl md:mt-12">
             <div className="flex items-baseline justify-between gap-6">
-              <p className="type-meta text-ink-on-dark">
+              <p className="type-meta">
                 <span className="num">{made}</span> made
               </p>
-              <p className="type-meta text-ink-on-dark">
+              <p className="type-meta">
                 <span className="num">{remaining}</span> left
               </p>
             </div>
@@ -123,37 +151,22 @@ export default function DropOpening() {
             />
           </Reveal>
 
-          {/* Reversed below `lg` so the rail is never the last element on the
-              screen. A horizontal snap surface sitting on the bottom margin is
-              where a thumb lands first, and it fought the page's own vertical
-              scroll every time. The action goes there instead, which is what
-              the thumb zone is for. */}
-          <div className="mt-12 flex flex-col-reverse gap-10 lg:mt-14 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
-              <Link
-                href={`/shop?drop=${CURRENT_DROP.slug}`}
-                className="btn btn-inverse"
-              >
-                Shop the drop
-              </Link>
-              <Link href="/drop" className="link-rule link-rule-reveal">
-                About this drop
-              </Link>
-            </div>
-
-            {/* The way into the shop from the picture rather than from the
-                buttons: what is actually being worn in the frame above. */}
-            {hero ? (
-              <div className="max-w-md lg:max-w-sm">
-                <WornList
-                  slugs={hero.wearing}
-                  frameId={hero.id}
-                  variant="rail"
-                  onDark
-                />
-              </div>
-            ) : null}
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-5">
+            <Link href={`/shop?drop=${CURRENT_DROP.slug}`} className="btn btn-solid">
+              Shop the drop
+            </Link>
+            <Link href="/drop" className="link-rule link-rule-reveal">
+              About this drop
+            </Link>
           </div>
+
+          {/* The way into the shop from the picture rather than from the
+              buttons: what is actually being worn in the frame beside it. */}
+          {hero ? (
+            <div className="mt-12 max-w-md">
+              <WornList slugs={hero.wearing} frameId={hero.id} variant="rail" />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

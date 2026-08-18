@@ -11,9 +11,13 @@ import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
  * held steady by the slot's `code` so a piece keeps the same frames across
  * renders — so the layout can be judged before the shoot.
  *
- * The stand-ins are free-licence stock (Openverse: StockSnap / rawpixel),
- * desaturated to the monochrome palette so the pages read as one system. They
- * are not THARROS product and nothing here should ship.
+ * The stand-ins are free-licence stock (Openverse, CC0 and public domain),
+ * fetched by `scripts/fetch-filler.mjs` and credited in
+ * `scripts/filler-credits.json`. They are in colour and ungraded: an earlier
+ * set was desaturated to a monochrome palette, which read as an art direction
+ * the label had chosen rather than as scaffolding, and could not be undone —
+ * a greyscale JPEG has no hue left to restore. They are not THARROS product
+ * and nothing here should ship.
  *
  * Turning it off is one flag: `FILLER_IMAGES` below — and the site is designed
  * to still read as *pending* with it off, which is the test that a layout is
@@ -61,9 +65,9 @@ function hash(code: string): number {
 }
 
 /** `ratio` is the slot's, kept for call-site parity — the frame is cropped by CSS. */
-type Props = { image: ImageSlotData; ratio?: Ratio; className?: string };
+type Props = { image: ImageSlotData; ratio?: Ratio; sizes?: string; className?: string };
 
-export default function FillerImage({ image, className = "" }: Props) {
+export default function FillerImage({ image, sizes = "100vw", className = "" }: Props) {
   const scene = sceneFor(image);
   // The code picks the frame, so sibling shots of one piece differ but neither
   // moves between renders.
@@ -71,12 +75,19 @@ export default function FillerImage({ image, className = "" }: Props) {
 
   // `zoom-target` so a filler frame answers `.hover-zoom` the way a photograph
   // will, and the hover behaviour can be judged now rather than after the shoot.
+  //
+  // `sizes` comes from the slot rather than being pinned at 100vw here. It was
+  // pinned, which meant every stand-in downloaded at full viewport width no
+  // matter how small its frame — a 56px archive thumbnail was fetching a
+  // 1400px picture, nine times per band. The real-`src` branch of `ImageSlot`
+  // always honoured the slot's value; only the stand-in ignored it, so the
+  // defect was invisible until a page used small frames.
   return (
     <Image
       src={`/filler/${scene}-${n}.jpg`}
       alt={`${image.alt} — stand-in photograph, THARROS photography pending`}
       fill
-      sizes="100vw"
+      sizes={sizes}
       className={`zoom-target object-cover ${className}`}
     />
   );

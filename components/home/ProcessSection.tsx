@@ -1,38 +1,16 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ImageSlot from "@/components/media/ImageSlot";
-
-const STEPS = [
-  {
-    index: "01",
-    name: "Design",
-    body: "A shape gets drawn, argued with, and drawn again before anything is cut.",
-  },
-  {
-    index: "02",
-    name: "Pattern",
-    body: "The drawing becomes a pattern. Most of the work — and most of the mistakes — happen here.",
-  },
-  {
-    index: "03",
-    name: "Sample",
-    body: "One piece is made and worn. Some patterns survive this. Several have not.",
-  },
-  {
-    index: "04",
-    name: "Refine",
-    body: "Length, shoulder, hem, weight. The changes are small and they take the longest.",
-  },
-  {
-    index: "05",
-    name: "Release",
-    body: "A short run is made and goes out. What it teaches goes into the next drop.",
-  },
-];
+import { STUDIO_STAGES } from "@/lib/catalog/studio";
 
 /**
- * The process is the differentiator, so it gets a section rather than a line
- * in the About page.
+ * The studio, in summary — the section that sends you to the page.
+ *
+ * The six stages live in `lib/catalog/studio.ts` rather than in this file, so
+ * the process is data like everything else on the site. There was a `/studio`
+ * page that documented them at length; it was cut, and this is now the only
+ * place the sequence is stated. Each stage's `short` line is what shows here —
+ * `long` is kept in the data for whatever states it next.
  *
  * It is built as a sticky two-column story: the frame holds while the five
  * steps travel past it. That is the difference between this and the campaign
@@ -48,10 +26,10 @@ export default function ProcessSection() {
     <section className="rhythm-default">
       <div className="page-frame">
         <SectionHeading
-          index="04"
-          label="The process"
-          title="Every piece gets made twice before it gets made properly."
+          index="03"
+          label="The studio"
           aside="Designed, tested, refined"
+          title="Every piece gets made twice before it gets made properly."
         />
 
         <div className="section-lead grid gap-x-12 gap-y-14 lg:grid-cols-12">
@@ -71,7 +49,7 @@ export default function ProcessSection() {
           </Reveal>
 
           <ol className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">
-            {STEPS.map((step, i) => (
+            {STUDIO_STAGES.map((step, i) => (
               <Reveal
                 as="li"
                 key={step.index}
@@ -81,7 +59,7 @@ export default function ProcessSection() {
                 <span className="num type-meta pt-1 text-ink-faint">{step.index}</span>
                 <div>
                   <h3 className="type-display-4">{step.name}</h3>
-                  <p className="type-body-sm mt-2 text-ink-muted">{step.body}</p>
+                  <p className="type-body-sm mt-2 text-ink-muted">{step.short}</p>
                 </div>
               </Reveal>
             ))}

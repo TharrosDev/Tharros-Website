@@ -67,7 +67,7 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Payment | **Not connected**, and said before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and beside the action itself. The flow is two steps rather than four, because a card-shaped walk to an email is three screens of theatre — the working action composes a `mailto:` from the resolved bag, the address and the delivery choice. There is no disabled pay button: a permanently dead primary control is chrome, and the panel above it states the situation in words. |
 | Accounts / sign-in | **Not connected.** `/account` states that once, then spends the page on what works without one — saved pieces and the email order. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
-| Product photography | **Not shot yet.** Image slots render a free-licence stock stand-in, desaturated to the monochrome palette, from `public/filler` (`components/media/FillerImage.tsx`). `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
+| Product photography | **Not shot yet.** Image slots render a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
 | Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere; `pieceTable()` returns null and the product page says the piece has not been measured. Filling them in is a data change — see `lib/catalog/sizing.ts`. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
@@ -95,13 +95,13 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Drop opening → The run → Statement → The people → Process → Frames → Next drop |
+| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
-| `/lookbook` | `app/lookbook/page.tsx` | Editorial spreads, four layout modes |
+| `/archive` | `app/archive/page.tsx` | Every garment made, in year bands, as a ledger |
+| `/archive/[ref]` | `app/archive/[ref]/page.tsx` | One garment as a record rather than as stock. SSG per piece. |
 | `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
-| `/journal`, `/journal/[slug]` | `app/journal/**` | Structured blocks, no MDX |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
 | `/checkout` | `app/checkout/page.tsx` | Two steps — details, then where it goes — ending in a composed email |
 | `/account` | `app/account/page.tsx` | Shell |
@@ -112,13 +112,13 @@ decision, and it is the owner's.
 | Loading | — | **There is no route-level loading state, deliberately.** `app/shop/loading.tsx` put the whole `/shop` segment — every product page included — behind a Suspense boundary that only resolves once JavaScript runs, so without it the shop served a permanent skeleton (`main` held 40 characters). Pending feedback lives on the filter links instead, via `useLinkStatus` in `FilterBar`. Do not reintroduce a `loading.tsx` in a segment that must render without scripting. |
 
 The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
-Shop / Drop / Lookbook) plus a search control, a saved count when there is one, and keeps `IndexOverlay` as the full
+Shop / Drop / Archive) plus a search control, a saved count when there is one, and keeps `IndexOverlay` as the full
 navigation surface. They are real links, so navigation survives scripting being
 unavailable; before this the only nav trigger was a `<button>` and the footer was the
 site's entire navigation with JS off.
 
-`Header` floats transparent over the hero on the routes in `TRANSPARENT_ROUTES`
-(`/` and `/lookbook`). Every other page opens with `PageIntro`, which carries the fixed
+`Header` floats over the hero on the routes in `TRANSPARENT_ROUTES` (`/` only). It is light
+ink on every route — the paper wash under it fades up into a solid plate on scroll. Every other page opens with `PageIntro`, which carries the fixed
 header's clearance — so no page hand-rolls top padding.
 
 Adding a route means touching **four** places: the page's own `metadata`,
@@ -137,8 +137,8 @@ lib/catalog/
   categories.ts   category list + sizing-table mapping
   drops.ts        Drop 001 (released) / Drop 002 (in development)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
-  lookbook.ts     spreads
-  journal.ts      entries
+  archive.ts      GARMENT NUMBERS AND THE RECORD — derived, never authored
+  studio.ts       the six stages, read by the home page's process section
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
   images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER
@@ -200,8 +200,8 @@ Shared hooks live in `lib/hooks.ts`: `useFocusTrap`, `useEscape`, `useLockBodySc
 
 **Read [`DESIGN.md`](./DESIGN.md).** Summary:
 
-Monochrome — black, near-black, steel, concrete, ash, bone, paper, plus one oxide accent.
-The clothing supplies the colour. If the owner wants a second colour, add it and update
+Light — paper, bone, ash, concrete, steel, near-black, one near-black footer, plus one
+oxide accent. The clothing supplies the colour. If the owner wants a second colour, add it and update
 `DESIGN.md`; do not talk them out of it.
 
 `--concrete` (`text-ink-faint`) is the faintest text tone allowed and is tuned to pass AA

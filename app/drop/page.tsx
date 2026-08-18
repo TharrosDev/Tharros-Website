@@ -123,7 +123,7 @@ export default function DropPage() {
       </div>
 
       {NEXT_DROP ? (
-        <section className="on-dark rhythm-default">
+        <section className="on-pale rhythm-default">
           <div className="page-frame">
             <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-4">
               <p className="eyebrow">
@@ -131,7 +131,7 @@ export default function DropPage() {
                 <span>{NEXT_DROP.name}</span>
               </p>
               {/* Oxide marks the state, not the numeral. */}
-              <p className="type-meta text-signal-on-dark">In development</p>
+              <p className="type-meta text-signal">In development</p>
             </Reveal>
 
             <h2 className="type-display-2 mt-10 max-w-[16ch]">{NEXT_DROP.statement}</h2>
@@ -139,11 +139,11 @@ export default function DropPage() {
             <div className="mt-8 grid gap-x-6 gap-y-10 lg:grid-cols-12">
               <div className="space-y-5 lg:col-span-5">
                 {NEXT_DROP.body.map((paragraph) => (
-                  <p key={paragraph} className="type-body text-ink-on-dark-muted">
+                  <p key={paragraph} className="type-body text-ink-muted">
                     {paragraph}
                   </p>
                 ))}
-                <p className="type-meta text-ink-on-dark-faint">
+                <p className="type-meta text-ink-faint">
                   No release date is published until there is one.
                 </p>
               </div>
@@ -177,13 +177,10 @@ export default function DropPage() {
 
       <section className="page-frame rhythm-tight border-t border-rule">
         <div className="flex flex-wrap items-center justify-between gap-6">
-          <p className="type-display-3 uppercase">See how it was made.</p>
+          <p className="type-display-3 uppercase">Everything made so far.</p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/journal" className="btn btn-outline">
-              Read the journal
-            </Link>
-            <Link href="/lookbook" className="btn btn-solid">
-              Open the lookbook
+            <Link href="/archive" className="btn btn-solid">
+              Open the archive
             </Link>
           </div>
         </div>

@@ -21,11 +21,14 @@ export default function CampaignSequence({
   index,
   label = "The people",
   title,
+  action,
 }: {
   dropId: string;
   index: string;
   label?: string;
   title?: string;
+  /** Passed straight to the opener's right-hand slot — the way out of the sequence. */
+  action?: { href: string; label: string };
 }) {
   const campaign = campaignFor(dropId);
   if (!campaign || campaign.sequence.length === 0) return null;
@@ -33,7 +36,7 @@ export default function CampaignSequence({
   return (
     <section className="rhythm-default">
       <div className="page-frame">
-        <SectionHeading index={index} label={label} title={title} />
+        <SectionHeading index={index} label={label} title={title} action={action} />
       </div>
 
       {/* Frames are separated by more than sections are: each one is a picture

@@ -20,10 +20,13 @@ export default function ProductBadge({
     ) : null;
   }
 
-  // Every unavailable state is solid. Sold out used to be the quietest badge in
-  // the system while "New" was the loudest, which inverted the two states'
-  // actual weight: one is a nice-to-know, the other is the whole answer to
-  // "can I buy this".
+  // Every unavailable state is solid, including `Archived`. Renaming the state
+  // reframes what a finished run means; it does not make the badge less
+  // load-bearing on a grid, where "can I buy this" is still the question being
+  // asked. The archive is where a closed run is read as a record — there the
+  // state sits in a ledger row at metadata weight, not on a solid chip.
+  // Sold out used to be the quietest badge in the system while "New" was the
+  // loudest, which inverted the two states' actual weight.
   return (
     <span className={`badge badge-solid ${className}`}>
       {AVAILABILITY_LABEL[availability]}

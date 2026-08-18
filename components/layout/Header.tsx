@@ -14,7 +14,7 @@ import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { NAV_PRIMARY } from "@/lib/site";
 
 /** Routes that open on a full-bleed image the header floats over. */
-const TRANSPARENT_ROUTES = new Set(["/", "/lookbook"]);
+const TRANSPARENT_ROUTES = new Set(["/"]);
 
 export default function Header() {
   const pathname = usePathname();
@@ -71,15 +71,31 @@ export default function Header() {
           are both always present, rather than a swap of the whole class string.
           Before this the scrim was a `before:` gradient that only existed while
           floating, so it vanished the instant the page passed 24px — the colour
-          transitioned and the picture behind the header did not. */}
+          transitioned and the picture behind the header did not.
+
+          THE CHROME IS LIGHT ON EVERY ROUTE. It used to invert over the hero:
+          `on-dark`, paper ink, and a black gradient down from the top edge to
+          hold it off the photograph. That was necessary while the hero was a
+          full-bleed picture with type laid over it. The hero keeps its picture
+          to one side now, so the header sits on the page rather than on the
+          image, and a black band across the top of a light site was the one
+          piece of chrome still arguing with the ground.
+
+          What floats is the ground, not the ink: a paper wash with no rule,
+          fading up into a solid plate with one once the page has moved. */}
       <header
-        className={`fixed inset-x-0 top-0 z-[var(--z-header)] [transition:color_var(--dur-base)_var(--ease-out-quart)] ${
-          floating ? "on-dark text-paper" : "text-ink"
-        }`}
+        className="fixed inset-x-0 top-0 z-[var(--z-header)] text-ink [transition:color_var(--dur-base)_var(--ease-out-quart)]"
       >
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black/55 to-transparent [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
+          /* Solid paper for the header's own height, then a fade. The ink is
+             dark now, and on the home page the hero photograph runs to the top
+             edge — on a phone it is directly behind the wordmark. A gentle
+             wash that was already half transparent at 36px left dark type on a
+             picture, which is the same legibility failure the old dark scrim
+             existed to prevent, just inverted. The fade starts below the
+             controls and ends before the picture is dimmed. */
+          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-[var(--paper)] from-45% via-[var(--paper)]/75 to-transparent [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
             floating ? "opacity-100" : "opacity-0"
           }`}
         />

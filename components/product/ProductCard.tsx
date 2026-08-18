@@ -13,6 +13,7 @@ import {
   resolveAvailability,
   runStatus,
 } from "@/lib/catalog/queries";
+import { archiveState, garmentId } from "@/lib/catalog/archive";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/catalog/types";
 
@@ -44,9 +45,12 @@ export default function ProductCard({
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
   const run = runStatus(product);
-  // The style code without its size suffix — the same figure the product page
-  // prints, so the two cannot disagree.
-  const code = product.variants[0]?.sku.replace(/-[^-]+$/, "");
+  // The garment's number in the record, not its SKU stem. `TH-ARC-HOOD` is a
+  // warehouse string that happens to be visible; `TH-003` is the piece's
+  // identity, it is the same on the archive ledger and its record page, and it
+  // is what someone would actually use to refer to a piece they own.
+  const code = garmentId(product);
+  const unset = archiveState(product) === "in-development";
   const sellable = product.variants.filter((variant) =>
     isSizeAvailable(product, variant.size),
   );
@@ -191,12 +195,16 @@ export default function ProductCard({
       {specimen ? (
         <dl className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
           <div className="flex items-baseline gap-2">
-            <dt className="visually-hidden">Code</dt>
+            <dt className="visually-hidden">Garment</dt>
             <dd className="type-meta text-ink-faint">{code}</dd>
           </div>
+          {/* A piece still being sampled has no run size decided yet, so both
+              figures are 0 — which reads as "none were made" rather than as
+              "not made yet". Same em dash the archive and the size tables use
+              for a number nobody has set. */}
           <div className="flex items-baseline gap-2">
             <dt className="type-meta text-ink-faint">Made</dt>
-            <dd className="num type-meta">{run.made}</dd>
+            <dd className="num type-meta">{unset ? "—" : run.made}</dd>
           </div>
           <div className="flex items-baseline gap-2">
             <dt className="type-meta text-ink-faint">Left</dt>
@@ -205,7 +213,7 @@ export default function ProductCard({
                 dilutes it; the sold-out badge on the frame already says this.
                 The accent for a closed run belongs on the product page, where
                 it is about the piece being looked at. */}
-            <dd className="num type-meta">{run.remaining}</dd>
+            <dd className="num type-meta">{unset ? "—" : run.remaining}</dd>
           </div>
         </dl>
       ) : null}

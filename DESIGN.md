@@ -1,6 +1,6 @@
 # THARROS — Design System
 
-Monochrome. Square. Editorial. Type does the shouting.
+Light. Square. Editorial. Type does the shouting.
 
 **What this document is.** A record of the design decisions currently in the code, so a
 change can be made consistently instead of guessing. Tokens live in `app/globals.css`.
@@ -37,20 +37,48 @@ prohibition — if the owner wants any of them, they are in.
 
 ## 2. Colour
 
-One neutral ramp. The clothing supplies the colour; the interface does not.
+**Light ground, one accent, and the clothing supplies the rest.**
 
 | Token | Value | Use |
 |---|---|---|
-| `--black` | `oklch(8% 0 0)` | Dark sections, footer, 404 |
-| `--near-black` | `oklch(13% 0 0)` | Primary ink, button fill, heavy rules |
-| `--steel` | `oklch(52% 0 0)` | Body text on paper (AA) |
-| `--concrete` | `oklch(55% 0 0)` | Faint metadata — AA at 11px on paper |
-| `--ash` | `oklch(82% 0 0)` | Empty-slot frame lines |
-| `--bone` | `oklch(90.5% 0.002 90)` | Empty image slots |
-| `--paper` | `oklch(98% 0.003 90)` | Page background, ink on dark |
+| `--paper` | `oklch(98.5% 0.003 85)` | The page |
+| `--bone` | `oklch(94.5% 0.004 85)` | The pale band, and empty image slots |
+| `--ash` | `oklch(86% 0.004 85)` | Empty-slot frame lines |
+| `--concrete` | `oklch(51.5% 0.005 70)` | Faint metadata — 5.39:1 paper, 4.79:1 pale |
+| `--steel` | `oklch(48% 0.005 70)` | Body text — 6.27:1 paper, 5.57:1 pale |
+| `--near-black` | `oklch(24% 0.006 60)` | Primary ink, button fill, heavy rules |
+| `--black` | `oklch(20% 0.006 60)` | The footer, and nothing else |
+
+Two things about this ramp are decisions rather than values.
+
+**It is only just warm.** The ramp was fully achromatic while the site was monochrome,
+which was right then; beside any warm surface the same greys go blue. It then went the
+whole way to unbleached ivory (chroma .008, hue 85) and that was wrong in the other
+direction — ivory reads *aged*, and a page the colour of an old book is the wrong century
+for a label whose argument is that it is new and getting better. The chroma is a trace now:
+enough that a photograph does not sit on the page like a cut-out, not enough to read as a
+colour or a mood.
+
+**`--bone` is a surface, not a fill.** It moved from 90% to 94.5% and became the site's
+second ground — the pale band that replaced almost every black one. At 90% it was a panel;
+at 94.5% it is a change of paper. It also cleared a real defect: `--ink-faint` reads 4.79:1
+on it, where the old bone gave 3.66:1 and forced `PendingNotice` to avoid bone entirely.
+
+**One black band survives, and it is the footer.** The page used to alternate paper with
+full-viewport near-black: a black statement, a black next-drop, a black footer. Three of
+those in one scroll is not rhythm, it is a site that keeps switching the lights off. The
+contrast comes from type scale now, which is what the display ladder was built for.
 
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
 what components actually reference. Recolour through the aliases, never the ramp.
+
+### Grain
+
+`body::before`, one fixed inline-SVG turbulence plate at `--grain-opacity` (0.022),
+`pointer-events: none`, `--z-grain: 1`. Under a kilobyte, no request, and `fixed` so it does
+not repaint on scroll. Tuned over a photograph rather than over a flat swatch, because grain
+on top of a picture is where this goes wrong. If it is *visible* as an effect it is too
+strong.
 
 ### Surfaces rebind the aliases
 
@@ -61,7 +89,8 @@ they are sitting on and become correct automatically.
 
 | Class | Use |
 |---|---|
-| `.on-dark` | A section on the black surface |
+| `.on-pale` | A section on the bone surface — the site's second ground |
+| `.on-dark` | A section on the black surface. The footer, the 404 and the error boundaries |
 | `.on-light` | An element carrying its own pale surface *inside* a dark one — the empty image frame |
 
 This is the point of the alias layer, and it is not optional politeness: before the aliases
@@ -75,8 +104,15 @@ One chromatic value, and it is a state marker rather than a colour scheme.
 
 | Token | Value | Contrast |
 |---|---|---|
-| `--oxide` | `oklch(48% 0.14 30)` | 6.61:1 on paper, 5.27:1 on bone |
-| `--oxide-on-dark` | `oklch(62% 0.15 30)` | 5.32:1 on black |
+| `--oxide` | `oklch(48% 0.14 30)` | 6.71:1 on paper, 5.97:1 on the pale band |
+| `--oxide-on-dark` | `oklch(64% 0.15 30)` | 5.04:1 on the footer |
+
+A matter family — olive, umber and stone, for saying what a garment is made of as against
+what condition it is in — was added here and taken out again. It existed to colour material
+swatches and a fabric specification block, and those came out: restating one row of a spec
+table as a section with coloured chips is the performance of care rather than care. With no
+consumer left, three unused colour tokens are three colours waiting to be used
+decoratively.
 
 Referenced through `--signal` / `--signal-on-dark` (`text-signal`, `text-signal-on-dark`),
 never through `--oxide` directly.
@@ -392,11 +428,17 @@ photographs instead of six. Small thumbnails (bag, search, order summary) invert
 Until photography exists, a slot without `src` shows a stand-in photograph from
 `public/filler` — a flat lay, a figure in a place, a street, or a fabric study, chosen
 from the slot's `kind` and `crop` and held steady by its asset code, so a frame is
-identical on every render and machine. They are free-licence stock (Openverse:
-StockSnap / rawpixel), desaturated to the monochrome palette so the pages read as one
-system. They were drawn illustrations until August 2026; a drawing let the layout be
-checked but not judged — a page of diagrams does not tell you whether the composition
-holds a photograph.
+identical on every render and machine. They are free-licence stock (Openverse, CC0 and
+public domain), pulled by `scripts/fetch-filler.mjs` and credited in
+`scripts/filler-credits.json`.
+
+They are in colour, and ungraded. Two earlier passes were not, and both were wrong in the
+same way. They were drawn illustrations first — a drawing lets a layout be checked but not
+judged, because a page of diagrams does not tell you whether the composition holds a
+photograph. Then they were photographs desaturated to a monochrome palette, which reads as
+an art direction the label has chosen rather than as scaffolding, and which could not be
+reversed: a greyscale JPEG has no hue left to restore, so replacing them meant fetching a
+new set. Stand-ins should look like what they are.
 
 `NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames. It is a switch for looking at a
 layout without the stand-ins in it, nothing more — the site is pre-launch, the stand-ins are
@@ -404,8 +446,9 @@ scaffolding, and how much a layout leans on them while the photography does not 
 not a problem to solve. Build what looks right; the frames hold their ratio either way, so
 real photography drops in without moving anything.
 
-The shoot itself — subjects, locations, styling, mood, whether it is monochrome at all —
-is the owner's to direct, and is not specified here.
+The shoot itself — subjects, locations, styling, mood — is the owner's to direct, and is
+not specified here. The one thing the stand-ins should not do is pre-empt that decision,
+which is what grading them to a house palette did.
 
 ### Type over pictures
 

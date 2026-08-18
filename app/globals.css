@@ -2,19 +2,38 @@
 
 /* ============================================================
    THARROS — design system
-   Monochrome. Square. Editorial. Type does the shouting.
-   One neutral ramp, one muted steel accent, no third colour.
+   A working catalogue, printed on unbleached stock and annotated
+   in the studio. Square. Editorial. Type does the shouting.
+   Three registers: PAPER (the ground), PRINT (the technical
+   layer), PICTURE (the work).
    ============================================================ */
 
 :root {
-  /* — Neutral ramp —————————————————————————————— */
-  --black:      oklch(8% 0 0);
-  --near-black: oklch(13% 0 0);
-  --steel:      oklch(52% 0 0);   /* AA body text on paper */
-  --concrete:   oklch(55% 0 0);   /* faint metadata — still AA at 11px */
-  --ash:        oklch(82% 0 0);
-  --bone:       oklch(90.5% 0.002 90);
-  --paper:      oklch(98% 0.003 90);
+  /* — The ground ———————————————————————————————
+     Light, and only just warm.
+
+     This went to a full warm ivory first — unbleached paper, hue 85, chroma
+     .008 — and ivory has a temperature problem: it reads *aged*. On a label
+     whose argument is that it is new and getting better, a page the colour of
+     an old book is the wrong century. So the chroma is cut to a trace: enough
+     that the greys are not blue and a photograph does not sit on the page like
+     a cut-out, not enough to read as a colour or a mood.
+
+     `--bone` moved a long way up, from 90% to 94.5%. It is no longer just the
+     empty-image-slot fill: it is the site's second surface, the pale band that
+     replaced most of the black ones. At 90% it was a panel; at 94.5% it is a
+     change of paper. It also fixed a real defect — `--ink-faint` reads 4.79:1
+     on it now, where on the old bone it was 3.66:1 and sub-AA, which is why
+     `PendingNotice` had to avoid bone entirely.
+
+     `--black` survives in exactly one place, the footer. */
+  --black:      oklch(20% 0.006 60);  /* the footer, and nothing else */
+  --near-black: oklch(24% 0.006 60);  /* primary ink, button fill */
+  --steel:      oklch(48% 0.005 70);  /* AA body text — 6.27:1 paper, 5.57:1 pale */
+  --concrete:   oklch(51.5% 0.005 70);/* faint metadata — 5.39:1 / 4.79:1, AA at 11px */
+  --ash:        oklch(86% 0.004 85);
+  --bone:       oklch(94.5% 0.004 85);/* the pale band, and empty image slots */
+  --paper:      oklch(98.5% 0.003 85);/* the page */
 
   /* — Semantic surfaces ————————————————————————— */
   --surface:       var(--paper);
@@ -26,28 +45,42 @@
   --ink-muted:  var(--steel);
   --ink-faint:  var(--concrete);
   --ink-on-dark:       var(--paper);
-  --ink-on-dark-muted: oklch(72% 0 0);
-  --ink-on-dark-faint: oklch(58% 0 0);
+  --ink-on-dark-muted: oklch(72% 0.005 70);
+  --ink-on-dark-faint: oklch(62% 0.005 70);
 
-  /* — Rules ————————————————————————————————————— */
-  --rule-light:        oklch(88% 0.002 90);
-  --rule-light-strong: oklch(78% 0.002 90);
+  /* — Rules ————————————————————————————————————
+     Rules carry more of the structure now that there are fewer dark bands to
+     divide the page, so they sit a step lighter and a step more precise. */
+  --rule-light:        oklch(90% 0.004 85);
+  --rule-light-strong: oklch(80% 0.004 85);
   --rule:          var(--rule-light);
   --rule-strong:   var(--rule-light-strong);
-  --rule-on-dark:        oklch(26% 0 0);
-  --rule-on-dark-strong: oklch(36% 0 0);
+  --rule-on-dark:        oklch(32% 0.006 60);
+  --rule-on-dark-strong: oklch(42% 0.006 60);
 
-  /* — Accent ———————————————————————————————————
-     The one chromatic value in the interface. Oxide red, the colour of a
-     printed production stamp rather than a fashion colour. It has exactly
-     three jobs: marking the current drop, marking a closed run, and marking
-     something still in development. Never in a button, never decorative,
-     never more than once in a viewport.
-     Verified by canvas pixel readback (Chromium serialises oklch() as lab(),
-     so parsing the computed string lies): 6.61:1 on paper, 5.27:1 on bone,
-     5.32:1 on black. All AA for text. */
-  --oxide:         oklch(48% 0.14 30);
-  --oxide-on-dark: oklch(62% 0.15 30);
+  /* — The accent ———————————————————————————————
+     One chromatic value, and it is a state marker rather than a colour scheme.
+
+     OXIDE IS STATE. The current drop, a closed run, something in development.
+     One accented element per screen of content, never in a button, never
+     decorative. Oxide reads as a printed production stamp rather than as a
+     fashion colour, and its restraint is the whole reason it still means
+     anything.
+
+     A MATTER FAMILY WAS ADDED HERE AND TAKEN OUT AGAIN. Olive, umber and stone
+     were introduced to mark what a garment is made of as against what
+     condition it is in — swatch chips, fabric specifications, a material
+     column in the archive. All of that came out: restating one row of a spec
+     table as a section with coloured chips is the performance of care rather
+     than care itself. With the swatches gone the three tones had no consumer,
+     and an unused colour token is a colour waiting to be used decoratively by
+     whoever adds the next section.
+
+     Verified by canvas pixel readback against paper, bone and charcoal —
+     Chromium serialises oklch() as lab(), so parsing the computed string
+     lies. */
+  --oxide:         oklch(48% 0.14 30);    /* 6.71:1 paper · 5.97:1 pale */
+  --oxide-on-dark: oklch(64% 0.15 30);    /* 5.04:1 footer */
 
   --signal:         var(--oxide);
   --signal-on-dark: var(--oxide-on-dark);
@@ -66,6 +99,13 @@
      `.field-error` below. Colour was never the only indicator anyway —
      `aria-invalid`, `role="alert"` and a focus move all already fire. */
 
+  /* — Grain ————————————————————————————————————
+     The stock has a tooth. One fixed overlay, felt rather than seen: at 0.022
+     it sits below the threshold where it reads as an effect and above the one
+     where the page reads as a screen. Tuned over the hero photograph, not
+     over a flat swatch — grain on top of a picture is where it goes wrong. */
+  --grain-opacity: 0.022;
+
   /* — Motion ———————————————————————————————————
      Slow and flat. Nothing overshoots, nothing bounces. */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -75,6 +115,7 @@
   --dur-base:   320ms;
   --dur-slow:   620ms;
   --dur-reveal: 900ms;
+  --dur-frame:  1200ms;  /* the frame wipe — slower than any other gesture */
 
   /* — Vertical rhythm ———————————————————————————
      Three intervals and no fourth. `tight` groups two things that belong to
@@ -104,8 +145,10 @@
   /* — Stacking ——————————————————————————————————
      One ordered scale. Before this the chrome used 40 / 60 / 80 / 100 picked
      independently, which is a scale nobody can reason about from any single
-     file. Sticky page furniture sits under the header; the header sits under
-     anything that takes over the screen; the skip link outranks all of it. */
+     file. Grain sits above the page and below anything interactive; sticky
+     page furniture sits under the header; the header sits under anything that
+     takes over the screen; the skip link outranks all of it. */
+  --z-grain:   1;
   --z-sticky:  40;
   --z-header:  60;
   --z-overlay: 80;
@@ -203,6 +246,35 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    /* The caret and the scrollbar are drawn by the browser, not by this file,
+       and they ship in a grey that belongs to no design system. On ivory a
+       default caret reads blue-black against warm ink. */
+    caret-color: var(--ink);
+    scrollbar-color: var(--rule-light-strong) transparent;
+  }
+
+  /* THE STOCK.
+     A single fixed grain plate over the whole page — the tooth of the paper
+     everything else is printed on. It is the one element allowed to sit above
+     the content and below the chrome, and it is `pointer-events: none` so it
+     never intercepts anything.
+
+     Inline SVG turbulence rather than an image: no request, no decode, under
+     a kilobyte, and it scales to any viewport without tiling seams. `fixed`
+     rather than `absolute` so it does not repaint on scroll — the grain
+     belongs to the screen, like the surface of a print, not to the document.
+
+     `--grain-opacity` is deliberately a token: a photograph carries its own
+     noise and the plate has to stay under it, so this is the one value most
+     likely to need retuning when real photography lands. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-grain);
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
   }
 
   /* Square by default. Radius is opt-in, and almost never taken. */
@@ -789,6 +861,35 @@
     color: var(--ink-on-dark);
   }
 
+  /* THE PALE BAND — the site's second surface, and what replaced most of the
+     black ones.
+
+     The page used to alternate paper and near-black, and the black bands were
+     by far the heaviest thing on it: a full-viewport statement, a full-
+     viewport next drop, a black footer. Three of those on one page is not
+     rhythm, it is a site that keeps switching the lights off. They are pale
+     now and the contrast comes from type scale instead, which is what the
+     display ladder was built for.
+
+     It is a real surface, so it sets a background AND rebinds the aliases —
+     the aliases happen to be the light ones, but binding them explicitly is
+     what lets a section nested inside a dark one still resolve correctly.
+
+     One black band survives, and it is the footer. A page needs somewhere to
+     end. */
+  .on-pale {
+    --ink:         var(--near-black);
+    --ink-muted:   var(--steel);
+    --ink-faint:   var(--concrete);
+    --rule:        var(--rule-light);
+    --rule-strong: var(--rule-light-strong);
+    --signal:      var(--oxide);
+    --surface:     var(--bone);
+
+    background: var(--bone);
+    color: var(--near-black);
+  }
+
   /* The inverse: an element that carries its own light surface regardless of
      the section around it. The empty image frame is always bone, so inside a
      dark section its labels must not follow the section's ink — they sit on
@@ -1091,6 +1192,92 @@
   @media (prefers-reduced-motion: reduce) {
     .bag-count {
       animation: none;
+    }
+  }
+
+  /* ============================================================
+     THE PRINT REGISTER
+     Marks borrowed from printed matter and from a pattern table. Every one of
+     them is decoration that carries information — a swatch says what a thing
+     is made of, a measure rule says how big it is, a registration mark says
+     where the frame is. None of them is a texture for its own sake, and the
+     moment one stops saying something it comes out.
+     ============================================================ */
+
+  /* A dimension callout — a hairline with a tick at each end, the way a
+     measurement is drawn on a pattern — was built here and removed again. The
+     site already draws exactly one quantity as a line, and that is
+     `.run-ledger`. A second measure rule would have been a second visual idea
+     for the same job, used nowhere, waiting to be reached for by whoever added
+     the next section. If a real dimension ever needs drawing, it goes back in.
+
+     A registration crosshair, as printed in the trim margin of a sheet. Set
+     on a frame's corner via positioning at the call site. Purely a mark —
+     always `aria-hidden`, never a control, never on a small frame where it
+     would crowd the picture. */
+  .mark-registration {
+    position: relative;
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: none;
+    opacity: 0.5;
+  }
+
+  .mark-registration::before,
+  .mark-registration::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+
+  .mark-registration::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+
+  .mark-registration::after {
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 1px;
+  }
+
+  /* THE FRAME WIPE — the fourth gesture.
+     `.reveal` fades and lifts, which is right for a block of type and wrong
+     for a photograph: a picture that slides has been moved, a picture that is
+     uncovered has been developed. This clips instead, bottom edge travelling
+     down, so the frame stays exactly where it was and the image arrives
+     inside it. Reserved for full-bleed and lead frames — used on a grid it
+     turns into the same entrance everywhere, which is the thing the site's
+     motion notes already warn about.
+
+     Composited on the GPU, no layout, no paint. Shares `--reveal-delay` with
+     the other three gestures so a frame can still be staggered with the rule
+     that labels it.
+
+     It is driven by `Reveal`, so it lands on an element that already carries
+     `.reveal` — and it has to CANCEL that fade rather than stack with it, or
+     the frame both wipes and slides and reads as two effects fighting. Same
+     shape as `.rule-draw`, which is likewise only meaningful in combination
+     with `.reveal`. Put it anywhere else and it is inert, not broken. */
+  [data-js] .reveal.reveal-frame {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path var(--dur-frame) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  }
+
+  [data-js] .reveal.reveal-frame.reveal-in {
+    clip-path: inset(0 0 0 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js] .reveal.reveal-frame,
+    [data-js] .reveal.reveal-frame.reveal-in {
+      clip-path: none;
+      transition: none;
     }
   }
 

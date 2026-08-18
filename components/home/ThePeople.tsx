@@ -2,19 +2,19 @@ import CampaignSequence from "@/components/campaign/CampaignSequence";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 /**
- * The home page's editorial middle: the drop on people, before the page goes
- * back to talking about how it was made.
+ * The home page's editorial middle: the drop on people.
  *
- * It sits after the statement rather than before it, so the run of surfaces
- * stays alternated — black record, paper grid, black statement, paper
- * editorial, paper process. Two image-led sections either side of the statement
- * would have put the page's two heaviest blocks in the same breath.
+ * The page used to run this sequence AND a horizontal rail of lookbook
+ * spreads four sections later — two movements of people photographed in the
+ * same drop, in the same register, which made the second read as more of the
+ * first. The rail went, and then the lookbook page did too: the campaign is
+ * where the drop is photographed now, and it is enough.
  */
 export default function ThePeople() {
   return (
     <CampaignSequence
       dropId={CURRENT_DROP.id}
-      index="03"
+      index="04"
       label="The people"
       title="Worn in, not styled."
     />

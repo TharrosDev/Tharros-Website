@@ -15,7 +15,7 @@ export default function NextDrop() {
   if (!NEXT_DROP) return null;
 
   return (
-    <section className="on-dark rhythm-breath">
+    <section className="on-pale rhythm-breath">
       <div className="page-frame">
         {/* The index in this row is the section's place on the page, not the
             drop's number — printing "002" here put a second numbering series in
@@ -27,7 +27,7 @@ export default function NextDrop() {
             <span className="num">06</span>
             <span>{NEXT_DROP.name}</span>
           </p>
-          <p className="type-meta text-signal-on-dark">In development</p>
+          <p className="type-meta text-signal">In development</p>
         </Reveal>
 
         {/* Same interval as SectionHeading's title, hand-rolled because this
@@ -39,17 +39,17 @@ export default function NextDrop() {
         <div className="section-lead grid gap-x-12 gap-y-8 lg:grid-cols-12">
           <div className="space-y-5 lg:col-span-6">
             {NEXT_DROP.body.map((paragraph) => (
-              <p key={paragraph} className="type-body text-ink-on-dark-muted">
+              <p key={paragraph} className="type-body text-ink-muted">
                 {paragraph}
               </p>
             ))}
           </div>
 
           <div className="lg:col-span-5 lg:col-start-8">
-            <p className="type-meta text-ink-on-dark-faint">
+            <p className="type-meta text-ink-faint">
               No release date is published until there is one.
             </p>
-            <Link href="/drop" className="btn btn-outline-on-dark mt-8">
+            <Link href="/drop" className="btn btn-outline mt-8">
               Follow the build
             </Link>
           </div>
