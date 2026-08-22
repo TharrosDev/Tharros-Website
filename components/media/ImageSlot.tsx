@@ -78,7 +78,7 @@ export default function ImageSlot({
   if (!image.src && FILLER_IMAGES) {
     return (
       <div className={`${shape} overflow-hidden bg-surface-frame ${className}`}>
-        <FillerImage image={image} ratio={ratio} sizes={sizes} />
+        <FillerImage image={image} ratio={ratio} sizes={sizes} priority={priority} />
       </div>
     );
   }

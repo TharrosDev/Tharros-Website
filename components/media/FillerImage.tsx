@@ -79,9 +79,22 @@ function hash(code: string): number {
 }
 
 /** `ratio` is the slot's, kept for call-site parity — the frame is cropped by CSS. */
-type Props = { image: ImageSlotData; ratio?: Ratio; sizes?: string; className?: string };
+type Props = {
+  image: ImageSlotData;
+  ratio?: Ratio;
+  sizes?: string;
+  /**
+   * Forwarded from the slot. It was not, and while stand-ins are what the site
+   * renders that meant `priority` did nothing anywhere: every LCP image on
+   * every route — the home hero, the product gallery, the archive record's
+   * lead frame — was declared eager by its call site and served `loading=lazy`.
+   * A prop silently dropped one layer down is invisible until you read the HTML.
+   */
+  priority?: boolean;
+  className?: string;
+};
 
-export default function FillerImage({ image, sizes = "100vw", className = "" }: Props) {
+export default function FillerImage({ image, sizes = "100vw", priority = false, className = "" }: Props) {
   const scene = sceneFor(image);
   // The code picks the frame, so sibling shots of one piece differ but neither
   // moves between renders.
@@ -102,6 +115,7 @@ export default function FillerImage({ image, sizes = "100vw", className = "" }: 
       alt={`${image.alt} — stand-in photograph, THARROS photography pending`}
       fill
       sizes={sizes}
+      priority={priority}
       className={`zoom-target object-cover ${className}`}
     />
   );

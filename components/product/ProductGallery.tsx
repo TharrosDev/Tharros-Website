@@ -13,6 +13,13 @@ type Props = {
 export default function ProductGallery({ images, productName }: Props) {
   const [active, setActive] = useState(0);
   const [zoomed, setZoomed] = useState(false);
+  // Latched on first open, so the zoom frame stays out of the document until
+  // someone asks for it — and stays in it afterwards, so closing and reopening
+  // does not refetch. `Modal` is always mounted for its transition, which meant
+  // a 90vw image was being downloaded on every product page for a dialog most
+  // visitors never open. Set in the handler rather than an effect, the same way
+  // the header latches its search overlay.
+  const [zoomUsed, setZoomUsed] = useState(false);
   // The swipe rail had no position indicator at all — no dots, no counter, just
   // a static "Swipe — 4 images". Derived from scroll position in the handler
   // rather than from an effect, so no render cascade.
@@ -41,7 +48,19 @@ export default function ProductGallery({ images, productName }: Props) {
           {images.map((image) => (
             <li key={image.code} className="w-full shrink-0 snap-center">
               <div className="relative h-[72svh] w-full overflow-hidden">
-                <ImageSlot image={image} fill sizes="100vw" priority={image === images[0]} />
+                {/* `1px` from `md` up is not a lie, it is the truth about a
+                    display:none element. This rail is `md:hidden`, but hidden
+                    is not unloaded — the browser still picks a candidate from
+                    the srcset and fetches it. At 1440 that was six frames at
+                    the 1920w candidate, 137 kB of pictures a desktop visitor
+                    cannot see. The media condition makes the browser pick the
+                    smallest candidate instead. */}
+                <ImageSlot
+                  image={image}
+                  fill
+                  sizes="(min-width: 768px) 1px, 100vw"
+                  priority={image === images[0]}
+                />
               </div>
             </li>
           ))}
@@ -85,7 +104,11 @@ export default function ProductGallery({ images, productName }: Props) {
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
-                <ImageSlot image={image} ratio="square" sizes="80px" />
+                <ImageSlot
+                  image={image}
+                  ratio="square"
+                  sizes="(max-width: 767px) 1px, 80px"
+                />
                 <span className="visually-hidden">
                   Show image {index + 1} of {productName}
                 </span>
@@ -100,14 +123,17 @@ export default function ProductGallery({ images, productName }: Props) {
             whole page nudged every time someone looked at another picture. */}
         <button
           type="button"
-          onClick={() => setZoomed(true)}
+          onClick={() => {
+            setZoomUsed(true);
+            setZoomed(true);
+          }}
           className="hover-zoom relative min-w-0 flex-1 cursor-zoom-in overflow-hidden"
         >
           <div className="relative h-[78svh] w-full">
             <ImageSlot
               image={current}
               fill
-              sizes="(min-width: 1024px) 45vw, 60vw"
+              sizes="(max-width: 767px) 1px, (min-width: 1024px) 45vw, 60vw"
               priority
             />
           </div>
@@ -116,8 +142,12 @@ export default function ProductGallery({ images, productName }: Props) {
       </div>
 
       <Modal open={zoomed} onClose={() => setZoomed(false)} title={productName}>
-        <ImageSlot image={current} sizes="90vw" />
-        <p className="type-meta mt-4 text-ink-faint">{current.alt}</p>
+        {zoomUsed ? (
+          <>
+            <ImageSlot image={current} sizes="90vw" />
+            <p className="type-meta mt-4 text-ink-faint">{current.alt}</p>
+          </>
+        ) : null}
       </Modal>
     </>
   );
