@@ -426,8 +426,9 @@ photographs instead of six. Small thumbnails (bag, search, order summary) invert
 ### The stand-in artwork
 
 Until photography exists, a slot without `src` shows a stand-in photograph from
-`public/filler` — a flat lay, a figure in a place, a street, or a fabric study, chosen
-from the slot's `kind` and `crop` and held steady by its asset code, so a frame is
+`public/filler` — a flat lay, a figure in a place, a street, a portrait, a fabric study or
+the opening frame, chosen from the slot's `kind` and `crop` and held steady by its asset
+code, so a frame is
 identical on every render and machine. They are free-licence stock (Openverse, CC0 and
 public domain), pulled by `scripts/fetch-filler.mjs` and credited in
 `scripts/filler-credits.json`.

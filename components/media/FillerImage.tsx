@@ -37,7 +37,8 @@ type Scene =
   | "street"
   | "campaign"
   | "portrait"
-  | "detail";
+  | "detail"
+  | "hero";
 
 /**
  * Kind first, then crop, then ratio.
@@ -55,10 +56,14 @@ function sceneFor(image: ImageSlotData): Scene {
   // wide, and the wide pool is shot wide — but the home page's opening frame is
   // a campaign frame rendered as a tall half-screen panel, and centre-cropping
   // a landscape picture into it cuts the figure out of the shot entirely. A
-  // campaign frame that declares itself tall gets a picture that is tall.
+  // campaign frame that declares itself tall gets the hero pool, which is shot
+  // for exactly that hole: one figure, three-quarter length, plain wall, room
+  // around them. It borrowed `scene` before the hero frames existed, and those
+  // are a different shot — a small figure in a large piece of architecture,
+  // right for a lifestyle slot and wrong behind a headline.
   if (image.kind === "campaign") {
     return image.ratio === "portrait" || image.ratio === "editorial"
-      ? "scene"
+      ? "hero"
       : "campaign";
   }
   if (image.kind === "lifestyle") return "scene";
