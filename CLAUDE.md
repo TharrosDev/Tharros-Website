@@ -237,9 +237,17 @@ its ratio, so dropping in real photography is a one-line data change and moves n
 | Dev | `npm run dev` |
 | Build | `npm run build` |
 | Lint | `npm run lint` |
+| Type check | `npm run typecheck` |
+| Test | `npm test` |
 
 Run **both** `npm run lint` and `npm run build` before declaring work done. Lint enforces
 React Compiler rules that the build does not.
+
+`npm test` runs the assert-based checks in `lib/` through Node directly — no framework and
+no dependency, Node strips the types. They cover the two pieces of logic that fail
+silently: the postal patterns in `lib/commerce/regions.ts` and the cents-to-currency
+rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so the
+`.ts`-suffixed imports those files need do not fail `tsc`.
 
 ---
 

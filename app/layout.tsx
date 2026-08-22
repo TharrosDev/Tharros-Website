@@ -6,7 +6,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 import CartDrawer from "@/components/commerce/CartDrawer";
-import { BRAND, BRAND_LINE, CONTACT_EMAIL, SITE_URL, socialProfiles } from "@/lib/site";
+import {
+  BRAND,
+  BRAND_LINE,
+  CONTACT_EMAIL,
+  INK_HEX,
+  SITE_URL,
+  socialProfiles,
+} from "@/lib/site";
 import { jsonLd } from "@/lib/jsonld";
 
 /** Loaded as a variable font rather than pinned to 700/800, so weight is an
@@ -31,7 +38,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: INK_HEX,
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -55,6 +62,10 @@ export const metadata: Metadata = {
     "heavyweight hoodie",
     "oversized tee",
   ],
+  // The manifest existed in `public/` and nothing ever asked for it, so the
+  // install prompt, the home-screen name and the splash colours were all
+  // sitting unused — and the CSP already carried a `manifest-src` for it.
+  manifest: "/manifest.json",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

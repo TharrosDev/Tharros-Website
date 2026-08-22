@@ -5,6 +5,28 @@ export const BRAND = "THARROS";
 export const BRAND_LINE = "Small runs. Original ideas.";
 export const CONTACT_EMAIL = "hello@tharros.com";
 
+/**
+ * The brand ink and ground as sRGB hex.
+ *
+ * `globals.css` holds the real tokens in oklch, and everything that can read a
+ * stylesheet should use those. These exist for the three places that cannot:
+ * `next/og` renders through Satori with no stylesheet (`icon`, `apple-icon`,
+ * `opengraph-image`), `global-error.tsx` catches failures in the root layout so
+ * it must not depend on the CSS having loaded, and `viewport.themeColor` and
+ * the web manifest are plain values in the document head.
+ *
+ * They were five separate literals, and they had already drifted: every one of
+ * them said `#0a0a0a`/`#fafafa`, a cold black on a cold white, while the site's
+ * own `--near-black` and `--paper` are the warm `#211f1c` and `#fbfaf8` below.
+ * The favicon, the share card and the installed-app splash were a different
+ * black from the page they belong to.
+ *
+ * Keep these in step with `--near-black` and `--paper` in `globals.css`.
+ */
+export const INK_HEX = "#211f1c";
+export const PAPER_HEX = "#fbfaf8";
+
+
 /** Placeholder until the accounts exist. These point at the platforms, not at
  *  THARROS profiles, so they are deliberately excluded from the structured-data
  *  `sameAs` by `socialProfiles()` — claiming them would assert ownership of a

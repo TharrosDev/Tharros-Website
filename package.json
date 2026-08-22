@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "node lib/commerce/regions.test.ts && node lib/format.test.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

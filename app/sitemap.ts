@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PRODUCTS } from "@/lib/catalog/products";
+import { listProducts } from "@/lib/catalog/queries";
 import { archiveEntries } from "@/lib/catalog/archive";
 import { SITE_URL } from "@/lib/site";
 
@@ -38,7 +38,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     })),
-    ...PRODUCTS.map((product) => ({
+    // Through `queries.ts` like everything else that reads the catalog. This
+    // was the one place importing `products.ts` directly, so a CMS swapped in
+    // behind the seam would have left the sitemap reading the old array.
+    ...listProducts().map((product) => ({
       url: `${SITE_URL}/shop/${product.slug}`,
       lastModified: new Date(product.releasedAt),
       changeFrequency: "weekly" as const,

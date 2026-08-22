@@ -35,6 +35,10 @@ export default function Newsletter({ onDark = false }: { onDark?: boolean }) {
               if (state !== "idle") setState("idle");
             }}
             placeholder="name@email.com"
+            // The status line was announced but the field itself never reported
+            // as invalid, so a screen reader read the error and then described
+            // the input beside it as a normal empty box.
+            aria-invalid={state === "invalid" || undefined}
             aria-describedby="newsletter-status"
             className={`field ${onDark ? "field-on-dark" : ""}`}
           />

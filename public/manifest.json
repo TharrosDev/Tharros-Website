@@ -1,11 +1,11 @@
 {
   "name": "THARROS",
   "short_name": "THARROS",
-  "description": "Contemporary streetwear. Built for those who don't blend in.",
+  "description": "THARROS is an independent streetwear label making small runs of original pieces. Designed, patterned and sampled in-house.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#fbfaf8",
+  "theme_color": "#211f1c",
   "icons": [
     {
       "src": "/icon",

@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Pin the workspace root. Without it Turbopack walks up looking for a
+  // lockfile, finds an unrelated one in the developer's home directory, and
+  // treats that as the root — which it warns about on every dev and build run.
+  turbopack: { root: import.meta.dirname },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
