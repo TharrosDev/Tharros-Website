@@ -6,6 +6,10 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    // The one test file runs under `node --experimental-strip-types`, which
+    // requires the `.ts` extension on its own import. Without this flag
+    // `tsc --noEmit` fails on that line alone.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",

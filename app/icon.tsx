@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { INK_HEX, PAPER_HEX } from "@/lib/site";
 
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
@@ -14,8 +15,8 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a0a0a",
-          color: "#fafafa",
+          background: INK_HEX,
+          color: PAPER_HEX,
           fontSize: 44,
           fontWeight: 800,
           letterSpacing: "-0.04em",

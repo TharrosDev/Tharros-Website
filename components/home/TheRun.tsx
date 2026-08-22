@@ -23,11 +23,16 @@ export default function TheRun() {
           action={{ href: "/shop", label: "Shop all" }}
         />
         <div className="section-lead">
+          {/* No `priorityCount`. The opening panel is `min-h-[100svh]`, so the
+              first row of this grid is below the fold at every width — and
+              `priority` emits a `<link rel=preload>`, which put three
+              below-the-fold frames in the same starting gun as the hero. Four
+              images racing means the LCP one gets a quarter of the bandwidth
+              instead of all of it. */}
           <ProductGrid
             products={products}
             heading={`${CURRENT_DROP.name} pieces`}
             columns={3}
-            priorityCount={3}
             specimen
             hang
           />

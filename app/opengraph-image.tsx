@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { BRAND_LINE } from "@/lib/site";
+import { BRAND_LINE, INK_HEX, PAPER_HEX } from "@/lib/site";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 export const size = { width: 1200, height: 630 };
@@ -16,8 +16,8 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0a0a0a",
-          color: "#fafafa",
+          background: INK_HEX,
+          color: PAPER_HEX,
           padding: 72,
         }}
       >

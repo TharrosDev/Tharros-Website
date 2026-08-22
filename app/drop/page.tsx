@@ -114,12 +114,12 @@ export default function DropPage() {
           titleClass="type-display-3"
           className="mb-12"
         />
-        <ProductGrid
-          products={pieces}
-          columns={3}
-          priorityCount={3}
-          specimen
-        />
+        {/* No `priorityCount`. This page opens on type and then runs a whole
+            campaign sequence before reaching the grid, so its first row is far
+            below the fold — and the LCP here is a heading, not a photograph.
+            Preloading three frames nothing is waiting for only takes bandwidth
+            from the frames further up that are. */}
+        <ProductGrid products={pieces} columns={3} specimen />
       </div>
 
       {NEXT_DROP ? (

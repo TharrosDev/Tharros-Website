@@ -1,8 +1,8 @@
 # THARROS
 
-The ecommerce site for THARROS — a contemporary streetwear label.
+The ecommerce site for THARROS — an independent streetwear label.
 
-Built for those who don't blend in.
+Small runs. Original ideas.
 
 **Status: in development. Not live, and not launching soon.** Everything here is subject to
 change at the owner's discretion — look, structure, copy and scope included. `CLAUDE.md`,
@@ -26,11 +26,14 @@ npm run dev      # http://localhost:3000
 ```
 
 ```bash
-npm run build    # production build + type check
-npm run lint     # eslint, including React Compiler rules
+npm run build      # production build + type check
+npm run lint       # eslint, including React Compiler rules
+npm run typecheck  # tsc --noEmit on its own, without a full build
+npm test           # the assert-based checks in lib/, run by node directly
 ```
 
-Run both `lint` and `build` before shipping.
+Run both `lint` and `build` before shipping. `test` is two files and no framework —
+Node strips the types itself, so there is nothing to install.
 
 Copy `.env.example` to `.env.local`. Nothing in it is required for local development —
 `NEXT_PUBLIC_SITE_URL` only affects canonical URLs, the sitemap and JSON-LD.
@@ -38,8 +41,8 @@ Copy `.env.example` to `.env.local`. Nothing in it is required for local develop
 ## What works today
 
 Real: the catalog, filtering, sorting, search, product pages, size and inventory logic,
-the bag (persisted per browser), saved items, and checkout through contact, shipping
-address and delivery — with live subtotal, shipping and total.
+the bag (persisted per browser), saved items, and checkout through details and delivery —
+two steps, with live subtotal, shipping and total, ending in a composed order email.
 
 Not connected, and the site says so on the page rather than pretending: **payments**,
 **customer accounts**, and **newsletter signup**.
@@ -48,12 +51,14 @@ Placeholder, and marked as such in the source: **all product data** (`lib/catalo
 **shipping rates** (`lib/commerce/shipping.ts`), **size measurements**
 (`lib/catalog/sizing.ts`), and **legal pages**.
 
-There is no photography yet. Every image renders as a ratio-correct drawn stand-in — a
-flat-lay, a figure, an environment or a fabric study, each marked FILLER and carrying its
-asset code — so pages can be built and judged before the shoot. Run with
-`NEXT_PUBLIC_FILLER_IMAGES=off` to see the bare frames instead. The stand-ins are
-scaffolding for a site that is not live; they hold each slot's ratio, so real photography
-drops in without moving a layout.
+There is no photography yet. Every image renders a free-licence stand-in photograph from
+`public/filler`, picked by the slot's own kind and crop and held steady by its asset code,
+so pages can be built and judged before the shoot. They are Openverse CC0 and public
+domain, fetched by `scripts/fetch-filler.mjs` and credited in
+`scripts/filler-credits.json` — not THARROS product, and nothing there should ship. Run
+with `NEXT_PUBLIC_FILLER_IMAGES=off` to get the bare labelled frames instead, which is the
+test that a layout reads as pending rather than filler-dependent. Either way the slot
+holds its ratio, so real photography drops in without moving a layout.
 
 ## Adding real content
 
@@ -80,10 +85,14 @@ only module the rest of the site reads products through.
 app/                 routes, metadata, sitemap, robots, generated icons + OG image
 components/
   commerce/          cart + wishlist providers, drawer, search, checkout
-  layout/            header, mobile nav, footer, page intro, newsletter
+  layout/            header, index overlay, footer, page intro, newsletter
   product/           card, grid, gallery, buy panel, size guide, badges
+  shop/              filter bar, shop feature
   home/              home page sections
-  media/ ui/         ImageSlot, wordmark, buttons-adjacent primitives
+  campaign/          campaign frames and sequences
+  archive/           the archive ledger
+  media/             ImageSlot, FillerImage, CinematicFrame
+  motion/ ui/        parallax numeral, accordion, modal, reveal, primitives
 lib/
   catalog/           product data + the query seam
   commerce/          cart maths, shipping, tax

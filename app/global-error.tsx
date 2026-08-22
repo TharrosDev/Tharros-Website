@@ -1,5 +1,7 @@
 "use client";
 
+import { INK_HEX, PAPER_HEX } from "@/lib/site";
+
 /**
  * Last-resort boundary: catches failures in the root layout itself, so it has
  * to render its own <html> and cannot rely on the design system loading.
@@ -14,8 +16,8 @@ export default function GlobalError({ reset }: { reset: () => void }) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          background: "#0a0a0a",
-          color: "#fafafa",
+          background: INK_HEX,
+          color: PAPER_HEX,
           fontFamily: "ui-sans-serif, system-ui, sans-serif",
           padding: "clamp(1.25rem, 4vw, 4rem)",
         }}
@@ -46,9 +48,9 @@ export default function GlobalError({ reset }: { reset: () => void }) {
             alignSelf: "flex-start",
             minHeight: 52,
             padding: "0 2rem",
-            border: "1px solid #fafafa",
-            background: "#fafafa",
-            color: "#0a0a0a",
+            border: `1px solid ${PAPER_HEX}`,
+            background: PAPER_HEX,
+            color: INK_HEX,
             fontSize: 13,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
