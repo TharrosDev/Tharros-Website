@@ -62,7 +62,7 @@ function sceneFor(image: ImageSlotData): Scene {
   // are a different shot — a small figure in a large piece of architecture,
   // right for a lifestyle slot and wrong behind a headline.
   if (image.kind === "campaign") {
-    return image.ratio === "portrait" || image.ratio === "editorial"
+    return image.ratio === "tall" || image.ratio === "portrait" || image.ratio === "editorial"
       ? "hero"
       : "campaign";
   }

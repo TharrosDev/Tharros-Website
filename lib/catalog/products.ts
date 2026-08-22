@@ -39,12 +39,16 @@ function sized(code: string, stock: Partial<Record<Size, number>>): Variant[] {
  */
 function shots(code: string, name: string): Product["images"] {
   return [
-    { code: `${code}-01`, alt: `${name}, front view, laid flat`, kind: "front", ratio: "portrait" },
-    { code: `${code}-02`, alt: `${name}, back view, laid flat`, kind: "back", ratio: "portrait" },
-    { code: `${code}-03`, alt: `${name}, close detail of fabric and construction`, kind: "detail", ratio: "editorial" },
-    { code: `${code}-04`, alt: `Model wearing the ${name}, full length`, kind: "model", ratio: "portrait", crop: "full" },
-    { code: `${code}-05`, alt: `Model wearing the ${name}, walking`, kind: "lifestyle", ratio: "editorial", crop: "walking" },
-    { code: `${code}-06`, alt: `Model wearing the ${name}, close`, kind: "model", ratio: "portrait", crop: "close" },
+    // Each slot declares the shape it is actually photographed at: a flat lay
+    // is square, a detail is 3:4, a figure is 2:3. They were all rounded to
+    // portrait or editorial before, which cropped a quarter off the width of
+    // every flat lay and a sixth off the height of every figure.
+    { code: `${code}-01`, alt: `${name}, front view, laid flat`, kind: "front", ratio: "square" },
+    { code: `${code}-02`, alt: `${name}, back view, laid flat`, kind: "back", ratio: "square" },
+    { code: `${code}-03`, alt: `${name}, close detail of fabric and construction`, kind: "detail", ratio: "portrait" },
+    { code: `${code}-04`, alt: `Model wearing the ${name}, full length`, kind: "model", ratio: "tall", crop: "full" },
+    { code: `${code}-05`, alt: `Model wearing the ${name}, walking`, kind: "lifestyle", ratio: "tall", crop: "walking" },
+    { code: `${code}-06`, alt: `Model wearing the ${name}, close`, kind: "model", ratio: "tall", crop: "close" },
   ];
 }
 

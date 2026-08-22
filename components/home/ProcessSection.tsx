@@ -35,20 +35,21 @@ export default function ProcessSection() {
         <div className="section-lead grid gap-x-12 gap-y-14 lg:grid-cols-12">
           {/* Bounded, per the sticky rule: on a short screen it scrolls its own
               overflow rather than hiding its own bottom off the viewport. */}
-          <Reveal className="order-2 lg:order-1 lg:col-span-5 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
+          <Reveal className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
             <ImageSlot
               image={{
                 code: "PRC-01",
                 alt: "A pattern piece and a part-sewn sample on a work table",
                 kind: "detail",
-                ratio: "square",
+                ratio: "portrait",
               }}
-              ratioSm="editorial"
-              sizes="(min-width: 1024px) 40vw, 100vw"
+              ratio="portrait"
+              ratioSm="tall"
+              sizes="(min-width: 1024px) 48vw, 100vw"
             />
           </Reveal>
 
-          <ol className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">
+          <ol className="order-1 lg:order-2 lg:col-span-5 lg:col-start-8">
             {STUDIO_STAGES.map((step, i) => (
               <Reveal
                 as="li"

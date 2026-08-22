@@ -151,7 +151,7 @@ export default function DropPage() {
               <Reveal className="lg:col-span-6 lg:col-start-7">
                 <ImageSlot
                   image={NEXT_DROP.cover}
-                  ratio="editorial"
+                  ratio="tall"
                   sizes="(min-width: 1024px) 50vw, 100vw"
                 />
               </Reveal>

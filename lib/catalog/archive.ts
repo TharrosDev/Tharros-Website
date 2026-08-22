@@ -118,9 +118,6 @@ export function getArchiveEntry(ref: string): ArchiveEntry | undefined {
   return product ? toEntry(product) : undefined;
 }
 
-export function archiveEntryFor(product: Product): ArchiveEntry {
-  return toEntry(product);
-}
 
 export function allArchiveRefs(): string[] {
   return ORDERED.map((p) => garmentId(p).toLowerCase());

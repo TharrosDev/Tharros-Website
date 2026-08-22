@@ -486,6 +486,15 @@
    asked for it stayed portrait.
    ============================================================ */
 
+/* 2:3 — the shape almost every figure in `public/filler` is shot at, and the
+   one the ladder did not have. Without it a portrait frame rendered at 3:4 and
+   object-cover ate 11% of its height, a 4:5 frame ate 17%, and what it ate was
+   the top and bottom of a person. A ratio should describe the photograph, not
+   round it to the nearest rung that already existed. */
+@utility ratio-tall {
+  aspect-ratio: 2 / 3;
+}
+
 @utility ratio-portrait {
   aspect-ratio: 3 / 4;
 }

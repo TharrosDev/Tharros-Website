@@ -70,18 +70,19 @@ export default function CampaignFrame({
   if (align === "full") {
     return (
       <figure>
-        {/* A full-width frame takes a wide ratio whatever the slot declares: a
-            portrait run edge to edge on a desktop is nearly two screens tall,
-            and the reader loses the picture scrolling through it. On a phone it
-            goes back to a tall frame, where full width is only 390px. */}
-        <div className="relative">
-          <ImageSlot
-            image={frame.image}
-            ratio={ratio ?? "campaign"}
-            ratioSm={ratioSm ?? "editorial"}
-            sizes="100vw"
-            priority={priority}
-          />
+        {/* A full frame is bounded by the viewport, not by its own aspect.
+            It used to be forced to a wide ratio here, because a 2:3 picture run
+            edge to edge on a desktop is one and a half screens tall and the
+            reader loses it scrolling. Forcing the ratio solved the height by
+            throwing away the photograph: a standing figure in a 16:9 box is a
+            horizontal slice of their chest.
+
+            A height band keeps both — the picture stays the shape it was shot
+            at and the screen decides how much of it you see at once. `svh` so a
+            phone measures the viewport it actually has rather than the tallest
+            one it could have. */}
+        <div className="relative h-[86svh] w-full overflow-hidden">
+          <ImageSlot image={frame.image} fill sizes="100vw" priority={priority} />
           {markers}
         </div>
         <figcaption className="page-frame mt-6">
@@ -118,7 +119,12 @@ export default function CampaignFrame({
             : "min-w-0 md:col-span-8 md:col-start-5 md:order-2"
         }
       >
-        <div className="relative">
+        {/* Capped for the same reason the full frame is. At 66% of a 1440px
+            frame a native 2:3 picture is ~1200px tall, so the caption hung to
+            its foot lands a screen and a half below its own heading. The cap
+            crops from a shape the photograph already has rather than imposing
+            a different one. */}
+        <div className="relative max-h-[78svh] overflow-hidden">
           <ImageSlot
             image={frame.image}
             ratio={ratio}

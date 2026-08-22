@@ -221,8 +221,37 @@ rung first; add a rung if none fits.
   because there scanning is the job.
 - Header height is `--header-h` (4.5rem). The header is fixed; `PageIntro` carries the
   clearance so pages never add their own top padding.
-- Image ratios: `ratio-portrait` (3:4, product), `ratio-editorial` (4:5),
+- Image ratios: `ratio-tall` (2:3), `ratio-portrait` (3:4), `ratio-editorial` (4:5),
   `ratio-campaign` (16:9), `ratio-wide` (21:9), `ratio-square` (1:1).
+
+  **A slot declares the shape its photograph actually is.** The scale had no 2:3
+  rung while the imagery was stock, so every figure was rounded to 3:4 or 4:5 and
+  `object-cover` ate 11–17% of its height — the top and bottom of a person. Flat
+  lays are square and were declared portrait, losing a quarter of their width;
+  details are 3:4 and were declared square, losing a quarter of their height.
+  Figures are `tall`, flat lays are `square`, details are `portrait`, and the
+  only crop left in the system is 16% off a wide landscape frame, which is sky.
+
+### Full-bleed is bounded by the viewport, not by the aspect
+
+`CinematicFrame` is the primitive for a picture that takes a whole screen, and it
+sets a height in `svh` rather than an aspect ratio. `ImageSlot` draws an
+aspect-ratio box, which is right for a picture in a column and wrong edge to
+edge: the photography is 2:3, so a full-width 2:3 frame on a 1600px screen is
+2400px tall — one and a half viewports of one image.
+
+The old fix was to force a wide ratio on any full-width frame, which solved the
+height by throwing the photograph away: a standing figure in a 16:9 box is a
+horizontal slice of their chest. A height band keeps both — the picture stays
+the shape it was shot at, and the screen decides how much of it you see.
+
+`svh` and not `vh`, so a phone measures the viewport it has rather than the
+tallest one it could have. Side-aligned campaign frames and the product gallery
+are capped the same way, for the same reason.
+
+Captions sit under the frame on the page grid, never over the picture. Type on
+an image needs a scrim, a scrim dims the image, and not dimming the photography
+is the whole argument for going full-bleed.
 
 ### Visual rhythm
 

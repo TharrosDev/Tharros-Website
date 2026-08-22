@@ -16,7 +16,7 @@
  * interaction, so the markers only render once a frame has a real photograph
  * behind them — see components/campaign/FrameHotspots.tsx.
  */
-import type { CampaignFrame, Campaign } from "./types";
+import type { Campaign } from "./types";
 
 export const CAMPAIGNS: Campaign[] = [
   {
@@ -36,7 +36,7 @@ export const CAMPAIGNS: Campaign[] = [
         // screen gives it the right-hand half of the viewport, not a band
         // across the top. A frame's ratio is what shape it is actually shown
         // at, and `sceneFor` reads it to pick a picture of that shape.
-        ratio: "editorial",
+        ratio: "tall",
       },
     },
     sequence: [
@@ -49,7 +49,7 @@ export const CAMPAIGNS: Campaign[] = [
           code: "CMP-001-A",
           alt: "Figure walking, the Arc Hoodie moving with the stride",
           kind: "lifestyle",
-          ratio: "editorial",
+          ratio: "tall",
           crop: "walking",
         },
       },
@@ -86,8 +86,3 @@ export function campaignFor(dropId: string): Campaign | undefined {
   return CAMPAIGNS.find((campaign) => campaign.drop === dropId);
 }
 
-/** Every frame of a campaign, hero first — for pages that want the whole set. */
-export function campaignFrames(dropId: string): CampaignFrame[] {
-  const campaign = campaignFor(dropId);
-  return campaign ? [campaign.hero, ...campaign.sequence] : [];
-}

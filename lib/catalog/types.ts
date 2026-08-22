@@ -51,7 +51,13 @@ export type ImageKind =
  */
 export type Crop = "full" | "three-quarter" | "close" | "walking";
 
-export type Ratio = "portrait" | "editorial" | "campaign" | "wide" | "square";
+export type Ratio =
+  | "tall"       /* 2:3 — figures, as shot */
+  | "portrait"   /* 3:4 — details, as shot */
+  | "editorial"  /* 4:5 */
+  | "campaign"   /* 16:9 */
+  | "wide"       /* 21:9 */
+  | "square";    /* 1:1 — flat lays, as shot */
 
 /**
  * An image slot. `src` is intentionally optional: until real photography

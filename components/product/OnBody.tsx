@@ -68,7 +68,7 @@ export default function OnBody({
               <div className="hover-zoom overflow-hidden">
                 <ImageSlot
                   image={frame}
-                  ratio="portrait"
+                  ratio="tall"
                   sizes="(min-width: 1024px) 28vw, (min-width: 640px) 42vw, 74vw"
                 />
               </div>

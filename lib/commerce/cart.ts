@@ -23,7 +23,7 @@ export type ResolvedLine = CartLine & {
 
 export const MAX_LINE_QUANTITY = 10;
 
-export function lineKey(productId: string, size: Size): string {
+function lineKey(productId: string, size: Size): string {
   return `${productId}::${size}`;
 }
 

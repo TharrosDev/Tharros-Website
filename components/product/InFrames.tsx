@@ -47,7 +47,7 @@ export default function InFrames({
             <Link href={frame.href} className="hover-zoom block overflow-hidden">
               <ImageSlot
                 image={frame.image}
-                ratio="editorial"
+                ratio="tall"
                 sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 72vw"
               />
             </Link>

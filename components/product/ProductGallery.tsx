@@ -33,9 +33,16 @@ export default function ProductGallery({ images, productName }: Props) {
             setSwiped(Math.round(rail.scrollLeft / rail.clientWidth));
           }}
         >
+          {/* One band, whatever shape the frame is. A gallery now holds a
+              2:3 figure, a 1:1 flat lay and a 3:4 detail, and letting each
+              slide take its own height made a horizontal snap rail change
+              height under the thumb mid-swipe. The band is the constant; the
+              photograph covers it. */}
           {images.map((image) => (
             <li key={image.code} className="w-full shrink-0 snap-center">
-              <ImageSlot image={image} sizes="100vw" priority={image === images[0]} />
+              <div className="relative h-[72svh] w-full overflow-hidden">
+                <ImageSlot image={image} fill sizes="100vw" priority={image === images[0]} />
+              </div>
             </li>
           ))}
         </ul>
@@ -78,7 +85,7 @@ export default function ProductGallery({ images, productName }: Props) {
                     : "border-transparent opacity-60 hover:opacity-100"
                 }`}
               >
-                <ImageSlot image={image} sizes="80px" />
+                <ImageSlot image={image} ratio="square" sizes="80px" />
                 <span className="visually-hidden">
                   Show image {index + 1} of {productName}
                 </span>
@@ -87,12 +94,23 @@ export default function ProductGallery({ images, productName }: Props) {
           ))}
         </ul>
 
+        {/* The main frame is a fixed band for the same reason. Switching from
+            the figure to the flat lay used to resize the frame, which moved the
+            thumbnail rail beside it and the record column next to that — the
+            whole page nudged every time someone looked at another picture. */}
         <button
           type="button"
           onClick={() => setZoomed(true)}
-          className="hover-zoom min-w-0 flex-1 cursor-zoom-in overflow-hidden"
+          className="hover-zoom relative min-w-0 flex-1 cursor-zoom-in overflow-hidden"
         >
-          <ImageSlot image={current} sizes="(min-width: 1024px) 45vw, 60vw" priority />
+          <div className="relative h-[78svh] w-full">
+            <ImageSlot
+              image={current}
+              fill
+              sizes="(min-width: 1024px) 45vw, 60vw"
+              priority
+            />
+          </div>
           <span className="visually-hidden">Zoom image of {productName}</span>
         </button>
       </div>

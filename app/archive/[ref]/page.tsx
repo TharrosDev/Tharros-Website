@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import ImageSlot from "@/components/media/ImageSlot";
+import CinematicFrame from "@/components/media/CinematicFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ArchiveLedger from "@/components/archive/ArchiveLedger";
@@ -158,12 +158,22 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
           </dl>
         </div>
 
-        {/* One large frame, given a whole movement of its own. The archive's
-            job is to make someone look closely at a garment they cannot buy. */}
+        {/* One frame, given a whole screen. The archive's job is to make
+            someone look closely at a garment they cannot buy, and nothing else
+            on this page competes with this. */}
         {frames[0] ? (
-          <Reveal className="reveal-frame mt-16 overflow-hidden md:mt-24">
-            <ImageSlot image={frames[0]} ratio="campaign" ratioSm="editorial" sizes="100vw" priority />
-          </Reveal>
+          <CinematicFrame
+            image={frames[0]}
+            priority
+            className="mt-16 md:mt-24"
+            eyebrow={entry.garmentId}
+            caption={product.name}
+            aside={
+              <>
+                <span className="num">{entry.made}</span> made
+              </>
+            }
+          />
         ) : null}
 
         <div className="page-frame rhythm-tight">
@@ -207,17 +217,23 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
         {/* The remaining frames, as a study rather than as a gallery: no
             counter, no thumbnails, nothing to operate. Just the pictures. */}
         {frames.length > 1 ? (
-          <div className="page-frame rhythm-tight">
-            <SectionHeading index={sectionIndex("frames")} label="Frames" title="The rest of it." />
-            <div className="section-lead grid gap-6 md:grid-cols-2 md:gap-10">
+          <div className="rhythm-tight">
+            {/* The opener sits on the page grid; the frames break out of it.
+                A full-bleed frame nested inside `page-frame` is not full-bleed,
+                it is a frame with gutters — so the padding goes on the heading
+                rather than on the section. */}
+            <div className="page-frame">
+              <SectionHeading index={sectionIndex("frames")} label="Frames" title="The rest of it." />
+            </div>
+            <div className="section-lead space-y-16 md:space-y-24">
               {frames.slice(1).map((image, i) => (
-                <Reveal key={image.code} delay={Math.min(i, 4) * 70} className="overflow-hidden">
-                  <ImageSlot
-                    image={image}
-                    ratio="editorial"
-                    sizes="(min-width: 768px) 46vw, 100vw"
-                  />
-                </Reveal>
+                <CinematicFrame
+                  key={image.code}
+                  image={image}
+                  height="half"
+                  eyebrow={String(i + 2).padStart(2, "0")}
+                  caption={image.alt}
+                />
               ))}
             </div>
           </div>

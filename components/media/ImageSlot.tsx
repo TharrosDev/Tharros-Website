@@ -3,6 +3,7 @@ import FillerImage, { FILLER_IMAGES } from "@/components/media/FillerImage";
 import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
 
 const RATIO_CLASS: Record<Ratio, string> = {
+  tall: "ratio-tall",
   portrait: "ratio-portrait",
   editorial: "ratio-editorial",
   campaign: "ratio-campaign",
@@ -19,6 +20,7 @@ const RATIO_CLASS: Record<Ratio, string> = {
  * only sees class names it can find whole in the source.
  */
 const RATIO_CLASS_MD: Record<Ratio, string> = {
+  tall: "md:ratio-tall",
   portrait: "md:ratio-portrait",
   editorial: "md:ratio-editorial",
   campaign: "md:ratio-campaign",
