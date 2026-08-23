@@ -116,6 +116,43 @@ test.describe("bag", () => {
       /^mailto:/,
     );
   });
+
+  test("the order cannot be written once the reply address has been blanked", async ({
+    page,
+  }) => {
+    await page.goto(PIECE);
+    await page.locator("fieldset label").filter({ hasText: /^M$/ }).click();
+    await page.getByRole("button", { name: "Add to bag" }).first().click();
+
+    await page.goto("/checkout");
+    await page.getByLabel("First name", { exact: true }).fill("Test");
+    await page.getByLabel("Last name", { exact: true }).fill("Person");
+    await page.getByLabel("Email", { exact: true }).fill("test@example.com");
+    await page.getByRole("button", { name: /Continue to delivery/ }).click();
+
+    await page.getByLabel("Address", { exact: true }).fill("1 Test Street");
+    await page.getByLabel("City", { exact: true }).fill("Ottawa");
+    await page.getByLabel("Province", { exact: true }).selectOption("ON");
+    await page.getByLabel("Postal code", { exact: true }).fill("K1A 0B1");
+
+    // The step rail walks backwards without validating, which is the whole
+    // point of it. Blanking the email here and stepping forward again lands on
+    // a step whose own checks all pass — and the only artefact this checkout
+    // produces is an email to reply to.
+    await page.getByRole("button", { name: /01 Your details/ }).click();
+    await page.getByLabel("Email", { exact: true }).fill("");
+    await page.getByRole("button", { name: /02 Delivery/ }).click();
+    await expect(page.getByRole("heading", { name: "Where it goes" })).toBeVisible();
+
+    await page.getByRole("link", { name: /Write this order/ }).click();
+
+    // Sent back to the field that is missing, not handed a mailto with nobody
+    // in it. The address above is valid, so only the blanked email can do this.
+    await expect(page.getByRole("heading", { name: "Your details" })).toBeVisible();
+    await expect(
+      page.getByRole("alert").filter({ hasText: "Enter your email address." }),
+    ).toBeVisible();
+  });
 });
 
 test("an empty bag says so at checkout instead of showing a form", async ({ page }) => {

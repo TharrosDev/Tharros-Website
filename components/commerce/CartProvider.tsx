@@ -10,13 +10,12 @@ import {
 } from "react";
 import {
   countOf,
+  purchasableCeiling,
   resolveLines,
   subtotalOf,
-  MAX_LINE_QUANTITY,
   type CartLine,
   type ResolvedLine,
 } from "@/lib/commerce/cart";
-import { getProductById, variantFor } from "@/lib/catalog/queries";
 import { createPersistentStore } from "@/lib/persistent-store";
 import { useHydrated } from "@/lib/hooks";
 import type { Size } from "@/lib/catalog/types";
@@ -97,10 +96,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // `resolveLines` already clamps what is *displayed*, so an over-count was
       // invisible — but it was still written to storage, and it would have come
       // back the moment stock was replenished.
-      const product = getProductById(productId);
-      if (!product) return current;
-      const stock = variantFor(product, size)?.inventory ?? 0;
-      const ceiling = Math.min(stock, MAX_LINE_QUANTITY);
+      const ceiling = purchasableCeiling(productId, size);
       if (ceiling <= 0) return current;
 
       const existing = current.find(
@@ -120,13 +116,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const setQuantity = useCallback((productId: string, size: Size, quantity: number) => {
     bagStore.set((current) => {
-      if (quantity <= 0) {
+      // Stepping to zero removes the line, and so does a size that can no
+      // longer be bought at all. Everything else is held to the same ceiling
+      // `add` uses: the stepper's `max` is display state, and this is storage.
+      const next = Math.min(quantity, purchasableCeiling(productId, size));
+      if (next <= 0) {
         return current.filter(
           (line) => !(line.productId === productId && line.size === size),
         );
       }
       return current.map((line) =>
-        line.productId === productId && line.size === size ? { ...line, quantity } : line,
+        line.productId === productId && line.size === size
+          ? { ...line, quantity: next }
+          : line,
       );
     });
   }, []);

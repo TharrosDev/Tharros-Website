@@ -28,6 +28,24 @@ function lineKey(productId: string, size: Size): string {
 }
 
 /**
+ * Units of a size that may actually be written into a bag: what is on the
+ * shelf, capped by the per-line limit. 0 when the piece or the size is gone.
+ *
+ * Every write to the stored bag goes through this. `add` clamped and
+ * `setQuantity` did not, which left the quantity stepper's `max` as the only
+ * thing holding a line down — and that is display state, recomputed from a
+ * render. A `setQuantity` carrying a larger number (a second tab stepping the
+ * same line, a replayed handler) wrote it straight to storage, where
+ * `resolveLines` would hide it on the way back out and stock replenishment
+ * would hand it back.
+ */
+export function purchasableCeiling(productId: string, size: Size): number {
+  const product = getProductById(productId);
+  if (!product) return 0;
+  return Math.min(variantFor(product, size)?.inventory ?? 0, MAX_LINE_QUANTITY);
+}
+
+/**
  * Drops lines whose product or size no longer exists, or is out of stock, and
  * clamps quantities to what is on hand. Runs on every read, so a bag restored
  * from localStorage months later can never check out something unsellable.
