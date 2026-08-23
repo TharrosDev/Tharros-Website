@@ -429,7 +429,7 @@ export default function FilterBar({
           role="dialog"
           aria-modal="true"
           aria-labelledby="filter-sheet-title"
-          className="overlay-panel overlay-from-below absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto bg-surface"
+          className="overlay-panel overlay-from-below pb-safe absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto bg-surface"
         >
           <div className="flex items-center justify-between border-b border-rule px-6 py-4">
             <h2 id="filter-sheet-title" className="type-meta">

@@ -196,7 +196,7 @@ export default function ProductGallery({ images, productName }: Props) {
             <ImageSlot
               image={current}
               fill
-              sizes="(max-width: 767px) 1px, (min-width: 1024px) 45vw, 60vw"
+              sizes="(max-width: 767px) 1px, (min-width: 1024px) min(45vw, 700px), 60vw"
               priority
             />
           </div>

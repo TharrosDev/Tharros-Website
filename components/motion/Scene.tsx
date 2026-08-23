@@ -143,13 +143,33 @@ export default function Scene({
         media.add(QUERY.motion, build(false));
       }
 
-      // Still. Every layer is placed at the state it ends on, so the
-      // composition is the one the scene was designed around — just without
-      // the travel between. Never an empty or half-built screen.
+      // Still — and still means the state the scene STARTS at, not the one it
+      // ends on.
+      //
+      // This used to place every layer at its `to`, on the reasoning that the
+      // end state is "the composition the scene was designed around". For a
+      // scrubbed scene that is the wrong end of the timeline: `to` is where a
+      // layer sits once the section has been scrolled past, so a reduced-motion
+      // visitor was handed the hero as it looks on the way out. On the home
+      // page that pushed the release record 18% of its own height off the top
+      // of the frame and dropped the h1 on top of it — at 844x390 the record
+      // row was clipped away entirely and "DROP 001 · 7 PIECES" rendered behind
+      // "WHERE IT". The statement section did the same to its own eyebrow.
+      //
+      // A pure-travel step (`to` only) moves a layer away from a resting state
+      // that is already correct, because scenes are authored on content that
+      // reads unaided — so under reduced motion there is nothing to set. A step
+      // that declares `from` is the other case: there the resting state is a
+      // pre-state the scene settles OUT of, and `to` is where it belongs. Only
+      // those are applied.
+      //
+      // CSS pre-states are handled the same way in `globals.css`, where
+      // `.scene-oversize` resolves to `transform: none` under reduced motion.
       media.add(QUERY.reduced, () => {
         for (const step of steps) {
+          if (!step.from || !step.to) continue;
           const targets = layer(step.layer);
-          if (targets.length === 0 || !step.to) continue;
+          if (targets.length === 0) continue;
           const rest = { ...step.to };
           delete rest.duration;
           gsap.set(targets, rest);

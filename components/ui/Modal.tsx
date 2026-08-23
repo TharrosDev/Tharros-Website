@@ -43,7 +43,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="overlay-panel overlay-from-below relative max-h-[88svh] w-full overflow-y-auto bg-surface md:max-h-[80svh] md:w-[min(46rem,92vw)]"
+        className="overlay-panel overlay-from-below pb-safe relative max-h-[88svh] w-full overflow-y-auto bg-surface md:max-h-[80svh] md:w-[min(46rem,92vw)]"
       >
         <div className="flex items-center justify-between border-b border-rule px-6 py-4 md:px-8">
           <h2 id={titleId} className="type-meta">

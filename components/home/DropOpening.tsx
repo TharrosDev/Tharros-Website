@@ -67,7 +67,13 @@ export default function DropOpening() {
   return (
     <Scene
       as="section"
-      className="on-dark relative isolate flex min-h-[100svh] flex-col justify-between overflow-hidden"
+      /* `gap` under `justify-between` is a FLOOR, not a spacing decision: with
+         room to spare the two blocks are pushed to the edges and the gap never
+         applies, and on a landscape phone — where the record, the headline,
+         the ledger, two controls and the worn list add up to nearly twice the
+         viewport — it is the only thing keeping the release record off the top
+         of a 100px headline. */
+      className="on-dark relative isolate flex min-h-[100svh] flex-col justify-between gap-10 overflow-hidden"
       scrub
       start="top top"
       end="bottom top"
@@ -92,17 +98,29 @@ export default function DropOpening() {
       </SceneLayer>
 
       {/* THE TOP BAND. Anchored to the record row and the header above it,
-          ending before the subject. */}
+          ending before the subject.
+
+          `max()` AGAINST A REM FLOOR, because the band is sized by the
+          viewport and the row it protects is sized by the header height and a
+          type ladder — two rulers that agree on a tall screen and part company
+          on a short one. On a landscape phone 38svh is 148px, which puts the
+          transparent end of the gradient exactly where the release record sits,
+          and the row went unreadable wherever the photograph behind it was
+          pale. The floor is roughly twice the row's own depth, so the fade is
+          still dark where the text is. Above about 850px tall the viewport
+          value is the larger of the two and nothing changes. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[38svh] bg-gradient-to-b from-black/70 via-black/35 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[max(20rem,38svh)] bg-gradient-to-b from-black/70 via-black/35 to-transparent"
       />
 
       {/* THE FOOT BAND. Taller, because it carries the statement, the ledger
-          and two controls rather than one line of metadata. */}
+          and two controls rather than one line of metadata — and floored the
+          same way, against the depth of that stack rather than against the
+          screen. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[62svh] bg-gradient-to-t from-black/80 via-black/50 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[max(36rem,62svh)] bg-gradient-to-t from-black/80 via-black/50 to-transparent"
       />
 
       {/* The record of the release, stated once, at the head of the frame. */}

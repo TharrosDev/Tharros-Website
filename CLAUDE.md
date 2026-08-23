@@ -216,8 +216,20 @@ contrast fact, not a preference.
 - The type ladder is `@utility` classes in `globals.css` — `type-colossal` through
   `type-meta`. They support responsive variants (`md:type-display-2`), so a per-breakpoint
   size rarely needs inventing — add a rung rather than a one-off.
-- Structure: `.page-frame`, `.rhythm-tight | -default | -breath`, aspect utilities
-  (`ratio-portrait` etc).
+- **The body rungs carry their own measure.** `type-lead`, `type-body` and `type-body-sm`
+  set a `max-width` from `--measure-lead` / `--measure-body`. Do not restate it at a call
+  site with `max-w-prose` or `max-w-2xl` — both are utilities too, so which one wins is
+  Tailwind's sort order rather than the markup. The values look small because `ch` is the
+  zero glyph and Inter's digits run wide: 55ch measures ~75 characters on this face.
+- Structure: `.page-frame`, `.rhythm-tight | -default | -breath`, `.pb-safe`, aspect
+  utilities (`ratio-portrait` etc).
+- **Two sections on the same surface share one interval.** Each rhythm class pays its
+  padding at both ends, so an abutting pair pays the sum — fine where the surface changes
+  and a hole where it does not. `globals.css` drops the lower section's opening interval
+  on a same-surface join. Nothing to do at a call site; just do not add a compensating
+  margin on top of it.
+- **Anything anchored to the foot of the viewport takes `.pb-safe`** — the panel, not the
+  block inside it. Five surfaces needed it and only `BuyPanel` had it.
 - Buttons: `.btn` + `.btn-solid | -inverse | -outline | -outline-on-dark`. Square, 0
   radius, hover = inversion.
 - Dark sections carry `.on-dark`.

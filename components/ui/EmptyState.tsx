@@ -31,7 +31,7 @@ export default function EmptyState({
   return (
     <Reveal className={`rule-draw pt-10 ${className}`}>
       <p className="type-display-3 uppercase max-w-[18ch]">{title}</p>
-      {body ? <p className="type-body mt-4 max-w-prose text-ink-muted">{body}</p> : null}
+      {body ? <p className="type-body mt-4 text-ink-muted">{body}</p> : null}
       {action || secondary ? (
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
           {action ? (

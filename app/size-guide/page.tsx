@@ -59,12 +59,12 @@ export default function SizeGuidePage() {
             label="Measurements pending"
             title="The numbers come off the production samples, not off a chart."
           >
-            <p className="type-body max-w-prose text-ink-muted">
+            <p className="type-body text-ink-muted">
               Each piece is measured from the sample that was actually made, and
               those measurements are published here before the next drop. Nothing
               is going in this table until then.
             </p>
-            <p className="type-body max-w-prose text-ink-muted">
+            <p className="type-body text-ink-muted">
               In the meantime, every product page carries the fit notes for that
               piece — how it is cut and how it is meant to sit.{" "}
               <Link href="/shop" className="link-rule">
@@ -133,7 +133,7 @@ export default function SizeGuidePage() {
         ))}
 
         {MODEL_FIT_NOTE ? (
-          <p className="type-body max-w-prose text-ink-muted">{MODEL_FIT_NOTE}</p>
+          <p className="type-body text-ink-muted">{MODEL_FIT_NOTE}</p>
         ) : null}
       </div>
 

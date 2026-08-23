@@ -140,7 +140,7 @@ export default function AboutPage() {
                       ratio: "campaign",
                     }}
                     ratioSm="editorial"
-                    sizes="(min-width: 1024px) 80vw, 100vw"
+                    sizes="(min-width: 1024px) min(80vw, 1160px), 100vw"
                   />
                 </Reveal>
               ) : null}

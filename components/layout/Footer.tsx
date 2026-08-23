@@ -96,7 +96,12 @@ export default function Footer() {
           <Reveal mode="frame">
             <WordmarkFit />
           </Reveal>
-          <div className="mt-8 flex flex-col justify-between gap-x-8 gap-y-4 md:flex-row md:items-baseline">
+          {/* `lg`, not `md`. The brand line and the four legal marks need about
+              720px of mono between them, and the frame does not reach that
+              until roughly 1000px — so at 768 the row went sideways and then
+              both halves immediately wrapped, which is two lines of ragged
+              type where the stacked version is two clean ones. */}
+          <div className="mt-8 flex flex-col justify-between gap-x-8 gap-y-4 lg:flex-row lg:items-baseline">
             <p className="type-meta text-ink-on-dark-faint">{BRAND_LINE}</p>
             <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
               {FOOTER_LEGAL.map((link) => (

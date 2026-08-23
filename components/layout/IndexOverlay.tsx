@@ -174,7 +174,7 @@ export default function IndexOverlay({
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      className="overlay-root on-dark fixed inset-0 z-[var(--z-overlay)] flex flex-col overflow-y-auto"
+      className="overlay-root on-dark pb-safe fixed inset-0 z-[var(--z-overlay)] flex flex-col overflow-y-auto"
     >
       {/* THE PICTURE STAGE. Behind the list, inert, and hidden from assistive
           technology — the rows are the content and they name every

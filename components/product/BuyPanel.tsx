@@ -250,10 +250,9 @@ export default function BuyPanel({ product }: { product: Product }) {
           can travel, and stays out of the tab order until it has arrived. */}
       <div
         inert={!addOffScreen}
-        className={`fixed inset-x-0 bottom-0 z-[var(--z-sticky)] border-t border-rule bg-surface/95 backdrop-blur-sm [transition:transform_var(--dur-base)_var(--ease-out-expo)] lg:hidden ${
+        className={`pb-safe fixed inset-x-0 bottom-0 z-[var(--z-sticky)] border-t border-rule bg-surface/95 backdrop-blur-sm [transition:transform_var(--dur-base)_var(--ease-out-expo)] lg:hidden ${
           addOffScreen ? "translate-y-0" : "translate-y-full"
         }`}
-        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="page-frame flex items-center justify-between gap-4 py-3">
           <div className="min-w-0">

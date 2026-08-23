@@ -81,7 +81,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="bag-title"
-        className="overlay-panel overlay-from-right absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-surface"
+        className="overlay-panel overlay-from-right pb-safe absolute inset-y-0 right-0 flex w-full max-w-[30rem] flex-col bg-surface"
       >
         <div className="flex shrink-0 items-center justify-between border-b border-rule px-6 py-4">
           <h2 id="bag-title" className="type-meta">

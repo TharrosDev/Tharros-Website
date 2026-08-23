@@ -153,7 +153,7 @@ export default function DropPage() {
                 <ImageSlot
                   image={NEXT_DROP.cover}
                   ratio="tall"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) min(50vw, 700px), 100vw"
                 />
               </Reveal>
             </div>
