@@ -16,11 +16,11 @@ import NextDrop from "@/components/home/NextDrop";
  *
  *   —   hero            picture     sparse      full viewport
  *   01  the run         paper       dense       the grid
- *   02  statement       pale        sparse      type only
+ *   02  statement       pale        sparse      one frame + type
  *   03  the studio      paper       medium      sticky frame + list
  *   04  the people      picture     full bleed  alternating frames
  *   05  the archive     bone        densest     a ledger, 11px
- *   06  in development  pale        quiet       type + one frame
+ *   06  in development  pale        quiet       type only
  *
  * The archive is the one new movement and the only section on the page that is
  * information rather than atmosphere; it is what stops the sequence reading as
