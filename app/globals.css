@@ -136,9 +136,16 @@
      either side of a black band. They were pitched a step closer together and
      the page read as one continuous column at one density — the intervals now
      sit far enough apart that a pause is legible as a pause. */
-  --rhythm-tight:   clamp(3.5rem, 6vw, 6rem);
-  --rhythm-default: clamp(6rem, 11vw, 11rem);
-  --rhythm-breath:  clamp(9rem, 18vw, 19rem);
+  /* Tightened by about a third across the scale. The intervals were set for a
+     page read as an exhibition, where the space between two bands is part of
+     what is being shown; they made a visitor scroll through a lot of paper to
+     get between one thing and the next. The ladder keeps its proportions —
+     tight, default and breath still read as three distinct intervals — it is
+     the whole scale that steps down, so no section gains or loses emphasis
+     relative to its neighbours. */
+  --rhythm-tight:   clamp(2.5rem, 4vw, 4rem);
+  --rhythm-default: clamp(4rem, 7.5vw, 7.5rem);
+  --rhythm-breath:  clamp(6rem, 12vw, 12.5rem);
 
   /* The interval between a section's opener and the work it opens. One value,
      used everywhere, so the page has a spacing scale rather than a per-section

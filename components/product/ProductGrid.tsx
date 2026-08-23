@@ -1,6 +1,4 @@
 import ProductCard from "./ProductCard";
-import Reveal from "@/components/ui/Reveal";
-import { STAGGER } from "@/lib/motion/config";
 import type { Product } from "@/lib/catalog/types";
 
 type Props = {
@@ -71,29 +69,23 @@ export default function ProductGrid({
       <ul
         className={`grid gap-x-6 gap-y-16 md:gap-x-10 md:gap-y-24 lg:gap-x-14 ${COLUMN_CLASS[columns]} ${hang ? "grid-hang" : ""}`}
       >
-        {/* The grid arrives as a cascade rather than as one slab. The stagger
-            is capped at the first row and a bit: past that the delay stops
-            reading as sequence and starts reading as lag, and a nine-piece
-            grid would have its last card waiting half a second. */}
+        {/* THE CARDS DO NOT MAKE AN ENTRANCE.
+            They arrived as a staggered cascade, each one uncovered as it came
+            into view. That is the right gesture for an editorial band and the
+            wrong one for a grid somebody is shopping: the merchandise is what
+            the visitor came to compare, and an entrance means the thing they
+            are looking for is briefly not there — worse when they scroll fast,
+            which is exactly how a nine-piece grid gets read. The pieces are
+            simply present. The entrances elsewhere on the page are untouched. */}
         {products.map((product, index) => (
-          // `frame` rather than the default fade: a card is mostly photograph,
-          // and a picture that is uncovered has been developed where a picture
-          // that slides up has merely been moved. The priority cards are
-          // `still` — an entrance that starts hidden is an entrance that delays
-          // the largest paint, and on `/shop` the first row is the LCP.
-          <Reveal
-            as="li"
-            key={product.id}
-            mode={index < priorityCount ? "still" : "frame"}
-            delay={Math.min(index, STAGGER.cap) * 70}
-          >
+          <li key={product.id}>
             <ProductCard
               product={product}
               sizes={SIZES[columns]}
               priority={index < priorityCount}
               specimen={specimen}
             />
-          </Reveal>
+          </li>
         ))}
       </ul>
     </>
