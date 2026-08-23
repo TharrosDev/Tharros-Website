@@ -25,8 +25,12 @@ export default function PendingNotice({
   // 3.66:1, both under AA, and a notice is mostly secondary text. Verified by
   // converting the oklch values to linear sRGB and computing the ratio, because
   // Chromium serialises oklch() as lab() and parsing the computed string lies.
+  // Bounded by the measure of the prose it holds, plus its own padding. The
+  // three routes that place it full-frame — checkout, the size guide, the legal
+  // drafts — drew a 1600px ruled box around a 65ch paragraph on a wide screen,
+  // which reads as a box that failed to fill rather than as a notice.
   return (
-    <Reveal className="border border-ink p-8 md:p-10">
+    <Reveal className="max-w-[calc(var(--measure-body)+5rem)] border border-ink p-8 md:p-10">
       <p className="type-meta text-ink-faint">{label}</p>
       <p className="type-display-4 mt-4 max-w-[26ch]">{title}</p>
       {children ? <div className="mt-5 space-y-4">{children}</div> : null}

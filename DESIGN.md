@@ -222,6 +222,28 @@ largest thing on the screen, not a shrunken desktop figure.
 The ladder exists so a size does not have to be invented per breakpoint. Reach for a
 rung first; add a rung if none fits.
 
+### The body rungs carry their own measure
+
+`type-lead`, `type-body` and `type-body-sm` set a `max-width` as well as a size, from
+`--measure-lead` and `--measure-body`. A column's width is decided by the layout; a
+*line's* width is decided by the face, and the two are not the same constraint. Below
+`lg` every editorial grid here collapses to one full-frame column and on an ultra-wide
+screen a twelve-column span is 760px of paper — so the body register ran to 86–92
+characters across the 768–1023 band on eight routes, and the checkout's opening paragraph
+reached 146 at 1920. Six call sites had noticed and reached for `max-w-prose`
+individually; the rest had not.
+
+**The numbers are not the conventional ones, and `ch` is why.** The unit is the width of
+the zero glyph, and Inter's digits run about a quarter wider than its average lowercase
+letter — so the usual 65ch (what `max-w-prose` sets) measures 89 characters on this face.
+`--measure-body: 55ch` lands at ~75 and `--measure-lead: 45ch` at ~61, measured on the
+rendered text rather than assumed. Re-measure if the faces change; the ratio belongs to
+Inter, not to `ch`.
+
+Do not restate the measure at a call site with `max-w-prose` or `max-w-2xl`. Both are
+utilities too, so which of the two won was Tailwind's sort order rather than anything
+readable in the markup.
+
 ---
 
 ## 4. Structure
@@ -233,6 +255,22 @@ rung first; add a rung if none fits.
   intervals and no fourth, pitched far enough apart that a pause reads as a pause —
   `tight` groups two things that belong together, `default` separates sections, `breath`
   is the held beat either side of a black band.
+- **A join between two sections costs one interval, not two.** Every rhythm class pays
+  its interval at both ends, so an abutting pair pays the sum. Where the surface changes
+  that is right and legible — the band edge lands in the middle of the gap and each half
+  belongs to the section it came from. Where the surface does not change there is no edge
+  to see and the sum reads as a hole: the archive and the next drop are both pale and
+  adjacent, and their join measured 417px of unbroken bone at 1440 and 480px at 2560. So
+  a same-surface join drops the lower section's opening interval. Only where that section
+  opens on `default` or `breath` — `tight` is already the interval that says "these
+  belong to each other", and twice tight has never read as a gap.
+- `.pb-safe` puts `env(safe-area-inset-bottom)` on the panels the site anchors to the
+  foot of the viewport — the bag, the filter sheet, the mobile modal, the index, the
+  sticky add-to-bag bar. It goes on the panel and not on the block inside it, so the
+  inset composes with that block's own `py-*` instead of competing with it in the same
+  cascade layer. `.page-frame` does the same on the inline axis with `max()`, which
+  matters only in landscape on a notched phone, where the notch is very nearly as wide as
+  the gutter.
 - `.section-lead` (`--lead-gap`) is the one interval between a section's opener and the
   work it opens. Six sections previously carried their own `mt-10 / mt-12 / mt-14 /
   mt-16`, which is four values for one relationship. Reach for it rather than a margin.
@@ -559,10 +597,26 @@ spinner, which is the same rule the rest of the site follows.
 
 ### Reduced motion is a branch, not a speed
 
-`gsap.matchMedia()` runs a separate context that attaches no ScrollTrigger and
-sets resting states directly. Writing a transform and then zeroing it still
-moves the element for a frame; not writing one is the only version that is
-actually still.
+`gsap.matchMedia()` runs a separate context that attaches no ScrollTrigger.
+Writing a transform and then zeroing it still moves the element for a frame; not
+writing one is the only version that is actually still.
+
+**And still means the state the scene starts at, not the one it ends on.** That
+context used to place every layer at its `to`, on the reasoning that the end
+state is the composition the scene was designed around. For a scrubbed scene it
+is the wrong end of the timeline: `to` is where a layer sits once the section
+has been scrolled past. The home hero handed a reduced-motion visitor its own
+exit — the release record pushed 18% of its height off the top of the frame with
+the h1 dropped on top of it, which at 844x390 clipped the record away entirely.
+The statement did the same to its own eyebrow.
+
+A pure-travel step (`to` only) moves a layer away from a resting state that is
+already correct, because scenes are authored on content that reads unaided — so
+under reduced motion there is nothing to set. A step declaring `from` is the
+other case: there the resting state is a pre-state the scene settles *out* of,
+and `to` is where the layer belongs. Only those are applied. CSS pre-states
+follow the same rule, which is why `.scene-oversize` resolves to
+`transform: none` under reduced motion rather than to `scale(1)` via a tween.
 
 A coarse pointer keeps the motion and loses only what a finger cannot drive —
 hover cinematography — at half the parallax travel, because a

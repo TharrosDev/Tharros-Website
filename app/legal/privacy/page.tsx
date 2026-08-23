@@ -26,7 +26,7 @@ export default function PrivacyPage() {
             label="Working draft"
             title="This has not been through legal review yet."
           >
-            <p className="type-body max-w-prose text-ink-muted">
+            <p className="type-body text-ink-muted">
               It states what THARROS actually intends to do, and it is here so
               nothing about the store is hidden. It is not the final wording, it
               is deliberately left out of search results, and it will be replaced

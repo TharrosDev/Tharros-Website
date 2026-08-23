@@ -42,11 +42,18 @@ export default function ShopFeature() {
             so it is the one that gets to move — the grid below stays square,
             because there the job is scanning. */}
         <Parallax depth="environment" className="min-w-0 md:col-span-7">
+          {/* `priority`, because on the unfiltered view this frame IS the
+              largest contentful paint — it sits above the grid and fills most
+              of the first screen. Without it Next lazy-loads the one image the
+              route is measured on, so the LCP waits for the loader to notice
+              it. It is not inside a `Reveal`, so nothing is hiding it either;
+              the `Parallax` around it only writes a transform. */}
           <ImageSlot
             image={frame.image}
             ratio="campaign"
             ratioSm="editorial"
-            sizes="(min-width: 768px) 58vw, 100vw"
+            priority
+            sizes="(min-width: 768px) min(58vw, 800px), 100vw"
           />
         </Parallax>
 

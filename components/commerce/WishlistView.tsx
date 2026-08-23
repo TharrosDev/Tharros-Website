@@ -10,13 +10,13 @@ export default function WishlistView() {
   if (!ready) {
     // Nothing renders until storage is read — a flash of "empty" would read as
     // data loss to someone with saved pieces.
-    return <div className="min-h-[40vh]" aria-hidden="true" />;
+    return <div className="min-h-[40svh]" aria-hidden="true" />;
   }
 
   if (products.length === 0) {
     return (
       <EmptyState
-        className="min-h-[40vh]"
+        className="min-h-[40svh]"
         title="Nothing saved."
         body="Tap the heart on any piece to keep it here. Saved pieces stay on this device — there is no account to sync them to yet."
         action={{ href: "/shop", label: "Shop the drop" }}

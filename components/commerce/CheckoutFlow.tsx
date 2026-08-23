@@ -322,7 +322,7 @@ export default function CheckoutFlow() {
 
   if (!ready) {
     return (
-      <p className="type-meta min-h-[50vh] text-ink-faint" role="status">
+      <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
         Loading your bag
       </p>
     );

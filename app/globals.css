@@ -197,6 +197,32 @@
   --type-mono-2: clamp(1.5rem, 1rem + 2.2vw, 3rem);
   --type-mono-3: clamp(1rem, 0.9rem + 0.6vw, 1.25rem);
 
+  /* — Measure ——————————————————————————————————
+     A column's width is set by the layout; a LINE's width is set by the face,
+     and the two are not the same constraint. Below `lg` every editorial grid
+     on the site collapses to one full-frame column, and on an ultra-wide
+     screen a twelve-column span is 760px of paper — so the body register ran
+     to 86–92ch across the 768–1023 band on eight routes, and the checkout's
+     opening paragraph reached 146ch at 1920. That is a line the eye loses its
+     place on, at every width where nothing else looks wrong.
+
+     So measure belongs in the type ladder beside line-height and tracking,
+     not at the call site: it is a property of the face at that size, and
+     seven `max-w-prose` classes scattered across eight information pages were
+     the same rule stated seven times and forgotten everywhere else.
+
+     THESE ARE NOT THE CONVENTIONAL NUMBERS, AND `ch` IS WHY. The unit is the
+     width of the zero glyph, and in Inter the digits run about a quarter wider
+     than the average lowercase letter — so the usual 65ch (what Tailwind's
+     `max-w-prose` sets, and what six call sites here were already using)
+     measured 89 characters per line on this face, which is past the far end of
+     comfortable rather than in the middle of it. Measured on the rendered text
+     rather than assumed: 55ch lands at roughly 75 characters and 45ch at
+     roughly 61, which is where a body column and a lead belong. Re-measure if
+     the faces ever change — the ratio is a property of Inter, not of `ch`. */
+  --measure-body: 55ch;
+  --measure-lead: 45ch;
+
   /* The wordmark is the one piece of display type whose size is set by the
      chrome it sits in rather than by the ladder. It had been `text-lg
      md:text-xl` — a hand-rolled per-breakpoint size, which the system forbids
@@ -432,16 +458,19 @@
   line-height: 1.45;
   letter-spacing: -0.011em;
   color: var(--ink-muted);
+  max-width: var(--measure-lead);
 }
 
 @utility type-body {
   font-size: var(--type-body);
   line-height: 1.65;
+  max-width: var(--measure-body);
 }
 
 @utility type-body-sm {
   font-size: var(--type-body-sm);
   line-height: 1.6;
+  max-width: var(--measure-body);
 }
 
 /* The technical layer: product codes, prices, sizes, captions. */
@@ -554,6 +583,30 @@
   aspect-ratio: 1 / 1;
 }
 
+/* ============================================================
+   FOOT-OF-SCREEN CLEARANCE
+   The bottom edge of a phone is not the bottom of the screen. Every surface
+   the site anchors to the foot of the viewport — the bag's totals and its
+   checkout button, the filter sheet, the mobile modal, the index's social row
+   — sat under the home indicator on any device that has one.
+
+   It goes on the PANEL, not on the block inside it. Every one of those panels
+   is `fixed`/`absolute` against the bottom edge and carries no padding of its
+   own, so the inset composes with the block's existing `py-*` instead of
+   competing with it — two utilities both setting `padding-bottom` land in the
+   same cascade layer, and which one wins is Tailwind's sort order rather than
+   anything readable at the call site. On a flex-column panel it shortens the
+   column and lifts the footer; on a scrolling one it becomes end padding.
+
+   `env()` resolves to 0 everywhere else, so this is inert on a desktop and on
+   a phone with no indicator. `BuyPanel` already did it with an inline style;
+   it uses this now, so the rule has one owner.
+   ============================================================ */
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @layer components {
   /* ============================================================
      LAYOUT
@@ -563,7 +616,15 @@
     width: 100%;
     max-width: var(--frame-max);
     margin-inline: auto;
-    padding-inline: var(--gutter);
+    /* `max()` against the device insets rather than the gutter alone. It
+       changes nothing on a desktop or on a phone held upright, where both
+       insets are zero — it matters in landscape on a notched phone, where the
+       notch eats 44px of one edge and the gutter is only just wider than that.
+       The frame is used inside the fullscreen overlays as well as on the page,
+       and those have no chrome of their own to hold content clear. */
+    padding-inline:
+      max(var(--gutter), env(safe-area-inset-left))
+      max(var(--gutter), env(safe-area-inset-right));
   }
 
   /* Clearance for the fixed header. Five surfaces carried their own
@@ -606,6 +667,31 @@
 
   .rhythm-breath {
     padding-block: var(--rhythm-breath);
+  }
+
+  /* A JOIN BETWEEN TWO SECTIONS COSTS ONE INTERVAL, NOT TWO.
+     Every rhythm class pays its interval at both ends, so where two sections
+     abut, the gap between them is the sum of the two. Where the surface
+     changes that is correct and legible: the band edge lands in the middle of
+     the gap, and each half plainly belongs to the section it came from.
+
+     Where the surface does NOT change there is no edge to see, and the sum
+     reads as a void rather than as a pause. On the home page the archive and
+     the next drop are both pale and adjacent, so their join measured 417px of
+     unbroken bone at 1440 and 480px at 2560 — a hole in the page with nothing
+     in it to explain itself. The studio and the people did the same on paper,
+     at 316px.
+
+     So on a same-surface join the lower section drops its own opening interval
+     and the one above carries the whole thing. Only where the lower section
+     opens on `default` or `breath`: a `tight` join is already the interval
+     that says "these two belong to each other", and 2 x tight has never been
+     large enough to read as a gap — the product record stacks four of them. */
+  section:not(.on-pale, .on-dark, .on-light)
+    + section:where(.rhythm-default, .rhythm-breath):not(.on-pale, .on-dark, .on-light),
+  section.on-pale + section.on-pale:where(.rhythm-default, .rhythm-breath),
+  section.on-dark + section.on-dark:where(.rhythm-default, .rhythm-breath) {
+    padding-block-start: 0;
   }
 
   /* ============================================================

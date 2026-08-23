@@ -32,10 +32,25 @@ const COLUMN_CLASS: Record<2 | 3 | 4, string> = {
   4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
 };
 
+/* THE FRAME STOPS GROWING AND `vw` DOES NOT.
+   `.page-frame` caps at `--frame-max`, so above roughly 1824px the content
+   width is fixed at 1376 while every `vw` term keeps climbing with the screen.
+   A bare `33vw` therefore claims 845px on a 2560 monitor for a card that is
+   measured at 421 — two steps up Next's width ladder, and on a 2x display the
+   difference is a 1920px source fetched where an 828 would do.
+
+   `min()` is the whole fix: below the cap the viewport term still wins and
+   nothing changes, above it the pixel ceiling takes over. The ceilings are the
+   measured box at 2560 rounded up, not guesses. Only the widest branch needs
+   one — the narrower breakpoints all sit below the cap, where `vw` is right.
+
+   The full-bleed rails in `OnBody` and `InFrames` deliberately keep bare `vw`:
+   they break the frame with `-mx-gutter`, so their items really are a share of
+   the viewport. Verified — those two measure exactly what they declare. */
 const SIZES: Record<2 | 3 | 4, string> = {
-  2: "(min-width: 640px) 50vw, 100vw",
-  3: "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
-  4: "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw",
+  2: "(min-width: 640px) min(50vw, 680px), 100vw",
+  3: "(min-width: 1024px) min(33vw, 440px), (min-width: 640px) 50vw, 100vw",
+  4: "(min-width: 1024px) min(25vw, 320px), (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw",
 };
 
 export default function ProductGrid({

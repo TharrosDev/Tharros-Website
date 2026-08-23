@@ -45,7 +45,7 @@ export default function ProcessSection() {
               }}
               ratio="portrait"
               ratioSm="tall"
-              sizes="(min-width: 1024px) 48vw, 100vw"
+              sizes="(min-width: 1024px) min(48vw, 680px), 100vw"
             />
           </Reveal>
 

@@ -75,7 +75,7 @@ export default function PageIntro({
         );
       })()}
 
-      {lead ? <p className="type-lead mt-8 max-w-2xl">{lead}</p> : null}
+      {lead ? <p className="type-lead mt-8">{lead}</p> : null}
 
       {children}
     </div>

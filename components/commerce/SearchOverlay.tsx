@@ -99,7 +99,7 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="search-title"
-      className="overlay-root fixed inset-0 z-[var(--z-overlay)] overflow-y-auto bg-surface"
+      className="overlay-root pb-safe fixed inset-0 z-[var(--z-overlay)] overflow-y-auto bg-surface"
     >
       <div className="page-frame">
         <div
@@ -244,7 +244,7 @@ export default function SearchOverlay({ open, onClose, hasOpened }: Props) {
                         <div className="hover-zoom overflow-hidden">
                           <ImageSlot
                             image={thumbnailImage(product)}
-                            sizes="(min-width: 1024px) 20vw, 45vw"
+                            sizes="(min-width: 1024px) min(20vw, 260px), 45vw"
                           />
                         </div>
                         <p className="type-body-sm mt-3 font-medium">

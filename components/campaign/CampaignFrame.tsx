@@ -139,7 +139,7 @@ export default function CampaignFrame({
             image={frame.image}
             ratio={ratio}
             ratioSm={ratioSm}
-            sizes="(min-width: 768px) 66vw, 100vw"
+            sizes="(min-width: 768px) min(66vw, 920px), 100vw"
             priority={priority}
           />
           {markers}
