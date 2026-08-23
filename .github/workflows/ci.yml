@@ -35,3 +35,37 @@ jobs:
       - run: npm run lint
 
       - run: npm run build
+
+      # The assert-based checks in lib/. They cover the postal patterns and the
+      # cents-to-currency rounding — two pieces of logic that fail silently —
+      # and the workflow was not running them at all.
+      - run: npm test
+
+  e2e:
+    name: End to end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Only the two engines the suite declares. `--with-deps` installs the
+      # system libraries WebKit needs on a bare runner.
+      - run: npx playwright install --with-deps chromium webkit
+
+      # The suite builds and serves the site itself — see playwright.config.ts.
+      - run: npm run e2e
+
+      - uses: actions/upload-artifact@v4
+        # The report is only worth keeping when something went wrong, and it is
+        # the only way to see a trace from a run nobody was watching.
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
