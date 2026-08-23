@@ -7,7 +7,6 @@ import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
 import MotionRuntime from "@/components/motion/MotionRuntime";
 import RouteCurtain from "@/components/motion/RouteCurtain";
-import Cursor from "@/components/motion/Cursor";
 import EntrySequence from "@/components/motion/EntrySequence";
 import CartDrawer from "@/components/commerce/CartDrawer";
 import {
@@ -193,7 +192,6 @@ export default function RootLayout({
         <Providers>
           <MotionRuntime />
           <RouteCurtain />
-          <Cursor />
           <EntrySequence />
           <Header />
           {/* `tabIndex={-1}` so the skip link actually moves focus rather than

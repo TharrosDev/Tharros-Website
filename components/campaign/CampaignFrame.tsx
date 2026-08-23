@@ -83,7 +83,6 @@ export default function CampaignFrame({
             phone measures the viewport it actually has rather than the tallest
             one it could have. */}
         <div
-          data-cursor-mode="frame"
           className="relative h-[86svh] w-full overflow-hidden"
         >
           <ImageSlot image={frame.image} fill sizes="100vw" priority={priority} />
@@ -135,7 +134,6 @@ export default function CampaignFrame({
         <Parallax
           depth="subject"
           className="relative max-h-[78svh] overflow-hidden"
-          cursorMode="frame"
         >
           <ImageSlot
             image={frame.image}

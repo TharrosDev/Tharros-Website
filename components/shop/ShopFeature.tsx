@@ -41,7 +41,7 @@ export default function ShopFeature() {
             one picture on the shop that is a photograph rather than a product,
             so it is the one that gets to move — the grid below stays square,
             because there the job is scanning. */}
-        <Parallax depth="environment" className="min-w-0 md:col-span-7" cursorMode="frame">
+        <Parallax depth="environment" className="min-w-0 md:col-span-7">
           <ImageSlot
             image={frame.image}
             ratio="campaign"

@@ -213,7 +213,6 @@ export default function IndexOverlay({
           type="button"
           onClick={onClose}
           tabIndex={open ? undefined : -1}
-          data-cursor-mode="link"
           className="-mr-3 inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
         >
           <CloseIcon />
@@ -247,7 +246,6 @@ export default function IndexOverlay({
                     onClick={onClose}
                     tabIndex={open ? undefined : -1}
                     aria-current={active ? "page" : undefined}
-                    data-cursor-mode="link"
                     // Centred, not baseline-aligned: an 11px index sitting on
                     // the baseline of display type reads as belonging to the
                     // rule below it rather than to its own row.

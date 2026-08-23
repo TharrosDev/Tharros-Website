@@ -158,7 +158,6 @@ export default function ProductGallery({ images, productName }: Props) {
                 type="button"
                 onClick={() => setActive(index)}
                 aria-current={index === active ? "true" : undefined}
-                data-cursor-mode="link"
                 // The active frame is marked with a rule, not with opacity. On
                 // a site whose entire language is hairlines, signalling state
                 // by fading everything else was the one place that forgot it.
@@ -191,8 +190,6 @@ export default function ProductGallery({ images, productName }: Props) {
             setZoomUsed(true);
             setZoomed(true);
           }}
-          data-cursor-mode="zoom"
-          data-cursor-label="Zoom"
           className="hover-zoom relative min-w-0 flex-1 cursor-zoom-in overflow-hidden"
         >
           <div ref={mainRef} className="relative h-[78svh] w-full">

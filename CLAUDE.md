@@ -225,8 +225,10 @@ contrast fact, not a preference.
   masks only. That is the direction in the code today, not a constraint on what
   can be asked for.
 - **Motion is a primary instrument now, not a garnish.** The site opens on a
-  full-screen frame with a camera push, holds two pinned scenes on `/`, cuts
-  between routes with a curtain, and carries a custom pointer. `DESIGN.md` §6
+  full-screen frame with a camera push, holds two pinned scenes on `/`, and
+  cuts between routes with a curtain. The pointer is the system cursor —
+  a custom one was built and then removed, and it is not to come back.
+  `DESIGN.md` §6
   is the whole system; the parts that are not taste are the pin budget, the LCP
   exclusions, the magnetics deny-list, and the rule that nothing may be hidden
   in the served HTML that only JavaScript can bring back.
@@ -288,10 +290,15 @@ rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so 
   `globals.css` behind `[data-js]` (see `.scene-oversize`).
 - **Author a pinned section unpinned first.** The pin goes on top of a DOM that
   already reads, which is what keeps the reduced-motion and no-JS paths whole.
-- Hyphenated JSX attributes (`data-cursor-mode`) typecheck on ANY component
+- Hyphenated JSX attributes (`data-whatever`) typecheck on ANY component
   whether or not it forwards them, so they are silently dropped on custom
-  components. Declare a real prop instead — `Parallax` takes `cursorMode` for
-  exactly this reason.
+  components with no error anywhere. Declare a real prop instead.
+- **A `Reveal` mode must never clip the element `Reveal` observes.** The
+  entrance waits on an IntersectionObserver, and an element clipped to no area
+  reports `isIntersecting: false` forever — it hides itself, which stops it
+  being seen, which stops it being shown. `.reveal-frame` and `.reveal-wipe`
+  clip `> *` for exactly this reason. Verified: the same node jumps from
+  `ratio: 0` to `ratio: 0.725` the instant its own clip-path is removed.
 
 ---
 

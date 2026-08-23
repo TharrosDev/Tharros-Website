@@ -32,19 +32,11 @@ export default function Parallax({
   children,
   depth = "subject",
   className = "",
-  cursorMode,
   as = "div",
 }: {
   children: React.ReactNode;
   depth?: Depth;
   className?: string;
-  /**
-   * Declared explicitly rather than spread from `...rest`. A hyphenated JSX
-   * attribute passes TypeScript on ANY component whether or not the component
-   * forwards it, so `data-cursor-mode` written at a call site would have been
-   * silently dropped here with no error anywhere.
-   */
-  cursorMode?: string;
   as?: "div" | "figure" | "span" | "p";
 }) {
   const Tag = as as React.ElementType;
@@ -84,7 +76,7 @@ export default function Parallax({
   );
 
   return (
-    <Tag ref={ref} className={className} data-cursor-mode={cursorMode}>
+    <Tag ref={ref} className={className}>
       {children}
     </Tag>
   );

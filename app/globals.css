@@ -130,11 +130,6 @@
   --travel-reveal: 1.75rem;
   --travel-scene:  4rem;
 
-  /* The custom cursor. Sized in one place so the ring, the dot and the label
-     cannot drift apart. */
-  --cursor-size: 2.5rem;
-  --cursor-dot: 0.375rem;
-
   /* — Vertical rhythm ———————————————————————————
      Three intervals and no fourth. `tight` groups two things that belong to
      each other, `default` separates sections, `breath` is the held pause
@@ -179,9 +174,6 @@
      navigation away from it. */
   --z-entry:   95;
   --z-skip:    100;
-  /* Above everything, including the skip link: the pointer is drawn on top of
-     whatever it is pointing at, and it never intercepts a click. */
-  --z-cursor:  120;
 
   /* — Type scale ————————————————————————————————
      Fluid clamps. Never hand-roll a per-breakpoint size. */
@@ -1144,101 +1136,6 @@
     }
   }
 
-  /* ——— THE POINTER ——————————————————————————————————
-     A dot that tracks exactly and a ring that lags behind it. Both start
-     invisible and are faded in by `Cursor.tsx` on the first real pointer
-     movement, so nothing is drawn on a page nobody is pointing at.
-
-     `cursor: none` is gated on `[data-cursor="1"]`, which that component sets
-     only after GSAP has loaded AND a pointer has moved. Putting it in static
-     CSS would leave a site with no pointer at all whenever the bundle fails —
-     the worst failure this feature can have, and the easiest to avoid.
-
-     Both elements are `fixed` at the origin and moved with transforms, never
-     with `left`/`top`: a pointer that repaints the document on every mouse
-     move is a pointer that makes the whole site feel slow. */
-  .cursor-root {
-    position: fixed;
-    inset: 0;
-    z-index: var(--z-cursor);
-    pointer-events: none;
-  }
-
-  .cursor-dot,
-  .cursor-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    border-radius: 50%;
-    /* Centred on the pointer rather than hanging below and right of it. */
-    margin-left: calc(var(--cursor-dot) / -2);
-    margin-top: calc(var(--cursor-dot) / -2);
-    will-change: transform;
-  }
-
-  .cursor-dot {
-    width: var(--cursor-dot);
-    height: var(--cursor-dot);
-    background: var(--ink);
-  }
-
-  .cursor-ring {
-    width: var(--cursor-size);
-    height: var(--cursor-size);
-    margin-left: calc(var(--cursor-size) / -2);
-    margin-top: calc(var(--cursor-size) / -2);
-    border: 1px solid var(--ink);
-    display: grid;
-    place-items: center;
-    transition: border-color var(--dur-fast) var(--ease-out-quart);
-  }
-
-  /* Over a picture the ring is paper, not ink — the same inversion every
-     other element on this site makes when it lands on a dark surface. */
-  .cursor-ring[data-mode="frame"],
-  .cursor-ring[data-mode="zoom"] {
-    border-color: var(--ink-on-dark);
-    background: color-mix(in oklab, var(--black) 22%, transparent);
-  }
-
-  /* The label rides inside the ring and counter-scales, so a word set in an
-     element that has been scaled 2.4x is still 11px on screen rather than
-     26px. */
-  .cursor-label {
-    color: var(--ink-on-dark);
-    white-space: nowrap;
-    transform: scale(0.42);
-  }
-
-  [data-cursor="1"],
-  [data-cursor="1"] a,
-  [data-cursor="1"] button,
-  [data-cursor="1"] [role="button"] {
-    cursor: none;
-  }
-
-  /* A text caret is information, not decoration — it says where typing will
-     go. It is never replaced. */
-  [data-cursor="1"] input,
-  [data-cursor="1"] textarea,
-  [data-cursor="1"] select {
-    cursor: auto;
-  }
-
-  @media (pointer: coarse) {
-    .cursor-root {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cursor-root {
-      display: none;
-    }
-  }
-
   /* THE DEAD-MAN SWITCH.
      `[data-js]` promises that nothing is hidden when scripting is absent. It
      does not cover the case where scripting is *present at first paint and
@@ -1252,7 +1149,11 @@
      lands on the root, and every entrance is forced to its resting state.
      Roughly three seconds of a hidden section is the cost; a permanently
      blank page is what it buys off. */
-  [data-motion="off"] .reveal {
+  /* `> *` as well as the element: the clipping modes hide the children now, so
+     forcing only the host to its resting state would leave the content
+     clipped — which is the blank page this switch exists to prevent. */
+  [data-motion="off"] .reveal,
+  [data-motion="off"] .reveal > * {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
@@ -1528,20 +1429,35 @@
      the frame both wipes and slides and reads as two effects fighting. Same
      shape as `.rule-draw`, which is likewise only meaningful in combination
      with `.reveal`. Put it anywhere else and it is inert, not broken. */
+  /* THE CLIP GOES ON THE CHILDREN, NOT ON THE OBSERVED ELEMENT.
+     `Reveal` waits for an IntersectionObserver to report the element on
+     screen, and an element clipped to `inset(0 0 100% 0)` has no area — so
+     the observer reports `isIntersecting: false, ratio: 0` forever and the
+     class that would uncover it is never added. The element hides itself,
+     which stops it being seen, which stops it being shown: every product card
+     on the site stayed blank. Verified directly — the same node reports
+     `ratio: 0.725` the instant its own clip-path is removed.
+     Clipping `> *` breaks the cycle with no extra DOM and no layout change.
+     A wrapper element would have been the other fix, and it silently breaks
+     the `space-y-*` and grid utilities several call sites pass as
+     `className` — those target the children this component is given. */
   [data-js] .reveal.reveal-frame {
     opacity: 1;
     transform: none;
+  }
+
+  [data-js] .reveal.reveal-frame > * {
     clip-path: inset(0 0 100% 0);
     transition: clip-path var(--dur-frame) var(--ease-out-expo) var(--reveal-delay, 0ms);
   }
 
-  [data-js] .reveal.reveal-frame.reveal-in {
+  [data-js] .reveal.reveal-frame.reveal-in > * {
     clip-path: inset(0 0 0 0);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-js] .reveal.reveal-frame,
-    [data-js] .reveal.reveal-frame.reveal-in {
+    [data-js] .reveal.reveal-frame > *,
+    [data-js] .reveal.reveal-frame.reveal-in > * {
       clip-path: none;
       transition: none;
     }
@@ -1572,14 +1488,19 @@
      `--reveal-delay` is shared with `.rule-draw` and `.run-ledger`, so a
      frame can be staggered with the rule that labels it. */
 
+  /* Clipped on the children for the same reason as `.reveal-frame` above: a
+     clip-path with no area is invisible to the observer that would lift it. */
   [data-js] .reveal.reveal-wipe {
     opacity: 1;
     transform: none;
+  }
+
+  [data-js] .reveal.reveal-wipe > * {
     clip-path: inset(0 100% 0 0);
     transition: clip-path var(--dur-frame) var(--ease-out-expo) var(--reveal-delay, 0ms);
   }
 
-  [data-js] .reveal.reveal-wipe.reveal-in {
+  [data-js] .reveal.reveal-wipe.reveal-in > * {
     clip-path: inset(0 0 0 0);
   }
 

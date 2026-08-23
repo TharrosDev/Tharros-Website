@@ -52,7 +52,6 @@ export default function CinematicFrame({
           that starts hidden is an entrance that delays the largest paint. */}
       {priority ? (
         <div
-          data-cursor-mode="frame"
           className={`relative w-full overflow-hidden ${band}`}
         >
           <ImageSlot image={image} fill priority sizes="100vw" />

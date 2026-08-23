@@ -79,8 +79,6 @@ export default function ProductCard({
         <Link
           href={`/shop/${product.slug}`}
           className="block overflow-hidden"
-          data-cursor-mode="frame"
-          data-cursor-label="View"
         >
           <div className="hover-zoom">
             <ImageSlot image={primary} sizes={sizes} priority={priority} />

@@ -467,10 +467,11 @@ for — but the overhaul makes it load-bearing rather than incidental.
   navigation once the new route has rendered — covering first would mean
   intercepting every `Link` click and losing streaming, back/forward and scroll
   restoration.
-- **The pointer** (`Cursor`) is a dot that tracks exactly and a ring that lags
-  behind it. `cursor: none` is gated on `[data-cursor="1"]`, written only after
-  GSAP has loaded and a pointer has moved; in static CSS it would leave a site
-  with no pointer at all whenever the bundle fails.
+- **The pointer is the system cursor.** A custom one — a tracking dot and a
+  lagging ring, with per-surface modes — was built and then removed at the
+  owner's direction. Nothing replaces it: the native cursor is what the site
+  uses, and `cursor` is only ever set to the standard keywords the platform
+  already understands (`pointer`, `not-allowed`, `zoom-in`).
 - **Hover cinematography** in `IndexOverlay`: each destination has a frame in
   `NAV_FRAMES` (`lib/catalog/images.ts`), and pointing at a row brings its
   picture up. Keyboard focus drives it identically, so it is not a pointer-only
@@ -564,7 +565,7 @@ moves the element for a frame; not writing one is the only version that is
 actually still.
 
 A coarse pointer keeps the motion and loses only what a finger cannot drive —
-hover cinematography and the cursor — at half the parallax travel, because a
+hover cinematography — at half the parallax travel, because a
 thumb scrolls faster than a wheel. Switching motion off there would leave the
 site with none at all on the device most people meet it on.
 

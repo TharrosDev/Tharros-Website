@@ -46,8 +46,6 @@ export default function InFrames({
           >
             <Link
               href={frame.href}
-              data-cursor-mode="frame"
-              data-cursor-label="View"
               className="hover-zoom block overflow-hidden"
             >
               <ImageSlot
