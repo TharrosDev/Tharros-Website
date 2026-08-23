@@ -3,31 +3,67 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import ImageSlot from "@/components/media/ImageSlot";
 import Wordmark from "@/components/ui/Wordmark";
 import { CloseIcon, SearchIcon } from "@/components/ui/icons";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import { NAV_INDEX, SOCIAL } from "@/lib/site";
+import { NAV_FRAMES } from "@/lib/catalog/images";
 import { CURRENT_DROP, NEXT_DROP } from "@/lib/catalog/drops";
+import { loadMotion } from "@/lib/motion/registry";
+import { prefersReducedMotion } from "@/lib/motion/media";
+import { DUR, EASE, STAGGER } from "@/lib/motion/config";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   onSearch: () => void;
   savedCount: number;
+  /** Latched by the header the first time the menu is opened. */
+  hasOpened: boolean;
 };
 
 /**
- * The site index. One navigation surface at every breakpoint rather than a
- * desktop bar and a separate mobile drawer — the label has five destinations,
- * and a numbered index states that plainly instead of dressing it as a store
- * menu.
+ * The site index, as a scene rather than a list of links.
+ *
+ * One navigation surface at every breakpoint rather than a desktop bar and a
+ * separate mobile drawer — the label has five destinations, and a numbered
+ * index states that plainly instead of dressing it as a store menu.
+ *
+ * WHAT MAKES IT A SCENE. Behind the list sits a stack of frames, one per
+ * destination. Pointing at a row brings its frame up and drops the other rows
+ * back, so the menu says what each place *is* rather than only naming it —
+ * Shop is the drop on a body, Archive is a close study of cloth. It is the one
+ * piece of navigation on the site that is also photography.
+ *
+ * THREE THINGS THAT KEEP IT HONEST:
+ *
+ * 1. **Keyboard drives it identically.** `focusin` runs the same code as
+ *    `pointerover`, so this is not a pointer-only feature and a tabbing
+ *    visitor sees the same cinematography.
+ * 2. **No React state.** Hover is delegated to two listeners on the list which
+ *    write straight to GSAP. A `setState` per hovered row would re-render the
+ *    whole overlay on every pointer move across it.
+ * 3. **The frames do not load until the menu has been opened once.** This
+ *    overlay is mounted on every route; four full-bleed pictures behind it
+ *    would be four requests on every page for a surface most visitors never
+ *    open. `hasOpened` is latched by the header, the same way `SearchOverlay`
+ *    already defers its body.
  *
  * Search leads deliberately: taking it out of the header costs discovery, so
  * it is the first thing here and also answers the "/" shortcut.
  */
-export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Props) {
+export default function IndexOverlay({
+  open,
+  onClose,
+  onSearch,
+  savedCount,
+  hasOpened,
+}: Props) {
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   useLockBodyScroll(open);
   useEscape(open, onClose);
@@ -39,6 +75,98 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  // The choreography: rows stagger in on open, and the frame stack answers
+  // whichever row is being pointed at or focused.
+  useEffect(() => {
+    if (!open || prefersReducedMotion()) return;
+
+    const list = listRef.current;
+    const stage = stageRef.current;
+    if (!list) return;
+
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
+
+    loadMotion().then(({ gsap }) => {
+      if (cancelled || !listRef.current) return;
+
+      const rows = Array.from(list.querySelectorAll<HTMLElement>("[data-nav-row]"));
+      const frames = stage
+        ? Array.from(stage.querySelectorAll<HTMLElement>("[data-nav-frame]"))
+        : [];
+
+      const context = gsap.context(() => {
+        gsap.from(rows, {
+          yPercent: 60,
+          autoAlpha: 0,
+          duration: DUR.reveal,
+          ease: EASE.expo,
+          stagger: STAGGER.base,
+        });
+      }, list);
+
+      const show = (href: string | null) => {
+        for (const frame of frames) {
+          const active = frame.dataset.navFrame === href;
+          gsap.to(frame, {
+            autoAlpha: active ? 1 : 0,
+            scale: active ? 1 : 1.06,
+            duration: DUR.slow,
+            ease: EASE.out,
+            overwrite: "auto",
+          });
+        }
+        for (const row of rows) {
+          const dim = href !== null && row.dataset.navRow !== href;
+          gsap.to(row, {
+            opacity: dim ? 0.35 : 1,
+            duration: DUR.base,
+            ease: EASE.out,
+            overwrite: "auto",
+          });
+        }
+      };
+
+      const onEnter = (event: Event) => {
+        const target = event.target as Element | null;
+        const row = target?.closest?.("[data-nav-row]") as HTMLElement | null;
+        if (row) show(row.dataset.navRow ?? null);
+      };
+
+      const onLeaveList = () => show(null);
+
+      // Focus leaving the list clears the stage; focus moving between two rows
+      // inside it does not.
+      const onFocusOut = (event: FocusEvent) => {
+        const next = event.relatedTarget as Node | null;
+        if (!next || !list.contains(next)) onLeaveList();
+      };
+
+      list.addEventListener("pointerover", onEnter);
+      list.addEventListener("focusin", onEnter);
+      list.addEventListener("pointerleave", onLeaveList);
+      list.addEventListener("focusout", onFocusOut);
+
+      teardown = () => {
+        list.removeEventListener("pointerover", onEnter);
+        list.removeEventListener("focusin", onEnter);
+        list.removeEventListener("pointerleave", onLeaveList);
+        list.removeEventListener("focusout", onFocusOut);
+        context.revert();
+        // The frames keep whatever opacity the last hover left them at, and
+        // the overlay stays mounted — so they are reset rather than left
+        // holding a picture the next open would fade out of.
+        gsap.set(frames, { clearProps: "all" });
+        gsap.set(rows, { clearProps: "opacity" });
+      };
+    });
+
+    return () => {
+      cancelled = true;
+      teardown?.();
+    };
+  }, [open]);
+
   return (
     <div
       ref={panelRef}
@@ -48,6 +176,34 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
       aria-label="Site navigation"
       className="overlay-root on-dark fixed inset-0 z-[var(--z-overlay)] flex flex-col overflow-y-auto"
     >
+      {/* THE PICTURE STAGE. Behind the list, inert, and hidden from assistive
+          technology — the rows are the content and they name every
+          destination in words. `md` and up only: on a phone the list fills the
+          screen and a picture behind it is a picture nobody can see. */}
+      {hasOpened ? (
+        <div
+          ref={stageRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-1/2 md:block"
+        >
+          {NAV_INDEX.map((item) =>
+            NAV_FRAMES[item.href] ? (
+              <div
+                key={item.href}
+                data-nav-frame={item.href}
+                className="absolute inset-0 opacity-0 [mask-image:linear-gradient(to_right,transparent,black_38%)]"
+              >
+                <ImageSlot
+                  image={NAV_FRAMES[item.href]}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 1px"
+                />
+              </div>
+            ) : null,
+          )}
+        </div>
+      ) : null}
+
       <div
         className="page-frame flex shrink-0 items-center justify-between"
         style={{ height: "var(--header-h)" }}
@@ -57,6 +213,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
           type="button"
           onClick={onClose}
           tabIndex={open ? undefined : -1}
+          data-cursor-mode="link"
           className="-mr-3 inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
         >
           <CloseIcon />
@@ -75,17 +232,22 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
         </div>
 
         <nav aria-label="Site navigation" className="mt-10">
-          <ul>
+          <ul ref={listRef}>
             {NAV_INDEX.map((item, index) => {
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
-                <li key={item.href} className="border-b border-rule-on-dark">
+                <li
+                  key={item.href}
+                  data-nav-row={item.href}
+                  className="border-b border-rule-on-dark"
+                >
                   <Link
                     href={item.href}
                     onClick={onClose}
                     tabIndex={open ? undefined : -1}
                     aria-current={active ? "page" : undefined}
+                    data-cursor-mode="link"
                     // Centred, not baseline-aligned: an 11px index sitting on
                     // the baseline of display type reads as belonging to the
                     // rule below it rather than to its own row.
@@ -94,7 +256,7 @@ export default function IndexOverlay({ open, onClose, onSearch, savedCount }: Pr
                     <span className="num type-meta text-ink-on-dark-faint">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="type-display-3 uppercase transition-opacity group-hover:opacity-60 md:type-display-2">
+                    <span className="type-display-3 uppercase transition-transform duration-500 ease-out group-hover:translate-x-3 md:type-display-2">
                       {item.name}
                     </span>
                     {active ? (

@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ImageSlot from "@/components/media/ImageSlot";
 import Modal from "@/components/ui/Modal";
+import { loadMotion } from "@/lib/motion/registry";
+import { prefersReducedMotion } from "@/lib/motion/media";
+import { DUR, EASE } from "@/lib/motion/config";
 import type { ImageSlotData } from "@/lib/catalog/types";
 
 type Props = {
@@ -28,6 +31,49 @@ export default function ProductGallery({ images, productName }: Props) {
   const total = String(images.length).padStart(2, "0");
 
   const current = images[active] ?? images[0];
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLUListElement>(null);
+
+  // The main frame is uncovered when the selection changes, rather than being
+  // swapped under the visitor. The frame itself never moves — it is a fixed
+  // band — so this is a picture being changed inside a window, which is the
+  // same idea as the frame wipe everywhere else on the site.
+  //
+  // Keyed on `active` and driven straight to the node: no state is set here,
+  // so changing pictures costs one render for the selection and nothing else.
+  useEffect(() => {
+    const node = mainRef.current;
+    if (!node || prefersReducedMotion()) return;
+
+    let cancelled = false;
+    loadMotion().then(({ gsap }) => {
+      if (cancelled || !mainRef.current) return;
+      gsap.fromTo(
+        node,
+        { clipPath: "inset(0 0 100% 0)" },
+        { clipPath: "inset(0 0 0% 0)", duration: DUR.slow, ease: EASE.expo },
+      );
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [active]);
+
+  // Left and right move through the rail. A thumbnail list that can only be
+  // operated by tabbing to each button in turn is a list, not a control — and
+  // roving focus is what a picture chooser is expected to do.
+  const onRailKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const step = event.key === "ArrowRight" ? 1 : -1;
+    const next = (active + step + images.length) % images.length;
+    setActive(next);
+    railRef.current
+      ?.querySelectorAll<HTMLButtonElement>("button")
+      [next]?.focus();
+  };
 
   return (
     <>
@@ -88,13 +134,18 @@ export default function ProductGallery({ images, productName }: Props) {
 
       {/* Desktop: thumbnail rail plus a click-to-zoom main frame. */}
       <div className="hidden gap-4 md:flex">
-        <ul className="flex w-20 shrink-0 flex-col gap-3">
+        <ul
+          ref={railRef}
+          onKeyDown={onRailKeyDown}
+          className="flex w-20 shrink-0 flex-col gap-3"
+        >
           {images.map((image, index) => (
             <li key={image.code}>
               <button
                 type="button"
                 onClick={() => setActive(index)}
                 aria-current={index === active ? "true" : undefined}
+                data-cursor-mode="link"
                 // The active frame is marked with a rule, not with opacity. On
                 // a site whose entire language is hairlines, signalling state
                 // by fading everything else was the one place that forgot it.
@@ -127,9 +178,11 @@ export default function ProductGallery({ images, productName }: Props) {
             setZoomUsed(true);
             setZoomed(true);
           }}
+          data-cursor-mode="zoom"
+          data-cursor-label="Zoom"
           className="hover-zoom relative min-w-0 flex-1 cursor-zoom-in overflow-hidden"
         >
-          <div className="relative h-[78svh] w-full">
+          <div ref={mainRef} className="relative h-[78svh] w-full">
             <ImageSlot
               image={current}
               fill

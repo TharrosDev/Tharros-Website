@@ -57,11 +57,20 @@ export default function Header() {
   const { ids, ready: wishlistReady } = useWishlist();
 
   const [indexOpen, setIndexOpen] = useState(false);
+  // Latched the first time the menu is opened, so its four destination frames
+  // stay out of every route's HTML until someone actually wants them. Set in
+  // the handler rather than in an effect, because that is where it belongs.
+  const [indexUsed, setIndexUsed] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   // Latched the first time search is opened, so its body is kept out of the
   // HTML of every route until someone actually wants it. Set here rather than
   // inside the overlay because it belongs in an event handler, not an effect.
   const [searchUsed, setSearchUsed] = useState(false);
+
+  const openIndex = () => {
+    setIndexUsed(true);
+    setIndexOpen(true);
+  };
 
   const openSearch = () => {
     setSearchUsed(true);
@@ -108,29 +117,29 @@ export default function Header() {
           floating, so it vanished the instant the page passed 24px — the colour
           transitioned and the picture behind the header did not.
 
-          THE CHROME IS LIGHT ON EVERY ROUTE. It used to invert over the hero:
-          `on-dark`, paper ink, and a black gradient down from the top edge to
-          hold it off the photograph. That was necessary while the hero was a
-          full-bleed picture with type laid over it. The hero keeps its picture
-          to one side now, so the header sits on the page rather than on the
-          image, and a black band across the top of a light site was the one
-          piece of chrome still arguing with the ground.
+          THE CHROME INVERTS OVER THE HERO. It was light on every route for a
+          while, which was correct while the opening screen kept its picture to
+          one side and the header sat on paper. The hero is a full-bleed
+          photograph again, so dark ink on it is unreadable at any weight, and
+          the chrome goes back to paper ink over a gradient held off the top
+          edge. On every other route it is light, as before.
 
-          What floats is the ground, not the ink: a paper wash with no rule,
-          fading up into a solid plate with one once the page has moved. */}
+          What changes is the ground AND the ink, and both cross-fade: two
+          grounds that are always present, one fading out as the other fades
+          in. Swapping the class string outright means the gradient ceases to
+          exist at the threshold rather than leaving. */}
       <header
-        className="fixed inset-x-0 top-0 z-[var(--z-header)] text-ink [transition:color_var(--dur-base)_var(--ease-out-quart)]"
+        className={`fixed inset-x-0 top-0 z-[var(--z-header)] [transition:color_var(--dur-base)_var(--ease-out-quart)] ${
+          floating ? "on-dark" : "text-ink"
+        }`}
       >
         <span
           aria-hidden="true"
-          /* Solid paper for the header's own height, then a fade. The ink is
-             dark now, and on the home page the hero photograph runs to the top
-             edge — on a phone it is directly behind the wordmark. A gentle
-             wash that was already half transparent at 36px left dark type on a
-             picture, which is the same legibility failure the old dark scrim
-             existed to prevent, just inverted. The fade starts below the
-             controls and ends before the picture is dimmed. */
-          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-[var(--paper)] from-45% via-[var(--paper)]/75 to-transparent [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
+          /* The scrim that holds paper ink off the photograph. Strongest for
+             the header's own height, then a fade that ends well before the
+             subject of the picture — the hero's own top band carries on from
+             here, and between them nothing dims the middle of the frame. */
+          className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black/75 via-black/40 to-transparent [transition:opacity_var(--dur-base)_var(--ease-out-quart)] ${
             floating ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -188,7 +197,7 @@ export default function Header() {
 
             <MenuButton
               open={indexOpen}
-              onOpen={() => setIndexOpen(true)}
+              onOpen={openIndex}
               className="-ml-2 inline-flex md:hidden"
             />
           </div>
@@ -262,7 +271,7 @@ export default function Header() {
                 who has ever looked for navigation was looking for a menu. */}
             <MenuButton
               open={indexOpen}
-              onOpen={() => setIndexOpen(true)}
+              onOpen={openIndex}
               className="hidden md:inline-flex"
             />
 
@@ -298,6 +307,7 @@ export default function Header() {
         onClose={() => setIndexOpen(false)}
         onSearch={openSearch}
         savedCount={savedCount}
+        hasOpened={indexUsed}
       />
       <SearchOverlay
         open={searchOpen}

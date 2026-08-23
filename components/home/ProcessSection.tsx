@@ -35,7 +35,7 @@ export default function ProcessSection() {
         <div className="section-lead grid gap-x-12 gap-y-14 lg:grid-cols-12">
           {/* Bounded, per the sticky rule: on a short screen it scrolls its own
               overflow rather than hiding its own bottom off the viewport. */}
-          <Reveal className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
+          <Reveal mode="mask" className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
             <ImageSlot
               image={{
                 code: "PRC-01",

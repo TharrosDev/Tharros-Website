@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
+import SplitLines from "@/components/motion/SplitLines";
+import Magnetic from "@/components/motion/Magnetic";
 import { NEXT_DROP } from "@/lib/catalog/drops";
 
 /**
@@ -31,27 +33,35 @@ export default function NextDrop() {
         </Reveal>
 
         {/* Same interval as SectionHeading's title, hand-rolled because this
-            opener carries a state mark rather than a link. */}
-        <h2 className="type-display-2 mt-10 max-w-[16ch] md:mt-12">
-          {NEXT_DROP.statement}
-        </h2>
+            opener carries a state mark rather than a link.
+
+            Split, because this is the last statement on the page and the one
+            the visitor leaves on. The home page spends the gesture twice: on
+            what the label is (02) and on what is coming (06). */}
+        <SplitLines
+          as="h2"
+          text={NEXT_DROP.statement}
+          className="type-display-2 mt-10 max-w-[16ch] md:mt-12"
+        />
 
         <div className="section-lead grid gap-x-12 gap-y-8 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-6">
+          <Reveal mode="wipe" className="space-y-5 lg:col-span-6">
             {NEXT_DROP.body.map((paragraph) => (
               <p key={paragraph} className="type-body text-ink-muted">
                 {paragraph}
               </p>
             ))}
-          </div>
+          </Reveal>
 
           <div className="lg:col-span-5 lg:col-start-8">
             <p className="type-meta text-ink-faint">
               No release date is published until there is one.
             </p>
-            <Link href="/drop" className="btn btn-outline mt-8">
-              Follow the build
-            </Link>
+            <Magnetic className="mt-8">
+              <Link href="/drop" className="btn btn-outline">
+                Follow the build
+              </Link>
+            </Magnetic>
           </div>
         </div>
       </div>

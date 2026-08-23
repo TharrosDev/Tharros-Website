@@ -57,6 +57,7 @@ export default function ArchivePage() {
         index="01"
         label="The record"
         title="Archive"
+        split
         lead="Every piece made so far, in the order it was made. A finished run is not removed from here — it is what the label has actually done."
         crumbs={[{ name: "Home", href: "/" }]}
       >

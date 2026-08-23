@@ -1,4 +1,5 @@
 import Reveal from "@/components/ui/Reveal";
+import Parallax from "@/components/motion/Parallax";
 
 export type InfoSection = {
   index: string;
@@ -18,6 +19,13 @@ export type InfoSection = {
  * The rule draws itself here for the same reason it does everywhere else: five
  * of the site's routes opened on five static borders, which is the one place
  * the entrance gesture was completely absent.
+ *
+ * THIS FILE IS THE MOTION FOR EIGHT ROUTES. The five information pages and the
+ * three legal drafts all render through it, so the section index drifting
+ * against its prose is what stops the support layer reading as a different,
+ * flatter website than the one it supports. It is the shallowest rung on the
+ * depth ladder on purpose — these pages are read, and a heading that swims
+ * beside the paragraph it labels is a heading in the way.
  */
 export default function InfoSections({ sections }: { sections: InfoSection[] }) {
   return (
@@ -33,12 +41,15 @@ export default function InfoSections({ sections }: { sections: InfoSection[] }) 
                 it is a correct but static rule, which is the bug this file had
                 in the first place. */}
             <Reveal className="rule-draw pt-4 lg:col-span-3" delay={i * 60}>
-              <p className="eyebrow">
-                <span className="num">{section.index}</span>
-              </p>
-              <h2 className="type-display-4 mt-4">{section.title}</h2>
+              <Parallax depth="background">
+                <p className="eyebrow">
+                  <span className="num">{section.index}</span>
+                </p>
+                <h2 className="type-display-4 mt-4">{section.title}</h2>
+              </Parallax>
             </Reveal>
             <Reveal
+              mode="wipe"
               className="space-y-5 lg:col-span-7 lg:col-start-5 lg:pt-4"
               delay={i * 60 + 90}
             >

@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
+import Parallax from "@/components/motion/Parallax";
 import PageIntro from "@/components/layout/PageIntro";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { SITE_URL } from "@/lib/site";
@@ -95,11 +96,12 @@ export default function AboutPage() {
         index="01"
         label="The label"
         title="Built from the ground up."
+        split
         lead="An independent streetwear label making small runs of original pieces — designed, patterned and sampled in-house, then made in numbers small enough to count."
         crumbs={[{ name: "Home", href: "/" }]}
       />
 
-      <Reveal className="section-lead">
+      <Reveal mode="mask" className="section-lead">
         <ImageSlot
           image={{
             code: "ABT-01",
@@ -126,7 +128,10 @@ export default function AboutPage() {
                   somewhere to breathe — and so the label's own page shows the
                   people it keeps talking about. */}
               {index === 3 ? (
-                <Reveal className="lg:col-span-10 lg:col-start-2">
+                <Reveal
+                  mode="frame"
+                  className="lg:col-span-10 lg:col-start-2"
+                >
                   <ImageSlot
                     image={{
                       code: "ABT-02",
@@ -154,10 +159,17 @@ export default function AboutPage() {
               >
                 <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
                   <Reveal className="rule-draw pt-4 md:col-span-3">
-                    <p className="eyebrow">
-                      <span className="num">{chapter.index}</span>
-                    </p>
-                    <h2 className="type-display-4 mt-4">{chapter.title}</h2>
+                    {/* The chapter numeral and its title drift against the
+                        prose beside them — the shallowest rung, because this
+                        column is read rather than looked at. Same gesture the
+                        information set uses, so About and the support pages
+                        move the same way. */}
+                    <Parallax depth="background">
+                      <p className="eyebrow">
+                        <span className="num">{chapter.index}</span>
+                      </p>
+                      <h2 className="type-display-4 mt-4">{chapter.title}</h2>
+                    </Parallax>
                   </Reveal>
                   <Reveal className="space-y-5 md:col-span-9" delay={90}>
                     {chapter.body.map((paragraph) => (

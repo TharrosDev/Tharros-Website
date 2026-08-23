@@ -65,6 +65,7 @@ export default function DropPage() {
             : "In development"
         }
         title={CURRENT_DROP.name}
+        split
         lead={CURRENT_DROP.statement}
       >
         {/* Real numbers, straight from the catalogue. Nothing here is a

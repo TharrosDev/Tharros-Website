@@ -66,7 +66,12 @@ export default function ProductCard({
           the heart and every quick-add size button — so keyboard focus went
           invisible on the one surface with the most focusable controls. */}
       <div className="relative">
-        <Link href={`/shop/${product.slug}`} className="block overflow-hidden">
+        <Link
+          href={`/shop/${product.slug}`}
+          className="block overflow-hidden"
+          data-cursor-mode="frame"
+          data-cursor-label="View"
+        >
           <div className="hover-zoom">
             <ImageSlot image={primary} sizes={sizes} priority={priority} />
           </div>

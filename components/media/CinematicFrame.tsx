@@ -51,11 +51,17 @@ export default function CinematicFrame({
       {/* Not wrapped in `Reveal` when it is the priority frame: an entrance
           that starts hidden is an entrance that delays the largest paint. */}
       {priority ? (
-        <div className={`relative w-full overflow-hidden ${band}`}>
+        <div
+          data-cursor-mode="frame"
+          className={`relative w-full overflow-hidden ${band}`}
+        >
           <ImageSlot image={image} fill priority sizes="100vw" />
         </div>
       ) : (
-        <Reveal className={`reveal-frame relative w-full overflow-hidden ${band}`}>
+        <Reveal
+          mode="frame"
+          className={`relative w-full overflow-hidden ${band}`}
+        >
           <ImageSlot image={image} fill sizes="100vw" />
         </Reveal>
       )}

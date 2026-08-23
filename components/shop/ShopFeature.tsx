@@ -2,6 +2,7 @@ import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import WornList from "@/components/campaign/WornList";
 import Reveal from "@/components/ui/Reveal";
+import Parallax from "@/components/motion/Parallax";
 import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { listProducts } from "@/lib/catalog/queries";
@@ -36,14 +37,18 @@ export default function ShopFeature() {
             its content, so the horizontally scrolling rail below sized the track
             to its own max-content and pushed the page 6px wider than the phone.
             The rail is meant to scroll, not to set the layout. */}
-        <div className="min-w-0 md:col-span-7">
+        {/* The feature frame drifts against the record beside it. It is the
+            one picture on the shop that is a photograph rather than a product,
+            so it is the one that gets to move — the grid below stays square,
+            because there the job is scanning. */}
+        <Parallax depth="environment" className="min-w-0 md:col-span-7" cursorMode="frame">
           <ImageSlot
             image={frame.image}
             ratio="campaign"
             ratioSm="editorial"
             sizes="(min-width: 768px) 58vw, 100vw"
           />
-        </div>
+        </Parallax>
 
         <div className="flex min-w-0 flex-col md:col-span-4 md:col-start-9">
           <Reveal className="rule-draw pt-4">

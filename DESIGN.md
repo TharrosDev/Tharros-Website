@@ -21,12 +21,25 @@ it says so. Everything else is taste, and the taste is not yours.
 THARROS is a fashion label, not a software product. The site is built to read as a
 campaign you can buy from, not a catalogue with a brand banner on top.
 
-Four preferences that have resolved most conflicts so far:
+The site is built to be moved through rather than read down. It opens on a
+frame that takes the whole screen, holds on the sentence that says what the
+label is, stops on one photograph in the campaign, and closes on the mark. That
+is a sequence, not a stack of sections, and §6 is how it is built.
+
+Five preferences that have resolved most conflicts so far:
 
 1. Between more features and a premium aesthetic — the aesthetic has won.
 2. Between louder and more sophisticated — sophistication has won.
 3. Between more UI and more breathing room — breathing room has won.
 4. Between generic ecommerce and editorial fashion — editorial has won.
+5. Between a still page and a page with a camera in it — the camera has won.
+
+The fifth is new, and it reverses what this document used to say. Motion was
+previously spent only where it was invisible as an effect; it is now a primary
+instrument. What has NOT changed is that it is spent deliberately — the budgets
+in §6 exist because a site where everything moves emphasises nothing, which is
+the same failure the old restraint was guarding against, arrived at from the
+other direction.
 
 Currently unused, and unused on purpose rather than by accident: gradients as decoration,
 glassmorphism, rounded cards, drop shadows, pill buttons, emoji, icon-card grids,
@@ -64,10 +77,18 @@ second ground — the pale band that replaced almost every black one. At 90% it 
 at 94.5% it is a change of paper. It also cleared a real defect: `--ink-faint` reads 4.79:1
 on it, where the old bone gave 3.66:1 and forced `PendingNotice` to avoid bone entirely.
 
-**One black band survives, and it is the footer.** The page used to alternate paper with
-full-viewport near-black: a black statement, a black next-drop, a black footer. Three of
-those in one scroll is not rhythm, it is a site that keeps switching the lights off. The
-contrast comes from type scale now, which is what the display ladder was built for.
+**Two dark surfaces, and they bracket the page.** The home page opens on a
+full-bleed photograph carrying its own scrim bands and closes on the near-black
+footer; everything between them is paper and bone. The page used to alternate
+the two all the way down — a black statement, a black next-drop, a black footer
+— and three of those in one scroll is not rhythm, it is a site that keeps
+switching the lights off. Between the brackets the contrast comes from type
+scale, which is what the display ladder was built for.
+
+The hero is a photograph rather than a painted band, so the dark there is the
+picture, not a fill. What sits on it is held off by two anchored gradients —
+never a flat wash across the whole frame, which would dim the middle third
+where the subject is and where no type ever goes. See §7.
 
 Semantic aliases (`--surface`, `--ink`, `--ink-muted`, `--rule`, `--rule-on-dark`, …) are
 what components actually reference. Recolour through the aliases, never the ramp.
@@ -366,74 +387,203 @@ right, name and price sit below the frame in a single row.
 
 ## 6. Motion
 
-Slow, flat, intentional. Nothing bounces or overshoots.
+Deliberate, and now cinematic. Nothing overshoots and nothing bounces — the
+scale of a gesture carries the drama, not its springiness.
 
-- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-slow` 620ms (zoom),
-  `--dur-reveal` 900ms (scroll entrance). There was a `--dur-page` 480ms for route
-  changes; nothing referenced it and there is no route-change indicator, so a token that
-  described a transition the site does not have has been removed rather than kept as a
-  promise.
-- Easing: `--ease-out-quart`, `--ease-out-expo`, `--ease-ledger` (the rule draw).
-- **The ledger rule** (`.rule-draw`) is the site's entrance gesture: a hairline that draws
-  itself left to right across the top of a section, so the rule and whatever sits on it — a
-  mono index, a count — arrive together. Combined with `Reveal`, which supplies the
-  `reveal-in` class. A section fades; a rule is ruled.
-- `Reveal` adds a class on intersection rather than removing one, and its hidden state is
-  scoped to `[data-js]` — an attribute the root layout sets before first paint. If scripting
-  is blocked or the bundle fails, content is never hidden to begin with. Both halves are
-  required: the class-adding alone would still strand `opacity: 0` in the SSR HTML.
-- **The travelling numeral** (`ParallaxNumeral`) is the second gesture: a frame's mono
-  index drifts about 40px against the picture it labels as the frame crosses the viewport.
-  Typographic, monochrome, and the only motion allowed on top of imagery. On a coarse
-  pointer it travels half as far rather than not at all — switching it off there left the
-  site with no motion whatsoever on the device most people meet it on.
-- **The staggered ledger** is the third: `Reveal`'s `delay` cascades a grid or a rail so it
-  arrives as a sequence of rules rather than as one slab. Capped at about five steps —
-  past that the delay stops reading as sequence and starts reading as lag. The delay is
-  published as `--reveal-delay` as well as an inline `transition-delay`, because a
-  pseudo-element cannot see the inline one and the rule would otherwise arrive early.
-- **Cross-fade, never swap.** The header's floating → solid change is two grounds that are
-  both always present, one fading out as the other fades in. Swapping the whole class
-  string means the gradient simply ceases to exist at the threshold, which is what it used
-  to do: the colour transitioned and the picture behind the header did not.
-- Everything is disabled under `prefers-reduced-motion`.
+This section used to open "slow, flat, intentional" and end with a subsection
+headed **No animation library**. Both have been replaced. The site runs a scene
+system on GSAP now, and the restraint that governed it has moved from *how much
+motion exists* to *where the motion is spent*.
 
-### No animation library
+- Durations: `--dur-fast` 180ms (hover), `--dur-base` 320ms, `--dur-slow` 620ms
+  (zoom), `--dur-reveal` 900ms (scroll entrance), `--dur-frame` 1200ms (a frame
+  uncovering), `--dur-cinematic` 1600ms (scene and route changes).
+- Easing: `--ease-out-quart`, `--ease-out-expo`, `--ease-ledger` (the rule
+  draw), `--ease-in-out` (two-way moves — the curtain).
+- **The same ladder exists in seconds** in `lib/motion/config.ts`, which is what
+  GSAP reads. A hover lasting 180ms in CSS and 200ms in a tween reads as two
+  different sites, so both files hold the same numbers and both say so.
 
-There is no animation dependency, and adding one needs to clear a bar this project has
-already tested. `motion` was added for the travelling numeral and removed again: scoped as
-tightly as it goes — `LazyMotion` with `domAnimation` and `m` rather than `motion` — it
-still measured **38kB gzipped**, loaded on `/`, `/drop` and `/lookbook`, for a 40px drift.
+### The stack
 
-The argument for it was that scroll-linked position is the one thing CSS cannot do
-portably while `scroll-timeline` has a Safari gap, and that hand-rolling it means a scroll
-listener driving `setState` — a render cascade the React Compiler rejects. The first half
-is true; the second was not. `ParallaxNumeral` writes the transform **straight to the
-node**, so React never re-renders and there is no state to cascade. An `IntersectionObserver`
-keeps the scroll handler idle while the element is off screen, and a single
-`requestAnimationFrame` coalesces the work.
+**GSAP 3.15**, with ScrollTrigger, Flip and SplitText. All of them are free
+under the standard licence as of 3.13.
 
-The pattern, for any future scroll-linked effect:
+It is **dynamically imported**. `lib/motion/registry.ts` loads it once after
+hydration and shares the promise. The motion runtime mounts in the root layout,
+so a static import would put ~62 kB gzipped into the shared chunk and serve it
+on `/legal/privacy`. Verified absent from `rootMainFiles` after every build — if
+GSAP ever appears there, something imported it statically.
 
-- A `"use client"` leaf, `useRef` + `useEffect`, no state.
-- Bail before attaching anything under `prefers-reduced-motion`, so no transform is ever
-  *written* rather than written and zeroed. A coarse pointer halves the travel rather than
-  bailing: switching motion off there left the site with none at all on the device most
-  people meet it on.
-- Clean up the listener, the observer, the pending frame **and the inline transform**.
-- Nothing in the served HTML: the effect runs after hydration, so SSR output is untouched.
+`@gsap/react` is deliberately **not** used. `useGSAP` is a good hook, but it
+imports gsap statically, which defeats the arrangement above. The part of it
+worth having is twenty lines and lives in `lib/motion/use-scene.ts`.
 
-Presence animation likewise stays in CSS. `FrameHotspots`' label was a state toggle inside
-`AnimatePresence`; hover and focus are things CSS already knows, so `group-hover` /
-`group-focus-visible` do it with no state, no bundle, and no client component at all.
+The cost of loading late, stated plainly: scenes set up a frame or two after
+paint rather than during it. Everything in the next section follows from that.
 
-**Currently kept in CSS rather than a library** — converting `Reveal` to any library's
-`whileInView` (it would lose the `[data-js]` guarantee that nothing is hidden in the SSR HTML when scripting fails, and
-the shared observer is cheaper than one per element); the overlays, which keep their
-`[data-open]` CSS transitions; `.rule-draw`, `.hover-zoom`, `.link-rule`, `.btn`,
-`.bag-count`; and route transitions, which would force a client boundary at the layout root.
+### The rule that makes it safe
 
----
+**Nothing may be hidden in the served HTML that only JavaScript can bring
+back.** This predates the scene system — it is what `[data-js]` has always been
+for — but the overhaul makes it load-bearing rather than incidental.
+
+- A pre-state a scene animates *away* from goes in `globals.css` behind
+  `[data-js]` (see `.scene-oversize`), never in a `gsap.from()`. A `from` that
+  hides content shows it, removes it, then brings it back.
+- **The dead-man switch** covers the case `[data-js]` never did: scripting
+  present at first paint and then failing. The head script arms a 3.5s timer,
+  `MotionRuntime` clears it on boot, and if the runtime never arrives the timer
+  sets `data-motion="off"` and forces every entrance to its resting state. Test
+  it by blocking `/_next/static/chunks/*` and loading `/`.
+- **Author every pinned section unpinned first.** The pin goes on top of a DOM
+  that already reads. That is what makes the reduced-motion and no-JS paths a
+  real site rather than a broken one, and it is a review gate, not an intention.
+
+### The gestures
+
+- **The ledger rule** (`.rule-draw`) is still the site's entrance: a hairline
+  drawing itself across the top of a section so the rule and its index arrive
+  together. A section fades; a rule is ruled.
+- **The reveal modes.** `Reveal` is unchanged in machinery — one shared
+  IntersectionObserver, `[data-js]`-gated, class added and never removed — and
+  gained a `mode`: `fade`, `frame`, `wipe`, `mask`, `rise`, `scale`, `still`.
+  One entrance repeated down a page is the tell of generated animation, so the
+  mode is chosen for the content. `still` lets a call site opt out and keep its
+  slot in a stagger.
+- **The scene** (`components/motion/Scene.tsx`) is the new primitive: a
+  declarative timeline over named layers, scrubbed against scroll and
+  optionally pinned. Choreography is data, so a scene can be re-timed without
+  unpicking an imperative timeline — forty hand-rolled timelines is the
+  spaghetti this component exists to prevent.
+- **Depth** (`Parallax`) travels as a fraction of the element's own height, off
+  a five-rung ladder in `config.ts`. A background at 2% and a foreground at 16%
+  describe a space; six hand-picked values describe nothing.
+- **Split lines** (`SplitLines`) set display type a line at a time out of a
+  mask. The loudest typographic gesture in the system: at most twice per route,
+  never on body copy, never in checkout.
+- **The cut** (`RouteCurtain`) is an ink plane that lifts off each new route. It
+  *uncovers* rather than covers, because the App Router only announces a
+  navigation once the new route has rendered — covering first would mean
+  intercepting every `Link` click and losing streaming, back/forward and scroll
+  restoration.
+- **The pointer** (`Cursor`) is a dot that tracks exactly and a ring that lags
+  behind it. `cursor: none` is gated on `[data-cursor="1"]`, written only after
+  GSAP has loaded and a pointer has moved; in static CSS it would leave a site
+  with no pointer at all whenever the bundle fails.
+- **Hover cinematography** in `IndexOverlay`: each destination has a frame in
+  `NAV_FRAMES` (`lib/catalog/images.ts`), and pointing at a row brings its
+  picture up. Keyboard focus drives it identically, so it is not a pointer-only
+  feature. The frames are latched behind a first-open flag — four full-bleed
+  pictures on every route, for a surface most visitors never open, is four
+  wasted requests per page.
+- **The travelling numeral** (`ParallaxNumeral`) survives unchanged. It is
+  px-based and hand-rolled where `Parallax` is percentage-based and GSAP-driven;
+  small type and whole frames want different units. Reach for `Parallax` for
+  anything with a picture in it.
+
+### The budgets
+
+These are not taste. They are what stops the system eating the site.
+
+- **Two pinned ScrollTriggers per route, never nested.** `/` spends its two on
+  the statement and on the campaign's one full-bleed frame. Three pinned frames
+  in a row is a corridor with no way out.
+- **Never pin, scrub or entrance the LCP element.** The home `h1`, the first row
+  of `/shop` (`priorityCount`), the lead gallery frame. `ProductGrid` sets
+  `mode="still"` on its priority cards for exactly this reason.
+- **Transform, opacity and clip-path only** on anything scrubbed. `mask-image`
+  is the one exception, and it is profiled.
+- **No magnetics in a purchase or data-entry path.** A hit target that moves as
+  you approach it is a target you can miss, and missing it in checkout costs
+  someone an order. Not in `BuyPanel`, `CheckoutFlow`, `QuantityStepper`,
+  `CartDrawer`, `FilterBar`, `SizeGuideModal`, the quick-add size chips, or any
+  `.field`.
+- **`/checkout` is the quietest route on the site**, deliberately. Spectacle in
+  a payment flow reads as a site more interested in itself than in your order —
+  and the payment is not connected, which the page says out loud.
+
+### Why there is no image continuity between routes
+
+The brief asked for a product card's picture to expand into the product page's
+hero. It is not built, and the reason is worth recording so it is not
+re-attempted blindly.
+
+Cross-route image continuity wants the View Transitions API, driven by React's
+`<ViewTransition>` component behind Next's `experimental.viewTransition` flag.
+The flag is accepted by Next 16.2.6 and the build passes — but
+`unstable_ViewTransition` is not exported from stable React 19.2.4. It lives in
+React's experimental channel. Turning it on therefore means moving a working
+commerce build onto React experimental, which is not a trade this site should
+make before it has launched.
+
+There is also a straight conflict. **The curtain and image continuity cannot
+both run.** A plane that covers the viewport on navigation hides exactly the
+continuity a view transition exists to show. Whichever ships, the other has to
+go, and the curtain is the one that works on every navigation rather than only
+on the card-to-product path.
+
+If this is revisited: remove `RouteCurtain` first, then check whether
+`ViewTransition` has reached the stable React channel. The naming helpers and
+the duplicate-name hazard are the real work — `view-transition-name` must be
+unique per document, and `/shop/[slug]` renders a related-products grid that
+can legitimately contain the card you arrived from.
+
+### The pin is conditional on width
+
+`Scene` builds a pinned scene twice: held above `64rem`, and scrubbed without
+the hold below it (`QUERY.wide` / `QUERY.narrow` in `lib/motion/media.ts`). A
+phone's viewport changes height as the browser chrome collapses mid-scroll, so
+a pin there is a section measured against a moving ruler. Below `lg` the
+choreography is identical and only the hold is dropped.
+
+The complement is written as an explicit `max-width` rather than composed as
+`and not (...)`. That form is Media Queries Level 4, and `matchMedia` silently
+never matches where it is unsupported — which would drop the unpinned branch on
+exactly the devices that need it.
+
+### The opening title is CSS
+
+`EntrySequence` is keyframes, not a timeline. It is armed by the head script —
+home page, first view of the session, no reduced-motion preference — and those
+conditions are checked before first paint so a repeat visit never flashes a
+curtain that an effect then removes.
+
+It is deliberately not GSAP. A sequence driven by a library that arrives on a
+promise is a sequence that can fail to arrive, and the failure mode is a
+full-bleed plane over the site with nothing left to lift it. The animation ends
+in `visibility: hidden` with `forwards`, so the screen clears whether or not a
+single line of JavaScript runs. It states the real drop number rather than a
+spinner, which is the same rule the rest of the site follows.
+
+### Reduced motion is a branch, not a speed
+
+`gsap.matchMedia()` runs a separate context that attaches no ScrollTrigger and
+sets resting states directly. Writing a transform and then zeroing it still
+moves the element for a frame; not writing one is the only version that is
+actually still.
+
+A coarse pointer keeps the motion and loses only what a finger cannot drive —
+hover cinematography and the cursor — at half the parallax travel, because a
+thumb scrolls faster than a wheel. Switching motion off there would leave the
+site with none at all on the device most people meet it on.
+
+### Three foundation fixes the scene system required
+
+All three were latent bugs that only manifest once pins exist, and all three are
+in `globals.css`:
+
+- `body` was `overflow-x: hidden`, which forces the other axis to compute as
+  `overflow-y: auto` and quietly makes `body` its own scroll container. Pins
+  then measure against a container that is not the one scrolling, and break
+  intermittently in a way that looks like a library bug. It is `clip` now — the
+  same fix `.overlay-root` already used.
+- `html` was `scroll-behavior: smooth`, which fights a scrubbed timeline on any
+  in-page jump. It is `auto`; `scroll-padding-top` still offsets anchors.
+- `html` gained `scrollbar-gutter: stable`, so an overlay's scroll lock no
+  longer removes the scrollbar, widens the viewport, and invalidates every
+  pinned measurement at the moment a drawer opens.
+
 
 ## 7. Imagery
 

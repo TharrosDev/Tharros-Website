@@ -38,7 +38,7 @@ export default function TheArchive() {
           action={{ href: "/archive", label: "All garments" }}
         />
 
-        <Reveal delay={60} className="section-lead">
+        <Reveal mode="wipe" delay={60} className="section-lead">
           <p className="type-body max-w-xl text-ink-muted">
             A finished run is not removed from the site. It stays here with the number it
             closed at, because what the label has made is a more useful thing to be able to

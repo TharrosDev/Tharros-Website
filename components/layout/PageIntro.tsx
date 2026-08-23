@@ -1,4 +1,5 @@
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
+import SplitLines from "@/components/motion/SplitLines";
 
 type Props = {
   index: string;
@@ -16,6 +17,13 @@ type Props = {
    * one page whose job is to show the clothes.
    */
   titleClass?: string;
+  /**
+   * Set the title a line at a time. Off for the routes whose h1 is the largest
+   * paint — the shop's first grid row sits under it — and off where the title
+   * is a customer's own search term, which is not a statement and should not
+   * perform like one.
+   */
+  split?: boolean;
 };
 
 /**
@@ -32,6 +40,7 @@ export default function PageIntro({
   children,
   compact = false,
   titleClass,
+  split = false,
 }: Props) {
   return (
     <div
@@ -52,16 +61,19 @@ export default function PageIntro({
           display-3 the same value is a hard wrap, which the shop's search view
           hits every time — its title is a quoted query, and a query is as long
           as someone typed. */}
-      <h1
+      {(() => {
         // `break-words` because one page title is a customer's own search
         // term. Display type at 6rem with an unbroken 400-character token
         // paints straight out of its column otherwise.
-        className={`${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-10 break-words md:mt-12 ${
+        const headingClass = `${titleClass ?? (compact ? "type-display-3" : "type-display-1")} mt-10 break-words md:mt-12 ${
           titleClass || compact ? "max-w-[22ch]" : "max-w-[14ch]"
-        }`}
-      >
-        {title}
-      </h1>
+        }`;
+        return split ? (
+          <SplitLines as="h1" text={title} className={headingClass} />
+        ) : (
+          <h1 className={headingClass}>{title}</h1>
+        );
+      })()}
 
       {lead ? <p className="type-lead mt-8 max-w-2xl">{lead}</p> : null}
 

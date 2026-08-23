@@ -67,6 +67,9 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Payment | **Not connected**, and said before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and beside the action itself. The flow is two steps rather than four, because a card-shaped walk to an email is three screens of theatre — the working action composes a `mailto:` from the resolved bag, the address and the delivery choice. There is no disabled pay button: a permanently dead primary control is chrome, and the panel above it states the situation in words. |
 | Accounts / sign-in | **Not connected.** `/account` states that once, then spends the page on what works without one — saved pieces and the email order. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
+| Motion | **Real.** GSAP 3.15 (ScrollTrigger, Flip, SplitText), dynamically imported so it never enters the shared chunk. Scene system in `components/motion/`, tokens in `lib/motion/config.ts`. See `DESIGN.md` §6 — especially the pin budget and the no-hidden-HTML rule. |
+| Route transitions | **Real** — an ink plane that lifts off each new route (`RouteCurtain`). Cross-route *image continuity* is **not** built: it needs React's `ViewTransition`, which is not in stable React 19.2.4, and it cannot coexist with the curtain anyway. `DESIGN.md` §6 records why. |
+| Opening sequence | **Real**, on `/` only, once per session, CSS-driven so it clears without JavaScript. Armed in the head script, not in React. |
 | Product photography | **Not shot yet.** Image slots render a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
 | Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere; `pieceTable()` returns null and the product page says the piece has not been measured. Filling them in is a data change — see `lib/catalog/sizing.ts`. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
@@ -218,8 +221,15 @@ contrast fact, not a preference.
 - Buttons: `.btn` + `.btn-solid | -inverse | -outline | -outline-on-dark`. Square, 0
   radius, hover = inversion.
 - Dark sections carry `.on-dark`.
-- Currently no shadows, no gradients except image scrims, no glass, no rounded cards.
-  That is the direction in the code today, not a constraint on what can be asked for.
+- Currently no shadows, no glass, no rounded cards. Gradients are scrims and
+  masks only. That is the direction in the code today, not a constraint on what
+  can be asked for.
+- **Motion is a primary instrument now, not a garnish.** The site opens on a
+  full-screen frame with a camera push, holds two pinned scenes on `/`, cuts
+  between routes with a curtain, and carries a custom pointer. `DESIGN.md` §6
+  is the whole system; the parts that are not taste are the pin budget, the LCP
+  exclusions, the magnetics deny-list, and the rule that nothing may be hidden
+  in the served HTML that only JavaScript can bring back.
 
 **`components/media/ImageSlot.tsx` is how images render.** Without a `src` it
 draws a ratio-correct stand-in — by default a stand-in photograph picked by
@@ -268,6 +278,20 @@ rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so 
   positioned hit area steals clicks from its neighbours.
 - Every sticky column is bounded (`max-h` + `overflow-y-auto`); an unbounded sticky
   element taller than the viewport hides its own bottom on short screens.
+- **Any scroll-linked effect goes through `components/motion/`** — `Scene`,
+  `Parallax` or `Reveal`'s modes. Do not hand-roll a scroll listener, and never
+  set React state from one: the React Compiler lint rejects the cascade, and
+  the existing primitives write transforms straight to the node.
+- **Never `gsap.from()` content.** GSAP is dynamically imported and arrives a
+  frame or two after paint, so a `from` that hides something shows it, removes
+  it, then brings it back. A pre-state a scene animates away from belongs in
+  `globals.css` behind `[data-js]` (see `.scene-oversize`).
+- **Author a pinned section unpinned first.** The pin goes on top of a DOM that
+  already reads, which is what keeps the reduced-motion and no-JS paths whole.
+- Hyphenated JSX attributes (`data-cursor-mode`) typecheck on ANY component
+  whether or not it forwards them, so they are silently dropped on custom
+  components. Declare a real prop instead — `Parallax` takes `cursorMode` for
+  exactly this reason.
 
 ---
 

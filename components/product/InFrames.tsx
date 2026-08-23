@@ -44,7 +44,12 @@ export default function InFrames({
             key={frame.id}
             className="w-[72vw] shrink-0 snap-start sm:w-[46vw] lg:w-[30vw]"
           >
-            <Link href={frame.href} className="hover-zoom block overflow-hidden">
+            <Link
+              href={frame.href}
+              data-cursor-mode="frame"
+              data-cursor-label="View"
+              className="hover-zoom block overflow-hidden"
+            >
               <ImageSlot
                 image={frame.image}
                 ratio="tall"

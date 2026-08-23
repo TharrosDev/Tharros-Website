@@ -119,3 +119,45 @@ export function thumbnailImage(product: Product): ImageSlotData {
   const flat = product.images.find((image) => image.kind === "front");
   return flat ?? product.images.find((image) => image.kind === "back") ?? heroImage(product);
 }
+
+/**
+ * THE NAVIGATION FRAMES — one picture per destination in the index overlay.
+ *
+ * Hovering a row in the menu brings up the frame that belongs to it, so
+ * navigation states what each place actually is rather than only naming it.
+ *
+ * They are catalog data rather than paths in a component for the same reason
+ * every other frame on this site is: the kind and crop declared here are what
+ * `FillerImage` reads to pick a stand-in, and they are what a real photograph
+ * replaces without touching a line of markup. Each destination declares a
+ * different kind, so the four frames come from four different pools and the
+ * menu does not show the same picture four times.
+ */
+export const NAV_FRAMES: Record<string, ImageSlotData> = {
+  "/shop": {
+    code: "NAV-SHOP",
+    alt: "The current drop worn on a figure — stand-in photograph, THARROS photography pending",
+    kind: "campaign",
+    ratio: "tall",
+    crop: "three-quarter",
+  },
+  "/drop": {
+    code: "NAV-DROP",
+    alt: "A piece from the current drop, worn — stand-in photograph, THARROS photography pending",
+    kind: "model",
+    ratio: "tall",
+    crop: "full",
+  },
+  "/archive": {
+    code: "NAV-ARCHIVE",
+    alt: "A close study of cloth and construction — stand-in photograph, THARROS photography pending",
+    kind: "detail",
+    ratio: "portrait",
+  },
+  "/about": {
+    code: "NAV-ABOUT",
+    alt: "A figure in the street, seen small — stand-in photograph, THARROS photography pending",
+    kind: "lifestyle",
+    ratio: "tall",
+  },
+};

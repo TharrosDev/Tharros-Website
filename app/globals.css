@@ -107,15 +107,33 @@
   --grain-opacity: 0.022;
 
   /* — Motion ———————————————————————————————————
-     Slow and flat. Nothing overshoots, nothing bounces. */
+     Deliberate, and now cinematic. Nothing overshoots and nothing bounces —
+     the scale of a gesture carries the drama, not its springiness.
+
+     These intervals are mirrored in SECONDS in `lib/motion/config.ts`, which
+     is what GSAP reads. A hover that lasts 180ms in CSS and 200ms in a tween
+     reads as two different sites, so the two ladders hold the same numbers. */
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
   --ease-ledger:    cubic-bezier(0.22, 1, 0.36, 1);  /* the rule draw */
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);  /* two-way: the curtain */
   --dur-fast:   180ms;
   --dur-base:   320ms;
   --dur-slow:   620ms;
   --dur-reveal: 900ms;
   --dur-frame:  1200ms;  /* the frame wipe — slower than any other gesture */
+  --dur-cinematic: 1600ms;  /* scene changes and route transitions */
+
+  /* Entrance travel. Small on purpose: at display scale the type is already
+     the event, and a heading that arrives from 80px away reads as a slide
+     deck. The scene ladder is for whole compositions, not for words. */
+  --travel-reveal: 1.75rem;
+  --travel-scene:  4rem;
+
+  /* The custom cursor. Sized in one place so the ring, the dot and the label
+     cannot drift apart. */
+  --cursor-size: 2.5rem;
+  --cursor-dot: 0.375rem;
 
   /* — Vertical rhythm ———————————————————————————
      Three intervals and no fourth. `tight` groups two things that belong to
@@ -152,7 +170,18 @@
   --z-sticky:  40;
   --z-header:  60;
   --z-overlay: 80;
+  /* Above the overlays, because navigating out of an open drawer has to cover
+     the drawer as well as the page. Below the skip link, which must stay
+     reachable at every moment including mid-transition. */
+  --z-curtain: 90;
+  /* The opening title covers everything the curtain does, and the curtain is
+     never live at the same moment — one is a first view, the other a
+     navigation away from it. */
+  --z-entry:   95;
   --z-skip:    100;
+  /* Above everything, including the skip link: the pointer is drawn on top of
+     whatever it is pointing at, and it never intercepts a click. */
+  --z-cursor:  120;
 
   /* — Type scale ————————————————————————————————
      Fluid clamps. Never hand-roll a per-breakpoint size. */
@@ -230,11 +259,23 @@
 
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+    /* NOT `scroll-behavior: smooth`. A scrubbed ScrollTrigger reads the scroll
+       position every frame and ties a timeline to it; a browser that is
+       animating that same position toward a target fights the scrub, and the
+       symptom is a scene that stutters or overshoots on any in-page jump.
+       Anchors land instantly now, which `scroll-padding-top` still offsets
+       correctly. */
+    scroll-behavior: auto;
     /* The header is fixed, so an in-page anchor — or keyboard focus moved by
        one — lands underneath it without this. Set on the scroll container
        rather than as scroll-margin on every possible target. */
     scroll-padding-top: calc(var(--header-h) + 1.5rem);
+    /* Reserve the scrollbar's width permanently. Every overlay locks the body
+       scroll, and without the gutter that lock removes the scrollbar, widens
+       the viewport, and shifts the whole page a few pixels sideways — which
+       also invalidates every pinned scene's measurements at the moment a
+       drawer opens. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -245,7 +286,14 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    /* `clip`, NOT `hidden`. `overflow-x: hidden` forces the other axis to
+       compute as `overflow-y: auto`, which quietly makes <body> its own scroll
+       container. Pinned sections then measure against a container that is not
+       the one actually scrolling, and pins break intermittently in a way that
+       looks like a library bug. `clip` contains the same horizontal overflow
+       without creating a scroll box — the same fix `.overlay-root` already
+       uses further down this file. */
+    overflow-x: clip;
     /* The caret and the scrollbar are drawn by the browser, not by this file,
        and they ship in a grey that belongs to no design system. On ivory a
        default caret reads blue-black against warm ink. */
@@ -323,10 +371,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
+  /* `html { scroll-behavior: auto }` used to be repeated here. It is the
+     unconditional value now — smooth scrolling fights a scrubbed timeline —
+     so restating it under reduced motion asserted nothing. */
   *,
   *::before,
   *::after {
@@ -1004,6 +1051,216 @@
     transform: none;
   }
 
+  /* A resting over-scale for a layer a scene settles OUT of.
+     Gated on [data-js] for the same reason every other pre-state is: with
+     scripting unavailable nothing arrives to animate it back, and a
+     permanently 14% over-scaled photograph is a crop nobody chose. The scene
+     tweens it to 1; reduced motion sets it to 1 outright. */
+  [data-js] .scene-oversize {
+    transform: scale(1.14);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js] .scene-oversize {
+      transform: none;
+    }
+  }
+
+  [data-motion="off"] .scene-oversize {
+    transform: none !important;
+  }
+
+  /* ——— THE OPENING TITLE ——————————————————————————————
+     Armed by the head script, which sets [data-entry] on the root before first
+     paint when — and only when — this is the home page, the first view of the
+     session, and no reduced-motion preference is stated. Without that
+     attribute every rule here is inert and the markup costs nothing.
+
+     Deliberately CSS rather than a timeline. The plane ends hidden with
+     `forwards`, so the screen clears even if no JavaScript ever runs; a
+     sequence driven by a library that arrives on a promise is a sequence that
+     can fail to arrive, and the failure mode is a full-bleed plane over the
+     site with nothing left to lift it.
+
+     The whole thing is 1.5s and the site is already painted underneath. */
+  .entry {
+    display: none;
+  }
+
+  [data-entry] .entry {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-entry);
+    display: grid;
+    place-items: center;
+    background: var(--black);
+    /* The plane lifts from the bottom edge, the same direction the route
+       curtain and the frame wipe uncover. One vocabulary. */
+    transform-origin: bottom;
+    animation: entry-lift 1500ms var(--ease-out-expo) forwards;
+  }
+
+  [data-entry] .entry-mark {
+    text-align: center;
+    animation: entry-mark 1100ms var(--ease-out-expo) forwards;
+  }
+
+  @keyframes entry-lift {
+    0%,
+    58% {
+      transform: scaleY(1);
+      visibility: visible;
+    }
+    100% {
+      transform: scaleY(0);
+      visibility: hidden;
+    }
+  }
+
+  @keyframes entry-mark {
+    0% {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    28%,
+    62% {
+      opacity: 1;
+      transform: none;
+    }
+    /* The mark leaves before the plane does, so the screen is bare ink for a
+       beat and the lift reads as a curtain rather than as a fade-out. */
+    100% {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  /* Belt to the braces. The head script already refuses to arm the sequence
+     under reduced motion; this makes the CSS refuse it too, so a preference
+     changed mid-session cannot leave a plane on screen. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-entry] .entry {
+      display: none;
+    }
+  }
+
+  /* ——— THE POINTER ——————————————————————————————————
+     A dot that tracks exactly and a ring that lags behind it. Both start
+     invisible and are faded in by `Cursor.tsx` on the first real pointer
+     movement, so nothing is drawn on a page nobody is pointing at.
+
+     `cursor: none` is gated on `[data-cursor="1"]`, which that component sets
+     only after GSAP has loaded AND a pointer has moved. Putting it in static
+     CSS would leave a site with no pointer at all whenever the bundle fails —
+     the worst failure this feature can have, and the easiest to avoid.
+
+     Both elements are `fixed` at the origin and moved with transforms, never
+     with `left`/`top`: a pointer that repaints the document on every mouse
+     move is a pointer that makes the whole site feel slow. */
+  .cursor-root {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-cursor);
+    pointer-events: none;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 50%;
+    /* Centred on the pointer rather than hanging below and right of it. */
+    margin-left: calc(var(--cursor-dot) / -2);
+    margin-top: calc(var(--cursor-dot) / -2);
+    will-change: transform;
+  }
+
+  .cursor-dot {
+    width: var(--cursor-dot);
+    height: var(--cursor-dot);
+    background: var(--ink);
+  }
+
+  .cursor-ring {
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    margin-left: calc(var(--cursor-size) / -2);
+    margin-top: calc(var(--cursor-size) / -2);
+    border: 1px solid var(--ink);
+    display: grid;
+    place-items: center;
+    transition: border-color var(--dur-fast) var(--ease-out-quart);
+  }
+
+  /* Over a picture the ring is paper, not ink — the same inversion every
+     other element on this site makes when it lands on a dark surface. */
+  .cursor-ring[data-mode="frame"],
+  .cursor-ring[data-mode="zoom"] {
+    border-color: var(--ink-on-dark);
+    background: color-mix(in oklab, var(--black) 22%, transparent);
+  }
+
+  /* The label rides inside the ring and counter-scales, so a word set in an
+     element that has been scaled 2.4x is still 11px on screen rather than
+     26px. */
+  .cursor-label {
+    color: var(--ink-on-dark);
+    white-space: nowrap;
+    transform: scale(0.42);
+  }
+
+  [data-cursor="1"],
+  [data-cursor="1"] a,
+  [data-cursor="1"] button,
+  [data-cursor="1"] [role="button"] {
+    cursor: none;
+  }
+
+  /* A text caret is information, not decoration — it says where typing will
+     go. It is never replaced. */
+  [data-cursor="1"] input,
+  [data-cursor="1"] textarea,
+  [data-cursor="1"] select {
+    cursor: auto;
+  }
+
+  @media (pointer: coarse) {
+    .cursor-root {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-root {
+      display: none;
+    }
+  }
+
+  /* THE DEAD-MAN SWITCH.
+     `[data-js]` promises that nothing is hidden when scripting is absent. It
+     does not cover the case where scripting is *present at first paint and
+     then fails* — the head script sets the attribute, the bundle 404s or
+     throws, and every `.reveal` on the page stays at opacity 0 with nothing
+     left to bring it back. The site is then a blank sheet, which is strictly
+     worse than having no entrances at all.
+
+     So the same head script arms a timer, and the motion runtime clears it on
+     boot. If the runtime never boots, the timer fires, `data-motion="off"`
+     lands on the root, and every entrance is forced to its resting state.
+     Roughly three seconds of a hidden section is the cost; a permanently
+     blank page is what it buys off. */
+  [data-motion="off"] .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    transition: none !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     [data-js] .reveal {
       opacity: 1;
@@ -1286,6 +1543,131 @@
     [data-js] .reveal.reveal-frame,
     [data-js] .reveal.reveal-frame.reveal-in {
       clip-path: none;
+      transition: none;
+    }
+  }
+
+  /* ——— THE REVEAL MODES ———————————————————————————————
+     One entrance repeated down a page is the most common tell of generated
+     animation: everything fades up, so nothing is emphasised and the fade
+     stops carrying meaning. These are the alternatives, and they are chosen
+     per content type rather than assigned at random.
+
+       fade    (default)  a block of type arriving
+       frame              a photograph being uncovered, bottom edge down
+       wipe               a horizontal uncover — rails, ledgers, rows
+       mask               a soft gradient sweep, for a picture that should
+                          emerge rather than be revealed by an edge
+       rise               the fade, given scene-scale travel
+       scale              a frame settling from slightly over-size
+       still              opted out — the element is the LCP, or is already
+                          moving under a scrubbed timeline
+
+     Every mode CANCELS the base fade rather than stacking with it. Two
+     entrances on one element read as two effects fighting, which is exactly
+     what `.reveal-frame` was written to avoid. All of them are composited:
+     clip-path, mask-image, transform and opacity only, so no mode costs a
+     layout or a paint.
+
+     `--reveal-delay` is shared with `.rule-draw` and `.run-ledger`, so a
+     frame can be staggered with the rule that labels it. */
+
+  [data-js] .reveal.reveal-wipe {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path var(--dur-frame) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  }
+
+  [data-js] .reveal.reveal-wipe.reveal-in {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* The soft one. A gradient mask has no edge, so the picture appears out of
+     the paper instead of being pushed out from behind a line — the right
+     gesture where a hard clip would read as a mechanism. Slower than the
+     clip, because a soft edge needs the extra time to be legible as movement
+     at all. */
+  [data-js] .reveal.reveal-mask {
+    opacity: 1;
+    transform: none;
+    /* THE MASK MOVES, THE GRADIENT DOES NOT.
+       The obvious way to write this is to transition `mask-image` between two
+       gradients, and it is wrong: gradient interpolation is not dependable
+       across engines, and where it is unsupported the mask SNAPS at the end of
+       the transition — leaving the content invisible for the whole duration
+       rather than arriving softly. `mask-position` is a length and every
+       engine interpolates it.
+
+       The gradient is twice the element's height, opaque across its top half
+       and fading out through the bottom. Parked at the foot, the element sits
+       under the transparent end; travelling to the head brings it under the
+       opaque end, so the picture emerges with no edge anywhere in it. */
+    mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
+    mask-size: 100% 200%;
+    -webkit-mask-size: 100% 200%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-position: 0 100%;
+    -webkit-mask-position: 0 100%;
+    transition:
+      mask-position var(--dur-cinematic) var(--ease-out-expo) var(--reveal-delay, 0ms),
+      -webkit-mask-position var(--dur-cinematic) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  }
+
+  [data-js] .reveal.reveal-mask.reveal-in {
+    mask-position: 0 0;
+    -webkit-mask-position: 0 0;
+  }
+
+  [data-js] .reveal.reveal-rise {
+    transform: translateY(var(--travel-scene));
+  }
+
+  [data-js] .reveal.reveal-rise.reveal-in {
+    transform: none;
+  }
+
+  /* Settles rather than grows. 1.06 and not 1.2: a frame that arrives from a
+     fifth over-size is a zoom, and the site already has one of those on
+     hover. */
+  [data-js] .reveal.reveal-scale {
+    opacity: 0;
+    transform: scale(1.06);
+    transition:
+      opacity var(--dur-reveal) var(--ease-out-expo) var(--reveal-delay, 0ms),
+      transform var(--dur-frame) var(--ease-out-expo) var(--reveal-delay, 0ms);
+  }
+
+  [data-js] .reveal.reveal-scale.reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Opted out. Present so a call site can say "this one does not enter" in
+     the same vocabulary as the rest, rather than by omitting the wrapper and
+     losing the stagger slot. */
+  [data-js] .reveal.reveal-still,
+  [data-js] .reveal.reveal-still.reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js] .reveal.reveal-wipe,
+    [data-js] .reveal.reveal-wipe.reveal-in,
+    [data-js] .reveal.reveal-mask,
+    [data-js] .reveal.reveal-mask.reveal-in,
+    [data-js] .reveal.reveal-rise,
+    [data-js] .reveal.reveal-rise.reveal-in,
+    [data-js] .reveal.reveal-scale,
+    [data-js] .reveal.reveal-scale.reveal-in {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+      mask-image: none;
+      -webkit-mask-image: none;
       transition: none;
     }
   }

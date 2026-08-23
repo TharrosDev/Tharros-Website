@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard";
 import Reveal from "@/components/ui/Reveal";
+import { STAGGER } from "@/lib/motion/config";
 import type { Product } from "@/lib/catalog/types";
 
 type Props = {
@@ -60,7 +61,17 @@ export default function ProductGrid({
             reading as sequence and starts reading as lag, and a nine-piece
             grid would have its last card waiting half a second. */}
         {products.map((product, index) => (
-          <Reveal as="li" key={product.id} delay={Math.min(index, 4) * 70}>
+          // `frame` rather than the default fade: a card is mostly photograph,
+          // and a picture that is uncovered has been developed where a picture
+          // that slides up has merely been moved. The priority cards are
+          // `still` — an entrance that starts hidden is an entrance that delays
+          // the largest paint, and on `/shop` the first row is the LCP.
+          <Reveal
+            as="li"
+            key={product.id}
+            mode={index < priorityCount ? "still" : "frame"}
+            delay={Math.min(index, STAGGER.cap) * 70}
+          >
             <ProductCard
               product={product}
               sizes={SIZES[columns]}

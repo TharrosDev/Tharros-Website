@@ -1,4 +1,5 @@
 import ImageSlot from "@/components/media/ImageSlot";
+import Parallax from "@/components/motion/Parallax";
 import ParallaxNumeral from "@/components/motion/ParallaxNumeral";
 import FrameHotspots from "./FrameHotspots";
 import ModelCredit from "./ModelCredit";
@@ -81,7 +82,10 @@ export default function CampaignFrame({
             at and the screen decides how much of it you see at once. `svh` so a
             phone measures the viewport it actually has rather than the tallest
             one it could have. */}
-        <div className="relative h-[86svh] w-full overflow-hidden">
+        <div
+          data-cursor-mode="frame"
+          className="relative h-[86svh] w-full overflow-hidden"
+        >
           <ImageSlot image={frame.image} fill sizes="100vw" priority={priority} />
           {markers}
         </div>
@@ -124,7 +128,15 @@ export default function CampaignFrame({
             its foot lands a screen and a half below its own heading. The cap
             crops from a shape the photograph already has rather than imposing
             a different one. */}
-        <div className="relative max-h-[78svh] overflow-hidden">
+        {/* The picture drifts against the caption hung beside it. `subject`
+            rather than a deeper rung: this frame shares a row with type, and a
+            picture that travels further than the words next to it stops
+            reading as the same object. */}
+        <Parallax
+          depth="subject"
+          className="relative max-h-[78svh] overflow-hidden"
+          cursorMode="frame"
+        >
           <ImageSlot
             image={frame.image}
             ratio={ratio}
@@ -133,7 +145,7 @@ export default function CampaignFrame({
             priority={priority}
           />
           {markers}
-        </div>
+        </Parallax>
       </div>
 
       {/* Hung to the foot of the frame, not to its head. Aligned to the top,

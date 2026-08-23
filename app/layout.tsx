@@ -5,6 +5,10 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
+import MotionRuntime from "@/components/motion/MotionRuntime";
+import RouteCurtain from "@/components/motion/RouteCurtain";
+import Cursor from "@/components/motion/Cursor";
+import EntrySequence from "@/components/motion/EntrySequence";
 import CartDrawer from "@/components/commerce/CartDrawer";
 import {
   BRAND,
@@ -153,10 +157,31 @@ export default function RootLayout({
         {/* Marks the document as scripted before first paint, so the entrance
             styles in globals.css only ever hide content that JS can bring
             back. Without this the .reveal opacity would strand sections
-            invisible whenever the bundle is blocked or fails. */}
+            invisible whenever the bundle is blocked or fails.
+
+            The timer is the other half of that guarantee. `data-js` covers
+            scripting being absent; it does nothing about scripting being
+            present at first paint and then failing — the attribute is set, the
+            bundle 404s, and every entrance stays at opacity 0 with nothing
+            left to restore it. `MotionRuntime` clears this on boot, so the
+            only way it fires is if the runtime never arrived. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.dataset.js="1"`,
+            __html:
+              'document.documentElement.dataset.js="1";' +
+              "window.__tharrosMotion=setTimeout(function(){" +
+              'document.documentElement.dataset.motion="off"' +
+              "},3500);" +
+              // The opening sequence is armed HERE rather than in React, so a
+              // repeat visit never flashes a curtain that a later effect then
+              // removes. Three conditions, all of which have to hold: the home
+              // page, the first view of this session, and no stated preference
+              // for less motion.
+              "try{if(location.pathname===\"/\"&&!sessionStorage.getItem(\"tharros:entered\")" +
+              "&&!matchMedia(\"(prefers-reduced-motion: reduce)\").matches){" +
+              'document.documentElement.dataset.entry="1";' +
+              'sessionStorage.setItem("tharros:entered","1")' +
+              "}}catch(e){}",
           }}
         />
       </head>
@@ -166,6 +191,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: jsonLd(graph) }}
         />
         <Providers>
+          <MotionRuntime />
+          <RouteCurtain />
+          <Cursor />
+          <EntrySequence />
           <Header />
           {/* `tabIndex={-1}` so the skip link actually moves focus rather than
               only scrolling. A plain `#main` anchor sets Chrome's sequential

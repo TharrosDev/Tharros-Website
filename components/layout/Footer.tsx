@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { WordmarkFit } from "@/components/ui/Wordmark";
+import Reveal from "@/components/ui/Reveal";
 import Newsletter from "./Newsletter";
 import {
   BRAND_LINE,
@@ -86,10 +87,15 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* The wordmark closes the site at scale — the last thing you read. */}
+      {/* THE LAST SHOT. The wordmark closes the site at scale, and it is the
+          one place the name is allowed to arrive rather than simply be there:
+          uncovered bottom-edge-down, the same gesture a photograph gets. The
+          footer is the end of the sequence, so it ends on the mark. */}
       <div className="overflow-hidden border-t border-rule-on-dark">
         <div className="page-frame py-10">
-          <WordmarkFit />
+          <Reveal mode="frame">
+            <WordmarkFit />
+          </Reveal>
           <div className="mt-8 flex flex-col justify-between gap-x-8 gap-y-4 md:flex-row md:items-baseline">
             <p className="type-meta text-ink-on-dark-faint">{BRAND_LINE}</p>
             <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">

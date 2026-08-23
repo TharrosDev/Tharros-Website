@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
+import SplitLines from "@/components/motion/SplitLines";
 
 type Props = {
   index: string;
@@ -16,6 +17,15 @@ type Props = {
   titleId?: string;
   /** Stagger, in ms, shared with the rule draw. */
   delay?: number;
+  /**
+   * Set the title a line at a time, each line rising out of its own mask.
+   *
+   * Off by default and deliberately so: this is the loudest typographic
+   * gesture in the system, and a page where every section title performs the
+   * same entrance has spent it. Reserve it for the statement of a page — one
+   * per route, occasionally two.
+   */
+  split?: boolean;
   className?: string;
 };
 
@@ -42,6 +52,7 @@ export default function SectionHeading({
   level = 2,
   titleId,
   delay = 0,
+  split = false,
   className = "",
 }: Props) {
   const Heading = level === 3 ? "h3" : "h2";
@@ -73,9 +84,19 @@ export default function SectionHeading({
           belong to the section, and a heading that sits as close to its own
           label as to the work underneath it groups with the wrong thing. */}
       {title ? (
-        <Heading id={titleId} className={`${titleClass} mt-10 max-w-[16ch] md:mt-12`}>
-          {title}
-        </Heading>
+        split ? (
+          <SplitLines
+            as={Heading}
+            id={titleId}
+            text={title}
+            delay={delay}
+            className={`${titleClass} mt-10 max-w-[16ch] md:mt-12`}
+          />
+        ) : (
+          <Heading id={titleId} className={`${titleClass} mt-10 max-w-[16ch] md:mt-12`}>
+            {title}
+          </Heading>
+        )
       ) : null}
     </div>
   );
