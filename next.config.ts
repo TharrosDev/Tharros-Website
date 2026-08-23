@@ -6,7 +6,12 @@ const nextConfig: NextConfig = {
   // treats that as the root — which it warns about on every dev and build run.
   turbopack: { root: import.meta.dirname },
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    // `true` stripped `console.error` too, which took out the only diagnostic
+    // the app has: `app/error.tsx` logs the caught error, and in a production
+    // build that call was compiled away entirely — so the boundary the visitor
+    // sees was the whole of what anybody got. Everything else still goes.
+    removeConsole:
+      process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
   images: {
     formats: ["image/avif", "image/webp"],

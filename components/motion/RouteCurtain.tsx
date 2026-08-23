@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { loadMotion } from "@/lib/motion/registry";
+import { loadMotion, type MotionApi } from "@/lib/motion/registry";
 import { prefersReducedMotion } from "@/lib/motion/media";
 import { DUR, EASE } from "@/lib/motion/config";
 
@@ -35,6 +35,11 @@ export default function RouteCurtain() {
   const pathname = usePathname();
   const panel = useRef<HTMLDivElement>(null);
   const firstRender = useRef(true);
+  // The lift in flight, if any. A navigation that lands mid-lift used to leave
+  // two timelines writing `scaleY` on the same plane, and the older one's
+  // closing `.set(opacity: 0)` fired part-way through the newer one's travel —
+  // so a quick second click blanked the curtain rather than replaying it.
+  const lift = useRef<ReturnType<MotionApi["gsap"]["timeline"]> | null>(null);
 
   useEffect(() => {
     if (firstRender.current) {
@@ -50,7 +55,8 @@ export default function RouteCurtain() {
     loadMotion().then(({ gsap }) => {
       if (cancelled || !panel.current) return;
 
-      gsap.timeline()
+      lift.current = gsap
+        .timeline()
         // Struck over the new route, anchored to the top edge.
         .set(node, { scaleY: 1, transformOrigin: "top", opacity: 1 })
         // Then lifted from the bottom, so the page is revealed downward —
@@ -66,6 +72,10 @@ export default function RouteCurtain() {
 
     return () => {
       cancelled = true;
+      // A navigation landing mid-lift, or the layout going away, takes the
+      // timeline with it rather than leaving it writing to the plane.
+      lift.current?.kill();
+      lift.current = null;
     };
   }, [pathname]);
 

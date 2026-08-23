@@ -12,7 +12,10 @@ export default function GlobalError({ reset }: { reset: () => void }) {
       <body
         style={{
           margin: 0,
-          minHeight: "100vh",
+          // `dvh`, not `vh`: this page is bottom-aligned, and on a phone `100vh`
+          // puts the button behind the browser chrome until the page is
+          // scrolled — on the one screen whose only control is that button.
+          minHeight: "100dvh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",

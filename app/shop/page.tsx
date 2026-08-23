@@ -185,7 +185,9 @@ export default async function ShopPage({
         ) : (
           <ProductGrid
             products={products}
-            heading={`${heading} — ${products.length} pieces`}
+            heading={`${heading} — ${products.length} ${
+              products.length === 1 ? "piece" : "pieces"
+            }`}
             columns={3}
             priorityCount={3}
             specimen

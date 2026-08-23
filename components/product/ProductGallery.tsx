@@ -34,6 +34,7 @@ export default function ProductGallery({ images, productName }: Props) {
 
   const mainRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLUListElement>(null);
+  const firstFrame = useRef(true);
 
   // The main frame is uncovered when the selection changes, rather than being
   // swapped under the visitor. The frame itself never moves — it is a fixed
@@ -42,7 +43,19 @@ export default function ProductGallery({ images, productName }: Props) {
   //
   // Keyed on `active` and driven straight to the node: no state is set here,
   // so changing pictures costs one render for the selection and nothing else.
+  //
+  // NOT ON FIRST MOUNT. This is a `fromTo` out of a fully clipped state, and
+  // GSAP arrives a frame or two after paint — so on load the main frame painted,
+  // was clipped away to nothing, and wiped back in. That is the flash the
+  // `[data-js]` rule exists to prevent, on the largest paint of every product
+  // page. The wipe belongs to *changing* the picture; the first one is simply
+  // the picture.
   useEffect(() => {
+    if (firstFrame.current) {
+      firstFrame.current = false;
+      return;
+    }
+
     const node = mainRef.current;
     if (!node || prefersReducedMotion()) return;
 

@@ -32,11 +32,21 @@ export default function ProductCard({
   priority = false,
   specimen = false,
 }: Props) {
-  const { add, openBag } = useCart();
+  const { add, openBag, lines } = useCart();
   // Quick-add used to force the bag drawer open over the grid, which threw the
   // browsing visitor out of the thing they were browsing. The card confirms in
   // place instead and offers the drawer rather than imposing it.
   const [added, setAdded] = useState<string | null>(null);
+  // The confirmation is a claim about the bag, so the bag has to be what says
+  // it. This state only records which size was last added here; removing that
+  // line in the drawer used to leave the card asserting "Size M in bag" for the
+  // rest of the visit, on a site whose position is that it tells you the truth
+  // about stock.
+  const inBag =
+    added &&
+    lines.some((line) => line.productId === product.id && line.size === added)
+      ? added
+      : null;
 
   // The card leads with the piece on a person and swaps to the garment itself.
   // Which frames those are is the catalogue's decision, not the card's — see
@@ -125,7 +135,7 @@ export default function ProductCard({
           >
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="type-meta mr-1 text-ink-faint">
-                {added ? "Added" : "Add"}
+                {inBag ? "Added" : "Add"}
               </span>
               {/* Only what can actually be bought. The strip used to print every
                   size and disable the gone ones, which put up to eleven targets
@@ -159,10 +169,10 @@ export default function ProductCard({
               role="status"
               className="type-meta mt-2 flex min-h-6 items-center gap-3"
             >
-              {added ? (
+              {inBag ? (
                 <>
                   <span className="text-ink-faint">
-                    Size {added} in bag
+                    Size {inBag} in bag
                   </span>
                   <button
                     type="button"

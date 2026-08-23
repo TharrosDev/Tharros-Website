@@ -73,6 +73,17 @@ export default function Cursor() {
         const mode = holder?.dataset.cursorMode ?? "";
         const text = holder?.dataset.cursorLabel ?? "";
 
+        // `pointerover` fires on every element boundary the pointer crosses, so
+        // moving across a paragraph of links fired this dozens of times a
+        // second — each one writing the same attributes and starting another
+        // 320ms scale tween on top of the last. Only a real change is a change.
+        // Both halves are compared: two `frame` holders can carry different
+        // labels ("View" on a card, nothing on a campaign frame), so keying on
+        // the mode alone would strand the previous word inside the ring.
+        if (ringNode.dataset.mode === mode && labelNode.textContent === text) {
+          return;
+        }
+
         ringNode.dataset.mode = mode;
         labelNode.textContent = text;
 

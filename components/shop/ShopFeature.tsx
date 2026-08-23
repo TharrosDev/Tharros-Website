@@ -61,7 +61,8 @@ export default function ShopFeature() {
             {CURRENT_DROP.statement}
           </h2>
           <p className="type-meta mt-5 text-ink-faint">
-            <span className="num">{count}</span> pieces in the run
+            <span className="num">{count}</span> {count === 1 ? "piece" : "pieces"} in
+            the run
           </p>
           <Link href="/drop" className="link-rule link-rule-reveal mt-5 self-start">
             About this drop
