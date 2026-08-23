@@ -44,3 +44,9 @@ next-env.d.ts
 .impeccable/
 .mcp.json
 desktop.ini
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

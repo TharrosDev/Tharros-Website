@@ -69,6 +69,19 @@ export default function CampaignSequence({
                 key={frame.id}
                 pin
                 end="+=90%"
+                /* THE OVER-SCALE HAS TO BE CROPPED BY SOMETHING.
+                   `scene-oversize` is `scale(1.14)`, and a scaled box expands
+                   the scrollable area of the document unless an ancestor clips
+                   it — the `overflow-hidden` inside `CampaignFrame` sits on a
+                   descendant of the scaled node, so it never applied. The page
+                   really did scroll sideways: 89px at 1280 and 26px on a phone,
+                   on `/` and on `/drop`, for as long as the scrub had not yet
+                   settled the layer back to 1. `body { overflow-x: clip }` did
+                   not contain it.
+                   Clipping here crops the frame to its own bounds, which is
+                   what an over-scaled photograph in a frame is supposed to do
+                   anyway — the camera moves inside the shot, not outside it. */
+                className="overflow-clip"
                 steps={[
                   { at: 0, span: 0.7, layer: "shot", to: { scale: 1, ease: "none" } },
                 ]}

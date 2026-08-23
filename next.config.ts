@@ -43,7 +43,15 @@ const nextConfig: NextConfig = {
       "base-uri 'self'",
       "form-action 'self'",
       "frame-ancestors 'none'",
-      "upgrade-insecure-requests",
+      // Meaningless on an http origin, and actively harmful on one: WebKit
+      // honours it against `http://localhost` and upgrades every asset request
+      // to https, which nothing is listening for — so a local production build
+      // serves a page with no CSS and no JavaScript. Chromium exempts loopback
+      // and hides the problem. The e2e webServer is the only thing that sets
+      // this variable; a deploy never does, so production keeps the directive.
+      ...(process.env.CSP_ALLOW_INSECURE === "1"
+        ? []
+        : ["upgrade-insecure-requests"]),
     ].join("; ");
 
     return [
