@@ -290,8 +290,23 @@ rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so 
 - **Interactive controls carry a real box**, not an expanded invisible overlay: header
   icons are `h-11 w-11` flex boxes, small mono links get `-my-2 py-2`. An absolutely
   positioned hit area steals clicks from its neighbours.
-- Every sticky column is bounded (`max-h` + `overflow-y-auto`); an unbounded sticky
-  element taller than the viewport hides its own bottom on short screens.
+- Every sticky column is bounded; an unbounded sticky element taller than the viewport
+  hides its own bottom on short screens. **`max-h` + `overflow-y-auto` is the bound for a
+  column of TEXT.** A picture takes its height from its width and its ratio, so the same
+  pair gives it a scrollbar down the side of the photograph instead — which is what the
+  studio frame had on every laptop. Cap the frame's own height and let `object-cover`
+  take the difference (`ProcessSection`).
+- **Never pin a scene whose parent is a flex or grid container.** ScrollTrigger reserves
+  the held distance as `padding-bottom` on the spacer it wraps the element in, and it
+  silently declines to do that inside a flex parent — no error, no warning, just
+  `padding-bottom: 0` against whatever `end` says, and everything below scrolls up over
+  the held frame. `e2e/routes.spec.ts` asserts every spacer reserves something.
+- **`useScene` is a LAYOUT effect and must stay one.** GSAP moves nodes React owns —
+  `pin` wraps the element in a spacer, `SplitText` rewrites a heading's children. React
+  removes host nodes in the mutation phase and runs `useEffect` cleanups after it, so
+  reverting from a passive effect happens after the removal has already thrown
+  `NotFoundError: removeChild`. Anything else that hands the DOM to a library needs the
+  same treatment.
 - **Any scroll-linked effect goes through `components/motion/`** — `Scene`,
   `Parallax` or `Reveal`'s modes. Do not hand-roll a scroll listener, and never
   set React state from one: the React Compiler lint rejects the cascade, and

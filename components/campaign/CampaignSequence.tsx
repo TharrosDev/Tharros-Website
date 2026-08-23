@@ -55,8 +55,22 @@ export default function CampaignSequence({
       </div>
 
       {/* Frames are separated by more than sections are: each one is a picture
-          to stop at, and at gap-20 the sequence scrolled as a strip. */}
-      <div className="section-lead flex flex-col gap-28 md:gap-40">
+          to stop at, and at gap-20 the sequence scrolled as a strip.
+
+          A BLOCK COLUMN WITH MARGINS, NOT A FLEX ONE WITH A GAP. This held
+          `flex flex-col gap-28`, and ScrollTrigger silently drops `pinSpacing`
+          when the element it pins sits in a flex parent — it cannot reserve the
+          held distance by padding a flex item. The spacer for the held shot
+          therefore measured `padding-bottom: 0` against `end="+=90%"`, so the
+          frame was fixed for 900px of scrolling that the document never
+          reserved and every frame after it rode up over the top of it, caption
+          and all. The statement's pin, whose parent is `<main>`, reserved its
+          800px correctly the whole time — which is what made this look like a
+          campaign bug rather than a layout one.
+
+          Nothing else here wanted flex: no ordering, no alignment, one axis.
+          `space-y` spaces the pin-spacer exactly as it spaced the frame. */}
+      <div className="section-lead space-y-28 md:space-y-40">
         {campaign.sequence.map((frame, i) => {
           const align = ALIGNMENTS[i % ALIGNMENTS.length];
 
