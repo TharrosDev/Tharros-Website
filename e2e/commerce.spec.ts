@@ -140,6 +140,10 @@ test.describe("bag", () => {
     // a step whose own checks all pass — and the only artefact this checkout
     // produces is an email to reply to.
     await page.getByRole("button", { name: /01 Your details/ }).click();
+    // Wait for the step rather than for the field. `goTo` scrolls and then
+    // moves focus a frame later, so filling the moment the click returns races
+    // that — which is what made this flake on WebKit under a loaded run.
+    await expect(page.getByRole("heading", { name: "Your details" })).toBeVisible();
     await page.getByLabel("Email", { exact: true }).fill("");
     await page.getByRole("button", { name: /02 Delivery/ }).click();
     await expect(page.getByRole("heading", { name: "Where it goes" })).toBeVisible();
