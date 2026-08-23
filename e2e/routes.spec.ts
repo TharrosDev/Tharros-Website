@@ -163,3 +163,88 @@ test("/new still redirects to the drop", async ({ page }) => {
   await page.goto("/new");
   await expect(page).toHaveURL(/\/drop$/);
 });
+
+/**
+ * The two ways a scene that moves DOM breaks the page, both of which shipped.
+ *
+ * Neither was visible to any assertion the suite already had: the routes spec
+ * loads each page directly and watches its console, and both of these need a
+ * CLIENT navigation away from — or a scroll through — a route whose scenes have
+ * already rewritten the DOM. `/` is that route.
+ *
+ * `.split-line` is the signal that GSAP has arrived and re-parented something:
+ * `SplitText` writes it at every width, where a pin exists only from `lg` up.
+ */
+test.describe("scenes that move the DOM", () => {
+  /**
+   * A pin has to reserve the distance it holds for.
+   *
+   * ScrollTrigger reserves it as `padding-bottom` on the spacer it wraps the
+   * pinned element in — and it silently declines to do that when the parent is
+   * a flex container, because it cannot pad a flex item into reserving space.
+   * The campaign's held frame sat in `flex flex-col gap-28` and reserved zero
+   * against `end="+=90%"`, so it was fixed for 900px the document never
+   * accounted for, and every frame after it scrolled up over the top of it —
+   * caption over caption, two "In this frame" lists in the same place.
+   *
+   * Asserted as "no spacer reserves nothing" rather than against a number: how
+   * far a scene holds is its own business, that it reserves anything at all is
+   * the invariant.
+   */
+  test("every pin reserves the scroll it holds", async ({ page }, testInfo) => {
+    // Pins are `lg` and up by design — below that a scene keeps its
+    // choreography and loses the hold, so there is no spacer to check.
+    // See QUERY.wide in lib/motion/media.ts.
+    const width = testInfo.project.use.viewport?.width ?? 0;
+    test.skip(width < 1024, "scenes do not pin below lg");
+
+    await page.goto("/");
+    await page.waitForSelector(".pin-spacer", { timeout: 15_000 });
+
+    const reserved = await page.$$eval(".pin-spacer", (spacers) =>
+      spacers.map((spacer) => ({
+        parent: getComputedStyle(spacer.parentElement!).display,
+        padding: parseFloat(getComputedStyle(spacer).paddingBottom),
+      })),
+    );
+
+    expect(reserved.length).toBeGreaterThan(0);
+    for (const spacer of reserved) {
+      expect(spacer.padding, `pin in a ${spacer.parent} parent`).toBeGreaterThan(0);
+    }
+  });
+
+  /**
+   * Leaving such a route must not throw.
+   *
+   * GSAP moves nodes React owns — `pin` wraps the element in a spacer,
+   * `SplitText` replaces a heading's children with per-line spans. React
+   * deletes host nodes in the mutation phase and runs `useEffect` cleanups
+   * after it, so reverting there happened once the removal had already thrown
+   * `NotFoundError: Failed to execute 'removeChild'`, and the route error
+   * boundary took the page. It reproduced on every navigation off `/`.
+   *
+   * Runs at every width: `SplitText` re-parents on a phone too, so the hazard
+   * is not the pin's alone.
+   */
+  test("leaving a scene does not throw", async ({ page, console: watched }) => {
+    await page.goto("/");
+    await page.waitForSelector(".split-line", { timeout: 15_000 });
+
+    // The footer's link, not the header's: the header states its destinations
+    // inline only from `md` up, so on a phone there is no "Shop" to click and
+    // the mobile project — the one width where `SplitText` is the whole hazard,
+    // because nothing pins there — would never run this.
+    await page
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Archive", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/archive$/);
+    await expect(page.locator("main h1").first()).toBeVisible();
+
+    // The boundary renders this. The console assertion below would also catch
+    // the throw, but naming it makes a failure legible.
+    await expect(page.getByText("That didn't work.")).toHaveCount(0);
+    expect(watched.errors, "navigating away from a scene").toEqual([]);
+  });
+});

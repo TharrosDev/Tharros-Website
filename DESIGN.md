@@ -623,6 +623,31 @@ hover cinematography — at half the parallax travel, because a
 thumb scrolls faster than a wheel. Switching motion off there would leave the
 site with none at all on the device most people meet it on.
 
+### Two ways a scene breaks the page, and the shape of both
+
+Both shipped, both were invisible to every assertion the suite had, and both come from
+the same fact: **GSAP moves DOM that React believes it owns.** `pin` wraps the pinned
+element in a `pin-spacer`; `SplitText` replaces a heading's children with per-line spans.
+
+**The pin must not sit in a flex parent.** ScrollTrigger reserves the distance a pin
+holds for as `padding-bottom` on the spacer — and inside a flex container it cannot,
+because padding on a flex item does not reserve space the way it needs. It declines
+silently: no error, no warning, just `padding-bottom: 0`. The campaign's held frame sat
+in `flex flex-col gap-28` and was fixed for 900px that the document never accounted for,
+so every frame after it scrolled up over the top of it, caption over caption. The
+statement's pin, whose parent is `<main>`, reserved its 800px correctly throughout, which
+is what made this read as a campaign bug rather than a layout one. The sequence is a
+block column with margins now.
+
+**The revert must run in a layout effect.** React deletes a subtree's host nodes during
+the mutation phase and runs passive (`useEffect`) cleanups afterwards, so a `useScene`
+that reverted from a passive cleanup did so *after* React had already tried to remove a
+node the spacer had re-parented — `NotFoundError: Failed to execute 'removeChild'`, on
+every navigation away from `/`, with the route error boundary taking the page.
+Layout-effect cleanups run inside the deletion walk, before the node comes out. This is
+why `@gsap/react`'s `useGSAP` uses one; the hand-rolled subset here had copied everything
+but that.
+
 ### Three foundation fixes the scene system required
 
 All three were latent bugs that only manifest once pins exist, and all three are

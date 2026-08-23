@@ -33,9 +33,23 @@ export default function ProcessSection() {
         />
 
         <div className="section-lead grid gap-x-12 gap-y-14 lg:grid-cols-12">
-          {/* Bounded, per the sticky rule: on a short screen it scrolls its own
-              overflow rather than hiding its own bottom off the viewport. */}
-          <Reveal mode="mask" className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:max-h-[calc(100svh-var(--header-h)-5rem)] lg:self-start lg:overflow-y-auto">
+          {/* THE STICKY RULE APPLIES; THE SCROLLBAR DOES NOT.
+              A bounded sticky column is right — unbounded, it hides its own
+              bottom on a short screen. But the bound was `max-h` plus
+              `overflow-y-auto`, which is the mechanism for a column of TEXT.
+              A picture sizes its height from its width and its ratio, so on
+              any laptop the 3:4 frame came out taller than the bound and the
+              column grew a scrollbar down the side of the photograph: 812
+              against 748 at 1440x900, 717 against 648 at 1280x800, and again
+              at 1024x700. A frame you scroll inside is not a frame.
+
+              So the cap moves onto the frame itself and the scroller goes.
+              The height is clamped and `object-cover` takes the difference,
+              which is what every other frame on the site already does — at
+              1440 that is 8% off a detail shot, against a scrollbar. The
+              column keeps its full grid width, so the image still aligns to
+              the same vertical guide as the list beside it. */}
+          <Reveal mode="mask" className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:self-start">
             <ImageSlot
               image={{
                 code: "PRC-01",
@@ -45,6 +59,7 @@ export default function ProcessSection() {
               }}
               ratio="portrait"
               ratioSm="tall"
+              className="lg:max-h-[calc(100svh-var(--header-h)-5rem)]"
               sizes="(min-width: 1024px) min(48vw, 680px), 100vw"
             />
           </Reveal>
