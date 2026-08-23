@@ -315,9 +315,17 @@ is the whole argument for going full-bleed.
 ### Visual rhythm
 
 The home page deliberately avoids a repeating image → heading → cards loop. Scale,
-alignment, density and surface alternate: full-bleed hero, three-up specimen grid, black
-type-only statement, the campaign sequence's alternating frames, a sticky two-column
-story, a horizontal rail, black again. When adding a section, ask what it varies.
+alignment, density and surface alternate: full-bleed hero, three-up specimen grid, a
+pale statement at the heaviest step with one frame under it, the campaign sequence's
+alternating frames, a sticky two-column story, a horizontal rail, black again. When
+adding a section, ask what it varies.
+
+**Frames vary by register, not only by placement.** The stand-in pools are chosen by a
+slot's `kind` and `crop` (see `FillerImage`), and the home page spends a different one in
+each movement: `hero` behind the opening headline, `worn` and `street` through the
+campaign, `detail` in the studio, `flat` in the archive. The statement's frame takes
+`lifestyle` with no crop — a figure small inside a large piece of architecture, which was
+the register left, and the right one for a sentence about being deliberately small.
 
 **Captions hang to the foot of their frame.** A campaign frame's caption column is
 bottom-aligned (`md:self-end`), not top-aligned. Level with the top of a tall picture it
