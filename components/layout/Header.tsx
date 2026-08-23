@@ -209,7 +209,16 @@ export default function Header() {
           <div className="flex flex-col items-center justify-self-center">
             <Link
               href="/"
-              className="inline-flex shrink-0 items-center"
+              /* A 24px box, for the same reason the stamp below it has one.
+                 The mark was as tall as its glyphs — 18px on a phone — and the
+                 stamp sits flush under it with no gap at all, so the home link
+                 and `/drop` were two abutting targets 21px between centres.
+                 That is a mis-tap on the control every route carries.
+
+                 The box grows symmetrically around a glyph that was already
+                 centred in it, so the mark itself does not move; the pair is
+                 3px taller and the stamp drops by that much. */
+              className="inline-flex h-6 shrink-0 items-center"
               aria-label="THARROS — home"
             >
               <Wordmark className="type-wordmark" label={false} />

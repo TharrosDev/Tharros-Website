@@ -47,8 +47,21 @@ export default function CartDrawer() {
     name: string;
   } | null>(null);
 
+  /**
+   * The bag-was-adjusted notice, once the customer has actually seen the bag.
+   *
+   * `adjusted` compares stored lines against resolved ones, and nothing ever
+   * writes the resolution back — so a piece that sold out while it sat in
+   * somebody's bag made this banner true permanently. It reads as news, it
+   * carries `role="status"`, and it re-announced the same stale line on every
+   * open for the life of the bag. Told once, on the screen that shows what
+   * changed, and then done with.
+   */
+  const [noticeSeen, setNoticeSeen] = useState(false);
+
   const close = () => {
     setUndo(null);
+    setNoticeSeen(true);
     closeBag();
   };
 
@@ -100,7 +113,7 @@ export default function CartDrawer() {
         {/* The bag re-reads stock on every render, so a piece that sold out
             since it was added is dropped and an over-large quantity is clamped.
             Both used to happen in silence. */}
-        {adjusted ? (
+        {adjusted && !noticeSeen ? (
           <p
             role="status"
             className="type-meta shrink-0 border-b border-rule bg-surface-frame px-6 py-3 text-ink"

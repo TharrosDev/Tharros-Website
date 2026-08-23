@@ -320,6 +320,30 @@ export default function CheckoutFlow() {
     );
   };
 
+  /**
+   * Everything the composed email needs, checked before it is composed.
+   *
+   * The delivery step only ever validated the address, on the reasoning that
+   * the details step had already checked itself on the way through. The step
+   * rail breaks that: it walks backwards to a reachable step without
+   * validating, so blanking the email on Details and clicking "02 Delivery" to
+   * come back leaves the flow on a step whose checks pass. The one artefact
+   * this checkout produces is an order enquiry, and that path composes one with
+   * no name and no address to reply to — the single failure that makes the
+   * whole flow worthless, and it is silent.
+   *
+   * A failing detail field is off screen here, so `validate`'s focus move
+   * cannot land. The step it lives on is what gets shown instead; the errors it
+   * set are already rendered when it arrives.
+   */
+  const validateOrder = (): boolean => {
+    if (!validate(DETAIL_FIELDS)) {
+      goTo("details");
+      return false;
+    }
+    return validate(ADDRESS_FIELDS);
+  };
+
   if (!ready) {
     return (
       <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
@@ -507,7 +531,7 @@ export default function CheckoutFlow() {
             noValidate
             onSubmit={(event) => {
               event.preventDefault();
-              validate(ADDRESS_FIELDS);
+              validateOrder();
             }}
           >
             <h2
@@ -718,7 +742,7 @@ export default function CheckoutFlow() {
               <a
                 href={orderMail}
                 onClick={(event) => {
-                  if (!validate(ADDRESS_FIELDS)) event.preventDefault();
+                  if (!validateOrder()) event.preventDefault();
                 }}
                 className="btn btn-solid btn-full mt-8"
               >
