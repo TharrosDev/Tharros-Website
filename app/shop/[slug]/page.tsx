@@ -149,11 +149,50 @@ export default async function ProductPage({ params }: { params: Params }) {
           have been giving it to nothing; now that a frame carries a picture,
           the picture is what the page is for. */}
       <div className="page-frame mt-8 grid gap-x-16 gap-y-12 lg:grid-cols-12">
-        <div className="lg:col-span-7">
+        {/* THE PICTURE IS THE COLUMN THAT STICKS.
+            The sticky treatment used to be on the record beside it, which is
+            backwards in both directions: the record is 1763px and never fits a
+            screen, while the gallery is already capped — its main frame is
+            `78svh` with `object-cover` — so it comes in around 749px and fits
+            almost any desktop window. Sticking the tall one hid its own buy
+            control; sticking the short one keeps the garment on screen while
+            the specification scrolls past it, which is the way round the page
+            wanted anyway.
+
+            No `max-h` and no internal scroll: the frame is bounded by its own
+            `svh` height rather than by a cap on the column, which is the
+            pattern `ProcessSection` already uses for a picture in a sticky
+            column. The min-height query stands the whole thing down on a window
+            too short to hold it, so nothing is ever stuck out of reach.
+
+            660px is where it stops fitting, not a round number: the frame is
+            `0.78h`, the caption runs about 47px and the header clearance is
+            96px, so the column fits while `143 <= 0.22h` — h >= 650. The first
+            pass guessed 700 and left a real 677px-tall Chrome window unstuck
+            with the void still in it. */}
+        <div className="lg:col-span-7 [@media(min-height:660px)]:lg:sticky [@media(min-height:660px)]:lg:top-[calc(var(--header-h)+1.5rem)] [@media(min-height:660px)]:lg:self-start">
           <ProductGallery images={galleryImages(product)} productName={product.name} />
         </div>
 
-        <div className="no-scrollbar lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
+        {/* NOT STICKY, AND NOT AN INTERNAL SCROLLER.
+            It was both: capped at the viewport with `overflow-y-auto` and
+            `no-scrollbar`, which is the bound `CLAUDE.md` asks every sticky
+            column to carry. The bound is right for a column that nearly fits.
+            This one is 1419px of record — name, price, run, description, six
+            specimen rows, the size selector, the buy control and three
+            accordions — so it never fits any viewport, and what the cap
+            actually did was hide 639–839px of it behind a scroll region with
+            no scrollbar to say so.
+
+            Measured: the ADD TO BAG button sits at y=995 inside a column
+            clipped at 731 / 831 / 931. At 1440x700, x800 and x900 the primary
+            commerce control on the product page was not visible and not
+            reachable without discovering an invisible nested scroller. Only
+            1080-tall screens ever showed it.
+
+            A sticky column is for content shorter than the screen. This is not
+            that, so it scrolls with the page like the gallery beside it. */}
+        <div className="lg:col-span-4 lg:col-start-9 lg:self-start">
           {/* The record opens on an index like every other block on the site.
               It had none, which is why the page's section numbering started at
               02. The garment number moves up here out of the specimen table: it

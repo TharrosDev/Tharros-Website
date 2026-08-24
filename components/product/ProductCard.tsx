@@ -188,8 +188,16 @@ export default function ProductCard({
 
       <div className="flex items-start justify-between gap-4 pt-5">
         <div className="min-w-0">
+          {/* `-my-1 py-1` for the same reason the footer links carry it: the
+              name is the card's keyboard target and a `type-body` line is a
+              19px box, under the 24px minimum. The negative margin gives the
+              padding back to the layout, so the specimen row below does not
+              move. */}
           <h3 className="type-body font-medium">
-            <Link href={`/shop/${product.slug}`} className="link-rule-reveal">
+            <Link
+              href={`/shop/${product.slug}`}
+              className="link-rule-reveal -my-1 inline-block py-1"
+            >
               {product.name}
             </Link>
           </h3>

@@ -21,12 +21,18 @@ function Column({
   return (
     <div>
       <h2 className="type-meta text-ink-on-dark-faint">{title}</h2>
-      <ul className="mt-5 space-y-2.5">
+      {/* `py-1` on the link and a tighter gap between them. A `type-body-sm`
+          link is a 17px box, and the whole footer — every route's entire
+          secondary navigation — was under the 24px minimum that
+          `CLAUDE.md` already states and WCAG 2.5.8 requires. Padding on the
+          anchor rather than the `li` so the growth is inside the target, and
+          the gap comes down by the same amount so the column looks unchanged. */}
+      <ul className="mt-5 space-y-1">
         {links.map((link) => (
           <li key={`${link.name}-${link.href}`}>
             <Link
               href={link.href}
-              className="type-body-sm text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
+              className="type-body-sm inline-block py-1 text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
             >
               {link.name}
             </Link>
@@ -61,14 +67,14 @@ export default function Footer() {
           <Column title="Information" links={FOOTER_INFORMATION} />
           <div>
             <h2 className="type-meta text-ink-on-dark-faint">Follow</h2>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-5 space-y-1">
               {SOCIAL.map((social) => (
                 <li key={social.name}>
                   <a
                     href={social.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="type-body-sm text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
+                    className="type-body-sm inline-block py-1 text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
                   >
                     {social.name}
                   </a>
@@ -77,7 +83,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className="type-body-sm text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
+                  className="type-body-sm inline-block py-1 text-ink-on-dark-muted transition-colors hover:text-ink-on-dark"
                 >
                   {CONTACT_EMAIL}
                 </a>
