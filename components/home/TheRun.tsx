@@ -14,7 +14,10 @@ export default function TheRun() {
   const products = listProducts({ drop: CURRENT_DROP.id });
 
   return (
-    <section className="rhythm-default">
+    /* `relative` so the opening screen's detail frame, which hangs down over
+       the top of this section, has a positioned neighbour to sit against
+       rather than resolving its stacking against the page root. */
+    <section className="relative rhythm-default">
       <div className="page-frame">
         <SectionHeading
           index="01"

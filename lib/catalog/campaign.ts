@@ -32,11 +32,23 @@ export const CAMPAIGNS: Campaign[] = [
         code: "CMP-001-HERO",
         alt: "A figure in Drop 001 against a plain wall, daylight",
         kind: "campaign",
-        // Declared tall because the home page renders it tall: the opening
-        // screen gives it the right-hand half of the viewport, not a band
-        // across the top. A frame's ratio is what shape it is actually shown
-        // at, and `sceneFor` reads it to pick a picture of that shape.
+        // Declared tall because the shot wants to be tall: it is a standing
+        // figure, filling the opening screen, and a frame's ratio is what
+        // shape it is actually shown at. `sceneFor` reads it to pick a
+        // stand-in of that shape — a wide campaign picture centre-cropped into
+        // a full-height frame cuts the figure out of its own shot.
         ratio: "tall",
+      },
+      // The close frame that hangs off the bottom of the opening screen and
+      // over the section below it. Deliberately the cloth rather than the
+      // figure: every other frame above the fold is a person at distance, and
+      // the one thing a small label needs the first screen to say is that
+      // someone chose this fabric.
+      detail: {
+        code: "CMP-001-HERO-DETAIL",
+        alt: "The Arc Hoodie's cuff and cord, close",
+        kind: "detail",
+        ratio: "portrait",
       },
     },
     sequence: [
