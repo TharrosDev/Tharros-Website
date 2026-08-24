@@ -110,7 +110,23 @@ export default function DropOpening() {
         name="picture"
         className="pointer-events-none absolute inset-0 -z-10"
       >
-        <ImageSlot image={frame} fill priority sizes="100vw" />
+        {/* THE SUBJECT IS AT 62% ACROSS, SO THE CROP HAS TO KNOW THAT.
+            `object-cover` takes the centre, and the centre of a 16:9
+            photograph is not the centre of the box a phone gives it: at 390
+            this frame shows 28% of the picture's width, so centred it kept the
+            wall and cut the face off the right edge. Anchoring the crop at the
+            subject puts her in the middle of a narrow frame.
+
+            From `lg` the box is wide enough to hold nearly the whole picture,
+            and there the default centre is what is wanted — it leaves her at
+            62%, which is where the headline stops. */}
+        <ImageSlot
+          image={frame}
+          fill
+          priority
+          sizes="100vw"
+          imageClassName="object-[62%_center] lg:object-center"
+        />
       </SceneLayer>
 
         {/* THE TOP BAND. Anchored to the record row and the header above it,
