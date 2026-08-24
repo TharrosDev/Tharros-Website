@@ -482,9 +482,10 @@ for — but the overhaul makes it load-bearing rather than incidental.
   `MotionRuntime` clears it on boot, and if the runtime never arrives the timer
   sets `data-motion="off"` and forces every entrance to its resting state. Test
   it by blocking `/_next/static/chunks/*` and loading `/`.
-- **Author every pinned section unpinned first.** The pin goes on top of a DOM
-  that already reads. That is what makes the reduced-motion and no-JS paths a
-  real site rather than a broken one, and it is a review gate, not an intention.
+- **Nothing pins.** Every scene was authored unpinned first and the pin went on
+  top; the pin is now gone entirely, so what ships is the DOM that already
+  read. That is what makes the reduced-motion and no-JS paths a real site
+  rather than a broken one.
 
 ### The gestures
 
@@ -533,9 +534,15 @@ for — but the overhaul makes it load-bearing rather than incidental.
 
 These are not taste. They are what stops the system eating the site.
 
-- **Two pinned ScrollTriggers per route, never nested.** `/` spends its two on
-  the statement and on the campaign's one full-bleed frame. Three pinned frames
-  in a row is a corridor with no way out.
+- **No pinned ScrollTriggers, anywhere.** This used to be a budget of two per
+  route, spent on `/` by the statement and the campaign's one full-bleed frame.
+  It is now zero: **the site does not stop or slow the page at any point.** The
+  scroll belongs to the visitor and no scene takes it, however briefly. Both
+  scenes kept their choreography — they scrub as the section crosses the
+  viewport, which is exactly the branch every phone was already getting, since
+  a pin was never safe against a viewport that resizes as browser chrome
+  collapses. `e2e/routes.spec.ts` asserts no `.pin-spacer` exists on `/` or
+  `/drop` after a full scroll of the page.
 - **Never pin, scrub or entrance the LCP element.** The home `h1`, the first row
   of `/shop` (`priorityCount`), the lead gallery frame. `ProductGrid` sets
   `mode="still"` on its priority cards for exactly this reason.
@@ -576,18 +583,17 @@ the duplicate-name hazard are the real work — `view-transition-name` must be
 unique per document, and `/shop/[slug]` renders a related-products grid that
 can legitimately contain the card you arrived from.
 
-### The pin is conditional on width
+### There is no pin to make conditional
 
-`Scene` builds a pinned scene twice: held above `64rem`, and scrubbed without
-the hold below it (`QUERY.wide` / `QUERY.narrow` in `lib/motion/media.ts`). A
-phone's viewport changes height as the browser chrome collapses mid-scroll, so
-a pin there is a section measured against a moving ruler. Below `lg` the
-choreography is identical and only the hold is dropped.
+`Scene` used to build a pinned scene twice — held above `64rem` and scrubbed
+without the hold below it, because a phone's viewport changes height as the
+browser chrome collapses mid-scroll and a pin there is a section measured
+against a moving ruler. The complement was written as an explicit `max-width`
+rather than composed as `and not (...)`, because that form is Media Queries
+Level 4 and `matchMedia` silently never matches where it is unsupported.
 
-The complement is written as an explicit `max-width` rather than composed as
-`and not (...)`. That form is Media Queries Level 4, and `matchMedia` silently
-never matches where it is unsupported — which would drop the unpinned branch on
-exactly the devices that need it.
+All of it is gone. There is one branch now, it is the one every narrow screen
+was already taking, and `QUERY.wide` / `QUERY.narrow` were deleted with it.
 
 ### The opening title is CSS
 

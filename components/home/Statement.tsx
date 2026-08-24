@@ -22,26 +22,29 @@ import Scene, { SceneLayer } from "@/components/motion/Scene";
  * site's parallax says the same thing everywhere: the picture is the ground
  * and the type moves against it, never the reverse.
  *
- * THE HELD BEAT. This is the one pinned scene in the top half of the page. The
- * section is held still for the length of its own height while the statement
- * drifts up and the prose comes in under it, so the page stops moving for a
- * moment on the sentence that says what the label is. Everything either side
- * of it scrolls normally, which is what makes the stop legible as a stop
- * rather than as a stall.
+ * THE BEAT, NO LONGER HELD. This used to be a pinned scene: the section was
+ * fixed for 80% of its own height while the statement drifted up and the prose
+ * came in under it, so the page stopped moving for a moment on the sentence
+ * that says what the label is.
  *
- * It is authored as an ordinary stacked section first and pinned second. That
- * is why the reduced-motion and no-JS versions are not degraded: they are the
- * section as written, and the pin is something the scene does on top.
+ * The pin is gone at the owner's direction — the site is not to stop or slow
+ * the page anywhere. The choreography is unchanged and still scrubbed against
+ * scroll; the layers now drift as the section crosses the viewport under a
+ * scroll that never leaves the visitor's hands. This is exactly the branch
+ * `Scene` already built for narrow screens, where a pin was never safe, so it
+ * is a path that was always shipping rather than a new one.
  *
- * `rhythm-breath` rather than `rhythm-default`: the page's one held breath.
+ * It was authored as an ordinary stacked section first and pinned second,
+ * which is why removing the pin costs nothing: what is left is the section as
+ * written.
+ *
+ * `rhythm-breath` rather than `rhythm-default`: the page's one long breath.
  */
 export default function Statement() {
   return (
     <Scene
       as="section"
       className="on-pale rhythm-breath"
-      pin
-      end="+=80%"
       steps={[
         { at: 0, layer: "title", to: { yPercent: -14 } },
         { at: 0, layer: "frame", to: { yPercent: -6 } },

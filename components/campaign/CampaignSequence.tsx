@@ -76,13 +76,17 @@ export default function CampaignSequence({
 
           if (i === pinnedIndex) {
             return (
-              // THE HELD SHOT. The frame is pinned for its own height while
-              // the picture settles out of an over-scale — a camera coming to
-              // rest rather than a zoom.
+              // THE SHOT THAT SETTLES. The picture comes out of an over-scale
+              // as the frame crosses the viewport — a camera coming to rest
+              // rather than a zoom.
+              //
+              // It used to be pinned, holding the page for 90% of its own
+              // height while the scale played out. The pin is gone at the
+              // owner's direction: nothing on this site stops or slows the
+              // scroll. The move itself is unchanged, and it is the same
+              // unpinned branch `Scene` already built for narrow screens.
               <Scene
                 key={frame.id}
-                pin
-                end="+=90%"
                 /* THE OVER-SCALE HAS TO BE CROPPED BY SOMETHING.
                    `scene-oversize` is `scale(1.14)`, and a scaled box expands
                    the scrollable area of the document unless an ancestor clips

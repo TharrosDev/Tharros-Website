@@ -177,40 +177,36 @@ test("/new still redirects to the drop", async ({ page }) => {
  */
 test.describe("scenes that move the DOM", () => {
   /**
-   * A pin has to reserve the distance it holds for.
+   * NOTHING ON THIS SITE HOLDS THE PAGE.
    *
-   * ScrollTrigger reserves it as `padding-bottom` on the spacer it wraps the
-   * pinned element in — and it silently declines to do that when the parent is
-   * a flex container, because it cannot pad a flex item into reserving space.
-   * The campaign's held frame sat in `flex flex-col gap-28` and reserved zero
-   * against `end="+=90%"`, so it was fixed for 900px the document never
-   * accounted for, and every frame after it scrolled up over the top of it —
-   * caption over caption, two "In this frame" lists in the same place.
+   * The scroll is the visitor's and no scene takes it: there are no pinned
+   * ScrollTriggers anywhere, at the owner's direction. This asserts the
+   * absence, because the failure it guards is a quiet one — `pin: true` is a
+   * one-word change, it looks correct in review, and what it produces is a
+   * section that stops the page.
    *
-   * Asserted as "no spacer reserves nothing" rather than against a number: how
-   * far a scene holds is its own business, that it reserves anything at all is
-   * the invariant.
+   * The routes checked are the two that used to hold: `/` pinned the statement
+   * and the campaign's first full-bleed frame, and `/drop` pinned the same
+   * frame through the shared sequence.
+   *
+   * It waits on `.split-line` first. That class only exists once GSAP has
+   * booted and SplitText has run, so it is proof the motion runtime actually
+   * arrived — without it the assertion passes on any page where nothing ran.
    */
-  test("every pin reserves the scroll it holds", async ({ page }, testInfo) => {
-    // Pins are `lg` and up by design — below that a scene keeps its
-    // choreography and loses the hold, so there is no spacer to check.
-    // See QUERY.wide in lib/motion/media.ts.
-    const width = testInfo.project.use.viewport?.width ?? 0;
-    test.skip(width < 1024, "scenes do not pin below lg");
-
-    await page.goto("/");
-    await page.waitForSelector(".pin-spacer", { timeout: 15_000 });
-
-    const reserved = await page.$$eval(".pin-spacer", (spacers) =>
-      spacers.map((spacer) => ({
-        parent: getComputedStyle(spacer.parentElement!).display,
-        padding: parseFloat(getComputedStyle(spacer).paddingBottom),
-      })),
-    );
-
-    expect(reserved.length).toBeGreaterThan(0);
-    for (const spacer of reserved) {
-      expect(spacer.padding, `pin in a ${spacer.parent} parent`).toBeGreaterThan(0);
+  test("no scene pins the page", async ({ page }) => {
+    for (const route of ["/", "/drop"]) {
+      await page.goto(route);
+      await page.waitForSelector(".split-line", { timeout: 15_000 });
+      // A pin is created on the trigger's first evaluation, so scroll the
+      // whole page past every scene before looking for a spacer.
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 400) {
+          window.scrollTo(0, y);
+          await new Promise((r) => requestAnimationFrame(r));
+        }
+      });
+      const spacers = await page.locator(".pin-spacer").count();
+      expect(spacers, `${route} must not pin`).toBe(0);
     }
   });
 
