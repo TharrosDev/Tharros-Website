@@ -41,6 +41,21 @@ type Props = {
   sizes?: string;
   priority?: boolean;
   className?: string;
+  /**
+   * Classes for the PICTURE rather than for the frame around it — in practice
+   * `object-position`, which is the one piece of art direction a single file
+   * still needs.
+   *
+   * `object-cover` crops to the centre, and the centre of a 16:9 photograph is
+   * nowhere near the centre of the 0.5-aspect box a phone gives it. The home
+   * hero's subject sits at 62% across; centred, a phone showed the 28% of the
+   * frame either side of the middle and cut her out of her own picture.
+   *
+   * A class rather than a style prop, because the value is per-breakpoint and
+   * an inline style cannot carry a media query. Written literally at the call
+   * site so Tailwind can see both halves of `object-[62%_center] lg:object-center`.
+   */
+  imageClassName?: string;
   /** Fill the parent instead of holding its own aspect ratio. */
   fill?: boolean;
 };
@@ -59,6 +74,7 @@ export default function ImageSlot({
   sizes = "100vw",
   priority = false,
   className = "",
+  imageClassName = "",
   fill = false,
 }: Props) {
   const wide = ratio ?? image.ratio;
@@ -78,7 +94,13 @@ export default function ImageSlot({
   if (!image.src && FILLER_IMAGES) {
     return (
       <div className={`${shape} overflow-hidden bg-surface-frame ${className}`}>
-        <FillerImage image={image} ratio={ratio} sizes={sizes} priority={priority} />
+        <FillerImage
+          image={image}
+          ratio={ratio}
+          sizes={sizes}
+          priority={priority}
+          className={imageClassName}
+        />
       </div>
     );
   }
@@ -122,7 +144,7 @@ export default function ImageSlot({
         fill
         sizes={sizes}
         priority={priority}
-        className="object-cover"
+        className={`object-cover ${imageClassName}`}
       />
     </div>
   );
