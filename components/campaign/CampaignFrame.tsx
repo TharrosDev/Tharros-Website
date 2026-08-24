@@ -25,6 +25,7 @@ export default function CampaignFrame({
   ratioSm,
   priority = false,
   onDark = false,
+  held = false,
 }: {
   frame: Frame;
   align?: "left" | "right" | "full";
@@ -32,6 +33,15 @@ export default function CampaignFrame({
   ratioSm?: Ratio;
   priority?: boolean;
   onDark?: boolean;
+  /**
+   * This frame is the sequence's held shot: its PICTURE carries the scene's
+   * over-scale and answers to the `shot` layer.
+   *
+   * A boolean rather than a class and a layer name plumbed in from the caller,
+   * because which box in here is the picture is this component's business. The
+   * caller only knows that one frame in the sequence is the one being held.
+   */
+  held?: boolean;
 }) {
   const muted = onDark ? "text-ink-on-dark-faint" : "text-ink-faint";
   const rule = onDark ? "border-rule-on-dark" : "border-rule";
@@ -85,7 +95,24 @@ export default function CampaignFrame({
         <div
           className="relative h-[86svh] w-full overflow-hidden"
         >
-          <ImageSlot image={frame.image} fill sizes="100vw" priority={priority} />
+          {/* THE OVER-SCALE BELONGS TO THE PICTURE, NOT TO THE FIGURE.
+              It used to sit on a wrapper around the whole of this component,
+              which meant the scene was scaling the caption, the numeral and the
+              worn list along with the photograph — type enlarged by a transform
+              rather than set at a size, so it rendered soft and off its own
+              ladder, and the caption's page-frame gutter was pushed past the
+              edge of the screen (9px at 1440, 26px at 390) and clipped.
+              The comment in CampaignSequence already said the camera moves
+              inside the shot rather than outside it. This is where that is
+              actually true: the scaled box is inside the `overflow-hidden`
+              above it, so the picture zooms within its frame and nothing else
+              in the composition moves at all. */}
+          <div
+            data-layer={held ? "shot" : undefined}
+            className={`absolute inset-0 ${held ? "scene-oversize" : ""}`}
+          >
+            <ImageSlot image={frame.image} fill sizes="100vw" priority={priority} />
+          </div>
           {markers}
         </div>
         <figcaption className="page-frame mt-6">

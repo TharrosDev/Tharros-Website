@@ -220,7 +220,20 @@ export default function IndexOverlay({
         </button>
       </div>
 
-      <div className="page-frame flex flex-1 flex-col justify-center py-10">
+      {/* THE NAVIGATION HAS TO FIT THE SCREEN IT OPENS ON.
+          At `display-2` a destination row is 126px, so four of them plus the
+          drop line and the footer wanted 959px — on a 675px laptop viewport
+          that put About, Account, Saved and all three social links below the
+          fold of a surface that IS the site's navigation, with no scroll cue.
+          The rung and the padding step down on a short viewport instead. The
+          height query rather than a width one because this is a height
+          problem: a 1440x1900 monitor never had it.
+
+          980px, not 820: the full-size list needs 959px, so anything short of
+          about a thousand has to use the compact one. The first pass drew the
+          line at 820 and left every 900px-tall laptop still cutting the social
+          row off the bottom. */}
+      <div className="page-frame flex flex-1 flex-col justify-center py-10 [@media(max-height:980px)]:py-5">
         {/* The drop leads the index: it is what the label is currently doing. */}
         <div className="rule-draw flex flex-wrap items-baseline gap-x-5 gap-y-1 pt-4">
           <span className="type-mono-2 text-signal-on-dark">{CURRENT_DROP.index}</span>
@@ -249,12 +262,12 @@ export default function IndexOverlay({
                     // Centred, not baseline-aligned: an 11px index sitting on
                     // the baseline of display type reads as belonging to the
                     // rule below it rather than to its own row.
-                    className="group flex items-center gap-6 py-4 md:py-5"
+                    className="group flex items-center gap-6 py-4 md:py-5 [@media(max-height:980px)]:md:py-2.5"
                   >
                     <span className="num type-meta text-ink-on-dark-faint">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="type-display-3 uppercase transition-transform duration-500 ease-out group-hover:translate-x-3 md:type-display-2">
+                    <span className="type-display-3 uppercase transition-transform duration-500 ease-out group-hover:translate-x-3 md:type-display-2 [@media(max-height:980px)]:md:type-display-3">
                       {item.name}
                     </span>
                     {active ? (

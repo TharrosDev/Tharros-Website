@@ -39,9 +39,16 @@ export default function Breadcrumbs({ trail, current, className = "" }: Props) {
             search term. An unbroken 400-character query took the document to
             3296px wide at every viewport — the page scrolled sideways on a
             phone, and the trail is the one element here whose content nobody
-            on this side gets to choose the length of. */}
+            on this side gets to choose the length of.
+
+            It opens up from `md`, because 22ch is the bound a 320px screen
+            needs and it was being applied to a 1440px one as well: `/shop`
+            rendered its own page title as "EVERYTHING MADE S…" with more than
+            half the viewport empty beside it. `truncate` is what actually
+            prevents the overflow; the max-width only has to stay inside the
+            room the screen has. */}
         {current ? (
-          <li title={current} className="max-w-[22ch] truncate text-ink">
+          <li title={current} className="max-w-[22ch] truncate text-ink md:max-w-[46ch]">
             {current}
           </li>
         ) : null}

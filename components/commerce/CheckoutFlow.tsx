@@ -218,7 +218,22 @@ function Field({
   );
 }
 
-export default function CheckoutFlow() {
+export default function CheckoutFlow({
+  notice,
+}: {
+  /**
+   * The "no card can be taken yet" panel, passed in from the page rather than
+   * rendered above this component.
+   *
+   * It has to be here because whether it belongs on screen depends on the bag,
+   * and the bag is client state. Rendered unconditionally by the page it was
+   * explaining the payment situation to someone whose bag is empty — four
+   * lines about the checkout they cannot start, above the line telling them
+   * why. It stays for the loading state, because with scripting unavailable
+   * that is the only state there is and the page should still say the thing.
+   */
+  notice?: React.ReactNode;
+}) {
   const { lines, subtotal, ready } = useCart();
   const form = useSyncExternalStore(
     formStore.subscribe,
@@ -346,9 +361,12 @@ export default function CheckoutFlow() {
 
   if (!ready) {
     return (
-      <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
-        Loading your bag
-      </p>
+      <>
+        {notice}
+        <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
+          Loading your bag
+        </p>
+      </>
     );
   }
 
@@ -415,7 +433,9 @@ export default function CheckoutFlow() {
   const summary = <OrderSummary shippingOptionId={shippingOption} />;
 
   return (
-    <div className="grid gap-12 pb-24 lg:grid-cols-12 lg:gap-16">
+    <>
+      {notice}
+      <div className="grid gap-12 pb-24 lg:grid-cols-12 lg:gap-16">
       <div className="lg:col-span-7" ref={panelRef}>
         {/* The rail is navigable backwards. It was a flat list of `<li>`s, so
             the only way back to a typed-in address was the one Back button on
@@ -761,9 +781,16 @@ export default function CheckoutFlow() {
         ) : null}
       </div>
 
-      <div className="no-scrollbar hidden lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:block lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
+      {/* `no-scrollbar` is gone. The cap is right here — a bag summary beside a
+          form genuinely wants to stay put, and it is short enough that most
+          orders never reach the bound — but hiding the scrollbar on a region
+          that can still overflow means a long bag loses lines with nothing on
+          screen to say they exist. The platform's own scrollbar is the
+          affordance; it only appears when there is something to scroll. */}
+      <div className="hidden lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:block lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
         {summary}
       </div>
-    </div>
+      </div>
+    </>
   );
 }

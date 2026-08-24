@@ -1,7 +1,7 @@
 import CampaignFrame from "./CampaignFrame";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Scene, { SceneLayer } from "@/components/motion/Scene";
+import Scene from "@/components/motion/Scene";
 import { campaignFor } from "@/lib/catalog/campaign";
 
 /**
@@ -100,18 +100,20 @@ export default function CampaignSequence({
                   { at: 0, span: 0.7, layer: "shot", to: { scale: 1, ease: "none" } },
                 ]}
               >
-                <SceneLayer
-                  name="shot"
-                  // `scene-oversize` is the resting state the scrub settles
-                  // out of, and it lives in CSS behind [data-js] rather than
-                  // in a step's `from`: GSAP arrives a frame or two after
-                  // paint, so a `from` would show the picture at rest and then
-                  // jump it — and with scripting off nothing would ever bring
-                  // an inline over-scale back down.
-                  className="scene-oversize"
-                >
-                  <CampaignFrame frame={frame} align={align} />
-                </SceneLayer>
+                {/* No SceneLayer here. `held` puts `data-layer="shot"` and
+                    `scene-oversize` on the PICTURE inside CampaignFrame, which
+                    is the only part of the frame the camera is supposed to
+                    move — wrapping the whole component scaled the caption and
+                    the worn list with it. `Scene` finds the layer by its
+                    attribute wherever it lives, so nothing else changes.
+
+                    `scene-oversize` is still the resting state the scrub
+                    settles out of, and still lives in CSS behind [data-js]
+                    rather than in a step's `from`: GSAP arrives a frame or two
+                    after paint, so a `from` would show the picture at rest and
+                    then jump it — and with scripting off nothing would ever
+                    bring an inline over-scale back down. */}
+                <CampaignFrame frame={frame} align={align} held />
               </Scene>
             );
           }

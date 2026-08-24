@@ -50,10 +50,19 @@ export default function PageIntro({
         <Breadcrumbs trail={crumbs} current={title} className="mb-8" />
       ) : null}
 
+      {/* THE EYEBROW DOES NOT SAY THE TITLE BACK.
+          `label` names the section and `title` names the page, and on two
+          routes they are the same word — `/wishlist` opened "01 SAVED" above
+          "SAVED" above "NOTHING SAVED.", which is the word three times inside
+          400px, and `/checkout` did the same with "Checkout". Where they agree
+          there is nothing for the label to add, so the index carries the row on
+          its own. */}
       <div className="flex items-baseline gap-4 border-t border-ink pt-4">
         <p className="eyebrow">
           <span className="num">{index}</span>
-          <span>{label}</span>
+          {label.trim().toLowerCase() === title.trim().toLowerCase() ? null : (
+            <span>{label}</span>
+          )}
         </p>
       </div>
 
