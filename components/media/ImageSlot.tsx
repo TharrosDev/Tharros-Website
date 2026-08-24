@@ -28,6 +28,25 @@ const RATIO_CLASS_MD: Record<Ratio, string> = {
   square: "md:ratio-square",
 };
 
+/**
+ * The same shapes as numbers, for a frame that has to be sized by its HEIGHT.
+ *
+ * A slot is normally sized by its width and takes its height from the ratio,
+ * which is right everywhere the picture is one column of a layout. Where the
+ * *height* is what is bounded — a campaign frame held to a fraction of the
+ * viewport — the arithmetic runs the other way: cap the width at
+ * `height x ratio` and the height can never exceed the bound, so nothing has to
+ * be clipped off the bottom of a photograph to make it fit.
+ */
+export const RATIO_VALUE: Record<Ratio, number> = {
+  tall: 2 / 3,
+  portrait: 3 / 4,
+  editorial: 4 / 5,
+  campaign: 16 / 9,
+  wide: 21 / 9,
+  square: 1,
+};
+
 type Props = {
   image: ImageSlotData;
   /** Override the ratio the data declares — e.g. a portrait shot run wide. */

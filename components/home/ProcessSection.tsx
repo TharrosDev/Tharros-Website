@@ -61,7 +61,8 @@ export default function ProcessSection() {
           <ImageSlot
             image={{
               code: "PRC-01",
-              alt: "A pattern piece and a part-sewn sample on a work table",
+              src: "/photography/prc-01.jpg",
+              alt: "Pattern pieces weighted flat beside a part-sewn sample on a work table",
               kind: "detail",
               ratio: "wide",
             }}

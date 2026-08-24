@@ -10,7 +10,23 @@ export default function WishlistView() {
   if (!ready) {
     // Nothing renders until storage is read — a flash of "empty" would read as
     // data loss to someone with saved pieces.
-    return <div className="min-h-[40svh]" aria-hidden="true" />;
+    //
+    // But that blank is what the SERVER sends, so with scripting unavailable it
+    // is the whole page: `main` held seven characters, the word in the heading.
+    // The saved list genuinely cannot work without storage, and saying so is
+    // the honest version of a page that otherwise just looks broken. `noscript`
+    // rather than a rendered fallback, because a reader who has JavaScript is
+    // about to get the real answer a frame later and must not see this.
+    return (
+      <div className="min-h-[40svh]">
+        <noscript>
+          <p className="type-body text-ink-muted">
+            Saved pieces are kept in this browser rather than in an account, so
+            this list needs JavaScript to read them back.
+          </p>
+        </noscript>
+      </div>
+    );
   }
 
   if (products.length === 0) {
