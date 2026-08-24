@@ -201,6 +201,12 @@ export type CampaignFrame = {
   /** Shown in the mono layer beside the frame. */
   index: string;
   image: ImageSlotData;
+  /**
+   * A second, smaller frame set with the first — the cloth close up where the
+   * main image is a figure at distance. Only the home page's opening frame
+   * carries one, and it is optional because most frames are one photograph.
+   */
+  detail?: ImageSlotData;
   /** A line set with the frame. Most frames carry none. */
   line?: string;
   caption?: string;

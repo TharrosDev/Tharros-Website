@@ -37,9 +37,17 @@ export default function WornList({
   if (products.length === 0) return null;
 
   // Over a picture the faint tone has no headroom — it only just clears AA on
-  // pure black — so the on-dark metadata layer steps up one stop. Hierarchy is
-  // carried by the mono face and scale instead of by tone.
-  const muted = onDark ? "text-ink-on-dark-muted" : "text-ink-faint";
+  // pure black — so the on-dark metadata layer steps up. It stepped up ONE
+  // stop, to `--ink-on-dark-muted`, and that is not enough: muted is tuned
+  // against near-black, and a photograph is not near-black. Measured by pixel
+  // readback against the home hero's own frame it lands at 2.2–2.9 wherever the
+  // picture behind it is pale, which is most of a daylight shot against a wall.
+  //
+  // So on a picture the metadata is paper held back to 90%, which measures
+  // 4.6–5.9 over the same grounds. Hierarchy is carried by the mono face and
+  // scale rather than by tone — which is what the rule always said it was,
+  // there was simply no tone left to spend.
+  const muted = onDark ? "text-ink-on-dark/90" : "text-ink-faint";
   const rule = onDark ? "border-rule-on-dark" : "border-rule";
 
   return (

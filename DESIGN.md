@@ -721,17 +721,42 @@ which is what grading them to a house palette did.
 ### Type over pictures
 
 `--ink-on-dark-faint` only just clears AA on pure black, so it has **no headroom over a
-photograph**. Metadata set over imagery uses `--ink-on-dark-muted` and carries its
-hierarchy through the mono face and scale instead. Scrims are anchored to the block they
-protect, not to a fraction of the viewport — viewport-fraction bands drift as the screen
-height changes and leave text on bare picture. Verify by pixel readback, never by parsing
-`getComputedStyle().color`: Chromium returns these as `lab()`.
+photograph**. Scrims are anchored to the block they protect, not to a fraction of the
+viewport — viewport-fraction bands drift as the screen height changes and leave text on
+bare picture. Verify by pixel readback, never by parsing `getComputedStyle().color`:
+Chromium returns these as `lab()`.
+
+**And `--ink-on-dark-muted` is not the answer over a picture either.** This section used
+to say metadata over imagery steps up one stop to muted and carries its hierarchy through
+the mono face and scale. The second half is right; the first half was one stop short.
+Muted is tuned against near-black, and a daylight photograph against a pale wall is not
+near-black. Measured by pixel readback on the home hero, the release record came in at
+**1.65:1** and the worn list's heading at 2.2–2.5 — straight AA failures on the site's
+most visited route, under bands that looked deep enough by eye.
+
+The tone over a photograph is **paper held back to 90%** (`text-ink-on-dark/90`), which
+measures 4.7–6.7 over the same grounds. Hierarchy is carried by the mono face and scale,
+exactly as before — there was simply no tone left to spend on it. Two places apply it:
+the home hero's record row and `WornList`'s `onDark` branch, which is also what
+`CampaignFrame` renders through.
+
+The band levels moved with it, because neither fixed the row alone: the hero's top band
+holds `black/55` at its mid stop rather than `black/35`, and the foot band `black/55`
+rather than `black/50`. A band is only worth the level it actually holds **where the text
+is**, which is not something the gradient's endpoints tell you — measure it.
 
 **Anchored bands, and nothing on top of them.** The home hero carried `bg-black/45` across
 the whole frame *in addition* to its two anchored bands and the header's own gradient —
 four dimming layers, on a site whose thesis is that the clothing supplies the colour. The
 only part of the picture ever seen undimmed was the middle third, which is the part with
 nothing in it. The flat wash is gone. The bands stay, and they are the only ones.
+
+The foot band is **`max(24rem, 44svh)`**, down from `max(36rem, 62svh)`. It was that deep
+because the opening screen's foot was a five-block column — statement, run figures, ledger
+bar, controls, worn rail — and a stack that tall needs two thirds of the frame dimmed
+behind it. The figures and the ledger bar are gone from the hero (`runStatus()` prints
+them under every card in *the run*, one screen below), so the column is three blocks and
+the band is the depth those three actually need.
 
 ---
 

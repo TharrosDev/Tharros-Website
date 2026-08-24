@@ -98,7 +98,7 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop |
+| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it, and a detail frame hangs across the join. |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
@@ -228,6 +228,17 @@ contrast fact, not a preference.
   and a hole where it does not. `globals.css` drops the lower section's opening interval
   on a same-surface join. Nothing to do at a call site; just do not add a compensating
   margin on top of it.
+- **The opening screen is not full height and must not become full height again.** It is
+  `88svh` / `92svh` from `md`, so the paper of *the run* and the top of its drawn rule sit
+  under the picture. That change of surface is the only scroll affordance on the page —
+  there is no "scroll" microcopy and no chevron, and a hero at `100svh` takes the cue away
+  and leaves a splash screen. `DropOpening` also clips on two axes for two different
+  reasons: `overflow-x-clip` on the root (the pushed-in picture must not widen the page)
+  and `overflow-hidden` on the inner plate (the wordmark is cut by the bottom edge). The
+  detail frame escapes downward through the gap between them.
+- **Text over a photograph is `text-ink-on-dark/90`, never `-muted`.** Muted is tuned
+  against near-black and fails AA over a pale picture — the release record measured 1.65:1.
+  `DESIGN.md` §7 has the figures. Check a change here by pixel readback, not by eye.
 - **Anything anchored to the foot of the viewport takes `.pb-safe`** — the panel, not the
   block inside it. Five surfaces needed it and only `BuyPanel` had it.
 - Buttons: `.btn` + `.btn-solid | -inverse | -outline | -outline-on-dark`. Square, 0
