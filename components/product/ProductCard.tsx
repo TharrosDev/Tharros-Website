@@ -76,8 +76,31 @@ export default function ProductCard({
           the heart and every quick-add size button — so keyboard focus went
           invisible on the one surface with the most focusable controls. */}
       <div className="relative">
+        {/* THE PICTURE IS THE SECOND WAY IN, NOT A SECOND LINK.
+            The card carries two routes to the same product — this frame and
+            the name under it — which is right for a pointer and wrong for
+            everything else: a screen reader announced the destination twice
+            per card, and this one announced it as its own photograph, because
+            a link wrapping only images takes its accessible name from their
+            `alt`. On /shop that is nine pieces read out as eighteen links, half
+            of them called things like "A figure in Drop 001 against a plain
+            wall, daylight".
+
+            So it leaves the accessibility tree and the tab order, and the name
+            under it becomes the single named link to the piece. It stays a real
+            anchor, so clicking the picture, middle-clicking it and copying its
+            address all still work.
+
+            `aria-hidden` with `tabIndex={-1}` rather than either alone: hiding
+            a focusable element is what makes `aria-hidden` invalid, and taking
+            it out of the tab order without hiding it leaves the duplicate in
+            the links list. It holds no focusable descendants — the heart and
+            the quick-add strip are siblings below, deliberately outside this
+            frame. */}
         <Link
           href={`/shop/${product.slug}`}
+          aria-hidden="true"
+          tabIndex={-1}
           className="block overflow-hidden"
         >
           <div className="hover-zoom">

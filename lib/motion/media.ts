@@ -17,26 +17,13 @@ export const QUERY = {
   coarse: "(pointer: coarse)",
   motion: "(prefers-reduced-motion: no-preference)",
   reduced: "(prefers-reduced-motion: reduce)",
-  /**
-   * The floor for pinning. A pinned section is measured against the viewport,
-   * and a phone's viewport changes height as the browser chrome collapses
-   * mid-scroll — so a pin there is a section that jitters against a moving
-   * ruler. Below this width a pinned scene keeps its choreography and loses
-   * only the hold.
-   *
-   * 64rem is `lg`, which is also where the site's two-column compositions
-   * start; a pin below that would be holding a single stacked column, which is
-   * a stall rather than a held beat.
-   */
-  wide: "(min-width: 64rem)",
-  /**
-   * The complement of `wide`, written out rather than composed as
-   * `and not (...)` — that form is Media Queries Level 4 and `matchMedia`
-   * silently never matches where it is unsupported, which would drop the
-   * unpinned branch of every scene on the devices that need it most.
-   */
-  narrow: "(max-width: 63.999rem)",
 } as const;
+
+/*
+ * `wide` and `narrow` used to live here — the width floor a pinned scene was
+ * allowed above, and its explicitly written complement. Nothing pins any more,
+ * so both are gone rather than kept for a caller that no longer exists.
+ */
 
 /** Read once, imperatively — for the bail-before-attaching path. */
 export function prefersReducedMotion(): boolean {

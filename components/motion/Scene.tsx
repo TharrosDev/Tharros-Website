@@ -33,8 +33,6 @@ export type SceneStep = {
 type Props = {
   children: React.ReactNode;
   steps: SceneStep[];
-  /** Hold the scene still while its timeline plays out. */
-  pin?: boolean;
   /**
    * Tie the timeline to the scrollbar. A number is the lag in seconds; `true`
    * snaps directly. Off means the scene plays once on entry.
@@ -42,7 +40,7 @@ type Props = {
   scrub?: boolean | number;
   /** ScrollTrigger start, e.g. "top top" or "top 70%". */
   start?: string;
-  /** ScrollTrigger end. With `pin`, this is how long the scene is held. */
+  /** ScrollTrigger end. */
   end?: string;
   className?: string;
   as?: "div" | "section" | "figure";
@@ -79,10 +77,9 @@ type Props = {
 export default function Scene({
   children,
   steps,
-  pin = false,
   scrub = SCRUB,
-  start = pin ? "top top" : "top 80%",
-  end = pin ? "+=100%" : "bottom top",
+  start = "top 80%",
+  end = "bottom top",
   className = "",
   as = "div",
 }: Props) {
@@ -97,20 +94,21 @@ export default function Scene({
 
       const media = gsap.matchMedia();
 
-      // A pinned scene is built twice: held on a wide screen, and scrubbed
-      // without the hold below that. See QUERY.wide — a phone's viewport
-      // changes height as the browser chrome collapses, so a pin there is a
-      // section measured against a moving ruler. The choreography is identical
-      // either way; only the hold is conditional.
-      const build = (holding: boolean) => () => {
+      // NOTHING HERE HOLDS THE PAGE.
+      //
+      // A scene used to be buildable twice — pinned on a wide screen, scrubbed
+      // without the hold below that, because a phone's viewport changes height
+      // as the browser chrome collapses and a pin there is a section measured
+      // against a moving ruler. The narrow branch is now the only branch: the
+      // site does not stop or slow the scroll anywhere, at the owner's
+      // direction, so `pin`, the wide/narrow split and the pin budget are all
+      // gone with it. What is left is what every phone was already getting.
+      const build = () => {
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: node,
-            start: holding ? start : "top 80%",
-            end: holding ? end : "bottom top",
-            pin: holding,
-            // Pinning without this leaves a 1px seam where the spacer rounds.
-            anticipatePin: holding ? 1 : 0,
+            start,
+            end,
             scrub,
             invalidateOnRefresh: true,
           },
@@ -136,12 +134,7 @@ export default function Scene({
         timeline.totalDuration(1);
       };
 
-      if (pin) {
-        media.add(`${QUERY.motion} and ${QUERY.wide}`, build(true));
-        media.add(`${QUERY.motion} and ${QUERY.narrow}`, build(false));
-      } else {
-        media.add(QUERY.motion, build(false));
-      }
+      media.add(QUERY.motion, build);
 
       // Still — and still means the state the scene STARTS at, not the one it
       // ends on.
@@ -176,7 +169,7 @@ export default function Scene({
         }
       });
     },
-    [steps, pin, scrub, start, end],
+    [steps, scrub, start, end],
   );
 
   return (
