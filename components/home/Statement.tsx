@@ -1,44 +1,38 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
-import ImageSlot from "@/components/media/ImageSlot";
 import Scene, { SceneLayer } from "@/components/motion/Scene";
 
 /**
- * The pause between the drop and the process, and the page's heaviest sentence.
+ * The pause between the drop and the studio: one sentence at the top of the
+ * ladder, and a short block indented under it. Type only.
  *
- * The statement takes the top of the band at the heaviest step on the ladder,
- * and under it a frame and the prose share one row — so the section is a pause
- * because it is loud and short, not because it is empty.
+ * NO PICTURE HERE ANY MORE. The band used to hold a square `lifestyle` frame on
+ * the left with the prose hung to its foot on the right, and the composition
+ * had two faults that only a measurement makes obvious. The prose was
+ * bottom-aligned against a 615px picture, so the top two thirds of the right
+ * column — 560 x 430px at 1440x900 — was empty page; and the whole section ran
+ * 1686px, 1.9 viewports, to carry 55 words and one photograph. That is the
+ * "empty space around not much" the section was accused of.
  *
- * THE FRAME. This band held type and nothing else for a while, and the left of
- * it read as a hole rather than as a rest. The picture fills it and takes the
- * one register the home page was not already spending: `lifestyle` with no
- * crop, which is a figure small inside a large piece of architecture. The hero
- * is a `hero` frame, the campaign runs `street` and `worn`, the studio is
- * `detail` and the archive is `flat` — a scene is the only one left, and it
- * happens to be the right one for a sentence about being deliberately small.
+ * The frame is also the reason the band had nothing of its own to say. A figure
+ * small inside a large piece of architecture is the register the campaign
+ * sequence two sections below already owns, so 02 was previewing 04 rather than
+ * contrasting with it. Handing the picture back leaves 02 the one thing on the
+ * page that is purely typographic, between a grid of photographs above it and a
+ * photograph below it — which is what makes it read as a pause rather than as
+ * another picture section with more air around it.
  *
- * It is the slowest plane in the scene, at a third of the prose's travel. The
- * site's parallax says the same thing everywhere: the picture is the ground
- * and the type moves against it, never the reverse.
+ * The prose runs as one row under the title, both columns top-aligned, rather
+ * than hung to the foot of anything. Nothing on this page is bottom-aligned to
+ * a picture that is no longer there.
  *
- * THE BEAT, NO LONGER HELD. This used to be a pinned scene: the section was
- * fixed for 80% of its own height while the statement drifted up and the prose
- * came in under it, so the page stopped moving for a moment on the sentence
- * that says what the label is.
+ * `split` stays. This is the page's statement and the one place `SplitLines` is
+ * spent on `/` — `e2e/routes.spec.ts` waits on `.split-line` as its proof that
+ * the motion runtime booted before it asserts nothing pinned.
  *
- * The pin is gone at the owner's direction — the site is not to stop or slow
- * the page anywhere. The choreography is unchanged and still scrubbed against
- * scroll; the layers now drift as the section crosses the viewport under a
- * scroll that never leaves the visitor's hands. This is exactly the branch
- * `Scene` already built for narrow screens, where a pin was never safe, so it
- * is a path that was always shipping rather than a new one.
- *
- * It was authored as an ordinary stacked section first and pinned second,
- * which is why removing the pin costs nothing: what is left is the section as
- * written.
- *
- * `rhythm-breath` rather than `rhythm-default`: the page's one long breath.
+ * `rhythm-breath` rather than `rhythm-default`: the page's one long breath, and
+ * now short enough that the interval reads as a held beat rather than as the
+ * section running out of content.
  */
 export default function Statement() {
   return (
@@ -46,9 +40,8 @@ export default function Statement() {
       as="section"
       className="on-pale rhythm-breath"
       steps={[
-        { at: 0, layer: "title", to: { yPercent: -14 } },
-        { at: 0, layer: "frame", to: { yPercent: -6 } },
-        { at: 0.1, layer: "prose", to: { yPercent: -34 } },
+        { at: 0, layer: "title", to: { yPercent: -8 } },
+        { at: 0.1, layer: "lead", to: { yPercent: -22 } },
       ]}
     >
       <div className="page-frame">
@@ -62,50 +55,32 @@ export default function Statement() {
           />
         </SceneLayer>
 
-        {/* Both layers take `lg:row-start-1` explicitly. The frame is first in
-            the DOM so a phone reads statement, picture, prose; without the row
-            pinned, placing the prose at `col-start-8` would let auto-flow drop
-            the second item onto a row of its own the moment the order changed. */}
-        <div className="section-lead grid gap-x-12 gap-y-12 lg:grid-cols-12">
-          <SceneLayer name="frame" className="lg:col-span-6 lg:row-start-1">
-            {/* `mask`, not the default fade: this is a photograph, and the site
-                uncovers pictures rather than sliding them. */}
-            <Reveal mode="mask">
-              <ImageSlot
-                image={{
-                  code: "STM-01",
-                  alt: "A figure at the foot of a plain concrete wall",
-                  kind: "lifestyle",
-                  ratio: "square",
-                }}
-                ratio="square"
-                ratioSm="editorial"
-                sizes="(min-width: 1024px) min(48vw, 680px), 100vw"
-              />
-            </Reveal>
-          </SceneLayer>
-
-          {/* Hung at the foot of the frame rather than level with its top. Two
-              short paragraphs against a square picture leave the space either
-              above the type or below it, and above is where it reads as air —
-              the same call the campaign captions make. */}
-          <SceneLayer
-            name="prose"
-            className="lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:self-end"
-          >
-            <Reveal delay={120} className="space-y-5">
-              <p className="type-body text-ink-muted">
-                THARROS is an independent label run at a small scale on purpose.
-                Pieces are designed, patterned and sampled here, then made in
-                short runs — few enough that every one is accounted for.
-              </p>
-              <p className="type-body text-ink-muted">
-                Every product page prints how many were made and how many are
-                left. When a size is gone, it is gone.
-              </p>
-            </Reveal>
-          </SceneLayer>
-        </div>
+        {/* ONE ROW, BOTH COLUMNS FILLED, BOTH TOP-ALIGNED. The prose was a
+            single block indented to the middle of the frame, which left the
+            leading half of the row — 490 x 250px at 1440x900 — as empty page
+            under the title. An indent is only an indent when something else
+            holds the line it is indented from. Split across the row the two
+            paragraphs fill the measure between them, and the only space left
+            is the rag of the display type above, which is the shape of the
+            sentence rather than a hole in the layout. */}
+        <SceneLayer
+          name="lead"
+          className="section-lead grid gap-x-12 gap-y-6 lg:grid-cols-12"
+        >
+          <Reveal className="lg:col-span-6 lg:row-start-1">
+            <p className="type-lead text-ink">
+              THARROS is an independent label run at a small scale on purpose.
+              Pieces are designed, patterned and sampled here, then made in
+              short runs — few enough that every one is accounted for.
+            </p>
+          </Reveal>
+          <Reveal delay={100} className="lg:col-span-5 lg:col-start-8 lg:row-start-1">
+            <p className="type-body text-ink-muted">
+              Every product page prints how many were made and how many are
+              left. When a size is gone, it is gone.
+            </p>
+          </Reveal>
+        </SceneLayer>
       </div>
     </Scene>
   );

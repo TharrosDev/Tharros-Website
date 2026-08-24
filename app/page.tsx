@@ -16,25 +16,33 @@ import NextDrop from "@/components/home/NextDrop";
  *
  *   —   hero            picture     sparse      full viewport
  *   01  the run         paper       dense       the grid
- *   02  statement       pale        sparse      one frame + type
- *   03  the studio      paper       medium      sticky frame + list
- *   04  the people      picture     full bleed  alternating frames
+ *   02  statement       pale        sparse      type only
+ *   03  the studio      paper       medium      one wide band + a mono strip
+ *   04  the people      paper       sparse      one tall frame + a column
  *   05  the archive     bone        densest     a ledger, 11px
  *   06  in development  pale        quiet       type only
  *
- * The archive is the one new movement and the only section on the page that is
- * information rather than atmosphere; it is what stops the sequence reading as
- * seven marketing blocks.
+ * The archive is the section that is information rather than atmosphere; it is
+ * what stops the sequence reading as seven marketing blocks.
  *
- * The lookbook rail that used to sit at 05 is gone with the lookbook page. It
- * photographed the same people in the same drop as the campaign sequence four
- * sections earlier, so it read as more of that rather than as anything new.
+ * 02, 03 AND 04 WERE ALL "A PICTURE BESIDE SOME WORDS" AND ARE NOT ANY MORE.
+ * They ran 6330px of a 13131px page at 1440x900 — nearly half of it — to carry
+ * three photographs and about 300 words, and two of them made the same
+ * argument. 02 has given its picture up entirely and is the one purely
+ * typographic movement on the page. 03 spends that picture as a single
+ * landscape band with the six studio stages named on one rule under it, rather
+ * than as a sticky frame beside six paragraphs. 04 shows one campaign frame and
+ * links to `/drop`, where the sequence belongs and runs whole. The same three
+ * sections now measure 3335px.
+ *
+ * Shape is the contrast between 03 and 04, and it is deliberate: 03's picture
+ * is the only landscape frame on the page and 04's is a standing figure. Every
+ * other picture here is a portrait.
  *
  * Rhythm is a device, not a constant. The statement and the next drop breathe;
- * the archive sits tight; the hero, the piece and the people get
- * the room. Every section below the hero was once `rhythm-default`, which gave
- * the page one spacing value for its whole length and meant nothing could be a
- * pause.
+ * the hero and the people get the room. Every section below the hero was once
+ * `rhythm-default`, which gave the page one spacing value for its whole length
+ * and meant nothing could be a pause.
  *
  * The numbering series runs 01–06 and it counts positions on this page. A
  * section's index is never a drop's number.

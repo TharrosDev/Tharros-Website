@@ -4,9 +4,15 @@ import type { ImageSlotData } from "./types";
  * The six stages a piece goes through, as THARROS describes its own process.
  *
  * Content is data, never JSX — the same rule the catalogue follows. This lives
- * beside the catalogue rather than inside the page because the homepage states
- * a short form of the same sequence and the two must not drift into being two
+ * beside the catalogue rather than inside the page because more than one
+ * surface states the sequence and the two must not drift into being two
  * different accounts of how the label works.
+ *
+ * THE HOME PAGE READS `index` AND `name` ONLY. It sets the six stages as a
+ * strip of labels on one rule — six rows of a name plus a sentence is a feature
+ * list, and reading it was the bulk of what that section asked for. `short` and
+ * `long` stay here for the surface that states the process at length; neither
+ * has a consumer today.
  *
  * Nothing here asserts a fact about tooling, premises, suppliers or people.
  * It describes the order of operations, which is the thing the About page,
@@ -15,9 +21,9 @@ import type { ImageSlotData } from "./types";
 export type StudioStage = {
   index: string;
   name: string;
-  /** The sentence the homepage uses. Short enough to sit in a list. */
+  /** One sentence per stage. Short enough to sit in a list. */
   short: string;
-  /** What the studio page adds: what actually goes wrong at this stage. */
+  /** What a longer account adds: what actually goes wrong at this stage. */
   long: string;
   image: ImageSlotData;
 };
