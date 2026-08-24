@@ -39,17 +39,6 @@ export const CAMPAIGNS: Campaign[] = [
         // a full-height frame cuts the figure out of its own shot.
         ratio: "tall",
       },
-      // The close frame that hangs off the bottom of the opening screen and
-      // over the section below it. Deliberately the cloth rather than the
-      // figure: every other frame above the fold is a person at distance, and
-      // the one thing a small label needs the first screen to say is that
-      // someone chose this fabric.
-      detail: {
-        code: "CMP-001-HERO-DETAIL",
-        alt: "The Arc Hoodie's cuff and cord, close",
-        kind: "detail",
-        ratio: "portrait",
-      },
     },
     sequence: [
       {

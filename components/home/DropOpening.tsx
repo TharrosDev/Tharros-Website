@@ -3,7 +3,6 @@ import ImageSlot from "@/components/media/ImageSlot";
 import Scene, { SceneLayer } from "@/components/motion/Scene";
 import SplitLines from "@/components/motion/SplitLines";
 import Magnetic from "@/components/motion/Magnetic";
-import Parallax from "@/components/motion/Parallax";
 import WornList from "@/components/campaign/WornList";
 import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
@@ -74,17 +73,12 @@ export default function DropOpening() {
   return (
     <Scene
       as="section"
-      /* `overflow-x-clip` on the root and `overflow-hidden` on the inner
-         plate, because the two things this frame contains want opposite
-         answers: the wordmark is cut by the bottom edge on purpose, and the
-         detail frame crosses it on purpose. Clipping the picture and the
-         wordmark on the plate lets the frame escape downward while the root
-         still stops the pushed-in picture widening the page.
-
-         `clip` rather than `hidden` on the horizontal axis: `overflow-x:
-         hidden` makes the element a scroll container, which would give the
-         sticky and scroll-linked work below it a second scrollport to fight
-         with. `clip` cuts without one.
+      /* `overflow-hidden` clips both the pushed-in picture and the bottom of
+         the wordmark, which is the whole job now. It was `overflow-x-clip`
+         with a separately clipped inner plate, so that a small detail frame
+         could hang past the bottom edge into the section below; that frame is
+         gone at the owner's direction and nothing replaces it, so the split is
+         gone with it.
 
          `gap` under `justify-between` is a FLOOR, not a spacing decision: with
          room to spare the two blocks are pushed to the edges and the gap never
@@ -92,7 +86,7 @@ export default function DropOpening() {
          two controls and the worn list add up to nearly twice the viewport —
          it is the only thing keeping the release record off the top of a 100px
          headline. */
-      className="on-dark relative isolate flex min-h-[88svh] flex-col justify-between gap-10 overflow-x-clip md:min-h-[92svh]"
+      className="on-dark relative isolate flex min-h-[88svh] flex-col justify-between gap-10 overflow-hidden md:min-h-[92svh]"
       scrub
       start="top top"
       end="bottom top"
@@ -110,13 +104,14 @@ export default function DropOpening() {
         { at: 0, layer: "record", to: { yPercent: -18 } },
       ]}
     >
-      {/* THE PLATE — everything that is cut by the frame's own edges. Inert:
-          every way into the shop from this screen is a real link in front of
-          it. */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <SceneLayer name="picture" className="absolute inset-0">
-          <ImageSlot image={frame} fill priority sizes="100vw" />
-        </SceneLayer>
+      {/* THE PICTURE. Behind everything and inert: every way into the shop
+          from this screen is a real link in front of it. */}
+      <SceneLayer
+        name="picture"
+        className="pointer-events-none absolute inset-0 -z-10"
+      >
+        <ImageSlot image={frame} fill priority sizes="100vw" />
+      </SceneLayer>
 
         {/* THE TOP BAND. Anchored to the record row and the header above it,
             ending before the subject.
@@ -158,10 +153,11 @@ export default function DropOpening() {
 
             Decorative — the accessible wordmark is the header's, and this one
             is `aria-hidden` rather than a second announcement of the same
-            string. It is set on the plate, so the bottom of the letterforms is
-            clipped by the frame: an incomplete shape is the strongest "there is
-            more below this" the composition can make, because the eye finishes
-            the letter somewhere the page has to continue to.
+            string. It sits behind the content and the section clips it, so the
+            bottom of the letterforms is cut: an incomplete shape is the
+            strongest "there is more below this" the composition can make,
+            because the eye finishes the letter somewhere the page has to
+            continue to.
 
             NOT MASKED AROUND THE SUBJECT. That treatment needs a photograph
             whose subject is in a known place, and every frame here is a
@@ -185,20 +181,21 @@ export default function DropOpening() {
               every width above `md`. `nowrap` keeps a future miscalculation a
               clip rather than a wrap.
 
-              LEFT, AND SHORT OF THE FULL FRAME, because the detail frame owns
-              the bottom-right corner. Centred and set to the frame's whole
-              width, the name ran under that picture and lost its last letter
-              — a watermark reading THARRO is worse than no watermark. It
-              starts at the same gutter the headline does, which is the
-              alignment the rest of the composition is already on. */}
+              LEFT, AND SHORT OF THE FULL FRAME. It starts at the same gutter
+              the headline does, so the whole composition hangs off one edge,
+              and it stops well before the other one — which keeps the right of
+              the photograph, the side the subject is on, clear of type. The
+              size was originally cut to this to clear a detail frame in the
+              bottom-right corner; that frame is gone, and the measure is kept
+              because the composition reads better left-weighted than it did
+              spanning the frame. */}
           <p
             aria-hidden="true"
             className="type-colossal whitespace-nowrap text-[min(13.5vw,13.5rem)] text-ink-on-dark/10"
           >
             Tharros
           </p>
-        </SceneLayer>
-      </div>
+      </SceneLayer>
 
       {/* The record of the release, stated once, at the head of the frame. */}
       <SceneLayer
@@ -223,19 +220,17 @@ export default function DropOpening() {
       </SceneLayer>
 
       <SceneLayer name="type" className="page-frame relative pb-14 md:pb-20">
-        {/* TWO ANCHORS: the words on the left, the cloth on the right.
+        {/* ONE ANCHOR, ON THE LEFT: the statement, the two controls and what is
+            in the picture, stacked against the gutter the rest of the page is
+            already aligned to. The right of the frame stays photograph.
 
-            The right anchor is the crossing frame below, which is positioned
-            against the section rather than sitting in this row — it has to
-            escape the bottom edge and the row does not. So this column is
-            bounded away from it instead, and the worn list comes back under
-            the controls where it can be a rail at every width.
-
-            It was the other way round for one pass, with the worn list on the
-            right and the frame under it. Two right-aligned blocks anchored to
-            the same gutter is not a composition, it is a collision — the frame
-            landed on top of the second garment. */}
-        <div className="lg:max-w-[calc(100%-20rem)]">
+            This column used to be bounded to `calc(100% - 20rem)` to hold it
+            off a detail frame in the bottom-right. That frame is gone, and the
+            reservation went with it — every block in here carries its own
+            measure (`13ch` on the headline, `max-w-md` on the worn list), so
+            the bound was doing nothing except describing a neighbour that no
+            longer exists. */}
+        <div>
           {/* THE RUNG IS CHOSEN FOR THE FRAME, NOT A COLUMN. The type has the
               whole screen now rather than half of it, so display-1 fits at
               every width and the old rung-down at `md` went with the split. */}
@@ -274,33 +269,6 @@ export default function DropOpening() {
         </div>
       </SceneLayer>
 
-      {/* THE FRAME THAT CROSSES THE BOUNDARY.
-
-          One element doing three jobs, which is why it is here and a fourth
-          decorative layer is not: it shows the cloth close up, where every
-          other frame on this screen shows a figure at distance; it is the
-          foreground plane of the depth stack, in front of the type rather than
-          behind it; and by hanging past the bottom edge into the paper of
-          `TheRun` it makes the join a continuation instead of a cut.
-
-          Not `priority`. It must not be in the same starting gun as the
-          picture behind it — `sizes` is capped at the width it is actually
-          drawn at, so it costs a fraction of the LCP frame.
-
-          `lg` and up only. Below that the gutter is most of the screen and this
-          would sit on top of the worn list rather than beside it. */}
-      {hero?.detail ? (
-        <Parallax
-          depth="foreground"
-          className="pointer-events-none absolute right-[var(--gutter)] bottom-0 z-10 hidden w-[clamp(9rem,14vw,13.75rem)] translate-y-[38%] lg:block"
-        >
-          <ImageSlot
-            image={hero.detail}
-            ratio="portrait"
-            sizes="(min-width: 1600px) 220px, 14vw"
-          />
-        </Parallax>
-      ) : null}
     </Scene>
   );
 }
