@@ -105,7 +105,8 @@ export default function AboutPage() {
         <ImageSlot
           image={{
             code: "ABT-01",
-            alt: "Work table with patterns, a part-sewn sample and fabric",
+            src: "/photography/abt-01.jpg",
+            alt: "Pattern paper, cut black cloth and a tape measure on a work table",
             kind: "detail",
             ratio: "wide",
           }}
@@ -135,7 +136,8 @@ export default function AboutPage() {
                   <ImageSlot
                     image={{
                       code: "ABT-02",
-                      alt: "Two figures in Drop 001 on the street the label works from",
+                      src: "/photography/abt-02.jpg",
+                      alt: "Two figures in Drop 001 outside an industrial door on a quiet street",
                       kind: "campaign",
                       ratio: "campaign",
                     }}

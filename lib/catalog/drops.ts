@@ -22,7 +22,8 @@ export const DROPS: Drop[] = [
     status: "released",
     cover: {
       code: "DROP-001-COVER",
-      alt: "Drop 001 campaign image",
+      src: "/photography/drop-001-cover.jpg",
+      alt: "Two figures apart along a plaster wall, in the Arc Hoodie and the Work Jacket",
       kind: "lifestyle",
       ratio: "campaign",
     },
@@ -41,7 +42,8 @@ export const DROPS: Drop[] = [
     status: "in-development",
     cover: {
       code: "DROP-002-COVER",
-      alt: "Drop 002 development image",
+      src: "/photography/drop-002-cover.jpg",
+      alt: "Black canvas part cut on a work table, a chalk line and pins across it",
       kind: "detail",
       ratio: "campaign",
     },

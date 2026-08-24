@@ -234,8 +234,15 @@ export default function IndexOverlay({
           line at 820 and left every 900px-tall laptop still cutting the social
           row off the bottom. */}
       <div className="page-frame flex flex-1 flex-col justify-center py-10 [@media(max-height:980px)]:py-5">
+        {/* THE RULES STOP BEFORE THE PICTURE.
+            The stage is the right half of the screen, so a rule drawn across
+            the whole page frame runs through whatever photograph is up — four
+            hairlines cutting a standing figure into five pieces. Capping the
+            width at just past the stage's leading edge keeps the rules in the
+            type's own column, where the picture is still fully transparent
+            under the mask. */}
         {/* The drop leads the index: it is what the label is currently doing. */}
-        <div className="rule-draw flex flex-wrap items-baseline gap-x-5 gap-y-1 pt-4">
+        <div className="rule-draw flex flex-wrap items-baseline gap-x-5 gap-y-1 pt-4 md:max-w-[54%]">
           <span className="type-mono-2 text-signal-on-dark">{CURRENT_DROP.index}</span>
           <span className="type-meta text-ink-on-dark">{CURRENT_DROP.name}</span>
           <span className="type-meta text-ink-on-dark-faint">
@@ -244,7 +251,7 @@ export default function IndexOverlay({
         </div>
 
         <nav aria-label="Site navigation" className="mt-10">
-          <ul ref={listRef}>
+          <ul ref={listRef} className="md:max-w-[54%]">
             {NAV_INDEX.map((item, index) => {
               const active =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);

@@ -56,7 +56,8 @@ export const CAMPAIGNS: Campaign[] = [
         wearing: ["arc-hoodie"],
         image: {
           code: "CMP-001-A",
-          alt: "Figure walking, the Arc Hoodie moving with the stride",
+          src: "/photography/cmp-001-a.jpg",
+          alt: "Figure walking away in the Arc Hoodie, seen from behind against a plaster wall",
           kind: "lifestyle",
           ratio: "tall",
           crop: "walking",
@@ -69,7 +70,8 @@ export const CAMPAIGNS: Campaign[] = [
         wearing: ["core-tee"],
         image: {
           code: "CMP-001-B",
-          alt: "Figure standing against a brutalist wall in the Core Tee",
+          src: "/photography/cmp-001-b.jpg",
+          alt: "A woman standing square against a concrete wall in the Core Tee, full length",
           kind: "model",
           ratio: "portrait",
           crop: "full",
@@ -82,7 +84,8 @@ export const CAMPAIGNS: Campaign[] = [
         wearing: ["work-jacket", "utility-cargo-pant"],
         image: {
           code: "CMP-001-C",
-          alt: "Figure at distance under an underpass in the Work Jacket",
+          src: "/photography/cmp-001-c.jpg",
+          alt: "Figure at distance under a concrete underpass, small against the span",
           kind: "campaign",
           ratio: "campaign",
         },

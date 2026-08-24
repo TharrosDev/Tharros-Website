@@ -11,6 +11,16 @@ neutrals, no props, no styling noise.
 **Session 1 — site furniture (12 images).** Paste the block below into ChatGPT, then say
 `next` for each image. Save each file to `public/photography/`.
 
+The generator returns PNG, which is the wrong container for a photograph: the twelve came
+to 27MB. They are converted on the way in — `sharp(...).jpeg({quality: 86, mozjpeg: true,
+chromaSubsampling: '4:4:4'})`, which took the set to 2MB with no visible difference — and
+the `src` values point at `.jpg`. `sharp` is already present as a Next dependency, so this
+needs nothing installed.
+
+`DROP-001-COVER` is wired into the data but nothing renders it today: `DropOpening` reads
+it only when a drop has no campaign hero, and Drop 001 has one. It is generated so the
+slot is filled, not because a page is waiting on it.
+
 **Session 2 — product frames (27 images).** Not written yet: three frames per piece
 (front flat, detail, on-body) across the nine products in `lib/catalog/products.ts`.
 
@@ -80,36 +90,43 @@ camera as the others.
 
 **1. `cmp-001-a.png`** — Portrait 1024×1536. A figure walking past a plain plaster wall in
 the Arc Hoodie, caught mid-stride so the fleece moves with them. Three-quarter to full
-length. Motion is real but not blurred. Daylight from the side. Safe area: keep the whole
-figure within the centre 70% vertically — this gets cropped to a tall 2:3 frame.
+length. Motion is real but not blurred. Daylight from the side. The site sizes this frame
+by its height and derives the width from the shape, so nothing is cropped — compose it as
+the finished picture.
 
 **2. `cmp-001-b.png`** — Portrait 1024×1536. A figure standing square against a raw
 concrete wall in the Core Tee, arms down, still, full length. The point of the shot is the
-boxy silhouette holding its shape rather than draping. Flat even daylight. Safe area:
-crops to 3:4, so leave room at top and bottom.
+boxy silhouette holding its shape rather than draping. Flat even daylight. This is the
+sequence's full-height frame: it runs the height of the viewport, uncropped, so the whole
+figure is the composition.
 
 **3. `cmp-001-c.png`** — Landscape 1536×1024. A single figure at distance under a concrete
 underpass, wearing the Work Jacket and the Utility Cargo Pant. The architecture dominates;
 the person is small in the frame and off-centre. End of the day, flat grey daylight, long
-empty ground in front of them. Safe area: crops to 16:9, so keep the figure clear of the
-top and bottom eighth.
+empty ground in front of them. Runs wide and uncropped.
 
 **4. `drop-001-cover.png`** — Landscape 1536×1024. Two figures against a long plaster
 wall, one in the Arc Hoodie, one in the Work Jacket, standing apart and not interacting.
 Unposed, mid-conversation-that-has-stopped. This is the cover image for a released drop —
 it should read as a group of clothes existing in a place, not as a fashion advertisement.
-Safe area: crops to 16:9.
+Held as the drop's cover, which today is a fallback rather than a rendered frame — see the
+note under Session 1 above.
 
 **5. `drop-002-cover.png`** — Landscape 1536×1024. A close, quiet detail of work in
 progress: black cotton canvas partly cut, a tailor's chalk line across it, a few pins.
 Shot from directly above on a pale worn work table. No hands, no face. This stands for a
-drop that is still being sampled, so it should look unfinished. Safe area: crops to 16:9,
-so keep the subject well inside the middle band.
+drop that is still being sampled, so it should look unfinished. Rendered in an upright
+frame on `/drop`, so the middle of the picture is what survives — keep the chalk line and
+the pins near the centre.
+
+The four `nav-*` frames are NOT thumbnails. Each one fills a tall panel down the right of
+the full-screen menu — roughly half the window wide and its whole height — with the menu's
+type crossing it under a scrim. So: one figure, strong separation from the wall, no
+clutter, and a little room above the head, because the panel crops from the edges.
 
 **6. `nav-shop.png`** — Portrait 1024×1536. A three-quarter length figure against a plain
 bone-coloured wall wearing the Core Tee and the Utility Cargo Pant, standing relaxed,
-looking away. This one is a navigation thumbnail, so it must read instantly at small size:
-one figure, high separation from the wall, no clutter. Safe area: crops to a tall 2:3.
+looking away. Safe area: crops to a tall 2:3.
 
 **7. `nav-drop.png`** — Portrait 1024×1536. Full length figure in the Arc Hoodie, hood
 down, standing against a concrete wall in soft daylight, hands in the front pocket. Calmer
