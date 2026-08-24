@@ -26,6 +26,7 @@ export default function CampaignFrame({
   priority = false,
   onDark = false,
   held = false,
+  lead,
 }: {
   frame: Frame;
   align?: "left" | "right" | "full";
@@ -42,6 +43,22 @@ export default function CampaignFrame({
    * caller only knows that one frame in the sequence is the one being held.
    */
   held?: boolean;
+  /**
+   * A block that opens the caption column — in practice a section's own
+   * heading, set beside the picture rather than above it.
+   *
+   * It exists because of the arithmetic of a side-aligned frame. A standing
+   * figure cannot run the full measure on a desktop without being cropped to a
+   * horizontal slice of itself, so it takes a column and something has to sit
+   * in the one beside it. A caption and two links is ~110px of content against
+   * a ~700px picture, and no alignment rescues that: hung at the foot it leaves
+   * the hole at the top, hung at the head it leaves it at the bottom, spread it
+   * leaves it in the middle. Given the heading, the column is a column.
+   *
+   * Only the side alignments take it. A full-bleed frame's caption is already a
+   * row under the picture and has no column to fill.
+   */
+  lead?: React.ReactNode;
 }) {
   const muted = onDark ? "text-ink-on-dark-faint" : "text-ink-faint";
   const rule = onDark ? "border-rule-on-dark" : "border-rule";
@@ -124,6 +141,24 @@ export default function CampaignFrame({
 
   const imageFirst = align === "left";
 
+  // A `lead` puts a section heading in the side column, so the column has to be
+  // a column rather than a margin note: five tracks against the picture's
+  // seven. Without one it stays the narrow record it has always been.
+  const pictureSpan = lead
+    ? imageFirst
+      ? "md:col-span-7 md:col-start-1"
+      : "md:col-span-7 md:col-start-6"
+    : imageFirst
+      ? "md:col-span-8 md:col-start-1"
+      : "md:col-span-8 md:col-start-5";
+  const sideSpan = lead
+    ? imageFirst
+      ? "md:col-span-5 md:col-start-8"
+      : "md:col-span-5 md:col-start-1"
+    : imageFirst
+      ? "md:col-span-4 md:col-start-9"
+      : "md:col-span-4 md:col-start-1";
+
   // The alternation has to exist on a phone too. Left, full and right lived
   // entirely in `md:col-start-*` / `md:order-*`, so below `md` all three frames
   // rendered identically — image, then caption — and the sequence became the
@@ -139,25 +174,37 @@ export default function CampaignFrame({
     // the whole document wider than the viewport before a single child was
     // measured. The children stack anyway at this width; the columns were only
     // ever for the desktop composition.
+    //
+    // TWO ROWS FROM `md`, AND THAT IS WHAT LETS `lead` EXIST. The lead, the
+    // picture and the record are three siblings in source order, so a phone
+    // reads heading, picture, caption — the order the section is written in.
+    // From `md` the lead takes the first row of the side column, the picture
+    // spans both rows, and the record sits at the foot of the second: the
+    // heading's baseline starts level with the top of the frame and the worn
+    // list's rule lands on its lower edge, with the air collecting between two
+    // blocks that are each attached to an edge. Hung at one end instead, the
+    // column left 500px of empty page at 1440x900 — at the foot if it was
+    // top-aligned, at the head if it was bottom-aligned.
     <figure
-      className={`grid grid-cols-1 items-start gap-y-8 md:grid-cols-12 md:gap-x-8 ${mobileInset}`}
+      className={`grid grid-cols-1 items-start gap-y-8 md:grid-cols-12 md:grid-rows-[auto_1fr] md:gap-x-8 ${mobileInset}`}
     >
+      {lead ? (
+        <div className={`min-w-0 ${sideSpan} md:row-start-1`}>{lead}</div>
+      ) : null}
+
       <div
-        className={
-          imageFirst
-            ? "min-w-0 md:col-span-8"
-            : "min-w-0 md:col-span-8 md:col-start-5 md:order-2"
-        }
+        className={`min-w-0 ${pictureSpan} md:row-start-1 ${lead ? "md:row-span-2" : ""}`}
       >
         {/* Capped for the same reason the full frame is. At 66% of a 1440px
-            frame a native 2:3 picture is ~1200px tall, so the caption hung to
-            its foot lands a screen and a half below its own heading. The cap
-            crops from a shape the photograph already has rather than imposing
-            a different one. */}
-        {/* The picture drifts against the caption hung beside it. `subject`
-            rather than a deeper rung: this frame shares a row with type, and a
-            picture that travels further than the words next to it stops
-            reading as the same object. */}
+            frame a native 2:3 picture is ~1200px tall, so the record beside it
+            lands a screen and a half below its own heading. The cap crops from
+            a shape the photograph already has rather than imposing a different
+            one.
+
+            The picture drifts against the type set beside it. `subject` rather
+            than a deeper rung: this frame shares a row with words, and a
+            picture that travels further than they do stops reading as the same
+            object. */}
         <Parallax
           depth="subject"
           className="relative max-h-[78svh] overflow-hidden"
@@ -173,18 +220,8 @@ export default function CampaignFrame({
         </Parallax>
       </div>
 
-      {/* Hung to the foot of the frame, not to its head. Aligned to the top,
-          the caption started level with the picture and then ran out, leaving
-          a column of empty page under it and its own rule floating a third of
-          the way up a tall frame. Bottom-aligned, the caption's rule and the
-          frame's lower edge land together and the space collects above them,
-          where it reads as air rather than as a gap. */}
       <figcaption
-        className={
-          imageFirst
-            ? "min-w-0 md:col-span-3 md:col-start-10 md:self-end"
-            : "min-w-0 md:col-span-3 md:col-start-1 md:row-start-1 md:self-end"
-        }
+        className={`min-w-0 ${sideSpan} md:self-end ${lead ? "md:row-start-2" : "md:row-start-1 md:row-span-2"}`}
       >
         {meta}
       </figcaption>

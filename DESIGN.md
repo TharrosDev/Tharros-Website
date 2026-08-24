@@ -315,30 +315,53 @@ is the whole argument for going full-bleed.
 ### Visual rhythm
 
 The home page deliberately avoids a repeating image → heading → cards loop. Scale,
-alignment, density and surface alternate: full-bleed hero, three-up specimen grid, a
-pale statement at the heaviest step with one frame under it, the campaign sequence's
-alternating frames, a sticky two-column story, a horizontal rail, black again. When
-adding a section, ask what it varies.
+alignment, density and surface alternate: full-bleed hero, three-up specimen grid, a pale
+statement in type alone, one landscape band with the studio sequence named under it, one
+tall campaign frame beside its own column, a ledger at 11px, black again. When adding a
+section, ask what it varies.
+
+**Three sections in a row that are all "a picture beside some words" is one section
+three times.** 02, 03 and 04 were exactly that and measured 6330px of a 13131px page at
+1440x900 — 48% of the scroll for three photographs and about 300 words, with 02 and 03
+making the same argument in different words. They are 3335px now. What separated them was
+never their spacing:
+
+- **02 has no picture at all.** It is the one purely typographic movement on the page —
+  the sentence at `display-1` and two short paragraphs filling one row under it. A
+  photograph there also pre-spent 04's register, since the frame it held was a figure in a
+  place, which is what 04 is.
+- **03 spends the picture 02 gave up, as the page's only landscape frame.** One wide
+  detail band across the page frame, and the six studio stages named on one rule beneath
+  it: index and name, no sentences. Six rows of a bold name plus two lines of grey body is
+  a feature list, and it was ~120 words of reading in a section whose job is atmosphere.
+  The `short` and `long` lines stay in `lib/catalog/studio.ts` for a surface that states
+  the process at length.
+- **04 shows one campaign frame and links to `/drop`,** where the sequence belongs and
+  runs whole. Three frames on the home page was three "in this frame" rails of thumbnails,
+  names and prices — a second product grid, one screen below `01 The run`, which already
+  shows every piece in the drop with its price.
 
 **Frames vary by register, not only by placement.** The stand-in pools are chosen by a
 slot's `kind` and `crop` (see `FillerImage`), and the home page spends a different one in
-each movement: `hero` behind the opening headline, `worn` and `street` through the
-campaign, `detail` in the studio, `flat` in the archive. The statement's frame takes
-`lifestyle` with no crop — a figure small inside a large piece of architecture, which was
-the register left, and the right one for a sentence about being deliberately small.
+each movement: `hero` behind the opening headline, `detail` in the studio, `street` in the
+campaign frame, `flat` in the archive. `lifestyle` is no longer spent on the home page:
+the statement it belonged to is type only now.
 
-**Captions hang to the foot of their frame.** A campaign frame's caption column is
-bottom-aligned (`md:self-end`), not top-aligned. Level with the top of a tall picture it
-ran out after two lines and left a column of empty page under it, with its own rule
-floating a third of the way up the frame. Hung at the foot, the caption's rule and the
-picture's lower edge land together and the space collects above them, where it reads as
-air. The same instinct governs the frame gutters: a piece needs more room from the piece
-beside it than its own record needs from its frame.
+**Type beside a picture is anchored at both ends, or it is a hole.** A side-aligned
+campaign frame is a ~700px picture next to ~110px of caption, and no single alignment
+rescues that: hung at the foot the empty page collects at the top, hung at the head it
+collects at the bottom, spread between them it collects in the middle. So the column is
+given something to hold at each end. On `/` that is the section's own `h2` — passed to
+`CampaignFrame` as `lead`, set in the column rather than above the frame — with the
+caption under it and the worn list anchored to the picture's lower edge. Where there is no
+lead, the record still stretches the frame's height (`md:self-stretch`) rather than
+hanging at one end of it. The grid is two rows from `md` for this, and the lead, the
+picture and the record are three siblings in source order so a phone reads heading,
+picture, caption.
 
 **Rhythm is used as a device.** Every section below the hero used to be
 `rhythm-default`, which meant the page had one spacing value for its whole length and
-nothing could be a pause. The statement and the closing drop take `rhythm-breath`; the
-lookbook rail takes `rhythm-tight` so it sits against the process above it.
+nothing could be a pause. The statement and the closing drop take `rhythm-breath`.
 
 **Numbering runs as one series per page.** The home page runs 01–06. A section's
 index is its place in the page, never a drop's number — printing `002` in that column put
@@ -686,7 +709,11 @@ frame with a dashed inset rule and the asset code in mono — legible as *pendin
 *broken*. Labels hide themselves via container queries when the slot is too small.
 
 `ratioSm` gives a slot a second shape below `md`, so a 21:9 campaign frame is a tall frame
-on a phone rather than a 167px band — one element, one download. The ratio classes are
+on a phone rather than a 167px band — one element, one download. **A slot that can be
+handed landscape data needs one.** `CampaignSequence` never passed it, so a frame
+declaring `campaign` rendered 16:9 at every width: 295 x 166px at 390 and 435 x 245 at
+768, which is the exact band the prop exists to prevent. Side-aligned campaign frames take
+`editorial` below `md`. The ratio classes are
 `@utility` declarations for exactly this reason: as plain classes in `@layer utilities`
 they take no responsive variants, and `md:ratio-campaign` silently does nothing.
 

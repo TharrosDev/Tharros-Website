@@ -4,22 +4,47 @@ import ImageSlot from "@/components/media/ImageSlot";
 import { STUDIO_STAGES } from "@/lib/catalog/studio";
 
 /**
- * The studio, in summary — the section that sends you to the page.
+ * The studio: one detail, and the sequence named.
  *
- * The six stages live in `lib/catalog/studio.ts` rather than in this file, so
- * the process is data like everything else on the site. There was a `/studio`
- * page that documented them at length; it was cut, and this is now the only
- * place the sequence is stated. Each stage's `short` line is what shows here —
- * `long` is kept in the data for whatever states it next.
+ * WHAT THIS REPLACED, AND WHY. It was a sticky 3:4 frame beside an `<ol>` of
+ * the six stages, each row a numbered `h3` and two lines of body copy. Three
+ * things were wrong with it and none of them were spacing.
  *
- * It is built as a sticky two-column story: the frame holds while the five
- * steps travel past it. That is the difference between this and the campaign
- * section immediately above — before, both were a picture beside a column, two
- * sections running, which is the one thing the rhythm rule asks you not to do.
+ * It was a feature list. Six identical rows of bold-name-plus-grey-sentence is
+ * the shape of a SaaS "how it works" block, and reading it costs ~120 words in
+ * a section whose job on this page is atmosphere. The owner's word for it was
+ * clutter, and six rows of similar length is what that word describes.
  *
- * The order flips below `lg`. Stacked, a full-width 4:5 frame ahead of the list
- * spent a whole screen on the illustration before the content it illustrates,
- * so on a phone the steps come first and the frame closes the section.
+ * The sticky premise did not fire. At 1440x900 the picture measured 780px and
+ * the list 900px, so the frame "held while the steps travelled past it" for
+ * about 120px of scroll. Below `lg` the columns stack and there is no sticky at
+ * all — which is where the section was worst: 2350px, the tallest thing on the
+ * page at 768x1024, for one picture and six sentences.
+ *
+ * And it argued the same case as 02 immediately above it. "Designed, patterned
+ * and sampled here" and "idea / pattern / sample / fit / revision / production"
+ * are one claim stated twice, which is the page doctrine's one prohibition.
+ *
+ * So the reading is cut to the sequence itself. The six `short` lines stay in
+ * `lib/catalog/studio.ts` for the page that states them at length; what belongs
+ * on a home page is that there are six stages and what they are called. Six
+ * words on one rule says that, and says it in the technical register the mono
+ * layer exists for.
+ *
+ * THE FRAME IS LANDSCAPE, AND IT IS THE ONLY ONE ON THE PAGE. 02 gave up its
+ * picture, so this section takes the whole page frame for a single wide detail
+ * — a macro crop, close, no figure in it. Every other picture on `/` is a
+ * portrait: the hero, the run's cards, the campaign frame below. One band
+ * across the measure is what makes this section a different shape rather than
+ * a different margin. Below `md` it steps to 4:5, because 21:9 on a phone is
+ * the 167px band `ratioSm` exists to prevent.
+ *
+ * The title stays at `type-display-2`. It was tried a rung down, to separate it
+ * from 02's `display-1`, and a rung down is also a rung narrower: `display-3`
+ * inside `SectionHeading`'s 16ch measure is a 470px block with 800px of empty
+ * paper beside it at 1440, which reads as a heading that failed to fill rather
+ * than as a heading that chose not to. The change of volume between 02 and 03
+ * is carried by what is under the two headings, not by their size.
  */
 export default function ProcessSection() {
   return (
@@ -32,55 +57,43 @@ export default function ProcessSection() {
           title="Every piece gets made twice before it gets made properly."
         />
 
-        <div className="section-lead grid gap-x-12 gap-y-14 lg:grid-cols-12">
-          {/* THE STICKY RULE APPLIES; THE SCROLLBAR DOES NOT.
-              A bounded sticky column is right — unbounded, it hides its own
-              bottom on a short screen. But the bound was `max-h` plus
-              `overflow-y-auto`, which is the mechanism for a column of TEXT.
-              A picture sizes its height from its width and its ratio, so on
-              any laptop the 3:4 frame came out taller than the bound and the
-              column grew a scrollbar down the side of the photograph: 812
-              against 748 at 1440x900, 717 against 648 at 1280x800, and again
-              at 1024x700. A frame you scroll inside is not a frame.
+        <Reveal mode="mask" className="section-lead">
+          <ImageSlot
+            image={{
+              code: "PRC-01",
+              alt: "A pattern piece and a part-sewn sample on a work table",
+              kind: "detail",
+              ratio: "wide",
+            }}
+            ratio="wide"
+            ratioSm="editorial"
+            sizes="(min-width: 1600px) 1600px, 100vw"
+          />
+        </Reveal>
 
-              So the cap moves onto the frame itself and the scroller goes.
-              The height is clamped and `object-cover` takes the difference,
-              which is what every other frame on the site already does — at
-              1440 that is 8% off a detail shot, against a scrollbar. The
-              column keeps its full grid width, so the image still aligns to
-              the same vertical guide as the list beside it. */}
-          <Reveal mode="mask" className="order-2 lg:order-1 lg:col-span-6 lg:sticky lg:top-[calc(var(--header-h)+2.5rem)] lg:self-start">
-            <ImageSlot
-              image={{
-                code: "PRC-01",
-                alt: "A pattern piece and a part-sewn sample on a work table",
-                kind: "detail",
-                ratio: "portrait",
-              }}
-              ratio="portrait"
-              ratioSm="tall"
-              className="lg:max-h-[calc(100svh-var(--header-h)-5rem)]"
-              sizes="(min-width: 1024px) min(48vw, 680px), 100vw"
-            />
-          </Reveal>
-
-          <ol className="order-1 lg:order-2 lg:col-span-5 lg:col-start-8">
-            {STUDIO_STAGES.map((step, i) => (
-              <Reveal
-                as="li"
-                key={step.index}
-                delay={i * 70}
-                className="grid grid-cols-[3rem_1fr] gap-x-6 border-b border-rule py-8 last:border-b-0"
-              >
-                <span className="num type-meta pt-1 text-ink-faint">{step.index}</span>
-                <div>
-                  <h3 className="type-display-4">{step.name}</h3>
-                  <p className="type-body-sm mt-2 text-ink-muted">{step.short}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
+        {/* The stages as a strip rather than a stack. Two cells on a phone,
+            three on a tablet, all six on one rule from `lg` — so the sequence
+            is something you take in at a glance instead of something you
+            scroll. The names are labels, not headings: six `h3`s carrying one
+            word each inflated the outline of the page for no reader. */}
+        <ol className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
+          {STUDIO_STAGES.map((stage, i) => (
+            <Reveal
+              as="li"
+              key={stage.index}
+              mode="wipe"
+              delay={i * 60}
+              className="border-t border-ink pt-3"
+            >
+              <span className="num type-meta block text-ink-faint">
+                {stage.index}
+              </span>
+              <span className="type-mono-3 mt-2 block text-ink">
+                {stage.name}
+              </span>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   );

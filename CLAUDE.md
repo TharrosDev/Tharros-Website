@@ -98,7 +98,7 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it, and a detail frame hangs across the join. |
+| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it, and a detail frame hangs across the join. 02 is type only, 03 is one landscape band plus the studio stages named on a rule, and 04 is a single campaign frame that links to `/drop` — see the page's own docblock. |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
@@ -141,7 +141,7 @@ lib/catalog/
   drops.ts        Drop 001 (released) / Drop 002 (in development)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
   archive.ts      GARMENT NUMBERS AND THE RECORD — derived, never authored
-  studio.ts       the six stages, read by the home page's process section
+  studio.ts       the six stages; the home page reads `index` and `name` only
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
   images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER
@@ -304,9 +304,12 @@ rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so 
 - Every sticky column is bounded; an unbounded sticky element taller than the viewport
   hides its own bottom on short screens. **`max-h` + `overflow-y-auto` is the bound for a
   column of TEXT.** A picture takes its height from its width and its ratio, so the same
-  pair gives it a scrollbar down the side of the photograph instead — which is what the
-  studio frame had on every laptop. Cap the frame's own height and let `object-cover`
-  take the difference (`ProcessSection`).
+  pair gives it a scrollbar down the side of the photograph instead. Cap the frame's own
+  height and let `object-cover` take the difference. There is no sticky column on `/` any
+  more — the studio's was one, and it held for about 120px of scroll at 1440x900 because
+  the picture and the list beside it were within 120px of the same height. **A sticky
+  frame only reads as sticky if what travels past it is meaningfully taller.** Measure
+  both before reaching for it.
 - **Never pin a scene. Not on any route, not at any width.** The site must not
   stop or slow the page anywhere — that is the owner's direction, not a
   performance note. `Scene` no longer accepts a `pin` prop and `e2e` asserts no
