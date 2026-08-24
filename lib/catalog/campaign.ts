@@ -27,16 +27,24 @@ export const CAMPAIGNS: Campaign[] = [
       // No `line` here. It read "Nine pieces, made small." against a drop of
       // seven, nothing rendered it, and a hand-typed count is exactly the figure
       // that drifts. Every piece count on the site is derived from the catalogue.
-      wearing: ["arc-hoodie", "utility-cargo-pant"],
+      // EMPTY, AND NOT BY OVERSIGHT. The opening frame is now a real
+      // photograph, and it is a head-and-shoulders portrait — there is no
+      // garment in it. "In this frame" over a list of two pieces the frame
+      // does not show is the site asserting something untrue, which is the one
+      // thing the catalogue rules do not bend on. `WornList` renders nothing
+      // for an empty list, so the rail is simply absent until a frame exists
+      // that actually has clothes in it.
+      wearing: [],
       image: {
         code: "CMP-001-HERO",
-        alt: "A figure in Drop 001 against a plain wall, daylight",
+        src: "/hero-drop-001.png",
+        alt: "A woman in wraparound sunglasses against a plain wall, daylight",
         kind: "campaign",
-        // Declared tall because the shot wants to be tall: it is a standing
-        // figure, filling the opening screen, and a frame's ratio is what
-        // shape it is actually shown at. `sceneFor` reads it to pick a
-        // stand-in of that shape — a wide campaign picture centre-cropped into
-        // a full-height frame cuts the figure out of its own shot.
+        // The home page renders this one `fill`, so the ratio is not what
+        // shapes it — the opening section is. It stays declared because
+        // `sceneFor` reads it to pick a stand-in when `src` is switched off,
+        // and a tall declaration keeps that stand-in a portrait rather than a
+        // letterbox.
         ratio: "tall",
       },
     },
