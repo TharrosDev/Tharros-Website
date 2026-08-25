@@ -147,7 +147,7 @@ export default function CartDrawer() {
           <div className="flex flex-1 flex-col justify-center px-6 py-16">
             <EmptyState
               title="Your bag is empty."
-              body="Everything made so far is in the shop."
+              body="The whole catalogue is in the shop."
               action={{ href: "/shop", label: "Shop the drop", onClick: close }}
               secondary={{ href: "/drop", label: "What is coming", onClick: close }}
             />

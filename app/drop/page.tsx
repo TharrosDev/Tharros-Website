@@ -6,7 +6,7 @@ import ProductGrid from "@/components/product/ProductGrid";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { CURRENT_DROP, NEXT_DROP } from "@/lib/catalog/drops";
+import { CURRENT_DROP, NEXT_DROP, NO_DATE_NOTE } from "@/lib/catalog/drops";
 import { listProducts, runStatus } from "@/lib/catalog/queries";
 import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
@@ -144,9 +144,7 @@ export default function DropPage() {
                     {paragraph}
                   </p>
                 ))}
-                <p className="type-meta text-ink-faint">
-                  No release date is published until there is one.
-                </p>
+                <p className="type-meta text-ink-faint">{NO_DATE_NOTE}</p>
               </div>
 
               <Reveal className="lg:col-span-6 lg:col-start-7">

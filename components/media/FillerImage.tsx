@@ -4,12 +4,15 @@ import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
 /**
  * TEMPORARY VISUALISATION AID — delete once real photography lands.
  *
- * Photography does not exist yet, so every image slot on the site renders as an
- * empty frame. That is honest but it makes whole pages hard to read: rhythm,
- * contrast and crop all disappear. This puts a stand-in photograph in the slot
- * instead — picked from `public/filler` by the slot's own `kind` and `crop`, and
- * held steady by the slot's `code` so a piece keeps the same frames across
- * renders — so the layout can be judged before the shoot.
+ * No garment has been photographed, so every product slot on the site renders
+ * as an empty frame. That is honest but it makes whole pages hard to read:
+ * rhythm, contrast and crop all disappear. This puts a stand-in photograph in
+ * the slot instead — picked from `public/filler` by the slot's own `kind` and
+ * `crop`, and held steady by the slot's `code` so a piece keeps the same frames
+ * across renders — so the layout can be judged before the shoot.
+ *
+ * It only ever fires for a slot with no `src`. A stand-in is never declared as
+ * one: `lib/catalog/photography.test.ts` fails if a `src` points in here.
  *
  * The stand-ins are free-licence stock (Openverse, CC0 and public domain),
  * fetched by `scripts/fetch-filler.mjs` and credited in

@@ -4,9 +4,19 @@
  *
  * A shop answers "what can I buy". An archive answers "what has been made",
  * and the second question is the one a small label is actually interesting
- * for. So a piece never leaves this file: when its run is finished it stops
- * being for sale and starts being history, which is a promotion, not a
+ * for. So a released piece never leaves this file: when its run is finished it
+ * stops being for sale and starts being history, which is a promotion, not a
  * deletion.
+ *
+ * THE RECORD HOLDS RELEASED WORK ONLY. A piece still being patterned has a
+ * number reserved for it — `garmentId()` covers the whole catalogue — but it
+ * is not in the record, because the record is what the label has done and that
+ * piece has not been done. Two unmade garments in a ledger headed "every piece
+ * made so far" is the one claim this file exists to make impossible, and it
+ * was inflating the garment count on `/archive` and on the home page while
+ * filing them under the year band of a drop that has no release date. Until a
+ * piece ships it lives on `/drop` and `/shop`, where "in development" is the
+ * whole point of showing it.
  *
  * NOTHING HERE IS AUTHORED. Every figure is derived from the catalogue —
  * garment numbers from release order, state from `resolveAvailability()`,
@@ -27,6 +37,11 @@ import type { Availability, Drop, Product } from "./types";
  * closed and the number it closed at is now part of the record. Same data,
  * and deliberately a different frame: the site is trying to make a finished
  * run read as something that happened rather than as something you missed.
+ *
+ * `in-development` never appears on an `ArchiveEntry` — the entries are
+ * filtered before they are built. It stays in the union because the state is
+ * still the right answer for a *product*, and `ProductCard` reads it to print
+ * an em dash where a run size would go.
  */
 export type ArchiveState = "available" | "archived" | "in-development";
 
@@ -37,11 +52,11 @@ export type ArchiveEntry = {
   ref: string;
   product: Product;
   drop: Drop | undefined;
-  /** Four-digit year from `releasedAt`, or null while a piece is unreleased. */
-  year: string | null;
+  /** Four-digit year from `releasedAt`. Every entry has one — see the filter. */
+  year: string;
   state: ArchiveState;
   availability: Availability;
-  /** How many were made. Zero while a piece is still being developed. */
+  /** How many were made. */
   made: number;
   remaining: number;
 };
@@ -57,7 +72,9 @@ export type ArchiveEntry = {
  * the tiebreak, so the numbering is reproducible on every machine.
  *
  * Unreleased pieces sort last by date but still take a number: something in
- * development is already a garment, it just is not a finished one yet.
+ * development is already a garment, it just is not a finished one yet. The
+ * number is why the ordering spans the whole catalogue while the record below
+ * does not.
  */
 const ORDERED: Product[] = PRODUCTS.map((product, position) => ({ product, position }))
   .sort((a, b) => {
@@ -92,6 +109,13 @@ export const ARCHIVE_STATE_LABEL: Record<ArchiveState, string> = {
   "in-development": "In development",
 };
 
+/** Has this piece actually been made? The record's one entry condition. */
+export function isRecorded(product: Product): boolean {
+  return archiveState(product) !== "in-development";
+}
+
+const RECORDED: Product[] = ORDERED.filter(isRecorded);
+
 function toEntry(product: Product): ArchiveEntry {
   const id = garmentId(product);
   return {
@@ -99,7 +123,7 @@ function toEntry(product: Product): ArchiveEntry {
     ref: id.toLowerCase(),
     product,
     drop: getDrop(product.drop),
-    year: product.releasedAt ? product.releasedAt.slice(0, 4) : null,
+    year: product.releasedAt.slice(0, 4),
     state: archiveState(product),
     availability: resolveAvailability(product),
     made: product.runSize,
@@ -107,43 +131,37 @@ function toEntry(product: Product): ArchiveEntry {
   };
 }
 
-/** Every garment, newest first — the order the archive is read in. */
+/** Every garment made, newest first — the order the archive is read in. */
 export function archiveEntries(): ArchiveEntry[] {
-  return [...ORDERED].reverse().map(toEntry);
+  return [...RECORDED].reverse().map(toEntry);
 }
 
 export function getArchiveEntry(ref: string): ArchiveEntry | undefined {
   const wanted = ref.toLowerCase();
-  const product = ORDERED.find((p) => garmentId(p).toLowerCase() === wanted);
+  const product = RECORDED.find((p) => garmentId(p).toLowerCase() === wanted);
   return product ? toEntry(product) : undefined;
 }
 
 
 export function allArchiveRefs(): string[] {
-  return ORDERED.map((p) => garmentId(p).toLowerCase());
+  return RECORDED.map((p) => garmentId(p).toLowerCase());
 }
 
-/**
- * Grouped into `ARCHIVE / 2026` bands, newest year first. A piece with no
- * release date has not entered a year yet and collects under its own band,
- * which is named at the call site rather than here — this file does not do
- * copy.
- */
-export function archiveByYear(): { year: string | null; entries: ArchiveEntry[] }[] {
+/** Grouped into `ARCHIVE / 2026` bands, newest year first. */
+export function archiveByYear(): { year: string; entries: ArchiveEntry[] }[] {
   const bands = new Map<string, ArchiveEntry[]>();
   for (const entry of archiveEntries()) {
-    const key = entry.year ?? "";
-    const band = bands.get(key);
+    const band = bands.get(entry.year);
     if (band) band.push(entry);
-    else bands.set(key, [entry]);
+    else bands.set(entry.year, [entry]);
   }
   return [...bands.entries()]
     .sort((a, b) => b[0].localeCompare(a[0]))
-    .map(([year, entries]) => ({ year: year === "" ? null : year, entries }));
+    .map(([year, entries]) => ({ year, entries }));
 }
 
 /**
- * The two figures the archive is actually about. Derived on every read so
+ * The three figures the archive is actually about. Derived on every read so
  * they cannot disagree with a product page, and returned as numbers rather
  * than as a formatted string because the pages set them in different type.
  */

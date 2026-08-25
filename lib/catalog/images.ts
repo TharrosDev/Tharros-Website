@@ -165,3 +165,41 @@ export const NAV_FRAMES: Record<string, ImageSlotData> = {
     ratio: "tall",
   },
 };
+
+/**
+ * THE PAGE FRAMES — the photography that belongs to a route rather than to a
+ * garment, a drop or a campaign.
+ *
+ * Three slots were declared as object literals inside JSX, which made them the
+ * only images on the site the catalog layer could not see: nothing could count
+ * them, nothing could tell whether they were photographed or standing in, and
+ * a change of crop meant editing a page component. They are declared here for
+ * the same reason `NAV_FRAMES` is — the `kind` and `crop` are what picks a
+ * stand-in and what a real photograph replaces without touching markup.
+ *
+ * Keyed by asset code, because that is what the pending frame prints and what
+ * the photography brief is written against.
+ */
+export const PAGE_FRAMES: Record<string, ImageSlotData> = {
+  "ABT-01": {
+    code: "ABT-01",
+    src: "/photography/abt-01.jpg",
+    alt: "Pattern paper, cut black cloth and a tape measure on a work table",
+    kind: "detail",
+    ratio: "wide",
+  },
+  "ABT-02": {
+    code: "ABT-02",
+    src: "/photography/abt-02.jpg",
+    alt: "Two figures in Drop 001 outside an industrial door on a quiet street",
+    kind: "campaign",
+    ratio: "campaign",
+  },
+  "PRC-01": {
+    code: "PRC-01",
+    src: "/photography/prc-01.jpg",
+    alt: "Pattern pieces weighted flat beside a part-sewn sample on a work table",
+    kind: "detail",
+    ratio: "wide",
+  },
+};

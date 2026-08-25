@@ -17,6 +17,7 @@ import {
   AVAILABILITY_SCHEMA,
   framesFeaturing,
   galleryImages,
+  heroImage,
   getProduct,
   getRelated,
   onBodyImages,
@@ -28,7 +29,7 @@ import { SITE_URL } from "@/lib/site";
 import { SHIPPING_OPTIONS, FREE_SHIPPING_THRESHOLD } from "@/lib/commerce/shipping";
 import { RETURN_WINDOW } from "@/lib/commerce/returns";
 import { getDrop } from "@/lib/catalog/drops";
-import { garmentId } from "@/lib/catalog/archive";
+import { garmentId, isRecorded } from "@/lib/catalog/archive";
 import { jsonLd } from "@/lib/jsonld";
 
 type Params = Promise<{ slug: string }>;
@@ -66,6 +67,12 @@ export default async function ProductPage({ params }: { params: Params }) {
   const availability = resolveAvailability(product);
   const drop = getDrop(product.drop);
   const run = runStatus(product);
+  // A piece still being sampled has no run size and no stock, so both figures
+  // print 0 — and a signal-red 0 above "None left of 0 made" reads as a run
+  // that sold out rather than as one that has not been cut yet. The em dash is
+  // the same admission `ProductCard` and the archive ledger already make, and
+  // the record is where the number appears once there is one.
+  const recorded = isRecorded(product);
   const frames = framesFeaturing(product.slug);
 
   /**
@@ -87,6 +94,15 @@ export default async function ProductPage({ params }: { params: Params }) {
   const sectionIndex = (id: string) =>
     String(sections.indexOf(id) + 1).padStart(2, "0");
 
+  // Google wants an image on a Product node and there is not one to give yet:
+  // every product slot is unphotographed, so `heroImage` resolves to a frame
+  // with no `src` and the site draws a stand-in. Publishing that URL would be
+  // telling a search engine that a piece of free-licence stock is the garment.
+  // The key is therefore conditional rather than absent-forever — the day a
+  // product carries real photography it starts being published, with no other
+  // change here.
+  const heroSrc = heroImage(product).src;
+
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -98,6 +114,7 @@ export default async function ProductPage({ params }: { params: Params }) {
         sku: product.variants[0]?.sku,
         color: product.colorway,
         category: categoryName(product.category),
+        ...(heroSrc ? { image: `${SITE_URL}${heroSrc}` } : {}),
         brand: { "@id": `${SITE_URL}/#organization` },
         offers: {
           "@type": "Offer",
@@ -201,12 +218,16 @@ export default async function ProductPage({ params }: { params: Params }) {
               exists on both sides of the run closing. */}
           <p className="eyebrow border-t border-ink pt-4">
             <span className="num">{sectionIndex("record")}</span>
-            <Link
-              href={`/archive/${garmentId(product).toLowerCase()}`}
-              className="num -my-2 py-2 underline-offset-4 hover:underline"
-            >
-              {garmentId(product)}
-            </Link>
+            {recorded ? (
+              <Link
+                href={`/archive/${garmentId(product).toLowerCase()}`}
+                className="num -my-2 py-2 underline-offset-4 hover:underline"
+              >
+                {garmentId(product)}
+              </Link>
+            ) : (
+              <span className="num">{garmentId(product)}</span>
+            )}
           </p>
 
           <h1 className="type-display-3 mt-6 max-w-[16ch]">{product.name}</h1>
@@ -230,13 +251,19 @@ export default async function ProductPage({ params }: { params: Params }) {
               for a 460px column beside a title. */}
           <p className="mt-8 flex items-baseline gap-3 border-t border-ink pt-4">
             <span
-              className={`type-mono-3 ${run.remaining === 0 ? "text-signal" : ""}`}
+              className={`type-mono-3 ${recorded && run.remaining === 0 ? "text-signal" : ""}`}
             >
-              {run.remaining}
+              {recorded ? run.remaining : <>&mdash;</>}
             </span>
             <span className="type-meta text-ink-faint">
-              {run.remaining === 0 ? "None left" : "left"} of{" "}
-              <span className="num">{run.made}</span> made
+              {recorded ? (
+                <>
+                  {run.remaining === 0 ? "None left" : "left"} of{" "}
+                  <span className="num">{run.made}</span> made
+                </>
+              ) : (
+                "Run size set when the sample is signed off"
+              )}
             </span>
           </p>
 
@@ -293,8 +320,14 @@ export default async function ProductPage({ params }: { params: Params }) {
             <Accordion title="The run">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 <li>
-                  <span className="num">{run.made}</span> made in total,{" "}
-                  <span className="num">{run.remaining}</span> still available.
+                  {recorded ? (
+                    <>
+                      <span className="num">{run.made}</span> made in total,{" "}
+                      <span className="num">{run.remaining}</span> still available.
+                    </>
+                  ) : (
+                    "How many get made is decided on the production sample."
+                  )}
                 </li>
                 {drop ? <li>Released as part of {drop.name}.</li> : null}
                 <li>
@@ -310,9 +343,6 @@ export default async function ProductPage({ params }: { params: Params }) {
                 </Link>
                 . Full material specification is confirmed on the production sample
                 before launch.
-              </p>
-              <p className="type-meta mt-5 text-ink-faint">
-                Runs are small because production is small, not as a sales tactic.
               </p>
             </Accordion>
 

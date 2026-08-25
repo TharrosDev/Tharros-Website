@@ -8,8 +8,9 @@
  * picture they like to a garment they can buy without ever meeting a product
  * card first.
  *
- * Like the catalogue, none of these frames carry `src` yet. Captions and lines
- * below are placeholder copy for layout and must be replaced before launch.
+ * All four frames are photographed. The catalogue is not: captions and lines
+ * below are still placeholder copy for layout and must be replaced before
+ * launch.
  *
  * `hotspots` is deliberately absent on every frame. A coordinate pointing at a
  * garment in a drawing that has no garment at that coordinate is a fabricated
@@ -37,7 +38,7 @@ export const CAMPAIGNS: Campaign[] = [
       wearing: [],
       image: {
         code: "CMP-001-HERO",
-        src: "/hero-drop-001.png",
+        src: "/photography/cmp-001-hero.jpg",
         alt: "A woman in wraparound sunglasses against a plain wall, daylight",
         kind: "campaign",
         // The home page renders this one `fill`, so the ratio is not what

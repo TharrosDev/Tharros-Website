@@ -2,14 +2,12 @@
 
 import type { gsap as GsapType } from "gsap";
 import type { ScrollTrigger as ScrollTriggerType } from "gsap/ScrollTrigger";
-import type { Flip as FlipType } from "gsap/Flip";
 import type { SplitText as SplitTextType } from "gsap/SplitText";
 import { DUR, EASE } from "./config";
 
 export type MotionApi = {
   gsap: typeof GsapType;
   ScrollTrigger: typeof ScrollTriggerType;
-  Flip: typeof FlipType;
   SplitText: typeof SplitTextType;
 };
 
@@ -19,7 +17,15 @@ let ready: MotionApi | null = null;
 /**
  * Loads GSAP once, after hydration, and shares the promise.
  *
- * WHY THIS IS DYNAMIC. GSAP with ScrollTrigger, Flip and SplitText is ~62 kB
+ * FLIP IS NOT LOADED. It was imported, registered and handed out on the API
+ * for the whole life of this file and never called once — the FLIP technique
+ * belongs to cross-route image continuity, which `DESIGN.md` records as not
+ * built and not buildable alongside the route curtain. A plugin nothing uses
+ * is a chunk every visitor who scrolls anything pays for. Put the import, the
+ * type and the `registerPlugin` argument back together on the day something
+ * actually flips.
+ *
+ * WHY THIS IS DYNAMIC. GSAP with ScrollTrigger and SplitText is tens of kB
  * gzipped. The motion runtime mounts in the root layout, so a static import
  * puts all of it in the shared chunk — served on `/legal/privacy` and
  * `/checkout` and every other route that animates nothing. Loading it on
@@ -40,19 +46,17 @@ export function loadMotion(): Promise<MotionApi> {
   if (booting) return booting;
 
   booting = (async () => {
-    const [core, scrollTrigger, flip, splitText] = await Promise.all([
+    const [core, scrollTrigger, splitText] = await Promise.all([
       import("gsap"),
       import("gsap/ScrollTrigger"),
-      import("gsap/Flip"),
       import("gsap/SplitText"),
     ]);
 
     const { gsap } = core;
     const { ScrollTrigger } = scrollTrigger;
-    const { Flip } = flip;
     const { SplitText } = splitText;
 
-    gsap.registerPlugin(ScrollTrigger, Flip, SplitText);
+    gsap.registerPlugin(ScrollTrigger, SplitText);
 
     // The site's resting state, so a tween that specifies neither is still in
     // the house language rather than GSAP's default 0.5s power1.out. Read from
@@ -68,7 +72,7 @@ export function loadMotion(): Promise<MotionApi> {
       limitCallbacks: true,
     });
 
-    ready = { gsap, ScrollTrigger, Flip, SplitText };
+    ready = { gsap, ScrollTrigger, SplitText };
     return ready;
   })();
 

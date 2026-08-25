@@ -2,7 +2,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import SplitLines from "@/components/motion/SplitLines";
 import Magnetic from "@/components/motion/Magnetic";
-import { NEXT_DROP } from "@/lib/catalog/drops";
+import { NEXT_DROP, NO_DATE_NOTE } from "@/lib/catalog/drops";
 
 /**
  * What is coming, stated without a date — because there isn't one.
@@ -54,9 +54,7 @@ export default function NextDrop() {
           </Reveal>
 
           <div className="lg:col-span-5 lg:col-start-8">
-            <p className="type-meta text-ink-faint">
-              No release date is published until there is one.
-            </p>
+            <p className="type-meta text-ink-faint">{NO_DATE_NOTE}</p>
             <Magnetic className="mt-8">
               <Link href="/drop" className="btn btn-outline">
                 Follow the build

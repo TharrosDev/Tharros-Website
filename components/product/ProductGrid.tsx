@@ -13,7 +13,7 @@ type Props = {
   /** Columns at the large breakpoint. Two reads more editorial, five reads catalog. */
   columns?: Columns;
   priorityCount?: number;
-  /** Print each piece's code and run figures under the frame. */
+  /** Print each piece's run figures under the frame. */
   specimen?: boolean;
 };
 

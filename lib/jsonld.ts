@@ -1,7 +1,7 @@
 /**
  * Serialise structured data for an inline <script type="application/ld+json">.
  *
- * `JSON.stringify` does not escape `<`, so a product name or journal title
+ * `JSON.stringify` does not escape `<`, so a product name or a drop title
  * containing `</script>` would close the block and inject markup. Catalog
  * content is trusted today, but that stops being true the moment a CMS is
  * wired in behind `lib/catalog/queries.ts`.
@@ -15,10 +15,9 @@ const LINE_SEPARATORS = new RegExp("[\\u2028\\u2029]", "g");
 /**
  * A BreadcrumbList from a trail of `[name, path]` pairs.
  *
- * Only `/shop/[slug]` and `/journal/[slug]` used to publish one, each with its
- * own hand-built `itemListElement` array — so every other route was invisible
- * to breadcrumb rendering in results, and the two that were not could drift
- * apart. Paths are site-relative; the site URL is applied here.
+ * Two routes used to publish one, each with its own hand-built
+ * `itemListElement` array — so every other route was invisible to breadcrumb
+ * rendering in results, and the two that were not could drift apart. Paths are site-relative; the site URL is applied here.
  *
  * No `@context` — this is always a node inside a page's own graph, and a
  * nested context is not what the caller means.

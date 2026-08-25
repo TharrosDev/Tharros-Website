@@ -22,9 +22,14 @@ import Scene, { SceneLayer } from "@/components/motion/Scene";
  * photograph below it — which is what makes it read as a pause rather than as
  * another picture section with more air around it.
  *
- * The prose runs as one row under the title, both columns top-aligned, rather
- * than hung to the foot of anything. Nothing on this page is bottom-aligned to
- * a picture that is no longer there.
+ * ONE SENTENCE, NOT TWO PARAGRAPHS. The band used to say that pieces are
+ * "designed, patterned and sampled here" and that "every product page prints
+ * how many were made and how many are left" — the first is the argument
+ * `/about` spends two chapters on and 03 makes again forty lines below, and the
+ * second describes the grid immediately above, where every card already prints
+ * MADE and LEFT. A pause that restates its neighbours is not a pause. What is
+ * left is the one claim nothing else on the page makes in words, and it is
+ * short enough to sit on the measure without a second column.
  *
  * `split` stays. This is the page's statement and the one place `SplitLines` is
  * spent on `/` — `e2e/routes.spec.ts` waits on `.split-line` as its proof that
@@ -48,36 +53,18 @@ export default function Statement() {
         <SceneLayer name="title">
           <SectionHeading
             index="02"
-            label="Built from the ground up"
+            label="The scale"
             title="Made small. Made with intent."
             titleClass="type-display-1"
             split
           />
         </SceneLayer>
 
-        {/* ONE ROW, BOTH COLUMNS FILLED, BOTH TOP-ALIGNED. The prose was a
-            single block indented to the middle of the frame, which left the
-            leading half of the row — 490 x 250px at 1440x900 — as empty page
-            under the title. An indent is only an indent when something else
-            holds the line it is indented from. Split across the row the two
-            paragraphs fill the measure between them, and the only space left
-            is the rag of the display type above, which is the shape of the
-            sentence rather than a hole in the layout. */}
-        <SceneLayer
-          name="lead"
-          className="section-lead grid gap-x-12 gap-y-6 lg:grid-cols-12"
-        >
-          <Reveal className="lg:col-span-6 lg:row-start-1">
+        <SceneLayer name="lead" className="section-lead">
+          <Reveal>
             <p className="type-lead text-ink">
-              THARROS is an independent label run at a small scale on purpose.
-              Pieces are designed, patterned and sampled here, then made in
-              short runs — few enough that every one is accounted for.
-            </p>
-          </Reveal>
-          <Reveal delay={100} className="lg:col-span-5 lg:col-start-8 lg:row-start-1">
-            <p className="type-body text-ink-muted">
-              Every product page prints how many were made and how many are
-              left. When a size is gone, it is gone.
+              An independent label working at a scale where every garment is
+              accounted for.
             </p>
           </Reveal>
         </SceneLayer>

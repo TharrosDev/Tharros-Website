@@ -13,7 +13,7 @@ import {
   resolveAvailability,
   runStatus,
 } from "@/lib/catalog/queries";
-import { archiveState, garmentId } from "@/lib/catalog/archive";
+import { archiveState } from "@/lib/catalog/archive";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/catalog/types";
 
@@ -22,7 +22,7 @@ type Props = {
   /** Grid slot width, for correct image sizing. */
   sizes?: string;
   priority?: boolean;
-  /** Print the piece's code and run figures under the frame. */
+  /** Print the piece's run figures under the frame. */
   specimen?: boolean;
 };
 
@@ -55,11 +55,6 @@ export default function ProductCard({
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
   const run = runStatus(product);
-  // The garment's number in the record, not its SKU stem. `TH-ARC-HOOD` is a
-  // warehouse string that happens to be visible; `TH-003` is the piece's
-  // identity, it is the same on the archive ledger and its record page, and it
-  // is what someone would actually use to refer to a piece they own.
-  const code = garmentId(product);
   const unset = archiveState(product) === "in-development";
   const sellable = product.variants.filter((variant) =>
     isSizeAvailable(product, variant.size),
@@ -240,13 +235,16 @@ export default function ProductCard({
 
       {/* The specimen line. Real figures only: `made` is how many exist,
           `remaining` is live variant inventory. A closed run is the one thing
-          here allowed to carry the accent. */}
+          here allowed to carry the accent.
+
+          THE GARMENT NUMBER IS NOT HERE ANY MORE. A card has one job — make
+          the piece worth opening — and `TH-005 · MADE 18 · LEFT 8` spent three
+          quarters of its metadata line on an identifier nobody browses by. The
+          two figures that are evidence stay; the reference belongs on the
+          product page, which opens on it, and in the archive ledger, which is
+          indexed by it. */}
       {specimen ? (
         <dl className="mt-auto flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
-          <div className="flex items-baseline gap-2">
-            <dt className="visually-hidden">Garment</dt>
-            <dd className="type-meta text-ink-faint">{code}</dd>
-          </div>
           {/* A piece still being sampled has no run size decided yet, so both
               figures are 0 — which reads as "none were made" rather than as
               "not made yet". Same em dash the archive and the size tables use

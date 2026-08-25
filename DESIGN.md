@@ -326,8 +326,8 @@ height on an `ImageSlot` directly.
 ### Visual rhythm
 
 The home page deliberately avoids a repeating image → heading → cards loop. Scale,
-alignment, density and surface alternate: full-bleed hero, three-up specimen grid, a pale
-statement in type alone, one landscape band with the studio sequence named under it, one
+alignment, density and surface alternate: full-bleed hero, five-up specimen grid, a pale
+statement of one sentence in type alone, one landscape band with the studio sequence named under it, one
 tall campaign frame beside its own column, a ledger at 11px, black again. When adding a
 section, ask what it varies.
 
@@ -352,11 +352,12 @@ never their spacing:
   names and prices — a second product grid, one screen below `01 The run`, which already
   shows every piece in the drop with its price.
 
-**Frames vary by register, not only by placement.** The stand-in pools are chosen by a
-slot's `kind` and `crop` (see `FillerImage`), and the home page spends a different one in
-each movement: `hero` behind the opening headline, `detail` in the studio, `street` in the
-campaign frame, `flat` in the archive. `lifestyle` is no longer spent on the home page:
-the statement it belonged to is type only now.
+**Frames vary by register, not only by placement.** Three of the home page's four frames
+are real photographs now — the opening portrait, the studio band and the campaign frame —
+and only the archive's thumbnails still stand in. The register still alternates, and it is
+declared the same way either way: a slot's `kind` and `crop` are what picks a stand-in from
+`FillerImage`'s pools *and* what a real photograph is briefed against, so the sequence
+survives the shoot rather than being rebuilt by it.
 
 **Type beside a picture is anchored at both ends, or it is a hole.** A side-aligned
 campaign frame is a ~700px picture next to ~110px of caption, and no single alignment
@@ -486,8 +487,10 @@ motion exists* to *where the motion is spent*.
 
 ### The stack
 
-**GSAP 3.15**, with ScrollTrigger, Flip and SplitText. All of them are free
-under the standard licence as of 3.13.
+**GSAP 3.15**, with ScrollTrigger and SplitText. Both are free under the
+standard licence as of 3.13. Flip was registered and handed out on the motion
+API from the start and never called once — it belongs to cross-route image
+continuity, which §6 records as not built — so it is no longer imported.
 
 It is **dynamically imported**. `lib/motion/registry.ts` loads it once after
 hydration and shares the promise. The motion runtime mounts in the root layout,
@@ -533,8 +536,8 @@ for — but the overhaul makes it load-bearing rather than incidental.
   mode is chosen for the content. `still` lets a call site opt out and keep its
   slot in a stagger.
 - **The scene** (`components/motion/Scene.tsx`) is the new primitive: a
-  declarative timeline over named layers, scrubbed against scroll and
-  optionally pinned. Choreography is data, so a scene can be re-timed without
+  declarative timeline over named layers, scrubbed against scroll. Nothing
+  pins — `Scene` no longer takes the prop. Choreography is data, so a scene can be re-timed without
   unpicking an imperative timeline — forty hand-rolled timelines is the
   spaghetti this component exists to prevent.
 - **Depth** (`Parallax`) travels as a fraction of the element's own height, off
@@ -736,13 +739,17 @@ photographs instead of six. Small thumbnails (bag, search, order summary) invert
 
 ### The stand-in artwork
 
-Until photography exists, a slot without `src` shows a stand-in photograph from
+Thirteen frames are photographed; every product slot is not. A slot without `src` shows a stand-in photograph from
 `public/filler` — a flat lay, a figure in a place, a street, a portrait, a fabric study or
 the opening frame, chosen from the slot's `kind` and `crop` and held steady by its asset
 code, so a frame is
 identical on every render and machine. They are free-licence stock (Openverse, CC0 and
 public domain), pulled by `scripts/fetch-filler.mjs` and credited in
 `scripts/filler-credits.json`.
+
+The line between the two is enforced rather than trusted: `lib/catalog/photography.test.ts`
+fails if any declared `src` points into `public/filler`, and it names the pieces still
+pending so "which garments are unphotographed" is something the repository knows.
 
 They are in colour, and ungraded. Two earlier passes were not, and both were wrong in the
 same way. They were drawn illustrations first — a drawing lets a layout be checked but not
@@ -754,7 +761,7 @@ new set. Stand-ins should look like what they are.
 
 `NEXT_PUBLIC_FILLER_IMAGES=off` returns the bare frames. It is a switch for looking at a
 layout without the stand-ins in it, nothing more — the site is pre-launch, the stand-ins are
-scaffolding, and how much a layout leans on them while the photography does not exist is
+scaffolding, and how much a layout leans on them while the garments are unphotographed is
 not a problem to solve. Build what looks right; the frames hold their ratio either way, so
 real photography drops in without moving anything.
 

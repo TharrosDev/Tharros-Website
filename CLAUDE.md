@@ -67,10 +67,11 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Payment | **Not connected**, and said before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and beside the action itself. The flow is two steps rather than four, because a card-shaped walk to an email is three screens of theatre — the working action composes a `mailto:` from the resolved bag, the address and the delivery choice. There is no disabled pay button: a permanently dead primary control is chrome, and the panel above it states the situation in words. |
 | Accounts / sign-in | **Not connected.** `/account` states that once, then spends the page on what works without one — saved pieces and the email order. |
 | Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
-| Motion | **Real.** GSAP 3.15 (ScrollTrigger, Flip, SplitText), dynamically imported so it never enters the shared chunk. Scene system in `components/motion/`, tokens in `lib/motion/config.ts`. See `DESIGN.md` §6 — especially the no-pinning rule and the no-hidden-HTML rule. |
+| Motion | **Real.** GSAP 3.15 (ScrollTrigger and SplitText — Flip was registered for a year and never called, so it is no longer loaded), dynamically imported so it never enters the shared chunk. Scene system in `components/motion/`, tokens in `lib/motion/config.ts`. See `DESIGN.md` §6 — especially the no-pinning rule and the no-hidden-HTML rule. |
 | Route transitions | **Real** — an ink plane that lifts off each new route (`RouteCurtain`). Cross-route *image continuity* is **not** built: it needs React's `ViewTransition`, which is not in stable React 19.2.4, and it cannot coexist with the curtain anyway. `DESIGN.md` §6 records why. |
 | Opening sequence | **Real**, on `/` only, once per session, CSS-driven so it clears without JavaScript. Armed in the head script, not in React. |
-| Product photography | **Not shot yet.** Image slots render a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout. |
+| Site photography | **Thirteen frames shot**, in `public/photography` — the home hero (`CMP-001-HERO`), three campaign frames, both drop covers, the four index-overlay frames, two for `/about` and one for the studio band. Declared in `campaign.ts`, `drops.ts` and `images.ts` (`NAV_FRAMES`, `PAGE_FRAMES`). |
+| Product photography | **Not shot yet.** All 54 product slots are pending, so every card, gallery and thumbnail is a stand-in. Session 2 of `docs/PHOTOGRAPHY_PROMPT.md` is the queue. A slot with no `src` renders a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout — `lib/catalog/photography.test.ts` fails if a `src` ever points into `public/filler`, or if the list of pending pieces stops matching the catalogue. |
 | Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere; `pieceTable()` returns null and the product page says the piece has not been measured. Filling them in is a data change — see `lib/catalog/sizing.ts`. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
 | Legal pages | **Working drafts**, marked as pending review. |
@@ -98,11 +99,11 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it, and a detail frame hangs across the join. 02 is type only, 03 is one landscape band plus the studio stages named on a rule, and 04 is a single campaign frame that links to `/drop` — see the page's own docblock. |
+| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it. (The detail frame that used to hang across the join is gone, at the owner's direction.) 02 is type only and one sentence, 03 is one landscape band plus the studio stages named on a rule, and 04 is a single campaign frame that links to `/drop` — see the page's own docblock. |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
-| `/archive` | `app/archive/page.tsx` | Every garment made, in year bands, as a ledger |
+| `/archive` | `app/archive/page.tsx` | Every garment **made**, in year bands, as a ledger. A piece still in development is not in it — it has a number reserved but no record, and it lives on `/drop` and `/shop` until it ships. |
 | `/archive/[ref]` | `app/archive/[ref]/page.tsx` | One garment as a record rather than as stock: the product page's gallery-plus-column layout with the buying taken out — no buy panel, no size selector, no logistics. It was a stack of full-screen frames and that read as a slideshow. SSG per piece. |
 | `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
@@ -135,7 +136,7 @@ Content is data. It never lives in JSX.
 
 ```
 lib/catalog/
-  types.ts        Product, Variant, ImageSlotData, Collection, LookbookSpread, JournalEntry
+  types.ts        Product, Variant, ImageSlotData, Drop, Campaign, CampaignFrame
   products.ts     the catalog (placeholder)
   categories.ts   category list + sizing-table mapping
   drops.ts        Drop 001 (released) / Drop 002 (in development)
@@ -144,7 +145,9 @@ lib/catalog/
   studio.ts       the six stages; the home page reads `index` and `name` only
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
-  images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER
+  images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER — plus
+                  NAV_FRAMES and PAGE_FRAMES, the photography that belongs to a
+                  route rather than to a garment
   queries.ts      THE ONLY WAY TO READ PRODUCTS
 lib/commerce/
   cart.ts         CartLine, resolveLines, totals
@@ -256,8 +259,9 @@ contrast fact, not a preference.
   the LCP exclusions, the magnetics deny-list, and the rule that nothing may be
   hidden in the served HTML that only JavaScript can bring back.
 
-**`components/media/ImageSlot.tsx` is how images render.** Without a `src` it
-draws a ratio-correct stand-in — by default a stand-in photograph picked by
+**`components/media/ImageSlot.tsx` is how images render.** With a `src` it is a
+`next/image` at the slot's ratio — thirteen frames take that branch today. Without one it
+draws a ratio-correct stand-in: by default a stand-in photograph picked by
 `FillerImage.tsx` from `public/filler`, or a bare frame carrying the asset code when
 filler is switched off. Either way the slot holds
 its ratio, so dropping in real photography is a one-line data change and moves no layout.
@@ -274,14 +278,16 @@ its ratio, so dropping in real photography is a one-line data change and moves n
 | Lint | `npm run lint` |
 | Type check | `npm run typecheck` |
 | Test | `npm test` |
+| End to end | `npm run e2e` |
 
 Run **both** `npm run lint` and `npm run build` before declaring work done. Lint enforces
 React Compiler rules that the build does not.
 
 `npm test` runs the assert-based checks in `lib/` through Node directly — no framework and
-no dependency, Node strips the types. They cover the two pieces of logic that fail
-silently: the postal patterns in `lib/commerce/regions.ts` and the cents-to-currency
-rounding in `lib/format.ts`. `tsconfig` carries `allowImportingTsExtensions` so the
+no dependency, Node strips the types. They cover the three things that fail silently: the
+postal patterns in `lib/commerce/regions.ts`, the cents-to-currency rounding in
+`lib/format.ts`, and the line between a photograph and a stand-in in
+`lib/catalog/photography.test.ts`. `tsconfig` carries `allowImportingTsExtensions` so the
 `.ts`-suffixed imports those files need do not fail `tsc`.
 
 ---

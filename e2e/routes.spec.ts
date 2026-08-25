@@ -244,3 +244,61 @@ test.describe("scenes that move the DOM", () => {
     expect(watched.errors, "navigating away from a scene").toEqual([]);
   });
 });
+
+/**
+ * The archive is a record, and a record cannot contain work that has not been
+ * done.
+ *
+ * Two pieces of Drop 002 are in development. They carry `runSize: 0`, so they
+ * never inflated "units made" — but they were counted as garments, filed under
+ * the 2026 band beside pieces that shipped in May, and shown as the newest two
+ * rows of a home page section titled "Everything made so far." The ledger row
+ * itself said "In development" honestly; the figure above it did not.
+ *
+ * The assertion is the relationship rather than the numbers: a count that
+ * disagrees with the rows under it is the failure, at seven garments or at two
+ * hundred.
+ */
+test.describe("the archive records what was made", () => {
+  test("the garment count is the number of rows", async ({ page }) => {
+    await page.goto("/archive");
+
+    // `dt` inside the `dl > div` wrapper this page uses is not exposed as
+    // `term`, so the pair is addressed structurally rather than by role.
+    const stated = await page
+      .locator("dl div", { hasText: "Garments" })
+      .locator("dd")
+      .innerText();
+    // The ledger's own rows, not every list item in `main` — the page also
+    // carries breadcrumbs.
+    const rows = await page.locator('main a[href^="/archive/th-"]').count();
+
+    expect(Number(stated.trim()), "stated garment count").toBe(rows);
+  });
+
+  test("nothing in development is in the record", async ({ page }) => {
+    await page.goto("/archive");
+    await expect(page.getByRole("main").getByText("In development")).toHaveCount(0);
+  });
+
+  test("an unreleased piece has no record page", async ({ page }) => {
+    const response = await page.goto("/archive/th-008");
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole("link", { name: /return home/i })).toBeVisible();
+  });
+});
+
+/**
+ * A run that has not been decided is not a run that sold out.
+ *
+ * `runSize: 0` and no stock made the product page print a signal-red `0` above
+ * "None left of 0 made", which is the reading every other surface on the site
+ * already takes trouble to avoid. The em dash is the site's word for a number
+ * nobody has set.
+ */
+test("a piece in development shows no run figures", async ({ page }) => {
+  await page.goto("/shop/shell-jacket-01");
+  await expect(page.locator("main")).not.toContainText("None left");
+  await expect(page.locator("main")).not.toContainText("0 made");
+  await expect(page.getByText("Not out yet")).toBeVisible();
+});
