@@ -4,7 +4,7 @@
  * The stand-ins that were here were desaturated to a monochrome palette before
  * they were committed, so the colour was not recoverable by regrading them —
  * a greyscale JPEG has no hue to restore. This pulls fresh CC0 photographs
- * from Openverse, in colour, at the seven scene types `FillerImage.tsx`
+ * from Openverse, in colour, at the five scene types `FillerImage.tsx`
  * resolves to, and writes `public/filler/<scene>-<n>.jpg`.
  *
  * CC0 only, and photographs only. `license=cc0` means no attribution is
@@ -35,9 +35,7 @@ const FORCE = process.argv.includes("--force");
 const SCENES = {
   flat: ["folded clothing", "shirt flat lay", "garment on table"],
   worn: ["person wearing hoodie", "man wearing jacket", "person in sweater"],
-  scene: ["person standing architecture", "man standing building", "person concrete wall"],
   street: ["person walking street", "man walking city", "pedestrian street"],
-  campaign: ["fashion model", "woman coat outdoors", "man coat outdoors", "person landscape wide", "couple walking outdoors"],
   portrait: ["portrait person natural light", "headshot man", "portrait face"],
   detail: ["fabric texture macro", "textile weave close up", "denim texture"],
 };

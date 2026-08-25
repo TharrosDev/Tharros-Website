@@ -163,7 +163,7 @@ export default function FilterBar({
           })),
           {
             id: "all",
-            name: "Everything made so far",
+            name: "Everything",
             count,
             href: buildHref({ category, sort, query }),
           },

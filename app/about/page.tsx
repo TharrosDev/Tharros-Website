@@ -6,19 +6,20 @@ import Reveal from "@/components/ui/Reveal";
 import Parallax from "@/components/motion/Parallax";
 import PageIntro from "@/components/layout/PageIntro";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
+import { PAGE_FRAMES } from "@/lib/catalog/images";
 import { SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "THARROS is an independent streetwear label built from the ground up — designed, patterned and sampled in-house, released in small runs.",
+    "THARROS is an independent streetwear label, designed, patterned and sampled in-house and released in small runs.",
   alternates: { canonical: "/about" },
   openGraph: {
     type: "article",
     title: "About THARROS",
     description:
-      "An independent streetwear label built from the ground up — designed, patterned and sampled in-house, released in small runs.",
+      "An independent streetwear label, designed, patterned and sampled in-house and released in small runs.",
     url: `${SITE_URL}/about`,
   },
 };
@@ -97,19 +98,13 @@ export default function AboutPage() {
         label="The label"
         title="Built from the ground up."
         split
-        lead="An independent streetwear label making small runs of original pieces — designed, patterned and sampled in-house, then made in numbers small enough to count."
+        lead="An independent streetwear label, designed, patterned and sampled in-house and released in numbers small enough to count."
         crumbs={[{ name: "Home", href: "/" }]}
       />
 
       <Reveal mode="mask" className="section-lead">
         <ImageSlot
-          image={{
-            code: "ABT-01",
-            src: "/photography/abt-01.jpg",
-            alt: "Pattern paper, cut black cloth and a tape measure on a work table",
-            kind: "detail",
-            ratio: "wide",
-          }}
+          image={PAGE_FRAMES["ABT-01"]!}
           ratioSm="editorial"
           sizes="100vw"
         />
@@ -134,13 +129,7 @@ export default function AboutPage() {
                   className="lg:col-span-10 lg:col-start-2"
                 >
                   <ImageSlot
-                    image={{
-                      code: "ABT-02",
-                      src: "/photography/abt-02.jpg",
-                      alt: "Two figures in Drop 001 outside an industrial door on a quiet street",
-                      kind: "campaign",
-                      ratio: "campaign",
-                    }}
+                    image={PAGE_FRAMES["ABT-02"]!}
                     ratioSm="editorial"
                     sizes="(min-width: 1024px) min(80vw, 1160px), 100vw"
                   />
@@ -196,13 +185,7 @@ export default function AboutPage() {
 
       <section className="on-pale rhythm-breath">
         <div className="page-frame">
-          <h2 className="type-display-2 max-w-[18ch]">
-            Designed, tested, refined.
-          </h2>
-          <p className="type-body mt-8 max-w-lg text-ink-muted">
-            {CURRENT_DROP.name} is where it starts. Everything it taught is
-            already going into the next one.
-          </p>
+          <h2 className="type-display-2 max-w-[18ch]">{CURRENT_DROP.name}.</h2>
           <div className="mt-12 flex flex-wrap gap-4">
             <Link href="/drop" className="btn btn-solid">
               See the current drop

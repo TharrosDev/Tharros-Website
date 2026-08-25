@@ -4,7 +4,7 @@ The image slots on this site are declared in data and render as stand-ins until 
 is filled in (see `components/media/ImageSlot.tsx`). These are the prompts used to
 generate the real frames, one paste per session.
 
-The home hero (`CMP-001-HERO`, `public/hero-drop-001.png`) is done and is the reference
+The home hero (`CMP-001-HERO`, `public/photography/cmp-001-hero.jpg`) is done and is the reference
 for everything else: warm plaster wall, soft directional daylight, ungraded warm
 neutrals, no props, no styling noise.
 
@@ -21,8 +21,22 @@ needs nothing installed.
 it only when a drop has no campaign hero, and Drop 001 has one. It is generated so the
 slot is filled, not because a page is waiting on it.
 
-**Session 2 — product frames (27 images).** Not written yet: three frames per piece
-(front flat, detail, on-body) across the nine products in `lib/catalog/products.ts`.
+**Session 2 — product frames (27 images).** Three frames per piece across the nine
+products in `lib/catalog/products.ts`. The prompt is at the bottom of this file.
+
+Every product slot on the site is still a stand-in — that is 54 declared frames and nine
+pieces nobody can actually see. This is the session that matters most, and it is why
+`lib/catalog/photography.test.ts` names the pending pieces rather than counting them: the
+list empties one product at a time, and the test says which are left.
+
+**Which three, and why those three.** `lib/catalog/images.ts` ranks frames
+`model -> lifestyle -> campaign -> detail -> back -> front`, and the ladder is built to
+degrade correctly for a garment with three photographs instead of six. Three shots cover
+every consumer of that ladder: `-04` is what `heroImage` picks for the gallery and the
+card, `-01` is what `thumbnailImage` picks for the bag, the search results and the archive
+row (thumbnails deliberately invert the ladder), and `-03` is what `detailImages` needs so
+the piece can be proved rather than described. `-02`, `-05` and `-06` are Session 3 and the
+site reads correctly without them.
 
 ---
 
@@ -162,3 +176,92 @@ two must not look like the same photograph. **Also cropped to 21:9 on desktop an
 mobile**, so keep the subject in the middle third both ways.
 
 Confirm you have the brief, then generate image 1.
+
+---
+
+## Session 2 prompt — paste everything below this line
+
+You are my art director and image generator for a photography set. Read this whole brief,
+confirm in two lines that you have it, then generate **image 1 only** and stop. After that,
+every time I say `next` you generate the next image in the queue and stop again. Never
+generate two images in one turn. Never skip ahead. If I say `again`, regenerate the current
+image with a different take rather than moving on.
+
+### The set
+
+Nine garments, three frames each, twenty-seven images. Same world as Session 1: warm
+plaster and raw concrete, one soft directional daylight source, warm neutrals only, no
+props, no styling noise, no text of any kind anywhere in the image. `cmp-001-hero.jpg` is
+the reference for light and grade.
+
+The three frames repeat for every piece, in this order:
+
+- **`-01` front flat.** Square 1024×1024. The garment laid flat and square to the camera on
+  a plain warm-neutral surface, shot from directly above, filling most of the frame with an
+  even margin. Nothing else in the picture. This is the frame that becomes a 64px thumbnail,
+  so the silhouette has to read at that size: shoulders square, sleeves straight, no folds
+  that break the outline.
+- **`-03` detail.** Portrait 1024×1365 (3:4). One construction detail at close range —
+  named per piece below. Shallow depth, the detail sharp and the rest falling off. This is
+  the frame that has to prove the garment is made rather than printed.
+- **`-04` on-body, full length.** Portrait 1024×1536 (2:3). One person wearing the piece,
+  full length, standing, still, not looking at the camera, against plaster or concrete.
+  Unposed. No jewellery, no visible makeup. The point of the shot is the silhouette, so the
+  whole garment must be inside the frame with room above the head and below the feet.
+
+The same small cast recurs across the set — reuse the two figures from `cmp-001-b` and
+`nav-drop` rather than a new face per garment. Bottom halves are the Utility Cargo Pant or
+plain black trousers throughout, so the tops read against a constant.
+
+### Output rules for every image
+
+- Generate at the **native size named for that frame type** — do not substitute.
+- Keep the subject inside the frame with margin. Every one of these gets cropped by the
+  site at some width.
+- After generating, print one line: the **filename**, and nothing else.
+- Photorealistic. No illustration, no 3D render, no collage, no borders, no frames.
+
+### The nine garments
+
+Colour and construction are from `lib/catalog/products.ts` and are not to be embellished.
+
+| Code | Piece | Colour | Made from | Fit | The `-03` detail |
+|---|---|---|---|---|---|
+| `CORE-TEE` | Core Tee | washed black | heavyweight cotton jersey, ribbed collar, tonal embroidery | boxy, drops at the shoulder | the ribbed collar and the tonal embroidery beside it |
+| `NOISE-TEE` | Noise / Silence Tee | off white | heavyweight cotton jersey, screen-printed graphic | oversized | the printed surface at an angle, so the ink sits on the cloth |
+| `ARC-HOODIE` | Arc Hoodie | black | heavyweight brushed-back fleece, double-layer hood, metal-tipped drawcord | relaxed, dropped shoulder | the metal drawcord tip against the double-layer hood edge |
+| `MONUMENT-CREW` | Monument Crewneck | bone | heavyweight loopback cotton, raised print, ribbed trims | regular | the ribbed cuff meeting the sleeve, raised print just in frame |
+| `CARGO-PANT` | Utility Cargo Pant | black | cotton twill, reinforced bar-tacking, adjustable hem drawcord | wide leg, mid rise, stacks over footwear | a bar-tacked pocket corner, stitching visible |
+| `LOGO-CAP` | Logo Cap | black | cotton twill, embroidered wordmark, adjustable strap | one size | the adjustable strap and the twill weave behind it |
+| `WORK-JACKET` | Work Jacket | faded black | cotton canvas, corozo buttons, four-pocket front | boxy, squared shoulder | one corozo button on the canvas placket |
+| `SHELL-01` | Shell Jacket 01 | black | technical woven shell, taped seams, two-way zip | oversized, layers over heavyweight fleece | a taped seam running past the two-way zip |
+| `BEANIE` | Ribbed Beanie | charcoal | fine-gauge rib knit, woven cuff label | one size | the woven cuff label on the folded rib |
+
+### The queue — 27 images
+
+Nine blocks of three, in catalogue order. For each piece, generate `-01`, then `-03`, then
+`-04`, using the frame specifications above and the row for that piece in the table.
+
+1. `core-tee-01.png` · 2. `core-tee-03.png` · 3. `core-tee-04.png`
+4. `noise-tee-01.png` · 5. `noise-tee-03.png` · 6. `noise-tee-04.png`
+7. `arc-hoodie-01.png` · 8. `arc-hoodie-03.png` · 9. `arc-hoodie-04.png`
+10. `monument-crew-01.png` · 11. `monument-crew-03.png` · 12. `monument-crew-04.png`
+13. `cargo-pant-01.png` · 14. `cargo-pant-03.png` · 15. `cargo-pant-04.png`
+16. `logo-cap-01.png` · 17. `logo-cap-03.png` · 18. `logo-cap-04.png`
+19. `work-jacket-01.png` · 20. `work-jacket-03.png` · 21. `work-jacket-04.png`
+22. `shell-01-01.png` · 23. `shell-01-03.png` · 24. `shell-01-04.png`
+25. `beanie-01.png` · 26. `beanie-03.png` · 27. `beanie-04.png`
+
+Confirm you have the brief, then generate image 1.
+
+### Wiring the results in
+
+Convert on the way in, the same way Session 1 was:
+
+```bash
+node -e "require('sharp')('in.png').jpeg({quality:86,mozjpeg:true,chromaSubsampling:'4:4:4'}).toFile('public/photography/out.jpg')"
+```
+
+Then add `src` to the matching slot in `shots()` in `lib/catalog/products.ts`, remove that
+piece from `PENDING_PHOTOGRAPHY` in `lib/catalog/photography.test.ts`, and run `npm test`.
+No layout moves — the slot already holds its ratio.

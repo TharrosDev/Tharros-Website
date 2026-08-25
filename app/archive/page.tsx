@@ -82,12 +82,12 @@ export default function ArchivePage() {
       <div className="page-frame pb-[var(--rhythm-default)]">
         {bands.map((band, i) => {
           return (
-            <section key={band.year ?? "unreleased"} className="mt-[var(--rhythm-tight)] first:mt-0">
+            <section key={band.year} className="mt-[var(--rhythm-tight)] first:mt-0">
               {/* The band header is the year at mono display scale — the
                   archive's largest figure, because the year is the axis the
                   record is organised on. */}
               <Reveal className="rule-draw flex items-baseline justify-between gap-6 pt-4">
-                <h2 className="num type-mono-2">{band.year ?? "Unreleased"}</h2>
+                <h2 className="num type-mono-2">{band.year}</h2>
                 <p className="type-meta text-ink-faint">
                   <span className="num">{band.entries.length}</span>{" "}
                   {band.entries.length === 1 ? "garment" : "garments"}

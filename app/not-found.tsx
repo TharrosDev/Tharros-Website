@@ -29,8 +29,8 @@ export default function NotFound() {
             headline already said that. This one says something the headline
             does not. */}
         <p className="type-body mt-6 max-w-md text-ink-on-dark-muted">
-          Nothing lives at this address. The line is small enough that everything
-          made so far fits on one page.
+          Nothing lives at this address. The line is small enough that the whole
+          catalogue fits on one page.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <Magnetic>

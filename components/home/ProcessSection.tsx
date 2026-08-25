@@ -2,6 +2,7 @@ import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ImageSlot from "@/components/media/ImageSlot";
 import { STUDIO_STAGES } from "@/lib/catalog/studio";
+import { PAGE_FRAMES } from "@/lib/catalog/images";
 
 /**
  * The studio: one detail, and the sequence named.
@@ -59,13 +60,7 @@ export default function ProcessSection() {
 
         <Reveal mode="mask" className="section-lead">
           <ImageSlot
-            image={{
-              code: "PRC-01",
-              src: "/photography/prc-01.jpg",
-              alt: "Pattern pieces weighted flat beside a part-sewn sample on a work table",
-              kind: "detail",
-              ratio: "wide",
-            }}
+            image={PAGE_FRAMES["PRC-01"]!}
             ratio="wide"
             ratioSm="editorial"
             sizes="(min-width: 1600px) 1600px, 100vw"

@@ -16,7 +16,7 @@ export const DROPS: Drop[] = [
     statement: "Where it starts.",
     body: [
       "Seven pieces. Small runs of each, made to see what holds up — the cut, the weight, the way a graphic sits once it is on a body rather than a screen.",
-      "Nothing here was made in a quantity that needed a warehouse. When a size is gone, it is gone, and what comes next is built on what this run taught.",
+      "Nothing here was made in a quantity that needed a warehouse.",
     ],
     releasedAt: "2026-05-02",
     status: "released",
@@ -55,6 +55,16 @@ export const CURRENT_DROP = DROPS[0];
 
 /** The drop being worked on, if there is one. */
 export const NEXT_DROP = DROPS.find((drop) => drop.status === "in-development");
+
+/**
+ * One string, because it was two.
+ *
+ * The home page's next-drop section and `/drop`'s own fourth band both stated
+ * this inline, in the same words, and a sentence written twice is a sentence
+ * that gets edited once. It lives here because it is a fact about the drop
+ * rather than about either page.
+ */
+export const NO_DATE_NOTE = "No release date is published until there is one.";
 
 export function getDrop(slug: string): Drop | undefined {
   return DROPS.find((drop) => drop.slug === slug || drop.id === slug);

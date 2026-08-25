@@ -27,11 +27,19 @@ export type Availability =
   | "available"
   | "low-stock"
   | "sold-out"
-  | "coming-soon"
-  | "preorder";
+  | "coming-soon";
 
-/** Release posture, set in data. Inventory decides the rest. */
-export type ReleaseState = "released" | "coming-soon" | "preorder";
+/**
+ * Release posture, set in data. Inventory decides the rest.
+ *
+ * `preorder` was a third posture here, and a fifth `Availability`. It was
+ * carried through `resolveAvailability`, `AVAILABILITY_LABEL`,
+ * `AVAILABILITY_SCHEMA` and `archiveState`, and no product has ever declared
+ * it — THARROS releases a run when it is made rather than taking money for one
+ * that is not. `coming-soon` is the state a piece being sampled is actually in.
+ * Putting it back is one member and four map entries.
+ */
+export type ReleaseState = "released" | "coming-soon";
 
 /**
  * What a slot holds. `campaign` is an environment frame that leads a page — it
@@ -133,7 +141,6 @@ export type Product = {
   story: string;
   /** Minor units (cents) so arithmetic never touches floats. */
   price: number;
-  compareAtPrice?: number;
   category: CategoryId;
   /** The drop this piece was released in. */
   drop: string;

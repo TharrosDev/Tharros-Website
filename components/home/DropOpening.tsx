@@ -56,8 +56,8 @@ import { formatDate } from "@/lib/format";
  * WHAT IS NOT ANIMATED, and why. The h1 is the largest paint on the site's
  * most visited route. It is never hidden, never inside a pinned scene and
  * never waiting on GSAP — SplitLines renders it as ordinary text and enhances
- * it once the library arrives. There is no pin anywhere in here: `/` spends its
- * whole two-pin budget on the statement and the campaign frame.
+ * it once the library arrives. There is no pin anywhere in here, and there is
+ * no pin anywhere on the site — `Scene` does not take the prop.
  */
 export default function DropOpening() {
   const pieces = listProducts({ drop: CURRENT_DROP.id });
@@ -101,7 +101,12 @@ export default function DropOpening() {
         // own height: enough to separate the planes, not enough to read as the
         // words sliding off the screen.
         { at: 0, layer: "type", to: { yPercent: -8 } },
-        { at: 0, layer: "record", to: { yPercent: -18 } },
+        // The release record had a fourth rate, -18, and it was the steepest
+        // travel on the smallest text on the screen. Four planes at four rates
+        // over a photograph is one plane more than the eye reads as depth, and
+        // the one it read least was the row carrying the only figures here.
+        // It sits still now: three planes, and the record stays legible for
+        // the whole of the scroll it is legible at the top of.
       ]}
     >
       {/* THE PICTURE. Behind everything and inert: every way into the shop
@@ -214,10 +219,7 @@ export default function DropOpening() {
       </SceneLayer>
 
       {/* The record of the release, stated once, at the head of the frame. */}
-      <SceneLayer
-        name="record"
-        className="page-frame relative pt-[calc(var(--header-h)+2.5rem)]"
-      >
+      <div className="page-frame relative pt-[calc(var(--header-h)+2.5rem)]">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-rule pt-4">
           <p className="type-meta text-ink-on-dark/90">
             {CURRENT_DROP.name}
@@ -233,7 +235,7 @@ export default function DropOpening() {
             <span className="mark-registration" aria-hidden="true" />
           </p>
         </div>
-      </SceneLayer>
+      </div>
 
       <SceneLayer name="type" className="page-frame relative pb-14 md:pb-20">
         {/* ONE ANCHOR, ON THE LEFT: the statement, the two controls and what is

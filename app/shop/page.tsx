@@ -89,7 +89,13 @@ export default async function ShopPage({
         ? drop.name
         : category !== "all"
           ? categoryName(category)
-          : (soleDrop?.name ?? "Everything made so far");
+          : // Not "Everything made so far": that is the archive's claim, and
+            // the shop holds pieces still being sampled. The catalogue is what
+            // exists, released or not; the record is what has been done. One
+            // word rather than four — the eyebrow above it already says which
+            // everything this is, and a heading set at `display-2` earns its
+            // room by being short.
+            (soleDrop?.name ?? "Everything");
 
   // "Everything, as it comes" — no search, no category, no drop, no new filter,
   // and the default sort. Anything else is a narrowed view.
@@ -121,9 +127,8 @@ export default async function ShopPage({
               ? "Next drop"
               : (drop ?? soleDrop)
                 ? "The run"
-                : // Not "Everything made so far": that is the title, and an
-                  // eyebrow repeating its own heading is a label describing
-                  // nothing.
+                : // Not the title again — an eyebrow repeating its own
+                  // heading is a label describing nothing.
                   "The catalogue"
         }
         title={heading}

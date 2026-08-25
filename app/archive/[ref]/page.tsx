@@ -71,12 +71,6 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
     .filter((e) => e.garmentId !== entry.garmentId)
     .slice(0, 4);
 
-  // An unreleased piece has no run size and no stock: both figures would print
-  // 0, which reads as "none were made" rather than as "this has not been made
-  // yet". The em dash is the same admission the size tables already use for a
-  // measurement nobody has taken.
-  const unset = entry.state === "in-development";
-
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -139,7 +133,7 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
             <dl className="mt-8 grid grid-cols-2 gap-x-8 border-t border-ink pt-5">
               <div>
                 <dt className="type-meta text-ink-faint">Made</dt>
-                <dd className="num type-mono-3 mt-2">{unset ? <>&mdash;</> : entry.made}</dd>
+                <dd className="num type-mono-3 mt-2">{entry.made}</dd>
               </div>
               <div>
                 <dt className="type-meta text-ink-faint">
@@ -148,7 +142,7 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
                 <dd
                   className={`num type-mono-3 mt-2 ${entry.state === "archived" ? "text-signal" : ""}`}
                 >
-                  {unset ? <>&mdash;</> : entry.remaining}
+                  {entry.remaining}
                 </dd>
               </div>
             </dl>

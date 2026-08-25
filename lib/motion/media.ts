@@ -31,7 +31,10 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia(QUERY.reduced).matches;
 }
 
-export function hasFinePointer(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return false;
-  return window.matchMedia(QUERY.fine).matches;
-}
+/*
+ * `hasFinePointer` used to sit here beside `prefersReducedMotion`, written as
+ * its symmetrical twin and called by nothing. Every pointer test on the site
+ * goes through `gsap.matchMedia()` with `QUERY.fine`, which is the branching
+ * form — an imperative read would have to be re-run on a pointer change and
+ * nothing was re-running it. `QUERY.fine` is still exported above.
+ */

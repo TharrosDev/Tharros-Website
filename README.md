@@ -15,8 +15,10 @@ it is.
 ## Stack
 
 Next.js 16 (App Router, Turbopack) · React 19 · TypeScript (strict) · Tailwind 4 ·
-Vercel Analytics. Transitions are CSS. No CSS framework config file — the design
-system lives in `app/globals.css` via `@theme inline` and `@utility`.
+GSAP 3.15 · Vercel Analytics. Entrances and hovers are CSS; the scroll scenes, the split
+headings, the parallax and the route curtain are GSAP, dynamically imported so none of it
+enters the shared chunk. No CSS framework config file — the design system lives in
+`app/globals.css` via `@theme inline` and `@utility`.
 
 ## Getting started
 
@@ -30,10 +32,12 @@ npm run build      # production build + type check
 npm run lint       # eslint, including React Compiler rules
 npm run typecheck  # tsc --noEmit on its own, without a full build
 npm test           # the assert-based checks in lib/, run by node directly
+npm run e2e        # playwright: chromium, webkit and a Pixel 5
 ```
 
-Run both `lint` and `build` before shipping. `test` is two files and no framework —
-Node strips the types itself, so there is nothing to install.
+Run both `lint` and `build` before shipping. `test` is three files and no framework —
+Node strips the types itself, so there is nothing to install. `e2e` builds the site and
+serves it on 3100; CI runs it as a required job.
 
 Copy `.env.example` to `.env.local`. Nothing in it is required for local development —
 `NEXT_PUBLIC_SITE_URL` only affects canonical URLs, the sitemap and JSON-LD.
@@ -51,14 +55,21 @@ Placeholder, and marked as such in the source: **all product data** (`lib/catalo
 **shipping rates** (`lib/commerce/shipping.ts`), **size measurements**
 (`lib/catalog/sizing.ts`), and **legal pages**.
 
-There is no photography yet. Every image renders a free-licence stand-in photograph from
-`public/filler`, picked by the slot's own kind and crop and held steady by its asset code,
-so pages can be built and judged before the shoot. They are Openverse CC0 and public
-domain, fetched by `scripts/fetch-filler.mjs` and credited in
-`scripts/filler-credits.json` — not THARROS product, and nothing there should ship. Run
-with `NEXT_PUBLIC_FILLER_IMAGES=off` to get the bare labelled frames instead, which is the
-test that a layout reads as pending rather than filler-dependent. Either way the slot
-holds its ratio, so real photography drops in without moving a layout.
+Thirteen real photographs exist, in `public/photography`: the home hero, three campaign
+frames, the two drop covers, the four navigation frames, two for `/about` and one for the
+studio band. **No garment has been photographed** — all 54 product slots are still pending,
+which is every product card, every gallery and every thumbnail on the site.
+
+A slot with no `src` renders a free-licence stand-in from `public/filler` — five pools of
+four, picked by the slot's own kind and crop and held steady by its asset code, so pages can be built and
+judged before the shoot. They are Openverse CC0 and public domain, fetched by
+`scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json` — not THARROS
+product, and nothing there should ship. `lib/catalog/photography.test.ts` enforces the
+line: no declared `src` may point into `public/filler`, and the pieces still pending are
+named rather than counted. Run with `NEXT_PUBLIC_FILLER_IMAGES=off` to get the bare
+labelled frames instead, which is the test that a layout reads as pending rather than
+filler-dependent. Either way the slot holds its ratio, so real photography drops in
+without moving a layout.
 
 ## Adding real content
 
@@ -91,14 +102,14 @@ components/
   home/              home page sections
   campaign/          campaign frames and sequences
   archive/           the archive ledger
-  media/             ImageSlot, FillerImage, CinematicFrame
+  media/             ImageSlot, FillerImage
   motion/ ui/        parallax numeral, accordion, modal, reveal, primitives
 lib/
   catalog/           product data + the query seam
   commerce/          cart maths, shipping, tax
   hooks.ts           focus trap, escape, scroll lock, hydration
   persistent-store.ts localStorage as an external store
-docs/                content guide
+docs/                content guide, photography brief
 ```
 
 ## Docs
@@ -106,5 +117,6 @@ docs/                content guide
 - [`CLAUDE.md`](./CLAUDE.md) — working notes and invariants
 - [`DESIGN.md`](./DESIGN.md) — the design system
 - [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md) — voice and copy rules
+- [`docs/PHOTOGRAPHY_PROMPT.md`](./docs/PHOTOGRAPHY_PROMPT.md) — the shot briefs, session by session
 
 © 2026 THARROS

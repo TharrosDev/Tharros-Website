@@ -82,9 +82,11 @@ type Props = {
 /**
  * Every image on the site goes through here.
  *
- * Photography does not exist yet, so a slot without `src` renders as a
- * ratio-correct frame carrying its asset code and an accessible label. Adding
- * the photograph is a one-line data change and moves no layout.
+ * With a `src` it is a `next/image` at the slot's declared ratio. Without one —
+ * which is still every product slot on the site — it renders as a ratio-correct
+ * frame carrying its asset code and an accessible label, or as a stand-in if
+ * filler is on. Adding the photograph is a one-line data change and moves no
+ * layout.
  */
 export default function ImageSlot({
   image,

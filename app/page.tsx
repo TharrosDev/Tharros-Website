@@ -14,7 +14,7 @@ import NextDrop from "@/components/home/NextDrop";
  * stacked. Every section varies at least two of surface, density and register
  * from the one above it, so no two neighbours are built the same way:
  *
- *   —   hero            picture     sparse      full viewport
+ *   —   hero            picture     sparse      88svh, 92 from md
  *   01  the run         paper       dense       the grid
  *   02  statement       pale        sparse      type only
  *   03  the studio      paper       medium      one wide band + a mono strip
@@ -23,7 +23,7 @@ import NextDrop from "@/components/home/NextDrop";
  *   06  in development  pale        quiet       type only
  *
  * The archive is the section that is information rather than atmosphere; it is
- * what stops the sequence reading as seven marketing blocks.
+ * what stops the sequence reading as six marketing blocks.
  *
  * 02, 03 AND 04 WERE ALL "A PICTURE BESIDE SOME WORDS" AND ARE NOT ANY MORE.
  * They ran 6330px of a 13131px page at 1440x900 — nearly half of it — to carry
