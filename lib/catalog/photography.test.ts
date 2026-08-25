@@ -1,6 +1,14 @@
 /**
  * Run with: node lib/catalog/photography.test.ts
  *
+ * IMPORTS HERE CARRY `.ts` AND SO MUST EVERY VALUE IMPORT THEY REACH. Node
+ * runs this file directly and strips the types itself, which means a bare
+ * `from "./products"` two modules down resolves to nothing and `npm test`
+ * fails with ERR_MODULE_NOT_FOUND. It works today because `products`,
+ * `images`, `campaign` and `drops` import types only, and a type import is
+ * erased before resolution ever happens. `archive.ts` and `queries.ts` cannot
+ * be imported from here for exactly that reason.
+ *
  * THE LINE BETWEEN A PHOTOGRAPH AND A STAND-IN.
  *
  * `public/filler` holds free-licence stock. It exists so a layout can be

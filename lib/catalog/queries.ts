@@ -58,7 +58,6 @@ export function totalInventory(product: Product): number {
  */
 export function resolveAvailability(product: Product): Availability {
   if (product.release === "coming-soon") return "coming-soon";
-  if (product.release === "preorder") return "preorder";
 
   const stock = totalInventory(product);
   if (stock === 0) return "sold-out";
@@ -99,7 +98,6 @@ export const AVAILABILITY_LABEL: Record<Availability, string> = {
   "low-stock": "Low stock",
   "sold-out": "Archived",
   "coming-soon": "Coming soon",
-  preorder: "Preorder",
 };
 
 /** Schema.org ItemAvailability, for Product JSON-LD. */
@@ -108,7 +106,6 @@ export const AVAILABILITY_SCHEMA: Record<Availability, string> = {
   "low-stock": "https://schema.org/LimitedAvailability",
   "sold-out": "https://schema.org/SoldOut",
   "coming-soon": "https://schema.org/PreOrder",
-  preorder: "https://schema.org/PreOrder",
 };
 
 const SORTERS: Record<SortKey, (a: Product, b: Product) => number> = {

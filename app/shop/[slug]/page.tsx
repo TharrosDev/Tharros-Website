@@ -232,14 +232,11 @@ export default async function ProductPage({ params }: { params: Params }) {
 
           <h1 className="type-display-3 mt-6 max-w-[16ch]">{product.name}</h1>
 
-          <div className="mt-4 flex items-baseline gap-4">
-            <p className="num type-mono-3">{formatPrice(product.price)}</p>
-            {product.compareAtPrice ? (
-              <p className="num text-ink-faint line-through">
-                {formatPrice(product.compareAtPrice)}
-              </p>
-            ) : null}
-          </div>
+          {/* One price. `compareAtPrice` was an optional field no product has
+              ever set, rendering a struck-through was-price for a sale this
+              label has not run and does not plan to — see the note on
+              `ReleaseState`. */}
+          <p className="num type-mono-3 mt-4">{formatPrice(product.price)}</p>
 
           {/* The run, stated before anything has to be opened. These are the
               figures that make a small label credible, and they were previously

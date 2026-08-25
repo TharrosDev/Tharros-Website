@@ -16,7 +16,16 @@ import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
  *
  * The stand-ins are free-licence stock (Openverse, CC0 and public domain),
  * fetched by `scripts/fetch-filler.mjs` and credited in
- * `scripts/filler-credits.json`. They are in colour and ungraded: an earlier
+ * `scripts/filler-credits.json`.
+ *
+ * THAT CREDITS FILE IS NOW EMPTY, AND IT IS NOT A CLEAN BILL. It only ever
+ * held three entries, all in the `campaign` pool, and that pool has been
+ * deleted — so the twenty frames still in `public/filler` have no recorded
+ * source. They did not come from a run of the fetch script that wrote credits.
+ * Nothing here ships as THARROS work and nothing here should reach production,
+ * but if any of it ever needed attributing, the provenance would have to be
+ * re-established by refetching rather than looked up. Refetching is one
+ * command and it writes the credits as it goes. They are in colour and ungraded: an earlier
  * set was desaturated to a monochrome palette, which read as an art direction
  * the label had chosen rather than as scaffolding, and could not be undone —
  * a greyscale JPEG has no hue left to restore. They are not THARROS product
@@ -33,45 +42,42 @@ export const FILLER_IMAGES = process.env.NEXT_PUBLIC_FILLER_IMAGES !== "off";
 /** Four frames per scene, in `public/filler`. */
 const POOL_SIZE = 4;
 
-type Scene =
-  | "flat"
-  | "worn"
-  | "scene"
-  | "street"
-  | "campaign"
-  | "portrait"
-  | "detail"
-  | "hero";
+type Scene = "flat" | "worn" | "street" | "portrait" | "detail";
 
 /**
  * Kind first, then crop, then ratio.
  *
  * Kind says what the slot is for; crop says how it is framed, and a crop can
  * override the default composition for its kind — a `model` slot cropped close
- * is a portrait, not a fitting. Ratio is the last resort: a wide frame with no
- * other signal is a campaign frame, because nothing else is shot that shape.
+ * is a portrait, not a fitting. Ratio is the last resort.
+ *
+ * THREE POOLS WERE REMOVED, AND THE BRANCHES THAT REACHED THEM WITH THEM.
+ * `campaign`, `hero` and `scene` held twelve frames — 760 kB deployed out of
+ * `public/` — and by the time the campaign frames, both drop covers and the
+ * four navigation frames were photographed, no slot on the site could route to
+ * any of them. They were scaffolding for holes that no longer exist.
+ *
+ * The cases still resolve, because a pool nothing reaches today is not the same
+ * as a case that cannot happen tomorrow: a Drop 003 cover declared before its
+ * shoot is a `campaign` slot with no `src`. Those now fall to the nearest
+ * surviving pool by shape — a tall campaign frame to `portrait`, a wide one to
+ * the square `flat` pool, which centre-crops to the middle band. That is a
+ * worse-shaped stand-in, not a missing one, and a stand-in is scaffolding. If
+ * the wide holes ever come back in number, `scripts/fetch-filler.mjs` refetches
+ * a pool in one line.
  */
 function sceneFor(image: ImageSlotData): Scene {
   if (image.kind === "detail") return "detail";
   if (image.crop === "close") return "portrait";
   if (image.crop === "walking") return "street";
-  // Shape beats kind when the shape is explicit. A campaign frame is normally
-  // wide, and the wide pool is shot wide — but the home page's opening frame is
-  // a campaign frame rendered as a tall half-screen panel, and centre-cropping
-  // a landscape picture into it cuts the figure out of the shot entirely. A
-  // campaign frame that declares itself tall gets the hero pool, which is shot
-  // for exactly that hole: one figure, three-quarter length, plain wall, room
-  // around them. It borrowed `scene` before the hero frames existed, and those
-  // are a different shot — a small figure in a large piece of architecture,
-  // right for a lifestyle slot and wrong behind a headline.
   if (image.kind === "campaign") {
     return image.ratio === "tall" || image.ratio === "portrait" || image.ratio === "editorial"
-      ? "hero"
-      : "campaign";
+      ? "portrait"
+      : "flat";
   }
-  if (image.kind === "lifestyle") return "scene";
+  if (image.kind === "lifestyle") return "worn";
   if (image.kind === "model") return "worn";
-  if (image.ratio === "campaign" || image.ratio === "wide") return "campaign";
+  if (image.ratio === "campaign" || image.ratio === "wide") return "flat";
   return "flat";
 }
 

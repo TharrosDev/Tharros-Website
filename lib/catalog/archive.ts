@@ -99,7 +99,7 @@ export function garmentId(product: Product): string {
 export function archiveState(product: Product): ArchiveState {
   const availability = resolveAvailability(product);
   if (availability === "sold-out") return "archived";
-  if (availability === "coming-soon" || availability === "preorder") return "in-development";
+  if (availability === "coming-soon") return "in-development";
   return "available";
 }
 

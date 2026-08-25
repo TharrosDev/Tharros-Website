@@ -142,7 +142,7 @@ lib/catalog/
   drops.ts        Drop 001 (released) / Drop 002 (in development)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
   archive.ts      GARMENT NUMBERS AND THE RECORD — derived, never authored
-  studio.ts       the six stages; the home page reads `index` and `name` only
+  studio.ts       the six stages, as six names — `index` and `name`, nothing else
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
   images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER — plus

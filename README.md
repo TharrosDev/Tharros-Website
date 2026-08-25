@@ -60,8 +60,8 @@ frames, the two drop covers, the four navigation frames, two for `/about` and on
 studio band. **No garment has been photographed** — all 54 product slots are still pending,
 which is every product card, every gallery and every thumbnail on the site.
 
-A slot with no `src` renders a free-licence stand-in from `public/filler`, picked by the
-slot's own kind and crop and held steady by its asset code, so pages can be built and
+A slot with no `src` renders a free-licence stand-in from `public/filler` — five pools of
+four, picked by the slot's own kind and crop and held steady by its asset code, so pages can be built and
 judged before the shoot. They are Openverse CC0 and public domain, fetched by
 `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json` — not THARROS
 product, and nothing there should ship. `lib/catalog/photography.test.ts` enforces the

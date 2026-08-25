@@ -345,8 +345,9 @@ never their spacing:
   detail band across the page frame, and the six studio stages named on one rule beneath
   it: index and name, no sentences. Six rows of a bold name plus two lines of grey body is
   a feature list, and it was ~120 words of reading in a section whose job is atmosphere.
-  The `short` and `long` lines stay in `lib/catalog/studio.ts` for a surface that states
-  the process at length.
+  `lib/catalog/studio.ts` is six names and nothing else — the `short` and `long` lines
+  were kept for "a surface that states the process at length", and that surface is
+  `/about`, which states it in its own words.
 - **04 shows one campaign frame and links to `/drop`,** where the sequence belongs and
   runs whole. Three frames on the home page was three "in this frame" rails of thumbnails,
   names and prices — a second product grid, one screen below `01 The run`, which already
