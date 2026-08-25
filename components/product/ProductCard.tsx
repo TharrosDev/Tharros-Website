@@ -70,7 +70,12 @@ export default function ProductCard({
     // useState pair, which re-rendered the whole card — and every card in the
     // grid it belongs to — on each pointer entry and exit, for an effect the
     // browser can do on its own.
-    <article className="group">
+    // `flex h-full flex-col` levels the grid. The frame is one ratio for every
+    // piece, so the pictures already lined up — what did not was everything
+    // under them: a name that wrapped to two lines pushed its specimen row a
+    // line lower than the card beside it. The card fills its grid row and the
+    // specimen line is pinned to the foot, so a row of records reads as a row.
+    <article className="group flex h-full flex-col">
       {/* `overflow-hidden` belongs to the frame, not to the card. On the card it
           also clipped the 3px focus ring of everything positioned inside it —
           the heart and every quick-add size button — so keyboard focus went
@@ -209,7 +214,7 @@ export default function ProductCard({
         ) : null}
       </div>
 
-      <div className="flex items-start justify-between gap-4 pt-5">
+      <div className="flex items-start justify-between gap-4 pt-5 pb-4">
         <div className="min-w-0">
           {/* `-my-1 py-1` for the same reason the footer links carry it: the
               name is the card's keyboard target and a `type-body` line is a
@@ -237,7 +242,7 @@ export default function ProductCard({
           `remaining` is live variant inventory. A closed run is the one thing
           here allowed to carry the accent. */}
       {specimen ? (
-        <dl className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
+        <dl className="mt-auto flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
           <div className="flex items-baseline gap-2">
             <dt className="visually-hidden">Garment</dt>
             <dd className="type-meta text-ink-faint">{code}</dd>

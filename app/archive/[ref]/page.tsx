@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import CinematicFrame from "@/components/media/CinematicFrame";
-import Reveal from "@/components/ui/Reveal";
+import ProductGallery from "@/components/product/ProductGallery";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ArchiveLedger from "@/components/archive/ArchiveLedger";
 import {
@@ -45,15 +44,20 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 /**
  * THE RECORD — one garment, documented rather than sold.
  *
- * This is deliberately not the product page with the buy button taken out.
- * The product page answers "should I get this", so it leads with a gallery, a
- * price and a size selector. This answers "what was this", so it leads with
- * the number and the run, sets the figures at the scale the page is actually
- * about, and keeps the single link to the shop at the bottom in metadata
- * weight — present for the pieces still available, never the point.
+ * It is the product page with the buying taken out, and that is deliberate.
+ * The record used to be its own composition: every frame given a whole screen
+ * as a full-bleed band, one after another. Six photographs of one garment
+ * arriving as six banners is not a study, it is a slideshow with no way out —
+ * nothing holds still, no two frames can be compared, and a visitor who came
+ * from the ledger to look a piece up has to scroll several screens of picture
+ * to reach the four numbers they came for.
  *
- * The two pages share their data and none of their composition. That is the
- * whole argument for the archive existing as its own route.
+ * So it uses the gallery every other garment on the site uses: a thumbnail
+ * rail and one steady frame, the record beside it. The same page a shopper
+ * already knows how to read, minus the machinery for buying. What is left is
+ * quieter than the product page rather than louder — no buy panel, no size
+ * selector, no logistics — and the run figures sit at the top of the column,
+ * because they are what a record is about.
  */
 export default async function ArchiveRecordPage({ params }: { params: Params }) {
   const { ref } = await params;
@@ -67,19 +71,11 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
     .filter((e) => e.garmentId !== entry.garmentId)
     .slice(0, 4);
 
-  /**
-   * The mono index counts the sections that actually render, exactly as the
-   * product page does. Material and development are both conditional on data
-   * that does not exist for any piece yet, so a hard-coded ladder here would
-   * print 02 followed by 04 and turn a position in a sequence into decoration.
-   */
-  const sections = [
-    "piece",
-    frames.length > 1 ? "frames" : null,
-    others.length > 0 ? "others" : null,
-  ].filter((id): id is string => id !== null);
-
-  const sectionIndex = (id: string) => String(sections.indexOf(id) + 1).padStart(2, "0");
+  // An unreleased piece has no run size and no stock: both figures would print
+  // 0, which reads as "none were made" rather than as "this has not been made
+  // yet". The em dash is the same admission the size tables already use for a
+  // measurement nobody has taken.
+  const unset = entry.state === "in-development";
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -107,155 +103,109 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
               { name: "Archive", href: "/archive" },
             ]}
             current={entry.garmentId}
-            className="mb-10"
           />
+        </div>
 
-          {/* The number IS the heading. On the shop page the name leads,
-              because a shopper is looking for a hoodie; here the reader is
-              looking up a record, and a record is found by its number. */}
-          <Reveal className="rule-draw pt-4">
-            <p className="eyebrow">
+        {/* The same split as the product page — seven columns of photograph
+            against four of type — and the same sticky rule with it: the gallery
+            is bounded by its own `svh` height so it fits a desktop window, the
+            record beside it is not, so the picture is the column that holds.
+            The min-height query stands it down on a window too short to take
+            it, exactly as `/shop/[slug]` does. */}
+        <div className="page-frame mt-8 grid gap-x-16 gap-y-12 lg:grid-cols-12">
+          <div className="lg:col-span-7 [@media(min-height:660px)]:lg:sticky [@media(min-height:660px)]:lg:top-[calc(var(--header-h)+1.5rem)] [@media(min-height:660px)]:lg:self-start">
+            <ProductGallery images={frames} productName={product.name} />
+          </div>
+
+          <div className="lg:col-span-4 lg:col-start-9 lg:self-start">
+            {/* The number IS the heading. On the shop page the name leads,
+                because a shopper is looking for a hoodie; here the reader is
+                looking up a record, and a record is found by its number. */}
+            <p className="eyebrow border-t border-ink pt-4">
               <span>Record</span>
               <span>{drop?.name ?? categoryName(product.category)}</span>
             </p>
-            <h1 className="num type-mono-1 mt-10 md:mt-12">{entry.garmentId}</h1>
-            <p className="type-display-3 mt-4 uppercase">{product.name}</p>
-          </Reveal>
 
-          {/* The specimen block: the figures this page exists to state, at the
-              scale that says so. Every one derived. */}
-          <dl className="section-lead grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-4">
-            {/* An unreleased piece has no run size and no stock: both figures
-                would print 0, which reads as "none were made" rather than as
-                "this has not been made yet". The em dash is the same admission
-                the size tables already use for a measurement nobody has taken. */}
-            <div>
-              <dt className="type-meta text-ink-faint">Made</dt>
-              <dd className="num type-mono-2 mt-2">
-                {entry.state === "in-development" ? <>&mdash;</> : entry.made}
-              </dd>
-            </div>
-            <div>
-              <dt className="type-meta text-ink-faint">
-                {entry.state === "archived" ? "Remaining" : "Available"}
-              </dt>
-              <dd
-                className={`num type-mono-2 mt-2 ${entry.state === "archived" ? "text-signal" : ""}`}
-              >
-                {entry.state === "in-development" ? <>&mdash;</> : entry.remaining}
-              </dd>
-            </div>
-            <div>
-              <dt className="type-meta text-ink-faint">Released</dt>
-              <dd className="type-mono-3 mt-2">
-                {product.releasedAt && drop?.releasedAt ? formatDate(product.releasedAt) : "—"}
-              </dd>
-            </div>
-            <div>
-              <dt className="type-meta text-ink-faint">State</dt>
-              <dd className="type-mono-3 mt-2">{ARCHIVE_STATE_LABEL[entry.state]}</dd>
-            </div>
-          </dl>
-        </div>
+            {/* `type-mono-2`, not `-1`. The promoted mono steps are for a
+                full-width context — the hero numeral, the drop record — and
+                this column is 460px, where `type-mono-1` broke TH-008 across
+                two lines as "TH-" and "008". Same reasoning the product page
+                already applies to its run figure. */}
+            <h1 className="num type-mono-2 mt-6">{entry.garmentId}</h1>
+            <p className="type-display-3 mt-3 max-w-[16ch] uppercase">{product.name}</p>
 
-        {/* One frame, given a whole screen. The archive's job is to make
-            someone look closely at a garment they cannot buy, and nothing else
-            on this page competes with this. */}
-        {frames[0] ? (
-          <CinematicFrame
-            image={frames[0]}
-            priority
-            className="mt-16 md:mt-24"
-            eyebrow={entry.garmentId}
-            caption={product.name}
-            aside={
-              <>
-                <span className="num">{entry.made}</span> made
-              </>
-            }
-          />
-        ) : null}
+            {/* The two figures this page exists to state, before anything else
+                it says. Both derived. */}
+            <dl className="mt-8 grid grid-cols-2 gap-x-8 border-t border-ink pt-5">
+              <div>
+                <dt className="type-meta text-ink-faint">Made</dt>
+                <dd className="num type-mono-3 mt-2">{unset ? <>&mdash;</> : entry.made}</dd>
+              </div>
+              <div>
+                <dt className="type-meta text-ink-faint">
+                  {entry.state === "archived" ? "Remaining" : "Available"}
+                </dt>
+                <dd
+                  className={`num type-mono-3 mt-2 ${entry.state === "archived" ? "text-signal" : ""}`}
+                >
+                  {unset ? <>&mdash;</> : entry.remaining}
+                </dd>
+              </div>
+            </dl>
 
-        <div className="page-frame rhythm-tight">
-          <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <Reveal className="rule-draw pt-4">
-                <p className="eyebrow">
-                  <span className="num">{sectionIndex("piece")}</span>
-                  <span>The piece</span>
-                </p>
-              </Reveal>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6 lg:pt-4">
-              <Reveal delay={90}>
-                <p className="type-lead">{product.description}</p>
-                <p className="type-body mt-6 text-ink-muted">{product.story}</p>
-              </Reveal>
+            <p className="type-body mt-8 text-ink-muted">{product.description}</p>
+            <p className="type-body mt-5 text-ink-muted">{product.story}</p>
 
-              <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6">
-                <div className="border-t border-rule pt-3">
-                  <dt className="type-meta text-ink-faint">Colour</dt>
-                  <dd className="type-body-sm mt-1">{product.colorway}</dd>
-                </div>
-                <div className="border-t border-rule pt-3">
-                  <dt className="type-meta text-ink-faint">Category</dt>
-                  <dd className="type-body-sm mt-1">{categoryName(product.category)}</dd>
-                </div>
-                <div className="border-t border-rule pt-3">
-                  <dt className="type-meta text-ink-faint">Drop</dt>
-                  <dd className="type-body-sm mt-1">{drop?.name ?? "—"}</dd>
-                </div>
-                <div className="border-t border-rule pt-3">
-                  <dt className="type-meta text-ink-faint">Price at release</dt>
-                  <dd className="type-body-sm num mt-1">{formatPrice(product.price)}</dd>
-                </div>
-              </dl>
-            </div>
+            {/* The specimen table, in the shape the product page uses — minus
+                the material and fit rows, which are there to help somebody
+                decide whether to buy a thing. This is about what it was. */}
+            <dl className="mt-10 divide-y divide-rule border-y border-rule">
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">Colour</dt>
+                <dd className="type-body-sm">{product.colorway}</dd>
+              </div>
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">Category</dt>
+                <dd className="type-body-sm">{categoryName(product.category)}</dd>
+              </div>
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">Drop</dt>
+                <dd className="type-body-sm">{drop?.name ?? "—"}</dd>
+              </div>
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">Released</dt>
+                <dd className="type-body-sm">
+                  {product.releasedAt && drop?.releasedAt ? formatDate(product.releasedAt) : "—"}
+                </dd>
+              </div>
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">Price at release</dt>
+                <dd className="type-body-sm num">{formatPrice(product.price)}</dd>
+              </div>
+              <div className="flex gap-6 py-4">
+                <dt className="type-meta w-32 shrink-0 text-ink-faint">State</dt>
+                <dd className="type-body-sm">{ARCHIVE_STATE_LABEL[entry.state]}</dd>
+              </div>
+            </dl>
+
+            {/* The one commercial line on the page, and it is a text link. If
+                the run is closed there is nothing to link to and nothing is
+                said. */}
+            {buyable ? (
+              <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4">
+                <p className="type-meta text-ink-faint">This run is still open.</p>
+                <Link href={`/shop/${product.slug}`} className="link-rule link-rule-reveal">
+                  Buy this piece
+                </Link>
+              </div>
+            ) : null}
           </div>
         </div>
-
-        {/* The remaining frames, as a study rather than as a gallery: no
-            counter, no thumbnails, nothing to operate. Just the pictures. */}
-        {frames.length > 1 ? (
-          <div className="rhythm-tight">
-            {/* The opener sits on the page grid; the frames break out of it.
-                A full-bleed frame nested inside `page-frame` is not full-bleed,
-                it is a frame with gutters — so the padding goes on the heading
-                rather than on the section. */}
-            <div className="page-frame">
-              <SectionHeading index={sectionIndex("frames")} label="Frames" title="The rest of it." />
-            </div>
-            <div className="section-lead space-y-16 md:space-y-24">
-              {frames.slice(1).map((image, i) => (
-                <CinematicFrame
-                  key={image.code}
-                  image={image}
-                  height="half"
-                  eyebrow={String(i + 2).padStart(2, "0")}
-                  caption={image.alt}
-                />
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        {/* The one commercial line on the page, and it is a text link. If the
-            run is closed there is nothing to link to and nothing is said. */}
-        {buyable ? (
-          <div className="page-frame pb-8">
-            <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-4 pt-4">
-              <p className="type-meta text-ink-faint">This run is still open.</p>
-              <Link href={`/shop/${product.slug}`} className="link-rule link-rule-reveal">
-                Buy this piece
-              </Link>
-            </Reveal>
-          </div>
-        ) : null}
 
         {others.length > 0 ? (
           <div className="page-frame rhythm-tight">
             <SectionHeading
-              index={sectionIndex("others")}
+              index="01"
               label="The record"
               title="Elsewhere in the archive."
               action={{ href: "/archive", label: "All garments" }}

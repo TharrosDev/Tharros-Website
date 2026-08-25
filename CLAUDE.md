@@ -103,7 +103,7 @@ decision, and it is the owner's.
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
 | `/archive` | `app/archive/page.tsx` | Every garment made, in year bands, as a ledger |
-| `/archive/[ref]` | `app/archive/[ref]/page.tsx` | One garment as a record rather than as stock. SSG per piece. |
+| `/archive/[ref]` | `app/archive/[ref]/page.tsx` | One garment as a record rather than as stock: the product page's gallery-plus-column layout with the buying taken out — no buy panel, no size selector, no logistics. It was a stack of full-screen frames and that read as a slideshow. SSG per piece. |
 | `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
 | `/checkout` | `app/checkout/page.tsx` | Two steps — details, then where it goes — ending in a composed email |
