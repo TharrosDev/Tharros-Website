@@ -43,6 +43,27 @@ const structuredData = {
   ],
 };
 
+/**
+ * THE PIECES COME BEFORE THE CAMPAIGN, AND THAT IS THE WHOLE REORGANISATION.
+ *
+ * Measured at 1440x900 the page ran 9148px — twelve and a half viewports — and
+ * spent them like this: the campaign 29%, the run 29%, the drop that has not
+ * been made 22%. A release page that gives its photography more room than its
+ * garments and gives next season nearly as much as this one has its priorities
+ * inverted, and someone who came to see what is in Drop 001 met four screens
+ * before the first product.
+ *
+ * So the order is the run, then the campaign, then what is being sampled. The
+ * campaign is not diminished by moving — it is the closing movement now rather
+ * than the toll on the way in, and it still runs whole, which is the reason it
+ * lives here rather than on the home page.
+ *
+ * The opening was three stacked blocks in the left half of the frame: the
+ * title, then the figures, then the writing, each starting where the last
+ * stopped. They are one row now — what the drop is on the left, what it is
+ * about on the right — because the figures and the paragraphs are the same
+ * thought and neither needs a screen of its own.
+ */
 export default function DropPage() {
   const pieces = listProducts({ drop: CURRENT_DROP.id });
   const upcoming = NEXT_DROP ? listProducts({ drop: NEXT_DROP.id }) : [];
@@ -68,60 +89,65 @@ export default function DropPage() {
         split
         lead={CURRENT_DROP.statement}
       >
-        {/* Real numbers, straight from the catalogue. Nothing here is a
-            marketing figure. */}
-        <dl className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-ink pt-6">
-          <div>
-            <dt className="type-meta text-ink-faint">Pieces</dt>
-            <dd className="num type-display-4 mt-2">{pieces.length}</dd>
-          </div>
-          <div>
-            <dt className="type-meta text-ink-faint">Units made</dt>
-            <dd className="num type-display-4 mt-2">{totalMade}</dd>
-          </div>
-          <div>
-            <dt className="type-meta text-ink-faint">Still available</dt>
-            <dd className="num type-display-4 mt-2">{remaining}</dd>
-          </div>
-        </dl>
-      </PageIntro>
+        {/* ONE ROW, NOT TWO BLOCKS. The figures and the writing were stacked,
+            each capped at `max-w-2xl` in the leading half of a 1425px frame, so
+            the opening ran a full viewport with the trailing half empty for all
+            of it. Read across instead of down they fill the measure between
+            them: real numbers straight from the catalogue on the left, what the
+            run was for on the right. Nothing here is a marketing figure. */}
+        <div className="mt-12 grid gap-x-6 gap-y-10 border-t border-ink pt-6 lg:grid-cols-12">
+          <dl className="grid grid-cols-3 gap-6 lg:col-span-6">
+            <div>
+              <dt className="type-meta text-ink-faint">Pieces</dt>
+              <dd className="num type-display-4 mt-2">{pieces.length}</dd>
+            </div>
+            <div>
+              <dt className="type-meta text-ink-faint">Units made</dt>
+              <dd className="num type-display-4 mt-2">{totalMade}</dd>
+            </div>
+            <div>
+              <dt className="type-meta text-ink-faint">Still available</dt>
+              <dd className="num type-display-4 mt-2">{remaining}</dd>
+            </div>
+          </dl>
 
-      <div className="page-frame">
-        <div className="max-w-2xl space-y-5">
-          {CURRENT_DROP.body.map((paragraph) => (
-            <p key={paragraph} className="type-body text-ink-muted">
-              {paragraph}
-            </p>
-          ))}
+          <div className="space-y-5 lg:col-span-5 lg:col-start-8">
+            {CURRENT_DROP.body.map((paragraph) => (
+              <p key={paragraph} className="type-body text-ink-muted">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
-      </div>
-
-      {/* The drop as a story: the statement and its figures, the writing, then
-          the people, then the pieces. Someone meets the run on a body before
-          they meet it as a grid. Renders nothing without campaign data, in
-          which case this page is what it was before. */}
-      <CampaignSequence
-        dropId={CURRENT_DROP.id}
-        index="02"
-        label="The people"
-        title="The drop, worn."
-      />
+      </PageIntro>
 
       <div className="page-frame rhythm-tight">
         <SectionHeading
-          index="03"
+          index="02"
           label="The pieces"
           title="Everything in the run."
           titleClass="type-display-3"
           className="mb-12"
         />
-        {/* No `priorityCount`. This page opens on type and then runs a whole
-            campaign sequence before reaching the grid, so its first row is far
-            below the fold — and the LCP here is a heading, not a photograph.
-            Preloading three frames nothing is waiting for only takes bandwidth
-            from the frames further up that are. */}
-        <ProductGrid products={pieces} columns={3} specimen />
+        {/* Four up, so seven pieces read 4 + 3. At three the last row was one
+            card alone beside two columns of empty page, which reads as the grid
+            having run out rather than as the run being seven.
+
+            Still no `priorityCount`, even though the grid has moved up the
+            page. The opening is type, so the largest paint here is a heading —
+            preloading a row of frames to beat an `h1` spends bandwidth on
+            something nothing is waiting for. */}
+        <ProductGrid products={pieces} columns={4} specimen />
       </div>
+
+      {/* The run on a body, after the run as a grid. Renders nothing without
+          campaign data, in which case this page is what it was before. */}
+      <CampaignSequence
+        dropId={CURRENT_DROP.id}
+        index="03"
+        label="The people"
+        title="The drop, worn."
+      />
 
       {NEXT_DROP ? (
         <section className="on-pale rhythm-default">
@@ -135,41 +161,53 @@ export default function DropPage() {
               <p className="type-meta text-signal">In development</p>
             </Reveal>
 
-            <h2 className="type-display-2 mt-10 max-w-[16ch]">{NEXT_DROP.statement}</h2>
+            {/* A BAND, NOT A MOVEMENT. This was 1984px — a fifth of the page —
+                for work that cannot be bought: a display-2 statement, both body
+                paragraphs, a half-width picture forced to `tall`, and then a
+                second block below with its own rule and heading to hold two
+                products. It is one row now. What is in development should be
+                worth knowing about without competing with what is for sale.
 
-            <div className="mt-8 grid gap-x-6 gap-y-10 lg:grid-cols-12">
-              <div className="space-y-5 lg:col-span-5">
-                {NEXT_DROP.body.map((paragraph) => (
-                  <p key={paragraph} className="type-body text-ink-muted">
+                The picture keeps its photograph and loses the `ratio="tall"`
+                override, so it renders at the `campaign` shape its own data
+                declares. The second paragraph goes: it said the drop has no
+                date and goes out when the fit is right, which is what
+                `NO_DATE_NOTE` says on the line under it. */}
+            <div className="mt-10 grid gap-x-6 gap-y-10 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <h2 className="type-display-3 max-w-[16ch]">{NEXT_DROP.statement}</h2>
+
+                {NEXT_DROP.body.slice(0, 1).map((paragraph) => (
+                  <p key={paragraph} className="type-body mt-6 text-ink-muted">
                     {paragraph}
                   </p>
                 ))}
-                <p className="type-meta text-ink-faint">{NO_DATE_NOTE}</p>
+
+                <p className="type-meta mt-4 text-ink-faint">{NO_DATE_NOTE}</p>
+
+                {upcoming.length > 0 ? (
+                  <div className="mt-10">
+                    <p className="eyebrow border-t border-rule pt-4">
+                      Far enough along to show
+                    </p>
+                    <div className="mt-8">
+                      <ProductGrid
+                        products={upcoming}
+                        heading={`${NEXT_DROP.name} pieces in development`}
+                        columns={2}
+                      />
+                    </div>
+                  </div>
+                ) : null}
               </div>
 
               <Reveal className="lg:col-span-6 lg:col-start-7">
                 <ImageSlot
                   image={NEXT_DROP.cover}
-                  ratio="tall"
                   sizes="(min-width: 1024px) min(50vw, 700px), 100vw"
                 />
               </Reveal>
             </div>
-
-            {upcoming.length > 0 ? (
-              <div className="section-lead">
-                <Reveal className="rule-draw pt-4">
-                  <p className="eyebrow">Far enough along to show</p>
-                </Reveal>
-                <div className="mt-10">
-                  <ProductGrid
-                    products={upcoming}
-                    heading={`${NEXT_DROP.name} pieces in development`}
-                    columns={4}
-                  />
-                </div>
-              </div>
-            ) : null}
           </div>
         </section>
       ) : null}
