@@ -274,10 +274,14 @@ readable in the markup.
 - `.section-lead` (`--lead-gap`) is the one interval between a section's opener and the
   work it opens. Six sections previously carried their own `mt-10 / mt-12 / mt-14 /
   mt-16`, which is four values for one relationship. Reach for it rather than a margin.
-- `.grid-hang` drops a three-up grid's middle column half a step from `lg`. Rigid rows of
-  a garment grid read as a catalogue page; one offset column turns the same grid into a
-  hang the eye travels rather than scans. Editorial grids only — `/shop` stays square,
-  because there scanning is the job.
+- **The garment grid is level, everywhere.** It used to hang: `.grid-hang` dropped a
+  three-up grid's middle column half a step from `lg`, on the argument that rigid rows
+  read as a catalogue page. In practice it read as a defect — a row of cards at three
+  different heights looks broken rather than composed, and every piece became harder to
+  compare with the piece beside it, which is the one thing a drop grid is for. The grid
+  is now square on the home page and on `/shop` alike, at five up from `lg`.
+  `ProductCard` is a full-height flex column with its specimen line pinned to the foot,
+  so a two-line name does not push one card's figures a line below its neighbour's.
 - Header height is `--header-h` (4.5rem). The header is fixed; `PageIntro` carries the
   clearance so pages never add their own top padding.
 - Image ratios: `ratio-tall` (2:3), `ratio-portrait` (3:4), `ratio-editorial` (4:5),
@@ -293,11 +297,10 @@ readable in the markup.
 
 ### Full-bleed is bounded by the viewport, not by the aspect
 
-`CinematicFrame` is the primitive for a picture that takes a whole screen, and it
-sets a height in `svh` rather than an aspect ratio. `ImageSlot` draws an
-aspect-ratio box, which is right for a picture in a column and wrong edge to
-edge: the photography is 2:3, so a full-width 2:3 frame on a 1600px screen is
-2400px tall — one and a half viewports of one image.
+Where a picture takes a whole screen, its height is set in `svh` rather than by an
+aspect ratio. `ImageSlot` draws an aspect-ratio box, which is right for a picture in a
+column and wrong edge to edge: the photography is 2:3, so a full-width 2:3 frame on a
+1600px screen is 2400px tall — one and a half viewports of one image.
 
 The old fix was to force a wide ratio on any full-width frame, which solved the
 height by throwing the photograph away: a standing figure in a 16:9 box is a
@@ -311,6 +314,14 @@ are capped the same way, for the same reason.
 Captions sit under the frame on the page grid, never over the picture. Type on
 an image needs a scrim, a scrim dims the image, and not dimming the photography
 is the whole argument for going full-bleed.
+
+**One is a frame; a stack of them is a slideshow.** `CinematicFrame` was the shared
+primitive for this and it is gone, because its only remaining caller was the archive
+record — which spent six screens showing six photographs of one garment as six banners.
+Nothing on the page held still and no two frames could be compared. A gallery is the
+right instrument for several views of one object; a full-screen frame is the right
+instrument for exactly one picture, and where a page wants one it can set an `svh`
+height on an `ImageSlot` directly.
 
 ### Visual rhythm
 

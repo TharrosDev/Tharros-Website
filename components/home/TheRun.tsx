@@ -32,9 +32,8 @@ export default function TheRun() {
           <ProductGrid
             products={products}
             heading={`${CURRENT_DROP.name} pieces`}
-            columns={3}
+            columns={5}
             specimen
-            hang
           />
         </div>
       </div>

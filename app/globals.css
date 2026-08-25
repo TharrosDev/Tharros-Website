@@ -652,18 +652,6 @@
     margin-block-start: var(--lead-gap);
   }
 
-  /* THE HANG — the grid drops its middle column half a step.
-     A three-up grid on a fashion page lines seven pieces into rigid rows and
-     reads as a catalogue page; offsetting one column turns the same grid into
-     a hang, where the eye travels rather than scans. Applied from `lg` only:
-     at one and two columns an offset is a broken row, not a composition, and
-     `:nth-child` counts the row differently at every column count. */
-  @media (min-width: 64rem) {
-    .grid-hang > :nth-child(3n + 2) {
-      margin-block-start: clamp(2.5rem, 4vw, 5rem);
-    }
-  }
-
   .rhythm-tight {
     padding-block: var(--rhythm-tight);
   }
