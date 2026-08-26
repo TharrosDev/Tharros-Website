@@ -29,7 +29,7 @@ export default function CampaignFrame({
   lead,
 }: {
   frame: Frame;
-  align?: "left" | "right" | "full";
+  align?: "left" | "right" | "full" | "stacked";
   ratio?: Ratio;
   ratioSm?: Ratio;
   priority?: boolean;
@@ -83,7 +83,7 @@ export default function CampaignFrame({
       <WornList
         slugs={frame.wearing}
         frameId={frame.id}
-        variant={align === "full" ? "rail" : "stack"}
+        variant={align === "left" || align === "right" ? "stack" : "rail"}
         onDark={onDark}
       />
     </div>
@@ -96,6 +96,41 @@ export default function CampaignFrame({
     frame.hotspots && frame.image.src ? (
       <FrameHotspots hotspots={frame.hotspots} frameId={frame.id} />
     ) : null;
+
+  // STACKED — the picture with its record under it, and no column beside it.
+  //
+  // The side alignments put an index, a caption line and a worn list into a
+  // track next to the photograph, which on `/drop` was 510px of column holding
+  // about 200px of content, stretched over 559px of frame, with a 403px margin
+  // outside it. Four small headings scattered down a column beside a picture is
+  // what a caption becomes when it is given a column it does not need.
+  //
+  // Under the picture it is a caption again: it takes the width the picture
+  // takes, it is as tall as the words are, and it ends. Nothing stretches and
+  // nothing is left over. This is what the sequence uses for the frames it
+  // pairs; `full` still handles the one that runs the page.
+  if (align === "stacked") {
+    return (
+      <figure>
+        <Parallax depth="subject" className="relative overflow-hidden">
+          <div
+            data-layer={held ? "shot" : undefined}
+            className={held ? "scene-oversize" : ""}
+          >
+            <ImageSlot
+              image={frame.image}
+              ratio={ratio}
+              ratioSm={ratioSm}
+              sizes="(min-width: 768px) 46vw, 100vw"
+              priority={priority}
+            />
+          </div>
+          {markers}
+        </Parallax>
+        <figcaption className="mt-5">{metaBlock()}</figcaption>
+      </figure>
+    );
+  }
 
   if (align === "full") {
     return (

@@ -142,12 +142,7 @@ export default function DropPage() {
 
       {/* The run on a body, after the run as a grid. Renders nothing without
           campaign data, in which case this page is what it was before. */}
-      <CampaignSequence
-        dropId={CURRENT_DROP.id}
-        index="03"
-        label="The people"
-        title="The drop, worn."
-      />
+      <CampaignSequence dropId={CURRENT_DROP.id} index="03" label="The people" />
 
       {NEXT_DROP ? (
         <section className="on-pale rhythm-default">
