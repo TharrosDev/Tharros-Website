@@ -41,14 +41,8 @@ import type { ImageSlotData } from "./types.ts";
  */
 export const PENDING_PHOTOGRAPHY = [
   "core-tee",
-  "noise-silence-tee",
   "arc-hoodie",
-  "monument-crewneck",
   "utility-cargo-pant",
-  "logo-cap",
-  "work-jacket",
-  "shell-jacket-01",
-  "ribbed-beanie",
 ];
 
 const everySlot: ImageSlotData[] = [

@@ -87,7 +87,7 @@ export const NAV_INDEX = [
   { name: "About", href: "/about" },
 ];
 
-/** Restrained on purpose: a nine-piece line does not need a category directory
+/** Restrained on purpose: a three-piece line does not need a category directory
  *  in the footer. The shop page's filter bar covers categories. */
 export const FOOTER_SHOP = [
   { name: "Current Drop", href: "/drop" },

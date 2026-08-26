@@ -60,7 +60,7 @@ const SORT_LABELS: Partial<Record<SortKey, string>> = {
 /**
  * Categories are a secondary axis and they have to earn the row.
  *
- * Six category rails over seven pieces is a directory of one-item shelves. The
+ * Six category rails over three pieces is a directory of one-item shelves. The
  * guard is derived, so the row appears on its own the day the catalogue is
  * genuinely worth filtering rather than on the day someone remembers to switch
  * it on.
@@ -353,7 +353,7 @@ export default function FilterBar({
 
             {/* One control that names the current order, rather than four
                 persistent links. The bar could put seventeen simultaneous
-                controls around a nine-piece run, and three of them were the
+                controls around a three-piece run, and three of them were the
                 sort orders nobody had chosen — the chip row already reports
                 which one is on.
 

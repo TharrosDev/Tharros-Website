@@ -427,7 +427,7 @@ does. A single-release label offering a choice of one release is furniture descr
 itself, so the rail hides itself there too, and the release the view is showing is named
 in the page's own opener instead.
 
-Four sort orders over seven pieces was three decisions nobody had to make — two of them
+Four sort orders over three pieces was three decisions nobody had to make — two of them
 the same list reversed, one of them meaningless inside a single drop. The URL still honours
 all four keys; the bar offers run order and price.
 
@@ -459,7 +459,7 @@ the name of the thing being looked at.
 warranted: sold out, low stock, coming soon, new.
 
 **IT USED TO END ON `MADE 40 / LEFT 24`,** on every grid on the site: the home run, the
-shop, the drop, the related rail. Nine of them in one viewport is a page about stock
+shop, the drop, the related rail. A grid of them in one viewport is a page about stock
 levels wearing photographs of clothes, and it was the single strongest carrier of the
 "archive / manufacturing dossier" reading the site is no longer trying to have. The run is
 still stated — once, on the product page, beside the price, as "Limited release · 40 units

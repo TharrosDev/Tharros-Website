@@ -226,7 +226,7 @@ export default async function ShopPage({
             heading={`${heading} — ${products.length} ${
               products.length === 1 ? "piece" : "pieces"
             }`}
-            columns={5}
+            columns={3}
             /* Two, not a whole row. `priority` emits a preload, and five of
                them race each other and the feature frame above for the same
                bandwidth. On the unfiltered view the feature frame IS the

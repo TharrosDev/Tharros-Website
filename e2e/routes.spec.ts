@@ -1,4 +1,18 @@
 import { ROUTES, expect, test } from "./fixtures";
+import { listProducts, resolveAvailability } from "../lib/catalog/queries";
+
+/**
+ * The subject of a state test is found, never named.
+ *
+ * These used to hard-code `work-jacket` and `shell-jacket-01`. Both left the
+ * catalogue and the tests 404ed against a page that was simply gone, which is a
+ * failure that says nothing about the behaviour being guarded. The assertion is
+ * worth keeping either way, so it looks for a piece in the state it cares about
+ * and skips when the catalogue holds none.
+ */
+function firstInState(state: "sold-out" | "coming-soon") {
+  return listProducts().find((product) => resolveAvailability(product) === state);
+}
 
 /**
  * Every route, loaded directly.
@@ -292,7 +306,7 @@ test.describe("the release history holds what was released", () => {
   });
 
   test("an unreleased piece has no record page", async ({ page }) => {
-    const response = await page.goto("/releases/th-008");
+    const response = await page.goto("/releases/th-004");
     expect(response?.status()).toBe(404);
     await expect(page.getByRole("link", { name: /return home/i })).toBeVisible();
   });
@@ -307,7 +321,9 @@ test.describe("the release history holds what was released", () => {
  * nobody has set.
  */
 test("an unreleased piece shows no run figures", async ({ page }) => {
-  await page.goto("/shop/shell-jacket-01");
+  const piece = firstInState("coming-soon");
+  test.skip(!piece, "the catalogue holds no unreleased piece");
+  await page.goto(`/shop/${piece!.slug}`);
   await expect(page.locator("main")).not.toContainText("None left");
   await expect(page.locator("main")).not.toContainText("0 made");
   await expect(page.getByText("Coming soon").first()).toBeVisible();
@@ -330,12 +346,16 @@ test.describe("the storefront offers exactly what it can sell", () => {
   });
 
   test("a sold-out piece offers no purchase", async ({ page }) => {
-    await page.goto("/shop/work-jacket");
+    const piece = firstInState("sold-out");
+    test.skip(!piece, "the catalogue holds no sold-out piece");
+    await page.goto(`/shop/${piece!.slug}`);
     await expect(page.getByRole("button", { name: /add to bag/i })).toHaveCount(0);
   });
 
   test("an unreleased piece offers no purchase", async ({ page }) => {
-    await page.goto("/shop/shell-jacket-01");
+    const piece = firstInState("coming-soon");
+    test.skip(!piece, "the catalogue holds no unreleased piece");
+    await page.goto(`/shop/${piece!.slug}`);
     await expect(page.getByRole("button", { name: /add to bag/i })).toHaveCount(0);
     await expect(page.getByText("Coming soon").first()).toBeVisible();
   });

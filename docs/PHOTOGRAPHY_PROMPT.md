@@ -21,10 +21,10 @@ needs nothing installed.
 it only when a drop has no campaign hero, and Drop 001 has one. It is generated so the
 slot is filled, not because a page is waiting on it.
 
-**Session 2 — product frames (27 images).** Three frames per piece across the nine
+**Session 2 — product frames (9 images).** Three frames per piece across the three
 products in `lib/catalog/products.ts`. The prompt is at the bottom of this file.
 
-Every product slot on the site is still a stand-in — that is 54 declared frames and nine
+Every product slot on the site is still a stand-in — that is 18 declared frames and three
 pieces nobody can actually see. This is the session that matters most, and it is why
 `lib/catalog/photography.test.ts` names the pending pieces rather than counting them: the
 list empties one product at a time, and the test says which are left.
@@ -90,12 +90,15 @@ camera as the others.
 
 ### The garments — these are real pieces and must be described accurately
 
+**Session 1 is already shot, and it is a record rather than a queue.** Some of its frames
+were briefed around the Work Jacket, which has since left the catalogue. Those briefs are
+kept as written because they describe photographs that exist; do not re-shoot them, and do
+not read the Work Jacket back into the catalogue from them.
+
 - **Arc Hoodie** — black heavyweight brushed-back fleece, double-layer hood, tight ribbed
   cuffs and hem so the body holds volume. An abstract arc shape runs low across the back.
 - **Core Tee** — washed black heavyweight cotton jersey, boxy through the chest and
   shoulder, shortened body, ribbed collar. No visible graphic.
-- **Work Jacket** — faded black cotton canvas, four patch pockets on the front, corozo
-  buttons, slightly worn.
 - **Utility Cargo Pant** — black cotton twill, reinforced stitching, drawcord at the hem.
 
 ### Output rules for every image
@@ -194,7 +197,7 @@ image with a different take rather than moving on.
 
 ### The set
 
-Nine garments, three frames each, twenty-seven images. Same world as Session 1: warm
+Three garments, three frames each, nine images. Same world as Session 1: warm
 plaster and raw concrete, one soft directional daylight source, warm neutrals only, no
 props, no styling noise, no text of any kind anywhere in the image. `cmp-001-hero.jpg` is
 the reference for light and grade.
@@ -226,36 +229,24 @@ plain black trousers throughout, so the tops read against a constant.
 - After generating, print one line: the **filename**, and nothing else.
 - Photorealistic. No illustration, no 3D render, no collage, no borders, no frames.
 
-### The nine garments
+### The three garments
 
 Colour and construction are from `lib/catalog/products.ts` and are not to be embellished.
 
 | Code | Piece | Colour | Made from | Fit | The `-03` detail |
 |---|---|---|---|---|---|
 | `CORE-TEE` | Core Tee | washed black | heavyweight cotton jersey, ribbed collar, tonal embroidery | boxy, drops at the shoulder | the ribbed collar and the tonal embroidery beside it |
-| `NOISE-TEE` | Noise / Silence Tee | off white | heavyweight cotton jersey, screen-printed graphic | oversized | the printed surface at an angle, so the ink sits on the cloth |
 | `ARC-HOODIE` | Arc Hoodie | black | heavyweight brushed-back fleece, double-layer hood, metal-tipped drawcord | relaxed, dropped shoulder | the metal drawcord tip against the double-layer hood edge |
-| `MONUMENT-CREW` | Monument Crewneck | bone | heavyweight loopback cotton, raised print, ribbed trims | regular | the ribbed cuff meeting the sleeve, raised print just in frame |
 | `CARGO-PANT` | Utility Cargo Pant | black | cotton twill, reinforced bar-tacking, adjustable hem drawcord | wide leg, mid rise, stacks over footwear | a bar-tacked pocket corner, stitching visible |
-| `LOGO-CAP` | Logo Cap | black | cotton twill, embroidered wordmark, adjustable strap | one size | the adjustable strap and the twill weave behind it |
-| `WORK-JACKET` | Work Jacket | faded black | cotton canvas, corozo buttons, four-pocket front | boxy, squared shoulder | one corozo button on the canvas placket |
-| `SHELL-01` | Shell Jacket 01 | black | technical woven shell, taped seams, two-way zip | oversized, layers over heavyweight fleece | a taped seam running past the two-way zip |
-| `BEANIE` | Ribbed Beanie | charcoal | fine-gauge rib knit, woven cuff label | one size | the woven cuff label on the folded rib |
 
-### The queue — 27 images
+### The queue — 9 images
 
-Nine blocks of three, in catalogue order. For each piece, generate `-01`, then `-03`, then
+Three blocks of three, in catalogue order. For each piece, generate `-01`, then `-03`, then
 `-04`, using the frame specifications above and the row for that piece in the table.
 
 1. `core-tee-01.png` · 2. `core-tee-03.png` · 3. `core-tee-04.png`
-4. `noise-tee-01.png` · 5. `noise-tee-03.png` · 6. `noise-tee-04.png`
-7. `arc-hoodie-01.png` · 8. `arc-hoodie-03.png` · 9. `arc-hoodie-04.png`
-10. `monument-crew-01.png` · 11. `monument-crew-03.png` · 12. `monument-crew-04.png`
-13. `cargo-pant-01.png` · 14. `cargo-pant-03.png` · 15. `cargo-pant-04.png`
-16. `logo-cap-01.png` · 17. `logo-cap-03.png` · 18. `logo-cap-04.png`
-19. `work-jacket-01.png` · 20. `work-jacket-03.png` · 21. `work-jacket-04.png`
-22. `shell-01-01.png` · 23. `shell-01-03.png` · 24. `shell-01-04.png`
-25. `beanie-01.png` · 26. `beanie-03.png` · 27. `beanie-04.png`
+4. `arc-hoodie-01.png` · 5. `arc-hoodie-03.png` · 6. `arc-hoodie-04.png`
+7. `cargo-pant-01.png` · 8. `cargo-pant-03.png` · 9. `cargo-pant-04.png`
 
 Confirm you have the brief, then generate image 1.
 

@@ -168,7 +168,7 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Route transitions | **Real** — an ink plane that lifts off each new route (`RouteCurtain`). Cross-route *image continuity* is **not** built: it needs React's `ViewTransition`, which is not in stable React 19.2.4, and it cannot coexist with the curtain anyway. `DESIGN.md` §6 records why. |
 | Opening sequence | **Real**, on `/` only, once per session, CSS-driven so it clears without JavaScript. Armed in the head script, not in React. |
 | Site photography | **Thirteen frames shot, ten in use**, in `public/photography` — the home hero (`CMP-001-HERO`), three campaign frames, the Drop 001 cover, the four index-overlay frames and one for `/about`. Declared in `campaign.ts`, `drops.ts` and `images.ts` (`NAV_FRAMES`, `PAGE_FRAMES`). **Three are withdrawn and rendered nowhere:** `abt-01.jpg` and `prc-01.jpg` (pattern paper, a part-sewn sample, a work table) and `drop-002-cover.jpg` (cut canvas, a chalk line, pins) — all three are pictures of clothes being made, and the surfaces that carried them are gone. The files stay on disk; `docs/PHOTOGRAPHY_PROMPT.md` records why. |
-| Product photography | **Not shot yet.** All 54 product slots are pending, so every card, gallery and thumbnail is a stand-in. Session 2 of `docs/PHOTOGRAPHY_PROMPT.md` is the queue. A slot with no `src` renders a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout — `lib/catalog/photography.test.ts` fails if a `src` ever points into `public/filler`, or if the list of pending pieces stops matching the catalogue. |
+| Product photography | **Not shot yet.** All 18 product slots are pending, so every card, gallery and thumbnail is a stand-in. Session 2 of `docs/PHOTOGRAPHY_PROMPT.md` is the queue. A slot with no `src` renders a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout — `lib/catalog/photography.test.ts` fails if a `src` ever points into `public/filler`, or if the list of pending pieces stops matching the catalogue. |
 | Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere and `pieceTable()` returns null. **No empty table ships:** `/size-guide` renders the how-to-measure half only, the PDP accordion says "Measurements coming soon", and `SizeGuideModal` drops its table when every cell would be an em dash. The structure in `lib/catalog/sizing.ts` is unchanged, so filling in real figures is a data change that brings all three tables back. |
 | Product data, prices, run sizes | **The working catalogue.** Treat names, prices, run sizes, inventory, colourways, fit and the two drops as real THARROS data. Replacing them is an import, not a redesign. |
 | Legal pages | **Working drafts** under `/legal`, marked as such on the page and `noindex`, and absent from the sitemap. That admission belongs on the legal document and nowhere else — `/returns` used to carry it too, under a heading a customer opened for the returns policy. **They need human legal review before commerce launch.** |
@@ -197,7 +197,7 @@ The whole integration surface is five functions and two data files:
 | Accounts | `/account` | Separable from shopping by construction — the bag and the saved list live on the device. |
 
 **The rule: one obvious boundary, not an abstraction framework.** No repository factories,
-no DI container, no event bus for nine products. If a second implementation of one of the
+no DI container, no event bus for three products. If a second implementation of one of the
 above ever exists, that is the moment to introduce an interface — not before.
 
 ### What must still never be faked
@@ -219,7 +219,8 @@ site looks:
 - **Numbers come from the data.** Availability from `resolveAvailability()`, run figures
   from `runStatus()`, counts from the same filter the grid runs, dates from the drop. A
   number typed into a sentence is a number that will be wrong — a "seven pieces" line
-  against a drop of nine is exactly how.
+  left standing over a drop of nine was exactly how, and the drop statements have been
+  rewritten twice since for the same reason. State the clothes, not the count.
 - **Only claim a restock policy the data states.** "Will not be remade" renders solely
   when `restock: "none"`.
 
@@ -343,9 +344,11 @@ Key invariants:
   at `lib/catalog/drops.ts`; the shop filters on `?drop=`. **A product has no `releasedAt`
   and no `release` state** — both were duplicates of the drop's own fields, and both had
   already drifted (Drop 002's pieces carried a date the drop record did not have). Read
-  them with `releaseDate()` and `releaseState()` in `queries.ts`. Keep the catalogue small — a nine-piece line should look
+  them with `releaseDate()` and `releaseState()` in `queries.ts`. Keep the catalogue small — a three-piece line should look
   curated, not empty, and the filter bar only offers categories that hold a piece
-  (`categoriesInUse()`).
+  (`categoriesInUse()`). **Drop 002 is announced with no pieces in it**, deliberately:
+  `NextDrop` and the `/drop` preview band both guard on `pieces.length`, so the release
+  previews as a statement and gains a grid the day it gains garments.
 - **A cart line stores only `productId + size + quantity`.** Name, price and imagery are
   re-read from the catalog on every render (`resolveLines`), so a stale bag can never
   check out a renamed, repriced or sold-out piece.
@@ -581,8 +584,10 @@ section is conditional (see `sectionIndex()` in `app/shop/[slug]/page.tsx`).
 Never in copy. Prices come from the catalogue, availability from `resolveAvailability()`,
 run figures from `runStatus()`, shipping from `lib/commerce/shipping.ts`, counts from the
 same filter the grid runs. **A number typed into a sentence is a number that will be
-wrong** — a "Nine pieces" line against a drop of seven is exactly how, and a shop hero
-reading "7 pieces in the run" above a grid headed "9 pieces" is how it happened again.
+wrong** — a "Nine pieces" line left over a drop of seven was exactly how, and a shop
+hero reading "7 pieces in the run" above a grid headed "9 pieces" is how it happened
+again. The catalogue has since been cut to three; nothing in copy had to change, because
+nothing in copy states a count.
 
 ### Connect payment
 

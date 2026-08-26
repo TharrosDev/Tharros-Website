@@ -331,7 +331,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               titleClass="type-display-3"
             />
             <div className="section-lead">
-              <ProductGrid products={related} columns={4} />
+              <ProductGrid products={related} columns={2} />
             </div>
           </div>
         </section>

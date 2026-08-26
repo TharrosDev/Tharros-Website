@@ -114,11 +114,11 @@ export default function DropPage() {
           titleClass="type-display-3"
           className="mb-12"
         />
-        {/* Four up, so seven pieces read 4 + 3. At three the last row was one
-            card beside two columns of empty page, which reads as the grid
-            having run out. No `priorityCount`: the cover frame above is the
-            largest paint here and already carries `priority`. */}
-        <ProductGrid products={pieces} columns={4} />
+        {/* Three up, because the run is three pieces and they fill the row
+            exactly. A wider grid leaves the last row short, which reads as the
+            grid having run out. No `priorityCount`: the cover frame above is
+            the largest paint here and already carries `priority`. */}
+        <ProductGrid products={pieces} columns={3} />
       </div>
 
       {/* The run on a body, after the run as a grid. Renders nothing without

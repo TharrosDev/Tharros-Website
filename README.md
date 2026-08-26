@@ -60,7 +60,7 @@ hero, three campaign frames, the Drop 001 cover, the four navigation frames and 
 `/about`. The other three are withdrawn — two work-table studies and a cut-canvas detail,
 all pictures of clothes being made rather than of clothes, on surfaces the site no longer
 has (`docs/PHOTOGRAPHY_PROMPT.md` records why). **No garment has been photographed** — all
-54 product slots are still pending, which is every product card, every gallery and every
+18 product slots are still pending, which is every product card, every gallery and every
 thumbnail on the site.
 
 A slot with no `src` renders a free-licence stand-in from `public/filler` — five pools of
