@@ -49,9 +49,22 @@ export default function CampaignSequence({
   );
 
   return (
-    <section className="rhythm-default">
+    // `rhythm-tight`, not `rhythm-default`. The interval either side was 214px
+    // of the 2689 this section ran, and it sits between a grid of the same
+    // pieces above and a band about the next drop below — neither of which the
+    // photographs need a held breath to be told apart from.
+    <section className="rhythm-tight">
       <div className="page-frame">
-        <SectionHeading index={index} label={label} title={title} action={action} />
+        {/* The step matches `02 The pieces` above it. At `display-2` the opener
+            was a 168px block alone on a near-empty screen, announcing the
+            photographs from further away than they are tall. */}
+        <SectionHeading
+          index={index}
+          label={label}
+          title={title}
+          titleClass="type-display-3"
+          action={action}
+        />
       </div>
 
       {/* Frames are separated by more than sections are: each one is a picture
@@ -63,7 +76,11 @@ export default function CampaignSequence({
           sits in a flex parent — it cannot reserve the held distance by padding
           a flex item. Nothing pins now, but nothing here wants flex either: no
           ordering, no alignment, one axis. */}
-      <div className="section-lead space-y-28 md:space-y-40">
+      {/* 160px between frames was set when each one was a picture with a hole
+          beside it, so the sequence needed the interval to read as separate
+          stops. With the columns closed up the frames are their own stops and
+          96px is enough of a beat. */}
+      <div className="section-lead space-y-16 md:space-y-24">
         {frames.map((frame, i) => {
           const align = ALIGNMENTS[i % ALIGNMENTS.length];
 
