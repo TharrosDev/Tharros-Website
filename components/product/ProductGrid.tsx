@@ -13,8 +13,6 @@ type Props = {
   /** Columns at the large breakpoint. Two reads more editorial, five reads catalog. */
   columns?: Columns;
   priorityCount?: number;
-  /** Print each piece's run figures under the frame. */
-  specimen?: boolean;
 };
 
 /* One column on the narrowest phones so a single piece reads at full width,
@@ -39,7 +37,7 @@ const COLUMN_CLASS: Record<Columns, string> = {
    measured box at 2560 rounded up, not guesses. Only the widest branch needs
    one — the narrower breakpoints all sit below the cap, where `vw` is right.
 
-   The full-bleed rails in `OnBody` and `InFrames` deliberately keep bare `vw`:
+   The full-bleed rail in `InFrames` deliberately keeps bare `vw`:
    they break the frame with `-mx-gutter`, so their items really are a share of
    the viewport. Verified — those two measure exactly what they declare. */
 const SIZES: Record<Columns, string> = {
@@ -54,7 +52,6 @@ export default function ProductGrid({
   heading,
   columns = 3,
   priorityCount = 0,
-  specimen = false,
 }: Props) {
   /* A five-up row is a narrower card, so it takes a narrower gutter with it.
      The wide interval is measured for a 420px card; spent five times across
@@ -91,7 +88,6 @@ export default function ProductGrid({
               product={product}
               sizes={SIZES[columns]}
               priority={index < priorityCount}
-              specimen={specimen}
             />
           </li>
         ))}

@@ -41,14 +41,26 @@ export default function SizeGuideModal({
    */
   const table = piece ?? SIZE_TABLES[tableKey];
 
+  /* A table whose every cell is an em dash is not a size guide. The category
+     tables ship unmeasured, so opening this from a piece with no measurements
+     of its own drew a 6x5 grid of dashes over the product page — the same
+     defect `/size-guide` carried, in a modal. The fit note is what is real
+     here, so when there is nothing to tabulate that is the whole panel. */
+  const measured = table.rows.some((row) =>
+    row.values.some((value) => value !== null),
+  );
+
   return (
     <Modal open={open} onClose={onClose} title="Size guide">
       <h2 className="type-display-4">{table.title}</h2>
-      <p className="type-meta mt-3 text-ink-faint">
-        {piece ? "This piece, measured flat" : "Garment measurements"},{" "}
-        {MEASUREMENT_UNIT}
-      </p>
+      {measured ? (
+        <p className="type-meta mt-3 text-ink-faint">
+          {piece ? "This piece, measured flat" : "Garment measurements"},{" "}
+          {MEASUREMENT_UNIT}
+        </p>
+      ) : null}
 
+      {measured ? (
       <div className="mt-6 overflow-x-auto">
         <table className="w-full border-collapse text-left">
           <thead>
@@ -82,11 +94,10 @@ export default function SizeGuideModal({
           </tbody>
         </table>
       </div>
+      ) : null}
 
       <p className="type-body-sm mt-6 text-ink-muted">
-        {fitNote ??
-          MODEL_FIT_NOTE ??
-          "Measurements are being taken from the production samples and will be published here before the next drop."}
+        {fitNote ?? MODEL_FIT_NOTE ?? "Measurements coming soon."}
       </p>
     </Modal>
   );

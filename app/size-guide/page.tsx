@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageIntro from "@/components/layout/PageIntro";
 import InfoFooter from "@/components/layout/InfoFooter";
-import PendingNotice from "@/components/ui/PendingNotice";
 import { informationIndex } from "@/lib/site";
 import {
   formatMeasurement,
@@ -44,40 +43,38 @@ export default function SizeGuidePage() {
         index={informationIndex("/size-guide")}
         label="Information"
         title="Size guide"
-        lead={`All measurements are taken flat on the garment, in ${MEASUREMENT_UNIT}.`}
+        lead={`How to measure, and what each figure means. All garment measurements are taken flat, in ${MEASUREMENT_UNIT}.`}
         crumbs={[{ name: "Home", href: "/" }]}
       />
 
       <div className="page-frame rhythm-tight space-y-16">
-        {/* The pending state, stated before the empty tables rather than in a
-            paragraph underneath both of them, and drawn the way this site draws
-            every other pending thing: a framed, stamped block that reads as
-            waiting rather than as broken. Two tables of forty-eight em dashes
-            with the explanation at the bottom is where this page was. */}
+        {/* THE EMPTY TABLE DOES NOT SHIP.
+            Two tables of forty-eight em dashes were the body of this page. The
+            structure is right and it is kept — `SIZE_TABLES` still declares the
+            columns and the rows, so the day the figures are measured they
+            appear here with no change to this file — but a grid of dashes is
+            not a size guide, it is a size guide's skeleton, and it was the
+            first thing a customer met. What always worked is the half that does
+            not need the numbers: what each measurement is and how to take it.
+            That is the page while the figures are outstanding. */}
         {pending ? (
-          <PendingNotice
-            label="Measurements pending"
-            title="The numbers come off the production samples, not off a chart."
-          >
-            <p className="type-body text-ink-muted">
-              Each piece is measured from the sample that was actually made, and
-              those measurements are published here before the next drop. Nothing
-              is going in this table until then.
-            </p>
-            <p className="type-body text-ink-muted">
-              In the meantime, every product page carries the fit notes for that
-              piece — how it is cut and how it is meant to sit.{" "}
+          <section>
+            <p className="type-lead text-ink">Measurements coming soon.</p>
+            <p className="type-body mt-5 text-ink-muted">
+              Every product page carries its fit notes — how the piece is cut and
+              how it is meant to sit.{" "}
               <Link href="/shop" className="link-rule">
-                Browse the drop
+                Browse the pieces
               </Link>
               .
             </p>
-          </PendingNotice>
+          </section>
         ) : null}
 
         {tables.map((table) => (
           <section key={table.key}>
             <h2 className="type-display-4 border-b border-ink pb-4">{table.title}</h2>
+            {pending ? null : (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[34rem] border-collapse text-left">
                 <caption className="visually-hidden">
@@ -115,6 +112,7 @@ export default function SizeGuidePage() {
                 </tbody>
               </table>
             </div>
+            )}
 
             {/* What each column means. A measurement table nobody can reproduce
                 is only half a size guide, and this half does not depend on the

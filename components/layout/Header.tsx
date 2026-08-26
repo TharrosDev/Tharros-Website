@@ -12,6 +12,7 @@ import { useWishlist } from "@/components/commerce/WishlistProvider";
 import { BagIcon, HeartIcon, SearchIcon } from "@/components/ui/icons";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { NAV_PRIMARY } from "@/lib/site";
+import { STORE_OPEN } from "@/lib/commerce/state";
 
 /** Routes that open on a full-bleed image the header floats over. */
 const TRANSPARENT_ROUTES = new Set(["/"]);
@@ -284,6 +285,11 @@ export default function Header() {
               className="hidden md:inline-flex"
             />
 
+            {/* Absent, not disabled. A bag icon is a promise that there is
+                somewhere to put something, and while no payment provider is
+                connected there is not. Saved is the state a visitor can
+                actually keep, and it sits where the bag was. */}
+            {STORE_OPEN ? (
             <button
               type="button"
               onClick={openBag}
@@ -307,6 +313,7 @@ export default function Header() {
                 Open bag — {ready ? count : 0} item{count === 1 ? "" : "s"}
               </span>
             </button>
+            ) : null}
           </div>
         </div>
       </header>

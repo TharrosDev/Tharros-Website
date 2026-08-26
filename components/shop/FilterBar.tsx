@@ -4,7 +4,7 @@ import Link, { useLinkStatus } from "next/link";
 import { useRef, useState } from "react";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { SORT_OPTIONS } from "@/lib/catalog/queries";
-import type { CategoryId } from "@/lib/catalog/types";
+import type { Availability, CategoryId } from "@/lib/catalog/types";
 import { CloseIcon } from "@/components/ui/icons";
 import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import type { SortKey } from "@/lib/catalog/types";
@@ -16,12 +16,20 @@ export type DropOption = {
   count: number;
 };
 
+/** A stock cut the bar can offer, with the count it will actually return. */
+export type AvailabilityOption = {
+  id: Availability;
+  name: string;
+  count: number;
+};
+
 type Props = {
   category: string;
   sort: SortKey;
   drop?: string;
   dropName?: string;
-  newOnly?: boolean;
+  /** The active stock cut, if one is on. */
+  availability?: Availability;
   /** The active `?q=`, carried through every link the bar builds. */
   query?: string;
   count: number;
@@ -29,6 +37,8 @@ type Props = {
   available: CategoryId[];
   /** Only drops that currently hold a piece, newest first. */
   drops: DropOption[];
+  /** Only stock states that currently hold a piece, with their counts. */
+  availabilities: AvailabilityOption[];
 };
 
 /**
@@ -70,7 +80,7 @@ function buildHref(params: {
   category?: string;
   sort?: string;
   drop?: string;
-  newOnly?: boolean;
+  availability?: string;
   query?: string;
 }): string {
   const search = new URLSearchParams();
@@ -78,7 +88,7 @@ function buildHref(params: {
   if (params.category && params.category !== "all") search.set("category", params.category);
   if (params.sort && params.sort !== "featured") search.set("sort", params.sort);
   if (params.drop) search.set("drop", params.drop);
-  if (params.newOnly) search.set("new", "1");
+  if (params.availability) search.set("availability", params.availability);
   const q = search.toString();
   return q ? `/shop?${q}` : "/shop";
 }
@@ -118,15 +128,17 @@ export default function FilterBar({
   sort,
   drop,
   dropName,
-  newOnly,
+  availability,
   query,
   count,
   available,
   drops,
+  availabilities,
 }: Props) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const sortRef = useRef<HTMLDetailsElement>(null);
+  const stockRef = useRef<HTMLDetailsElement>(null);
 
   const sorts = OFFERED_SORTS.map((key) => ({
     key,
@@ -159,74 +171,120 @@ export default function FilterBar({
             id: entry.slug,
             name: entry.name,
             count: entry.count,
-            href: buildHref({ category, sort, drop: entry.slug, query }),
+            href: buildHref({ category, sort, drop: entry.slug, availability, query }),
           })),
           {
             id: "all",
             name: "Everything",
             count,
-            href: buildHref({ category, sort, query }),
+            href: buildHref({ category, sort, availability, query }),
           },
         ]
       : [];
+
+  /* THE STOCK CUT — the axis a shopper actually browses on: what can I get,
+     what is coming, what did I miss. It was the one axis the bar did not
+     offer. What stood in for it was `?new=1`, rendered under the label "In
+     development" — a word about the label's schedule rather than about whether
+     a piece is there. Only states that hold at least one piece are offered,
+     and the counts are passed in from the same filter the grid runs, so a cut
+     can never turn out to be empty. Clicking the active one clears it. */
+  const stock = availabilities.map((entry) => ({
+    ...entry,
+    href: buildHref({
+      category,
+      sort,
+      drop,
+      availability: availability === entry.id ? undefined : entry.id,
+      query,
+    }),
+  }));
 
   const showCategories =
     available.length >= CATEGORY_ROW_MIN_CATEGORIES &&
     (count >= CATEGORY_ROW_MIN_PIECES || category !== "all");
 
   const filters = [
-    { id: "all", name: "All", href: buildHref({ sort, drop, query }) },
+    { id: "all", name: "All", href: buildHref({ sort, drop, availability, query }) },
     ...CATEGORIES.filter((entry) => available.includes(entry.id)).map((entry) => ({
       id: entry.id,
       name: entry.name,
-      href: buildHref({ category: entry.id, sort, drop, query }),
+      href: buildHref({ category: entry.id, sort, drop, availability, query }),
     })),
-    // `?new=1` used to be an orphan: it filtered the grid, but no entry in this
-    // list carried its id, so nothing was ever marked current and the view gave
-    // no sign it was filtered at all.
-    ...(newOnly
-      ? [{ id: "new", name: "In development", href: buildHref({ sort, drop, query, newOnly: true }) }]
-      : []),
   ];
 
-  const activeId = newOnly ? "new" : category;
+  const activeId = category;
 
   /**
-   * What the bar leads with: the releases when there are several, the
-   * categories when they have earned their row, and nothing at all when
-   * neither is true.
+   * WHAT THE BAR LEADS WITH, AND WHY IT IS NOT ALWAYS THE SAME THING.
    *
-   * Nothing is the honest answer for one release of seven pieces. The bar then
-   * carries what it can actually tell you — how many pieces are in front of you
-   * and what order they are in — rather than seven category links each holding
-   * one or two garments.
+   * Three axes exist and only one can hold the leading rail. The order of
+   * preference is the order a shopper narrows in: which release, then what is
+   * in stock, then what kind of garment. A single-release label offering a
+   * choice of one release is furniture describing itself, so the releases only
+   * take the rail once there are two of them — and until then the stock cut
+   * takes it, which is the question someone browsing one drop is actually
+   * asking.
+   *
+   * Whichever axis is not leading and still has something to say goes on the
+   * secondary row underneath, so no axis is ever offered twice.
    */
-  const primary: { id: string; name: string; href: string; count?: number }[] =
-    releases.length > 0 ? releases : showCategories ? filters : [];
+  const axis: "release" | "category" | "none" =
+    releases.length > 0 ? "release" : showCategories ? "category" : "none";
 
-  /** What is actually narrowing the list, each removable on its own. */
+  const primary: { id: string; name: string; href: string; count?: number }[] =
+    axis === "release" ? releases : axis === "category" ? filters : [];
+
+  const currentId = axis === "release" ? (drop ?? "all") : activeId;
+
+  /** The categories, on the row below, whenever they are not already the rail. */
+  const secondary = showCategories && axis === "release" ? filters : [];
+
+  /* Stock does not compete for a rail. Three axes and two rows meant one of
+     them was always the one a desktop did not get — and the stock cut is the
+     axis a shopper uses most, so it takes a control of its own beside Sort
+     rather than a place in a queue. Same `<details>` disclosure: real keyboard
+     behaviour, an accessible name, an open state the browser owns, and it
+     works with no JavaScript. */
+  const stockLabel =
+    stock.find((entry) => entry.id === availability)?.name ?? "All";
+
   const chips = [
     query
-      ? { key: "q", label: `“${query}”`, href: buildHref({ category, sort, drop, newOnly }) }
+      ? {
+          key: "q",
+          label: `“${query}”`,
+          href: buildHref({ category, sort, drop, availability }),
+        }
       : null,
     category !== "all"
       ? {
           key: "category",
           label: categoryName(category as CategoryId),
-          href: buildHref({ sort, drop, newOnly, query }),
+          href: buildHref({ sort, drop, availability, query }),
         }
       : null,
     drop
-      ? { key: "drop", label: dropName ?? drop, href: buildHref({ category, sort, newOnly, query }) }
+      ? {
+          key: "drop",
+          label: dropName ?? drop,
+          href: buildHref({ category, sort, availability, query }),
+        }
       : null,
-    newOnly
-      ? { key: "new", label: "In development", href: buildHref({ category, sort, drop, query }) }
+    availability
+      ? {
+          key: "availability",
+          label:
+            availabilities.find((entry) => entry.id === availability)?.name ??
+            availability,
+          href: buildHref({ category, sort, drop, query }),
+        }
       : null,
     sort !== "featured"
       ? {
           key: "sort",
           label: SORT_OPTIONS.find((option) => option.key === sort)?.label ?? sort,
-          href: buildHref({ category, drop, newOnly, query }),
+          href: buildHref({ category, drop, availability, query }),
         }
       : null,
   ].filter((chip): chip is { key: string; label: string; href: string } => chip !== null);
@@ -246,15 +304,14 @@ export default function FilterBar({
               leading position and the categories — when they are offered at
               all — sit under it as the secondary cut. */}
           <nav
-            aria-label="Filter products"
+            aria-label={
+              axis === "release" ? "Filter by release" : "Filter by category"
+            }
             className={primary.length === 0 ? "hidden" : "hidden min-w-0 lg:block"}
           >
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
               {primary.map((entry) => {
-                const current =
-                  releases.length > 0
-                    ? (drop ?? "all") === entry.id
-                    : activeId === entry.id;
+                const current = currentId === entry.id;
                 return (
                   <li key={entry.id}>
                     <Link
@@ -283,7 +340,7 @@ export default function FilterBar({
             className="type-meta -my-2 flex items-center gap-2 py-4 lg:hidden"
             aria-expanded={sheetOpen}
           >
-            {releases.length > 0 || showCategories ? "Filter & sort" : "Sort"}
+            {axis === "none" && stock.length < 2 ? "Sort" : "Filter & sort"}
             {chips.length > 0 ? (
               <span className="num badge badge-solid h-5">{chips.length}</span>
             ) : null}
@@ -304,6 +361,55 @@ export default function FilterBar({
                 keyboard behaviour, an accessible name and an open/closed state
                 the browser owns, and like every other control in this bar it
                 still works with no JavaScript. */}
+            {stock.length > 1 ? (
+              <details ref={stockRef} className="relative hidden lg:block">
+                <summary className="type-meta -my-2 flex cursor-pointer list-none items-center gap-2 py-2 transition-opacity hover:opacity-60 [&::-webkit-details-marker]:hidden">
+                  <span className="text-ink-faint">Availability</span>
+                  <span className="text-ink">{stockLabel}</span>
+                </summary>
+                <nav
+                  aria-label="Filter by availability"
+                  className="absolute top-full right-0 z-10 mt-3 min-w-56 border border-ink bg-surface p-2"
+                >
+                  <ul>
+                    <li>
+                      <Link
+                        href={buildHref({ category, sort, drop, query })}
+                        scroll={false}
+                        onClick={() => {
+                          if (stockRef.current) stockRef.current.open = false;
+                        }}
+                        aria-current={availability ? undefined : "true"}
+                        className={`type-meta block px-3 py-2.5 transition-colors hover:bg-ink hover:text-paper ${
+                          availability ? "text-ink-faint" : "text-ink"
+                        }`}
+                      >
+                        All
+                      </Link>
+                    </li>
+                    {stock.map((entry) => (
+                      <li key={entry.id}>
+                        <Link
+                          href={entry.href}
+                          scroll={false}
+                          onClick={() => {
+                            if (stockRef.current) stockRef.current.open = false;
+                          }}
+                          aria-current={availability === entry.id ? "true" : undefined}
+                          className={`type-meta flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors hover:bg-ink hover:text-paper ${
+                            availability === entry.id ? "text-ink" : "text-ink-faint"
+                          }`}
+                        >
+                          {entry.name}
+                          <span className="num opacity-60">{entry.count}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </details>
+            ) : null}
+
             <details ref={sortRef} className="relative hidden lg:block">
               <summary className="type-meta -my-2 flex cursor-pointer list-none items-center gap-2 py-2 transition-opacity hover:opacity-60 [&::-webkit-details-marker]:hidden">
                 <span className="text-ink-faint">Sort</span>
@@ -321,7 +427,7 @@ export default function FilterBar({
                           category,
                           sort: option.key,
                           drop,
-                          newOnly,
+                          availability,
                           query,
                         })}
                         scroll={false}
@@ -346,11 +452,11 @@ export default function FilterBar({
         {/* The secondary cut, and only once there is enough catalogue for it to
             cut anything — and only when the leading rail is already spoken for
             by the releases, so the categories never render twice. */}
-        {showCategories && releases.length > 0 ? (
+        {secondary.length > 0 ? (
           <div className="page-frame hidden border-t border-rule py-2.5 lg:block">
             <nav aria-label="Filter by category">
               <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                {filters.map((filter) => (
+                {secondary.map((filter) => (
                   <li key={filter.id}>
                     <Link
                       href={filter.href}
@@ -477,10 +583,40 @@ export default function FilterBar({
               </>
             ) : null}
 
-            {showCategories ? (
+            {stock.length > 1 ? (
               <>
                 <p
                   className={`type-meta text-ink-faint ${releases.length > 0 ? "mt-10" : ""}`}
+                >
+                  Availability
+                </p>
+                <ul className="mt-4 space-y-1">
+                  {stock.map((entry) => (
+                    <li key={entry.id}>
+                      <Link
+                        href={entry.href}
+                        scroll={false}
+                        onClick={() => setSheetOpen(false)}
+                        aria-current={availability === entry.id ? "page" : undefined}
+                        className={`type-display-4 flex items-baseline justify-between gap-4 py-2 ${
+                          availability === entry.id ? "text-ink" : "text-ink-faint"
+                        }`}
+                      >
+                        {entry.name}
+                        <span className="num type-meta">{entry.count}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+
+            {showCategories ? (
+              <>
+                <p
+                  className={`type-meta text-ink-faint ${
+                    releases.length > 0 || stock.length > 1 ? "mt-10" : ""
+                  }`}
                 >
                   Category
                 </p>
@@ -505,7 +641,7 @@ export default function FilterBar({
             ) : null}
 
             <p
-              className={`type-meta text-ink-faint ${releases.length > 0 || showCategories ? "mt-10" : ""}`}
+              className={`type-meta text-ink-faint ${axis === "none" ? "" : "mt-10"}`}
             >
               Sort
             </p>
@@ -513,7 +649,7 @@ export default function FilterBar({
               {sorts.map((option) => (
                 <li key={option.key}>
                   <Link
-                    href={buildHref({ category, sort: option.key, drop, newOnly, query })}
+                    href={buildHref({ category, sort: option.key, drop, availability, query })}
                     scroll={false}
                     onClick={() => setSheetOpen(false)}
                     aria-current={sort === option.key ? "true" : undefined}

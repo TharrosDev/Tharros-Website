@@ -11,9 +11,7 @@ import {
   isPurchasable,
   isSizeAvailable,
   resolveAvailability,
-  runStatus,
 } from "@/lib/catalog/queries";
-import { archiveState } from "@/lib/catalog/archive";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/catalog/types";
 
@@ -30,7 +28,6 @@ export default function ProductCard({
   product,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   priority = false,
-  specimen = false,
 }: Props) {
   const { add, openBag, lines } = useCart();
   // Quick-add used to force the bag drawer open over the grid, which threw the
@@ -54,8 +51,6 @@ export default function ProductCard({
   const { primary, secondary } = cardImages(product);
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
-  const run = runStatus(product);
-  const unset = archiveState(product) === "in-development";
   const sellable = product.variants.filter((variant) =>
     isSizeAvailable(product, variant.size),
   );
@@ -233,37 +228,17 @@ export default function ProductCard({
         </p>
       </div>
 
-      {/* The specimen line. Real figures only: `made` is how many exist,
-          `remaining` is live variant inventory. A closed run is the one thing
-          here allowed to carry the accent.
+      {/* NO SPECIMEN ROW. Every card in every grid used to end on
+          `MADE 40 / LEFT 24` — an inventory ledger under a photograph of a
+          hoodie, on the home page, the shop, the drop and the related rail.
+          Nine of them in one viewport is a page about stock levels, which is
+          the personality this site is no longer trying to have. The run is
+          still stated, once, on the product page beside the price, where it
+          reads as a property of the release rather than as the point of it.
 
-          THE GARMENT NUMBER IS NOT HERE ANY MORE. A card has one job — make
-          the piece worth opening — and `TH-005 · MADE 18 · LEFT 8` spent three
-          quarters of its metadata line on an identifier nobody browses by. The
-          two figures that are evidence stay; the reference belongs on the
-          product page, which opens on it, and in the archive ledger, which is
-          indexed by it. */}
-      {specimen ? (
-        <dl className="mt-auto flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-rule pt-3">
-          {/* A piece still being sampled has no run size decided yet, so both
-              figures are 0 — which reads as "none were made" rather than as
-              "not made yet". Same em dash the archive and the size tables use
-              for a number nobody has set. */}
-          <div className="flex items-baseline gap-2">
-            <dt className="type-meta text-ink-faint">Made</dt>
-            <dd className="num type-meta">{unset ? "—" : run.made}</dd>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <dt className="type-meta text-ink-faint">Left</dt>
-            {/* Deliberately not accented. A red zero on one card among nine
-                puts a second mark in the same viewport as the drop numeral and
-                dilutes it; the sold-out badge on the frame already says this.
-                The accent for a closed run belongs on the product page, where
-                it is about the piece being looked at. */}
-            <dd className="num type-meta">{unset ? "—" : run.remaining}</dd>
-          </div>
-        </dl>
-      ) : null}
+          What a card says about state is the badge on the frame — sold out,
+          low stock, coming soon, new — and that is enough to decide whether
+          the piece is worth opening. */}
     </article>
   );
 }

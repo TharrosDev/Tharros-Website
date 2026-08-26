@@ -301,13 +301,6 @@ export default function CartDrawer() {
               <Link href="/checkout" onClick={close} className="btn btn-solid btn-full mt-5">
                 Checkout
               </Link>
-              {/* Said here rather than only at step four. The limitation was
-                  disclosed honestly and late: after eight fields, which turns a
-                  defensible pre-launch state into a felt bait-and-switch for
-                  anyone who filled the form in. */}
-              <p className="type-meta mt-3 text-center text-ink-faint">
-                Card payment is not connected yet
-              </p>
             </div>
           </>
         )}

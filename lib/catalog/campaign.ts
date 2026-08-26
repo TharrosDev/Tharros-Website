@@ -81,7 +81,7 @@ export const CAMPAIGNS: Campaign[] = [
       {
         id: "cmp-001-c",
         index: "03",
-        caption: "Drop 001, at the end of the street it was made on.",
+        caption: "Drop 001, at the far end of the street.",
         wearing: ["work-jacket", "utility-cargo-pant"],
         image: {
           code: "CMP-001-C",

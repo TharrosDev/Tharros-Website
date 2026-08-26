@@ -180,10 +180,14 @@ export type Drop = {
   slug: string;
   statement: string;
   body: string[];
-  /** ISO date, or null while a drop is still in development. */
+  /** ISO date, or null while a drop has not been released. */
   releasedAt: string | null;
-  status: "released" | "in-development";
-  cover: ImageSlotData;
+  status: "released" | "upcoming";
+  /**
+   * Optional: a drop that has not been shot has no cover, and a preview is
+   * better with no picture than with one that is not of the clothes.
+   */
+  cover?: ImageSlotData;
 };
 
 /**
@@ -232,5 +236,7 @@ export type ProductQuery = {
   category?: CategoryId | "all";
   drop?: string;
   isNew?: boolean;
+  /** Narrow to one stock state. `available` also matches `low-stock`. */
+  availability?: Availability;
   sort?: SortKey;
 };

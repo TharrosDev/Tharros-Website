@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 import PageIntro from "@/components/layout/PageIntro";
-import PendingNotice from "@/components/ui/PendingNotice";
 import CheckoutFlow from "@/components/commerce/CheckoutFlow";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { STORE_OPEN } from "@/lib/commerce/state";
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -12,53 +11,35 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/**
+ * THE ROUTE STAYS. THE DEAD END DOES NOT.
+ *
+ * This page used to open on a panel headed "No card can be taken yet",
+ * explaining that the bag, the address and the totals were real but the
+ * payment provider was missing, so the last step would hand over a pre-filled
+ * email instead of a card form. That panel was honest and it was in the wrong
+ * place: by the time anyone read it they had been told a drop was out now,
+ * offered an add-to-bag on every card, and walked to a checkout — three
+ * promises, then a correction.
+ *
+ * The correction is now made at the top, once, by not making the promises:
+ * nothing is purchasable while `STORE_OPEN` is false, so no bag fills, no
+ * drawer opens and this route has nothing to check out. It redirects rather
+ * than rendering an apology, because a checkout with an empty bag and no
+ * payment is not a page, it is a wrong turn.
+ *
+ * `CheckoutFlow` is untouched and still holds the working two-step flow —
+ * details, address, delivery and live totals. Connecting a provider and
+ * flipping the flag restores this page whole.
+ */
 export default function CheckoutPage() {
+  if (!STORE_OPEN) redirect("/shop");
+
   return (
     <>
       <PageIntro index="01" label="Checkout" title="Checkout" compact />
       <div className="page-frame">
-        {/* Stated before the form rather than after it. `/account` already
-            announces its own limitation in the lead, and this page said nothing
-            until step four — the same honesty, eight fields too late.
-
-            HANDED TO THE FLOW RATHER THAN RENDERED ABOVE IT, because whether it
-            belongs on screen depends on the bag and the bag is client state.
-            Rendered here unconditionally it explained the payment situation to
-            people whose bag is empty: four lines about a checkout they cannot
-            start, sitting above the line that tells them why. */}
-        <CheckoutFlow
-          notice={
-            <div className="mb-12">
-              <PendingNotice
-                label="Before you start"
-                title="No card can be taken yet."
-              >
-                <p className="type-body text-ink-muted">
-                  Everything on this page is real — your bag, your address, the
-                  delivery options and the totals. What is missing is the
-                  payment provider, so the last step hands you a pre-filled
-                  email to{" "}
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="link-rule">
-                    {CONTACT_EMAIL}
-                  </a>{" "}
-                  instead of a card form.
-                </p>
-                <p className="type-body text-ink-muted">
-                  Nothing you enter leaves this browser.
-                </p>
-                {/* Its own line. Run on after the sentence it followed, a mono
-                    uppercase link reads as the end of that sentence rather than
-                    as a control. */}
-                <Link
-                  href="/shop"
-                  className="link-rule link-rule-reveal mt-2 inline-block"
-                >
-                  Back to the shop
-                </Link>
-              </PendingNotice>
-            </div>
-          }
-        />
+        <CheckoutFlow />
       </div>
     </>
   );

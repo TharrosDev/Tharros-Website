@@ -233,9 +233,9 @@ test.describe("scenes that move the DOM", () => {
     // because nothing pins there — would never run this.
     await page
       .getByRole("contentinfo")
-      .getByRole("link", { name: "Archive", exact: true })
+      .getByRole("link", { name: "Releases", exact: true })
       .click();
-    await expect(page).toHaveURL(/\/archive$/);
+    await expect(page).toHaveURL(/\/releases$/);
     await expect(page.locator("main h1").first()).toBeVisible();
 
     // The boundary renders this. The console assertion below would also catch
@@ -252,16 +252,18 @@ test.describe("scenes that move the DOM", () => {
  * Two pieces of Drop 002 are in development. They carry `runSize: 0`, so they
  * never inflated "units made" — but they were counted as garments, filed under
  * the 2026 band beside pieces that shipped in May, and shown as the newest two
- * rows of a home page section titled "Everything made so far." The ledger row
- * itself said "In development" honestly; the figure above it did not.
+ * rows of a home page section titled "Everything made so far." That section is
+ * gone and the destination is `/releases` now, but the failure it guards
+ * against is the same one: a stated count that disagrees with the rows under
+ * it.
  *
  * The assertion is the relationship rather than the numbers: a count that
  * disagrees with the rows under it is the failure, at seven garments or at two
  * hundred.
  */
-test.describe("the archive records what was made", () => {
+test.describe("the release index holds what was released", () => {
   test("the garment count is the number of rows", async ({ page }) => {
-    await page.goto("/archive");
+    await page.goto("/releases");
 
     // `dt` inside the `dl > div` wrapper this page uses is not exposed as
     // `term`, so the pair is addressed structurally rather than by role.
@@ -271,18 +273,22 @@ test.describe("the archive records what was made", () => {
       .innerText();
     // The ledger's own rows, not every list item in `main` — the page also
     // carries breadcrumbs.
-    const rows = await page.locator('main a[href^="/archive/th-"]').count();
+    const rows = await page.locator('main a[href^="/releases/th-"]').count();
 
     expect(Number(stated.trim()), "stated garment count").toBe(rows);
   });
 
-  test("nothing in development is in the record", async ({ page }) => {
-    await page.goto("/archive");
+  test("nothing unreleased is in the index", async ({ page }) => {
+    await page.goto("/releases");
+    // Both spellings: the site used to say "In development" in five places and
+    // "Coming soon" in one, for the same state. It says "Coming soon" now, and
+    // neither belongs in an index of what has been released.
     await expect(page.getByRole("main").getByText("In development")).toHaveCount(0);
+    await expect(page.getByRole("main").getByText("Coming soon")).toHaveCount(0);
   });
 
   test("an unreleased piece has no record page", async ({ page }) => {
-    const response = await page.goto("/archive/th-008");
+    const response = await page.goto("/releases/th-008");
     expect(response?.status()).toBe(404);
     await expect(page.getByRole("link", { name: /return home/i })).toBeVisible();
   });
@@ -296,9 +302,38 @@ test.describe("the archive records what was made", () => {
  * already takes trouble to avoid. The em dash is the site's word for a number
  * nobody has set.
  */
-test("a piece in development shows no run figures", async ({ page }) => {
+test("an unreleased piece shows no run figures", async ({ page }) => {
   await page.goto("/shop/shell-jacket-01");
   await expect(page.locator("main")).not.toContainText("None left");
   await expect(page.locator("main")).not.toContainText("0 made");
-  await expect(page.getByText("Not out yet")).toBeVisible();
+  await expect(page.getByText("Coming soon").first()).toBeVisible();
+});
+
+/**
+ * ONE COMMERCE STATE, ASSERTED FROM BOTH ENDS.
+ *
+ * The site used to say a drop was out now, offer an add-to-bag on every card,
+ * and put a Checkout button in the drawer — and then explain at the top of
+ * `/checkout` that no card could be taken and the order would be composed into
+ * an email. Everything now derives from `STORE_OPEN` in
+ * `lib/commerce/state.ts`, so the failure this guards against is a surface
+ * drifting back out of step with the flag rather than any particular wording.
+ */
+test.describe("the storefront does not promise a purchase it cannot take", () => {
+  test("no add to bag while the shop is shut", async ({ page }) => {
+    await page.goto("/shop/core-tee");
+    await expect(
+      page.getByRole("button", { name: /add to bag/i }),
+    ).toHaveCount(0);
+  });
+
+  test("checkout is not reachable", async ({ page }) => {
+    await page.goto("/checkout");
+    await expect(page).toHaveURL(/\/shop$/);
+  });
+
+  test("no bag control in the header", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("button", { name: /open bag/i })).toHaveCount(0);
+  });
 });

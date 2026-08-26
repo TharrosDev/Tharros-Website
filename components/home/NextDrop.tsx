@@ -2,65 +2,75 @@ import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import SplitLines from "@/components/motion/SplitLines";
 import Magnetic from "@/components/motion/Magnetic";
+import ProductGrid from "@/components/product/ProductGrid";
 import { NEXT_DROP, NO_DATE_NOTE } from "@/lib/catalog/drops";
+import { listProducts } from "@/lib/catalog/queries";
 
 /**
- * What is coming, stated without a date — because there isn't one.
+ * A COLLECTION PREVIEW, NOT A PROJECT STATUS REPORT.
  *
- * This closes the page on the drop it opened with, so the whole home page is
- * bracketed by the release cycle rather than by a hero and a social grid. If
- * there is no drop in development the section does not render at all; an empty
- * "coming soon" would be exactly the invented anticipation the content rules
- * forbid.
+ * This section used to say what was being patterned, what was being cut again,
+ * which pieces were "far enough along to show", and that the drop would go out
+ * "when the fit is right" — a development log, published to customers, closing
+ * the home page. Nothing here now states anything that is not confirmed: the
+ * name of the release, what is in it, and the fact that it has no date yet.
+ * The button used to read "Follow the build".
  */
 export default function NextDrop() {
   if (!NEXT_DROP) return null;
+  const pieces = listProducts({ drop: NEXT_DROP.id });
 
   return (
     <section className="on-pale rhythm-breath">
       <div className="page-frame">
-        {/* The index in this row is the section's place on the page, not the
-            drop's number — printing "002" here put a second numbering series in
-            the same column as 01…05 and read as a step backwards. The drop's own
-            name carries its number, and the accent moves to the state it marks:
-            oxide means in development, which is what this section is. */}
+        {/* The index is this section's place on the page, never the drop's own
+            number — printing "002" in the same column as 01 and 02 puts a
+            second series in one position and reads as a step backwards. The
+            drop's name carries its number, and the accent marks the state. */}
         <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-4">
           <p className="eyebrow">
-            <span className="num">06</span>
+            <span className="num">03</span>
             <span>{NEXT_DROP.name}</span>
           </p>
-          <p className="type-meta text-signal">In development</p>
+          <p className="type-meta text-signal">Coming next</p>
         </Reveal>
 
-        {/* Same interval as SectionHeading's title, hand-rolled because this
-            opener carries a state mark rather than a link.
-
-            Split, because this is the last statement on the page and the one
-            the visitor leaves on. The home page spends the gesture twice: on
-            what the label is (02) and on what is coming (06). */}
+        {/* Split, because this is the last statement on the page and the one
+            the visitor leaves on. */}
         <SplitLines
           as="h2"
           text={NEXT_DROP.statement}
           className="type-display-2 mt-10 max-w-[16ch] md:mt-12"
         />
 
-        <div className="section-lead grid gap-x-12 gap-y-8 lg:grid-cols-12">
-          <Reveal mode="wipe" className="space-y-5 lg:col-span-6">
+        <div className="section-lead grid gap-x-12 gap-y-10 lg:grid-cols-12">
+          <Reveal mode="wipe" className="space-y-5 lg:col-span-5">
             {NEXT_DROP.body.map((paragraph) => (
               <p key={paragraph} className="type-body text-ink-muted">
                 {paragraph}
               </p>
             ))}
-          </Reveal>
-
-          <div className="lg:col-span-5 lg:col-start-8">
             <p className="type-meta text-ink-faint">{NO_DATE_NOTE}</p>
-            <Magnetic className="mt-8">
+            <Magnetic className="inline-block pt-4">
               <Link href="/drop" className="btn btn-outline">
-                Follow the build
+                Preview {NEXT_DROP.name}
               </Link>
             </Magnetic>
-          </div>
+          </Reveal>
+
+          {/* The pieces themselves rather than a picture of the drop being
+              made. Two cards, no specimen row — there are no run figures for
+              an unreleased piece and an em dash in a stock column is a figure
+              nobody asked for. */}
+          {pieces.length > 0 ? (
+            <div className="lg:col-span-6 lg:col-start-7">
+              <ProductGrid
+                products={pieces}
+                heading={`${NEXT_DROP.name} pieces`}
+                columns={2}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

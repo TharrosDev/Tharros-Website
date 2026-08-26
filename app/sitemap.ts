@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1, changeFrequency: "weekly" },
     { path: "/shop", priority: 0.9, changeFrequency: "weekly" },
     { path: "/drop", priority: 0.9, changeFrequency: "weekly" },
-    { path: "/archive", priority: 0.8, changeFrequency: "weekly" },
+    { path: "/releases", priority: 0.8, changeFrequency: "weekly" },
     { path: "/about", priority: 0.7, changeFrequency: "yearly" },
     { path: "/size-guide", priority: 0.5, changeFrequency: "yearly" },
     { path: "/shipping", priority: 0.4, changeFrequency: "yearly" },
@@ -50,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Archive records are permanent by definition — a run does not reopen —
     // so they change less often than the product page for the same garment.
     ...archiveEntries().map((entry) => ({
-      url: `${SITE_URL}/archive/${entry.ref}`,
+      url: `${SITE_URL}/releases/${entry.ref}`,
       lastModified: new Date(entry.product.releasedAt),
       changeFrequency: "monthly" as const,
       priority: 0.6,

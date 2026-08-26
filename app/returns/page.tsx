@@ -51,7 +51,6 @@ export default function ReturnsPage() {
             title: "Refunds",
             body: [
               "Refunds are issued to the original payment method once the return is received and inspected.",
-              "This policy is a working draft pending legal review before launch.",
             ],
           },
         ]}

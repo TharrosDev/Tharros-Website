@@ -1,4 +1,5 @@
 import { PRODUCTS } from "./products";
+import { STORE_OPEN } from "@/lib/commerce/state";
 /**
  * Which frame of a piece to show is a catalogue question, so it is answered
  * behind the same seam as everything else a component is allowed to read.
@@ -65,7 +66,18 @@ export function resolveAvailability(product: Product): Availability {
   return "available";
 }
 
+/**
+ * Can this piece be put in a bag right now?
+ *
+ * Two conditions, and the first one is the storefront's rather than the
+ * piece's: while `STORE_OPEN` is false nothing is purchasable, because no
+ * payment provider is connected and a purchase path that cannot complete is
+ * worse than no purchase path. Every add-to-bag control, quick-add strip and
+ * size selector on the site asks this question, so standing the shop down is
+ * one flag rather than a sweep through the components.
+ */
 export function isPurchasable(product: Product): boolean {
+  if (!STORE_OPEN) return false;
   const availability = resolveAvailability(product);
   return availability === "available" || availability === "low-stock";
 }
@@ -80,25 +92,38 @@ export function isSizeAvailable(product: Product, size: string): boolean {
 }
 
 /**
- * A finished run is labelled `Archived`, not `Sold out`.
+ * One vocabulary for stock, used everywhere.
  *
- * They describe the same stock level and they do not mean the same thing.
- * "Sold out" is a shopping fact told from the visitor's side — you came too
- * late, and the piece is now an absence. "Archived" is a production fact told
- * from the label's side — that run closed at the number it closed at, and the
- * piece has entered the record. The garment is the same either way; only one
- * of the two words makes it worth looking at afterwards.
- *
- * The internal state stays `sold-out` because that is what the inventory
- * literally is, and because `AVAILABILITY_SCHEMA` below has to keep telling
- * Google `SoldOut` — a search engine wants the shopping fact.
+ * The site ran two: `sold-out` rendered as "Archived" on a badge and as "Sold
+ * out" in a filter, and `coming-soon` rendered as "In development" in four
+ * places and "Coming soon" in one. Two words for one state is two states as
+ * far as a reader is concerned. These are the words, and nothing else names a
+ * stock condition in its own copy.
  */
 export const AVAILABILITY_LABEL: Record<Availability, string> = {
   available: "Available",
   "low-stock": "Low stock",
-  "sold-out": "Archived",
+  "sold-out": "Sold out",
   "coming-soon": "Coming soon",
 };
+
+/** The states a shopper can filter on, in the order the bar offers them. */
+export const AVAILABILITY_FILTERS: Availability[] = [
+  "available",
+  "coming-soon",
+  "sold-out",
+];
+
+export function isAvailabilityKey(
+  value: string | undefined,
+): value is Availability {
+  return (
+    value === "available" ||
+    value === "low-stock" ||
+    value === "sold-out" ||
+    value === "coming-soon"
+  );
+}
 
 /** Schema.org ItemAvailability, for Product JSON-LD. */
 export const AVAILABILITY_SCHEMA: Record<Availability, string> = {
@@ -146,11 +171,22 @@ export function sortProducts(products: Product[], sort: SortKey = "featured"): P
 
 /** The other half of the same seam: narrowing a list the caller already holds. */
 export function filterProducts(products: Product[], query: ProductQuery = {}): Product[] {
-  const { category = "all", drop, isNew } = query;
+  const { category = "all", drop, isNew, availability } = query;
   return products.filter((product) => {
     if (category !== "all" && product.category !== category) return false;
     if (drop && product.drop !== drop) return false;
     if (isNew && !product.isNew) return false;
+    // "Available" means a shopper can see it on the rail, so low stock counts
+    // as available rather than as its own filter — nobody browses for the
+    // pieces that are nearly gone.
+    if (availability) {
+      const state = resolveAvailability(product);
+      const matches =
+        availability === "available"
+          ? state === "available" || state === "low-stock"
+          : state === availability;
+      if (!matches) return false;
+    }
     return true;
   });
 }

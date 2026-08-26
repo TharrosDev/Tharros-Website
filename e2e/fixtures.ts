@@ -13,12 +13,16 @@ export const ROUTES = [
   "/shop",
   "/shop/arc-hoodie",
   "/drop",
-  "/archive",
-  "/archive/th-001",
+  "/releases",
+  "/releases/th-001",
   "/about",
   "/wishlist",
-  "/account",
-  "/checkout",
+  // `/account` and `/checkout` are not here. Neither is reachable from the
+  // site: accounts are not connected so nothing links to `/account`, and
+  // `/checkout` redirects to `/shop` while no payment provider is wired up
+  // (`lib/commerce/state.ts`). A route smoke test that follows a redirect is
+  // testing `/shop` twice under another name. They go back the day the flag
+  // flips.
   "/size-guide",
   "/shipping",
   "/returns",

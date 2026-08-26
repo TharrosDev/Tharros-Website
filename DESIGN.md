@@ -159,8 +159,9 @@ marked: `.field[aria-invalid="true"]` doubles its own rule with an inset ring, a
 than a border-width change because border-width does not interpolate and a 1px growth
 reflows every field beside it.
 
-On the home page's opening screen the single accented element is the **run ledger**, not
-the drop numeral. See §5.
+On the home page's opening screen the only oxide is the header's drop stamp, which is
+chrome rather than content. The opening frame itself carries no accent — the picture is
+the whole of it.
 
 Every text tone in the system passes WCAG AA against the surface it is used on, verified
 by painting the computed colour to a canvas and reading the pixel back — Chromium
@@ -204,7 +205,7 @@ wide positive tracking. That contrast is the type system.
 ### The mono ladder
 
 The technical layer promoted to display scale — drop numerals, run counts, the figures a
-specimen record is actually about.
+release record is actually about.
 
 | Class | Size (fluid) | Use |
 |---|---|---|
@@ -279,9 +280,9 @@ readable in the markup.
   read as a catalogue page. In practice it read as a defect — a row of cards at three
   different heights looks broken rather than composed, and every piece became harder to
   compare with the piece beside it, which is the one thing a drop grid is for. The grid
-  is now square on the home page and on `/shop` alike, at five up from `lg`.
-  `ProductCard` is a full-height flex column with its specimen line pinned to the foot,
-  so a two-line name does not push one card's figures a line below its neighbour's.
+  is now square everywhere: four up on the home page, where the grid is the page's whole
+  argument and a quarter of the width is the right size to judge a garment at, and five up
+  on `/shop`, where the job is scanning a catalogue.
 - Header height is `--header-h` (4.5rem). The header is fixed; `PageIntro` carries the
   clearance so pages never add their own top padding.
 - Image ratios: `ratio-tall` (2:3), `ratio-portrait` (3:4), `ratio-editorial` (4:5),
@@ -326,39 +327,46 @@ height on an `ImageSlot` directly.
 ### Visual rhythm
 
 The home page deliberately avoids a repeating image → heading → cards loop. Scale,
-alignment, density and surface alternate: full-bleed hero, five-up specimen grid, a pale
-statement of one sentence in type alone, one landscape band with the studio sequence named under it, one
-tall campaign frame beside its own column, a ledger at 11px, black again. When adding a
-section, ask what it varies.
+alignment, density and surface alternate: full-bleed hero, four-up garment grid, a held
+figure beside its own column, one landscape frame at `86svh` with nothing on it, a pale
+band of type and two cards. When adding a section, ask what it varies.
 
-**Three sections in a row that are all "a picture beside some words" is one section
-three times.** 02, 03 and 04 were exactly that and measured 6330px of a 13131px page at
-1440x900 — 48% of the scroll for three photographs and about 300 words, with 02 and 03
-making the same argument in different words. They are 3335px now. What separated them was
-never their spacing:
+**IT WAS SIX MOVEMENTS AND THREE OF THEM WERE ABOUT MANUFACTURING.** 02 was a statement
+that the label works at a scale where every garment is accounted for; 03 was "The studio",
+a wide photograph of pattern pieces on a work table with Idea / Pattern / Sample / Fit /
+Revision / Production named on a rule beneath it; 05 was a ledger headed "Everything made
+so far". A third of the scroll, on a page selling clothes, spent explaining how the clothes
+get made — and the visitor met the second garment about four screens in.
 
-- **02 has no picture at all.** It is the one purely typographic movement on the page —
-  the sentence at `display-1` and two short paragraphs filling one row under it. A
-  photograph there also pre-spent 04's register, since the frame it held was a figure in a
-  place, which is what 04 is.
-- **03 spends the picture 02 gave up, as the page's only landscape frame.** One wide
-  detail band across the page frame, and the six studio stages named on one rule beneath
-  it: index and name, no sentences. Six rows of a bold name plus two lines of grey body is
-  a feature list, and it was ~120 words of reading in a section whose job is atmosphere.
-  `lib/catalog/studio.ts` is six names and nothing else — the `short` and `long` lines
-  were kept for "a surface that states the process at length", and that surface is
-  `/about`, which states it in its own words.
-- **04 shows one campaign frame and links to `/drop`,** where the sequence belongs and
-  runs whole. Three frames on the home page was three "in this frame" rails of thumbnails,
-  names and prices — a second product grid, one screen below `01 The run`, which already
-  shows every piece in the drop with its price.
+The page is four movements now: hero, the pieces, the campaign, Drop 002. What replaced
+the three that went is not more brand copy. It is the photography, given the room it was
+shot for, and a grid at four up instead of five.
 
-**Frames vary by register, not only by placement.** Three of the home page's four frames
-are real photographs now — the opening portrait, the studio band and the campaign frame —
-and only the archive's thumbnails still stand in. The register still alternates, and it is
-declared the same way either way: a slot's `kind` and `crop` are what picks a stand-in from
+- **01 is the run, and it comes first.** Four up rather than five: this is the first thing
+  under the hero and the page's whole argument, so each frame gets a quarter of the width
+  rather than a fifth. Seven pieces read 4 + 3, which is a composed row and a short one.
+- **02 is two frames of different shape.** A standing figure held beside a column of type
+  and the pieces she is wearing, then a landscape frame bounded by the viewport with
+  nothing on it but its own caption. Every other picture on this site is captioned,
+  tagged, priced or linked; one of them is allowed to just be a photograph. The interval
+  between the two is `tight`, because they are one thought.
+- **03 is the drop preview, and it is a preview.** Type, one paragraph, and the two pieces
+  announced for Drop 002 as cards. It used to name what was being patterned, what was on
+  its second sample and which pieces were "far enough along to show".
+
+**Frames vary by register, not only by placement.** The home page's three frames are all
+real photographs — the opening portrait, the held figure and the landscape frame — and
+only the garment cards still stand in. The register still alternates, and it is declared
+the same way either way: a slot's `kind` and `crop` are what picks a stand-in from
 `FillerImage`'s pools *and* what a real photograph is briefed against, so the sequence
 survives the shoot rather than being rebuilt by it.
+
+**Two frames were withdrawn from the site entirely,** and it is worth saying why here
+rather than only in the photography brief: `abt-01.jpg` (pattern paper, cut cloth, a tape
+measure) and `prc-01.jpg` (pattern pieces beside a part-sewn sample). Both are pictures of
+clothes being made rather than of clothes. A photograph carries positioning as strongly as
+a paragraph does, and removing the copy while keeping the workshop imagery would have left
+the argument in place with nothing to say it.
 
 **Type beside a picture is anchored at both ends, or it is a hole.** A side-aligned
 campaign frame is a ~700px picture next to ~110px of caption, and no single alignment
@@ -419,12 +427,18 @@ product page are conditional on data that does not exist yet, and with hard-code
 the page printed 01 followed by 04 — which turns a position in a sequence into decoration.
 See `sectionIndex()` in `app/shop/[slug]/page.tsx`.
 
-### The specimen record
+### The garment card
 
-`ProductCard`'s `specimen` line — code, made, left — is what makes a grid read as a
-label's record rather than a row of products. It is currently on every grid of pieces: the
-home run, the shop, the drop, related products. Availability and run figures are always
-derived; nothing here is authored.
+`ProductCard` is image, name, colour, price — and a state badge on the frame where one is
+warranted: sold out, low stock, coming soon, new.
+
+**IT USED TO END ON `MADE 40 / LEFT 24`,** on every grid on the site: the home run, the
+shop, the drop, the related rail. Nine of them in one viewport is a page about stock
+levels wearing photographs of clothes, and it was the single strongest carrier of the
+"archive / manufacturing dossier" reading the site is no longer trying to have. The run is
+still stated — once, on the product page, beside the price, as "Limited release · 40 units
+· 24 left" — where it reads as a property of the release rather than as the point of it.
+Every figure is still derived; nothing here is authored.
 
 ---
 
@@ -441,25 +455,19 @@ derived; nothing here is authored.
 | `.badge`, `.badge-solid`, `.badge-quiet` | Inventory and release state |
 | `.eyebrow` | Mono index + label opening every section |
 | `.on-dark` | Flips a section to the black surface |
-| `.run-ledger` | The release as a proportion — see below |
 
-### The run ledger
+### The run ledger, removed
 
-The home page's opening screen states the release as the proportion it describes rather
-than as a statistics row. A 2px track is the whole run; the oxide segment is the part of
-it that is gone; `40 MADE` and `24 LEFT` sit in mono at either end. `--run-taken` is a
-unitless ratio the component computes from `runSize` and `runStatus().remaining`, so the
-bar cannot disagree with the product pages and cannot manufacture urgency — it can only
-draw what the inventory already says. It is `aria-hidden`: the two figures beside it are
-the content, and a screen reader gets all of it.
+The opening screen used to carry a 2px track with an oxide segment for the part of the run
+that was gone, and `40 MADE` / `24 LEFT` in mono at either end. It was a good component —
+derived from real inventory, unable to manufacture urgency, correctly `aria-hidden` with
+the two figures as its content — and it is gone with the positioning that wanted it. A
+progress bar for a production run, at the top of the home page, is the label's output
+stated as the first thing a visitor sees.
 
-It draws itself on `--ease-ledger` and shares `Reveal`'s stagger through `--reveal-delay`,
-exactly as `.rule-draw` does — a pseudo-element cannot see the inline `transition-delay`
-that `Reveal` sets on the element itself.
-
-What it replaced was Pieces / Made / Remaining in a three-cell `dl` with hairline tops:
-structurally the same object as "10k users / 99.9% uptime / 24/7 support", wearing the
-most distinctive content on the site.
+The hero states the release instead: the drop, the piece count and the release date, in one
+mono row. `.run-ledger` and `--run-taken` are deleted from `globals.css`; the run figures
+live on the product page.
 
 Product cards: image swaps to the second shot on hover, image zooms 3.5%, quick-add size
 row slides up (desktop only — on touch the product page does that job), heart sits top

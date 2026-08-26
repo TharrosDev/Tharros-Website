@@ -21,6 +21,7 @@ import { pieceTable } from "@/lib/catalog/sizing";
 import { getCategory } from "@/lib/catalog/categories";
 import { MAX_LINE_QUANTITY } from "@/lib/commerce/cart";
 import type { Product, Size } from "@/lib/catalog/types";
+import { STORE_OPEN } from "@/lib/commerce/state";
 
 export default function BuyPanel({ product }: { product: Product }) {
   const { add } = useCart();
@@ -63,34 +64,82 @@ export default function BuyPanel({ product }: { product: Product }) {
 
   if (!buyable) {
     const soldOut = availability === "sold-out";
-    return (
-      <div className="border-t border-ink pt-6">
-        {/* "Archived", not "Sold out" — the run closed, and the piece is now
-            part of the record rather than a gap where a purchase was. The
-            copy below already had the right tone; only the headline was still
-            framing a finished run as the visitor's loss. */}
-        <p className="type-display-3 uppercase">
-          {soldOut ? "Archived" : "Not out yet"}
-        </p>
-        <p className="type-meta mt-3 text-ink-faint">
-          {drop?.name}
-          {soldOut && run.made > 0 ? (
-            <>
-              <span className="mx-3" aria-hidden="true">
-                /
-              </span>
-              <span className="num">{run.made}</span> made
-            </>
-          ) : null}
-        </p>
+    const upcoming = availability === "coming-soon";
 
-        <p className="type-body mt-5 text-ink-muted">
-          {soldOut
-            ? run.neverRestocked
-              ? "That run is finished and this piece will not be remade. Thank you — it went faster than expected."
-              : "That run is finished. If it comes back it will be in a later drop, and it may not be identical."
-            : "This piece is still being sampled. It goes on sale when the fit is right, not on a schedule."}
-        </p>
+    // THREE REASONS A PIECE CANNOT BE BOUGHT, AND THEY ARE NOT THE SAME THING.
+    // Two belong to the garment — the run is gone, or it has not been released
+    // — and one belongs to the storefront: no payment provider is connected,
+    // so nothing at all can be bought yet. That last case used to be invisible
+    // here and was disclosed for the first time at the top of `/checkout`,
+    // after the visitor had chosen a size and filled a bag. It is stated where
+    // the purchase would have been made instead.
+    // A HEADLINE ONLY WHERE THE GARMENT IS THE REASON.
+    // Sold out and coming soon are facts about this piece, and they belong at
+    // display scale because they are the answer to the question the visitor
+    // came with. The shop being shut is a fact about the storefront, and set
+    // in the same type it out-shouted the garment on every product page —
+    // "LAUNCHING SOON" twice the size of the name of the thing being looked
+    // at. It is stated once, quietly, beside the control it replaces.
+    const headline = soldOut ? "Sold out" : upcoming ? "Coming soon" : null;
+
+    const body = soldOut
+      ? run.neverRestocked
+        ? "That run is finished and this piece will not be remade."
+        : "That run is finished. If it returns it will be in a later drop, and it may not be identical."
+      : upcoming
+        ? `Announced for ${NEXT_DROP?.name ?? "the next drop"}. Dated when the release is set.`
+        : null;
+
+    // The panel's own rule belongs to the headline. With no headline the sizes
+    // block below supplies the first rule, and keeping both drew two hairlines
+    // with an empty band between them.
+    return (
+      <div className={headline ? "border-t border-ink pt-6" : ""}>
+        {headline ? (
+          <>
+            <p className="type-display-3 uppercase">{headline}</p>
+            <p className="type-meta mt-3 text-ink-faint">
+              {drop?.name}
+              {soldOut && run.made > 0 ? (
+                <>
+                  <span className="mx-3" aria-hidden="true">
+                    /
+                  </span>
+                  <span className="num">{run.made}</span> made
+                </>
+              ) : null}
+            </p>
+          </>
+        ) : null}
+        {body ? <p className="type-body mt-5 text-ink-muted">{body}</p> : null}
+
+        {/* Sizes are still worth showing on a piece nobody can buy — they are
+            what the piece was cut in, and a shopper reads them to know whether
+            it comes in theirs. As plain text rather than as radios: a control
+            that cannot be acted on is chrome. Struck through where the size is
+            gone, which is a fact about the run rather than about the store. */}
+        {product.variants.length > 1 ? (
+          <div
+            className={`border-rule pt-5 ${headline || body ? "mt-8 border-t" : "border-t border-ink"}`}
+          >
+            <p className="type-meta text-ink-faint">Cut in</p>
+            <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+              {product.variants.map((variant) => (
+                <li
+                  key={variant.sku}
+                  className={`type-meta ${
+                    variant.inventory > 0 ? "text-ink" : "text-ink-faint line-through"
+                  }`}
+                >
+                  {variant.size}
+                  {variant.inventory > 0 ? null : (
+                    <span className="visually-hidden"> — sold out</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-8 flex items-center gap-3">
           <SaveButton
@@ -101,10 +150,17 @@ export default function BuyPanel({ product }: { product: Product }) {
           <span className="type-meta text-ink-faint">Save it</span>
         </div>
 
-        {/* A finished run is the most common dead end on the site, and it used
-            to end on a heart. The way on is the rest of the run it came from
-            and — only when one actually exists in the data — the drop being
-            built. Neither promises this piece back. */}
+        {/* Said once, plainly, where the add-to-bag would be. No provider
+            names, no roadmap, no apology. */}
+        {!STORE_OPEN && !soldOut && !upcoming ? (
+          <p className="type-meta mt-6 text-ink-faint">
+            The shop is not open yet.
+          </p>
+        ) : null}
+
+        {/* The way on is the rest of the release it came from, and the next
+            one when the data actually names one. Neither promises this piece
+            back. */}
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-rule pt-5">
           <Link
             href={`/shop?drop=${drop?.slug ?? ""}`}
@@ -112,12 +168,33 @@ export default function BuyPanel({ product }: { product: Product }) {
           >
             The rest of {drop?.name ?? "the drop"}
           </Link>
-          {NEXT_DROP ? (
+          {NEXT_DROP && drop?.id !== NEXT_DROP.id ? (
             <Link href="/drop" className="link-rule link-rule-reveal">
-              {NEXT_DROP.name}, in development
+              {NEXT_DROP.name}, coming next
             </Link>
           ) : null}
         </div>
+
+        {sizingKey ? (
+          <p className="type-meta mt-6">
+            <button
+              type="button"
+              onClick={() => setGuideOpen(true)}
+              className="link-rule link-rule-reveal -my-2 py-2"
+            >
+              Size guide
+            </button>
+          </p>
+        ) : null}
+        {sizingKey ? (
+          <SizeGuideModal
+            open={guideOpen}
+            onClose={() => setGuideOpen(false)}
+            tableKey={sizingKey}
+            fitNote={fitNote(product)}
+            piece={pieceTable(product)}
+          />
+        ) : null}
       </div>
     );
   }

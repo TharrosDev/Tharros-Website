@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
     return [
       // The drop page moved from /new when the site shifted to a drop model.
       { source: "/new", destination: "/drop", permanent: true },
+      // `/archive` became `/releases`: the page indexes every piece the label
+      // has released, including ones still on sale, and calling that an
+      // archive contradicted the stock label of the same name.
+      { source: "/archive", destination: "/releases", permanent: true },
+      { source: "/archive/:ref", destination: "/releases/:ref", permanent: true },
     ];
   },
 

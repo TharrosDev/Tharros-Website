@@ -19,10 +19,13 @@ export default function WishlistView() {
     // about to get the real answer a frame later and must not see this.
     return (
       <div className="min-h-[40svh]">
+        {/* The list is read from this browser's own storage, so there is
+            nothing to render without scripting. How that storage works is a
+            privacy-policy fact, not an empty state — it used to be four lines
+            of implementation detail under a heading reading "Saved". */}
         <noscript>
           <p className="type-body text-ink-muted">
-            Saved pieces are kept in this browser rather than in an account, so
-            this list needs JavaScript to read them back.
+            Saved pieces need JavaScript to read back.
           </p>
         </noscript>
       </div>
@@ -33,10 +36,10 @@ export default function WishlistView() {
     return (
       <EmptyState
         className="min-h-[40svh]"
-        title="Nothing saved."
-        body="Tap the heart on any piece to keep it here. Saved pieces stay on this device — there is no account to sync them to yet."
-        action={{ href: "/shop", label: "Shop the drop" }}
-        secondary={{ href: "/archive", label: "Open the archive" }}
+        title="Nothing saved yet."
+        body="Save pieces you want to come back to."
+        action={{ href: "/shop", label: "Shop all" }}
+        secondary={{ href: "/drop", label: "The current drop" }}
       />
     );
   }

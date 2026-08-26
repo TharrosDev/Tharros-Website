@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import Link from "next/link";
 import ImageSlot from "@/components/media/ImageSlot";
 import Reveal from "@/components/ui/Reveal";
@@ -7,19 +6,20 @@ import Parallax from "@/components/motion/Parallax";
 import PageIntro from "@/components/layout/PageIntro";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { PAGE_FRAMES } from "@/lib/catalog/images";
-import { SITE_URL } from "@/lib/site";
+import { BRAND_LINE, SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
+
+const SUMMARY =
+  "THARROS is an independent streetwear label. Heavyweight cloth, wide silhouettes and restrained graphics, released in numbered drops.";
 
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "THARROS is an independent streetwear label, designed, patterned and sampled in-house and released in small runs.",
+  description: SUMMARY,
   alternates: { canonical: "/about" },
   openGraph: {
     type: "article",
     title: "About THARROS",
-    description:
-      "An independent streetwear label, designed, patterned and sampled in-house and released in small runs.",
+    description: SUMMARY,
     url: `${SITE_URL}/about`,
   },
 };
@@ -42,45 +42,54 @@ const structuredData = {
   ],
 };
 
+/**
+ * A LABEL STATEMENT. NOT A FOUNDER'S RETROSPECTIVE.
+ *
+ * This page was the strongest carrier of the positioning the site has dropped.
+ * It ran five chapters — "What this is", "How it is made", "Learning in
+ * public", "Why the runs are small", "Where it goes" — under the title "Built
+ * from the ground up", and three of the five were about manufacturing: a
+ * one-room operation, patterns and samples worn until their faults showed,
+ * sewing and grading being learned rather than outsourced, runs kept small
+ * because that is how much can currently be made well, and bigger runs promised
+ * as the making improved. Its own opening image was pattern paper and a tape
+ * measure.
+ *
+ * Four sections now, and every one of them is about the clothes: what they are,
+ * how they are cut, what the name means, and how they come out. Nothing has
+ * been invented to replace what was removed — no movement, no mythology, no
+ * ethics claim the label has not earned. Where there is nothing to say, the
+ * page is shorter instead.
+ */
 const CHAPTERS = [
   {
     index: "02",
-    title: "What this is",
+    title: "The clothes",
     body: [
-      "THARROS is an independent clothing label. Not a studio with a factory behind it — a small operation where the designing, patterning and sampling happen in one room, and a run of twenty is a real number rather than a marketing device.",
-      "The name is Greek: θάρρος, courage. It is on the label because putting something you made in front of people is the part that takes nerve.",
+      "Heavyweight jersey, brushed fleece, cotton canvas. Cut wide through the chest and shoulder, shortened through the body, with hems and cuffs ribbed tight enough to keep the volume where it was put. The weight is the point: the cloth stands away from you instead of falling against you, and the silhouette holds its shape through a day of wear.",
+      "Graphics are set large or left off. Black, off white, bone, faded black — colour comes from what you put the piece with, not from the piece.",
     ],
   },
   {
     index: "03",
-    title: "How it is made",
+    title: "The name",
     body: [
-      "Each piece starts as a shape worth arguing about, becomes a pattern, then a sample that gets worn until its faults show. Most of the work is in the second and third attempt: the shoulder that sat wrong, the hem two centimetres too long, the fabric that looked right and moved badly.",
-      "What survives that gets made in a short run. What does not gets cut up and used to make the next pattern.",
+      "θάρρος. Greek, and it means courage — the ordinary kind, the sort it takes to walk out of the door in something.",
     ],
   },
   {
     index: "04",
-    title: "Learning in public",
+    title: "Drops",
     body: [
-      "The craft is being built alongside the label. Sewing, construction, grading, fit — these are being learned properly rather than outsourced and forgotten, and each drop is measurably better made than the one before it.",
-      "That is not a disclaimer. It is the most interesting thing about a young label: you can watch it get good.",
+      "The line is released in numbered drops rather than seasons. A drop is a small, dated set of pieces, made in a short run, and it closes when the run is gone.",
+      `${BRAND_LINE} A piece that sells through may return in a later drop, changed, or it may not return at all — every product page says which.`,
     ],
   },
   {
     index: "05",
-    title: "Why the runs are small",
+    title: "What it is for",
     body: [
-      "Because that is genuinely how much can be made well right now. Not to manufacture urgency, and not to imply exclusivity that has not been earned.",
-      "Every product page prints how many were made and how many are left. When a size is gone it is gone, and the site says so plainly instead of dressing it up.",
-    ],
-  },
-  {
-    index: "06",
-    title: "Where it goes",
-    body: [
-      "Drops get bigger as the making gets better. More pieces, more ambitious construction, fabric chosen rather than settled for.",
-      "The ambition is not small. The current operation is. Both of those things are true at once, and the site is not going to pretend otherwise.",
+      "A wardrobe of a few heavy, well-proportioned things that work together and keep working. Not a catalogue. Not a season. A set of clothes that look like they came from the same eye.",
     ],
   },
 ];
@@ -95,10 +104,13 @@ export default function AboutPage() {
 
       <PageIntro
         index="01"
-        label="The label"
-        title="Built from the ground up."
+        label="About"
+        /* Not "THARROS". The wordmark sits centred in the header, the
+           breadcrumb repeats the page title, and an h1 of the same word put
+           the brand name three times in the top 200px of its own page. */
+        title="The label"
         split
-        lead="An independent streetwear label, designed, patterned and sampled in-house and released in numbers small enough to count."
+        lead={SUMMARY}
         crumbs={[{ name: "Home", href: "/" }]}
       />
 
@@ -107,41 +119,19 @@ export default function AboutPage() {
           image={PAGE_FRAMES["ABT-01"]!}
           ratioSm="editorial"
           sizes="100vw"
+          priority
         />
       </Reveal>
 
       <div className="page-frame rhythm-default">
-        {/* The chapters used to sit at an identical indent, which turned the
-            page into one long ladder of the same shape repeated five times.
-            The label sits in its own column beside the prose instead, so the
-            mono index and the text form a spread rather than a stack — and the
-            first chapter runs wider than the rest, giving the sequence a
-            beginning instead of five equal steps. */}
+        {/* The label sits in its own column beside the prose, so the mono index
+            and the text form a spread rather than a stack — and the first
+            chapter runs wider than the rest, giving the sequence a beginning
+            instead of four equal steps. */}
         <div className="grid gap-x-12 gap-y-20 lg:grid-cols-12">
           {CHAPTERS.map((chapter, index) => (
-            <Fragment key={chapter.index}>
-              {/* One picture partway down, so a page of five prose chapters has
-                  somewhere to breathe — and so the label's own page shows the
-                  people it keeps talking about. */}
-              {index === 3 ? (
-                <Reveal
-                  mode="frame"
-                  className="lg:col-span-10 lg:col-start-2"
-                >
-                  <ImageSlot
-                    image={PAGE_FRAMES["ABT-02"]!}
-                    ratioSm="editorial"
-                    sizes="(min-width: 1024px) min(80vw, 1160px), 100vw"
-                  />
-                </Reveal>
-              ) : null}
-
-              {/* The chapter title is a real h2. Five numbered chapters used to
-                  carry their titles inside a mono eyebrow, so the label's own
-                  page had one heading in it. And the rule is drawn by the
-                  element that reveals — on a child it is static, which is what
-                  it was. */}
               <section
+                key={chapter.index}
                 className={
                   index === 0
                     ? "lg:col-span-11 lg:col-start-2"
@@ -149,12 +139,9 @@ export default function AboutPage() {
                 }
               >
                 <div className="grid gap-x-10 gap-y-6 md:grid-cols-12">
+                  {/* The rule is drawn by the element that reveals — on a
+                      child it is a correct but static border. */}
                   <Reveal className="rule-draw pt-4 md:col-span-3">
-                    {/* The chapter numeral and its title drift against the
-                        prose beside them — the shallowest rung, because this
-                        column is read rather than looked at. Same gesture the
-                        information set uses, so About and the support pages
-                        move the same way. */}
                     <Parallax depth="background">
                       <p className="eyebrow">
                         <span className="num">{chapter.index}</span>
@@ -178,7 +165,6 @@ export default function AboutPage() {
                   </Reveal>
                 </div>
               </section>
-            </Fragment>
           ))}
         </div>
       </div>
@@ -190,8 +176,8 @@ export default function AboutPage() {
             <Link href="/drop" className="btn btn-solid">
               See the current drop
             </Link>
-            <Link href="/archive" className="btn btn-outline">
-              Open the archive
+            <Link href="/shop" className="btn btn-outline">
+              All pieces
             </Link>
           </div>
         </div>

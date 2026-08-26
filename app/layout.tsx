@@ -9,6 +9,7 @@ import MotionRuntime from "@/components/motion/MotionRuntime";
 import RouteCurtain from "@/components/motion/RouteCurtain";
 import EntrySequence from "@/components/motion/EntrySequence";
 import CartDrawer from "@/components/commerce/CartDrawer";
+import { STORE_OPEN } from "@/lib/commerce/state";
 import {
   BRAND,
   BRAND_LINE,
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
     template: `%s | ${BRAND}`,
   },
   description:
-    "THARROS is an independent streetwear label making small runs of original pieces. Designed, patterned and sampled in-house. Shop Drop 001.",
+    "THARROS is an independent streetwear label. Heavyweight cloth, wide silhouettes and restrained graphics, released in limited numbered drops.",
   keywords: [
     "THARROS",
     "independent streetwear",
@@ -204,7 +205,14 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <CartDrawer />
+          {/* The bag drawer is mounted only while the shop can take an
+              order. With no payment provider connected nothing is
+              purchasable, so the drawer could only ever have been an empty
+              panel behind a permanently empty control — and the Checkout
+              button inside it was the first half of a flow that ended in an
+              email. `CartProvider` still runs and the component is untouched;
+              flipping `STORE_OPEN` brings both back. */}
+          {STORE_OPEN ? <CartDrawer /> : null}
         </Providers>
         <Analytics />
       </body>

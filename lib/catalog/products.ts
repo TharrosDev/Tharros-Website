@@ -30,12 +30,15 @@ function sized(code: string, stock: Partial<Record<Size, number>>): Variant[] {
 /**
  * The shot list every piece is planned to have.
  *
- * These are declared, not taken — like the four before them, they name frames
- * the shoot is meant to produce so the layouts can be built against a real set
- * rather than a guess. Order here is authoring order only: what the site
- * actually shows is decided by the ladder in `lib/catalog/images.ts`, so a
- * piece that ends up with three of these frames instead of six still renders
- * correctly.
+ * These are declared, not taken — they name the frames the shoot is meant to
+ * produce so the layouts can be built against a real set rather than a guess.
+ * Order here is authoring order only: what the site actually shows is decided
+ * by the ladder in `lib/catalog/images.ts`, so a piece that ends up with three
+ * of these frames instead of six still renders correctly.
+ *
+ * The alt text describes the photograph, not the state of the shoot. Anything
+ * about what has and has not been shot is a note for this repository and is
+ * never allowed into an accessible name, a caption or a metadata field.
  */
 function shots(code: string, name: string): Product["images"] {
   return [
@@ -65,7 +68,7 @@ export const PRODUCTS: Product[] = [
     slug: "core-tee",
     description: "The foundation piece. Heavyweight cotton, boxy through the body.",
     story:
-      "The first pattern that felt finished. Cut wide through the chest and shoulder with a shortened body, so it holds its shape instead of draping. The wordmark sits small at the left chest — the point is the silhouette, not the branding. Three fits were made before this one; the other two were too long.",
+      "Heavyweight jersey with enough body to stand away from you. Cut wide through the chest and shoulder with a shortened hem, so it holds a square line instead of draping. The wordmark sits small at the left chest — the silhouette is the point, not the branding. Wears clean on its own and layers under the Work Jacket without bunching.",
     price: 7000,
     category: "t-shirts",
     drop: "drop-001",
@@ -88,7 +91,7 @@ export const PRODUCTS: Product[] = [
     slug: "noise-silence-tee",
     description: "Full-back graphic. Oversized cut, heavy hand-feel print.",
     story:
-      "Two words, front and back, set at scale. NOISE across the chest, SILENCE across the back — the same garment read differently depending on which way you are walking. Printed heavy so the graphic sits on the fabric rather than in it.",
+      "Two words, front and back, set at scale. NOISE across the chest, SILENCE across the back — the same garment reads differently depending on which way you are walking. Printed heavy, so the graphic sits on the fabric with a hand you can feel rather than soaking into it. Cut long and wide; size down if you want it to sit closer.",
     price: 7500,
     category: "t-shirts",
     drop: "drop-001",
@@ -111,7 +114,7 @@ export const PRODUCTS: Product[] = [
     slug: "arc-hoodie",
     description: "Heavyweight fleece with a double-layer hood.",
     story:
-      "Built dense enough to hold structure through the hood and shoulder. The arc graphic runs low across the back, breaking at the side seams. Cuffs and hem are ribbed tight so the body keeps its volume. The heaviest thing in the drop, and the one that took the most sampling.",
+      "The heaviest piece in the drop. Brushed-back fleece dense enough to hold structure through the hood and the shoulder, so the hood stands rather than collapses. The arc graphic runs low across the back and breaks at the side seams. Cuffs and hem are ribbed tight, which is what keeps the volume in the body instead of letting it hang.",
     price: 18000,
     category: "hoodies",
     drop: "drop-001",
@@ -134,7 +137,7 @@ export const PRODUCTS: Product[] = [
     slug: "monument-crewneck",
     description: "Structured crewneck with a raised chest hit.",
     story:
-      "A crewneck with weight to it. Raised chest graphic, ribbing carried through the collar, cuff and hem so it holds a clean line under outerwear.",
+      "A crewneck with real weight to it. Loopback cotton, a raised chest hit you can feel with a thumb, and ribbing carried through the collar, cuff and hem so it keeps a clean line under a jacket rather than rucking up at the waist.",
     price: 15000,
     category: "sweatshirts",
     drop: "drop-001",
@@ -157,7 +160,7 @@ export const PRODUCTS: Product[] = [
     slug: "utility-cargo-pant",
     description: "Wide leg, articulated knee, six pockets.",
     story:
-      "Cut wide from the hip with an articulated knee so the leg stacks properly over a boot. Pockets are placed to carry weight without pulling the silhouette out of shape. The hardest pattern in the drop and the one most likely to change next time.",
+      "Cut wide from the hip with an articulated knee, so the leg breaks once and stacks over a boot instead of pooling. Six pockets, placed to carry weight without dragging the silhouette out of shape, and a drawcord at the hem to close the leg down when you want it narrower.",
     price: 19000,
     category: "pants",
     drop: "drop-001",
@@ -180,7 +183,7 @@ export const PRODUCTS: Product[] = [
     slug: "logo-cap",
     description: "Unstructured six-panel with a low embroidered wordmark.",
     story:
-      "Unstructured so it collapses flat and sits low. The wordmark is embroidered small on the front panel and repeated on the back strap.",
+      "Unstructured, so it collapses flat in a pocket and sits low on the head rather than standing off it. Cotton twill, six panels, the wordmark embroidered small on the front and repeated on the back strap.",
     price: 6000,
     category: "accessories",
     drop: "drop-001",
@@ -203,7 +206,7 @@ export const PRODUCTS: Product[] = [
     slug: "work-jacket",
     description: "Boxy cotton canvas with a four-pocket front.",
     story:
-      "Built on a workwear pattern and squared off through the body. The canvas starts stiff and breaks in with wear, holding the shape of whoever wears it. Twelve were made and twelve went out — the pattern is being reworked for a later drop.",
+      "A workwear shape squared off through the body, with four pockets across the front and corozo buttons up the placket. The canvas starts stiff and breaks in with wear, so it ends up holding the shape of whoever wore it. Boxy enough to go over the Arc Hoodie.",
     price: 30000,
     category: "outerwear",
     drop: "drop-001",
@@ -221,14 +224,14 @@ export const PRODUCTS: Product[] = [
     releasedAt: "2026-05-02",
   },
 
-  // — Drop 002: patterned and sampled, not released ————————————————
+  // — Drop 002: announced, not released ————————————————————————————
   {
     id: "shell-jacket-01",
     name: "Shell Jacket 01",
     slug: "shell-jacket-01",
     description: "Technical outer layer. Taped seams, storm hood.",
     story:
-      "The first piece cut for Drop 002 and the most technical thing attempted so far. Oversized to layer over the Arc Hoodie, with a storm hood that holds its shape and a hem that sits below the seat. Currently on its second sample.",
+      "A technical outer layer, cut oversized to go over the Arc Hoodie without pulling across the back. Taped seams, a two-way zip, a storm hood that holds its shape in wind, and a hem that sits below the seat.",
     price: 34000,
     category: "outerwear",
     drop: "drop-002",
@@ -255,7 +258,7 @@ export const PRODUCTS: Product[] = [
     slug: "ribbed-beanie",
     description: "Fine-gauge rib with a woven label at the cuff.",
     story:
-      "Knitted long so it can be worn cuffed short or pulled down. Label sits on the cuff, visible either way. Sampled and approved; waiting on the rest of Drop 002.",
+      "Fine-gauge rib, knitted long so it can be cuffed short or pulled down over the ears. The woven label sits on the cuff and stays visible either way.",
     price: 5500,
     category: "accessories",
     drop: "drop-002",

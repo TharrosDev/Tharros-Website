@@ -13,10 +13,10 @@ test.describe("the index overlay", () => {
     await expect(index).toBeVisible();
     await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
 
-    // The row is numbered, so the accessible name is "03 Archive".
-    await index.getByRole("link", { name: /Archive$/ }).click();
+    // The row is numbered, so the accessible name is "03 Releases".
+    await index.getByRole("link", { name: /Releases$/ }).click();
 
-    await expect(page).toHaveURL(/\/archive$/);
+    await expect(page).toHaveURL(/\/releases$/);
     // A menu still open over the page it just navigated to is the commonest
     // overlay bug there is.
     await expect(index).toBeHidden();

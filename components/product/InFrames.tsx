@@ -13,7 +13,7 @@ import type { FeaturedFrame } from "@/lib/catalog/queries";
  * it is also the honest way out of a product page — toward the drop the piece
  * belongs to rather than toward another product card.
  *
- * A rail rather than a grid, matching `OnBody`: these are frames from one
+ * A rail rather than a grid: these are frames from one
  * session and reading them in sequence is how they were made.
  */
 export default function InFrames({

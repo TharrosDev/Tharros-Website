@@ -121,7 +121,15 @@ export default function FillerImage({ image, sizes = "100vw", priority = false, 
   return (
     <Image
       src={`/filler/${scene}-${n}.jpg`}
-      alt={`${image.alt} — stand-in photograph, THARROS photography pending`}
+      // THE ALT TEXT DESCRIBES THE PICTURE, AND NOTHING ELSE.
+      // It used to append "— stand-in photograph, THARROS photography
+      // pending", which put a note about this repository's build state into
+      // the accessible name of every frame on the site: read aloud by a screen
+      // reader, indexed by a search engine, and quoted in a share card. Which
+      // slots are photographed is a fact the repository keeps — in this file,
+      // in `docs/PHOTOGRAPHY_PROMPT.md` and in `photography.test.ts`, all of
+      // which are read by people working on the site rather than by customers.
+      alt={image.alt}
       fill
       sizes={sizes}
       priority={priority}

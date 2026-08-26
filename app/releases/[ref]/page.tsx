@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ProductGallery from "@/components/product/ProductGallery";
 import SectionHeading from "@/components/ui/SectionHeading";
-import ArchiveLedger from "@/components/archive/ArchiveLedger";
+import ReleaseLedger from "@/components/releases/ReleaseLedger";
 import {
   allArchiveRefs,
   archiveEntries,
@@ -12,7 +12,8 @@ import {
   getArchiveEntry,
 } from "@/lib/catalog/archive";
 import { categoryName } from "@/lib/catalog/categories";
-import { galleryImages, isPurchasable } from "@/lib/catalog/queries";
+import { galleryImages } from "@/lib/catalog/queries";
+import { STORE_OPEN } from "@/lib/commerce/state";
 import { formatDate, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
@@ -31,12 +32,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: `${entry.garmentId} — ${entry.product.name}`,
     description: `${entry.product.name}. ${entry.made} made. ${entry.product.description}`,
-    alternates: { canonical: `/archive/${entry.ref}` },
+    alternates: { canonical: `/releases/${entry.ref}` },
     openGraph: {
       type: "website",
-      title: `${entry.garmentId} ${entry.product.name} — THARROS archive`,
+      title: `${entry.garmentId} ${entry.product.name} — THARROS`,
       description: entry.product.description,
-      url: `${SITE_URL}/archive/${entry.ref}`,
+      url: `${SITE_URL}/releases/${entry.ref}`,
     },
   };
 }
@@ -59,14 +60,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
  * selector, no logistics — and the run figures sit at the top of the column,
  * because they are what a record is about.
  */
-export default async function ArchiveRecordPage({ params }: { params: Params }) {
+export default async function ReleaseRecordPage({ params }: { params: Params }) {
   const { ref } = await params;
   const entry = getArchiveEntry(ref);
   if (!entry) notFound();
 
   const { product, drop } = entry;
   const frames = galleryImages(product);
-  const buyable = isPurchasable(product);
   const others = archiveEntries()
     .filter((e) => e.garmentId !== entry.garmentId)
     .slice(0, 4);
@@ -76,8 +76,8 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
     "@graph": [
       breadcrumbList(SITE_URL, [
         { name: "Home", path: "/" },
-        { name: "Archive", path: "/archive" },
-        { name: entry.garmentId, path: `/archive/${entry.ref}` },
+        { name: "Releases", path: "/releases" },
+        { name: entry.garmentId, path: `/releases/${entry.ref}` },
       ]),
     ],
   };
@@ -94,7 +94,7 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
           <Breadcrumbs
             trail={[
               { name: "Home", href: "/" },
-              { name: "Archive", href: "/archive" },
+              { name: "Releases", href: "/releases" },
             ]}
             current={entry.garmentId}
           />
@@ -137,10 +137,10 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
               </div>
               <div>
                 <dt className="type-meta text-ink-faint">
-                  {entry.state === "archived" ? "Remaining" : "Available"}
+                  {entry.state === "closed" ? "Remaining" : "Available"}
                 </dt>
                 <dd
-                  className={`num type-mono-3 mt-2 ${entry.state === "archived" ? "text-signal" : ""}`}
+                  className={`num type-mono-3 mt-2 ${entry.state === "closed" ? "text-signal" : ""}`}
                 >
                   {entry.remaining}
                 </dd>
@@ -185,11 +185,15 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
             {/* The one commercial line on the page, and it is a text link. If
                 the run is closed there is nothing to link to and nothing is
                 said. */}
-            {buyable ? (
+            {/* The one commercial line, and it follows the storefront: while
+                the shop cannot take payment it points at the piece rather than
+                promising a purchase. `open` is stock, `STORE_OPEN` is the
+                store — a closed run is not for sale either way. */}
+            {entry.state === "available" ? (
               <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4">
                 <p className="type-meta text-ink-faint">This run is still open.</p>
                 <Link href={`/shop/${product.slug}`} className="link-rule link-rule-reveal">
-                  Buy this piece
+                  {STORE_OPEN ? "Buy this piece" : "See this piece"}
                 </Link>
               </div>
             ) : null}
@@ -200,11 +204,11 @@ export default async function ArchiveRecordPage({ params }: { params: Params }) 
           <div className="page-frame rhythm-tight">
             <SectionHeading
               index="01"
-              label="The record"
-              title="Elsewhere in the archive."
-              action={{ href: "/archive", label: "All garments" }}
+              label="The index"
+              title="Elsewhere in the index."
+              action={{ href: "/releases", label: "All releases" }}
             />
-            <ArchiveLedger entries={others} />
+            <ReleaseLedger entries={others} />
           </div>
         ) : null}
       </article>

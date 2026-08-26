@@ -50,10 +50,17 @@ image with a different take rather than moving on.
 
 ### The brand
 
-THARROS is a small independent streetwear label. It designs, patterns and samples in-house
-and releases numbered drops of a few pieces in short runs. The line is "Small runs.
-Original ideas." It is not a department store and not a hype brand. The tone is quiet
-confidence: a small label that knows what it made.
+THARROS is a small independent streetwear label: heavyweight cloth, wide silhouettes and
+restrained graphics, released in numbered drops of a few pieces in short runs. The line is
+"Small runs. Original ideas." It is not a department store and not a hype brand. The tone
+is quiet confidence: a small label that knows what its clothes look like.
+
+**Photograph the clothes and the people in them. Not the making of them.** Three frames in
+the original set were work-table studies — pattern paper, chalk lines, pins, a part-sewn
+sample — and they are no longer used anywhere on the site, because the site no longer
+tells the story of its own manufacture. Nothing in the queue below asks for a workshop
+again. If a frame's subject is a process rather than a garment or a person, it does not
+belong in this set.
 
 ### The visual system — this is the part that matters most
 
@@ -61,7 +68,7 @@ Every frame must look like it came from the same day, the same photographer and 
 camera as the others.
 
 - **Light.** Soft directional daylight, as if from a large window or an overcast sky just
-  out of frame. One source. Gentle falloff, no hard rim light, no studio strobe look, no
+  out of frame. One source. Gentle falloff, no hard rim light, no strobe look, no
   colour gels.
 - **Colour.** Warm neutrals only — plaster, bone, ash, concrete, faded black, off-white.
   Ungraded and natural, not filtered, not teal-and-orange, not desaturated to grey. The
@@ -126,12 +133,11 @@ it should read as a group of clothes existing in a place, not as a fashion adver
 Held as the drop's cover, which today is a fallback rather than a rendered frame — see the
 note under Session 1 above.
 
-**5. `drop-002-cover.png`** — Landscape 1536×1024. A close, quiet detail of work in
-progress: black cotton canvas partly cut, a tailor's chalk line across it, a few pins.
-Shot from directly above on a pale worn work table. No hands, no face. This stands for a
-drop that is still being sampled, so it should look unfinished. Rendered in an upright
-frame on `/drop`, so the middle of the picture is what survives — keep the chalk line and
-the pins near the centre.
+**5. ~~`drop-002-cover.png`~~ — WITHDRAWN.** This was a work table with partly cut canvas,
+a chalk line and pins: a picture of a drop being made, standing in for a drop. `/drop` and
+the home page preview Drop 002 through the two pieces announced for it instead, and
+`Drop.cover` is optional so an unshot release simply carries no cover. Shoot this slot only
+when there are garments to photograph.
 
 The four `nav-*` frames are NOT thumbnails. Each one fills a tall panel down the right of
 the full-screen menu — roughly half the window wide and its whole height — with the menu's
@@ -147,7 +153,8 @@ down, standing against a concrete wall in soft daylight, hands in the front pock
 and more frontal than image 6 so the two thumbnails do not read as the same picture. Safe
 area: crops to a tall 2:3.
 
-**8. `nav-archive.png`** — Portrait 1024×1536. A very close study of cloth: the ribbed cuff
+**8. `nav-archive.png`** — Portrait 1024×1536. (Keyed to `/releases`; the file name is
+kept so nothing has to be re-exported.) A very close study of cloth: the ribbed cuff
 and sleeve seam of a black heavyweight fleece, raking daylight across it so the texture of
 the knit and the stitch line are the whole subject. No garment shape, no person. Safe area:
 crops to 3:4.
@@ -156,12 +163,11 @@ crops to 3:4.
 away down an empty street of plain low buildings, wearing the Work Jacket. Overcast. The
 street is most of the frame. Safe area: crops to a tall 2:3.
 
-**10. `abt-01.png`** — Landscape 1536×1024. A work table seen from above: paper pattern
-pieces weighted flat, a part-sewn black sample garment, a folded length of cotton canvas, a
-tape measure. Ordinary, in use, not styled. Soft daylight from the left. **This one is
-cropped hardest — a 21:9 letterbox on desktop and a 4:5 upright on mobile.** So: fill the
-frame edge to edge with table, and keep the three or four things that matter clustered in
-the middle third, both horizontally and vertically.
+**10. ~~`abt-01.png`~~ — WITHDRAWN.** A work table from above with pattern pieces, a
+part-sewn sample and a tape measure. It opened `/about`, which is now a statement about the
+clothes rather than about how they are made, and the page leads on image 11 instead. The
+`ABT-01` slot still exists in `lib/catalog/images.ts` and points at image 11's file; a
+replacement, if one is ever shot, should be a garment or a figure.
 
 **11. `abt-02.png`** — Landscape 1536×1024. Two figures on a quiet street outside a plain
 industrial door, one in the Work Jacket and one in the Arc Hoodie, standing still, not
@@ -169,11 +175,10 @@ looking at the camera. This is the label's own page, so it should feel like the 
 work happens rather than a campaign. Safe area: crops to 16:9 on desktop and 4:5 on mobile
 — keep both figures inside the centre half of the width.
 
-**12. `prc-01.png`** — Landscape 1536×1024. A single paper pattern piece and a part-sewn
-black sample on a worn work table, shot low and along the surface rather than from above,
-so the table runs out of focus into the background. Quieter and closer than image 10 — the
-two must not look like the same photograph. **Also cropped to 21:9 on desktop and 4:5 on
-mobile**, so keep the subject in the middle third both ways.
+**12. ~~`prc-01.png`~~ — WITHDRAWN.** A pattern piece and a part-sewn sample on a work
+table. It was the picture in the home page's studio band, and that section — the six named
+stages of production under a wide workshop frame — no longer exists. Nothing renders this
+file.
 
 Confirm you have the brief, then generate image 1.
 

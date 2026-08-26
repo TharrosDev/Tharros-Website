@@ -41,11 +41,40 @@ The ecommerce site for **THARROS**, a small independent streetwear label. Next.j
 The brand name is always written **THARROS** in copy — never "Tharros Clothing" or
 "Tharros Apparel". The line is *"Small runs. Original ideas."*
 
-**Positioning.** THARROS is deliberately small: an independent label that designs,
-patterns and samples in-house and releases in numbered **drops** of a few pieces, made in
-short runs. Write it as that, not as a department store. Do not write copy implying
-inventory, teams, production, press, collaborations or history that does not exist — that
-one is a factual constraint, not a stylistic one.
+**Positioning.** THARROS is a small independent streetwear label defined by its clothes:
+heavyweight cloth, wide silhouettes, restrained graphics, campaign photography, and
+numbered **drops** of a few pieces in short runs. Write it as that, not as a department
+store. Do not write copy implying inventory, teams, production, press, collaborations or
+history that does not exist — that one is a factual constraint, not a stylistic one.
+
+**THE PROCESS NARRATIVE IS GONE, AND IT IS NOT TO COME BACK.** This is the largest change
+the site has had, so it is recorded here rather than left to be rediscovered.
+
+THARROS used to explain itself through how it was made. `/about` ran five chapters, three
+of them about manufacturing — a one-room operation, patterns and samples worn until their
+faults showed, sewing and grading being learned rather than outsourced, runs kept small
+because that was how much could be made well, bigger runs promised as the making improved.
+The home page carried a "The studio" band naming Idea / Pattern / Sample / Fit / Revision /
+Production under a photograph of a work table, and a ledger headed "Everything made so
+far". Product copy opened on how many fits came before this one. Drop 002 published its
+sample numbers. Every product card ended on `MADE 40 / LEFT 24`.
+
+All of it is removed. What replaced it is not another set of brand paragraphs — it is the
+garments, the campaign photography at the scale it was shot for, and a shorter page. The
+rule for new work: **the clothes are the subject; how they are made is not the pitch.**
+Garment construction is still legitimate product information (taped seams, a double-layer
+hood, ribbing through the trims). The target is process-as-brand-story.
+
+Small runs stay — the line "Small runs. Original ideas." is unchanged — but as a property
+of a release rather than an argument that needs defending. "Limited release. 40 units." is
+the whole claim. No paragraph about production capacity, warehouses, or why scarcity is
+not marketing.
+
+`docs/CONTENT_GUIDE.md` carries the voice rules and the prefer/over pairs.
+
+**Internal operational truth is not affected.** How the clothes are actually made, what is
+photographed, what is measured and what is wired up are facts this repository still keeps —
+in this file, in the data files, and in `docs/`. What changed is what the customer reads.
 
 **History:** until August 2026 this repo held a completely different site — a marketing
 site for an Ottawa AI agency (packages, pricing tiers, a Relevance AI chat demo, a
@@ -63,24 +92,32 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Area | State |
 |---|---|
 | Catalog, cart, sizes, inventory, wishlist, search, filtering, sorting | **Real and working** |
-| Checkout up to payment | **Real** — details, address, delivery, live totals |
-| Payment | **Not connected**, and said before it costs anyone effort: under `/checkout`'s intro, under the bag drawer's Checkout button, and beside the action itself. The flow is two steps rather than four, because a card-shaped walk to an email is three screens of theatre — the working action composes a `mailto:` from the resolved bag, the address and the delivery choice. There is no disabled pay button: a permanently dead primary control is chrome, and the panel above it states the situation in words. |
-| Accounts / sign-in | **Not connected.** `/account` states that once, then spends the page on what works without one — saved pieces and the email order. |
-| Newsletter signup | **Not connected.** The form validates, then says nothing was sent. |
+| Checkout up to payment | **Built and stood down** — `CheckoutFlow` still holds the working two-step flow (details, address, delivery, live totals). `/checkout` redirects to `/shop` while the store is shut. |
+| Payment | **Not connected**, and the whole storefront now derives from that one fact. See **The commerce state** below. |
+| Accounts / sign-in | **Not connected.** `/account` is unlinked and `noindex`, and says one sentence. Nothing in the header, the index overlay or the footer points at it. |
+| Newsletter signup | **Not connected.** `NEWSLETTER_CONNECTED` is false, so the footer offers a real `mailto:` instead of a form whose only outcome was a failure message. The form is still in `Newsletter.tsx` behind the flag and needs a POST target. |
 | Motion | **Real.** GSAP 3.15 (ScrollTrigger and SplitText — Flip was registered for a year and never called, so it is no longer loaded), dynamically imported so it never enters the shared chunk. Scene system in `components/motion/`, tokens in `lib/motion/config.ts`. See `DESIGN.md` §6 — especially the no-pinning rule and the no-hidden-HTML rule. |
 | Route transitions | **Real** — an ink plane that lifts off each new route (`RouteCurtain`). Cross-route *image continuity* is **not** built: it needs React's `ViewTransition`, which is not in stable React 19.2.4, and it cannot coexist with the curtain anyway. `DESIGN.md` §6 records why. |
 | Opening sequence | **Real**, on `/` only, once per session, CSS-driven so it clears without JavaScript. Armed in the head script, not in React. |
-| Site photography | **Thirteen frames shot**, in `public/photography` — the home hero (`CMP-001-HERO`), three campaign frames, both drop covers, the four index-overlay frames, two for `/about` and one for the studio band. Declared in `campaign.ts`, `drops.ts` and `images.ts` (`NAV_FRAMES`, `PAGE_FRAMES`). |
+| Site photography | **Thirteen frames shot, ten in use**, in `public/photography` — the home hero (`CMP-001-HERO`), three campaign frames, the Drop 001 cover, the four index-overlay frames and one for `/about`. Declared in `campaign.ts`, `drops.ts` and `images.ts` (`NAV_FRAMES`, `PAGE_FRAMES`). **Three are withdrawn and rendered nowhere:** `abt-01.jpg` and `prc-01.jpg` (pattern paper, a part-sewn sample, a work table) and `drop-002-cover.jpg` (cut canvas, a chalk line, pins) — all three are pictures of clothes being made, and the surfaces that carried them are gone. The files stay on disk; `docs/PHOTOGRAPHY_PROMPT.md` records why. |
 | Product photography | **Not shot yet.** All 54 product slots are pending, so every card, gallery and thumbnail is a stand-in. Session 2 of `docs/PHOTOGRAPHY_PROMPT.md` is the queue. A slot with no `src` renders a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout — `lib/catalog/photography.test.ts` fails if a `src` ever points into `public/filler`, or if the list of pending pieces stops matching the catalogue. |
-| Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere; `pieceTable()` returns null and the product page says the piece has not been measured. Filling them in is a data change — see `lib/catalog/sizing.ts`. |
+| Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere and `pieceTable()` returns null. **No empty table ships:** `/size-guide` renders the how-to-measure half only, the PDP accordion says "Measurements coming soon", and `SizeGuideModal` drops its table when every cell would be an em dash. The structure in `lib/catalog/sizing.ts` is unchanged, so filling in real figures is a data change that brings all three tables back. |
 | Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
-| Legal pages | **Working drafts**, marked as pending review. |
+| Legal pages | **Working drafts** under `/legal`, marked as such on the page and `noindex`, and absent from the sitemap. That admission belongs on the legal document and nowhere else — `/returns` used to carry it too, under a heading a customer opened for the returns policy. **They need human legal review before commerce launch.** |
+| Shipping rates | **Not confirmed.** `SHIPPING_RATES_CONFIRMED` in `lib/commerce/shipping.ts` is false, so `/shipping` names the delivery options without quoting their costs. A placeholder rate printed as a price with a disclaimer under it is still a price. |
 
 Four factual constraints follow from that table. They are about not asserting things that
 are untrue, so they hold regardless of how the site looks:
 
 - **Do not fake functionality.** No mock payment success, no fake order confirmation, no
   simulated sign-in.
+- **Do not narrate the unfinished parts to customers.** No public commentary about pending
+  photography, unconnected payment, missing measurements, provisional carrier contracts,
+  sign-in that is not live, or legal review. Handle an incomplete thing gracefully — a
+  shorter page, a cleaner empty state, a control that is absent rather than dead — and
+  record the blocker here, where the people who can fix it will read it. Internal notes
+  must never reach alt text, metadata, captions or accessible names: every image slot's
+  `alt` used to have "— stand-in photograph, THARROS photography pending" appended to it.
 - **Do not fabricate** reviews, testimonials, press, collaborations, customer counts,
   sustainability or manufacturing claims, founding history, or model measurements.
 - **Numbers come from the data.** Availability is derived in `resolveAvailability()`, and
@@ -88,6 +125,33 @@ are untrue, so they hold regardless of how the site looks:
   into copy — it drifts. (A "Nine pieces" line against a drop of seven is exactly how.)
 - **Only claim a restock policy the data states.** "Will not be remade" renders solely
   when `restock: "none"`.
+
+### The commerce state
+
+**One flag, `STORE_OPEN` in `lib/commerce/state.ts`, and everything derives from it.**
+
+The site used to hold two positions at once: a drop that was "out now", an add-to-bag on
+every card, a Checkout button in the drawer — and then a panel at the top of `/checkout`
+explaining that no card could be taken and the order would be composed into an email. A
+storefront that behaves as if it is live until the last screen is not honest about being
+pre-launch; the correction arrives after eight fields.
+
+While the flag is false:
+
+- `isPurchasable()` returns false for every piece, so every add-to-bag control, quick-add
+  strip and size selector on the site stands down at once. **This is the only place that
+  needs to change** — do not add a second check in a component.
+- `CartDrawer` is not mounted and the header carries no bag control.
+- `/checkout` redirects to `/shop`. `CheckoutFlow` is untouched.
+- Copy follows: "Shop the drop" is "See the pieces", "Out now" is the release date, and
+  the product page says "The shop is not open yet" once, quietly, where the buy control
+  would be.
+- `e2e/commerce.spec.ts` is `test.skip`ped on the same flag, and `routes.spec.ts` asserts
+  the opposite — that nothing offers a purchase. Both run off the import, so neither can
+  drift.
+
+Flip it to `true` **only when a payment provider is actually connected**, and the whole
+purchase path comes back.
 
 How the pending state *looks* — whether a stand-in is drawn or bare, whether an unwired
 form says so loudly or quietly, whether a placeholder is framed or plain — is a design
@@ -99,16 +163,16 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → The run → Statement → The studio → The people → The archive → Next drop. The hero is `88/92svh`, not full — *the run* peeks under it. (The detail frame that used to hang across the join is gone, at the owner's direction.) 02 is type only and one sentence, 03 is one landscape band plus the studio stages named on a rule, and 04 is a single campaign frame that links to `/drop` — see the page's own docblock. |
+| `/` | `app/page.tsx` | Hero → 01 the pieces → 02 the campaign → 03 Drop 002. Four movements, down from six: the statement about scale, the studio band and the archive ledger are gone with the process narrative. The hero is `88/92svh`, not full — the grid peeks under it. 02 is a held figure beside its own column and then one landscape frame at `86svh` with nothing on it but a caption. See the page's own docblock. |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
-| `/drop` | `app/drop/page.tsx` | Current drop, its real run numbers, and the next drop in development. `/new` 308s here. |
-| `/archive` | `app/archive/page.tsx` | Every garment **made**, in year bands, as a ledger. A piece still in development is not in it — it has a number reserved but no record, and it lives on `/drop` and `/shop` until it ships. |
-| `/archive/[ref]` | `app/archive/[ref]/page.tsx` | One garment as a record rather than as stock: the product page's gallery-plus-column layout with the buying taken out — no buy panel, no size selector, no logistics. It was a stack of full-screen frames and that read as a slideshow. SSG per piece. |
-| `/about` | `app/about/page.tsx` | Philosophy / culture / clothing / future |
+| `/drop` | `app/drop/page.tsx` | Current drop as a collection: one mono release row, the pieces, the campaign, then a Drop 002 preview. `/new` 308s here. |
+| `/releases` | `app/releases/page.tsx` | Every **released** piece, in year bands. **This was `/archive`, and the rename is the point:** the page claimed to hold "everything made so far" while six of its rows were on sale, and "Archived" was simultaneously the stock label for a closed run. One word cannot be both. `Sold out` is now the only name for a closed run, everywhere. `/archive` and `/archive/:ref` 308 here. |
+| `/releases/[ref]` | `app/releases/[ref]/page.tsx` | One garment as a record rather than as stock: the product page's gallery-plus-column layout with the buying taken out. SSG per piece. |
+| `/about` | `app/about/page.tsx` | A label statement in four sections — the clothes, the name, drops, what it is for. Rewritten from scratch; see the docblock for what it replaced. |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
-| `/checkout` | `app/checkout/page.tsx` | Two steps — details, then where it goes — ending in a composed email |
-| `/account` | `app/account/page.tsx` | Shell |
+| `/checkout` | `app/checkout/page.tsx` | Redirects to `/shop` while `STORE_OPEN` is false. The flow itself is intact in `CheckoutFlow`. |
+| `/account` | `app/account/page.tsx` | Unlinked, `noindex`, one sentence. |
 | `/size-guide`, `/shipping`, `/returns`, `/faq`, `/contact` | | Information |
 | `/legal/privacy`, `/legal/terms`, `/legal/refund-policy` | | Drafts |
 | 404 | `app/not-found.tsx` | Branded, full-screen |
@@ -116,8 +180,10 @@ decision, and it is the owner's.
 | Loading | — | **There is no route-level loading state, deliberately.** `app/shop/loading.tsx` put the whole `/shop` segment — every product page included — behind a Suspense boundary that only resolves once JavaScript runs, so without it the shop served a permanent skeleton (`main` held 40 characters). Pending feedback lives on the filter links instead, via `useLinkStatus` in `FilterBar`. Do not reintroduce a `loading.tsx` in a segment that must render without scripting. |
 
 The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
-Shop / Drop / Archive) plus a search control, a saved count when there is one, and keeps `IndexOverlay` as the full
-navigation surface. They are real links, so navigation survives scripting being
+Shop / Drop / Releases) plus a search control, a saved count when there is one, and keeps
+`IndexOverlay` as the full navigation surface. **There is no bag control and no Account
+entry** while the store is shut — an icon is a promise that there is somewhere to put
+something. They are real links, so navigation survives scripting being
 unavailable; before this the only nav trigger was a `<button>` and the footer was the
 site's entire navigation with JS off.
 
@@ -141,8 +207,8 @@ lib/catalog/
   categories.ts   category list + sizing-table mapping
   drops.ts        Drop 001 (released) / Drop 002 (in development)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
-  archive.ts      GARMENT NUMBERS AND THE RECORD — derived, never authored
-  studio.ts       the six stages, as six names — `index` and `name`, nothing else
+  archive.ts      GARMENT NUMBERS AND THE RELEASE INDEX — derived, never authored.
+                  Keeps its filename; the surface it feeds is `/releases`.
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
   images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER — plus
@@ -312,7 +378,8 @@ postal patterns in `lib/commerce/regions.ts`, the cents-to-currency rounding in
   column of TEXT.** A picture takes its height from its width and its ratio, so the same
   pair gives it a scrollbar down the side of the photograph instead. Cap the frame's own
   height and let `object-cover` take the difference. There is no sticky column on `/` any
-  more — the studio's was one, and it held for about 120px of scroll at 1440x900 because
+  more — the home page's studio band had one, and it held for about 120px of scroll at
+  1440x900 because
   the picture and the list beside it were within 120px of the same height. **A sticky
   frame only reads as sticky if what travels past it is meaningfully taller.** Measure
   both before reaching for it.

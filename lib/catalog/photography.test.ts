@@ -55,7 +55,7 @@ const everySlot: ImageSlotData[] = [
   ...PRODUCTS.flatMap((product) => product.images),
   ...Object.values(NAV_FRAMES),
   ...Object.values(PAGE_FRAMES),
-  ...DROPS.map((drop) => drop.cover),
+  ...DROPS.flatMap((drop) => (drop.cover ? [drop.cover] : [])),
   ...CAMPAIGNS.flatMap((campaign) =>
     [campaign.hero, ...campaign.sequence].map((frame) => frame.image),
   ),

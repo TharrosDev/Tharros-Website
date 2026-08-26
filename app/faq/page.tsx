@@ -42,20 +42,20 @@ const GROUPS: FaqGroup[] = [
       {
         question: "Why are there so few pieces?",
         answer:
-          "THARROS releases in drops rather than keeping a permanent catalogue. Each drop is a small number of pieces made in short runs — that is the actual production capacity, not a marketing tactic.",
+          "THARROS releases in numbered drops rather than keeping a permanent catalogue. A drop is a small set of pieces, made in a short run, and it closes when the run is gone.",
         more: { href: "/drop", label: "See the current drop" },
       },
       {
         question: "How many of each piece are made?",
         answer:
-          "It varies by piece and it is printed on every product page, along with how many are still available. When a size is gone, it is gone.",
+          "It varies by piece, and the number is printed on every product page along with how many are left. When a size is gone, it is gone.",
         more: { href: "/shop", label: "Browse the pieces" },
       },
       {
         question: "When is the next drop?",
         answer:
-          "There is no published date. A drop goes out when the fit is right; pieces far enough along to show appear on the current drop page while they are still in development.",
-        more: { href: "/drop", label: "What is in development" },
+          "Drop 002 has no date yet. The pieces announced for it are previewed on the drop page, and the list is emailed first.",
+        more: { href: "/drop", label: "Preview Drop 002" },
       },
     ],
   },
@@ -78,7 +78,7 @@ const GROUPS: FaqGroup[] = [
       {
         question: "How do THARROS pieces fit?",
         answer:
-          "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists its fit notes, and garment measurements are published in the size guide.",
+          "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists the fit notes for that piece; garment measurements are published as they are taken.",
         more: { href: "/size-guide", label: "Open the size guide" },
       },
     ],

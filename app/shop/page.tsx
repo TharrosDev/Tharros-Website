@@ -7,9 +7,12 @@ import PageIntro from "@/components/layout/PageIntro";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
 import { getDrop } from "@/lib/catalog/drops";
 import {
+  AVAILABILITY_FILTERS,
+  AVAILABILITY_LABEL,
   categoriesInUse,
   dropsInUse,
   filterProducts,
+  isAvailabilityKey,
   isSortKey,
   listProducts,
   searchProducts,
@@ -52,7 +55,19 @@ export default async function ShopPage({
   const dropSlug = dropParam && getDrop(dropParam) ? dropParam : undefined;
   const drop = dropSlug ? getDrop(dropSlug) : undefined;
 
-  const newOnly = first(params.new) === "1";
+  // AVAILABILITY IS A REAL AXIS, AND IT REPLACES THE `?new=1` VIEW.
+  // "New" was a boolean on the product that in practice meant "belongs to the
+  // drop that has not come out", and the bar rendered it as a filter labelled
+  // "In development" — a project-management word for a state a shopper reads
+  // as "coming soon". The state is now read off the same `resolveAvailability`
+  // everything else reads, so the filter cannot disagree with the badge on the
+  // card. `?new=1` still resolves, as `?availability=coming-soon`.
+  const availabilityParam = first(params.availability);
+  const availability = isAvailabilityKey(availabilityParam)
+    ? availabilityParam
+    : first(params.new) === "1"
+      ? ("coming-soon" as const)
+      : undefined;
 
   // `?q=` backs the WebSite SearchAction in the JSON-LD graph, so a search
   // engine's deep link lands on real results rather than the whole catalogue.
@@ -68,11 +83,11 @@ export default async function ShopPage({
         const matches = filterProducts(searchProducts(query, 100), {
           category,
           drop: drop?.id,
-          isNew: newOnly || undefined,
+          availability,
         });
         return sort === "featured" ? matches : sortProducts(matches, sort);
       })()
-    : listProducts({ category, sort, drop: drop?.id, isNew: newOnly || undefined });
+    : listProducts({ category, sort, drop: drop?.id, availability });
 
   // What the shop is browsed by is the release, so the unfiltered view names
   // the release it is actually showing. While one drop is the whole catalogue,
@@ -83,24 +98,21 @@ export default async function ShopPage({
 
   const heading = query
     ? `“${query}”`
-    : newOnly
-      ? "In development"
+    : availability
+      ? AVAILABILITY_LABEL[availability]
       : drop
         ? drop.name
         : category !== "all"
           ? categoryName(category)
-          : // Not "Everything made so far": that is the archive's claim, and
-            // the shop holds pieces still being sampled. The catalogue is what
-            // exists, released or not; the record is what has been done. One
-            // word rather than four — the eyebrow above it already says which
-            // everything this is, and a heading set at `display-2` earns its
-            // room by being short.
+          : // One word rather than four. The eyebrow above already says
+            // which everything this is, and a heading set at `display-2` earns
+            // its room by being short.
             (soleDrop?.name ?? "Everything");
 
   // "Everything, as it comes" — no search, no category, no drop, no new filter,
   // and the default sort. Anything else is a narrowed view.
   const unfiltered =
-    !query && category === "all" && !drop && !newOnly && sort === "featured";
+    !query && category === "all" && !drop && !availability && sort === "featured";
 
   const breadcrumbs = {
     "@context": "https://schema.org",
@@ -123,8 +135,8 @@ export default async function ShopPage({
         label={
           query
             ? "Search"
-            : newOnly
-              ? "Next drop"
+            : availability
+              ? "Availability"
               : (drop ?? soleDrop)
                 ? "The run"
                 : // Not the title again — an eyebrow repeating its own
@@ -160,20 +172,38 @@ export default async function ShopPage({
           narrowed the list wants the list. */}
       {unfiltered ? <ShopFeature /> : null}
 
+      {/* Counts for every rail come from the same filter the grid runs, over
+          the same catalogue, so a rail can never offer a cut that turns out to
+          be empty or disagree with the number printed under it. */}
       <FilterBar
         category={category}
         sort={sort}
         drop={dropSlug}
         dropName={drop?.name}
-        newOnly={newOnly}
+        availability={availability}
         query={query}
         count={products.length}
         available={categoriesInUse()}
-        drops={releases.map((entry) => ({
-          slug: entry.drop.slug,
-          name: entry.drop.name,
-          count: entry.count,
-        }))}
+        drops={releases
+          // Counted under the filter that is actually on. `dropsInUse()`
+          // counts the whole catalogue, so under an availability cut the rail
+          // read "DROP 001 7 / EVERYTHING 1" — two of the three numbers in one
+          // row counting a different list from the grid below them.
+          .map((entry) => ({
+            slug: entry.drop.slug,
+            name: entry.drop.name,
+            count: filterProducts(listProducts(), {
+              category,
+              drop: entry.drop.id,
+              availability,
+            }).length,
+          }))
+          .filter((entry) => entry.count > 0)}
+        availabilities={AVAILABILITY_FILTERS.map((state) => ({
+          id: state,
+          name: AVAILABILITY_LABEL[state],
+          count: filterProducts(listProducts(), { availability: state }).length,
+        })).filter((entry) => entry.count > 0)}
       />
 
       <div className="page-frame rhythm-tight">
@@ -183,7 +213,7 @@ export default async function ShopPage({
             body={
               query
                 ? "No pieces match that search."
-                : "Nothing in that category right now — the line is small on purpose."
+                : "Nothing here right now."
             }
             action={{ href: "/shop", label: "View everything" }}
           />
@@ -195,7 +225,6 @@ export default async function ShopPage({
             }`}
             columns={5}
             priorityCount={5}
-            specimen
           />
         )}
       </div>

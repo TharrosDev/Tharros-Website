@@ -10,6 +10,7 @@ import { useEscape, useFocusTrap, useLockBodyScroll } from "@/lib/hooks";
 import { NAV_INDEX, SOCIAL } from "@/lib/site";
 import { NAV_FRAMES } from "@/lib/catalog/images";
 import { CURRENT_DROP, NEXT_DROP } from "@/lib/catalog/drops";
+import { formatDate } from "@/lib/format";
 import { loadMotion } from "@/lib/motion/registry";
 import { prefersReducedMotion } from "@/lib/motion/media";
 import { DUR, EASE, STAGGER } from "@/lib/motion/config";
@@ -223,7 +224,7 @@ export default function IndexOverlay({
       {/* THE NAVIGATION HAS TO FIT THE SCREEN IT OPENS ON.
           At `display-2` a destination row is 126px, so four of them plus the
           drop line and the footer wanted 959px — on a 675px laptop viewport
-          that put About, Account, Saved and all three social links below the
+          that put About, Saved and all three social links below the
           fold of a surface that IS the site's navigation, with no scroll cue.
           The rung and the padding step down on a short viewport instead. The
           height query rather than a width one because this is a height
@@ -246,7 +247,12 @@ export default function IndexOverlay({
           <span className="type-mono-2 text-signal-on-dark">{CURRENT_DROP.index}</span>
           <span className="type-meta text-ink-on-dark">{CURRENT_DROP.name}</span>
           <span className="type-meta text-ink-on-dark-faint">
-            {CURRENT_DROP.status === "released" ? "Out now" : "In development"}
+            {/* "Out now" is a claim about the shop, not about the drop, and
+                it was being made on every route while nothing could be bought.
+                The release date is the fact. */}
+            {CURRENT_DROP.releasedAt
+              ? `Released ${formatDate(CURRENT_DROP.releasedAt)}`
+              : "Coming soon"}
           </span>
         </div>
 
@@ -303,14 +309,6 @@ export default function IndexOverlay({
             Search
           </button>
           <Link
-            href="/account"
-            onClick={onClose}
-            tabIndex={open ? undefined : -1}
-            className="link-rule link-rule-reveal"
-          >
-            Account
-          </Link>
-          <Link
             href="/wishlist"
             onClick={onClose}
             tabIndex={open ? undefined : -1}
@@ -324,7 +322,7 @@ export default function IndexOverlay({
         {NEXT_DROP ? (
           <p className="type-meta mt-12 text-ink-on-dark-faint">
             <span className="num text-signal-on-dark">{NEXT_DROP.index}</span>
-            <span className="ml-4">In development</span>
+            <span className="ml-4">Coming next</span>
           </p>
         ) : null}
       </div>

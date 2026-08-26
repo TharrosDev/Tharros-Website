@@ -49,7 +49,7 @@ function score(image: ImageSlotData): number {
 function pendingSlot(product: Product): ImageSlotData {
   return {
     code: product.variants[0]?.sku.replace(/-[^-]+$/, "") ?? product.id.toUpperCase(),
-    alt: `${product.name} — photography pending`,
+    alt: product.name,
     kind: "front",
     ratio: "portrait",
   };
@@ -150,7 +150,7 @@ export const NAV_FRAMES: Record<string, ImageSlotData> = {
     ratio: "tall",
     crop: "full",
   },
-  "/archive": {
+  "/releases": {
     code: "NAV-ARCHIVE",
     src: "/photography/nav-archive.jpg",
     alt: "The ribbed cuff and sleeve seam of a black fleece, close",
@@ -179,27 +179,20 @@ export const NAV_FRAMES: Record<string, ImageSlotData> = {
  *
  * Keyed by asset code, because that is what the pending frame prints and what
  * the photography brief is written against.
+ *
+ * TWO FRAMES CAME OUT OF THIS MAP AND OFF THE SITE: `abt-01.jpg` (pattern
+ * paper, cut cloth and a tape measure) and `prc-01.jpg` (pattern pieces beside
+ * a part-sewn sample). Both are pictures of clothes being made rather than of
+ * clothes, and the surfaces that carried them — the About opener and the home
+ * page's studio band — no longer exist. The files stay in `public/photography`;
+ * nothing renders them.
  */
 export const PAGE_FRAMES: Record<string, ImageSlotData> = {
   "ABT-01": {
     code: "ABT-01",
-    src: "/photography/abt-01.jpg",
-    alt: "Pattern paper, cut black cloth and a tape measure on a work table",
-    kind: "detail",
-    ratio: "wide",
-  },
-  "ABT-02": {
-    code: "ABT-02",
     src: "/photography/abt-02.jpg",
     alt: "Two figures in Drop 001 outside an industrial door on a quiet street",
     kind: "campaign",
     ratio: "campaign",
-  },
-  "PRC-01": {
-    code: "PRC-01",
-    src: "/photography/prc-01.jpg",
-    alt: "Pattern pieces weighted flat beside a part-sewn sample on a work table",
-    kind: "detail",
-    ratio: "wide",
   },
 };

@@ -1,8 +1,20 @@
 /**
  * PLACEHOLDER RATES. These are structural stand-ins so the bag and checkout can
  * show a real subtotal → shipping → total breakdown. Replace with the carrier
- * rates THARROS actually contracts before launch.
+ * rates THARROS actually contracts, then set `SHIPPING_RATES_CONFIRMED`.
  */
+
+/**
+ * Whether the figures below are real.
+ *
+ * While this is false nothing quotes them to a customer as a price — the
+ * shipping page names the delivery options without their costs, and the bag
+ * and the checkout are stood down anyway (`lib/commerce/state.ts`). It exists
+ * because a placeholder rate printed as a price with a disclaimer underneath
+ * is still a price: people read the number and skip the paragraph.
+ */
+export const SHIPPING_RATES_CONFIRMED = false;
+
 export type ShippingOption = {
   id: string;
   name: string;

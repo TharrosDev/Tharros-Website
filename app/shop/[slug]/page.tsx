@@ -3,10 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/product/ProductGallery";
 import BuyPanel from "@/components/product/BuyPanel";
-import OnBody from "@/components/product/OnBody";
-import FitStory from "@/components/product/FitStory";
 import InFrames from "@/components/product/InFrames";
 import Measurements from "@/components/product/Measurements";
+import ModelCredit from "@/components/product/ModelCredit";
 import ProductGrid from "@/components/product/ProductGrid";
 import Accordion from "@/components/ui/Accordion";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -20,7 +19,6 @@ import {
   heroImage,
   getProduct,
   getRelated,
-  onBodyImages,
   resolveAvailability,
   runStatus,
 } from "@/lib/catalog/queries";
@@ -78,15 +76,14 @@ export default async function ProductPage({ params }: { params: Params }) {
   /**
    * The page's numbering series, derived rather than typed.
    *
-   * Every section carried a hard-coded index while three of them render only
-   * when their data exists, so a piece with no fitting printed 01 followed by
-   * 04 — which turns the mono numeral from a position in a sequence into
-   * decoration. The sequence is now whatever is actually on the page.
+   * Every section carried a hard-coded index while some of them render only
+   * when their data exists, so a piece with no campaign frames printed 01
+   * followed by 04 — which turns the mono numeral from a position in a
+   * sequence into decoration. The sequence is whatever is actually on the
+   * page, and the page is three sections at most.
    */
   const sections = [
     "record",
-    onBodyImages(product).length > 0 ? "on-body" : null,
-    product.fit.length > 0 ? "fit" : null,
     frames.length > 0 ? "frames" : null,
     related.length > 0 ? "related" : null,
   ].filter((id): id is string => id !== null);
@@ -220,7 +217,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             <span className="num">{sectionIndex("record")}</span>
             {recorded ? (
               <Link
-                href={`/archive/${garmentId(product).toLowerCase()}`}
+                href={`/releases/${garmentId(product).toLowerCase()}`}
                 className="num -my-2 py-2 underline-offset-4 hover:underline"
               >
                 {garmentId(product)}
@@ -246,22 +243,38 @@ export default async function ProductPage({ params }: { params: Params }) {
               column whose subject is the garment. The promoted mono steps are
               for full-width contexts — the hero numeral, the drop record — not
               for a 460px column beside a title. */}
-          <p className="mt-8 flex items-baseline gap-3 border-t border-ink pt-4">
-            <span
-              className={`type-mono-3 ${recorded && run.remaining === 0 ? "text-signal" : ""}`}
-            >
-              {recorded ? run.remaining : <>&mdash;</>}
-            </span>
-            <span className="type-meta text-ink-faint">
-              {recorded ? (
-                <>
-                  {run.remaining === 0 ? "None left" : "left"} of{" "}
-                  <span className="num">{run.made}</span> made
-                </>
-              ) : (
-                "Run size set when the sample is signed off"
-              )}
-            </span>
+          {/* THE RUN AS A PROPERTY OF THE RELEASE, NOT AS AN ARGUMENT.
+              "Limited release — 40 units" is the whole claim. The figures are
+              still derived from real inventory, so the page cannot manufacture
+              scarcity; what changed is that they no longer need a sentence
+              explaining what the label can currently produce. A piece that has
+              not been released has no run size, so it says the one thing that
+              is true about it instead of printing a zero. */}
+          <p className="mt-8 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-ink pt-4">
+            {recorded ? (
+              <>
+                <span className="type-meta text-ink-faint">Limited release</span>
+                <span
+                  className={`type-mono-3 ${run.remaining === 0 ? "text-signal" : ""}`}
+                >
+                  {run.made}
+                </span>
+                <span className="type-meta text-ink-faint">
+                  {run.remaining === 0 ? (
+                    "units · sold out"
+                  ) : (
+                    <>
+                      units ·{" "}
+                      <span className="num">{run.remaining}</span> left
+                    </>
+                  )}
+                </span>
+              </>
+            ) : (
+              <span className="type-meta text-ink-faint">
+                {drop?.name ?? "Coming soon"} · not released yet
+              </span>
+            )}
           </p>
 
           <p className="type-body mt-6 text-ink-muted">{product.description}</p>
@@ -290,6 +303,11 @@ export default async function ProductPage({ params }: { params: Params }) {
                 {product.materials.join(" · ")}
               </dd>
             </div>
+            {/* FIT HAS ONE HOME AND THIS IS IT. The same three lines were
+                also set as a three-column list under a "How it fits" heading
+                with its own display-3 title, a screen below — the record
+                stating the fit, and then a whole section restating it in
+                bigger type. */}
             <div className="flex gap-6 py-4">
               <dt className="type-meta w-24 shrink-0 text-ink-faint">Fit</dt>
               <dd className="type-body-sm text-ink-muted">
@@ -298,55 +316,41 @@ export default async function ProductPage({ params }: { params: Params }) {
             </div>
           </dl>
 
+          {/* Who wore it and what size they took. Returns null until an actual
+              fitting has happened, which is why it is a component and not a
+              row in the table above. */}
+          <ModelCredit product={product} />
+
           <div className="mt-8">
             <BuyPanel product={product} />
           </div>
 
           <div className="mt-10">
             <h2 className="visually-hidden">Product information</h2>
-            <Accordion title="The piece" defaultOpen>
+            <Accordion title="Description" defaultOpen>
               <p className="type-body text-ink-muted">{product.story}</p>
             </Accordion>
 
-            {/* Ahead of the run figures and the logistics: this is the last
-                question between wanting the piece and picking a size. */}
+            {/* Ahead of the logistics: this is the last question between
+                wanting the piece and picking a size. */}
             <Accordion title="Measurements">
               <Measurements product={product} />
             </Accordion>
 
-            <Accordion title="The run">
-              <ul className="type-body space-y-1.5 text-ink-muted">
-                <li>
-                  {recorded ? (
-                    <>
-                      <span className="num">{run.made}</span> made in total,{" "}
-                      <span className="num">{run.remaining}</span> still available.
-                    </>
-                  ) : (
-                    "How many get made is decided on the production sample."
-                  )}
-                </li>
-                {drop ? <li>Released as part of {drop.name}.</li> : null}
-                <li>
-                  {product.restock === "none"
-                    ? "This run will not be remade."
-                    : "If it returns it will be in a later drop, and it may not be identical."}
-                </li>
-              </ul>
-              <p className="type-body mt-4 text-ink-muted">
-                Garment measurements are published in the{" "}
-                <Link href="/size-guide" className="link-rule">
-                  size guide
-                </Link>
-                . Full material specification is confirmed on the production sample
-                before launch.
-              </p>
-            </Accordion>
+            {/* THE RUN ACCORDION IS GONE. It restated the two figures printed
+                beside the price, then added that how many get made is decided
+                on the production sample and that the full material
+                specification is confirmed before launch — a manufacturing
+                schedule, inside a product page, under a heading a shopper
+                opened expecting stock. The one line worth keeping is the
+                restock claim, and it only renders when the data states it,
+                which is why it lives in `BuyPanel` beside the decision it
+                affects.
 
-            {/* Shipping, returns and care were three separate accordions. They
-                are all "what happens after you buy it" and nobody opens them
-                one at a time. */}
-            <Accordion title="Care & logistics">
+                Shipping, returns and care were three separate accordions.
+                They are all "what happens after you buy it" and nobody opens
+                them one at a time. */}
+            <Accordion title="Care & delivery">
               <ul className="type-body space-y-1.5 text-ink-muted">
                 {product.care.map((instruction) => (
                   <li key={instruction}>{instruction}</li>
@@ -375,28 +379,17 @@ export default async function ProductPage({ params }: { params: Params }) {
         </div>
       </div>
 
-      {/* Past the buying decision the page turns back into an editorial: the
-          piece on people, then how it is meant to sit. Both render nothing
-          until there is something real behind them.
+      {/* PAST THE BUYING DECISION, ONE EDITORIAL SECTION AND ONE WAY OUT.
+          There were three. "On body" was a rail of the model frames — the same
+          photographs the gallery immediately above it had just shown, in the
+          same order, at a smaller size. "How it fits" was the three fit lines
+          from the record set as a three-up list under a display-3 heading. Both
+          were the page saying a thing twice, and between them they added about
+          a screen and a half of scroll to every product.
 
-          What the cloth is stays in the record above, beside the price, where
-          it is one line of fact. It had a section of its own here — swatches,
-          weights, a fabric study — and a whole movement spent restating one
-          row of a spec table is the performance of care rather than the thing
-          itself. Same for a development ledger that had no development in it. */}
-      <OnBody product={product} index={sectionIndex("on-body")} />
-
-      {/* A plain wrapper: `FitStory` is itself the labelled section, and this
-          carried a second one around it — two nested landmarks announcing the
-          same heading. */}
-      <div className="rhythm-tight">
-        <div className="page-frame">
-          <FitStory product={product} index={sectionIndex("fit")} />
-        </div>
-      </div>
-
-      {/* The way out of a product page is the drop it belongs to, not another
-          product card. */}
+          What survives is the part that brings something new: the campaign
+          frames this piece appears in, which are photographs the gallery does
+          not hold. It renders nothing when there are none. */}
       <InFrames frames={frames} index={sectionIndex("frames")} />
 
       {related.length > 0 ? (
@@ -412,7 +405,7 @@ export default async function ProductPage({ params }: { params: Params }) {
               titleClass="type-display-3"
             />
             <div className="section-lead">
-              <ProductGrid products={related} columns={4} specimen />
+              <ProductGrid products={related} columns={4} />
             </div>
           </div>
         </section>

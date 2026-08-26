@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ArchiveLedger from "@/components/archive/ArchiveLedger";
+import ReleaseLedger from "@/components/releases/ReleaseLedger";
 import PageIntro from "@/components/layout/PageIntro";
 import Reveal from "@/components/ui/Reveal";
 import { archiveByYear, archiveTotals } from "@/lib/catalog/archive";
@@ -7,19 +7,19 @@ import { SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Archive",
+  title: "Releases",
   description:
-    "Every garment THARROS has made, with its number, its run and what is left of it. Nothing is removed when a run closes.",
-  alternates: { canonical: "/archive" },
+    "Every piece THARROS has released, by year — its number, the drop it came from, and what is left of the run.",
+  alternates: { canonical: "/releases" },
   openGraph: {
     type: "website",
-    title: "The THARROS archive",
-    description: "Every garment made so far, and how many of each.",
-    url: `${SITE_URL}/archive`,
+    title: "THARROS releases",
+    description: "Every piece released so far, by year.",
+    url: `${SITE_URL}/releases`,
   },
 };
 
-export default function ArchivePage() {
+export default function ReleasesPage() {
   const bands = archiveByYear();
   const totals = archiveTotals();
 
@@ -28,12 +28,12 @@ export default function ArchivePage() {
     "@graph": [
       breadcrumbList(SITE_URL, [
         { name: "Home", path: "/" },
-        { name: "Archive", path: "/archive" },
+        { name: "Releases", path: "/releases" },
       ]),
     ],
   };
 
-  // The ledger runs as one series across the year bands rather than restarting
+  // The index runs as one series across the year bands rather than restarting
   // per year: the reveal stagger is a property of reading down the page, not
   // of the band a row happens to fall in.
   //
@@ -55,10 +55,10 @@ export default function ArchivePage() {
 
       <PageIntro
         index="01"
-        label="The record"
-        title="Archive"
+        label="The index"
+        title="Releases"
         split
-        lead="Every piece made so far, in the order it was made. A finished run is not removed from here — it is what the label has actually done."
+        lead="Every piece THARROS has put out, newest first. A piece stays here after its run is gone."
         crumbs={[{ name: "Home", href: "/" }]}
       >
         {/* The two figures the page is about, stated once at the top so the
@@ -69,12 +69,12 @@ export default function ArchivePage() {
             <dd className="num type-mono-2 mt-2">{totals.garments}</dd>
           </div>
           <div>
-            <dt className="type-meta text-ink-faint">Units made</dt>
+            <dt className="type-meta text-ink-faint">Units released</dt>
             <dd className="num type-mono-2 mt-2">{totals.made}</dd>
           </div>
           <div>
-            <dt className="type-meta text-ink-faint">Runs closed</dt>
-            <dd className="num type-mono-2 mt-2">{totals.archived}</dd>
+            <dt className="type-meta text-ink-faint">Sold out</dt>
+            <dd className="num type-mono-2 mt-2">{totals.closed}</dd>
           </div>
         </dl>
       </PageIntro>
@@ -94,7 +94,7 @@ export default function ArchivePage() {
                 </p>
               </Reveal>
 
-              <ArchiveLedger entries={band.entries} delayFrom={offsets[i]} />
+              <ReleaseLedger entries={band.entries} delayFrom={offsets[i]} />
             </section>
           );
         })}

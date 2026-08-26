@@ -5,7 +5,6 @@ import Reveal from "@/components/ui/Reveal";
 import Parallax from "@/components/motion/Parallax";
 import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
-import { listProducts } from "@/lib/catalog/queries";
 
 /**
  * The shop's one editorial moment, above the grid.
@@ -24,7 +23,6 @@ export default function ShopFeature() {
   if (!campaign) return null;
 
   const frame = campaign.hero;
-  const count = listProducts({ drop: CURRENT_DROP.id }).length;
 
   return (
     // A split rather than a full-bleed band. Edge to edge at a campaign ratio
@@ -67,9 +65,14 @@ export default function ShopFeature() {
           <h2 className="type-display-4 mt-6 text-balance">
             {CURRENT_DROP.statement}
           </h2>
+          {/* NO COUNT HERE. This block sat directly above a grid headed
+              "Everything — 9 pieces" and said "7 pieces in the run", because
+              one counts the drop and the other counts the catalogue. Both were
+              derived and both were right, which is exactly why they could not
+              share a screen. The bar below states the counts, per release, and
+              this states which release the picture is. */}
           <p className="type-meta mt-5 text-ink-faint">
-            <span className="num">{count}</span> {count === 1 ? "piece" : "pieces"} in
-            the run
+            The current release
           </p>
           <Link href="/drop" className="link-rule link-rule-reveal mt-5 self-start">
             About this drop

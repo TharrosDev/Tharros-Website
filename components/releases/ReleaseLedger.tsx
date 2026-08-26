@@ -32,7 +32,7 @@ import { thumbnailImage } from "@/lib/catalog/queries";
  * 1fr)` meant that degraded to a truncated name rather than to an overflow,
  * which is the failure mode you do not notice in a screenshot.
  */
-export default function ArchiveLedger({
+export default function ReleaseLedger({
   entries,
   delayFrom = 0,
 }: {
@@ -42,7 +42,7 @@ export default function ArchiveLedger({
   return (
     <ol className="mt-8">
       {entries.map((entry, i) => {
-        const archived = entry.state === "archived";
+        const closed = entry.state === "closed";
         return (
           <Reveal
             as="li"
@@ -51,7 +51,7 @@ export default function ArchiveLedger({
             className="border-b border-rule"
           >
             <Link
-              href={`/archive/${entry.ref}`}
+              href={`/releases/${entry.ref}`}
               className="hover-zoom grid grid-cols-[3.5rem_minmax(0,1fr)] items-start gap-x-5 gap-y-2 py-5 lg:grid-cols-[3.5rem_6rem_minmax(0,1fr)_minmax(0,7rem)_5rem_6.5rem] lg:items-center lg:gap-x-7 lg:gap-y-0"
             >
               <span className="row-span-3 overflow-hidden bg-surface-frame lg:row-span-1">
@@ -63,7 +63,7 @@ export default function ArchiveLedger({
               <span className="flex items-baseline justify-between gap-4 lg:contents">
                 <span className="num type-meta-lg text-ink-faint">{entry.garmentId}</span>
                 <span
-                  className={`type-meta lg:order-last lg:text-end ${archived ? "text-ink" : "text-ink-faint"}`}
+                  className={`type-meta lg:order-last lg:text-end ${closed ? "text-ink" : "text-ink-faint"}`}
                 >
                   {entry.state === "available" ? (
                     <>
@@ -86,12 +86,12 @@ export default function ArchiveLedger({
                 <span className="type-meta min-w-0 truncate text-ink-muted">
                   {entry.drop?.name ?? categoryName(entry.product.category)}
                 </span>
-                {/* A piece still being sampled has no run size yet, and
+                {/* An unreleased piece has no run size yet, and
                     `runSize: 0` is the absence of a decision rather than a
                     decision to make none. Printing "0 made" states a fact that
                     is true and means the opposite of what it reads as. */}
                 <span className="type-meta whitespace-nowrap text-ink-faint lg:text-end">
-                  {entry.state === "in-development" ? (
+                  {entry.state === "unreleased" ? (
                     <span aria-label="Run size not set">&mdash;</span>
                   ) : (
                     <>

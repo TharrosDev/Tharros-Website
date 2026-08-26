@@ -1366,50 +1366,6 @@
     }
   }
 
-  /* THE RUN LEDGER
-     The release stated as a proportion rather than as a statistic. The track is
-     the whole run; the oxide segment is the part of it that is gone. Both
-     figures are derived from variant inventory, so the bar cannot disagree with
-     the product pages, and it carries no meaning the mono labels beside it do
-     not already state in words — it is the shape of the sentence, not a
-     substitute for it. That is also why it is `aria-hidden`: a screen reader
-     gets "40 made / 24 left", which is the whole content.
-
-     `--run-taken` is a unitless ratio set by the component. It draws itself on
-     the ledger easing and shares Reveal's stagger through `--reveal-delay`, the
-     same way `.rule-draw` does — a pseudo-element cannot see the inline
-     transition-delay Reveal sets on the element itself. */
-  .run-ledger {
-    position: relative;
-    height: 2px;
-    background: var(--rule-strong);
-  }
-
-  .run-ledger::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--signal);
-    transform: scaleX(var(--run-taken, 0));
-    transform-origin: left center;
-  }
-
-  [data-js] .reveal .run-ledger::after {
-    transform: scaleX(0);
-    transition: transform var(--dur-reveal) var(--ease-ledger) var(--reveal-delay, 0ms);
-  }
-
-  [data-js] .reveal.reveal-in .run-ledger::after {
-    transform: scaleX(var(--run-taken, 0));
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-js] .reveal .run-ledger::after {
-      transform: scaleX(var(--run-taken, 0));
-      transition: none;
-    }
-  }
-
   .hover-zoom img,
   .hover-zoom .zoom-target {
     transition: transform var(--dur-slow) var(--ease-out-expo);
@@ -1455,7 +1411,7 @@
   /* A dimension callout — a hairline with a tick at each end, the way a
      measurement is drawn on a pattern — was built here and removed again. The
      site already draws exactly one quantity as a line, and that is
-     `.run-ledger`. A second measure rule would have been a second visual idea
+     the ledger rule. A second measure rule would have been a second visual idea
      for the same job, used nowhere, waiting to be reached for by whoever added
      the next section. If a real dimension ever needs drawing, it goes back in.
 
@@ -1566,7 +1522,7 @@
      clip-path, mask-image, transform and opacity only, so no mode costs a
      layout or a paint.
 
-     `--reveal-delay` is shared with `.rule-draw` and `.run-ledger`, so a
+     `--reveal-delay` is shared with `.rule-draw`, so a
      frame can be staggered with the rule that labels it. */
 
   /* Clipped on the children for the same reason as `.reveal-frame` above: a

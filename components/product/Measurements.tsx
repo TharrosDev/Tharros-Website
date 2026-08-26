@@ -25,18 +25,20 @@ export default function Measurements({ product }: { product: Product }) {
 
   if (!table) {
     return (
+      /* Two sentences where there were five, and neither of them explains
+         the label's sampling schedule to somebody trying to pick a size. What
+         a shopper can act on is the fit notes, which are on this page and are
+         real, and the how-to-measure guide, which does not depend on the
+         numbers arriving. */
       <>
         <p className="type-body text-ink-muted">
-          This piece has not been measured yet. The numbers are taken from the
-          production sample, so they are published when the sample is signed off
-          rather than estimated from the pattern.
+          Measurements coming soon. The fit notes above describe how this piece
+          is cut.
         </p>
         <p className="type-body mt-4 text-ink-muted">
-          The{" "}
           <Link href="/size-guide" className="link-rule">
-            size guide
-          </Link>{" "}
-          holds the measurements for every piece as they are taken.
+            How to measure
+          </Link>
         </p>
       </>
     );

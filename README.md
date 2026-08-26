@@ -55,10 +55,13 @@ Placeholder, and marked as such in the source: **all product data** (`lib/catalo
 **shipping rates** (`lib/commerce/shipping.ts`), **size measurements**
 (`lib/catalog/sizing.ts`), and **legal pages**.
 
-Thirteen real photographs exist, in `public/photography`: the home hero, three campaign
-frames, the two drop covers, the four navigation frames, two for `/about` and one for the
-studio band. **No garment has been photographed** — all 54 product slots are still pending,
-which is every product card, every gallery and every thumbnail on the site.
+Thirteen real photographs exist in `public/photography` and **ten are in use**: the home
+hero, three campaign frames, the Drop 001 cover, the four navigation frames and one for
+`/about`. The other three are withdrawn — two work-table studies and a cut-canvas detail,
+all pictures of clothes being made rather than of clothes, on surfaces the site no longer
+has (`docs/PHOTOGRAPHY_PROMPT.md` records why). **No garment has been photographed** — all
+54 product slots are still pending, which is every product card, every gallery and every
+thumbnail on the site.
 
 A slot with no `src` renders a free-licence stand-in from `public/filler` — five pools of
 four, picked by the slot's own kind and crop and held steady by its asset code, so pages can be built and
@@ -101,7 +104,7 @@ components/
   shop/              filter bar, shop feature
   home/              home page sections
   campaign/          campaign frames and sequences
-  archive/           the archive ledger
+  releases/          the release index ledger
   media/             ImageSlot, FillerImage
   motion/ ui/        parallax numeral, accordion, modal, reveal, primitives
 lib/

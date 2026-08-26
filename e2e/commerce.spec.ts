@@ -1,6 +1,22 @@
 import { expect, test } from "./fixtures";
+import { STORE_OPEN } from "../lib/commerce/state";
 
 const PIECE = "/shop/arc-hoodie";
+
+/**
+ * THE WHOLE FILE IS GATED ON THE STOREFRONT'S ONE FLAG.
+ *
+ * Nothing on this site is purchasable while `STORE_OPEN` is false: no payment
+ * provider is connected, so the add-to-bag controls, the drawer and the
+ * checkout route are all stood down (`lib/commerce/state.ts`). These tests
+ * describe a purchase path that is deliberately not there, and they are kept
+ * rather than deleted because the path itself is kept — connecting a provider
+ * and flipping the flag has to bring back a flow somebody has tested.
+ *
+ * The complementary assertions — that nothing offers a purchase while the shop
+ * is shut — live in `routes.spec.ts` and run either way.
+ */
+test.skip(!STORE_OPEN, "the storefront cannot take payment yet");
 
 /**
  * The purchase path, which is the only flow on this site whose failure costs

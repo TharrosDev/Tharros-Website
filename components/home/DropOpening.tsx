@@ -8,6 +8,7 @@ import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { listProducts } from "@/lib/catalog/queries";
 import { formatDate } from "@/lib/format";
+import { STORE_OPEN } from "@/lib/commerce/state";
 
 /**
  * THE OPENING SHOT — one picture, most of the screen, and the line over it.
@@ -65,10 +66,14 @@ export default function DropOpening() {
   const released =
     CURRENT_DROP.status === "released" && CURRENT_DROP.releasedAt
       ? `Released ${formatDate(CURRENT_DROP.releasedAt)}`
-      : "In development";
+      : "Coming soon";
 
   const hero = campaignFor(CURRENT_DROP.id)?.hero;
+  // The campaign hero first, the drop's own cover as the fallback — and a
+  // drop may now carry neither, in which case there is no opening frame and
+  // the section does not render one.
   const frame = hero?.image ?? CURRENT_DROP.cover;
+  if (!frame) return null;
 
   return (
     <Scene
@@ -259,16 +264,22 @@ export default function DropOpening() {
           />
 
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-12">
+            {/* THE LABEL FOLLOWS THE STORE, NOT THE OTHER WAY ROUND. While
+                no payment provider is connected this cannot say "Shop the
+                drop" — the drop is fully browsable and nothing in it can be
+                bought, and a button that promises a transaction is where the
+                old contradiction started. It sends you to the same place
+                either way. */}
             <Magnetic>
               <Link
                 href={`/shop?drop=${CURRENT_DROP.slug}`}
                 className="btn btn-inverse"
               >
-                Shop the drop
+                {STORE_OPEN ? "Shop the drop" : "See the pieces"}
               </Link>
             </Magnetic>
             <Link href="/drop" className="link-rule link-rule-reveal">
-              About this drop
+              The campaign
             </Link>
           </div>
 
