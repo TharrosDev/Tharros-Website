@@ -1,80 +1,94 @@
 import CampaignFrame from "./CampaignFrame";
 import Reveal from "@/components/ui/Reveal";
-import SectionHeading from "@/components/ui/SectionHeading";
 import Scene from "@/components/motion/Scene";
 import { campaignFor } from "@/lib/catalog/campaign";
 
 /**
- * THE PEOPLE — the campaign read as a sequence rather than a gallery.
+ * THE PEOPLE — the campaign read as a spread rather than as a run of stops.
  *
- * Alignment alternates left, full, right so no two neighbouring frames are
- * built the same way, which is the same rule the home page's surface
- * alternation follows. The full-width frame in the middle is the one that gets
- * to be a photograph rather than a composition.
+ * IT WAS THREE FRAMES ALTERNATING LEFT, FULL, RIGHT, and each of the side ones
+ * put its record in a column next to the photograph. Measured on `/drop` that
+ * column was 510px carrying about 200px of content, stretched down 559px of
+ * frame, with a 403px margin outside it — and the record itself arrived as four
+ * separate small headings beside the picture: a numeral, a caption line, an "in
+ * this frame" label and a product name. A caption given a column stops reading
+ * as a caption.
+ *
+ * So the frames pair. Two to a row at their own shapes, each with its record on
+ * one line underneath, and a trailing odd frame runs the page full width. The
+ * alternation that the run of stops was for is now in the composition itself —
+ * a spread, then a full-bleed — rather than in three different ways of standing
+ * a picture next to some words.
+ *
+ * The pair keeps each picture's own ratio rather than forcing a common one:
+ * forcing a shared shape crops a photograph to level a row, which is the trade
+ * this file's own `full` branch refuses for the same reason. The row is levelled
+ * at the foot instead — see the comment on the row itself.
  *
  * THIS RUNS ON `/drop` ONLY. The home page used to mount it too and ran the
  * whole sequence: 2934px at 1440x900, three and a quarter viewports of the same
- * picture-plus-caption-plus-worn-list furniture, ending in a grid of the pieces
- * `01 The run` had already shown with their prices one screen above. `/` shows
- * one frame and links here — see `components/home/ThePeople.tsx`. A trailer is
- * not a shorter film, it is one shot.
+ * picture-plus-caption furniture, ending in a grid of the pieces `01 The run`
+ * had already shown with their prices one screen above. `/` shows one frame and
+ * links here — see `components/home/ThePeople.tsx`. A trailer is not a shorter
+ * film, it is one shot.
  *
  * Returns null when the drop has no campaign, which keeps every page that
  * mounts it byte-identical to before until the data exists.
  */
-const ALIGNMENTS = ["left", "full", "right"] as const;
-
 export default function CampaignSequence({
   dropId,
   index,
   label = "The people",
-  title,
-  action,
 }: {
   dropId: string;
   index: string;
   label?: string;
-  title?: string;
-  /** Passed straight to the opener's right-hand slot — the way out of the sequence. */
-  action?: { href: string; label: string };
 }) {
   const campaign = campaignFor(dropId);
   if (!campaign || campaign.sequence.length === 0) return null;
 
   const frames = campaign.sequence;
 
-  // The first full-bleed frame, and only that one, carries the settling shot.
-  const heldIndex = frames.findIndex(
-    (_, i) => ALIGNMENTS[i % ALIGNMENTS.length] === "full",
-  );
+  // Two to a row, and whatever is left over at the end takes the page.
+  const rows: (typeof frames)[] = [];
+  for (let i = 0; i < frames.length; i += 2) rows.push(frames.slice(i, i + 2));
 
   return (
-    <section className="rhythm-default">
+    // `rhythm-tight`, not `rhythm-default`. The interval either side was 214px
+    // of the 2689 this section ran, and it sits between a grid of the same
+    // pieces above and a band about the next drop below — neither of which the
+    // photographs need a held breath to be told apart from.
+    <section className="rhythm-tight">
+      {/* ONE MONO LINE, NO DISPLAY HEADING. The opener was `03 THE PEOPLE`
+          above "The drop, worn." set at display-2: a 168px block alone on a
+          near-empty screen, announcing the photographs from further away than
+          they are tall, and the fifth heading in a section that already had
+          four per frame. The rule and the index place the section in the
+          sequence, which is all an opener owes a set of pictures. Same shape
+          the next-drop band on `/drop` opens with. */}
       <div className="page-frame">
-        <SectionHeading index={index} label={label} title={title} action={action} />
+        <Reveal className="rule-draw pt-4">
+          <p className="eyebrow">
+            <span className="num">{index}</span>
+            <span>{label}</span>
+          </p>
+        </Reveal>
       </div>
 
-      {/* Frames are separated by more than sections are: each one is a picture
-          to stop at, and at gap-20 the sequence scrolled as a strip.
+      <div className="section-lead space-y-16 md:space-y-24">
+        {rows.map((row, rowIndex) => {
+          // The last row, when it holds one frame, is the held shot: the
+          // picture comes out of an over-scale as it crosses the viewport, a
+          // camera coming to rest rather than a zoom. It used to be pinned; the
+          // pin is gone at the owner's direction and the move is unchanged.
+          const alone = row.length === 1;
+          const first = row[0];
+          if (!first) return null;
 
-          A BLOCK COLUMN WITH MARGINS, NOT A FLEX ONE WITH A GAP. This held
-          `flex flex-col gap-28` while the full frame was pinned, and
-          ScrollTrigger silently drops `pinSpacing` when the element it pins
-          sits in a flex parent — it cannot reserve the held distance by padding
-          a flex item. Nothing pins now, but nothing here wants flex either: no
-          ordering, no alignment, one axis. */}
-      <div className="section-lead space-y-28 md:space-y-40">
-        {frames.map((frame, i) => {
-          const align = ALIGNMENTS[i % ALIGNMENTS.length];
-
-          if (i === heldIndex) {
+          if (alone) {
             return (
-              // THE SHOT THAT SETTLES. The picture comes out of an over-scale
-              // as the frame crosses the viewport — a camera coming to rest
-              // rather than a zoom. It used to be pinned; the pin is gone at
-              // the owner's direction and the move is unchanged.
               <Scene
-                key={frame.id}
+                key={first.id}
                 /* THE OVER-SCALE HAS TO BE CROPPED BY SOMETHING.
                    `scene-oversize` is `scale(1.14)`, and a scaled box expands
                    the scrollable area of the document unless an ancestor clips
@@ -89,40 +103,51 @@ export default function CampaignSequence({
                   { at: 0, span: 0.7, layer: "shot", to: { scale: 1, ease: "none" } },
                 ]}
               >
-                {/* No SceneLayer here. `held` puts `data-layer="shot"` and
+                {/* No SceneLayer. `held` puts `data-layer="shot"` and
                     `scene-oversize` on the PICTURE inside CampaignFrame, which
                     is the only part of the frame the camera is supposed to
-                    move — wrapping the whole component scaled the caption and
-                    the worn list with it. `Scene` finds the layer by its
-                    attribute wherever it lives, so nothing else changes.
-
-                    `scene-oversize` is the resting state the scrub settles out
-                    of, and lives in CSS behind [data-js] rather than in a
-                    step's `from`: GSAP arrives a frame or two after paint, so a
-                    `from` would show the picture at rest and then jump it — and
-                    with scripting off nothing would ever bring an inline
-                    over-scale back down. */}
-                <CampaignFrame frame={frame} align={align} held />
+                    move. `Scene` finds the layer by its attribute wherever it
+                    lives, and the pre-state is CSS behind [data-js] rather than
+                    a step's `from`: GSAP arrives a frame or two after paint, so
+                    a `from` would show the picture at rest and then jump it. */}
+                <CampaignFrame frame={first} align="full" held />
               </Scene>
             );
           }
 
-          // Full-width frames break the page frame; the others sit inside it.
           return (
-            <Reveal
-              key={frame.id}
-              mode="frame"
-              className={align === "full" ? "" : "page-frame"}
+            // `items-end`, not `items-start` or `stretch`.
+            //
+            // The pair keeps each picture's own shape, so at equal width a 2:3
+            // frame is 102px taller than a 3:4 one and something has to be
+            // ragged. Aligned at the top it is the captions, which puts two
+            // identical blocks of type on two different lines a hundred pixels
+            // apart and reads as a mistake. Stretched to a common height it is
+            // a hole under the shorter picture, which is the fault this whole
+            // section was rebuilt to remove.
+            //
+            // Aligned at the foot it is the tops that are ragged, and that is
+            // the one of the three that is not a defect: both photographs are
+            // figures on a floor, so a shared bottom edge stands them on the
+            // same ground line and lands their captions on one baseline. The
+            // ragged edge ends up at the top, where there is nothing to line up
+            // against anyway.
+            <div
+              key={`row-${rowIndex}`}
+              className="page-frame grid grid-cols-1 items-end gap-x-6 gap-y-14 md:grid-cols-2 md:gap-x-10"
             >
-              {/* A PHONE RATIO FOR EVERY FRAME THAT SHARES THE PAGE FRAME.
-                  `ratioSm` was never passed, so a frame declaring `campaign`
-                  (16:9) rendered 16:9 at every width — 295 x 166px at 390 and
-                  435 x 245 at 768, which is the band `ratioSm` was added to
-                  prevent. 4:5 below `md` gives a figure room to be a figure;
-                  from `md` the frame is whatever shape the data says it was
-                  shot at. */}
-              <CampaignFrame frame={frame} align={align} ratioSm="editorial" />
-            </Reveal>
+              {row.map((frame) => (
+                <Reveal key={frame.id} mode="frame">
+                  {/* A PHONE RATIO FOR EVERY PAIRED FRAME. A frame declaring
+                      `campaign` (16:9) rendered 16:9 at every width — 295 x
+                      166px at 390 — which is the band `ratioSm` exists to
+                      prevent. 4:5 below `md` gives a figure room to be a
+                      figure; from `md` the frame is whatever shape the data
+                      says it was shot at. */}
+                  <CampaignFrame frame={frame} align="stacked" ratioSm="editorial" />
+                </Reveal>
+              ))}
+            </div>
           );
         })}
       </div>

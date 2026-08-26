@@ -29,7 +29,7 @@ export default function CampaignFrame({
   lead,
 }: {
   frame: Frame;
-  align?: "left" | "right" | "full";
+  align?: "left" | "right" | "full" | "stacked";
   ratio?: Ratio;
   ratioSm?: Ratio;
   priority?: boolean;
@@ -63,8 +63,10 @@ export default function CampaignFrame({
   const muted = onDark ? "text-ink-on-dark-faint" : "text-ink-faint";
   const rule = onDark ? "border-rule-on-dark" : "border-rule";
 
-  const meta = (
-    <div className="flex flex-col gap-6">
+  // A factory rather than a constant: the side column needs to distribute this
+  // over the frame's height and the full-bleed caption does not.
+  const metaBlock = (className = "") => (
+    <div className={`flex flex-col gap-6 ${className}`}>
       <div className={`flex items-baseline gap-4 border-t ${rule} pt-3`}>
         <ParallaxNumeral className={`type-mono-3 ${muted}`}>
           {frame.index}
@@ -81,7 +83,7 @@ export default function CampaignFrame({
       <WornList
         slugs={frame.wearing}
         frameId={frame.id}
-        variant={align === "full" ? "rail" : "stack"}
+        variant={align === "left" || align === "right" ? "stack" : "rail"}
         onDark={onDark}
       />
     </div>
@@ -94,6 +96,41 @@ export default function CampaignFrame({
     frame.hotspots && frame.image.src ? (
       <FrameHotspots hotspots={frame.hotspots} frameId={frame.id} />
     ) : null;
+
+  // STACKED — the picture with its record under it, and no column beside it.
+  //
+  // The side alignments put an index, a caption line and a worn list into a
+  // track next to the photograph, which on `/drop` was 510px of column holding
+  // about 200px of content, stretched over 559px of frame, with a 403px margin
+  // outside it. Four small headings scattered down a column beside a picture is
+  // what a caption becomes when it is given a column it does not need.
+  //
+  // Under the picture it is a caption again: it takes the width the picture
+  // takes, it is as tall as the words are, and it ends. Nothing stretches and
+  // nothing is left over. This is what the sequence uses for the frames it
+  // pairs; `full` still handles the one that runs the page.
+  if (align === "stacked") {
+    return (
+      <figure>
+        <Parallax depth="subject" className="relative overflow-hidden">
+          <div
+            data-layer={held ? "shot" : undefined}
+            className={held ? "scene-oversize" : ""}
+          >
+            <ImageSlot
+              image={frame.image}
+              ratio={ratio}
+              ratioSm={ratioSm}
+              sizes="(min-width: 768px) 46vw, 100vw"
+              priority={priority}
+            />
+          </div>
+          {markers}
+        </Parallax>
+        <figcaption className="mt-5">{metaBlock()}</figcaption>
+      </figure>
+    );
+  }
 
   if (align === "full") {
     return (
@@ -160,7 +197,7 @@ export default function CampaignFrame({
           {markers}
         </div>
         <figcaption className="page-frame mt-6">
-          <div className="max-w-3xl">{meta}</div>
+          <div className="max-w-3xl">{metaBlock()}</div>
         </figcaption>
       </figure>
     );
@@ -180,6 +217,27 @@ export default function CampaignFrame({
   //
   // A landscape frame keeps the wide track — its width is what is short there,
   // not its height.
+  //
+  // AND THE COLUMN BESIDE IT IS SIZED BY WHAT IT HOLDS. That fix moved the
+  // record back next to the picture and left the hole on the other side of it:
+  // the side track stayed six of twelve — 665px on a 1440 screen — carrying an
+  // index, one line of caption and a worn list, about 110px of content hung at
+  // its foot. Measured on `/drop` the three frames were 27%, 38% and 59%
+  // photograph by width.
+  //
+  // Narrowing the column alone did not fix it, and measuring is why: the
+  // picture is 372px inside a five-track 510px box, so the caption's track
+  // began 278px past the edge of the photograph however wide the caption
+  // itself was. The tracks have to move, not just shrink. Four for the picture
+  // and five for the record, starting the moment the picture's own track ends,
+  // puts the two 61px apart — a caption gap — and collects the leftover as one
+  // outer margin, which reads as an inset composition rather than as a hole.
+  // The record is anchored at both ends there too, rather than hung at the
+  // foot.
+  //
+  // A frame WITH a `lead` keeps the six and the foot, because there the column
+  // really is a column: a section heading at the head, the record at the foot.
+  // That is the home page, and none of this reaches it.
   const upright = RATIO_VALUE[ratio ?? frame.image.ratio] < 1;
 
   // A `lead` puts a section heading in the side column, so the column has to be
@@ -190,9 +248,13 @@ export default function CampaignFrame({
   // generates a class it can find literally in the source, so `col-span-${n}`
   // would compile to nothing and every frame would stack.
   const pictureSpan = upright
-    ? imageFirst
-      ? "md:col-span-5 md:col-start-1"
-      : "md:col-span-5 md:col-start-8"
+    ? lead
+      ? imageFirst
+        ? "md:col-span-5 md:col-start-1"
+        : "md:col-span-5 md:col-start-8"
+      : imageFirst
+        ? "md:col-span-4 md:col-start-1"
+        : "md:col-span-4 md:col-start-9"
     : lead
       ? imageFirst
         ? "md:col-span-7 md:col-start-1"
@@ -201,9 +263,13 @@ export default function CampaignFrame({
         ? "md:col-span-8 md:col-start-1"
         : "md:col-span-8 md:col-start-5";
   const sideSpan = upright
-    ? imageFirst
-      ? "md:col-span-6 md:col-start-7"
-      : "md:col-span-6 md:col-start-1"
+    ? lead
+      ? imageFirst
+        ? "md:col-span-6 md:col-start-7"
+        : "md:col-span-6 md:col-start-1"
+      : imageFirst
+        ? "md:col-span-5 md:col-start-5"
+        : "md:col-span-5 md:col-start-4"
     : lead
       ? imageFirst
         ? "md:col-span-5 md:col-start-8"
@@ -278,9 +344,13 @@ export default function CampaignFrame({
       </div>
 
       <figcaption
-        className={`min-w-0 ${sideSpan} md:self-end ${lead ? "md:row-start-2" : "md:row-start-1 md:row-span-2"}`}
+        className={`min-w-0 ${sideSpan} ${
+          lead
+            ? "md:row-start-2 md:self-end"
+            : "md:row-start-1 md:row-span-2 md:self-stretch"
+        }`}
       >
-        {meta}
+        {metaBlock(lead ? "" : "md:h-full md:justify-between")}
       </figcaption>
     </figure>
   );
