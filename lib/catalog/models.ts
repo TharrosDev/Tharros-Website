@@ -8,7 +8,7 @@
  * look finished, and no component may synthesise a value that is null. See
  * CLAUDE.md: the storefront does not fabricate model measurements.
  *
- * The components that read this (`OnBody`, `ModelCredit`) render nothing at all
+ * The component that reads this (`ModelCredit`) renders nothing at all
  * when it is empty, which is the honest state until a shoot has happened.
  */
 

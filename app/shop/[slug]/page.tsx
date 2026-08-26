@@ -175,8 +175,9 @@ export default async function ProductPage({ params }: { params: Params }) {
 
             No `max-h` and no internal scroll: the frame is bounded by its own
             `svh` height rather than by a cap on the column, which is the
-            pattern `ProcessSection` already uses for a picture in a sticky
-            column. The min-height query stands the whole thing down on a window
+            pattern a picture in a sticky column has to use — a frame takes its
+            height from its width, so a `max-h` on the column gives it a
+            scrollbar down the side of the photograph instead. The min-height query stands the whole thing down on a window
             too short to hold it, so nothing is ever stuck out of reach.
 
             660px is where it stops fitting, not a round number: the frame is

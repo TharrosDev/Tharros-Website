@@ -29,7 +29,7 @@ import { campaignFor } from "@/lib/catalog/campaign";
  * whole sequence: 2934px at 1440x900, three and a quarter viewports of the same
  * picture-plus-caption furniture, ending in a grid of the pieces `01 The run`
  * had already shown with their prices one screen above. `/` shows one frame and
- * links here — see `components/home/ThePeople.tsx`. A trailer is not a shorter
+ * links here — see `components/home/HomeCampaign.tsx`. A trailer is not a shorter
  * film, it is one shot.
  *
  * Returns null when the drop has no campaign, which keeps every page that

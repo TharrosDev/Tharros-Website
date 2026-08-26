@@ -1,6 +1,39 @@
 # Claude Working Notes — THARROS
 
-Read this before generating code. It is the fastest route to a change that fits.
+The ecommerce site for THARROS, a small independent streetwear label. Next.js 16 (App
+Router, Turbopack), React 19, TypeScript strict, Tailwind 4. Read this before generating
+code — it is the fastest route to a change that fits, and most of it is here because
+something was got wrong once.
+
+**In one paragraph:** content is data and never lives in JSX; everything that reads
+products goes through `lib/catalog/queries.ts`; numbers are derived, never typed into
+copy; the storefront cannot take payment and every purchase control derives from one flag;
+the site must build, work by keyboard, work without JavaScript, and never claim something
+that is not true about stock, orders or payment. Everything else is the owner's taste, and
+the owner's taste wins.
+
+## Start here
+
+| If you are about to… | Read |
+|---|---|
+| Change a look, a layout, type, colour or motion | [`DESIGN.md`](./DESIGN.md), then **Design system** |
+| Write or edit customer-facing copy | [`docs/CONTENT_GUIDE.md`](./docs/CONTENT_GUIDE.md), then **Voice** |
+| Add or change a product, drop, image or size | **Data model**, then **Recipes** |
+| Add a route, a section or a component | **Architecture**, then **Recipes** |
+| Touch the bag, checkout, prices or availability | **The commerce state** — this one has hard rules |
+| Add animation | **Code style → Motion**. Nothing pins. Ever. |
+| Find out whether something is actually wired up | **What is wired up and what is not** |
+| Run, test or ship anything | **Commands**, **Testing**, **Git and CI** |
+
+Sibling documents, and what each one owns:
+
+| File | Owns |
+|---|---|
+| `CLAUDE.md` | How the code works, what is real, what the rules are |
+| `DESIGN.md` | The visual system — tokens, type ladder, rhythm, components, motion |
+| `docs/CONTENT_GUIDE.md` | The voice, and the words that are retired |
+| `docs/PHOTOGRAPHY_PROMPT.md` | The shot list and the brief every frame is made against |
+| `README.md` | The human-facing overview |
 
 ---
 
@@ -34,9 +67,6 @@ orders, stock or payment (see below). Those are not taste.
 ---
 
 ## What this repo is
-
-The ecommerce site for **THARROS**, a small independent streetwear label. Next.js 16
-(App Router, Turbopack), React 19, TypeScript strict, Tailwind 4.
 
 The brand name is always written **THARROS** in copy — never "Tharros Clothing" or
 "Tharros Apparel". The line is *"Small runs. Original ideas."*
@@ -81,6 +111,30 @@ site for an Ottawa AI agency (packages, pricing tiers, a Relevance AI chat demo,
 Supabase `/brief` wizard, a "Redline" red/black/white design system, the slogan "Keep it
 Local, Keep it Canadian"). All of that was deleted. If you find anything resembling it,
 it is a regression, not a feature to preserve.
+
+---
+
+## Quick start
+
+```bash
+npm install
+cp .env.example .env.local     # nothing in it is required to run the site
+npm run dev                    # http://localhost:3000
+```
+
+Node 22 — that is what CI runs and what the lockfile was resolved against.
+
+## Environment
+
+Every variable is optional; the site runs with none of them set. `.env.example` is the
+scaffold and carries the same notes.
+
+| Variable | Effect when unset |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Falls back to `https://tharros.com` in `lib/site.ts`. Drives `metadataBase`, the sitemap, robots and every JSON-LD `@id`. |
+| `NEXT_PUBLIC_FILLER_IMAGES` | Stand-ins are drawn. Set it to `off` to get the bare labelled frames — **that is the test that a layout reads as pending rather than as filler-dependent.** Run it before calling any image work done. |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `..._BING_...` | The meta tag is omitted. Paste only the `content` value, never the whole element. |
+| `PAYMENT_PROVIDER_SECRET_KEY` | Commented out, and there is no provider to key. **Never give a secret a `NEXT_PUBLIC_` prefix.** |
 
 ---
 
@@ -196,6 +250,51 @@ Adding a route means touching **four** places: the page's own `metadata`,
 
 ---
 
+## Architecture
+
+```
+app/                     routes; every page is a server component unless it says otherwise
+components/
+  home/                  the four home page movements, in page order
+                         DropOpening · TheRun · HomeCampaign · NextDrop
+  product/               the garment: card, grid, gallery, buy panel, badges,
+                         measurements, size guide, save button, campaign rail
+  commerce/              bag, wishlist, search, checkout — providers and surfaces.
+                         Everything stateful on the site is in here.
+  campaign/              campaign frames, sequences, hotspots, worn lists, credits
+  releases/              the release index ledger
+  layout/                header, footer, nav overlay, page intro, breadcrumbs,
+                         newsletter, the information-page furniture
+  media/                 ImageSlot and FillerImage — HOW EVERY IMAGE RENDERS
+  motion/                Scene, Parallax, SplitLines, RouteCurtain, Magnetic,
+                         MotionRuntime, EntrySequence — see Code style → Motion
+  ui/                    Accordion, Modal, Reveal, SectionHeading, EmptyState,
+                         PendingNotice, Wordmark, icons
+lib/
+  catalog/               product data and the query seam — see Data model
+  commerce/              cart maths, shipping, tax, regions, returns, STORE STATE
+  motion/                GSAP registry, tokens, media queries, useScene
+  format.ts              formatPrice, formatDate — CENTS IN, STRING OUT
+  jsonld.ts              the only way structured data reaches the page
+  site.ts                brand constants, navigation and footer arrays
+  hooks.ts               focus trap, escape, scroll lock, scrolled-past, debounce
+  persistent-store.ts    localStorage as an external store
+  reveal-observer.ts     the one shared IntersectionObserver
+docs/                    content guide, photography brief
+e2e/                     Playwright — see Testing
+scripts/                 fetch-filler.mjs, slice-grid.mjs (dev tooling, not shipped)
+```
+
+Three files are load-bearing enough to name on their own:
+
+- **`lib/catalog/queries.ts`** — the seam a CMS swaps in behind. Nothing reads
+  `products.ts` directly.
+- **`lib/commerce/state.ts`** — one flag, and the whole storefront derives from it.
+- **`components/media/ImageSlot.tsx`** — every image on the site goes through it, and it
+  is what makes dropping in real photography a data change that moves no layout.
+
+---
+
 ## Data model
 
 Content is data. It never lives in JSX.
@@ -205,7 +304,7 @@ lib/catalog/
   types.ts        Product, Variant, ImageSlotData, Drop, Campaign, CampaignFrame
   products.ts     the catalog (placeholder)
   categories.ts   category list + sizing-table mapping
-  drops.ts        Drop 001 (released) / Drop 002 (in development)
+  drops.ts        Drop 001 (released) / Drop 002 (upcoming, no date)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
   archive.ts      GARMENT NUMBERS AND THE RELEASE INDEX — derived, never authored.
                   Keeps its filename; the surface it feeds is `/releases`.
@@ -245,9 +344,15 @@ Key invariants:
   `thumbnailImage` — re-exported through `queries.ts`. The ladder leads with the piece on a
   person and degrades correctly for a garment with three photographs instead of six.
 - **The people are real or absent.** `models.ts` ships empty and `Product.onBody` is unset
-  everywhere. `OnBody` and `ModelCredit` return `null` rather than rendering a pending state,
-  and `fitNote()` omits an unmeasured height instead of guessing one. Do not populate either
+  everywhere. `ModelCredit` returns `null` rather than rendering a pending state, and
+  `fitNote()` omits an unmeasured height instead of guessing one. Do not populate either
   from anything but an actual fitting.
+- **The image ladder has spare rungs.** `onBodyImages`, `inSituImages` and `detailImages`
+  are exported and currently uncalled — the surfaces that used them were removed with the
+  process narrative. They are kept because they are the documented ladder, not dead
+  weight: a piece with six photographs still resolves correctly through them the day a
+  section wants one. Do not delete them to make a lint count go down, and do not add a
+  seventh without a caller.
 
 ---
 
@@ -336,43 +441,193 @@ its ratio, so dropping in real photography is a one-line data change and moves n
 
 ## Commands
 
-| Task | Command |
+| Task | Command | Notes |
+|---|---|---|
+| Install | `npm install` | Node 22 |
+| Dev | `npm run dev` | Port 3000 |
+| Build | `npm run build` | Turbopack; also runs `tsc` |
+| Lint | `npm run lint` | **Enforces React Compiler rules the build does not** |
+| Type check | `npm run typecheck` | `tsc --noEmit` |
+| Unit tests | `npm test` | Plain Node, no framework |
+| End to end | `npm run e2e` | Builds and serves the site itself |
+| E2E, watching | `npm run e2e:ui` | Playwright's UI mode |
+| Bare image frames | `NEXT_PUBLIC_FILLER_IMAGES=off npm run dev` | The pending-state check |
+
+**Before declaring any work done, run `npm run lint` and `npm run build`.** Lint catches
+the React Compiler violations the build compiles straight past, and it fails in seconds
+rather than after a full compile. For anything touching routes, copy, commerce or motion,
+run `npm run e2e` too — it is the only thing that catches a page that builds fine and
+renders blank.
+
+## Testing
+
+Three layers, and they cover different failure modes.
+
+**`npm test`** — assert-based checks in `lib/`, run through Node directly. No framework,
+no dependency; Node strips the types. They cover the three things that fail silently:
+
+- postal patterns — `lib/commerce/regions.ts`
+- cents-to-currency rounding — `lib/format.ts`
+- the line between a photograph and a stand-in — `lib/catalog/photography.test.ts`,
+  which fails if any declared `src` points into `public/filler`, **or if the list of
+  unphotographed pieces stops matching the catalogue**. That second assertion is
+  deliberate: it makes "which pieces are still unshot" something the repository knows
+  rather than something somebody remembers. When a shoot lands, update
+  `PENDING_PHOTOGRAPHY`.
+
+`tsconfig` carries `allowImportingTsExtensions` so the `.ts`-suffixed imports those files
+need do not fail `tsc`. **A test file may only import modules that import types only** —
+`archive.ts` and `queries.ts` cannot be reached from one, because a bare `from "./products"`
+two modules down resolves to nothing under Node.
+
+**`npm run e2e`** — Playwright, in `e2e/`, three projects: `chromium`, `webkit` and
+`mobile` (Pixel 5, which is what switches the site onto its touch branch). The suite
+builds and serves the site itself on port 3100, so it never collides with `npm run dev`.
+
+| Spec | Covers |
 |---|---|
-| Install | `npm install` |
-| Dev | `npm run dev` |
-| Build | `npm run build` |
-| Lint | `npm run lint` |
-| Type check | `npm run typecheck` |
-| Test | `npm test` |
-| End to end | `npm run e2e` |
+| `routes.spec.ts` | Every route: 200, an `h1`, no console errors, no failed requests, **no horizontal overflow at either width**, every scroll entrance actually fires, nothing pins, the release index agrees with its own rows, and the storefront offers no purchase it cannot take |
+| `navigation.spec.ts` | The index overlay opens, navigates, closes on arrival, and releases the scroll lock |
+| `commerce.spec.ts` | The whole purchase path — **`test.skip`ped on `STORE_OPEN`**, so it is 40 skipped tests today and a full suite the day payment is connected |
 
-Run **both** `npm run lint` and `npm run build` before declaring work done. Lint enforces
-React Compiler rules that the build does not.
+Run one file or one test:
 
-`npm test` runs the assert-based checks in `lib/` through Node directly — no framework and
-no dependency, Node strips the types. They cover the three things that fail silently: the
-postal patterns in `lib/commerce/regions.ts`, the cents-to-currency rounding in
-`lib/format.ts`, and the line between a photograph and a stand-in in
-`lib/catalog/photography.test.ts`. `tsconfig` carries `allowImportingTsExtensions` so the
-`.ts`-suffixed imports those files need do not fail `tsc`.
+```bash
+npx playwright test e2e/routes.spec.ts
+npx playwright test e2e/routes.spec.ts:226
+npx playwright test --project=mobile
+npx playwright install --with-deps chromium webkit   # first run only
+```
+
+Two of these exist because the suite once passed over a broken site, and the comments in
+`routes.spec.ts` say so: the scroll-entrance test was written after `.reveal-frame`
+clipped the very element its own IntersectionObserver was watching, so every product card
+stayed invisible while the console stayed clean and every other assertion passed. **When
+you fix a class of bug, leave the assertion behind.**
+
+**Manual checks no test makes.** Run with scripting disabled and with
+`NEXT_PUBLIC_FILLER_IMAGES=off`, and with `prefers-reduced-motion` on. The site is built
+to work in all three states and nothing in CI proves it.
+
+---
+
+## Recipes
+
+The tasks that come up, and the places they touch. Every one of these has been got wrong
+by touching one file and not the other three.
+
+### Add or change a product
+
+`lib/catalog/products.ts` only. Prices are **cents**. `runSize` is the real number made,
+never a marketing figure, and `variants[].inventory` is real stock — availability and
+every "x left" on the site derive from them. A new piece automatically gets a permanent
+garment number, a sitemap entry and a static route; it gets a release-index row once it is
+actually released, which is what keeps `/releases` an index of releases rather than of
+intentions.
+
+### Add a photograph
+
+Put the file in `public/photography` and add its `src` to the slot that already declares
+it — in `products.ts`, `campaign.ts`, `drops.ts` or `images.ts`. **That is the whole
+change; no layout moves.** Then update `PENDING_PHOTOGRAPHY` in `photography.test.ts`, or
+`npm test` fails. Alt text describes the photograph and nothing else — never the state of
+the shoot, never a note to the team.
+
+### Add a route
+
+Four places, and missing one is the usual bug:
+
+1. the page's own `metadata` (title, description, canonical, OG)
+2. `app/sitemap.ts`
+3. `lib/site.ts` — `NAV_PRIMARY`, `NAV_INDEX`, `FOOTER_*`, `INFORMATION` as appropriate
+4. any relevant JSON-LD, through `jsonLd()`
+
+Add it to `ROUTES` in `e2e/fixtures.ts` too, unless it is deliberately unreachable — and
+if it is, say why there, as `/account` and `/checkout` do.
+
+### Add a section to a page
+
+Open it with `SectionHeading`; open a page with `PageIntro`. Neither hand-rolls its
+eyebrow, its rule or its top padding. **A section's mono index is its position on that
+page, counted as the page renders** — never a drop's number, and never hard-coded where a
+section is conditional (see `sectionIndex()` in `app/shop/[slug]/page.tsx`).
+
+### Change a price, a rate, a count or a date
+
+Never in copy. Prices come from the catalogue, availability from `resolveAvailability()`,
+run figures from `runStatus()`, shipping from `lib/commerce/shipping.ts`, counts from the
+same filter the grid runs. **A number typed into a sentence is a number that will be
+wrong** — a "Nine pieces" line against a drop of seven is exactly how, and a shop hero
+reading "7 pieces in the run" above a grid headed "9 pieces" is how it happened again.
+
+### Connect payment
+
+Set `STORE_OPEN = true` in `lib/commerce/state.ts` and implement the server route the
+payment step calls. That single flag restores `isPurchasable()`, every add-to-bag control,
+the drawer, the header bag, `/checkout` and the skipped e2e suite. Do not add a second
+check anywhere.
+
+### Say that something is not ready
+
+Say it once, quietly, where the missing thing would have been — and never as a roadmap.
+Prefer removing the dead control to explaining it: the newsletter is a `mailto:` rather
+than a form that admits it sent nothing, `/account` is unlinked rather than a list of
+what sign-in would add, and `/size-guide` serves its how-to-measure half rather than a
+table of em dashes. Record the blocker here, where the people who can fix it will read it.
 
 ---
 
 ## Code style
 
+### The basics
+
 - Server components by default; `"use client"` only for cart, wishlist, search, gallery,
   filters, accordions, and overlays.
 - Comments explain *why*, never *what*. No `console.log`.
+- Tailwind class order: layout → sizing → spacing → color → typography → effects → state.
+- No `any` unless there is genuinely no alternative, and say why in a comment when there
+  is not.
+- **Hyphenated JSX attributes (`data-whatever`) typecheck on ANY component** whether or
+  not it forwards them, so they are silently dropped on custom components with no error
+  anywhere. Declare a real prop instead.
+
+### Accessibility
+
+These are not taste, and they are the one category that overrides the owner's direction.
+
 - Overlays (drawer, search, mobile nav, modals, filter sheet) must have
   `role="dialog"`, `aria-modal`, a focus trap, ESC-to-close, and scroll lock. Use the
-  hooks; do not re-implement.
-- Tailwind class order: layout → sizing → spacing → color → typography → effects → state.
+  hooks in `lib/hooks.ts`; do not re-implement.
+- **Use the platform before reaching for ARIA.** The size selector is a `fieldset` of real
+  radios because a radio group already has arrow-key navigation, roving focus and the
+  right announcement; the sort control is a `<details>` because a disclosure already has
+  keyboard behaviour and an open state the browser owns. Both still work with no
+  JavaScript. Do not use ARIA to compensate for the wrong element.
+- **Interactive controls carry a real box**, not an expanded invisible overlay: header
+  icons are `h-11 w-11` flex boxes, small mono links get `-my-2 py-2`. An absolutely
+  positioned hit area steals clicks from its neighbours. 24px is the floor
+  (WCAG 2.5.8) — the footer was under it on every route once.
+- A disabled option is struck through and faint, **not merely faded**; the one thing the
+  spec says must not be "merely a colour change" was once the most faded thing on the site.
+- Alt text describes the image. Never the state of the shoot, never an internal note —
+  every slot on the site once carried "— stand-in photograph, THARROS photography pending"
+  in its accessible name.
+- Heading order is real. A section that emits no `h2` does not get a visually hidden one
+  bolted on to fill the gap.
+
+### SEO and metadata
+
 - **Structured data goes through `jsonLd()`** (`lib/jsonld.ts`), never raw
   `JSON.stringify` — it escapes `<` and the U+2028/U+2029 line separators that would
   otherwise break out of the inline `<script>` once catalog content is CMS-driven.
-- **Interactive controls carry a real box**, not an expanded invisible overlay: header
-  icons are `h-11 w-11` flex boxes, small mono links get `-my-2 py-2`. An absolutely
-  positioned hit area steals clicks from its neighbours.
+- **Never emit schema that contradicts the store.** `AVAILABILITY_SCHEMA` is derived from
+  the same `resolveAvailability()` the page renders from, and a `Product` image key is
+  published only when the piece actually has a photograph — publishing a stand-in's URL
+  would be telling Google that a piece of free-licence stock is the garment.
+- Unfinished legal drafts carry `robots: { index: false }` and stay out of `sitemap.ts`.
+
+### Layout
+
 - Every sticky column is bounded; an unbounded sticky element taller than the viewport
   hides its own bottom on short screens. **`max-h` + `overflow-y-auto` is the bound for a
   column of TEXT.** A picture takes its height from its width and its ratio, so the same
@@ -383,6 +638,14 @@ postal patterns in `lib/commerce/regions.ts`, the cents-to-currency rounding in
   the picture and the list beside it were within 120px of the same height. **A sticky
   frame only reads as sticky if what travels past it is meaningfully taller.** Measure
   both before reaching for it.
+- **Anything anchored to the foot of the viewport takes `.pb-safe`** — on the panel, not
+  on the block inside it.
+
+### Motion
+
+The whole system is `DESIGN.md` §6. These are the parts that are engineering rather than
+taste, and every one of them shipped a real bug first.
+
 - **Never pin a scene. Not on any route, not at any width.** The site must not
   stop or slow the page anywhere — that is the owner's direction, not a
   performance note. `Scene` no longer accepts a `pin` prop and `e2e` asserts no
@@ -404,15 +667,42 @@ postal patterns in `lib/commerce/regions.ts`, the cents-to-currency rounding in
   `globals.css` behind `[data-js]` (see `.scene-oversize`).
 - **A scene is authored as a section that already reads,** and the motion goes
   on top of it. That is what keeps the reduced-motion and no-JS paths whole.
-- Hyphenated JSX attributes (`data-whatever`) typecheck on ANY component
-  whether or not it forwards them, so they are silently dropped on custom
-  components with no error anywhere. Declare a real prop instead.
+- **Nothing may be hidden in the served HTML that only JavaScript can bring back.** A
+  pre-state a scene animates away from goes in `globals.css` behind `[data-js]`. There is
+  a dead-man switch for the case `[data-js]` never covered — scripting present at first
+  paint and then failing — armed in the head script and cleared by `MotionRuntime`. Test
+  it by blocking `/_next/static/chunks/*` and loading `/`.
 - **A `Reveal` mode must never clip the element `Reveal` observes.** The
   entrance waits on an IntersectionObserver, and an element clipped to no area
   reports `isIntersecting: false` forever — it hides itself, which stops it
   being seen, which stops it being shown. `.reveal-frame` and `.reveal-wipe`
   clip `> *` for exactly this reason. Verified: the same node jumps from
   `ratio: 0` to `ratio: 0.725` the instant its own clip-path is removed.
+
+---
+
+## Git and CI
+
+**Work lands on `main` directly.** The owner has asked for finished work to be committed
+and pushed without being asked first, so: finish it, verify it, commit it with a real
+message, push. Do not open a branch or a PR unless asked. Do not stop to request
+permission. **Do report plainly if verification failed rather than pushing broken work,**
+and stop and ask before anything destructive — a force push, a history rewrite, deleting
+a branch.
+
+Commit messages are a sentence about what changed and why, in the site's own register:
+lowercase-ish, plain, no ceremony, no emoji. `The drop page leads with the drop` is the
+house style. End with the co-author trailer.
+
+`.github/workflows/ci.yml` runs on every PR and every push to `main`, in two jobs:
+
+- **check** — `npm ci` → `lint` → `build` → `test`. Lint first, deliberately: it enforces
+  the React Compiler rules the build does not, and it fails in seconds.
+- **e2e** — `npm ci` → `playwright install --with-deps chromium webkit` → `npm run e2e`,
+  uploading the report as an artifact only on failure.
+
+CI runs the same four commands you can run locally, so there is no excuse for finding out
+from CI.
 
 ---
 
