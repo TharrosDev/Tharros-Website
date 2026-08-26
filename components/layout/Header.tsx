@@ -18,17 +18,11 @@ import { STORE_OPEN } from "@/lib/commerce/state";
 const TRANSPARENT_ROUTES = new Set(["/"]);
 
 /**
- * The navigation trigger, declared once and mounted twice.
- *
- * It sits on the left below `md` — where it is the only navigation there is —
- * and on the right from `md` up, beside the other utilities, once the primary
- * links have taken the left cell. Those are two different grid cells, so one
- * element cannot occupy both.
- *
- * The alternative was a single button reordered with CSS, which puts the tab
- * order out of step with the visual order at one breakpoint or the other. Two
- * display-gated instances keep them in step: `display: none` removes the
- * inactive one from the accessibility tree, so exactly one is ever exposed.
+ * The navigation trigger, declared once and mounted twice — left below `md`,
+ * right from `md` up. Those are two different grid cells, and reordering one
+ * element with CSS would put the tab order out of step with the visual order at
+ * one breakpoint or the other. `display: none` removes the inactive instance
+ * from the accessibility tree, so exactly one is ever exposed.
  */
 function MenuButton({
   open,
@@ -112,23 +106,13 @@ export default function Header() {
         Skip to content
       </a>
 
-      {/* The floating → solid change is a cross-fade between two grounds that
-          are both always present, rather than a swap of the whole class string.
-          Before this the scrim was a `before:` gradient that only existed while
-          floating, so it vanished the instant the page passed 24px — the colour
-          transitioned and the picture behind the header did not.
+      {/* THE CHROME INVERTS OVER THE HERO: paper ink on a gradient there, dark
+          ink on a plate everywhere else.
 
-          THE CHROME INVERTS OVER THE HERO. It was light on every route for a
-          while, which was correct while the opening screen kept its picture to
-          one side and the header sat on paper. The hero is a full-bleed
-          photograph again, so dark ink on it is unreadable at any weight, and
-          the chrome goes back to paper ink over a gradient held off the top
-          edge. On every other route it is light, as before.
-
-          What changes is the ground AND the ink, and both cross-fade: two
-          grounds that are always present, one fading out as the other fades
-          in. Swapping the class string outright means the gradient ceases to
-          exist at the threshold rather than leaving. */}
+          Both grounds are always present and cross-fade. Swapping the class
+          string outright makes the gradient cease to exist at the threshold
+          rather than leave, so the colour transitions and the picture behind
+          the header does not. */}
       <header
         className={`fixed inset-x-0 top-0 z-[var(--z-header)] [transition:color_var(--dur-base)_var(--ease-out-quart)] ${
           floating ? "on-dark" : "text-ink"
@@ -150,14 +134,11 @@ export default function Header() {
             floating ? "opacity-0" : "opacity-100"
           }`}
         />
-        {/* THREE CELLS, NOT A FLEX SPLIT.
-            The mark is centred on the frame, and it has to stay centred while
-            the sides change width — which they do at runtime: the bag count
-            appears and grows, the saved count appears, the active nav label
-            changes length. `justify-between` would centre the middle group in
-            whatever space the other two left over, so the wordmark would drift
-            every time something was added to the bag. An `auto` column between
-            two `1fr` columns is centred on the frame regardless. */}
+        {/* THREE CELLS, NOT A FLEX SPLIT. The sides change width at runtime —
+            the bag count appears and grows, the saved count appears — and
+            `justify-between` would centre the middle group in whatever space
+            they left over, so the wordmark would drift on every add to bag. An
+            `auto` column between two `1fr` columns is centred regardless. */}
         <div
           className="page-frame grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4"
           style={{ height: "var(--header-h)" }}
@@ -176,12 +157,10 @@ export default function Header() {
                       <Link
                         href={item.href}
                         aria-current={active ? "page" : undefined}
-                        /* Active carries a rule as well as full opacity. On
+                        /* Active carries a rule as well as full opacity: on
                            11px type a 30% opacity step is the faintest signal
                            in the system, spent on the one control that says
-                           where you are. The hairline is the same gesture
-                           `.link-rule` already uses on text links, so it reads
-                           as this site rather than as a tab bar. */
+                           where you are. */
                         className={`type-meta relative inline-flex h-11 items-center px-3 transition-opacity hover:opacity-60 ${
                           active
                             ? "opacity-100 after:absolute after:inset-x-3 after:bottom-2.5 after:h-px after:bg-current"
@@ -210,15 +189,10 @@ export default function Header() {
           <div className="flex flex-col items-center justify-self-center">
             <Link
               href="/"
-              /* A 24px box, for the same reason the stamp below it has one.
-                 The mark was as tall as its glyphs — 18px on a phone — and the
-                 stamp sits flush under it with no gap at all, so the home link
-                 and `/drop` were two abutting targets 21px between centres.
-                 That is a mis-tap on the control every route carries.
-
-                 The box grows symmetrically around a glyph that was already
-                 centred in it, so the mark itself does not move; the pair is
-                 3px taller and the stamp drops by that much. */
+              /* A 24px box. The mark is as tall as its glyphs — 18px on a
+                 phone — and the stamp sits flush under it, so without the box
+                 the home link and `/drop` are two abutting targets 21px between
+                 centres. */
               className="inline-flex h-6 shrink-0 items-center"
               aria-label="THARROS — home"
             >
@@ -239,9 +213,8 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-1 justify-self-end md:gap-3">
-            {/* Search had no visible affordance at all — it was reachable from
-                inside the index overlay, or from a `/` shortcut documented
-                nowhere. That is a shortcut standing in for a control. */}
+            {/* A real control, not just the `/` shortcut below: a shortcut
+                documented nowhere is not an affordance. */}
             <button
               type="button"
               onClick={openSearch}
@@ -252,16 +225,13 @@ export default function Header() {
               <span className="visually-hidden">Search</span>
             </button>
 
-            {/* Saved is per-visitor state, so it belongs beside the bag rather
-                than counted on the navigation button — a number on "Menu" is a
-                number about something the menu is not. It appears only once
-                something is in it: a permanent zero is chrome displaying a
-                nothing, the same reason the bag count is absent at zero.
+            {/* Saved sits beside the bag and appears only once something is in
+                it — a permanent zero is chrome displaying a nothing, which is
+                also why the bag count is absent at zero.
 
-                Not below `sm`. At 320px the frame is 272px — `--gutter` floors
-                at 1.5rem — and the bar already overflowed there once anything
-                was saved, before this layout. `IndexOverlay` lists Saved with
-                the same count, one tap away behind the Menu button. */}
+                Not below `sm`: at 320px the frame is 272px and the bar
+                overflows. `IndexOverlay` carries Saved with the same count, one
+                tap away behind Menu. */}
             {savedCount > 0 ? (
               <Link
                 href="/wishlist"
@@ -277,18 +247,16 @@ export default function Header() {
               </Link>
             ) : null}
 
-            {/* "Index" is a designer's word for a list of pages. Every customer
-                who has ever looked for navigation was looking for a menu. */}
+            {/* "Menu", not "Index": one is a customer's word, one is a
+                designer's. */}
             <MenuButton
               open={indexOpen}
               onOpen={openIndex}
               className="hidden md:inline-flex"
             />
 
-            {/* Absent, not disabled. A bag icon is a promise that there is
-                somewhere to put something, and while no payment provider is
-                connected there is not. Saved is the state a visitor can
-                actually keep, and it sits where the bag was. */}
+            {/* Absent, not disabled, while the shop is closed: a bag icon is a
+                promise that there is somewhere to put something. */}
             {STORE_OPEN ? (
             <button
               type="button"
@@ -296,10 +264,8 @@ export default function Header() {
               className="-mr-2 inline-flex h-11 items-center gap-2 px-2 transition-opacity hover:opacity-60"
             >
               <BagIcon />
-              {/* Keyed on the count so the nudge animation restarts on every
-                  add — no timer, no state. Absent rather than zero: a badge
-                  reading "0" is chrome permanently displaying a nothing, and
-                  the icon already says what it is. */}
+              {/* Keyed on the count so the nudge restarts on every add — no
+                  timer, no state. Absent rather than zero. */}
               {ready && count > 0 ? (
                 <span
                   key={count}

@@ -407,6 +407,17 @@ one sequence, numbered as one in `lib/site.ts` (`INFORMATION`), and every one of
 on `InfoFooter` — the rest of the set as a ledger. They are the site's support layer and
 they behave like a set rather than like eight unrelated pages.
 
+### The release history
+
+`/releases` is organised by drop, not by year, and each release is a campaign frame, a
+date, a statement, a piece count and its garments as pictures. It was a table of rows under
+three display-scale totals — garments, units released, sold out — which is the label's
+output as a balance sheet on a page somebody opens to look at clothes. Small runs stay a
+property of a release; they are not a KPI the visitor is asked to total.
+
+Every band renders from `releaseHistory()`, so a new drop is a record in `drops.ts` and
+nothing else.
+
 ### Browsing is by release
 
 `/shop` is cut by drop first and by category second, and the category rail only renders
@@ -420,12 +431,27 @@ Four sort orders over seven pieces was three decisions nobody had to make — tw
 the same list reversed, one of them meaningless inside a single drop. The URL still honours
 all four keys; the bar offers run order and price.
 
-### The numbering is derived
+### The numbering is derived, and it is rare
 
-A page's mono index counts the sections that actually rendered. Three sections of the
-product page are conditional on data that does not exist yet, and with hard-coded indexes
-the page printed 01 followed by 04 — which turns a position in a sequence into decoration.
-See `sectionIndex()` in `app/shop/[slug]/page.tsx`.
+A page's mono index counts the sections that actually rendered — with hard-coded indexes
+the product page printed 01 followed by 04 whenever a conditional section was absent, which
+turns a position in a sequence into decoration. See `sectionIndex()` in
+`app/shop/[slug]/page.tsx`.
+
+**A numeral has to earn its place.** The test is whether it helps someone find where they
+are. It does on `/shop`, `/drop` and the information set, where it places a page or a
+section in a real sequence. It did not on `/about`, whose three sections do not need to be
+counted, or above the product page's own record, where it was numbering a column rather
+than a section. Both are gone. Where the numbering survives it should read as a signature,
+not as filing.
+
+### The garment number is a signature, not an accession number
+
+`TH-003` is permanent, derived from release order (`lib/catalog/releases.ts`) and is the
+one thing about a piece that exists on both sides of its run closing — so it links to the
+release record. It is set in 11px mono beside the drop name, above the product title. It
+spent a while at the head of the buying column in its own numbered row, where it outranked
+the name of the thing being looked at.
 
 ### The garment card
 
@@ -455,6 +481,13 @@ Every figure is still derived; nothing here is authored.
 | `.badge`, `.badge-solid`, `.badge-quiet` | Inventory and release state |
 | `.eyebrow` | Mono index + label opening every section |
 | `.on-dark` | Flips a section to the black surface |
+
+### The buying hierarchy
+
+The product page's type column runs **name → price → description → colour → size → add to
+bag**, and everything that describes the piece rather than sells it comes after the
+control: the run line, material, fit, then the accordions. Nothing in the garment-number
+system or the run figures is allowed to visually outrank the purchase decision.
 
 ### The run ledger, removed
 

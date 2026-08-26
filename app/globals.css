@@ -24,7 +24,7 @@
      replaced most of the black ones. At 90% it was a panel; at 94.5% it is a
      change of paper. It also fixed a real defect — `--ink-faint` reads 4.79:1
      on it now, where on the old bone it was 3.66:1 and sub-AA, which is why
-     `PendingNotice` had to avoid bone entirely.
+     a notice on bone had to avoid it entirely.
 
      `--black` survives in exactly one place, the footer. */
   --black:      oklch(20% 0.006 60);  /* the footer, and nothing else */

@@ -7,6 +7,9 @@ import Accordion from "@/components/ui/Accordion";
 import { informationIndex, SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 import { RETURN_WINDOW } from "@/lib/commerce/returns";
+import { SHIPPING_OPTIONS } from "@/lib/commerce/shipping";
+import { NEXT_DROP } from "@/lib/catalog/drops";
+import { formatDate } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -16,12 +19,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Grouped. Seven questions covering four subjects rendered as one flat stack of
- * seven `h2`s under a single `h1` — an outline with no shape, on the page whose
- * whole job is letting someone find one answer.
+ * Grouped by subject rather than stacked flat, and every figure is read from
+ * the same source the rest of the site quotes — a delivery time or a release
+ * date written out here is one that goes stale without anyone noticing.
  *
- * `more` is the page that actually owns the answer. Three of these restated
- * /shipping and /returns verbatim and linked neither of them.
+ * `more` is the page that actually owns the answer.
  */
 type FaqGroup = {
   index: string;
@@ -53,9 +55,12 @@ const GROUPS: FaqGroup[] = [
       },
       {
         question: "When is the next drop?",
-        answer:
-          "Drop 002 has no date yet. The pieces announced for it are previewed on the drop page, and the list is emailed first.",
-        more: { href: "/drop", label: "Preview Drop 002" },
+        answer: NEXT_DROP
+          ? `${NEXT_DROP.name} is set for ${NEXT_DROP.releasedAt ? formatDate(NEXT_DROP.releasedAt) : "a date still to be announced"}. The pieces announced for it are previewed on the drop page, and the list is emailed first.`
+          : "The next release is not announced yet. The list is emailed first.",
+        more: NEXT_DROP
+          ? { href: "/drop", label: `Preview ${NEXT_DROP.name}` }
+          : { href: "/drop", label: "See the current drop" },
       },
     ],
   },
@@ -78,7 +83,7 @@ const GROUPS: FaqGroup[] = [
       {
         question: "How do THARROS pieces fit?",
         answer:
-          "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists the fit notes for that piece; garment measurements are published as they are taken.",
+          "Most pieces are cut boxy or oversized and are true to size as designed. Each product page lists the fit notes for that piece.",
         more: { href: "/size-guide", label: "Open the size guide" },
       },
     ],
@@ -89,8 +94,9 @@ const GROUPS: FaqGroup[] = [
     questions: [
       {
         question: "How long does shipping take?",
-        answer:
-          "Orders are packed within two business days. Standard delivery takes 5–8 business days and express 2–3 business days.",
+        answer: `Orders are packed within two business days. ${SHIPPING_OPTIONS.map(
+          (option) => `${option.name} delivery takes ${option.detail}`,
+        ).join(" and ")}.`,
         more: { href: "/shipping", label: "Full shipping detail" },
       },
       {
@@ -145,7 +151,6 @@ export default function FaqPage() {
           <section key={group.index} className="grid gap-x-12 gap-y-6 lg:grid-cols-12">
             <SectionHeading
               index={group.index}
-              label="Topic"
               title={group.label}
               titleClass="type-display-4"
               className="lg:col-span-3"

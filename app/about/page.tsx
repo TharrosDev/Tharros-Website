@@ -43,27 +43,17 @@ const structuredData = {
 };
 
 /**
- * A LABEL STATEMENT. NOT A FOUNDER'S RETROSPECTIVE.
+ * A LABEL STATEMENT, AND IT ANSWERS THREE QUESTIONS.
  *
- * This page was the strongest carrier of the positioning the site has dropped.
- * It ran five chapters — "What this is", "How it is made", "Learning in
- * public", "Why the runs are small", "Where it goes" — under the title "Built
- * from the ground up", and three of the five were about manufacturing: a
- * one-room operation, patterns and samples worn until their faults showed,
- * sewing and grading being learned rather than outsourced, runs kept small
- * because that is how much can currently be made well, and bigger runs promised
- * as the making improved. Its own opening image was pattern paper and a tape
- * measure.
- *
- * Four sections now, and every one of them is about the clothes: what they are,
- * how they are cut, what the name means, and how they come out. Nothing has
- * been invented to replace what was removed — no movement, no mythology, no
- * ethics claim the label has not earned. Where there is nothing to say, the
+ * What the clothes are, what the name means, and how they come out. That is
+ * the whole page. There is no manifesto section, no founder history, no ethics
+ * claim the label has not earned and no philosophy about what the name implies
+ * — θάρρος means courage, and the name carries that on its own without a
+ * sentence explaining what courage is for. Where there is nothing to say the
  * page is shorter instead.
  */
 const CHAPTERS = [
   {
-    index: "02",
     title: "The clothes",
     body: [
       "Heavyweight jersey, brushed fleece, cotton canvas. Cut wide through the chest and shoulder, shortened through the body, with hems and cuffs ribbed tight enough to keep the volume where it was put. The weight is the point: the cloth stands away from you instead of falling against you, and the silhouette holds its shape through a day of wear.",
@@ -71,25 +61,14 @@ const CHAPTERS = [
     ],
   },
   {
-    index: "03",
     title: "The name",
-    body: [
-      "θάρρος. Greek, and it means courage — the ordinary kind, the sort it takes to walk out of the door in something.",
-    ],
+    body: ["θάρρος. Greek. It means courage."],
   },
   {
-    index: "04",
     title: "Drops",
     body: [
       "The line is released in numbered drops rather than seasons. A drop is a small, dated set of pieces, made in a short run, and it closes when the run is gone.",
       `${BRAND_LINE} A piece that sells through may return in a later drop, changed, or it may not return at all — every product page says which.`,
-    ],
-  },
-  {
-    index: "05",
-    title: "What it is for",
-    body: [
-      "A wardrobe of a few heavy, well-proportioned things that work together and keep working. Not a catalogue. Not a season. A set of clothes that look like they came from the same eye.",
     ],
   },
 ];
@@ -124,14 +103,17 @@ export default function AboutPage() {
       </Reveal>
 
       <div className="page-frame rhythm-default">
-        {/* The label sits in its own column beside the prose, so the mono index
-            and the text form a spread rather than a stack — and the first
-            chapter runs wider than the rest, giving the sequence a beginning
-            instead of four equal steps. */}
+        {/* The title sits in its own column beside the prose, so the two form
+            a spread rather than a stack. The first chapter runs wider than the
+            rest, giving the sequence a beginning instead of three equal steps.
+
+            NO MONO NUMERALS HERE. Three sections on one page do not need to be
+            counted, and a numeral that adds nothing to orientation is
+            decoration. */}
         <div className="grid gap-x-12 gap-y-20 lg:grid-cols-12">
           {CHAPTERS.map((chapter, index) => (
               <section
-                key={chapter.index}
+                key={chapter.title}
                 className={
                   index === 0
                     ? "lg:col-span-11 lg:col-start-2"
@@ -143,10 +125,7 @@ export default function AboutPage() {
                       child it is a correct but static border. */}
                   <Reveal className="rule-draw pt-4 md:col-span-3">
                     <Parallax depth="background">
-                      <p className="eyebrow">
-                        <span className="num">{chapter.index}</span>
-                      </p>
-                      <h2 className="type-display-4 mt-4">{chapter.title}</h2>
+                      <h2 className="type-display-4">{chapter.title}</h2>
                     </Parallax>
                   </Reveal>
                   <Reveal className="space-y-5 md:col-span-9" delay={90}>
@@ -171,10 +150,10 @@ export default function AboutPage() {
 
       <section className="on-pale rhythm-breath">
         <div className="page-frame">
-          <h2 className="type-display-2 max-w-[18ch]">{CURRENT_DROP.name}.</h2>
+          <h2 className="type-display-2 max-w-[18ch]">{CURRENT_DROP.statement}</h2>
           <div className="mt-12 flex flex-wrap gap-4">
             <Link href="/drop" className="btn btn-solid">
-              See the current drop
+              Shop {CURRENT_DROP.name}
             </Link>
             <Link href="/shop" className="btn btn-outline">
               All pieces

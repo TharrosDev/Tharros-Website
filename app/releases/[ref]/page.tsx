@@ -4,16 +4,15 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ProductGallery from "@/components/product/ProductGallery";
 import SectionHeading from "@/components/ui/SectionHeading";
-import ReleaseLedger from "@/components/releases/ReleaseLedger";
+import PieceRail from "@/components/releases/PieceRail";
 import {
-  allArchiveRefs,
-  archiveEntries,
-  ARCHIVE_STATE_LABEL,
-  getArchiveEntry,
-} from "@/lib/catalog/archive";
+  allReleaseRefs,
+  releaseEntries,
+  RELEASE_STATE_LABEL,
+  getReleaseEntry,
+} from "@/lib/catalog/releases";
 import { categoryName } from "@/lib/catalog/categories";
 import { galleryImages } from "@/lib/catalog/queries";
-import { STORE_OPEN } from "@/lib/commerce/state";
 import { formatDate, formatPrice } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
@@ -21,12 +20,12 @@ import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 type Params = Promise<{ ref: string }>;
 
 export function generateStaticParams() {
-  return allArchiveRefs().map((ref) => ({ ref }));
+  return allReleaseRefs().map((ref) => ({ ref }));
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { ref } = await params;
-  const entry = getArchiveEntry(ref);
+  const entry = getReleaseEntry(ref);
   if (!entry) return { title: "Not found" };
 
   return {
@@ -45,29 +44,19 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 /**
  * THE RECORD — one garment, documented rather than sold.
  *
- * It is the product page with the buying taken out, and that is deliberate.
- * The record used to be its own composition: every frame given a whole screen
- * as a full-bleed band, one after another. Six photographs of one garment
- * arriving as six banners is not a study, it is a slideshow with no way out —
- * nothing holds still, no two frames can be compared, and a visitor who came
- * from the ledger to look a piece up has to scroll several screens of picture
- * to reach the four numbers they came for.
- *
- * So it uses the gallery every other garment on the site uses: a thumbnail
- * rail and one steady frame, the record beside it. The same page a shopper
- * already knows how to read, minus the machinery for buying. What is left is
- * quieter than the product page rather than louder — no buy panel, no size
- * selector, no logistics — and the run figures sit at the top of the column,
- * because they are what a record is about.
+ * The product page's gallery-and-column layout with the machinery for buying
+ * taken out: no buy panel, no size selector, no logistics. The run figures sit
+ * at the top of the column because they are what a record is about, which is
+ * the one place on the site where that is true.
  */
 export default async function ReleaseRecordPage({ params }: { params: Params }) {
   const { ref } = await params;
-  const entry = getArchiveEntry(ref);
+  const entry = getReleaseEntry(ref);
   if (!entry) notFound();
 
   const { product, drop } = entry;
   const frames = galleryImages(product);
-  const others = archiveEntries()
+  const others = releaseEntries()
     .filter((e) => e.garmentId !== entry.garmentId)
     .slice(0, 4);
 
@@ -169,7 +158,7 @@ export default async function ReleaseRecordPage({ params }: { params: Params }) 
               <div className="flex gap-6 py-4">
                 <dt className="type-meta w-32 shrink-0 text-ink-faint">Released</dt>
                 <dd className="type-body-sm">
-                  {product.releasedAt && drop?.releasedAt ? formatDate(product.releasedAt) : "—"}
+                  {entry.releasedAt ? formatDate(entry.releasedAt) : "—"}
                 </dd>
               </div>
               <div className="flex gap-6 py-4">
@@ -178,22 +167,17 @@ export default async function ReleaseRecordPage({ params }: { params: Params }) 
               </div>
               <div className="flex gap-6 py-4">
                 <dt className="type-meta w-32 shrink-0 text-ink-faint">State</dt>
-                <dd className="type-body-sm">{ARCHIVE_STATE_LABEL[entry.state]}</dd>
+                <dd className="type-body-sm">{RELEASE_STATE_LABEL[entry.state]}</dd>
               </div>
             </dl>
 
-            {/* The one commercial line on the page, and it is a text link. If
-                the run is closed there is nothing to link to and nothing is
-                said. */}
-            {/* The one commercial line, and it follows the storefront: while
-                the shop cannot take payment it points at the piece rather than
-                promising a purchase. `open` is stock, `STORE_OPEN` is the
-                store — a closed run is not for sale either way. */}
+            {/* The one commercial line on the page, and it is a text link. A
+                closed run has nothing to link to, so nothing is said. */}
             {entry.state === "available" ? (
               <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4">
                 <p className="type-meta text-ink-faint">This run is still open.</p>
                 <Link href={`/shop/${product.slug}`} className="link-rule link-rule-reveal">
-                  {STORE_OPEN ? "Buy this piece" : "See this piece"}
+                  Buy this piece
                 </Link>
               </div>
             ) : null}
@@ -204,11 +188,13 @@ export default async function ReleaseRecordPage({ params }: { params: Params }) 
           <div className="page-frame rhythm-tight">
             <SectionHeading
               index="01"
-              label="The index"
-              title="Elsewhere in the index."
+              label="Released"
+              title="Elsewhere in the record."
+              titleClass="type-display-3"
               action={{ href: "/releases", label: "All releases" }}
+              className="mb-12"
             />
-            <ReleaseLedger entries={others} />
+            <PieceRail entries={others} />
           </div>
         ) : null}
       </article>

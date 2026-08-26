@@ -2,38 +2,29 @@ import Image from "next/image";
 import type { ImageSlotData, Ratio } from "@/lib/catalog/types";
 
 /**
- * TEMPORARY VISUALISATION AID — delete once real photography lands.
+ * DEVELOPMENT SCAFFOLDING, AND IT IS AN IMPLEMENTATION DETAIL.
  *
- * No garment has been photographed, so every product slot on the site renders
- * as an empty frame. That is honest but it makes whole pages hard to read:
- * rhythm, contrast and crop all disappear. This puts a stand-in photograph in
- * the slot instead — picked from `public/filler` by the slot's own `kind` and
- * `crop`, and held steady by the slot's `code` so a piece keeps the same frames
- * across renders — so the layout can be judged before the shoot.
+ * A slot with no `src` would otherwise render as an empty frame, which is
+ * honest but makes rhythm, contrast and crop impossible to judge. This puts a
+ * stand-in in the slot instead, picked from `public/filler` by the slot's own
+ * `kind` and `crop` and held steady by its `code`.
  *
- * It only ever fires for a slot with no `src`. A stand-in is never declared as
- * one: `lib/catalog/photography.test.ts` fails if a `src` points in here.
+ * THE RULES THAT KEEP IT SAFE:
  *
- * The stand-ins are free-licence stock (Openverse, CC0 and public domain),
- * fetched by `scripts/fetch-filler.mjs` and credited in
- * `scripts/filler-credits.json`.
+ * - It fires only for a slot with no `src`, so real photography always wins.
+ * - No product data ever names a filler asset — `photography.test.ts` fails if
+ *   a declared `src` points in here.
+ * - No component knows whether an image is a stand-in. `ImageSlot` is the only
+ *   caller and the layout is identical either way.
+ * - `NEXT_PUBLIC_FILLER_IMAGES=off` turns it off and the site must still read
+ *   as *pending* rather than broken. That is the test that a layout is
+ *   photography-ready rather than filler-dependent. Run it before calling any
+ *   image work done.
  *
- * THAT CREDITS FILE IS NOW EMPTY, AND IT IS NOT A CLEAN BILL. It only ever
- * held three entries, all in the `campaign` pool, and that pool has been
- * deleted — so the twenty frames still in `public/filler` have no recorded
- * source. They did not come from a run of the fetch script that wrote credits.
- * Nothing here ships as THARROS work and nothing here should reach production,
- * but if any of it ever needed attributing, the provenance would have to be
- * re-established by refetching rather than looked up. Refetching is one
- * command and it writes the credits as it goes. They are in colour and ungraded: an earlier
- * set was desaturated to a monochrome palette, which read as an art direction
- * the label had chosen rather than as scaffolding, and could not be undone —
- * a greyscale JPEG has no hue left to restore. They are not THARROS product
- * and nothing here should ship.
- *
- * Turning it off is one flag: `FILLER_IMAGES` below — and the site is designed
- * to still read as *pending* with it off, which is the test that a layout is
- * photography-ready rather than filler-dependent.
+ * The stand-ins are free-licence stock (Openverse, CC0 and public domain)
+ * fetched by `scripts/fetch-filler.mjs`, which writes `filler-credits.json` as
+ * it goes. That file is currently empty, so the frames on disk have no recorded
+ * provenance — refetching re-establishes it. Nothing here ships as THARROS work.
  */
 
 /** Set to false (or `NEXT_PUBLIC_FILLER_IMAGES=off`) to get the empty frames back. */

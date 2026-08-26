@@ -4,7 +4,7 @@ import InfoSections from "@/components/layout/InfoSections";
 import InfoFooter from "@/components/layout/InfoFooter";
 import { informationIndex } from "@/lib/site";
 import { CONTACT_EMAIL } from "@/lib/site";
-import { RETURN_WINDOW } from "@/lib/commerce/returns";
+import { RETURN_WINDOW, RETURN_WINDOW_WORDS } from "@/lib/commerce/returns";
 
 export const metadata: Metadata = {
   title: "Returns",
@@ -19,7 +19,7 @@ export default function ReturnsPage() {
         index={informationIndex("/returns")}
         label="Information"
         title="Returns"
-        lead="Thirty days, unworn, tags on. The rest is detail."
+        lead={`${RETURN_WINDOW_WORDS}, unworn, tags on. The rest is detail.`}
         crumbs={[{ name: "Home", href: "/" }]}
       />
       <InfoSections

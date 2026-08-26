@@ -8,57 +8,30 @@ import { campaignFor } from "@/lib/catalog/campaign";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 import { listProducts } from "@/lib/catalog/queries";
 import { formatDate } from "@/lib/format";
-import { STORE_OPEN } from "@/lib/commerce/state";
 
 /**
  * THE OPENING SHOT — one picture, most of the screen, and the line over it.
  *
- * This replaces a split composition in which the type held the left half of
- * the page and the photograph was masked into the right. That version existed
- * to avoid a scrim: on a light ground, dimming a photograph so ink can sit on
- * it is a tax the whole composition pays. It was the right answer for a page
- * that opened as a document.
+ * THE SCRIM IS TWO ANCHORED BANDS, NOT A FLAT WASH. Each band is attached to
+ * the block it protects — the release record at the top, the statement and the
+ * controls at the foot — so the middle third of the frame, where the subject is
+ * and where no type ever sits, is never dimmed. The header's own gradient on
+ * this route is the top band's upper reach, not a fourth layer.
  *
- * The site does not open as a document any more. It opens as a frame, and a
- * frame that takes half the screen is a picture on a page rather than a shot.
- * So the scrim comes back, and it is paid for deliberately:
+ * MOST OF THE SCREEN, NOT ALL OF IT. 88svh, 92 from md. At 100svh the page ends
+ * on the darkest part of its own foot band with nothing below it visible, which
+ * is a splash screen. The paper of `TheRun` showing under the picture is the
+ * only scroll cue the page needs — there is no chevron and no microcopy.
  *
- * - **Two anchored bands, not a flat wash.** The bands are attached to the
- *   blocks they protect — one under the metadata at the top, one under the
- *   statement and the controls at the foot. A flat wash across the whole frame
- *   dims the middle third, which is the part of the picture with the subject
- *   in it and the part no type ever sits on.
- * - **The bands are the only dimming.** The header's own gradient on this
- *   route is the top band's upper reach, not a fourth layer.
+ * THE CAMERA. Three planes leaving at three rates as the page scrolls: the
+ * picture pushes in, the wordmark drifts, the type leaves fastest. That
+ * difference is what reads as depth. The scale sits on the picture's own
+ * wrapper, so it composites and never repaints. The release record has no rate
+ * of its own — four planes is one more than the eye reads as depth.
  *
- * MOST OF THE SCREEN, NOT ALL OF IT. The frame was `100svh`, which made the
- * home page a splash screen: it ended on the darkest part of its own foot band
- * with nothing below it visible or implied, and the only reason to scroll was
- * the belief that a site normally has more. At `92svh` the paper of `TheRun`
- * and the top of its drawn rule sit under the picture, and the change of
- * surface is the scroll cue. Nothing has to say "scroll".
- *
- * THE FOOT IS TWO ANCHORS, NOT A STACK. The statement, the run figures, the
- * ledger bar, two controls and the worn rail were one left column. Five blocks
- * in a line need a foot band 62svh deep to stay readable, which is two thirds
- * of the photograph dimmed on a site whose thesis is that the clothing supplies
- * the colour. The statement and its controls hold the left; what is in the
- * frame holds the right; and the run figures are gone from here — `runStatus()`
- * prints them under every card in `TheRun` one screen below, and the record row
- * at the top of this frame already says how small the drop is. The band is
- * 44svh now and the picture is visible over half its own height.
- *
- * THE CAMERA. The picture is pushed in as the page scrolls while the type
- * drifts up faster than it does, and the wordmark between them drifts slower
- * than the type. That difference is what reads as depth: the frame is not
- * moving, the camera is. The scale sits on the picture's own wrapper, so it
- * composites and never repaints.
- *
- * WHAT IS NOT ANIMATED, and why. The h1 is the largest paint on the site's
- * most visited route. It is never hidden, never inside a pinned scene and
- * never waiting on GSAP — SplitLines renders it as ordinary text and enhances
- * it once the library arrives. There is no pin anywhere in here, and there is
- * no pin anywhere on the site — `Scene` does not take the prop.
+ * The h1 is the largest paint on the site's most visited route: never hidden,
+ * never inside a pinned scene, never waiting on GSAP. `SplitLines` renders it
+ * as ordinary text and enhances it once the library arrives. Nothing pins.
  */
 export default function DropOpening() {
   const pieces = listProducts({ drop: CURRENT_DROP.id });
@@ -264,18 +237,12 @@ export default function DropOpening() {
           />
 
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-12">
-            {/* THE LABEL FOLLOWS THE STORE, NOT THE OTHER WAY ROUND. While
-                no payment provider is connected this cannot say "Shop the
-                drop" — the drop is fully browsable and nothing in it can be
-                bought, and a button that promises a transaction is where the
-                old contradiction started. It sends you to the same place
-                either way. */}
             <Magnetic>
               <Link
                 href={`/shop?drop=${CURRENT_DROP.slug}`}
                 className="btn btn-inverse"
               >
-                {STORE_OPEN ? "Shop the drop" : "See the pieces"}
+                Shop the drop
               </Link>
             </Magnetic>
             <Link href="/drop" className="link-rule link-rule-reveal">

@@ -7,10 +7,23 @@ something was got wrong once.
 
 **In one paragraph:** content is data and never lives in JSX; everything that reads
 products goes through `lib/catalog/queries.ts`; numbers are derived, never typed into
-copy; the storefront cannot take payment and every purchase control derives from one flag;
-the site must build, work by keyboard, work without JavaScript, and never claim something
-that is not true about stock, orders or payment. Everything else is the owner's taste, and
-the owner's taste wins.
+copy; the storefront is a complete, active shop and every external system it will
+eventually need sits behind one thin seam; the site must build, work by keyboard, work
+without JavaScript, and never claim something that is not true about stock, orders or
+payment. Everything else is the owner's taste, and the owner's taste wins.
+
+**THE RULE FOR THIS PHASE, AND IT OVERRIDES ANY OLDER NOTE THAT CONTRADICTS IT:**
+
+> The THARROS storefront is designed and tested as a complete active ecommerce
+> experience. The current catalogue data is the working source of truth. Do not degrade
+> the customer experience into a pre-launch portfolio because external commerce
+> infrastructure is not yet connected. Keep provider boundaries clean so real catalogue,
+> inventory, payment, shipping and newsletter systems can replace the local
+> implementations later without redesigning the frontend.
+
+And the one it does not replace:
+
+> The clothes are the subject; how they are made is not the pitch.
 
 ## Start here
 
@@ -39,9 +52,10 @@ Sibling documents, and what each one owns:
 
 ## Status and who decides
 
-**This site is not live, and will not be for a while. It is in active development.**
-Nothing here is shipping to customers today, so nothing needs to be defended against a
-launch date that does not exist.
+**The site is in active development and behaves as a finished storefront.** The customer
+experience is not staged, gated or annotated with its own build state: a visitor shops,
+picks a size, fills a bag and walks a checkout. What is not yet connected is connected
+behind a seam, not disclosed in the UI.
 
 **Creative direction belongs to the owner.** Look, feel, layout, typography, colour,
 motion, copy voice, imagery, what a page is for — all of it is the owner's call, not an
@@ -146,70 +160,68 @@ is unwired because the site is pre-launch, not because it is waiting on a decisi
 | Area | State |
 |---|---|
 | Catalog, cart, sizes, inventory, wishlist, search, filtering, sorting | **Real and working** |
-| Checkout up to payment | **Built and stood down** — `CheckoutFlow` still holds the working two-step flow (details, address, delivery, live totals). `/checkout` redirects to `/shop` while the store is shut. |
-| Payment | **Not connected**, and the whole storefront now derives from that one fact. See **The commerce state** below. |
-| Accounts / sign-in | **Not connected.** `/account` is unlinked and `noindex`, and says one sentence. Nothing in the header, the index overlay or the footer points at it. |
-| Newsletter signup | **Not connected.** `NEWSLETTER_CONNECTED` is false, so the footer offers a real `mailto:` instead of a form whose only outcome was a failure message. The form is still in `Newsletter.tsx` behind the flag and needs a POST target. |
+| Checkout | **Real and working** up to the provider boundary — two steps, live totals, validated address, persisted progress. |
+| Payment | **Not connected.** One function: `createCheckout()` in `lib/commerce/checkout.ts`. It currently hands the composed order to the label; nothing else on the site knows a provider exists. |
+| Accounts / sign-in | **Not connected.** `/account` is unlinked and `noindex`. The bag and the saved list live on the device, so nothing about shopping depends on an account. |
+| Newsletter signup | **Not connected.** One function: `subscribe()` in `lib/commerce/newsletter.ts`. The form in `Newsletter.tsx` is the finished UI and already renders every state a provider returns. |
 | Motion | **Real.** GSAP 3.15 (ScrollTrigger and SplitText — Flip was registered for a year and never called, so it is no longer loaded), dynamically imported so it never enters the shared chunk. Scene system in `components/motion/`, tokens in `lib/motion/config.ts`. See `DESIGN.md` §6 — especially the no-pinning rule and the no-hidden-HTML rule. |
 | Route transitions | **Real** — an ink plane that lifts off each new route (`RouteCurtain`). Cross-route *image continuity* is **not** built: it needs React's `ViewTransition`, which is not in stable React 19.2.4, and it cannot coexist with the curtain anyway. `DESIGN.md` §6 records why. |
 | Opening sequence | **Real**, on `/` only, once per session, CSS-driven so it clears without JavaScript. Armed in the head script, not in React. |
 | Site photography | **Thirteen frames shot, ten in use**, in `public/photography` — the home hero (`CMP-001-HERO`), three campaign frames, the Drop 001 cover, the four index-overlay frames and one for `/about`. Declared in `campaign.ts`, `drops.ts` and `images.ts` (`NAV_FRAMES`, `PAGE_FRAMES`). **Three are withdrawn and rendered nowhere:** `abt-01.jpg` and `prc-01.jpg` (pattern paper, a part-sewn sample, a work table) and `drop-002-cover.jpg` (cut canvas, a chalk line, pins) — all three are pictures of clothes being made, and the surfaces that carried them are gone. The files stay on disk; `docs/PHOTOGRAPHY_PROMPT.md` records why. |
 | Product photography | **Not shot yet.** All 54 product slots are pending, so every card, gallery and thumbnail is a stand-in. Session 2 of `docs/PHOTOGRAPHY_PROMPT.md` is the queue. A slot with no `src` renders a free-licence colour stand-in from `public/filler` (`components/media/FillerImage.tsx`), fetched by `scripts/fetch-filler.mjs` and credited in `scripts/filler-credits.json`. `NEXT_PUBLIC_FILLER_IMAGES=off` shows the bare frames. Dropping in real photography is a data change and moves no layout — `lib/catalog/photography.test.ts` fails if a `src` ever points into `public/filler`, or if the list of pending pieces stops matching the catalogue. |
 | Garment measurements | **Not taken.** `Product.measurements` is optional and unset everywhere and `pieceTable()` returns null. **No empty table ships:** `/size-guide` renders the how-to-measure half only, the PDP accordion says "Measurements coming soon", and `SizeGuideModal` drops its table when every cell would be an em dash. The structure in `lib/catalog/sizing.ts` is unchanged, so filling in real figures is a data change that brings all three tables back. |
-| Product data, prices, run sizes | **Placeholder**, marked as such in the data files. |
+| Product data, prices, run sizes | **The working catalogue.** Treat names, prices, run sizes, inventory, colourways, fit and the two drops as real THARROS data. Replacing them is an import, not a redesign. |
 | Legal pages | **Working drafts** under `/legal`, marked as such on the page and `noindex`, and absent from the sitemap. That admission belongs on the legal document and nowhere else — `/returns` used to carry it too, under a heading a customer opened for the returns policy. **They need human legal review before commerce launch.** |
-| Shipping rates | **Not confirmed.** `SHIPPING_RATES_CONFIRMED` in `lib/commerce/shipping.ts` is false, so `/shipping` names the delivery options without quoting their costs. A placeholder rate printed as a price with a disclaimer under it is still a price. |
-
-Four factual constraints follow from that table. They are about not asserting things that
-are untrue, so they hold regardless of how the site looks:
-
-- **Do not fake functionality.** No mock payment success, no fake order confirmation, no
-  simulated sign-in.
-- **Do not narrate the unfinished parts to customers.** No public commentary about pending
-  photography, unconnected payment, missing measurements, provisional carrier contracts,
-  sign-in that is not live, or legal review. Handle an incomplete thing gracefully — a
-  shorter page, a cleaner empty state, a control that is absent rather than dead — and
-  record the blocker here, where the people who can fix it will read it. Internal notes
-  must never reach alt text, metadata, captions or accessible names: every image slot's
-  `alt` used to have "— stand-in photograph, THARROS photography pending" appended to it.
-- **Do not fabricate** reviews, testimonials, press, collaborations, customer counts,
-  sustainability or manufacturing claims, founding history, or model measurements.
-- **Numbers come from the data.** Availability is derived in `resolveAvailability()`, and
-  run figures come from `runStatus()`. Do not hand-type a piece count or a stock number
-  into copy — it drifts. (A "Nine pieces" line against a drop of seven is exactly how.)
-- **Only claim a restock policy the data states.** "Will not be remade" renders solely
-  when `restock: "none"`.
+| Shipping rates | **The working rates.** `lib/commerce/shipping.ts` is the one file, and `shippingLines()` / `freeShippingLine()` compose every sentence that quotes one. The PDP used to format `SHIPPING_OPTIONS` itself while `/shipping` formatted it a second way — two surfaces, one array, two possible answers. `e2e/routes.spec.ts` asserts the two now match. |
+| Legal pages | **Working drafts** under `/legal`, `noindex` and absent from the sitemap. **They need human legal review before launch** — that fact belongs here and not on the page. |
 
 ### The commerce state
 
-**One flag, `STORE_OPEN` in `lib/commerce/state.ts`, and everything derives from it.**
+**The storefront is open.** `STORE_OPEN` in `lib/commerce/state.ts` is `true`, and it
+exists so the shop can be *closed between drops* without deleting the purchase path — not
+as a pre-launch gate. `isPurchasable()` is the only thing that reads it. Do not add a
+second check in a component.
 
-The site used to hold two positions at once: a drop that was "out now", an add-to-bag on
-every card, a Checkout button in the drawer — and then a panel at the top of `/checkout`
-explaining that no card could be taken and the order would be composed into an email. A
-storefront that behaves as if it is live until the last screen is not honest about being
-pre-launch; the correction arrives after eight fields.
+Everything a real commerce stack eventually replaces sits behind exactly one seam each.
+The whole integration surface is five functions and two data files:
 
-While the flag is false:
+| What | The seam | What replacing it looks like |
+|---|---|---|
+| Products | `lib/catalog/queries.ts` | Point the query functions at a CMS/API. Nothing imports `products.ts` — cards, filters, PDPs and pages read the seam. |
+| Inventory & availability | `resolveAvailability()` / `isPurchasable()` / `runStatus()` | One resolver, one vocabulary (`AVAILABILITY_LABEL`). No surface invents stock logic. |
+| Cart | `lib/commerce/cart.ts` | A line is `productId + size + quantity`; everything else is re-read from the catalogue on render. |
+| **Payment** | **`createCheckout()` in `lib/commerce/checkout.ts`** | Return the provider's hosted-session URL. That is the whole change. |
+| Shipping | `lib/commerce/shipping.ts` | Real rates in one file. `shippingLines()` and `freeShippingLine()` are the sentences — no surface formats a rate itself. |
+| Returns | `lib/commerce/returns.ts` | `RETURN_WINDOW`, `RETURN_WINDOW_WORDS`. No `"30 days"` literal anywhere. |
+| Newsletter | `subscribe()` in `lib/commerce/newsletter.ts` | POST to the provider and return `ok` / `duplicate` / `error`. The form already renders all of them. |
+| Accounts | `/account` | Separable from shopping by construction — the bag and the saved list live on the device. |
 
-- `isPurchasable()` returns false for every piece, so every add-to-bag control, quick-add
-  strip and size selector on the site stands down at once. **This is the only place that
-  needs to change** — do not add a second check in a component.
-- `CartDrawer` is not mounted and the header carries no bag control.
-- `/checkout` redirects to `/shop`. `CheckoutFlow` is untouched.
-- Copy follows: "Shop the drop" is "See the pieces", "Out now" is the release date, and
-  the product page says "The shop is not open yet" once, quietly, where the buy control
-  would be.
-- `e2e/commerce.spec.ts` is `test.skip`ped on the same flag, and `routes.spec.ts` asserts
-  the opposite — that nothing offers a purchase. Both run off the import, so neither can
-  drift.
+**The rule: one obvious boundary, not an abstraction framework.** No repository factories,
+no DI container, no event bus for nine products. If a second implementation of one of the
+above ever exists, that is the moment to introduce an interface — not before.
 
-Flip it to `true` **only when a payment provider is actually connected**, and the whole
-purchase path comes back.
+### What must still never be faked
 
-How the pending state *looks* — whether a stand-in is drawn or bare, whether an unwired
-form says so loudly or quietly, whether a placeholder is framed or plain — is a design
-decision, and it is the owner's.
+These are about not asserting things that are untrue, and they hold however finished the
+site looks:
+
+- **No fake payment success.** `createCheckout()` does not mint an order id, claim a
+  charge, decrement stock or show a confirmation. Until a provider is wired it hands the
+  composed order to the label; the storefront around it is final UI either way.
+- **No fake sign-in**, no fabricated reviews, testimonials, press, collaborations,
+  customer counts, sustainability or manufacturing claims, founding history, or model
+  measurements.
+- **Do not narrate the build state to customers.** No "payment is not connected", no
+  "coming later", no prototype notices, no roadmap. Handle an incomplete thing gracefully
+  — a shorter page, a cleaner empty state, a control that is absent rather than dead — and
+  record the blocker here, where the people who can fix it will read it. Internal notes
+  must never reach alt text, metadata, captions or accessible names.
+- **Numbers come from the data.** Availability from `resolveAvailability()`, run figures
+  from `runStatus()`, counts from the same filter the grid runs, dates from the drop. A
+  number typed into a sentence is a number that will be wrong — a "seven pieces" line
+  against a drop of nine is exactly how.
+- **Only claim a restock policy the data states.** "Will not be remade" renders solely
+  when `restock: "none"`.
 
 ---
 
@@ -217,15 +229,15 @@ decision, and it is the owner's.
 
 | Route | File | Notes |
 |---|---|---|
-| `/` | `app/page.tsx` | Hero → 01 the pieces → 02 the campaign → 03 Drop 002. Four movements, down from six: the statement about scale, the studio band and the archive ledger are gone with the process narrative. The hero is `88/92svh`, not full — the grid peeks under it. 02 is a held figure beside its own column and then one landscape frame at `86svh` with nothing on it but a caption. See the page's own docblock. |
+| `/` | `app/page.tsx` | Hero → 01 the pieces → 02 the campaign → 03 the next drop. Four movements. The hero is `88/92svh`, not full — the grid peeks under it, and that change of surface is the only scroll cue. 02 is a held figure beside its own column and then one landscape frame at `86svh` carrying nothing but a caption. See the page's own docblock. |
 | `/shop` | `app/shop/page.tsx` | Filter + sort + `?q=` search, all via URL params. The only dynamic route. |
 | `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Gallery, size selector, accordions, related. SSG per product. |
 | `/drop` | `app/drop/page.tsx` | Current drop as a collection: one mono release row, the pieces, the campaign, then a Drop 002 preview. `/new` 308s here. |
-| `/releases` | `app/releases/page.tsx` | Every **released** piece, in year bands. **This was `/archive`, and the rename is the point:** the page claimed to hold "everything made so far" while six of its rows were on sale, and "Archived" was simultaneously the stock label for a closed run. One word cannot be both. `Sold out` is now the only name for a closed run, everywhere. `/archive` and `/archive/:ref` 308 here. |
+| `/releases` | `app/releases/page.tsx` | **Collection history, by drop.** Each release is its cover frame, its date, its statement, its piece count and its garments as pictures — rendered from `releaseHistory()`, so a new drop is a record in `drops.ts` and nothing else. It was a ledger of rows in year bands under three display-scale totals; see `DESIGN.md` → *The release history*. This was `/archive`, and the rename is the point: `Sold out` is the only name for a closed run, everywhere. `/archive` and `/archive/:ref` 308 here. |
 | `/releases/[ref]` | `app/releases/[ref]/page.tsx` | One garment as a record rather than as stock: the product page's gallery-plus-column layout with the buying taken out. SSG per piece. |
 | `/about` | `app/about/page.tsx` | A label statement in four sections — the clothes, the name, drops, what it is for. Rewritten from scratch; see the docblock for what it replaced. |
 | `/wishlist` | `app/wishlist/page.tsx` | Real, client-side |
-| `/checkout` | `app/checkout/page.tsx` | Redirects to `/shop` while `STORE_OPEN` is false. The flow itself is intact in `CheckoutFlow`. |
+| `/checkout` | `app/checkout/page.tsx` | Two steps — details, delivery — then `createCheckout()`. Redirects to `/shop` only while `STORE_OPEN` is false. |
 | `/account` | `app/account/page.tsx` | Unlinked, `noindex`, one sentence. |
 | `/size-guide`, `/shipping`, `/returns`, `/faq`, `/contact` | | Information |
 | `/legal/privacy`, `/legal/terms`, `/legal/refund-policy` | | Drafts |
@@ -234,15 +246,15 @@ decision, and it is the owner's.
 | Loading | — | **There is no route-level loading state, deliberately.** `app/shop/loading.tsx` put the whole `/shop` segment — every product page included — behind a Suspense boundary that only resolves once JavaScript runs, so without it the shop served a permanent skeleton (`main` held 40 characters). Pending feedback lives on the filter links instead, via `useLinkStatus` in `FilterBar`. Do not reintroduce a `loading.tsx` in a segment that must render without scripting. |
 
 The header states three destinations inline from `md` up (`NAV_PRIMARY` in `lib/site.ts` —
-Shop / Drop / Releases) plus a search control, a saved count when there is one, and keeps
-`IndexOverlay` as the full navigation surface. **There is no bag control and no Account
-entry** while the store is shut — an icon is a promise that there is somewhere to put
-something. They are real links, so navigation survives scripting being
-unavailable; before this the only nav trigger was a `<button>` and the footer was the
-site's entire navigation with JS off.
+Shop / Drop / Releases) plus search, a saved count when there is one, a bag, and
+`IndexOverlay` behind `Menu` as the full navigation surface. Six controls is the ceiling;
+THARROS does not need twelve. **There is no Account entry** — an icon is a promise that
+there is somewhere to go, and sign-in is not connected. The three destinations are real
+links, so navigation survives scripting being unavailable.
 
-`Header` floats over the hero on the routes in `TRANSPARENT_ROUTES` (`/` only). It is light
-ink on every route — the paper wash under it fades up into a solid plate on scroll. Every other page opens with `PageIntro`, which carries the fixed
+`Header` floats over the hero on the routes in `TRANSPARENT_ROUTES` (`/` only), where the
+chrome inverts to paper ink over a gradient. Everywhere else it is dark ink, and the paper
+wash under it fades up into a solid plate on scroll. Every other page opens with `PageIntro`, which carries the fixed
 header's clearance — so no page hand-rolls top padding.
 
 Adding a route means touching **four** places: the page's own `metadata`,
@@ -269,7 +281,7 @@ components/
   motion/                Scene, Parallax, SplitLines, RouteCurtain, Magnetic,
                          MotionRuntime, EntrySequence — see Code style → Motion
   ui/                    Accordion, Modal, Reveal, SectionHeading, EmptyState,
-                         PendingNotice, Wordmark, icons
+                         Wordmark, icons
 lib/
   catalog/               product data and the query seam — see Data model
   commerce/              cart maths, shipping, tax, regions, returns, STORE STATE
@@ -306,8 +318,8 @@ lib/catalog/
   categories.ts   category list + sizing-table mapping
   drops.ts        Drop 001 (released) / Drop 002 (upcoming, no date)
   campaign.ts     campaign frames — the hero and "the people" sequence per drop
-  archive.ts      GARMENT NUMBERS AND THE RELEASE INDEX — derived, never authored.
-                  Keeps its filename; the surface it feeds is `/releases`.
+  releases.ts     GARMENT NUMBERS AND THE RELEASE RECORD — derived, never
+                  authored. `releaseHistory()` is what `/releases` renders.
   models.ts       the people photographed in the clothes — SHIPS EMPTY
   sizing.ts       size tables — measurements are null until real ones are taken
   images.ts       WHICH FRAME OF A PIECE TO SHOW, AND IN WHAT ORDER — plus
@@ -327,8 +339,11 @@ Key invariants:
 
 - **Prices are minor units (cents).** Format with `formatPrice()` from `lib/format.ts`.
 - **Availability is derived**, never authored (`resolveAvailability`).
-- **A drop is the unit of release.** `Product.drop` points at `lib/catalog/drops.ts`;
-  the shop filters on `?drop=`. Keep the catalogue small — a nine-piece line should look
+- **A drop is the unit of release, and it owns the release facts.** `Product.drop` points
+  at `lib/catalog/drops.ts`; the shop filters on `?drop=`. **A product has no `releasedAt`
+  and no `release` state** — both were duplicates of the drop's own fields, and both had
+  already drifted (Drop 002's pieces carried a date the drop record did not have). Read
+  them with `releaseDate()` and `releaseState()` in `queries.ts`. Keep the catalogue small — a nine-piece line should look
   curated, not empty, and the filter bar only offers categories that hold a piece
   (`categoriesInUse()`).
 - **A cart line stores only `productId + size + quantity`.** Name, price and imagery are
@@ -477,7 +492,7 @@ no dependency; Node strips the types. They cover the three things that fail sile
 
 `tsconfig` carries `allowImportingTsExtensions` so the `.ts`-suffixed imports those files
 need do not fail `tsc`. **A test file may only import modules that import types only** —
-`archive.ts` and `queries.ts` cannot be reached from one, because a bare `from "./products"`
+`releases.ts` and `queries.ts` cannot be reached from one, because a bare `from "./products"`
 two modules down resolves to nothing under Node.
 
 **`npm run e2e`** — Playwright, in `e2e/`, three projects: `chromium`, `webkit` and
@@ -488,7 +503,7 @@ builds and serves the site itself on port 3100, so it never collides with `npm r
 |---|---|
 | `routes.spec.ts` | Every route: 200, an `h1`, no console errors, no failed requests, **no horizontal overflow at either width**, every scroll entrance actually fires, nothing pins, the release index agrees with its own rows, and the storefront offers no purchase it cannot take |
 | `navigation.spec.ts` | The index overlay opens, navigates, closes on arrival, and releases the scroll lock |
-| `commerce.spec.ts` | The whole purchase path — **`test.skip`ped on `STORE_OPEN`**, so it is 40 skipped tests today and a full suite the day payment is connected |
+| `commerce.spec.ts` | The whole purchase path: choose a size, add, reload, quantity, remove, undo, scroll lock, checkout validation, the step rail walking backwards. **`test.skip`ped on `STORE_OPEN`**, so it follows the storefront when the shop is closed between drops. It stops at the provider boundary and never asserts a completed payment. |
 
 Run one file or one test:
 
@@ -520,10 +535,19 @@ by touching one file and not the other three.
 
 `lib/catalog/products.ts` only. Prices are **cents**. `runSize` is the real number made,
 never a marketing figure, and `variants[].inventory` is real stock — availability and
-every "x left" on the site derive from them. A new piece automatically gets a permanent
-garment number, a sitemap entry and a static route; it gets a release-index row once it is
-actually released, which is what keeps `/releases` an index of releases rather than of
-intentions.
+every "x left" on the site derive from them. Do not give a product a release date or a
+release state: it inherits both from its drop. A new piece automatically gets a permanent
+garment number, a sitemap entry and a static route; it gets a release record once its drop
+is out, which is what keeps `/releases` a history of releases rather than of intentions.
+
+### Add a drop
+
+`lib/catalog/drops.ts` only, and that is genuinely the whole change. `CURRENT_DROP`,
+`NEXT_DROP` and `releasedDrops()` are all derived from `status` and `releasedAt`, so
+nothing hard-codes that Drop 001 is current or that Drop 002 is next. `/releases` grows a
+band, `/drop` leads with the new release, the shop gains a filter rail, the footer's
+signup line renames itself. Give it a `cover` frame if one has been shot; every surface
+treats it as optional.
 
 ### Add a photograph
 
@@ -562,18 +586,30 @@ reading "7 pieces in the run" above a grid headed "9 pieces" is how it happened 
 
 ### Connect payment
 
-Set `STORE_OPEN = true` in `lib/commerce/state.ts` and implement the server route the
-payment step calls. That single flag restores `isPurchasable()`, every add-to-bag control,
-the drawer, the header bag, `/checkout` and the skipped e2e suite. Do not add a second
-check anywhere.
+Replace the body of `createCheckout()` in `lib/commerce/checkout.ts` so it opens a hosted
+session and returns its URL. Nothing above that function changes — not `CheckoutFlow`, not
+`BuyPanel`, not `CartDrawer`, not a test. Do not spread provider-specific assumptions into
+components, and do not add a second flag.
+
+### Connect the real catalogue
+
+Point the functions in `lib/catalog/queries.ts` at the source and map it into `Product`.
+Nothing imports `products.ts` directly, so cards, filters, PDPs, the release record, the
+sitemap and the JSON-LD all follow. Prices stay minor units; a product carries no release
+date or release state of its own — both come from its drop.
+
+### Connect the newsletter
+
+Replace the body of `subscribe()` in `lib/commerce/newsletter.ts` and return `ok`,
+`duplicate` or `error`. The form already renders all three plus the sending state.
 
 ### Say that something is not ready
 
 Say it once, quietly, where the missing thing would have been — and never as a roadmap.
-Prefer removing the dead control to explaining it: the newsletter is a `mailto:` rather
-than a form that admits it sent nothing, `/account` is unlinked rather than a list of
-what sign-in would add, and `/size-guide` serves its how-to-measure half rather than a
-table of em dashes. Record the blocker here, where the people who can fix it will read it.
+Prefer removing the dead control to explaining it: `/account` is unlinked rather than a
+list of what sign-in would add, and `/size-guide` serves its how-to-measure half rather
+than a table of em dashes. Record the blocker here, where the people who can fix it will
+read it — never on the page.
 
 ---
 

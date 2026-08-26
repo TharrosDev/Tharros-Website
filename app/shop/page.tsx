@@ -5,7 +5,7 @@ import ProductGrid from "@/components/product/ProductGrid";
 import EmptyState from "@/components/ui/EmptyState";
 import PageIntro from "@/components/layout/PageIntro";
 import { CATEGORIES, categoryName } from "@/lib/catalog/categories";
-import { getDrop } from "@/lib/catalog/drops";
+import { CURRENT_DROP, getDrop } from "@/lib/catalog/drops";
 import {
   AVAILABILITY_FILTERS,
   AVAILABILITY_LABEL,
@@ -25,8 +25,7 @@ import { jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Shop",
-  description:
-    "Shop THARROS — heavyweight tees, hoodies, sweatshirts, pants, outerwear and accessories from Drop 001.",
+  description: `Shop THARROS — heavyweight tees, hoodies, sweatshirts, pants, outerwear and accessories from ${CURRENT_DROP.name}.`,
   alternates: { canonical: "/shop" },
 };
 
@@ -138,13 +137,17 @@ export default async function ShopPage({
             : availability
               ? "Availability"
               : (drop ?? soleDrop)
-                ? "The run"
+                ? "Release"
                 : // Not the title again — an eyebrow repeating its own
                   // heading is a label describing nothing.
                   "The catalogue"
         }
         title={heading}
         titleClass="type-display-2"
+        /* The shop opens tight. Every other route can spend a screen on its
+           own title; this one exists to show the clothes, and the first
+           product row has to be reachable at a laptop's height. */
+        compact
         crumbs={[{ name: "Home", href: "/" }]}
       >
         {/* The release line: what this view is, dated, from the drop record.
@@ -224,7 +227,11 @@ export default async function ShopPage({
               products.length === 1 ? "piece" : "pieces"
             }`}
             columns={5}
-            priorityCount={5}
+            /* Two, not a whole row. `priority` emits a preload, and five of
+               them race each other and the feature frame above for the same
+               bandwidth. On the unfiltered view the feature frame IS the
+               largest paint, so the grid asks for none. */
+            priorityCount={unfiltered ? 0 : 2}
           />
         )}
       </div>

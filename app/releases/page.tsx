@@ -1,27 +1,42 @@
 import type { Metadata } from "next";
-import ReleaseLedger from "@/components/releases/ReleaseLedger";
+import Link from "next/link";
+import ImageSlot from "@/components/media/ImageSlot";
+import PieceRail from "@/components/releases/PieceRail";
 import PageIntro from "@/components/layout/PageIntro";
 import Reveal from "@/components/ui/Reveal";
-import { archiveByYear, archiveTotals } from "@/lib/catalog/archive";
+import { releaseHistory } from "@/lib/catalog/releases";
+import { formatDate } from "@/lib/format";
 import { SITE_URL } from "@/lib/site";
 import { breadcrumbList, jsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Releases",
   description:
-    "Every piece THARROS has released, by year — its number, the drop it came from, and what is left of the run.",
+    "Every drop THARROS has released — the collection, the date, and the pieces that came out in it.",
   alternates: { canonical: "/releases" },
   openGraph: {
     type: "website",
     title: "THARROS releases",
-    description: "Every piece released so far, by year.",
+    description: "Every drop released so far, newest first.",
     url: `${SITE_URL}/releases`,
   },
 };
 
+/**
+ * COLLECTION HISTORY, NOT A LEDGER.
+ *
+ * The page was organised into year bands over a table of rows, opening on
+ * three display-scale totals — garments, units released, sold out. That is the
+ * label's output as a balance sheet, on a page somebody opens to look at
+ * clothes. A release is the unit now: its campaign frame, its date, its
+ * statement, its pieces. It gets more valuable as the label puts more out,
+ * which a totals row never does.
+ *
+ * Every band is rendered from `releaseHistory()`, so Drop 003 is a record in
+ * `drops.ts` and nothing else.
+ */
 export default function ReleasesPage() {
-  const bands = archiveByYear();
-  const totals = archiveTotals();
+  const history = releaseHistory();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -33,19 +48,6 @@ export default function ReleasesPage() {
     ],
   };
 
-  // The index runs as one series across the year bands rather than restarting
-  // per year: the reveal stagger is a property of reading down the page, not
-  // of the band a row happens to fall in.
-  //
-  // Precomputed rather than accumulated in the JSX. A `let` incremented inside
-  // `.map()` is a variable reassigned after render completes, which the React
-  // Compiler lint rules reject outright — and rightly, since the render would
-  // read a different value on a re-run.
-  const offsets = bands.reduce<number[]>(
-    (acc, band, i) => [...acc, (acc[i] ?? 0) + band.entries.length],
-    [0],
-  );
-
   return (
     <>
       <script
@@ -55,49 +57,70 @@ export default function ReleasesPage() {
 
       <PageIntro
         index="01"
-        label="The index"
+        label="Releases"
         title="Releases"
-        split
-        lead="Every piece THARROS has put out, newest first. A piece stays here after its run is gone."
+        lead="Every drop so far — the clothes that came out in each one, and what is still available. A piece stays here after its run is gone."
         crumbs={[{ name: "Home", href: "/" }]}
-      >
-        {/* The two figures the page is about, stated once at the top so the
-            ledger below does not have to be added up by eye. Both derived. */}
-        <dl className="mt-12 flex flex-wrap gap-x-14 gap-y-6">
-          <div>
-            <dt className="type-meta text-ink-faint">Garments</dt>
-            <dd className="num type-mono-2 mt-2">{totals.garments}</dd>
-          </div>
-          <div>
-            <dt className="type-meta text-ink-faint">Units released</dt>
-            <dd className="num type-mono-2 mt-2">{totals.made}</dd>
-          </div>
-          <div>
-            <dt className="type-meta text-ink-faint">Sold out</dt>
-            <dd className="num type-mono-2 mt-2">{totals.closed}</dd>
-          </div>
-        </dl>
-      </PageIntro>
+      />
 
       <div className="page-frame pb-[var(--rhythm-default)]">
-        {bands.map((band, i) => {
-          return (
-            <section key={band.year} className="mt-[var(--rhythm-tight)] first:mt-0">
-              {/* The band header is the year at mono display scale — the
-                  archive's largest figure, because the year is the axis the
-                  record is organised on. */}
-              <Reveal className="rule-draw flex items-baseline justify-between gap-6 pt-4">
-                <h2 className="num type-mono-2">{band.year}</h2>
+        {history.map(({ drop, entries }) => (
+          <section
+            key={drop.id}
+            className="mt-[var(--rhythm-default)] first:mt-0"
+            aria-labelledby={`${drop.id}-heading`}
+          >
+            <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 pt-4">
+              <p className="eyebrow">
+                <span className="num">{drop.index}</span>
+                <span>
+                  <span className="num">{entries.length}</span>{" "}
+                  {entries.length === 1 ? "piece" : "pieces"}
+                </span>
+              </p>
+              {drop.releasedAt ? (
                 <p className="type-meta text-ink-faint">
-                  <span className="num">{band.entries.length}</span>{" "}
-                  {band.entries.length === 1 ? "garment" : "garments"}
+                  <time dateTime={drop.releasedAt}>{formatDate(drop.releasedAt)}</time>
                 </p>
-              </Reveal>
+              ) : null}
+            </Reveal>
 
-              <ReleaseLedger entries={band.entries} delayFrom={offsets[i]} />
-            </section>
-          );
-        })}
+            {/* The frame leads the band. A drop without one opens on its own
+                name instead — no placeholder, no reserved hole. */}
+            {drop.cover ? (
+              <Reveal mode="frame" className="mt-10">
+                <ImageSlot
+                  image={drop.cover}
+                  ratio="campaign"
+                  ratioSm="editorial"
+                  sizes="(min-width: 1024px) min(88vw, 1376px), 100vw"
+                />
+              </Reveal>
+            ) : null}
+
+            <div className="mt-10 grid gap-x-12 gap-y-6 lg:grid-cols-12">
+              <h2 id={`${drop.id}-heading`} className="type-display-2 lg:col-span-5">
+                {drop.name}
+              </h2>
+              <div className="lg:col-span-6 lg:col-start-7">
+                <p className="type-lead">{drop.statement}</p>
+                {drop.body[0] ? (
+                  <p className="type-body mt-5 text-ink-muted">{drop.body[0]}</p>
+                ) : null}
+                <Link
+                  href={`/shop?drop=${drop.slug}`}
+                  className="link-rule link-rule-reveal mt-6 inline-block"
+                >
+                  Shop {drop.name}
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-14">
+              <PieceRail entries={entries} />
+            </div>
+          </section>
+        ))}
       </div>
     </>
   );

@@ -4,7 +4,9 @@ import SplitLines from "@/components/motion/SplitLines";
 
 type Props = {
   index: string;
-  label: string;
+  /** Omitted where the title already names the section — an eyebrow repeating
+   *  its own heading is a label describing nothing. */
+  label?: string;
   title?: string;
   action?: { href: string; label: string };
   /** A second mono line on the rule, opposite the index. */
@@ -30,16 +32,12 @@ type Props = {
 };
 
 /**
- * The opener every section shares: mono index, mono label, a rule, a title.
- * The rule draws itself as the heading arrives — the site's entrance gesture —
- * so the index and the line it sits on land together.
+ * The opener every section shares: mono index, optional label, a rule, a title.
+ * The rule draws itself as the heading arrives, so the index and the line it
+ * sits on land together — a static ink border is a different weight and a
+ * different idea, which is what twelve hand-rolled openers each lost.
  *
- * This is the only way a section opens. Twelve surfaces previously hand-rolled
- * `<p className="eyebrow"> + border-t border-ink`, and every one of them lost
- * the ledger rule: a static ink border is a different weight and a different
- * idea from a hairline that draws itself.
- *
- * `action` and `aside` are alternatives, not siblings — the right-hand slot
+ * `action` and `aside` are alternatives, not siblings: the right-hand slot
  * holds a link out or a line of technical copy, never both.
  */
 export default function SectionHeading({
@@ -65,7 +63,7 @@ export default function SectionHeading({
       >
         <p className="eyebrow">
           <span className="num">{index}</span>
-          <span>{label}</span>
+          {label ? <span>{label}</span> : null}
         </p>
         {action ? (
           <Link

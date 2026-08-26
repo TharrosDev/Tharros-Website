@@ -48,21 +48,21 @@ export default function SizeGuidePage() {
       />
 
       <div className="page-frame rhythm-tight space-y-16">
-        {/* THE EMPTY TABLE DOES NOT SHIP.
-            Two tables of forty-eight em dashes were the body of this page. The
-            structure is right and it is kept — `SIZE_TABLES` still declares the
+        {/* THE EMPTY TABLE DOES NOT SHIP. `SIZE_TABLES` still declares the
             columns and the rows, so the day the figures are measured they
-            appear here with no change to this file — but a grid of dashes is
-            not a size guide, it is a size guide's skeleton, and it was the
-            first thing a customer met. What always worked is the half that does
-            not need the numbers: what each measurement is and how to take it.
-            That is the page while the figures are outstanding. */}
+            appear here with no change to this file — but a grid of em dashes
+            is a size guide's skeleton, not a size guide, and it was the first
+            thing a customer met. The half that does not need the numbers —
+            what each measurement is and how to take it — is the page until
+            then. It points at the fit notes rather than announcing an
+            absence. */}
         {pending ? (
           <section>
-            <p className="type-lead text-ink">Measurements coming soon.</p>
+            <p className="type-lead text-ink">
+              Every product page carries its own fit notes — how the piece is cut
+              and how it is meant to sit.
+            </p>
             <p className="type-body mt-5 text-ink-muted">
-              Every product page carries its fit notes — how the piece is cut and
-              how it is meant to sit.{" "}
               <Link href="/shop" className="link-rule">
                 Browse the pieces
               </Link>
@@ -79,7 +79,6 @@ export default function SizeGuidePage() {
               <table className="w-full min-w-[34rem] border-collapse text-left">
                 <caption className="visually-hidden">
                   {table.title} — garment measurements in {MEASUREMENT_UNIT}
-                  {pending ? ", not yet published" : ""}
                 </caption>
                 <thead>
                   <tr className="border-b border-rule-strong">

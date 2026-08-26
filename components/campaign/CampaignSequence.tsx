@@ -4,36 +4,17 @@ import Scene from "@/components/motion/Scene";
 import { campaignFor } from "@/lib/catalog/campaign";
 
 /**
- * THE PEOPLE — the campaign read as a spread rather than as a run of stops.
- *
- * IT WAS THREE FRAMES ALTERNATING LEFT, FULL, RIGHT, and each of the side ones
- * put its record in a column next to the photograph. Measured on `/drop` that
- * column was 510px carrying about 200px of content, stretched down 559px of
- * frame, with a 403px margin outside it — and the record itself arrived as four
- * separate small headings beside the picture: a numeral, a caption line, an "in
- * this frame" label and a product name. A caption given a column stops reading
- * as a caption.
- *
- * So the frames pair. Two to a row at their own shapes, each with its record on
- * one line underneath, and a trailing odd frame runs the page full width. The
- * alternation that the run of stops was for is now in the composition itself —
- * a spread, then a full-bleed — rather than in three different ways of standing
- * a picture next to some words.
+ * THE PEOPLE — the campaign as a spread. Two frames to a row at their own
+ * shapes, each with its record on one line underneath, and a trailing odd frame
+ * running full width.
  *
  * The pair keeps each picture's own ratio rather than forcing a common one:
- * forcing a shared shape crops a photograph to level a row, which is the trade
- * this file's own `full` branch refuses for the same reason. The row is levelled
+ * forcing a shared shape crops a photograph to level a row. The row is levelled
  * at the foot instead — see the comment on the row itself.
  *
- * THIS RUNS ON `/drop` ONLY. The home page used to mount it too and ran the
- * whole sequence: 2934px at 1440x900, three and a quarter viewports of the same
- * picture-plus-caption furniture, ending in a grid of the pieces `01 The run`
- * had already shown with their prices one screen above. `/` shows one frame and
- * links here — see `components/home/HomeCampaign.tsx`. A trailer is not a shorter
- * film, it is one shot.
- *
- * Returns null when the drop has no campaign, which keeps every page that
- * mounts it byte-identical to before until the data exists.
+ * `/drop` ONLY. The home page shows one frame and links here
+ * (`components/home/HomeCampaign.tsx`) — a trailer is one shot, not a shorter
+ * film. Returns null when the drop has no campaign.
  */
 export default function CampaignSequence({
   dropId,
@@ -54,18 +35,14 @@ export default function CampaignSequence({
   for (let i = 0; i < frames.length; i += 2) rows.push(frames.slice(i, i + 2));
 
   return (
-    // `rhythm-tight`, not `rhythm-default`. The interval either side was 214px
-    // of the 2689 this section ran, and it sits between a grid of the same
-    // pieces above and a band about the next drop below — neither of which the
-    // photographs need a held breath to be told apart from.
+    // `rhythm-tight`: this sits between a grid of the same pieces and a band
+    // about the next drop, neither of which needs a held breath to be told
+    // apart from a photograph.
     <section className="rhythm-tight">
-      {/* ONE MONO LINE, NO DISPLAY HEADING. The opener was `03 THE PEOPLE`
-          above "The drop, worn." set at display-2: a 168px block alone on a
-          near-empty screen, announcing the photographs from further away than
-          they are tall, and the fifth heading in a section that already had
-          four per frame. The rule and the index place the section in the
-          sequence, which is all an opener owes a set of pictures. Same shape
-          the next-drop band on `/drop` opens with. */}
+      {/* ONE MONO LINE, NO DISPLAY HEADING. The rule and the index place the
+          section in the sequence, which is all an opener owes a set of
+          pictures — a display heading announces them from further away than
+          they are tall. */}
       <div className="page-frame">
         <Reveal className="rule-draw pt-4">
           <p className="eyebrow">

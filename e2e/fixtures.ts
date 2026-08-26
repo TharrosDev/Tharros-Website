@@ -17,12 +17,10 @@ export const ROUTES = [
   "/releases/th-001",
   "/about",
   "/wishlist",
-  // `/account` and `/checkout` are not here. Neither is reachable from the
-  // site: accounts are not connected so nothing links to `/account`, and
-  // `/checkout` redirects to `/shop` while no payment provider is wired up
-  // (`lib/commerce/state.ts`). A route smoke test that follows a redirect is
-  // testing `/shop` twice under another name. They go back the day the flag
-  // flips.
+  "/checkout",
+  // `/account` is not here. Nothing links to it — authentication is a separate
+  // system from shopping and the bag and saved list live on the device — so it
+  // is deliberately unreachable rather than broken.
   "/size-guide",
   "/shipping",
   "/returns",

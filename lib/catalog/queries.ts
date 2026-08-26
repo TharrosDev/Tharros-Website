@@ -19,6 +19,7 @@ import { getDrop } from "./drops";
 import { CAMPAIGNS } from "./campaign";
 import type {
   Availability,
+  ReleaseState,
   CategoryId,
   Drop,
   ImageSlotData,
@@ -53,12 +54,29 @@ export function totalInventory(product: Product): number {
 }
 
 /**
+ * When the release this piece belongs to went out, or is going out. Null only
+ * for a drop that has not been dated.
+ *
+ * THE DROP OWNS THE DATE. Products used to repeat it, and Drop 002's pieces
+ * carried 2026-09-12 while the drop record itself carried nothing — the
+ * collection and its own garments disagreeing about their release.
+ */
+export function releaseDate(product: Product): string | null {
+  return getDrop(product.drop)?.releasedAt ?? null;
+}
+
+/** Out, or not out yet. A property of the release, not of the garment. */
+export function releaseState(product: Product): ReleaseState {
+  return getDrop(product.drop)?.status === "released" ? "released" : "coming-soon";
+}
+
+/**
  * The only place availability is decided. Release posture wins, then the real
  * numbers — so the storefront can never claim scarcity the inventory doesn't
  * support.
  */
 export function resolveAvailability(product: Product): Availability {
-  if (product.release === "coming-soon") return "coming-soon";
+  if (releaseState(product) === "coming-soon") return "coming-soon";
 
   const stock = totalInventory(product);
   if (stock === 0) return "sold-out";
@@ -69,12 +87,10 @@ export function resolveAvailability(product: Product): Availability {
 /**
  * Can this piece be put in a bag right now?
  *
- * Two conditions, and the first one is the storefront's rather than the
- * piece's: while `STORE_OPEN` is false nothing is purchasable, because no
- * payment provider is connected and a purchase path that cannot complete is
- * worse than no purchase path. Every add-to-bag control, quick-add strip and
- * size selector on the site asks this question, so standing the shop down is
- * one flag rather than a sweep through the components.
+ * The single question every add-to-bag control, quick-add strip and size
+ * selector on the site asks. Two conditions: the storefront is open, and the
+ * piece is released with stock on the shelf. Closing the shop between drops is
+ * one flag here rather than a sweep through the components.
  */
 export function isPurchasable(product: Product): boolean {
   if (!STORE_OPEN) return false;
@@ -133,11 +149,16 @@ export const AVAILABILITY_SCHEMA: Record<Availability, string> = {
   "coming-soon": "https://schema.org/PreOrder",
 };
 
+/** Undated sorts as newest: a release with no date is the one still to come. */
+function sortDate(product: Product): string {
+  return releaseDate(product) ?? "9999-12-31";
+}
+
 const SORTERS: Record<SortKey, (a: Product, b: Product) => number> = {
   featured: (a, b) =>
     Number(b.featured) - Number(a.featured) ||
-    b.releasedAt.localeCompare(a.releasedAt),
-  newest: (a, b) => b.releasedAt.localeCompare(a.releasedAt),
+    sortDate(b).localeCompare(sortDate(a)),
+  newest: (a, b) => sortDate(b).localeCompare(sortDate(a)),
   "price-asc": (a, b) => a.price - b.price,
   "price-desc": (a, b) => b.price - a.price,
 };
@@ -325,7 +346,9 @@ export function dropsInUse(): { drop: Drop; count: number }[] {
     .filter(
       (entry): entry is { drop: Drop; count: number } => entry.drop !== undefined,
     )
-    .sort((a, b) => b.drop.index.localeCompare(a.drop.index));
+    .sort((a, b) =>
+      (b.drop.releasedAt ?? "9999-12-31").localeCompare(a.drop.releasedAt ?? "9999-12-31"),
+    );
 }
 
 /**
@@ -373,6 +396,8 @@ export function searchProducts(term: string, limit = 8): Product[] {
       product.colorway,
       product.description,
       product.drop,
+      ...product.materials,
+      ...product.fit,
     ]
       .join(" ")
       .toLowerCase();

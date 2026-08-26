@@ -26,9 +26,14 @@ inside a longer running sentence where full caps would shout.
 
 The line is: **Small runs. Original ideas.**
 
-Recurring editorial phrases, used sparingly: *Where it starts.*, *Worn in, not styled.*,
-*Coming next*, *Drop 001*. Pick one per page — a label that repeats its own slogans sounds
-like merchandise.
+Recurring editorial phrases, used sparingly: *Worn in, not styled.*, *Coming next*,
+*Drop 001*. Pick one per page — a label that repeats its own slogans sounds like
+merchandise.
+
+**A drop statement describes the clothes.** *Wide and heavy.* names a cut and a cloth.
+*Where it starts.* named nothing, which is the failure mode: a line that sounds like
+positioning and carries no information. Same test for a section title — prefer the count
+or the subject (*7 pieces.*) over the category (*The pieces.*) where the page has one.
 
 Retired, and not to come back: *Made small. Made with intent.*, *Built from the ground
 up.*, *Designed, tested, refined.* All three are about the label's manufacturing rather
@@ -72,8 +77,8 @@ marketing, or when the runs will get bigger. The customer did not ask for an ope
 briefing and does not need an apology.
 
 **Never narrate what is unfinished.** No public commentary about pending photography,
-unconnected payment, missing measurements, provisional carrier rates, sign-in that is not
-live, or legal review. Handle an incomplete thing gracefully — a shorter page, a cleaner
+unconnected payment, missing measurements, carrier rates, sign-in that is not live, or
+legal review. Handle an incomplete thing gracefully — a shorter page, a cleaner
 empty state, a control that is absent rather than dead — and record the blocker in the
 repository, where the people who can fix it will read it.
 
@@ -114,10 +119,14 @@ not sentences that would be off-voice.
 - a waitlist, notification or early access that is not actually wired up
 - "X people are viewing this" or any manufactured urgency
 
-**When something is not ready, say so in one plain line and stop.** The site already does
-this at the payment step, on `/account`, in the newsletter form, on the size guide, and on
-the legal drafts. Match that tone: state the fact, give the alternative, do not apologise
-twice.
+**When something is not ready, prefer removing the control to explaining it.** `/account`
+is unlinked rather than a list of what sign-in would add; the size guide serves its
+how-to-measure half rather than a table of em dashes. Where a line is genuinely needed,
+state the fact once, give the alternative, and do not apologise twice.
+
+**The storefront does not narrate its own build state.** No prototype notices, no
+"payment is not connected", no roadmap, no working-draft banners. That belongs in
+`CLAUDE.md`, where the people who can fix it will read it.
 
 ---
 

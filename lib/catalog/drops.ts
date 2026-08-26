@@ -1,16 +1,14 @@
 /**
- * PLACEHOLDER CONTENT — drop copy pending final direction.
+ * THE RELEASES. A drop is the unit THARROS puts clothes out in: numbered,
+ * dated, small, and closed once it sells through.
  *
- * A drop is the unit THARROS releases in. Numbered, dated, small, and closed
- * once it sells through. Replaces the open-ended "collection" idea: this label
- * does not run a permanent catalogue.
+ * THE DROP OWNS THE RELEASE DATE. Products used to repeat it — every Drop 001
+ * piece carried 2026-05-02 and every Drop 002 piece carried a date the drop
+ * itself did not have, so the collection and its own garments disagreed about
+ * when the release was. `releaseDate()` in `queries.ts` reads it from here, and
+ * a product has no date of its own to drift.
  *
- * WHAT A DROP RECORD SAYS AND WHAT IT DOES NOT. It names the release, states
- * what the clothes are, and stops. It used to read as a production log — what
- * was being patterned, what was on its second sample, how much could be sewn,
- * why a run was the size it was. None of that is what someone comes to a
- * clothing label for, and a release that explains its own manufacturing is
- * asking to be judged on the manufacturing. The garments carry the drop.
+ * A drop record names the release, states what the clothes are, and stops.
  */
 import type { Drop } from "./types";
 
@@ -20,7 +18,7 @@ export const DROPS: Drop[] = [
     index: "001",
     name: "Drop 001",
     slug: "drop-001",
-    statement: "Where it starts.",
+    statement: "Wide and heavy.",
     body: [
       "Seven pieces built around weight and volume — heavyweight jersey and fleece cut wide through the shoulder, canvas squared off through the body, a leg wide enough to stack over a boot.",
       "Black, off white, bone and faded black. Graphics set large or not at all.",
@@ -40,34 +38,35 @@ export const DROPS: Drop[] = [
     index: "002",
     name: "Drop 002",
     slug: "drop-002",
-    statement: "Coming next.",
+    statement: "A shell, and a rib knit.",
     body: [
       "A technical outer layer cut to go over the heaviest thing in Drop 001, and a fine-gauge rib knitted long enough to wear either way.",
     ],
-    releasedAt: null,
+    releasedAt: "2026-09-12",
     status: "upcoming",
-    // NO COVER. The only frame that existed for Drop 002 was a work table with
-    // a chalk line and pins across it — a picture of the drop being made
-    // rather than of the drop. A preview reads better with no photograph than
-    // with a photograph of something else.
+    // No cover frame yet. A preview reads better with no photograph than with
+    // a photograph of something else; every surface treats `cover` as optional.
   },
 ];
 
-/** The most recent released drop — what the storefront leads with. */
-export const CURRENT_DROP = DROPS[0];
+/** The release the storefront leads with: the most recent one that is out. */
+export const CURRENT_DROP =
+  [...DROPS]
+    .filter((drop) => drop.status === "released")
+    .sort((a, b) => (b.releasedAt ?? "").localeCompare(a.releasedAt ?? ""))[0] ?? DROPS[0];
 
-/** The next release, if one is announced. */
-export const NEXT_DROP = DROPS.find((drop) => drop.status === "upcoming");
+/** The next release, if one is announced. Earliest first, so Drop 004 being
+ *  added does not make it the one previewed ahead of Drop 003. */
+export const NEXT_DROP = [...DROPS]
+  .filter((drop) => drop.status === "upcoming")
+  .sort((a, b) => (a.releasedAt ?? "9999").localeCompare(b.releasedAt ?? "9999"))[0];
 
-/**
- * One string, because it was two.
- *
- * The home page's next-drop section and `/drop`'s own preview band both stated
- * this inline, in the same words, and a sentence written twice is a sentence
- * that gets edited once. It lives here because it is a fact about the drop
- * rather than about either page.
- */
-export const NO_DATE_NOTE = "Dated when the release is set.";
+/** Released drops, newest first — the order `/releases` reads in. */
+export function releasedDrops(): Drop[] {
+  return [...DROPS]
+    .filter((drop) => drop.status === "released")
+    .sort((a, b) => (b.releasedAt ?? "").localeCompare(a.releasedAt ?? ""));
+}
 
 export function getDrop(slug: string): Drop | undefined {
   return DROPS.find((drop) => drop.slug === slug || drop.id === slug);

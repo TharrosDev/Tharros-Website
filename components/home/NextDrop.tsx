@@ -3,18 +3,13 @@ import Reveal from "@/components/ui/Reveal";
 import SplitLines from "@/components/motion/SplitLines";
 import Magnetic from "@/components/motion/Magnetic";
 import ProductGrid from "@/components/product/ProductGrid";
-import { NEXT_DROP, NO_DATE_NOTE } from "@/lib/catalog/drops";
+import { NEXT_DROP } from "@/lib/catalog/drops";
+import { formatDate } from "@/lib/format";
 import { listProducts } from "@/lib/catalog/queries";
 
 /**
- * A COLLECTION PREVIEW, NOT A PROJECT STATUS REPORT.
- *
- * This section used to say what was being patterned, what was being cut again,
- * which pieces were "far enough along to show", and that the drop would go out
- * "when the fit is right" — a development log, published to customers, closing
- * the home page. Nothing here now states anything that is not confirmed: the
- * name of the release, what is in it, and the fact that it has no date yet.
- * The button used to read "Follow the build".
+ * The next release, closing the home page: its name, its statement, its date
+ * and the pieces announced for it. Nothing that is not confirmed.
  */
 export default function NextDrop() {
   if (!NEXT_DROP) return null;
@@ -24,9 +19,7 @@ export default function NextDrop() {
     <section className="on-pale rhythm-breath">
       <div className="page-frame">
         {/* The index is this section's place on the page, never the drop's own
-            number — printing "002" in the same column as 01 and 02 puts a
-            second series in one position and reads as a step backwards. The
-            drop's name carries its number, and the accent marks the state. */}
+            number — the drop's name already carries that. */}
         <Reveal className="rule-draw flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pt-4">
           <p className="eyebrow">
             <span className="num">03</span>
@@ -35,8 +28,8 @@ export default function NextDrop() {
           <p className="type-meta text-signal">Coming next</p>
         </Reveal>
 
-        {/* Split, because this is the last statement on the page and the one
-            the visitor leaves on. */}
+        {/* Split: the last statement on the page and the one the visitor
+            leaves on. */}
         <SplitLines
           as="h2"
           text={NEXT_DROP.statement}
@@ -50,7 +43,13 @@ export default function NextDrop() {
                 {paragraph}
               </p>
             ))}
-            <p className="type-meta text-ink-faint">{NO_DATE_NOTE}</p>
+            {NEXT_DROP.releasedAt ? (
+              <p className="type-meta text-ink-faint">
+                <time dateTime={NEXT_DROP.releasedAt}>
+                  {formatDate(NEXT_DROP.releasedAt)}
+                </time>
+              </p>
+            ) : null}
             <Magnetic className="inline-block pt-4">
               <Link href="/drop" className="btn btn-outline">
                 Preview {NEXT_DROP.name}
@@ -58,10 +57,7 @@ export default function NextDrop() {
             </Magnetic>
           </Reveal>
 
-          {/* The pieces themselves rather than a picture of the drop being
-              made. Two cards, no specimen row — there are no run figures for
-              an unreleased piece and an em dash in a stock column is a figure
-              nobody asked for. */}
+          {/* The pieces themselves are the picture. */}
           {pieces.length > 0 ? (
             <div className="lg:col-span-6 lg:col-start-7">
               <ProductGrid

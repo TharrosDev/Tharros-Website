@@ -4,24 +4,17 @@ import { STORE_OPEN } from "../lib/commerce/state";
 const PIECE = "/shop/arc-hoodie";
 
 /**
- * THE WHOLE FILE IS GATED ON THE STOREFRONT'S ONE FLAG.
+ * THE PURCHASE PATH, WHICH IS THE ONLY FLOW ON THIS SITE WHOSE FAILURE COSTS
+ * ANYBODY ANYTHING.
  *
- * Nothing on this site is purchasable while `STORE_OPEN` is false: no payment
- * provider is connected, so the add-to-bag controls, the drawer and the
- * checkout route are all stood down (`lib/commerce/state.ts`). These tests
- * describe a purchase path that is deliberately not there, and they are kept
- * rather than deleted because the path itself is kept — connecting a provider
- * and flipping the flag has to bring back a flow somebody has tested.
- *
- * The complementary assertions — that nothing offers a purchase while the shop
- * is shut — live in `routes.spec.ts` and run either way.
+ * Gated on `STORE_OPEN` so the suite follows the storefront when it is closed
+ * between drops rather than failing against a shop that is deliberately shut.
+ * The complementary assertions — what is and is not offered — live in
+ * `routes.spec.ts` and run either way.
  */
-test.skip(!STORE_OPEN, "the storefront cannot take payment yet");
+test.skip(!STORE_OPEN, "the storefront is closed");
 
 /**
- * The purchase path, which is the only flow on this site whose failure costs
- * anybody anything.
- *
  * The size input is `visually-hidden` and the visible control is the `<label>`
  * wrapping it, so these click the label — which is what a person does. Driving
  * the input directly would need `force`, and forcing past actionability is how
@@ -125,15 +118,15 @@ test.describe("bag", () => {
     await page.getByRole("button", { name: /Continue to delivery/ }).click();
 
     await expect(page.getByRole("heading", { name: "Where it goes" })).toBeVisible();
-    // The action is a composed mailto, not a payment. If this ever becomes a
-    // real submit, this assertion is the thing that should fail first.
-    await expect(page.getByRole("link", { name: /Write this order/ })).toHaveAttribute(
-      "href",
-      /^mailto:/,
-    );
+    // The transaction is one call to `createCheckout()`. The button is the
+    // whole payment boundary as far as this suite is concerned; what it
+    // resolves to is the provider's business, and no order is placed here.
+    await expect(
+      page.getByRole("button", { name: /Continue to payment/ }),
+    ).toBeVisible();
   });
 
-  test("the order cannot be written once the reply address has been blanked", async ({
+  test("the order cannot be placed once the contact address has been blanked", async ({
     page,
   }) => {
     await page.goto(PIECE);
@@ -153,8 +146,8 @@ test.describe("bag", () => {
 
     // The step rail walks backwards without validating, which is the whole
     // point of it. Blanking the email here and stepping forward again lands on
-    // a step whose own checks all pass — and the only artefact this checkout
-    // produces is an email to reply to.
+    // a step whose own checks all pass — and the order would leave with nobody
+    // to send a confirmation to.
     await page.getByRole("button", { name: /01 Your details/ }).click();
     // Wait for the step rather than for the field. `goTo` scrolls and then
     // moves focus a frame later, so filling the moment the click returns races
@@ -164,10 +157,11 @@ test.describe("bag", () => {
     await page.getByRole("button", { name: /02 Delivery/ }).click();
     await expect(page.getByRole("heading", { name: "Where it goes" })).toBeVisible();
 
-    await page.getByRole("link", { name: /Write this order/ }).click();
+    await page.getByRole("button", { name: /Continue to payment/ }).click();
 
-    // Sent back to the field that is missing, not handed a mailto with nobody
-    // in it. The address above is valid, so only the blanked email can do this.
+    // Sent back to the field that is missing, not handed to a provider with
+    // nobody to reply to. The address above is valid, so only the blanked email
+    // can do this.
     await expect(page.getByRole("heading", { name: "Your details" })).toBeVisible();
     await expect(
       page.getByRole("alert").filter({ hasText: "Enter your email address." }),

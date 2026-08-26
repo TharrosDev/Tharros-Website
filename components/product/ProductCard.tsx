@@ -20,8 +20,6 @@ type Props = {
   /** Grid slot width, for correct image sizing. */
   sizes?: string;
   priority?: boolean;
-  /** Print the piece's run figures under the frame. */
-  specimen?: boolean;
 };
 
 export default function ProductCard({
@@ -30,24 +28,19 @@ export default function ProductCard({
   priority = false,
 }: Props) {
   const { add, openBag, lines } = useCart();
-  // Quick-add used to force the bag drawer open over the grid, which threw the
-  // browsing visitor out of the thing they were browsing. The card confirms in
-  // place instead and offers the drawer rather than imposing it.
+  // Quick-add confirms in place and offers the drawer rather than throwing a
+  // browsing visitor out of the grid they are reading.
   const [added, setAdded] = useState<string | null>(null);
-  // The confirmation is a claim about the bag, so the bag has to be what says
-  // it. This state only records which size was last added here; removing that
-  // line in the drawer used to leave the card asserting "Size M in bag" for the
-  // rest of the visit, on a site whose position is that it tells you the truth
-  // about stock.
+  // The confirmation is a claim about the bag, so the bag is what decides it:
+  // this only records the last size added here, and removing that line in the
+  // drawer must not leave the card still asserting "Size M in bag".
   const inBag =
     added &&
     lines.some((line) => line.productId === product.id && line.size === added)
       ? added
       : null;
 
-  // The card leads with the piece on a person and swaps to the garment itself.
-  // Which frames those are is the catalogue's decision, not the card's — see
-  // lib/catalog/images.ts.
+  // Which frames these are is the catalogue's decision — lib/catalog/images.ts.
   const { primary, secondary } = cardImages(product);
   const buyable = isPurchasable(product);
   const soldOut = resolveAvailability(product) === "sold-out";
@@ -56,42 +49,26 @@ export default function ProductCard({
   );
 
   return (
-    // Hover is expressed in CSS rather than React state. It used to be a
-    // useState pair, which re-rendered the whole card — and every card in the
-    // grid it belongs to — on each pointer entry and exit, for an effect the
-    // browser can do on its own.
-    // `flex h-full flex-col` levels the grid. The frame is one ratio for every
-    // piece, so the pictures already lined up — what did not was everything
-    // under them: a name that wrapped to two lines pushed its specimen row a
-    // line lower than the card beside it. The card fills its grid row and the
-    // specimen line is pinned to the foot, so a row of records reads as a row.
+    // Hover is CSS, not React state: a useState pair re-rendered every card in
+    // the grid on each pointer entry, for something the browser does on its own.
+    // `flex h-full flex-col` levels the row — the frames already lined up, the
+    // records under them did not once a name wrapped to two lines.
     <article className="group flex h-full flex-col">
-      {/* `overflow-hidden` belongs to the frame, not to the card. On the card it
-          also clipped the 3px focus ring of everything positioned inside it —
-          the heart and every quick-add size button — so keyboard focus went
-          invisible on the one surface with the most focusable controls. */}
+      {/* `overflow-hidden` belongs to the frame, not to the card: on the card it
+          clipped the focus ring of the heart and every quick-add button. */}
       <div className="relative">
-        {/* THE PICTURE IS THE SECOND WAY IN, NOT A SECOND LINK.
-            The card carries two routes to the same product — this frame and
-            the name under it — which is right for a pointer and wrong for
-            everything else: a screen reader announced the destination twice
-            per card, and this one announced it as its own photograph, because
-            a link wrapping only images takes its accessible name from their
-            `alt`. On /shop that is nine pieces read out as eighteen links, half
-            of them called things like "A figure in Drop 001 against a plain
-            wall, daylight".
+        {/* THE PICTURE IS THE SECOND WAY IN, NOT A SECOND LINK. A link wrapping
+            only images takes its accessible name from their `alt`, so every
+            card announced its destination twice — once as the piece, once as a
+            description of a photograph. This one leaves the accessibility tree
+            and the tab order and the name under it is the single named link.
+            It stays a real anchor, so click, middle-click and copy-address all
+            still work.
 
-            So it leaves the accessibility tree and the tab order, and the name
-            under it becomes the single named link to the piece. It stays a real
-            anchor, so clicking the picture, middle-clicking it and copying its
-            address all still work.
-
-            `aria-hidden` with `tabIndex={-1}` rather than either alone: hiding
-            a focusable element is what makes `aria-hidden` invalid, and taking
-            it out of the tab order without hiding it leaves the duplicate in
-            the links list. It holds no focusable descendants — the heart and
-            the quick-add strip are siblings below, deliberately outside this
-            frame. */}
+            `aria-hidden` AND `tabIndex={-1}`: hiding a focusable element is
+            what makes `aria-hidden` invalid, and either alone leaves the
+            duplicate in the links list. It holds no focusable descendants — the
+            heart and the quick-add strip are siblings, outside this frame. */}
         <Link
           href={`/shop/${product.slug}`}
           aria-hidden="true"
@@ -101,18 +78,15 @@ export default function ProductCard({
           <div className="hover-zoom">
             <ImageSlot image={primary} sizes={sizes} priority={priority} />
           </div>
-          {/* Second shot sits on top and fades in — the standard fashion swap,
-              and here it is the whole editorial-to-commerce move in one gesture:
-              the picture you were looking at becomes the thing you can buy. */}
+          {/* The second shot fades in on top — the standard fashion swap. */}
           <div
             aria-hidden="true"
             className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           >
             <ImageSlot image={secondary} sizes={sizes} />
           </div>
-          {/* A sold-out frame is marked, not merely washed out. The wash alone
-              read as a rendering artefact next to the solid "New" badge — the
-              strongest state carrying the weakest mark. */}
+          {/* A sold-out frame is marked, not merely washed out: the wash alone
+              read as a rendering artefact beside the solid badge. */}
           {soldOut ? (
             <span
               aria-hidden="true"
@@ -129,37 +103,26 @@ export default function ProductCard({
           <SaveButton productId={product.id} productName={product.name} />
         </div>
 
-        {/* Quick add. Pointer-and-keyboard, desktop only: on touch the product
-            page does this job properly, and a permanent size row would clutter
-            the grid.
+        {/* Quick add. Desktop only: on touch the product page does this job
+            properly and a permanent size row would clutter the grid.
 
-            `group-focus-within` matters as much as `group-hover`. The strip is
-            translated out of sight but still in the tab order, so on /shop a
-            keyboard user previously walked through 26 invisible size buttons.
-            Revealing it on focus is the fix — the buttons are real
-            functionality, so hiding them from the tab order would have been
-            the wrong trade. */}
+            `group-focus-within` matters as much as `group-hover` — the strip
+            stays in the tab order, so without it a keyboard user walked through
+            two dozen invisible size buttons. */}
         {buyable ? (
           <div
-            /* Hidden by opacity, not by a full translate. The frame does not
-               clip — deliberately, so focus rings survive — so a strip
-               translated 100% down was not out of sight at all: it sat on top
-               of the name and the price on every unhovered card in the grid.
-               Fading it in over the foot of the photograph keeps the frame's
-               focus rings and gives the row back its own space. */
+            /* Hidden by opacity, not by a full translate: the frame does not
+               clip (so focus rings survive), which means a strip translated
+               100% down sat on top of the name and price instead of leaving. */
             className="pointer-events-none absolute inset-x-0 bottom-0 hidden translate-y-1 bg-surface/95 px-3 py-3 opacity-0 transition duration-300 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 md:block"
           >
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="type-meta mr-1 text-ink-faint">
                 {inBag ? "Added" : "Add"}
               </span>
-              {/* Only what can actually be bought. The strip used to print every
-                  size and disable the gone ones, which put up to eleven targets
-                  on one hovered card and nine of those cards in a grid — a
-                  size someone cannot pick is not a shortcut, it is a decision
-                  they have to make and discard. Which sizes exist and which are
-                  finished is stated properly on the product page, in the place
-                  that is about this piece. */}
+              {/* Only what can actually be bought — a size someone cannot pick
+                  is not a shortcut, it is a decision they have to discard. The
+                  full size run is on the product page. */}
               {sellable.map((variant) => (
                 <button
                   key={variant.sku}
@@ -178,9 +141,8 @@ export default function ProductCard({
               ))}
             </div>
 
-            {/* The confirmation. A polite live region rather than a toast: the
-                strip is already where the visitor is looking, and the bag is
-                offered rather than opened over the grid they are reading. */}
+            {/* A polite live region rather than a toast, and the bag is offered
+                rather than opened over the grid being read. */}
             <p
               role="status"
               className="type-meta mt-2 flex min-h-6 items-center gap-3"
@@ -206,11 +168,9 @@ export default function ProductCard({
 
       <div className="flex items-start justify-between gap-4 pt-5 pb-4">
         <div className="min-w-0">
-          {/* `-my-1 py-1` for the same reason the footer links carry it: the
-              name is the card's keyboard target and a `type-body` line is a
-              19px box, under the 24px minimum. The negative margin gives the
-              padding back to the layout, so the specimen row below does not
-              move. */}
+          {/* `-my-1 py-1`: the name is the card's keyboard target and a
+              `type-body` line is a 19px box, under the 24px minimum. The
+              negative margin gives the padding back to the layout. */}
           <h3 className="type-body font-medium">
             <Link
               href={`/shop/${product.slug}`}
@@ -221,24 +181,12 @@ export default function ProductCard({
           </h3>
           <p className="type-meta mt-2 text-ink-faint">{product.colorway}</p>
         </div>
-        {/* Promoted onto the mono ladder. The price is a figure the card is
-            partly about; it was set smaller than the name it sits beside. */}
+        {/* On the mono ladder: the price is a figure the card is partly about. */}
         <p className="num type-mono-3 shrink-0 text-ink-muted">
           {formatPrice(product.price)}
         </p>
       </div>
 
-      {/* NO SPECIMEN ROW. Every card in every grid used to end on
-          `MADE 40 / LEFT 24` — an inventory ledger under a photograph of a
-          hoodie, on the home page, the shop, the drop and the related rail.
-          Nine of them in one viewport is a page about stock levels, which is
-          the personality this site is no longer trying to have. The run is
-          still stated, once, on the product page beside the price, where it
-          reads as a property of the release rather than as the point of it.
-
-          What a card says about state is the badge on the frame — sold out,
-          low stock, coming soon, new — and that is enough to decide whether
-          the piece is worth opening. */}
     </article>
   );
 }

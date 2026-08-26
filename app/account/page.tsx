@@ -10,20 +10,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * UNLINKED, NOINDEXED, AND DELIBERATELY ALMOST EMPTY.
- *
- * Authentication is not connected. The page used to say so at length: a lead
- * announcing that sign-in was not live, a framed notice explaining that saved
- * pieces and the bag were held on this device and an order was placed by
- * email, a second paragraph describing what would happen once authentication
- * arrived, and a list headed "With sign-in" naming order history, saved
- * addresses and email preferences. That is a roadmap, published to customers,
- * on a route that does nothing.
- *
- * Nothing links here now — the entry is gone from the header, the index
- * overlay and the footer, and the route carries `noindex`. It survives so the
- * work has somewhere to land, and it says the one true thing plus the one
- * place that actually works.
+ * UNLINKED AND NOINDEXED. Accounts are a separate system from shopping and
+ * nothing on the storefront depends on one — the bag and the saved list are
+ * held on the device. The route survives so authentication has somewhere to
+ * land; nothing links to it and it publishes no roadmap.
  */
 export default function AccountPage() {
   return (
@@ -32,7 +22,7 @@ export default function AccountPage() {
         index="01"
         label="Account"
         title="Account"
-        lead="Accounts are not open yet."
+        lead="Your saved pieces are held on this device."
         crumbs={[{ name: "Home", href: "/" }]}
       />
       <div className="page-frame rhythm-tight">

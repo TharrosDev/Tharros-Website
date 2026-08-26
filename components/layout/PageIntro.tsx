@@ -50,13 +50,9 @@ export default function PageIntro({
         <Breadcrumbs trail={crumbs} current={title} className="mb-8" />
       ) : null}
 
-      {/* THE EYEBROW DOES NOT SAY THE TITLE BACK.
-          `label` names the section and `title` names the page, and on two
-          routes they are the same word — `/wishlist` opened "01 SAVED" above
-          "SAVED" above "NOTHING SAVED.", which is the word three times inside
-          400px, and `/checkout` did the same with "Checkout". Where they agree
-          there is nothing for the label to add, so the index carries the row on
-          its own. */}
+      {/* THE EYEBROW DOES NOT SAY THE TITLE BACK. Where `label` and `title` are
+          the same word there is nothing for the label to add, so the index
+          carries the row on its own. */}
       <div className="flex items-baseline gap-4 border-t border-ink pt-4">
         <p className="eyebrow">
           <span className="num">{index}</span>
@@ -66,10 +62,10 @@ export default function PageIntro({
         </p>
       </div>
 
-      {/* The measure follows the step. 14ch is a display-1 line; at display-2 or
-          display-3 the same value is a hard wrap, which the shop's search view
-          hits every time — its title is a quoted query, and a query is as long
-          as someone typed. */}
+      {/* The measure follows the step: 14ch is a display-1 line, and at a
+          smaller step the same value is a hard wrap — which the shop's search
+          view hits every time, its title being however long a query someone
+          typed. */}
       {(() => {
         // `break-words` because one page title is a customer's own search
         // term. Display type at 6rem with an unbroken 400-character token

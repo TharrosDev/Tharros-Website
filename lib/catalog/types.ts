@@ -30,14 +30,9 @@ export type Availability =
   | "coming-soon";
 
 /**
- * Release posture, set in data. Inventory decides the rest.
- *
- * `preorder` was a third posture here, and a fifth `Availability`. It was
- * carried through `resolveAvailability`, `AVAILABILITY_LABEL`,
- * `AVAILABILITY_SCHEMA` and `archiveState`, and no product has ever declared
- * it — THARROS releases a run when it is made rather than taking money for one
- * that is not. `coming-soon` is the state a piece being sampled is actually in.
- * Putting it back is one member and four map entries.
+ * Release posture. DERIVED FROM THE DROP, never set on a product — a piece is
+ * out when the release it belongs to is out. See `releaseState()` in
+ * `queries.ts`. Inventory decides everything after that.
  */
 export type ReleaseState = "released" | "coming-soon";
 
@@ -163,10 +158,14 @@ export type Product = {
   care: string[];
   featured: boolean;
   isNew: boolean;
-  release: ReleaseState;
-  /** ISO date — drives "Newest" sort and the drop ordering. */
-  releasedAt: string;
 };
+
+/*
+ * NO `release` AND NO `releasedAt` ON A PRODUCT. Both were duplicates of the
+ * drop's own fields and both had already drifted: Drop 002's pieces carried a
+ * release date the drop record did not have. `releaseState()` and
+ * `releaseDate()` in `queries.ts` read them from `Product.drop`.
+ */
 
 /**
  * A drop is the unit THARROS releases in: a small, numbered, dated batch of

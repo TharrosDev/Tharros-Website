@@ -1,19 +1,16 @@
 /**
- * PLACEHOLDER CATALOG.
+ * THE CATALOGUE.
  *
- * Every product below is placeholder content standing in for the real THARROS
- * line: names, prices, copy, specifications, run sizes and inventory counts are
- * invented for layout and commerce purposes and must be replaced before launch.
- * No product carries photography yet — image slots render as ratio-correct
- * frames until `src` is filled in.
+ * Prices are minor units, `runSize` is the real number made and
+ * `variants[].inventory` is real stock — the storefront prints all three
+ * verbatim and derives every "x left" from them, so neither can be inflated to
+ * look bigger without the site saying something untrue.
  *
- * The catalogue is deliberately small. THARROS releases in drops of a few
- * pieces rather than maintaining a permanent inventory, and `runSize` is the
- * real number made — the storefront prints it verbatim and derives what is left
- * from actual variant inventory. Do not inflate either to look bigger.
+ * A piece carries no release date and no release state: both belong to the
+ * drop it names in `drop`, and `queries.ts` reads them from there.
  *
- * This module is the single seam a CMS or database swaps in behind: everything
- * that reads products goes through `lib/catalog/queries.ts`.
+ * This module is the seam a CMS or database swaps in behind. Nothing imports
+ * it except `lib/catalog/queries.ts`.
  */
 import type { Product, Size, Variant } from "./types";
 
@@ -82,8 +79,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: true,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "noise-silence-tee",
@@ -105,8 +100,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: true,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "arc-hoodie",
@@ -128,8 +121,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: true,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "monument-crewneck",
@@ -151,8 +142,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: false,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "utility-cargo-pant",
@@ -174,8 +163,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: false,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "logo-cap",
@@ -197,8 +184,6 @@ export const PRODUCTS: Product[] = [
     care: ["Spot clean only.", "Do not machine wash."],
     featured: false,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
   {
     id: "work-jacket",
@@ -220,8 +205,6 @@ export const PRODUCTS: Product[] = [
     care: CARE,
     featured: false,
     isNew: false,
-    release: "released",
-    releasedAt: "2026-05-02",
   },
 
   // — Drop 002: announced, not released ————————————————————————————
@@ -249,8 +232,6 @@ export const PRODUCTS: Product[] = [
     ],
     featured: false,
     isNew: true,
-    release: "coming-soon",
-    releasedAt: "2026-09-12",
   },
   {
     id: "ribbed-beanie",
@@ -272,7 +253,5 @@ export const PRODUCTS: Product[] = [
     care: ["Hand wash cold.", "Dry flat."],
     featured: false,
     isNew: true,
-    release: "coming-soon",
-    releasedAt: "2026-09-12",
   },
 ];

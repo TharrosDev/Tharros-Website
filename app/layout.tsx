@@ -205,13 +205,9 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          {/* The bag drawer is mounted only while the shop can take an
-              order. With no payment provider connected nothing is
-              purchasable, so the drawer could only ever have been an empty
-              panel behind a permanently empty control — and the Checkout
-              button inside it was the first half of a flow that ended in an
-              email. `CartProvider` still runs and the component is untouched;
-              flipping `STORE_OPEN` brings both back. */}
+          {/* Mounted only while the shop can take an order — a drawer behind a
+              control that is not there is a panel nothing can open.
+              `CartProvider` runs either way. */}
           {STORE_OPEN ? <CartDrawer /> : null}
         </Providers>
         <Analytics />

@@ -4,13 +4,9 @@ import { listProducts } from "@/lib/catalog/queries";
 import { CURRENT_DROP } from "@/lib/catalog/drops";
 
 /**
- * The clothes, immediately, and at a size worth looking at.
- *
- * Four up rather than five. Five was chosen when this grid was one of six
- * sections and had to hold its place in a long page; it is now the first thing
- * under the hero and the page's whole argument, so each frame gets a quarter of
- * the width instead of a fifth. Seven pieces read 4 + 3, which is a composed
- * row and a short one rather than a database dump.
+ * The clothes, immediately, and at a size worth looking at. Four up: this is
+ * the first thing under the hero and the page's whole argument, so each frame
+ * gets a quarter of the width. Seven pieces read 4 + 3.
  */
 export default function TheRun() {
   const products = listProducts({ drop: CURRENT_DROP.id });
@@ -21,7 +17,7 @@ export default function TheRun() {
         <SectionHeading
           index="01"
           label={CURRENT_DROP.name}
-          title="The pieces."
+          title={`${products.length} pieces.`}
           action={{ href: `/shop?drop=${CURRENT_DROP.slug}`, label: "See all" }}
         />
         <div className="section-lead">
@@ -33,7 +29,6 @@ export default function TheRun() {
             products={products}
             heading={`${CURRENT_DROP.name} pieces`}
             columns={4}
-
           />
         </div>
       </div>

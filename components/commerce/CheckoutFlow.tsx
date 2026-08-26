@@ -13,23 +13,18 @@ import {
   DEFAULT_COUNTRY,
   getCountry,
   isValidPostal,
-  regionName,
 } from "@/lib/commerce/regions";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { createCheckout } from "@/lib/commerce/checkout";
 
 /**
- * Two steps, because there are two things to collect.
+ * Two steps, because there are two things to collect: who this is going to, and
+ * where it ships. Contact is a name and one field, delivery is a choice of two;
+ * neither earns a screen of its own, and a shorter walk is a smaller thing to
+ * abandon.
  *
- * It was four — contact, shipping, delivery, payment — which is the shape of a
- * checkout that takes a card. This one cannot: the last step was a review and a
- * disabled button, and the three before it walked a customer through a
- * card-shaped flow to reach an email. Contact is one field and a name; delivery
- * is a choice of two; neither earns a screen of its own, and a shorter walk to
- * the same email is a smaller thing to abandon.
- *
- * A stored step id from the old four survives it: the progress store falls back
- * to the first step rather than throwing, and clamps `furthest` to the steps
- * that exist.
+ * The transaction is `createCheckout()` and nothing here knows what it talks
+ * to. An unrecognised stored step id falls back to the first step rather than
+ * throwing, and `furthest` is clamped to the steps that exist.
  */
 type StepId = "details" | "delivery";
 
@@ -218,22 +213,7 @@ function Field({
   );
 }
 
-export default function CheckoutFlow({
-  notice,
-}: {
-  /**
-   * The "no card can be taken yet" panel, passed in from the page rather than
-   * rendered above this component.
-   *
-   * It has to be here because whether it belongs on screen depends on the bag,
-   * and the bag is client state. Rendered unconditionally by the page it was
-   * explaining the payment situation to someone whose bag is empty — four
-   * lines about the checkout they cannot start, above the line telling them
-   * why. It stays for the loading state, because with scripting unavailable
-   * that is the only state there is and the page should still say the thing.
-   */
-  notice?: React.ReactNode;
-}) {
+export default function CheckoutFlow() {
   const { lines, subtotal, ready } = useCart();
   const form = useSyncExternalStore(
     formStore.subscribe,
@@ -246,6 +226,8 @@ export default function CheckoutFlow({
     progressStore.getServer,
   );
   const [errors, setErrors] = useState<Partial<Record<keyof Form, string>>>({});
+  const [placing, setPlacing] = useState(false);
+  const [placeError, setPlaceError] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -361,12 +343,9 @@ export default function CheckoutFlow({
 
   if (!ready) {
     return (
-      <>
-        {notice}
-        <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
-          Loading your bag
-        </p>
-      </>
+      <p className="type-meta min-h-[50svh] text-ink-faint" role="status">
+        Loading your bag
+      </p>
     );
   }
 
@@ -377,7 +356,7 @@ export default function CheckoutFlow({
         title="Your bag is empty."
         body="There is nothing to check out yet."
         action={{ href: "/shop", label: "Shop the drop" }}
-        secondary={{ href: "/drop", label: "What is coming" }}
+        secondary={{ href: "/drop", label: "The current drop" }}
       />
     );
   }
@@ -389,53 +368,56 @@ export default function CheckoutFlow({
   const countryName = country.name;
 
   /**
-   * The escape hatch, pre-filled.
+   * THE ONE PLACE THIS FLOW LEAVES THE SITE.
    *
-   * It used to ask the customer to email "with the pieces and sizes you want" —
-   * asking them to transcribe, by hand, the exact bag and address this component
-   * is already holding. The subject and body are composed from `lines` and
-   * `form`, so what arrives is confirmed rather than retyped, and the mail
-   * client still shows every word before anything is sent.
+   * The address is validated first — the step rail walks backwards without
+   * validating, so blanking the email on Details and clicking "02 Delivery"
+   * lands on a step whose own checks all pass. Then the draft goes to
+   * `createCheckout()`, which owns everything a payment provider would.
+   *
+   * No order id is minted here and no confirmation is shown: whatever the
+   * provider returns is where the customer goes next.
    */
-  const orderMail = (() => {
-    const items = lines.map(
-      (line) =>
-        `- ${line.product.name} / size ${line.size} x${line.quantity} — ${formatPrice(line.lineTotal)}`,
-    );
-    const address = [
-      `${form.firstName} ${form.lastName}`.trim(),
-      form.address1,
-      form.address2,
-      [form.city, regionName(form.country, form.region), form.postal]
-        .filter(Boolean)
-        .join(", "),
-      countryName,
-    ].filter(Boolean);
-    const body = [
-      "I would like to order the following:",
-      "",
-      ...items,
-      "",
-      `Delivery: ${deliveryName}`,
-      `Total: ${formatPrice(total)}`,
-      "",
-      "Ship to:",
-      ...address,
-      form.email ? `Email: ${form.email}` : null,
-    ]
-      .filter((row) => row !== null)
-      .join("\n");
-    return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      "Order enquiry",
-    )}&body=${encodeURIComponent(body)}`;
-  })();
+  const placeOrder = async () => {
+    if (!validateOrder()) return;
+    setPlaceError(null);
+    setPlacing(true);
+    try {
+      const checkout = await createCheckout({
+        lines,
+        contact: {
+          email: form.email.trim(),
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+        },
+        address: {
+          address1: form.address1,
+          address2: form.address2,
+          city: form.city,
+          region: form.region,
+          postal: form.postal,
+          country: form.country,
+          countryName,
+        },
+        delivery: {
+          id: shippingOption,
+          name: deliveryName,
+          cost: shippingCost(subtotal, shippingOption),
+        },
+        subtotal,
+        total,
+      });
+      window.location.assign(checkout.url);
+    } catch {
+      setPlacing(false);
+      setPlaceError("That could not be started. Try again in a moment.");
+    }
+  };
 
   const summary = <OrderSummary shippingOptionId={shippingOption} />;
 
   return (
-    <>
-      {notice}
-      <div className="grid gap-12 pb-24 lg:grid-cols-12 lg:gap-16">
+    <div className="grid gap-12 pb-24 lg:grid-cols-12 lg:gap-16">
       <div className="lg:col-span-7" ref={panelRef}>
         {/* The rail is navigable backwards. It was a flat list of `<li>`s, so
             the only way back to a typed-in address was the one Back button on
@@ -501,8 +483,7 @@ export default function CheckoutFlow({
               Your details
             </h2>
             <p className="type-body-sm mt-3 text-ink-muted">
-              Three fields. The reply about this order goes to the email
-              address.
+              Order confirmation and tracking go to this address.
             </p>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               <Field
@@ -551,7 +532,7 @@ export default function CheckoutFlow({
             noValidate
             onSubmit={(event) => {
               event.preventDefault();
-              validateOrder();
+              void placeOrder();
             }}
           >
             <h2
@@ -704,11 +685,9 @@ export default function CheckoutFlow({
               </div>
             </fieldset>
 
-            {/* The review sits under the fields it reviews. It used to be a
-                fourth step, which meant reading back an address on a screen
-                that could not change it; here the same values are three
-                keystrokes from where they are shown, so only the one entered on
-                the step before carries an Edit. */}
+            {/* The review sits under the fields it reviews rather than on a
+                step of its own, so only the details entered earlier need an
+                Edit — everything else is three keystrokes away. */}
             <dl className="mt-12 divide-y divide-rule border-y border-rule">
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4">
                 <dt className="type-meta w-24 shrink-0 text-ink-faint">Order</dt>
@@ -720,7 +699,7 @@ export default function CheckoutFlow({
                 </dd>
               </div>
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 py-4">
-                <dt className="type-meta w-24 shrink-0 text-ink-faint">Reply to</dt>
+                <dt className="type-meta w-24 shrink-0 text-ink-faint">Contact</dt>
                 <dd className="type-body-sm min-w-0 flex-1 break-words">
                   {form.firstName} {form.lastName} · {form.email}
                 </dd>
@@ -734,40 +713,27 @@ export default function CheckoutFlow({
               </div>
             </dl>
 
-            {/* No payment provider is connected. Rather than mock a card form
-                that appears to work, the flow says what is actually true and
-                then does the thing that does work. */}
             <div className="mt-10 border border-ink p-8">
-              {/* The page opens on the full disclosure, so this states the
-                  mechanics of the button under it and not the situation again:
-                  two panels a scroll apart saying the same paragraph read as a
-                  site apologising twice. */}
-              <p className="type-meta">Placing this order</p>
-              <p className="type-body mt-4 text-ink-muted">
-                This opens a message to {CONTACT_EMAIL} with the pieces, sizes,
-                delivery method, address and total already written into it.
-                Nothing is sent until you send it, and nothing is charged.
-              </p>
+              <p className="type-meta">Payment</p>
 
-              <dl className="mt-8 border-t border-rule pt-5">
+              <dl className="mt-6 border-t border-rule pt-5">
                 <div className="flex justify-between">
                   <dt className="type-meta">Total</dt>
                   <dd className="num type-mono-3">{formatPrice(total)}</dd>
                 </div>
               </dl>
 
-              {/* Submitting the form validates the address; the mail link is
-                  the action itself. Both are here because an address typed and
-                  never checked would otherwise ride into the email unvalidated. */}
-              <a
-                href={orderMail}
-                onClick={(event) => {
-                  if (!validateOrder()) event.preventDefault();
-                }}
+              <button
+                type="submit"
+                disabled={placing}
                 className="btn btn-solid btn-full mt-8"
               >
-                Write this order
-              </a>
+                {placing ? "Starting" : "Continue to payment"}
+              </button>
+
+              <p role="alert" className="field-error min-h-5">
+                {placeError}
+              </p>
             </div>
 
             <button
@@ -781,16 +747,13 @@ export default function CheckoutFlow({
         ) : null}
       </div>
 
-      {/* `no-scrollbar` is gone. The cap is right here — a bag summary beside a
-          form genuinely wants to stay put, and it is short enough that most
-          orders never reach the bound — but hiding the scrollbar on a region
-          that can still overflow means a long bag loses lines with nothing on
-          screen to say they exist. The platform's own scrollbar is the
-          affordance; it only appears when there is something to scroll. */}
+      {/* Bounded and scrollable, with the platform's own scrollbar: a bag
+          summary beside a form wants to stay put, but hiding the scrollbar on a
+          region that can overflow means a long bag loses lines with nothing on
+          screen to say they exist. */}
       <div className="hidden lg:col-span-4 lg:col-start-9 lg:sticky lg:top-[calc(var(--header-h)+2rem)] lg:block lg:max-h-[calc(100svh-var(--header-h)-3rem)] lg:self-start lg:overflow-y-auto lg:overscroll-contain">
         {summary}
       </div>
-      </div>
-    </>
+    </div>
   );
 }

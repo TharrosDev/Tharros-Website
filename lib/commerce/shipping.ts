@@ -1,20 +1,14 @@
-/**
- * PLACEHOLDER RATES. These are structural stand-ins so the bag and checkout can
- * show a real subtotal → shipping → total breakdown. Replace with the carrier
- * rates THARROS actually contracts, then set `SHIPPING_RATES_CONFIRMED`.
- */
+import { formatPrice } from "@/lib/format";
 
 /**
- * Whether the figures below are real.
+ * THE ONLY PLACE A DELIVERY RATE IS WRITTEN DOWN.
  *
- * While this is false nothing quotes them to a customer as a price — the
- * shipping page names the delivery options without their costs, and the bag
- * and the checkout are stood down anyway (`lib/commerce/state.ts`). It exists
- * because a placeholder rate printed as a price with a disclaimer underneath
- * is still a price: people read the number and skip the paragraph.
+ * The product page, the bag, the checkout and `/shipping` all read from here,
+ * and none of them formats a rate of its own — `shippingLines()` and
+ * `freeShippingLine()` are the sentences, so four surfaces cannot disagree
+ * about what standard delivery costs. Replacing these with contracted carrier
+ * rates is a change to this file and nothing else.
  */
-export const SHIPPING_RATES_CONFIRMED = false;
-
 export type ShippingOption = {
   id: string;
   name: string;
@@ -24,18 +18,8 @@ export type ShippingOption = {
 };
 
 export const SHIPPING_OPTIONS: ShippingOption[] = [
-  {
-    id: "standard",
-    name: "Standard",
-    detail: "5–8 business days",
-    price: 1200,
-  },
-  {
-    id: "express",
-    name: "Express",
-    detail: "2–3 business days",
-    price: 2500,
-  },
+  { id: "standard", name: "Standard", detail: "5–8 business days", price: 1200 },
+  { id: "express", name: "Express", detail: "2–3 business days", price: 2500 },
 ];
 
 export const FREE_SHIPPING_THRESHOLD = 20000;
@@ -51,4 +35,16 @@ export function shippingCost(subtotal: number, optionId: string): number {
 
 export function amountToFreeShipping(subtotal: number): number {
   return Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+}
+
+/** "Standard — 5–8 business days. $12.00." One per option, in order. */
+export function shippingLines(): string[] {
+  return SHIPPING_OPTIONS.map(
+    (option) => `${option.name} — ${option.detail}. ${formatPrice(option.price)}.`,
+  );
+}
+
+/** The threshold, stated once. */
+export function freeShippingLine(): string {
+  return `Standard shipping is free on orders over ${formatPrice(FREE_SHIPPING_THRESHOLD)}.`;
 }

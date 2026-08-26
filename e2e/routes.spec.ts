@@ -261,24 +261,28 @@ test.describe("scenes that move the DOM", () => {
  * disagrees with the rows under it is the failure, at seven garments or at two
  * hundred.
  */
-test.describe("the release index holds what was released", () => {
-  test("the garment count is the number of rows", async ({ page }) => {
+test.describe("the release history holds what was released", () => {
+  test("each release states the number of pieces it actually shows", async ({
+    page,
+  }) => {
     await page.goto("/releases");
 
-    // `dt` inside the `dl > div` wrapper this page uses is not exposed as
-    // `term`, so the pair is addressed structurally rather than by role.
-    const stated = await page
-      .locator("dl div", { hasText: "Garments" })
-      .locator("dd")
-      .innerText();
-    // The ledger's own rows, not every list item in `main` — the page also
-    // carries breadcrumbs.
-    const rows = await page.locator('main a[href^="/releases/th-"]').count();
+    const bands = page.locator("main section[aria-labelledby]");
+    const count = await bands.count();
+    expect(count, "released drops on the page").toBeGreaterThan(0);
 
-    expect(Number(stated.trim()), "stated garment count").toBe(rows);
+    for (let i = 0; i < count; i++) {
+      const band = bands.nth(i);
+      const stated = await band.locator(".eyebrow").first().innerText();
+      const pieces = await band.locator('a[href^="/releases/th-"]').count();
+      expect(
+        Number(stated.replace(/[^0-9]/g, "").slice(3)),
+        `pieces stated in band ${i}`,
+      ).toBe(pieces);
+    }
   });
 
-  test("nothing unreleased is in the index", async ({ page }) => {
+  test("nothing unreleased is in the history", async ({ page }) => {
     await page.goto("/releases");
     // Both spellings: the site used to say "In development" in five places and
     // "Coming soon" in one, for the same state. It says "Coming soon" now, and
@@ -312,28 +316,69 @@ test("an unreleased piece shows no run figures", async ({ page }) => {
 /**
  * ONE COMMERCE STATE, ASSERTED FROM BOTH ENDS.
  *
- * The site used to say a drop was out now, offer an add-to-bag on every card,
- * and put a Checkout button in the drawer — and then explain at the top of
- * `/checkout` that no card could be taken and the order would be composed into
- * an email. Everything now derives from `STORE_OPEN` in
- * `lib/commerce/state.ts`, so the failure this guards against is a surface
- * drifting back out of step with the flag rather than any particular wording.
+ * Everything purchasable derives from `isPurchasable()`, which reads
+ * `STORE_OPEN` and then real inventory. The failure this guards against is a
+ * surface inventing its own answer — a sold-out piece keeping its add-to-bag,
+ * or a released piece losing it.
  */
-test.describe("the storefront does not promise a purchase it cannot take", () => {
-  test("no add to bag while the shop is shut", async ({ page }) => {
+test.describe("the storefront offers exactly what it can sell", () => {
+  test("an in-stock piece can be added", async ({ page }) => {
     await page.goto("/shop/core-tee");
     await expect(
-      page.getByRole("button", { name: /add to bag/i }),
-    ).toHaveCount(0);
+      page.getByRole("button", { name: /add to bag/i }).first(),
+    ).toBeVisible();
   });
 
-  test("checkout is not reachable", async ({ page }) => {
-    await page.goto("/checkout");
-    await expect(page).toHaveURL(/\/shop$/);
+  test("a sold-out piece offers no purchase", async ({ page }) => {
+    await page.goto("/shop/work-jacket");
+    await expect(page.getByRole("button", { name: /add to bag/i })).toHaveCount(0);
   });
 
-  test("no bag control in the header", async ({ page }) => {
+  test("an unreleased piece offers no purchase", async ({ page }) => {
+    await page.goto("/shop/shell-jacket-01");
+    await expect(page.getByRole("button", { name: /add to bag/i })).toHaveCount(0);
+    await expect(page.getByText("Coming soon").first()).toBeVisible();
+  });
+
+  test("the header carries a bag", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("button", { name: /open bag/i })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /open bag/i })).toBeVisible();
   });
+
+  test("checkout is reachable", async ({ page }) => {
+    await page.goto("/checkout");
+    await expect(page).toHaveURL(/\/checkout$/);
+  });
+});
+
+/**
+ * NO SURFACE INVENTS A SHIPPING RATE.
+ *
+ * The product page used to format `SHIPPING_OPTIONS` itself while `/shipping`
+ * formatted the same array a second way, so the two could quote different
+ * numbers for the same carrier. Both compose through `shippingLines()` now,
+ * which is what this checks: the sentence is identical on both surfaces.
+ */
+test("the product page and the shipping page quote the same rates", async ({
+  page,
+}) => {
+  await page.goto("/shipping");
+  const stated = (await page.locator("main").innerText())
+    .split("\n")
+    .map((row) => row.trim());
+
+  const rates = ["Standard", "Express"].map((name) => {
+    const line = stated.find((row) => row.startsWith(`${name} —`));
+    expect(line, `${name} rate on /shipping`).toBeTruthy();
+    return line!;
+  });
+
+  await page.goto("/shop/core-tee");
+  await page.getByRole("button", { name: /Care & delivery/i }).click();
+
+  // `toContainText` reads `textContent` and retries, so it neither races the
+  // accordion's own transition nor depends on the panel being unclipped.
+  for (const rate of rates) {
+    await expect(page.locator("main")).toContainText(rate);
+  }
 });

@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { listProducts } from "@/lib/catalog/queries";
-import { archiveEntries } from "@/lib/catalog/archive";
+import { listProducts, releaseDate } from "@/lib/catalog/queries";
+import { releaseEntries } from "@/lib/catalog/releases";
 import { SITE_URL } from "@/lib/site";
 
 /**
- * Generated from the catalog, so a new product or journal entry appears here
+ * Generated from the catalogue, so a new product or release appears here
  * without anyone remembering to update a list.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -43,15 +43,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // behind the seam would have left the sitemap reading the old array.
     ...listProducts().map((product) => ({
       url: `${SITE_URL}/shop/${product.slug}`,
-      lastModified: new Date(product.releasedAt),
+      lastModified: new Date(releaseDate(product) ?? now.toISOString()),
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
-    // Archive records are permanent by definition — a run does not reopen —
-    // so they change less often than the product page for the same garment.
-    ...archiveEntries().map((entry) => ({
+    // A release record is permanent by definition — a run does not reopen —
+    // so it changes less often than the product page for the same garment.
+    ...releaseEntries().map((entry) => ({
       url: `${SITE_URL}/releases/${entry.ref}`,
-      lastModified: new Date(entry.product.releasedAt),
+      lastModified: new Date(entry.releasedAt || now.toISOString()),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

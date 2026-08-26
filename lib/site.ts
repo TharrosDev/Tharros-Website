@@ -27,56 +27,51 @@ export const INK_HEX = "#211f1c";
 export const PAPER_HEX = "#fbfaf8";
 
 
-/** Placeholder until the accounts exist. These point at the platforms, not at
- *  THARROS profiles, so they are deliberately excluded from the structured-data
- *  `sameAs` by `socialProfiles()` — claiming them would assert ownership of a
- *  profile the label does not have. Replace the hrefs with real profile URLs
- *  and they start being published with no further change. */
+/**
+ * THE SOCIAL DESTINATIONS, AND THEY ARE ONLY DESTINATIONS ONCE THEY NAME ONE.
+ *
+ * An `href` of `https://instagram.com` is not a THARROS profile, it is
+ * Instagram — a footer link that sends somebody to a platform home page and
+ * strands them there. `activeSocial()` drops any entry whose URL carries no
+ * path, so the footer renders nothing for a platform the label is not on and
+ * the structured-data `sameAs` never claims a profile that does not exist.
+ *
+ * Fill in a real profile URL here and the link appears, in the footer and in
+ * the schema, with no component edit.
+ */
 export const SOCIAL = [
   { name: "Instagram", href: "https://instagram.com" },
   { name: "TikTok", href: "https://tiktok.com" },
   { name: "YouTube", href: "https://youtube.com" },
 ];
 
-/** Only entries that name an actual profile — a bare platform URL has no path. */
-export function socialProfiles(): string[] {
+/** Only the entries that name an actual profile — a bare platform URL has no path. */
+export function activeSocial(): { name: string; href: string }[] {
   return SOCIAL.filter((social) => {
     try {
       return new URL(social.href).pathname.replace(/\/+$/, "") !== "";
     } catch {
       return false;
     }
-  }).map((social) => social.href);
+  });
+}
+
+/** The same set, as URLs, for schema.org `sameAs`. */
+export function socialProfiles(): string[] {
+  return activeSocial().map((social) => social.href);
 }
 
 /**
- * The three destinations the header states out loud, from `md` up.
+ * SHOP, DROP, RELEASES — the three destinations the header states out loud,
+ * from `md` up. Real links, so navigation survives scripting being
+ * unavailable; the index overlay behind `Menu` carries everything else.
  *
- * The index overlay used to be the only navigation surface at any width, which
- * meant the visible chrome on every route was a wordmark, a three-character
- * stamp, the word "Index" and a bag — nothing naming a place to go. A first
- * visit could not discover that a releases index or an about page existed
- * without opening a dialog and then remembering what was in it, and with
- * scripting unavailable the dialog's trigger is a `<button>` that does nothing,
- * so the footer was the site's entire navigation.
- *
- * SHOP, DROP, RELEASES.
- *
- * "Archive" is gone as a destination name, and the route with it. It was doing
- * two contradictory jobs: the page said it held "every garment made so far",
- * which included six pieces you could buy that afternoon, while the same word
- * appeared as a stock label meaning a run that had closed. A shopper cannot
- * hold both. `Releases` names what the page actually is — every piece the label
- * has put out, by year, with the drop it came from — and `Sold out` is now the
- * only word for a closed run, everywhere.
- *
- * `Shop` is kept rather than promoted to "Collection" or "Objects" for the same
- * reason the overlay's trigger says `Menu` and not `Index`: it is the one word
- * in the set that belongs to the customer rather than to the designer.
+ * `Shop` is kept rather than promoted to "Collection" or "Objects" for the
+ * same reason the overlay's trigger says `Menu` and not `Index`: it is the one
+ * word in the set that belongs to the customer rather than to the designer.
  *
  * ACCOUNT IS NOT IN EITHER LIST. Sign-in is not connected, and a navigation
- * entry is a promise that something is there. The route survives for when
- * authentication exists; nothing links to it in the meantime.
+ * entry is a promise that something is there.
  */
 export const NAV_PRIMARY = [
   { name: "Shop", href: "/shop" },
@@ -111,13 +106,11 @@ export const FOOTER_INFORMATION = [
 ];
 
 /**
- * The information set, in one order.
- *
- * Eight routes each opened on the index "01", which makes the mono numeral
- * decorative — it is supposed to place a section in a sequence. They are one
- * sequence, so they are numbered as one, and each page can point at the rest of
- * it. A customer answering a shipping question used to have to go back to the
- * footer to reach the returns page that answers the next one.
+ * The information set, in one order, so each page can point at the rest of it —
+ * a customer answering a shipping question should not have to go back to the
+ * footer to reach the returns page that answers the next one. The index is the
+ * position in that sequence, which is the only thing that makes the numeral
+ * mean anything.
  */
 export const INFORMATION = [
   { index: "01", name: "Size guide", href: "/size-guide" },

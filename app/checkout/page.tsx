@@ -12,25 +12,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * THE ROUTE STAYS. THE DEAD END DOES NOT.
+ * Two steps — details, then delivery — and the transaction itself is handed to
+ * `createCheckout()` in `lib/commerce/checkout.ts`. Nothing on this page knows
+ * who takes the money.
  *
- * This page used to open on a panel headed "No card can be taken yet",
- * explaining that the bag, the address and the totals were real but the
- * payment provider was missing, so the last step would hand over a pre-filled
- * email instead of a card form. That panel was honest and it was in the wrong
- * place: by the time anyone read it they had been told a drop was out now,
- * offered an add-to-bag on every card, and walked to a checkout — three
- * promises, then a correction.
- *
- * The correction is now made at the top, once, by not making the promises:
- * nothing is purchasable while `STORE_OPEN` is false, so no bag fills, no
- * drawer opens and this route has nothing to check out. It redirects rather
- * than rendering an apology, because a checkout with an empty bag and no
- * payment is not a page, it is a wrong turn.
- *
- * `CheckoutFlow` is untouched and still holds the working two-step flow —
- * details, address, delivery and live totals. Connecting a provider and
- * flipping the flag restores this page whole.
+ * Redirects while the storefront is closed between drops: a checkout with
+ * nothing purchasable behind it is a wrong turn, not a page.
  */
 export default function CheckoutPage() {
   if (!STORE_OPEN) redirect("/shop");
